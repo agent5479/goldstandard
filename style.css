@@ -215,6 +215,21 @@ body::before {
 
 .hero h1 span { color: var(--amber); }
 
+.hero-tagline {
+  font-family: 'Crimson Pro', serif;
+  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+  font-weight: 400;
+  color: rgba(255,255,255,0.65);
+  line-height: 1.6;
+  margin-bottom: 2.5rem;
+}
+
+.hero-tagline span {
+  color: var(--amber);
+  font-style: italic;
+}
+
+
 .hero-sub {
   font-size: 1.2rem;
   color: rgba(255,255,255,0.72);
