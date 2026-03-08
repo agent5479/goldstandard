@@ -1,0 +1,6 @@
+# Gold Standard Dog Training — allow indexing for search and discovery
+User-agent: *
+Allow: /
+
+# Optional: add when you have a sitemap
+# Sitemap: https://goldstandarddogtraining.github.io/sitemap.xml
