@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Client Reference Guide | Gold Standard Dog Training</title>
+  <meta name="description" content="A reference guide for Gold Standard Dog Training clients — key techniques, owner mindset, corrections, and access training explained by Warwick Marshall.">
+  <link rel="canonical" href="https://goldstandarddogtraining.github.io/guide.html">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --cream:      #f2ead8;
+      --sand:       #e8dfc4;
+      --forest:     #2d4a2d;
+      --moss:       #4a6741;
+      --gold:       #b8832a;
+      --amber:      #d4a43a;
+      --text:       #1e2d1e;
+      --light-text: #5a6b4a;
+      --rule:       rgba(45,74,45,0.15);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--text);
+      font-family: 'Crimson Pro', Georgia, serif;
+      font-size: 1.125rem;
+      line-height: 1.75;
+    }
+
+    /* grain */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      pointer-events: none; z-index: 100;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--forest);
+      padding: 2rem 2.5rem 2.5rem;
+      border-bottom: 4px solid var(--gold);
+    }
+
+    .header-inner {
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--amber); }
+
+    .header-label {
+      font-size: 0.8rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 0.6rem;
+    }
+
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+
+    header p {
+      color: rgba(255,255,255,0.65);
+      max-width: 560px;
+      font-size: 1.05rem;
+    }
+
+    /* ── TOC ── */
+    .toc {
+      background: var(--sand);
+      border-bottom: 1px solid var(--rule);
+      padding: 1.5rem 2.5rem;
+    }
+
+    .toc-inner {
+      max-width: 820px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem 1.5rem;
+      align-items: center;
+    }
+
+    .toc-label {
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--light-text);
+      margin-right: 0.5rem;
+    }
+
+    .toc a {
+      color: var(--forest);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .toc a:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* ── MAIN ── */
+    main {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 3rem 2.5rem 5rem;
+    }
+
+    /* ── SECTIONS ── */
+    .guide-section {
+      margin-bottom: 4rem;
+      padding-bottom: 4rem;
+      border-bottom: 1px solid var(--rule);
+    }
+    .guide-section:last-of-type {
+      border-bottom: none;
+    }
+
+    .section-num {
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.4rem;
+    }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 3vw, 2.1rem);
+      font-weight: 700;
+      color: var(--forest);
+      line-height: 1.2;
+      margin-bottom: 1.25rem;
+    }
+
+    h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--forest);
+      margin: 2rem 0 0.6rem;
+    }
+
+    p { margin-bottom: 1rem; }
+    p:last-child { margin-bottom: 0; }
+
+    /* callout boxes */
+    .callout {
+      background: var(--forest);
+      color: rgba(255,255,255,0.88);
+      border-radius: 3px;
+      padding: 1.5rem 1.75rem;
+      margin: 1.75rem 0;
+    }
+
+    .callout strong {
+      display: block;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      color: var(--amber);
+      font-size: 1.15rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .callout p { color: rgba(255,255,255,0.75); font-size: 1rem; margin: 0; }
+
+    /* mantra box */
+    .mantra {
+      border-left: 4px solid var(--gold);
+      background: var(--sand);
+      padding: 1.25rem 1.5rem;
+      margin: 1.75rem 0;
+      border-radius: 0 3px 3px 0;
+    }
+
+    .mantra p {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.2rem;
+      color: var(--forest);
+      margin: 0;
+    }
+
+    /* technique steps */
+    .steps {
+      list-style: none;
+      margin: 1.25rem 0;
+      counter-reset: steps;
+    }
+
+    .steps li {
+      counter-increment: steps;
+      display: grid;
+      grid-template-columns: 2.5rem 1fr;
+      gap: 0.75rem;
+      align-items: start;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .steps li:last-child { border-bottom: none; }
+
+    .steps li::before {
+      content: counter(steps);
+      background: var(--forest);
+      color: var(--amber);
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      width: 2.5rem;
+      height: 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+
+    /* warning / don't box */
+    .dont {
+      border: 1px solid rgba(180,60,40,0.25);
+      background: rgba(180,60,40,0.04);
+      border-radius: 3px;
+      padding: 1.25rem 1.5rem;
+      margin: 1.5rem 0;
+    }
+
+    .dont strong {
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #8b3020;
+      display: block;
+      margin-bottom: 0.4rem;
+    }
+
+    .dont p { color: var(--text); font-size: 1rem; margin: 0; }
+
+    /* checklist */
+    .checklist {
+      list-style: none;
+      margin: 1rem 0;
+    }
+
+    .checklist li {
+      padding: 0.45rem 0;
+      border-bottom: 1px solid var(--rule);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-size: 1.05rem;
+    }
+
+    .checklist li:last-child { border-bottom: none; }
+
+    .checklist li::before {
+      content: '✓';
+      color: var(--gold);
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+
+    /* two-col */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin: 1.5rem 0;
+    }
+
+    .col-card {
+      background: var(--sand);
+      border-radius: 3px;
+      padding: 1.25rem 1.5rem;
+      border-top: 3px solid var(--gold);
+    }
+
+    .col-card h4 {
+      font-family: 'Playfair Display', serif;
+      color: var(--forest);
+      margin-bottom: 0.5rem;
+      font-size: 1.05rem;
+    }
+
+    .col-card p { font-size: 0.97rem; color: var(--light-text); margin: 0; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--forest);
+      color: rgba(255,255,255,0.5);
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.9rem;
+    }
+
+    footer a { color: var(--amber); text-decoration: none; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      header, .toc { padding-left: 1.25rem; padding-right: 1.25rem; }
+      main { padding: 2rem 1.25rem 4rem; }
+      .two-col { grid-template-columns: 1fr; }
+      .steps li { grid-template-columns: 2rem 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <a href="index.html" class="back-link">← Gold Standard Dog Training</a>
+      <p class="header-label">Client Reference Guide</p>
+      <h1>The principles behind<br>your dog's training.</h1>
+      <p>A reference for clients to revisit between sessions. These are the core ideas behind what you experienced with Warwick — use this to stay consistent at home.</p>
+    </div>
+  </header>
+
+  <nav class="toc" aria-label="Page contents">
+    <div class="toc-inner">
+      <span class="toc-label">Jump to:</span>
+      <a href="#owner-mindset">Owner mindset</a>
+      <a href="#corrections">Corrections</a>
+      <a href="#leash">Leash work</a>
+      <a href="#access">Access training</a>
+      <a href="#timing">Timing</a>
+      <a href="#rewards">Rewards</a>
+      <a href="#daily">Daily practice</a>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- 1. OWNER MINDSET -->
+    <section class="guide-section" id="owner-mindset">
+      <p class="section-num">01 — The foundation</p>
+      <h2>It starts with you, not the dog.</h2>
+
+      <p>The single most important thing to understand: your dog can feel your expectations. If your attention is on your dog — watching for what it might do wrong, bracing for a reaction — it feels your anxiety and reads it as insecurity. An insecure leader is one the dog feels compelled to protect. That's where fixation, barking, and reactivity come from. It's not a bad dog. It's a dog trying to fill a leadership gap.</p>
+
+      <div class="mantra">
+        <p>"It's not about you, it's about the pack. I expect you to know that."</p>
+      </div>
+
+      <p>Hold this as your internal attitude whenever you're out together. You don't need to look at your dog to lead it. A calm, forward-moving presence that expects compliance — without anxiety about whether compliance will come — is the foundation everything else rests on.</p>
+
+      <h3>What this looks like in practice</h3>
+      <ul class="checklist">
+        <li>Walk forward with relaxed confidence, not a tight grip and a watchful eye</li>
+        <li>Don't shush, reassure, or over-focus when the dog is reacting — that counts as attention, which is a reward</li>
+        <li>Expect the dog to manage itself. Correct only when it fails, calmly and without drama</li>
+        <li>Your energy says more than any command. Calm, certain expectation is the message</li>
+      </ul>
+
+      <div class="callout">
+        <strong>Why this matters</strong>
+        <p>Dogs don't misbehave out of malice — they fill whatever role the situation requires. If you're anxious, they become your guardian. If you're calm and certain, they relax into being your companion. Most "difficult" behaviour disappears when the owner regulation improves.</p>
+      </div>
+    </section>
+
+    <!-- 2. CORRECTIONS -->
+    <section class="guide-section" id="corrections">
+      <p class="section-num">02 — Correcting behaviour</p>
+      <h2>The butt push: interrupting the nervous system.</h2>
+
+      <p>When your dog is barking, fixating, or escalating, the goal is not to punish — it's to interrupt. A firm push to the dog's hindquarters (the butt push) breaks the nervous system cycle and re-anchors the dog to the pack. It works because it bypasses the dog's excited mental state and communicates physically: <em>I'm here, I'm in charge, this isn't necessary.</em></p>
+
+      <ol class="steps">
+        <li>Notice the behaviour starting — fixation, the first bark, body stiffening</li>
+        <li>Move calmly to the dog's side. No raised voice, no shushing</li>
+        <li>Apply a firm sideways or forward push to the hindquarters</li>
+        <li>Immediately return to your calm, forward-facing posture</li>
+        <li>Expect the dog to settle. Don't hover or watch for what it does next</li>
+      </ol>
+
+      <div class="dont">
+        <strong>Don't do this</strong>
+        <p>Don't give attention — verbal or physical — during or just after a reaction. Saying "it's okay" or reaching down to comfort is read as a reward for the excited state. Correct and move on, as if it barely warranted your notice.</p>
+      </div>
+
+      <p>The correction should carry the energy of mild interruption, not anger or frustration. Think of it as reminding the dog of something it already knows — because at this point, it does.</p>
+    </section>
+
+    <!-- 3. LEASH -->
+    <section class="guide-section" id="leash">
+      <p class="section-num">03 — Leash technique</p>
+      <h2>Downward correction. Slack line. No tension.</h2>
+
+      <p>How you hold the leash is doing constant communication. A tight, upward-pulled leash tells the dog you're nervous and reactive. It creates a feedback loop — you tighten, the dog feels it and escalates, you tighten more.</p>
+
+      <div class="two-col">
+        <div class="col-card">
+          <h4>What to do</h4>
+          <p>Keep the leash slack. When a correction is needed, pull <strong>downward</strong>, firmly and briefly, then release back to slack. The slack line is also information — it lets you read the dog's personality and natural impulses, rather than suppressing them with constant tension.</p>
+        </div>
+        <div class="col-card">
+          <h4>What to avoid</h4>
+          <p>Never pull <strong>upward</strong> — this puts pressure on the larynx and can cause injury. Avoid holding sustained tension as a method of control. Sustained tension is not leadership; it's anxiety transmitted through a leash.</p>
+        </div>
+      </div>
+
+      <div class="callout">
+        <strong>Slack is information</strong>
+        <p>A relaxed leash lets you see who your dog actually is. You'll notice where its attention goes, how quickly it fixates, whether it's scent-driven or visually triggered. You can't see any of that through a tight line. Slack-leash walking is the goal and also the ongoing diagnostic tool.</p>
+      </div>
+
+      <h3>Walking position</h3>
+      <p>You lead. The dog walks beside or slightly behind, not ahead. This is not just about control — it's about what the dog understands about the relationship. A dog that walks ahead of you has concluded it is responsible for the pair. That's a burden, and it produces anxiety. Walking beside you means you're in charge of what's out there, and the dog can simply be a dog.</p>
+    </section>
+
+    <!-- 4. ACCESS TRAINING -->
+    <section class="guide-section" id="access">
+      <p class="section-num">04 — Motivation</p>
+      <h2>For some dogs, access is everything.</h2>
+
+      <p>Not every dog is food-motivated. Not every dog is attention-motivated. For dogs that are highly environmentally oriented — particularly terrier types, working breeds, and dogs with strong prey or social drives — the reward isn't a treat or a pat. It's <em>access</em>. Access to the world: off the leash, nose to the ground, free to run and sniff.</p>
+
+      <p>Access training uses that drive deliberately:</p>
+
+      <ol class="steps">
+        <li>Good behaviour — calm walking, not fixating, responding to you — earns leash removal and free time</li>
+        <li>Misbehaviour — pulling, fixating, reacting — results in the leash going back on and free time ending</li>
+        <li>The dog makes the connection quickly: its behaviour directly controls how much freedom it has</li>
+      </ol>
+
+      <div class="mantra">
+        <p>The reward isn't "good boy." The reward is getting to be a dog.</p>
+      </div>
+
+      <p>The key is consistency. Every exit to the world is an opportunity — start at the front door. A dog that learns to wait, to check in, to not bolt through the door is a dog that understands the structure from the first moment of every outing.</p>
+    </section>
+
+    <!-- 5. TIMING -->
+    <section class="guide-section" id="timing">
+      <p class="section-num">05 — The one-second rule</p>
+      <h2>Catch it in the act. You have about a second.</h2>
+
+      <p>This is where most home training breaks down. The association between behaviour and correction — or behaviour and reward — requires the response to land within roughly one second of the behaviour. Beyond that, the dog cannot reliably connect the two. It doesn't understand that the correction two minutes later was for the thing it did two minutes ago.</p>
+
+      <div class="callout">
+        <strong>The association window</strong>
+        <p>You are not punishing a memory. You are interrupting a live impulse. If you miss the moment, let it go — wait for the next one and be faster. Delayed correction doesn't teach. It just confuses.</p>
+      </div>
+
+      <p>This is why professional training makes such a visible difference — maintaining the physical readiness and mental alertness to catch behaviour in the act, consistently, while also managing the leash and the environment, is genuinely difficult. It's a skill that develops with practice.</p>
+
+      <h3>Building your reflex</h3>
+      <ul class="checklist">
+        <li>Watch for the <em>precursor</em>, not the full behaviour — the head snap, the body freeze, the first intake of breath before a bark</li>
+        <li>Position yourself within reach at all times, especially in trigger-rich environments</li>
+        <li>React to the precursor where possible — it's easier to interrupt an impulse than a full reaction</li>
+        <li>If you miss it, stay calm. Reset, stay close, and be ready for the next moment</li>
+      </ul>
+    </section>
+
+    <!-- 6. REWARDS -->
+    <section class="guide-section" id="rewards">
+      <p class="section-num">06 — Rewards</p>
+      <h2>Choose the right currency for your dog.</h2>
+
+      <p>Before using treat-based training, understand whether your dog is actually food-motivated. Many are, but many aren't — particularly dogs that have been oversaturated with treats, or dogs whose primary drive is social, environmental, or prey-related.</p>
+
+      <div class="two-col">
+        <div class="col-card">
+          <h4>If using treats</h4>
+          <p>Use a rare, high-value treat your dog hasn't been overexposed to. Dried liver is reliable for most dogs. Fish cat biscuits work well for others. The rarer the treat, the stronger its value as a reward signal.</p>
+        </div>
+        <div class="col-card">
+          <h4>If not using treats</h4>
+          <p>Identify what your dog actually wants — usually access, play, or social interaction. Use that. A dog that wants to run gets to run when it behaves. A dog that wants to greet gets to greet when it's calm.</p>
+        </div>
+      </div>
+
+      <div class="dont">
+        <strong>Note on verbal praise</strong>
+        <p>"Good boy" during or just after a reactive episode rewards the episode. Save verbal praise for calm, correct behaviour — and use it calmly, not in an excited tone that re-elevates the dog's energy.</p>
+      </div>
+    </section>
+
+    <!-- 7. DAILY PRACTICE -->
+    <section class="guide-section" id="daily">
+      <p class="section-num">07 — Keeping it going</p>
+      <h2>Daily practice for the first three weeks.</h2>
+
+      <p>The training consolidates through repetition. The first three weeks are critical — not because sessions with Warwick are doing all the work, but because the daily practice at home is where the dog learns that the new structure is permanent, not situational.</p>
+
+      <ul class="checklist">
+        <li>Practice every day, even briefly — a consistent ten minutes is more valuable than an occasional hour</li>
+        <li>Start each outing at the front door: wait, calm, leash on with intention</li>
+        <li>Use every walk as a training session until the behaviours are solid</li>
+        <li>Maintain the same rules regardless of who is present — the dog doesn't get exceptions for family members who haven't been trained yet</li>
+        <li>After three weeks, maintenance is much lighter — but consistency never fully stops</li>
+      </ul>
+
+      <div class="callout">
+        <strong>Progress feels fast when the method is right</strong>
+        <p>Dogs respond to structural clarity at a speed that surprises most owners. When the method is consistent, you'll see changes within sessions. The key is that the owner maintains the structure between sessions — that's where the consolidation happens.</p>
+      </div>
+
+      <p style="margin-top: 2rem;">Questions between sessions? Call or text Warwick: <strong><a href="tel:+64278142222" style="color: var(--forest);">027 814 2222</a></strong> or email <strong><a href="mailto:goldstandardtakaka@gmail.com" style="color: var(--forest);">goldstandardtakaka@gmail.com</a></strong>.</p>
+    </section>
+
+  </main>
+
+  <footer>
+    <p><a href="index.html">Gold Standard Dog Training</a> · Takaka, Golden Bay, New Zealand · <a href="tel:+64278142222">027 814 2222</a></p>
+  </footer>
+
+</body>
+</html>
