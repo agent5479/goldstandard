@@ -447,6 +447,20 @@ h2 {
 .col-card h4 { font-family: 'Playfair Display', serif; color: var(--forest); margin-bottom: 0.5rem; font-size: 1.05rem; }
 .col-card p { font-size: 0.97rem; color: var(--light-text); margin: 0; }
 
+/* guide: three pillars & reminders */
+.guide-section--compact { padding-bottom: 2rem; }
+.guide-section--compact .section-desc { color: var(--light-text); font-size: 1rem; margin: -0.5rem 0 1.25rem; }
+.pillars { margin: 1.5rem 0; overflow-x: auto; }
+.pillars-table { width: 100%; border-collapse: collapse; font-size: 1rem; }
+.pillars-table th,
+.pillars-table td { padding: 0.75rem 1rem; text-align: left; border-bottom: 1px solid var(--rule); }
+.pillars-table th { font-family: 'Playfair Display', serif; color: var(--forest); font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; }
+.pillars-table td:first-child { width: 38%; color: var(--forest); }
+.pillars-table tbody tr:last-child td { border-bottom: none; }
+.callout.pro-tip { border-left: 4px solid var(--amber); }
+.callout.golden-rule { background: linear-gradient(135deg, var(--forest) 0%, #1e3a1e 100%); }
+.site-footer .footer-rule { margin-top: 1rem; font-size: 0.9rem; color: rgba(255,255,255,0.6); font-style: italic; max-width: 520px; margin-left: auto; margin-right: auto; }
+
 /* ============================================================
    RESPONSIVE
    ============================================================ */
@@ -462,6 +476,7 @@ h2 {
   .philosophy-text { grid-column: 1; }
   .guide-header, .toc { padding-left: 1.25rem; padding-right: 1.25rem; }
   .guide-main { padding: 2rem 1.25rem 4rem; }
+  .pillars-table th, .pillars-table td { padding: 0.5rem 0.75rem; font-size: 0.95rem; }
   .two-col { grid-template-columns: 1fr; }
   .steps li { grid-template-columns: 2rem 1fr; }
 }
