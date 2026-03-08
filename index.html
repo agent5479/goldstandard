@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gold Standard Dog Training | Golden Bay, New Zealand</title>
+  <meta name="description" content="Gold Standard Dog Training — Golden Bay, NZ. Patient, structured dog training, rehabilitation and in-person coaching using Beckman's proven technique. Call Warwick: 027 814 2222.">
+  <meta name="keywords" content="dog training Golden Bay, dog training Takaka, dog trainer Nelson, dog rehabilitation NZ, Beckman dog training NZ, Warwick Marshall dog training">
+  <meta name="author" content="Warwick Marshall, Gold Standard Dog Training">
+  <meta name="geo.region" content="NZ-TAS">
+  <meta name="geo.placename" content="Takaka, Golden Bay, New Zealand">
+  <link rel="canonical" href="https://goldstandarddogtraining.github.io/">
+
+  <meta property="og:title" content="Gold Standard Dog Training | Golden Bay, NZ">
+  <meta property="og:description" content="Patient, structured dog training and rehabilitation in Golden Bay. Consistent recall, slack-leash walking, impulse control. Call Warwick: 027 814 2222.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="en_NZ">
+  <meta property="og:site_name" content="Gold Standard Dog Training">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Gold Standard Dog Training | Golden Bay, NZ">
+  <meta name="twitter:description" content="Patient, structured dog training and rehabilitation in Golden Bay. Call Warwick: 027 814 2222.">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Gold Standard Dog Training",
+    "description": "Dog training, rehabilitation, and in-person coaching in Golden Bay, New Zealand. Using patient, structured methods based on Beckman's proven technique.",
+    "telephone": "+64278142222",
+    "email": "goldstandardtakaka@gmail.com",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Rangihaeata",
+      "addressLocality": "Takaka",
+      "addressRegion": "Golden Bay",
+      "postalCode": "7182",
+      "addressCountry": "NZ"
+    },
+    "areaServed": "Golden Bay, New Zealand",
+    "founder": { "@type": "Person", "name": "Warwick Marshall" },
+    "sameAs": ["https://www.facebook.com/profile.php?id=61580061262910"]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Crimson+Pro:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --cream:    #f2ead8;
+      --sand:     #e8dfc4;
+      --forest:   #2d4a2d;
+      --moss:     #4a6741;
+      --gold:     #b8832a;
+      --amber:    #d4a43a;
+      --bark:     #5c3d1e;
+      --text:     #1e2d1e;
+      --light-text: #5a6b4a;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--text);
+      font-family: 'Crimson Pro', Georgia, serif;
+      font-size: 1.125rem;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* Grain texture overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 100;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100svh;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      background: var(--forest);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 70% 40%, rgba(184,131,42,0.15) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 80% at 10% 90%, rgba(45,74,45,0.8) 0%, transparent 60%);
+    }
+
+    /* Large decorative paw — pure CSS */
+    .hero::after {
+      content: '🐾';
+      position: absolute;
+      right: -2rem;
+      top: 3rem;
+      font-size: 18rem;
+      opacity: 0.06;
+      line-height: 1;
+      pointer-events: none;
+      transform: rotate(15deg);
+    }
+
+    nav {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 2.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .nav-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      color: var(--amber);
+      letter-spacing: 0.02em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      font-size: 0.95rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--amber); }
+
+    .hero-body {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 4rem 2.5rem 3rem;
+      max-width: 680px;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.85rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 1.25rem;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.2s forwards;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      font-weight: 900;
+      line-height: 1.05;
+      color: #fff;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.4s forwards;
+    }
+
+    h1 span { color: var(--amber); }
+
+    .hero-sub {
+      font-size: 1.2rem;
+      color: rgba(255,255,255,0.72);
+      max-width: 480px;
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.6s forwards;
+    }
+
+    .hero-cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.8s forwards;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.85rem 2rem;
+      border-radius: 3px;
+      font-family: 'Crimson Pro', serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--gold);
+      color: #fff;
+      border: 2px solid var(--gold);
+    }
+
+    .btn-primary:hover {
+      background: var(--amber);
+      border-color: var(--amber);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(184,131,42,0.4);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: rgba(255,255,255,0.85);
+      border: 2px solid rgba(255,255,255,0.3);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--amber);
+      color: var(--amber);
+    }
+
+    .hero-footer {
+      position: relative;
+      z-index: 2;
+      padding: 1.5rem 2.5rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-stat {
+      color: rgba(255,255,255,0.5);
+      font-size: 0.9rem;
+      letter-spacing: 0.04em;
+    }
+
+    .hero-stat strong {
+      display: block;
+      color: rgba(255,255,255,0.9);
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    /* ── SECTIONS ── */
+    section { padding: 5rem 2.5rem; }
+
+    .section-inner {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.8rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.75rem;
+    }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      color: var(--forest);
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+    }
+
+    /* ── PHILOSOPHY ── */
+    .philosophy {
+      background: var(--sand);
+      border-top: 3px solid var(--gold);
+    }
+
+    .philosophy-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+      margin-top: 2.5rem;
+    }
+
+    .philosophy-text p {
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+
+    .philosophy-text p:last-child { margin-bottom: 0; }
+
+    .outcomes {
+      background: var(--forest);
+      border-radius: 4px;
+      padding: 2rem;
+    }
+
+    .outcomes h3 {
+      font-family: 'Playfair Display', serif;
+      color: var(--amber);
+      font-size: 1.2rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .outcomes ul {
+      list-style: none;
+    }
+
+    .outcomes li {
+      color: rgba(255,255,255,0.85);
+      padding: 0.55rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 1.05rem;
+    }
+
+    .outcomes li:last-child { border-bottom: none; }
+
+    .outcomes li::before {
+      content: '✓';
+      color: var(--amber);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    /* ── SERVICES ── */
+    .services { background: var(--cream); }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+
+    .service-card {
+      background: #fff;
+      border: 1px solid rgba(45,74,45,0.12);
+      border-radius: 4px;
+      padding: 2rem;
+      border-top: 3px solid var(--gold);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .service-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(45,74,45,0.1);
+    }
+
+    .service-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .service-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--forest);
+      margin-bottom: 0.6rem;
+    }
+
+    .service-card p {
+      color: var(--light-text);
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    /* ── APPROACH ── */
+    .approach {
+      background: var(--forest);
+      color: rgba(255,255,255,0.85);
+    }
+
+    .approach h2 { color: #fff; }
+
+    .approach-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      margin-top: 2rem;
+    }
+
+    .approach p { margin-bottom: 1rem; }
+    .approach p:last-child { margin-bottom: 0; }
+
+    .approach-aside {
+      border-left: 3px solid var(--gold);
+      padding-left: 2rem;
+    }
+
+    .approach-aside blockquote {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-style: italic;
+      color: var(--amber);
+      line-height: 1.4;
+      margin-bottom: 1rem;
+    }
+
+    .approach-aside p {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.6);
+    }
+
+    /* ── CONTACT ── */
+    .contact {
+      background: var(--sand);
+      text-align: center;
+    }
+
+    .contact .section-inner { max-width: 600px; }
+
+    .contact p {
+      color: var(--light-text);
+      margin-bottom: 2rem;
+    }
+
+    .contact-options {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 1.1rem;
+    }
+
+    .contact-item a {
+      color: var(--forest);
+      text-decoration: none;
+      font-weight: 600;
+      border-bottom: 1px solid var(--gold);
+      transition: color 0.2s;
+    }
+
+    .contact-item a:hover { color: var(--gold); }
+
+    .contact-label {
+      color: var(--light-text);
+      font-size: 0.9rem;
+      min-width: 70px;
+      text-align: right;
+    }
+
+    .facebook-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--light-text);
+      text-decoration: none;
+      font-size: 0.95rem;
+      border: 1px solid rgba(45,74,45,0.2);
+      padding: 0.5rem 1.25rem;
+      border-radius: 3px;
+      transition: all 0.2s;
+    }
+
+    .facebook-link:hover {
+      border-color: var(--forest);
+      color: var(--forest);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--forest);
+      color: rgba(255,255,255,0.5);
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.9rem;
+    }
+
+    footer span { color: var(--amber); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 700px) {
+      nav { padding: 1.25rem 1.25rem; }
+      .nav-links { display: none; }
+      .hero-body { padding: 3rem 1.25rem 2rem; }
+      .hero-footer { padding: 1.25rem; gap: 1.5rem; }
+      section { padding: 3.5rem 1.25rem; }
+      .philosophy-grid,
+      .approach-body { grid-template-columns: 1fr; gap: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <section class="hero">
+    <nav>
+      <span class="nav-brand">Gold Standard Dog Training</span>
+      <ul class="nav-links">
+        <li><a href="#services">Services</a></li>
+        <li><a href="#approach">Approach</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <div class="hero-body">
+      <p class="hero-eyebrow">Golden Bay · Takaka · New Zealand</p>
+      <h1>Train with confidence,<br>not <span>frustration.</span></h1>
+      <p class="hero-sub">Effective, patient dog training and rehabilitation. Warwick helps you understand how your dog thinks — so the results last.</p>
+      <div class="hero-cta">
+        <a href="tel:+64278142222" class="btn btn-primary">Call 027 814 2222</a>
+        <a href="#services" class="btn btn-secondary">See what's available</a>
+      </div>
+    </div>
+
+    <div class="hero-footer">
+      <div class="hero-stat">
+        <strong>Golden Bay</strong>
+        Local to Takaka & surrounds
+      </div>
+      <div class="hero-stat">
+        <strong>Beckman Method</strong>
+        Proven, structured technique
+      </div>
+      <div class="hero-stat">
+        <strong>All breeds</strong>
+        From puppies to rehabilitation
+      </div>
+    </div>
+  </section>
+
+  <section class="philosophy" id="about">
+    <div class="section-inner">
+      <p class="section-label">The philosophy</p>
+      <h2>Healthy habits for dogs<br>and their humans.</h2>
+      <div class="philosophy-grid">
+        <div class="philosophy-text">
+          <p>Dogs find peace and freedom when they know their place and learn trust and obedience. Gold Standard uses the core techniques and philosophy of Beckman's dog training school — patient, structured methods that work with how dogs actually think.</p>
+          <p>Training the owner is key. Warwick coaches you through each step so you can maintain the results at home with confidence instead of second-guessing.</p>
+        </div>
+        <div class="outcomes">
+          <h3>What you can achieve</h3>
+          <ul>
+            <li>Consistent recall</li>
+            <li>Slack-leash walking</li>
+            <li>Impulse control</li>
+            <li>No more jumping</li>
+            <li>Calm, trusting behaviour</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="services" id="services">
+    <div class="section-inner">
+      <p class="section-label">What's on offer</p>
+      <h2>Services</h2>
+      <div class="services-grid">
+        <div class="service-card">
+          <span class="service-icon">🐕</span>
+          <h3>General Obedience Training</h3>
+          <p>Sit, lie, fetch, wait, heel — and more. Sessions are customised to your dog's needs, with you coached through each step so you can maintain it at home.</p>
+        </div>
+        <div class="service-card">
+          <span class="service-icon">🤝</span>
+          <h3>Facilitated Dog Socialisation</h3>
+          <p>Structured group sessions with suitable dogs to build healthy social habits and allow natural correction in a safe, supervised environment.</p>
+        </div>
+        <div class="service-card">
+          <span class="service-icon">🔗</span>
+          <h3>Tied-up Dog Rehabilitation</h3>
+          <p>Meeting the needs of dogs with difficult starts. Safe, structured rehabilitation to build the trust and calm required for training to take hold.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="approach" id="approach">
+    <div class="section-inner">
+      <p class="section-label" style="color: var(--gold);">How it works</p>
+      <h2>The approach</h2>
+      <div class="approach-body">
+        <div>
+          <p>Gold Standard training is built around one principle: a dog that understands its place in the relationship is a relaxed, happy dog. That calm comes from structure — not punishment, not permissiveness, but clear and consistent guidance.</p>
+          <p>Sessions are held in Golden Bay and are tailored to the dog and the owner. The goal is always to give you the tools to keep the training going long after the session ends.</p>
+        </div>
+        <div class="approach-aside">
+          <blockquote>"Both pet and owner's needs are met — and stress is reduced."</blockquote>
+          <p>Results-focused · Individualised care · Local to Golden Bay</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="section-inner">
+      <p class="section-label">Get in touch</p>
+      <h2>Ready to get started?</h2>
+      <p>Call or text Warwick to discuss your dog and what you're hoping to achieve. First conversation is always free.</p>
+      <div class="contact-options">
+        <div class="contact-item">
+          <span class="contact-label">Phone</span>
+          <a href="tel:+64278142222">027 814 2222</a>
+        </div>
+        <div class="contact-item">
+          <span class="contact-label">Email</span>
+          <a href="mailto:goldstandardtakaka@gmail.com">goldstandardtakaka@gmail.com</a>
+        </div>
+        <div class="contact-item">
+          <span class="contact-label">Location</span>
+          <span>Rangihaeata, Takaka — Golden Bay</span>
+        </div>
+      </div>
+      <a href="https://www.facebook.com/profile.php?id=61580061262910" target="_blank" rel="noopener" class="facebook-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        Follow on Facebook
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 <span>Gold Standard Dog Training</span> · Takaka, Golden Bay, New Zealand</p>
+  </footer>
+
+</body>
+</html>
