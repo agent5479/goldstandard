@@ -275,6 +275,9 @@ body::before {
   display: flex;
   gap: 2.5rem;
   flex-wrap: wrap;
+  max-width: 680px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .hero-stat { color: rgba(255,255,255,0.5); font-size: 0.9rem; letter-spacing: 0.04em; }
