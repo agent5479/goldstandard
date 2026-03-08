@@ -10,335 +10,22 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
-
-  <style>
-    :root {
-      --cream:      #f2ead8;
-      --sand:       #e8dfc4;
-      --forest:     #2d4a2d;
-      --moss:       #4a6741;
-      --gold:       #b8832a;
-      --amber:      #d4a43a;
-      --text:       #1e2d1e;
-      --light-text: #5a6b4a;
-      --rule:       rgba(45,74,45,0.15);
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--cream);
-      color: var(--text);
-      font-family: 'Crimson Pro', Georgia, serif;
-      font-size: 1.125rem;
-      line-height: 1.75;
-    }
-
-    /* grain */
-    body::before {
-      content: '';
-      position: fixed; inset: 0;
-      pointer-events: none; z-index: 100;
-      opacity: 0.03;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    }
-
-    /* ── HEADER ── */
-    header {
-      background: var(--forest);
-      padding: 2rem 2.5rem 2.5rem;
-      border-bottom: 4px solid var(--gold);
-    }
-
-    .header-inner {
-      max-width: 820px;
-      margin: 0 auto;
-    }
-
-    .back-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      color: rgba(255,255,255,0.5);
-      text-decoration: none;
-      font-size: 0.85rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-bottom: 1.5rem;
-      transition: color 0.2s;
-    }
-    .back-link:hover { color: var(--amber); }
-
-    .header-label {
-      font-size: 0.8rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--amber);
-      margin-bottom: 0.6rem;
-    }
-
-    header h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
-      font-weight: 700;
-      color: #fff;
-      line-height: 1.15;
-      margin-bottom: 1rem;
-    }
-
-    header p {
-      color: rgba(255,255,255,0.65);
-      max-width: 560px;
-      font-size: 1.05rem;
-    }
-
-    /* ── TOC ── */
-    .toc {
-      background: var(--sand);
-      border-bottom: 1px solid var(--rule);
-      padding: 1.5rem 2.5rem;
-    }
-
-    .toc-inner {
-      max-width: 820px;
-      margin: 0 auto;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem 1.5rem;
-      align-items: center;
-    }
-
-    .toc-label {
-      font-size: 0.8rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--light-text);
-      margin-right: 0.5rem;
-    }
-
-    .toc a {
-      color: var(--forest);
-      text-decoration: none;
-      font-size: 0.95rem;
-      font-weight: 600;
-      border-bottom: 1px solid transparent;
-      transition: border-color 0.2s, color 0.2s;
-    }
-    .toc a:hover { border-color: var(--gold); color: var(--gold); }
-
-    /* ── MAIN ── */
-    main {
-      max-width: 820px;
-      margin: 0 auto;
-      padding: 3rem 2.5rem 5rem;
-    }
-
-    /* ── SECTIONS ── */
-    .guide-section {
-      margin-bottom: 4rem;
-      padding-bottom: 4rem;
-      border-bottom: 1px solid var(--rule);
-    }
-    .guide-section:last-of-type {
-      border-bottom: none;
-    }
-
-    .section-num {
-      font-size: 0.75rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 0.4rem;
-    }
-
-    h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.5rem, 3vw, 2.1rem);
-      font-weight: 700;
-      color: var(--forest);
-      line-height: 1.2;
-      margin-bottom: 1.25rem;
-    }
-
-    h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: var(--forest);
-      margin: 2rem 0 0.6rem;
-    }
-
-    p { margin-bottom: 1rem; }
-    p:last-child { margin-bottom: 0; }
-
-    /* callout boxes */
-    .callout {
-      background: var(--forest);
-      color: rgba(255,255,255,0.88);
-      border-radius: 3px;
-      padding: 1.5rem 1.75rem;
-      margin: 1.75rem 0;
-    }
-
-    .callout strong {
-      display: block;
-      font-family: 'Playfair Display', serif;
-      font-style: italic;
-      color: var(--amber);
-      font-size: 1.15rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .callout p { color: rgba(255,255,255,0.75); font-size: 1rem; margin: 0; }
-
-    /* mantra box */
-    .mantra {
-      border-left: 4px solid var(--gold);
-      background: var(--sand);
-      padding: 1.25rem 1.5rem;
-      margin: 1.75rem 0;
-      border-radius: 0 3px 3px 0;
-    }
-
-    .mantra p {
-      font-family: 'Playfair Display', serif;
-      font-style: italic;
-      font-size: 1.2rem;
-      color: var(--forest);
-      margin: 0;
-    }
-
-    /* technique steps */
-    .steps {
-      list-style: none;
-      margin: 1.25rem 0;
-      counter-reset: steps;
-    }
-
-    .steps li {
-      counter-increment: steps;
-      display: grid;
-      grid-template-columns: 2.5rem 1fr;
-      gap: 0.75rem;
-      align-items: start;
-      padding: 0.75rem 0;
-      border-bottom: 1px solid var(--rule);
-    }
-
-    .steps li:last-child { border-bottom: none; }
-
-    .steps li::before {
-      content: counter(steps);
-      background: var(--forest);
-      color: var(--amber);
-      font-family: 'Playfair Display', serif;
-      font-weight: 700;
-      font-size: 0.9rem;
-      width: 2.5rem;
-      height: 2.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      flex-shrink: 0;
-      margin-top: 0.1rem;
-    }
-
-    /* warning / don't box */
-    .dont {
-      border: 1px solid rgba(180,60,40,0.25);
-      background: rgba(180,60,40,0.04);
-      border-radius: 3px;
-      padding: 1.25rem 1.5rem;
-      margin: 1.5rem 0;
-    }
-
-    .dont strong {
-      font-size: 0.8rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: #8b3020;
-      display: block;
-      margin-bottom: 0.4rem;
-    }
-
-    .dont p { color: var(--text); font-size: 1rem; margin: 0; }
-
-    /* checklist */
-    .checklist {
-      list-style: none;
-      margin: 1rem 0;
-    }
-
-    .checklist li {
-      padding: 0.45rem 0;
-      border-bottom: 1px solid var(--rule);
-      display: flex;
-      align-items: flex-start;
-      gap: 0.75rem;
-      font-size: 1.05rem;
-    }
-
-    .checklist li:last-child { border-bottom: none; }
-
-    .checklist li::before {
-      content: '✓';
-      color: var(--gold);
-      font-weight: 700;
-      flex-shrink: 0;
-      margin-top: 0.1rem;
-    }
-
-    /* two-col */
-    .two-col {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-      margin: 1.5rem 0;
-    }
-
-    .col-card {
-      background: var(--sand);
-      border-radius: 3px;
-      padding: 1.25rem 1.5rem;
-      border-top: 3px solid var(--gold);
-    }
-
-    .col-card h4 {
-      font-family: 'Playfair Display', serif;
-      color: var(--forest);
-      margin-bottom: 0.5rem;
-      font-size: 1.05rem;
-    }
-
-    .col-card p { font-size: 0.97rem; color: var(--light-text); margin: 0; }
-
-    /* ── FOOTER ── */
-    footer {
-      background: var(--forest);
-      color: rgba(255,255,255,0.5);
-      text-align: center;
-      padding: 2rem;
-      font-size: 0.9rem;
-    }
-
-    footer a { color: var(--amber); text-decoration: none; }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 640px) {
-      header, .toc { padding-left: 1.25rem; padding-right: 1.25rem; }
-      main { padding: 2rem 1.25rem 4rem; }
-      .two-col { grid-template-columns: 1fr; }
-      .steps li { grid-template-columns: 2rem 1fr; }
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <header>
-    <div class="header-inner">
-      <a href="index.html" class="back-link">← Gold Standard Dog Training</a>
+  <header class="site-header">
+    <a href="index.html" class="site-header-brand">Gold Standard Dog Training</a>
+    <ul class="site-header-nav">
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#services">Services</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+      <li class="nav-highlight"><a href="index.html">← Back to site</a></li>
+    </ul>
+  </header>
+
+  <header class="guide-header">
+    <div class="guide-header-inner">
       <p class="header-label">Client Reference Guide</p>
       <h1>The principles behind<br>your dog's training.</h1>
       <p>A reference for clients to revisit between sessions. These are the core ideas behind what you experienced with Warwick — use this to stay consistent at home.</p>
@@ -358,9 +45,8 @@
     </div>
   </nav>
 
-  <main>
+  <main class="guide-main">
 
-    <!-- 1. OWNER MINDSET -->
     <section class="guide-section" id="owner-mindset">
       <p class="section-num">01 — The foundation</p>
       <h2>It starts with you, not the dog.</h2>
@@ -387,7 +73,6 @@
       </div>
     </section>
 
-    <!-- 2. CORRECTIONS -->
     <section class="guide-section" id="corrections">
       <p class="section-num">02 — Correcting behaviour</p>
       <h2>The butt push: interrupting the nervous system.</h2>
@@ -410,7 +95,6 @@
       <p>The correction should carry the energy of mild interruption, not anger or frustration. Think of it as reminding the dog of something it already knows — because at this point, it does.</p>
     </section>
 
-    <!-- 3. LEASH -->
     <section class="guide-section" id="leash">
       <p class="section-num">03 — Leash technique</p>
       <h2>Downward correction. Slack line. No tension.</h2>
@@ -437,7 +121,6 @@
       <p>You lead. The dog walks beside or slightly behind, not ahead. This is not just about control — it's about what the dog understands about the relationship. A dog that walks ahead of you has concluded it is responsible for the pair. That's a burden, and it produces anxiety. Walking beside you means you're in charge of what's out there, and the dog can simply be a dog.</p>
     </section>
 
-    <!-- 4. ACCESS TRAINING -->
     <section class="guide-section" id="access">
       <p class="section-num">04 — Motivation</p>
       <h2>For some dogs, access is everything.</h2>
@@ -459,7 +142,6 @@
       <p>The key is consistency. Every exit to the world is an opportunity — start at the front door. A dog that learns to wait, to check in, to not bolt through the door is a dog that understands the structure from the first moment of every outing.</p>
     </section>
 
-    <!-- 5. TIMING -->
     <section class="guide-section" id="timing">
       <p class="section-num">05 — The one-second rule</p>
       <h2>Catch it in the act. You have about a second.</h2>
@@ -482,7 +164,6 @@
       </ul>
     </section>
 
-    <!-- 6. REWARDS -->
     <section class="guide-section" id="rewards">
       <p class="section-num">06 — Rewards</p>
       <h2>Choose the right currency for your dog.</h2>
@@ -506,7 +187,6 @@
       </div>
     </section>
 
-    <!-- 7. DAILY PRACTICE -->
     <section class="guide-section" id="daily">
       <p class="section-num">07 — Keeping it going</p>
       <h2>Daily practice for the first three weeks.</h2>
@@ -531,7 +211,7 @@
 
   </main>
 
-  <footer>
+  <footer class="site-footer">
     <p><a href="index.html">Gold Standard Dog Training</a> · Takaka, Golden Bay, New Zealand · <a href="tel:+64278142222">027 814 2222</a></p>
   </footer>
 
