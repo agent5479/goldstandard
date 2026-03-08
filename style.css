@@ -161,23 +161,27 @@ body::before {
   overflow: hidden;
 }
 
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 40%;
+}
+
 .hero::before {
   content: '';
   position: absolute; inset: 0;
+  z-index: 1;
   background:
-    radial-gradient(ellipse 80% 60% at 70% 40%, rgba(184,131,42,0.15) 0%, transparent 70%),
-    radial-gradient(ellipse 50% 80% at 10% 90%, rgba(45,74,45,0.8) 0%, transparent 60%);
-}
-
-.hero::after {
-  content: '🐾';
-  position: absolute;
-  right: -2rem; top: 3rem;
-  font-size: 18rem;
-  opacity: 0.06;
-  line-height: 1;
+    linear-gradient(to bottom, rgba(45,74,45,0.5) 0%, rgba(45,74,45,0.75) 100%),
+    radial-gradient(ellipse 80% 60% at 70% 40%, rgba(184,131,42,0.12) 0%, transparent 70%);
   pointer-events: none;
-  transform: rotate(15deg);
 }
 
 .hero-body {
@@ -261,6 +265,44 @@ body::before {
 
 .hero-stat { color: rgba(255,255,255,0.5); font-size: 0.9rem; letter-spacing: 0.04em; }
 .hero-stat strong { display: block; color: rgba(255,255,255,0.9); font-size: 1rem; font-weight: 600; }
+
+/* feature images */
+.feature-image {
+  margin: 0;
+  padding: 0;
+  line-height: 0;
+  overflow: hidden;
+}
+
+.feature-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  object-position: center;
+}
+
+.feature-image--before-services {
+  max-height: 55vh;
+}
+
+.feature-image--before-services img {
+  max-height: 55vh;
+  width: 100%;
+  object-fit: cover;
+  object-position: center 35%;
+}
+
+.feature-image--before-cta {
+  max-height: 50vh;
+}
+
+.feature-image--before-cta img {
+  max-height: 50vh;
+  width: 100%;
+  object-fit: cover;
+  object-position: center 40%;
+}
 
 /* sections */
 section { padding: 5rem 2.5rem; }
@@ -423,7 +465,12 @@ h2 {
   .site-header-nav a { font-size: 0.8rem; }
   .hero-body { padding: 3rem 1.25rem 2rem; }
   .hero-footer { padding: 1.25rem; gap: 1.5rem; }
+  .hero-bg img { object-position: center 30%; }
   section { padding: 3.5rem 1.25rem; }
+  .feature-image--before-services,
+  .feature-image--before-cta { max-height: 45vh; }
+  .feature-image--before-services img,
+  .feature-image--before-cta img { max-height: 45vh; }
   .philosophy-grid, .approach-body { grid-template-columns: 1fr; gap: 2rem; }
   .philosophy-text { grid-column: 1; }
 }
