@@ -180,41 +180,6 @@ body::before {
   transform: rotate(15deg);
 }
 
-/* hero's own nav (inside the hero panel) */
-.hero-nav {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.5rem 2.5rem;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-}
-
-.hero-nav-brand {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.1rem;
-  color: var(--amber);
-  letter-spacing: 0.02em;
-}
-
-.hero-nav-links {
-  display: flex;
-  gap: 2rem;
-  list-style: none;
-}
-
-.hero-nav-links a {
-  color: rgba(255,255,255,0.7);
-  text-decoration: none;
-  font-size: 0.95rem;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  transition: color 0.2s;
-}
-
-.hero-nav-links a:hover { color: var(--amber); }
-
 .hero-body {
   position: relative;
   z-index: 2;
@@ -437,8 +402,6 @@ h2 {
   .site-header-nav { gap: 1rem; }
   .site-header-nav a { font-size: 0.8rem; }
 
-  .hero-nav { padding: 1.25rem; }
-  .hero-nav-links { display: none; }
   .hero-body { padding: 3rem 1.25rem 2rem; }
   .hero-footer { padding: 1.25rem; gap: 1.5rem; }
 
