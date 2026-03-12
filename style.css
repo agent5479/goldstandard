@@ -216,6 +216,7 @@ body::before {
   margin-bottom: 1.5rem;
   opacity: 0;
   animation: fadeUp 0.7s 0.4s forwards;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.45), 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .hero h1 span { color: var(--amber); }
@@ -227,13 +228,13 @@ body::before {
   color: rgba(255,255,255,0.65);
   line-height: 1.6;
   margin-bottom: 2.5rem;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.35);
 }
 
 .hero-tagline span {
   color: var(--amber);
   font-style: italic;
 }
-
 
 .hero-sub {
   font-size: 1.2rem;
@@ -242,6 +243,7 @@ body::before {
   margin-bottom: 2.5rem;
   opacity: 0;
   animation: fadeUp 0.7s 0.6s forwards;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.35);
 }
 
 .hero-cta {
