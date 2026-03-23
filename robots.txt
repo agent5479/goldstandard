@@ -3,4 +3,4 @@ User-agent: *
 Allow: /
 
 # Optional: add when you have a sitemap
-# Sitemap: https://goldstandarddogtraining.github.io/sitemap.xml
+# Sitemap: https://agent5479.github.io/goldstandard/sitemap.xml

@@ -21,8 +21,10 @@
 
 ## Site
 
-- **Live site:** [goldstandarddogtraining.github.io](https://goldstandarddogtraining.github.io/)  
-- **Client guide:** [guide.html](https://goldstandarddogtraining.github.io/guide.html) — reference for clients (principles, corrections, leash work, access training, timing, rewards, daily practice).
+- **Live site:** [agent5479.github.io/goldstandard](https://agent5479.github.io/goldstandard/)  
+- **Client guide:** [guide.html](https://agent5479.github.io/goldstandard/guide.html) — reference for clients (principles, corrections, leash work, access training, timing, rewards, daily practice).
+
+Open Graph / social previews use `images/dogrun.jpg`. For best LinkedIn and Facebook large previews, consider adding a dedicated image around **1200×627 px** and pointing `og:image` at it (current asset is smaller but valid).
 
 ## Keywords (for search and discovery)
 
