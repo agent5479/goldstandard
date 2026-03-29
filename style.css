@@ -228,9 +228,10 @@ body::before {
 
 .hero-photo-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 0.45rem;
-  max-width: min(100%, 440px);
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.5rem;
+  width: 100%;
+  max-width: 100%;
   margin: 0 auto 1.75rem;
   opacity: 0;
   animation: fadeUp 0.65s 0.55s forwards;
@@ -238,6 +239,7 @@ body::before {
 
 .hero-photo-cell {
   margin: 0;
+  min-width: 0;
   border-radius: 5px;
   overflow: hidden;
   aspect-ratio: 1;
@@ -479,9 +481,10 @@ h2 {
   .hero-body { padding: 1.5rem 1.25rem 1.5rem; }
   .hero-footer { padding: 1.25rem; gap: 1.5rem; }
   .hero-photo-grid {
-    grid-template-columns: repeat(5, 1fr);
-    max-width: min(360px, 94vw);
-    gap: 0.3rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    width: 100%;
+    max-width: 100%;
+    gap: 0.4rem;
   }
   section { padding: 3.5rem 1.25rem; }
   .feature-image--small { max-width: 100%; margin: 2rem auto; }
