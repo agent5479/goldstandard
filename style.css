@@ -228,9 +228,9 @@ body::before {
 
 .hero-photo-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.5rem;
-  max-width: 280px;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.45rem;
+  max-width: min(100%, 440px);
   margin: 0 auto 1.75rem;
   opacity: 0;
   animation: fadeUp 0.65s 0.55s forwards;
@@ -478,7 +478,11 @@ h2 {
   .site-header-nav li:not(.nav-highlight) { display: none; }
   .hero-body { padding: 1.5rem 1.25rem 1.5rem; }
   .hero-footer { padding: 1.25rem; gap: 1.5rem; }
-  .hero-photo-grid { max-width: min(260px, 88vw); gap: 0.4rem; }
+  .hero-photo-grid {
+    grid-template-columns: repeat(5, 1fr);
+    max-width: min(360px, 94vw);
+    gap: 0.3rem;
+  }
   section { padding: 3.5rem 1.25rem; }
   .feature-image--small { max-width: 100%; margin: 2rem auto; }
   .philosophy-grid, .approach-body { grid-template-columns: 1fr; gap: 2rem; }
