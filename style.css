@@ -21,7 +21,10 @@
 
 /* ── RESET ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  font-size: 115%;
+}
 body.nav-open { overflow: hidden; }
 
 body {
@@ -774,6 +777,7 @@ h2 {
 }
 
 @media (max-width: 700px) {
+  html { font-size: 108%; }
   .site-header { padding: 0.75rem 1.25rem; flex-wrap: wrap; }
   .menu-toggle { display: inline-flex; align-items: center; }
   .site-header-nav {
