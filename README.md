@@ -23,8 +23,21 @@
 
 - **Live site:** [agent5479.github.io/goldstandard](https://agent5479.github.io/goldstandard/)  
 - **Client guide:** [guide.html](https://agent5479.github.io/goldstandard/guide.html) — reference for clients (principles, corrections, leash work, access training, timing, rewards, daily practice).
+- **About page:** [about.html](https://agent5479.github.io/goldstandard/about.html)  
+- **Contact page:** [contact.html](https://agent5479.github.io/goldstandard/contact.html)
 
 Open Graph / social previews use `images/dogrun.jpg`. For best LinkedIn and Facebook large previews, consider adding a dedicated image around **1200×627 px** and pointing `og:image` at it (current asset is smaller but valid).
+
+## Contact form setup (Web3Forms)
+
+The contact page posts to Web3Forms so the site can stay fully static on GitHub Pages.
+
+1. Create a free key at [web3forms.com](https://web3forms.com).
+2. Open `form-config.js`.
+3. Set `window.GSDT_FORM_ACCESS_KEY` to your key.
+4. Keep `window.GSDT_FORM_ENDPOINT` as `https://api.web3forms.com/submit`.
+
+If the key is blank, the form intentionally shows a fallback message and visitors can still call or email directly.
 
 ## Keywords (for search and discovery)
 
