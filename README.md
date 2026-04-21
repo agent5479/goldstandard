@@ -26,7 +26,7 @@
 - **About page:** [about.html](https://agent5479.github.io/goldstandard/about.html)  
 - **Contact page:** [contact.html](https://agent5479.github.io/goldstandard/contact.html)
 
-Open Graph / social previews use `images/dogrun.jpg`. For best LinkedIn and Facebook large previews, consider adding a dedicated image around **1200×627 px** and pointing `og:image` at it (current asset is smaller but valid).
+Open Graph / social previews use `images/dog1024.jpg`. Favicons and install icons use `images/dog16.jpg` through `dog512.jpg` plus `site.webmanifest`. For best LinkedIn and Facebook large previews, a dedicated **1200×627 px** image is still ideal; `1024×1024` works but may be cropped by some platforms.
 
 ## Contact form setup (Web3Forms)
 
