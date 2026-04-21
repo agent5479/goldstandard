@@ -541,6 +541,74 @@ h2 {
 .toc a { color: var(--forest); text-decoration: none; font-size: 0.95rem; font-weight: 600; border-bottom: 1px solid transparent; transition: border-color 0.2s, color 0.2s; }
 .toc a:hover { border-color: var(--gold); color: var(--gold); }
 
+/* Guide page: sticky jump-to bar replaces global site header */
+.toc.toc--sticky-guide {
+  position: sticky;
+  top: 0;
+  z-index: 160;
+  background: var(--header-bg);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--header-rule);
+  box-shadow: 0 2px 14px rgba(24, 38, 24, 0.08);
+  padding: 0.65rem 2.5rem;
+}
+
+.toc.toc--sticky-guide .toc-inner {
+  max-width: 920px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1.25rem;
+}
+
+.toc.toc--sticky-guide .toc-main {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.toc.toc--sticky-guide .toc-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 1rem;
+}
+
+.toc.toc--sticky-guide .toc-label {
+  margin-right: 0;
+  flex-shrink: 0;
+}
+
+.toc.toc--sticky-guide .toc-back {
+  flex-shrink: 0;
+  font-size: 0.82rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--forest);
+  text-decoration: none;
+  border: 1px solid rgba(45, 74, 45, 0.28);
+  padding: 0.38rem 0.95rem;
+  border-radius: 3px;
+  border-bottom: 1px solid rgba(45, 74, 45, 0.28);
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.toc.toc--sticky-guide .toc-back:hover {
+  background: var(--forest);
+  color: #fff;
+  border-color: var(--forest);
+  border-bottom-color: var(--forest);
+}
+
+body.page-guide {
+  scroll-padding-top: 5.5rem;
+}
+
 .guide-main { max-width: 820px; margin: 0 auto; padding: 3rem 2.5rem 5rem; }
 .guide-section { margin-bottom: 4rem; padding-bottom: 4rem; border-bottom: 1px solid var(--rule); }
 .guide-section:last-of-type { border-bottom: none; }
@@ -803,7 +871,21 @@ h2 {
   section { padding: 3.5rem 1.25rem; }
   .feature-image--small { max-width: 100%; margin: 2rem auto; }
   .philosophy-grid, .approach-body { grid-template-columns: 1fr; gap: 2rem; }
-  .guide-header, .toc, .page-hero { padding-left: 1.25rem; padding-right: 1.25rem; }
+  .guide-header, .page-hero { padding-left: 1.25rem; padding-right: 1.25rem; }
+  .toc.toc--sticky-guide { padding-left: 1.25rem; padding-right: 1.25rem; }
+  .toc.toc--sticky-guide .toc-inner {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .toc.toc--sticky-guide .toc-links {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    gap: 0.75rem 1.25rem;
+    padding-bottom: 0.15rem;
+  }
+  .toc.toc--sticky-guide .toc-back { align-self: flex-start; }
+  body.page-guide { scroll-padding-top: 8rem; }
   .guide-main, .contact-page-main { padding: 2rem 1.25rem 4rem; }
   .pillars-table th, .pillars-table td { padding: 0.5rem 0.75rem; font-size: 0.95rem; }
   .two-col { grid-template-columns: 1fr; }
