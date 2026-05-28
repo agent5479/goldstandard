@@ -250,7 +250,7 @@ body::before {
 
 .hero-photo-grid {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 0.5rem;
   width: 100%;
   margin: 0 auto 1.75rem;
