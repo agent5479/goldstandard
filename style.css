@@ -250,8 +250,8 @@ body::before {
 
 .hero-photo-grid {
   display: grid;
-  grid-template-columns: repeat(7, minmax(0, 1fr));
-  gap: 0.5rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.55rem;
   width: 100%;
   margin: 0 auto 1.75rem;
   opacity: 0;
@@ -867,7 +867,7 @@ body.page-guide {
 
   .hero-body { padding: 1.1rem 1.25rem 1rem; }
   .hero-footer { padding: 0.9rem 1.25rem 1rem; gap: 1.2rem; }
-  .hero-photo-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); width: 100%; max-width: 100%; gap: 0.4rem; }
+  .hero-photo-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); width: 100%; max-width: 100%; gap: 0.45rem; }
   section { padding: 3.5rem 1.25rem; }
   .feature-image--small { max-width: 100%; margin: 2rem auto; }
   .philosophy-grid, .approach-body { grid-template-columns: 1fr; gap: 2rem; }
