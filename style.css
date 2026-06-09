@@ -747,6 +747,16 @@ body.page-guide {
   margin-top: 2rem;
 }
 
+.guide-section:nth-child(odd) .guide-section-inner a {
+  color: var(--forest);
+  font-weight: 600;
+}
+
+.guide-section:nth-child(even) .guide-section-inner a {
+  color: var(--amber);
+  font-weight: 600;
+}
+
 .guide-section:last-of-type {
   padding-bottom: 4rem;
 }
