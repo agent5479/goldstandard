@@ -206,6 +206,7 @@ body::before {
   grid-template-rows: auto auto;
   background: linear-gradient(180deg, #fbf9f3 0%, #f7f2e8 100%);
   position: relative;
+  padding: 0;
 }
 
 .hero::before {
@@ -223,14 +224,14 @@ body::before {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  padding: 1.6rem 2.5rem 1.6rem;
+  padding: 2.1rem 2.5rem 1.6rem;
   max-width: 760px;
   margin: 0 auto;
   width: 100%;
 }
 
 .page-home .hero-body {
-  padding-top: calc(var(--site-header-height) + 0.5rem);
+  padding-top: calc(var(--site-header-height) + 0.85rem);
 }
 
 .hero-eyebrow {
@@ -1059,8 +1060,8 @@ body.page-guide {
   .site-header-nav .nav-highlight a { width: 100%; display: inline-block; }
   .site-header-nav a { font-size: 0.8rem; }
 
-  .hero-body { padding: 1rem 1.25rem 1rem; }
-  .page-home .hero-body { padding-top: calc(var(--site-header-height) + 0.35rem); }
+  .hero-body { padding: 1.1rem 1.25rem 1rem; }
+  .page-home .hero-body { padding-top: calc(var(--site-header-height) + 0.75rem); }
   .hero-footer { padding: 0.9rem 1.25rem 1rem; gap: 1.2rem; }
   .hero-photo-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); width: 100%; max-width: 100%; gap: 0.45rem; }
   section { padding: 3.5rem 1.25rem; }
