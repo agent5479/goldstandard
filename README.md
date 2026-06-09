@@ -1,6 +1,6 @@
 # Gold Standard Dog Training
 
-**Gold Standard Dog Training** offers patient, structured dog training and rehabilitation in **Golden Bay, New Zealand** (Takaka and surrounds). Run by Warwick Marshall, the service uses methods aligned with Beckman's dog training philosophy: clear structure, consistent correction, and owner coaching so results last at home.
+**Gold Standard Dog Training** offers structured dog training and rehabilitation in **Golden Bay, New Zealand** (Takaka and surrounds). Run by Warwick Marshall, the service uses methods aligned with Beckman's dog training philosophy: clear structure, consistent correction, and owner coaching so results last at home.
 
 ## What we do
 
