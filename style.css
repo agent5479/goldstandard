@@ -17,6 +17,7 @@
   --surface-soft: #f1ecdf;
   --header-bg: rgba(248, 245, 238, 0.96);
   --header-rule: rgba(45, 74, 45, 0.18);
+  --site-header-height: 3.35rem;
 }
 
 /* ── RESET ── */
@@ -102,6 +103,18 @@ body::before {
   background: var(--forest);
   color: #fff;
   border-color: var(--forest);
+}
+
+/* Homepage: header overlays the hero instead of pushing it down */
+.page-home .site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(248, 245, 238, 0.82);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(45, 74, 45, 0.1);
+  box-shadow: none;
 }
 
 .menu-toggle {
@@ -210,10 +223,14 @@ body::before {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  padding: 0.35rem 2.5rem 1.6rem;
+  padding: 1.6rem 2.5rem 1.6rem;
   max-width: 760px;
   margin: 0 auto;
   width: 100%;
+}
+
+.page-home .hero-body {
+  padding-top: calc(var(--site-header-height) + 0.5rem);
 }
 
 .hero-eyebrow {
@@ -1042,7 +1059,8 @@ body.page-guide {
   .site-header-nav .nav-highlight a { width: 100%; display: inline-block; }
   .site-header-nav a { font-size: 0.8rem; }
 
-  .hero-body { padding: 0.35rem 1.25rem 1rem; }
+  .hero-body { padding: 1rem 1.25rem 1rem; }
+  .page-home .hero-body { padding-top: calc(var(--site-header-height) + 0.35rem); }
   .hero-footer { padding: 0.9rem 1.25rem 1rem; gap: 1.2rem; }
   .hero-photo-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); width: 100%; max-width: 100%; gap: 0.45rem; }
   section { padding: 3.5rem 1.25rem; }
