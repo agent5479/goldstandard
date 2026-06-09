@@ -810,6 +810,14 @@ body.page-guide {
 .col-card h4 { font-family: 'Playfair Display', serif; color: var(--forest); margin-bottom: 0.5rem; font-size: 1.05rem; }
 .col-card p { font-size: 0.97rem; color: var(--light-text); margin: 0; }
 
+.guide-glossary .pillars-table td:first-child { width: 22%; }
+.guide-glossary .pillars-table th:nth-child(3),
+.guide-glossary .pillars-table td:nth-child(3) { font-size: 0.95rem; color: var(--light-text); }
+
+.guide-section:nth-child(even) .guide-glossary .pillars-table td:nth-child(3) {
+  color: rgba(255, 255, 255, 0.75);
+}
+
 /* guide: three pillars & reminders */
 .guide-section--compact .guide-section-inner { padding-bottom: 1.75rem; }
 .guide-section--compact .section-desc { color: var(--light-text); font-size: 1rem; margin: -0.5rem 0 1.25rem; }
