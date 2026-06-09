@@ -66,9 +66,10 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Crimson+Pro:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <script src="nav.js" defer></script>
+  <script src="hero-gallery.js" defer></script>
 </head>
 <body class="page-home">
 
@@ -83,34 +84,50 @@
     </ul>
   </header>
 
-  <section class="hero" role="banner">
+  <section class="hero">
     <div class="hero-body">
       <p class="hero-eyebrow">Golden Bay · Takaka · New Zealand</p>
       <h1>The dog you always wanted<br><span>is already in there.</span></h1>
       <div class="hero-photo-grid" aria-label="Dogs in training">
         <figure class="hero-photo-cell">
-          <img src="images/dogs2.jpg" alt="Dog in training" width="88" height="88" loading="eager" fetchpriority="high">
+          <button type="button" class="hero-photo-trigger" data-full-src="images/dogs2.jpg" aria-label="View larger photo of dog in training">
+            <img src="images/thumbs/dogs2.jpg" alt="Dog in training" width="88" height="88" loading="eager" fetchpriority="high" decoding="async">
+          </button>
         </figure>
         <figure class="hero-photo-cell">
-          <img src="images/morty.jpg" alt="Morty" width="88" height="88" loading="eager">
+          <button type="button" class="hero-photo-trigger" data-full-src="images/morty.jpg" aria-label="View larger photo of Morty">
+            <img src="images/thumbs/morty.jpg" alt="Morty" width="88" height="88" loading="eager" decoding="async">
+          </button>
         </figure>
         <figure class="hero-photo-cell">
-          <img src="images/neocollieold.jpg" alt="Neo" width="88" height="88" loading="eager">
+          <button type="button" class="hero-photo-trigger" data-full-src="images/neocollieold.jpg" aria-label="View larger photo of Neo">
+            <img src="images/thumbs/neocollieold.jpg" alt="Neo" width="88" height="88" loading="eager" decoding="async">
+          </button>
         </figure>
         <figure class="hero-photo-cell">
-          <img src="images/archiegolden.jpg" alt="Archie" width="88" height="88" loading="lazy">
+          <button type="button" class="hero-photo-trigger" data-full-src="images/archiegolden.jpg" aria-label="View larger photo of Archie">
+            <img src="images/thumbs/archiegolden.jpg" alt="Archie" width="88" height="88" loading="lazy" decoding="async">
+          </button>
         </figure>
         <figure class="hero-photo-cell">
-          <img src="images/tillycollie.jpg" alt="Tilly" width="88" height="88" loading="lazy">
+          <button type="button" class="hero-photo-trigger" data-full-src="images/tillycollie.jpg" aria-label="View larger photo of Tilly">
+            <img src="images/thumbs/tillycollie.jpg" alt="Tilly" width="88" height="88" loading="lazy" decoding="async">
+          </button>
         </figure>
         <figure class="hero-photo-cell">
-          <img src="images/white.jpg" alt="White" width="88" height="88" loading="lazy">
+          <button type="button" class="hero-photo-trigger" data-full-src="images/white.jpg" aria-label="View larger photo of White">
+            <img src="images/thumbs/white.jpg" alt="White" width="88" height="88" loading="lazy" decoding="async">
+          </button>
         </figure>
         <figure class="hero-photo-cell">
-          <img src="images/cosmochihuahuapuppy.jpg" alt="Cosmo" width="88" height="88" loading="lazy">
+          <button type="button" class="hero-photo-trigger" data-full-src="images/cosmochihuahuapuppy.jpg" aria-label="View larger photo of Cosmo">
+            <img src="images/thumbs/cosmochihuahuapuppy.jpg" alt="Cosmo" width="88" height="88" loading="lazy" decoding="async">
+          </button>
         </figure>
         <figure class="hero-photo-cell">
-          <img src="images/stormstaffypuppy.jpg" alt="Storm" width="88" height="88" loading="lazy">
+          <button type="button" class="hero-photo-trigger" data-full-src="images/stormstaffypuppy.jpg" aria-label="View larger photo of Storm">
+            <img src="images/thumbs/stormstaffypuppy.jpg" alt="Storm" width="88" height="88" loading="lazy" decoding="async">
+          </button>
         </figure>
       </div>
       <p class="hero-lead">Effective dog training and rehabilitation — Results are quick and lasting!</p>
@@ -174,7 +191,7 @@
   <section class="services" id="services">
     <div class="section-inner">
       <figure class="feature-image feature-image--small">
-        <img src="images/archieglory.jpg" alt="Dog in training — Gold Standard Dog Training, Golden Bay">
+        <img src="images/archieglory.jpg" alt="Dog in training — Gold Standard Dog Training, Golden Bay" width="480" height="640" loading="lazy" decoding="async">
       </figure>
       <p class="section-label">What's on offer</p>
       <h2>Services</h2>
@@ -216,7 +233,7 @@
 
   <section class="approach" id="approach">
     <div class="section-inner">
-      <p class="section-label" style="color: var(--gold);">How it works</p>
+      <p class="section-label">How it works</p>
       <h2>The approach</h2>
       <div class="approach-body approach-body--linear">
         <p>When a dog understands its place in the relationship, it is a safer, happier, and more relaxed dog. Gold Standard training is built around harnessing the power of a dog's pack instinct — using strong expectations and clear, consistent boundaries. Understanding dog psychology is one aspect, but shaping their place with you requires fast and firm <a href="guide.html#corrections">correction</a> from a calm place — just like dogs do with each other, which Warwick is able to provide to start the process of changing your pack. Learning and using Warwick's techniques supports your dog to know the line is real in a way they can understand and find security within, without the risk of injury.</p>
@@ -230,7 +247,7 @@
   <section class="contact" id="contact">
     <div class="section-inner">
       <figure class="feature-image feature-image--small">
-        <img src="images/archiesit.jpg" alt="Trained dog — Gold Standard Dog Training, Golden Bay">
+        <img src="images/archiesit.jpg" alt="Trained dog — Gold Standard Dog Training, Golden Bay" width="480" height="600" loading="lazy" decoding="async">
       </figure>
       <p class="section-label">Get in touch</p>
       <h2>Ready to get started?</h2>
@@ -256,6 +273,18 @@
       </a>
     </div>
   </section>
+
+  <div id="hero-photo-preview" class="hero-photo-preview" aria-hidden="true">
+    <img src="" alt="">
+  </div>
+
+  <dialog class="photo-lightbox" id="photo-lightbox" aria-label="Enlarged photo">
+    <button type="button" class="photo-lightbox-close" aria-label="Close">&times;</button>
+    <figure>
+      <img src="" alt="" id="photo-lightbox-img">
+      <figcaption id="photo-lightbox-caption"></figcaption>
+    </figure>
+  </dialog>
 
   <footer class="site-footer">
     <nav class="footer-links" aria-label="Footer links">

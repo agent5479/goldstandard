@@ -24,10 +24,6 @@
 
   const hasValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-  if (!window.GSDT_FORM_ACCESS_KEY) {
-    showError("Enquiry form is not configured yet. Please call or email Warwick directly.");
-  }
-
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
     hideMessages();
@@ -51,28 +47,26 @@
       return;
     }
 
-    if (!window.GSDT_FORM_ACCESS_KEY) {
+    if (!window.GSDT_FORM_ENDPOINT) {
       showError("Enquiry form is not configured yet. Please call or email Warwick directly.");
       return;
     }
 
     const payload = {
-      access_key: window.GSDT_FORM_ACCESS_KEY,
-      from_name: name,
-      subject: `New Gold Standard enquiry (${service})`,
       name,
       phone,
       email,
       dog_name: form.elements.dog_name.value.trim(),
       service_interest: service,
-      message
+      message,
+      website: honeypot
     };
 
     try {
       setSubmittingState(true);
       const response = await fetch(window.GSDT_FORM_ENDPOINT, {
         method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
         body: JSON.stringify(payload)
       });
 

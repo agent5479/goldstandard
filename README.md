@@ -28,16 +28,66 @@
 
 Open Graph / social previews use `images/dog1024.jpg`. Favicons and install icons use `images/dog16.jpg` through `dog512.jpg` plus `site.webmanifest`. For best LinkedIn and Facebook large previews, a dedicated **1200×627 px** image is still ideal; `1024×1024` works but may be cropped by some platforms.
 
-## Contact form setup (Web3Forms)
+## Contact form setup (Google Sheets + Apps Script)
 
-The contact page posts to Web3Forms so the site can stay fully static on GitHub Pages.
+The contact page posts to a Google Apps Script web app so the site stays fully static on GitHub Pages. Enquiries are saved to a Google Sheet and optionally emailed to you.
 
-1. Create a free key at [web3forms.com](https://web3forms.com).
-2. Open `form-config.js`.
-3. Set `window.GSDT_FORM_ACCESS_KEY` to your key.
-4. Keep `window.GSDT_FORM_ENDPOINT` as `https://api.web3forms.com/submit`.
+### Step 1 — Create the Sheet
 
-If the key is blank, the form intentionally shows a fallback message and visitors can still call or email directly.
+1. In Google Drive, create a spreadsheet named **Gold Standard Enquiries**.
+2. In row 1, add these headers:
+
+   `Timestamp` | `Name` | `Phone` | `Email` | `Dog Name` | `Service` | `Message`
+
+3. Optional: freeze row 1, widen columns, and turn on filters.
+
+### Step 2 — Add the script
+
+1. In the sheet, open **Extensions → Apps Script**.
+2. Delete any default code and paste the contents of [`google-apps-script/Code.gs`](google-apps-script/Code.gs).
+3. Set `NOTIFY_EMAIL` at the top of the script to your inbox (or leave it blank to skip email notifications).
+4. Click **Save**.
+
+### Step 3 — Deploy as a web app
+
+1. Click **Deploy → New deployment**.
+2. Type: **Web app**.
+3. Settings:
+   - **Execute as:** Me
+   - **Who has access:** Anyone
+4. Click **Deploy** and **Authorize** when prompted (Google Sheets + Gmail if using email notify).
+5. Copy the **Web app URL** (ends in `/exec`).
+
+Each time you change the script, use **Deploy → Manage deployments → Edit → New version → Deploy** so the live URL picks up changes.
+
+### Step 4 — Connect the site
+
+1. Open [`form-config.js`](form-config.js).
+2. Set `window.GSDT_FORM_ENDPOINT` to your Web app URL:
+
+   ```javascript
+   window.GSDT_FORM_ENDPOINT = "https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec";
+   ```
+
+3. Commit and push. GitHub Pages will serve the updated config.
+
+If the URL is blank, the form still works for direct phone/email contact; the submit button shows an error only when someone tries to send.
+
+### Step 5 — Test
+
+1. Open [contact.html](contact.html) on the live site (or locally).
+2. Submit a test enquiry with all required fields filled in.
+3. Confirm a new row appears in the Sheet with the correct timestamp.
+4. Confirm the success message appears in the browser.
+5. Optional: confirm the notification email arrives.
+6. Honeypot check: if the hidden `website` field is filled, no row should be added.
+
+### Troubleshooting
+
+- **Form submits but no success message:** The site uses `Content-Type: text/plain` to avoid CORS preflight issues with Google Apps Script. Redeploy the script after changes and hard-refresh the contact page.
+- **Authorization errors:** Re-run deployment and accept all requested permissions.
+- **No email notification:** Check spam, confirm `NOTIFY_EMAIL` is set, and that Gmail permission was granted during authorization.
+- **Script URL is public:** This is normal for static sites. The honeypot field and server-side validation reduce spam; do not store secrets in the repo.
 
 ## Keywords (for search and discovery)
 
