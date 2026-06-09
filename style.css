@@ -489,7 +489,29 @@ h2 {
 }
 
 .approach h2 { color: #fff; }
-.approach-body { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 2rem; }
+.approach-body--linear {
+  display: block;
+  margin-top: 2rem;
+  max-width: 42rem;
+}
+.approach-body--linear p { margin-bottom: 1rem; }
+.approach-body--linear p:last-of-type { margin-bottom: 0; }
+.approach a { color: var(--amber); text-decoration: none; border-bottom: 1px solid rgba(212, 164, 58, 0.45); }
+.approach a:hover { color: #fff; border-bottom-color: #fff; }
+.approach-quote {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.35rem;
+  font-style: italic;
+  color: var(--amber);
+  line-height: 1.45;
+  margin: 1.75rem 0 1rem;
+  padding-left: 1.25rem;
+  border-left: 3px solid var(--gold);
+}
+.approach-tagline { font-size: 1rem; color: rgba(255, 255, 255, 0.66); margin-top: 0.5rem; }
+
+/* legacy two-column approach (unused on homepage) */
+.approach-body:not(.approach-body--linear) { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 2rem; }
 .approach p { margin-bottom: 1rem; }
 .approach p:last-child { margin-bottom: 0; }
 .approach-aside { border-left: 3px solid var(--gold); padding-left: 2rem; }
@@ -670,6 +692,23 @@ h2 {
   font-weight: 700;
   color: var(--forest);
   margin-bottom: 1.25rem;
+}
+
+.guide-contents-group-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin: 1.35rem 0 0.6rem;
+  font-weight: 600;
+}
+
+.guide-contents-group:first-child .guide-contents-group-label {
+  margin-top: 0;
+}
+
+.guide-contents-group + .guide-contents-group {
+  margin-top: 0.15rem;
 }
 
 .guide-contents-list {
