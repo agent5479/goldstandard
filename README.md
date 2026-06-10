@@ -30,6 +30,8 @@ Open Graph / social previews use `images/dog1024.jpg`. Favicons and install icon
 
 ## Contact form setup (Google Sheets + Apps Script)
 
+Full requirements and step-by-step walkthrough: **[GOOGLE-SHEETS-SETUP.md](GOOGLE-SHEETS-SETUP.md)**
+
 The contact page posts to a Google Apps Script web app so the site stays fully static on GitHub Pages. Enquiries are saved to a Google Sheet and optionally emailed to you.
 
 ### Step 1 — Create the Sheet
