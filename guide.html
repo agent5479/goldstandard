@@ -36,6 +36,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <script src="guide-search.js" defer></script>
 </head>
 <body class="page-guide">
 
@@ -56,6 +57,27 @@
       <p>A reference for clients to revisit between sessions. These are the core ideas behind what you experienced with Warwick — use this to stay consistent at home.</p>
     </div>
   </header>
+
+  <section class="guide-search" aria-label="Search the guide">
+    <div class="guide-search-inner">
+      <label for="guide-search-input" class="guide-search-label">🔍 Search the guide</label>
+      <div class="guide-search-field">
+        <input
+          type="search"
+          id="guide-search-input"
+          class="guide-search-input"
+          placeholder="Try recall, butt push, front door, reactivity…"
+          autocomplete="off"
+          role="combobox"
+          aria-expanded="false"
+          aria-controls="guide-search-results"
+          aria-autocomplete="list"
+        >
+        <ul id="guide-search-results" class="guide-search-results" role="listbox" hidden></ul>
+      </div>
+      <p class="guide-search-hint">Start typing for suggestions — jump straight to the section you need.</p>
+    </div>
+  </section>
 
   <section class="guide-contents" id="guide-contents" aria-labelledby="guide-contents-heading">
     <div class="guide-contents-inner">
