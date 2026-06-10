@@ -58,29 +58,28 @@
     </div>
   </header>
 
-  <section class="guide-search" aria-label="Search the guide">
-    <div class="guide-search-inner">
-      <label for="guide-search-input" class="guide-search-label">🔍 Search the guide</label>
-      <div class="guide-search-field">
-        <input
-          type="search"
-          id="guide-search-input"
-          class="guide-search-input"
-          placeholder="Try recall, butt push, front door, reactivity…"
-          autocomplete="off"
-          role="combobox"
-          aria-expanded="false"
-          aria-controls="guide-search-results"
-          aria-autocomplete="list"
-        >
-        <ul id="guide-search-results" class="guide-search-results" role="listbox" hidden></ul>
-      </div>
-      <p class="guide-search-hint">Start typing for suggestions — jump straight to the section you need.</p>
-    </div>
-  </section>
-
   <section class="guide-contents" id="guide-contents" aria-labelledby="guide-contents-heading">
     <div class="guide-contents-inner">
+      <div class="guide-search" aria-label="Search the guide">
+        <h2 class="guide-search-heading">🔍 Search the guide</h2>
+        <div class="guide-search-field">
+          <label class="visually-hidden" for="guide-search-input">Search the guide</label>
+          <input
+            type="text"
+            id="guide-search-input"
+            class="guide-search-input"
+            placeholder="Try recall, butt push, front door, reactivity…"
+            autocomplete="off"
+            role="combobox"
+            aria-expanded="false"
+            aria-controls="guide-search-results"
+            aria-autocomplete="list"
+          >
+          <ul id="guide-search-results" class="guide-search-results" role="listbox" hidden></ul>
+        </div>
+        <p class="guide-search-hint">Start typing for suggestions — jump straight to the section you need.</p>
+      </div>
+
       <h2 id="guide-contents-heading">📑 Contents</h2>
       <nav class="guide-contents-nav" aria-label="Guide sections">
         <div class="guide-contents-groups">
