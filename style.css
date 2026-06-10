@@ -1003,18 +1003,18 @@ body.page-guide {
 .mantra p { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.2rem; color: var(--forest); margin: 0; }
 
 .steps { list-style: none; margin: 1.25rem 0; counter-reset: steps; }
-.steps li { counter-increment: steps; display: grid; grid-template-columns: 2.5rem 1fr; gap: 0.75rem; align-items: start; padding: 0.75rem 0; border-bottom: 1px solid var(--rule); }
+.steps li { counter-increment: steps; position: relative; padding: 0.75rem 0 0.75rem 3.25rem; border-bottom: 1px solid var(--rule); text-align: left; }
 .steps li:last-child { border-bottom: none; }
-.steps li::before { content: counter(steps); background: var(--forest); color: var(--amber); font-family: 'Playfair Display', serif; font-weight: 700; font-size: 0.9rem; width: 2.5rem; height: 2.5rem; display: flex; align-items: center; justify-content: center; border-radius: 50%; flex-shrink: 0; margin-top: 0.1rem; }
+.steps li::before { content: counter(steps); position: absolute; left: 0; top: 0.85rem; background: var(--forest); color: var(--amber); font-family: 'Playfair Display', serif; font-weight: 700; font-size: 0.9rem; width: 2.5rem; height: 2.5rem; display: flex; align-items: center; justify-content: center; border-radius: 50%; }
 
 .dont { border: 1px solid rgba(180, 60, 40, 0.25); background: rgba(180, 60, 40, 0.04); border-radius: 3px; padding: 1.25rem 1.5rem; margin: 1.5rem 0; }
 .dont strong { font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; color: #8b3020; display: block; margin-bottom: 0.4rem; }
 .dont p { color: var(--text); font-size: 1rem; margin: 0; }
 
 .checklist { list-style: none; margin: 1rem 0; }
-.checklist li { padding: 0.45rem 0; border-bottom: 1px solid var(--rule); display: flex; align-items: flex-start; gap: 0.75rem; font-size: 1.05rem; }
+.checklist li { position: relative; padding: 0.45rem 0 0.45rem 1.75rem; border-bottom: 1px solid var(--rule); font-size: 1.05rem; text-align: left; }
 .checklist li:last-child { border-bottom: none; }
-.checklist li::before { content: '✓'; color: var(--gold); font-weight: 700; flex-shrink: 0; margin-top: 0.1rem; }
+.checklist li::before { content: '✓'; position: absolute; left: 0; top: 0.55rem; color: var(--gold); font-weight: 700; }
 
 .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1.5rem 0; }
 .col-card { background: var(--surface-soft); border-radius: 3px; padding: 1.25rem 1.5rem; border-top: 3px solid var(--gold); }
@@ -1282,5 +1282,6 @@ body.page-guide {
   .guide-main, .contact-page-main { padding: 2rem 1.25rem 4rem; }
   .pillars-table th, .pillars-table td { padding: 0.5rem 0.75rem; font-size: 0.95rem; }
   .two-col { grid-template-columns: 1fr; }
-  .steps li { grid-template-columns: 2rem 1fr; }
+  .steps li { padding-left: 2.75rem; }
+  .steps li::before { width: 2rem; height: 2rem; font-size: 0.85rem; top: 0.9rem; }
 }
