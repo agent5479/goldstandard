@@ -108,6 +108,7 @@
       { terms: ["panting", "lip lick", "shake off", "stiffening"], href: "#symptom-glossary" },
       { terms: ["dog fight", "dog meeting", "socialisation", "socialization"], href: "#dog-meetings" },
       { terms: ["trauma", "fearful", "shutdown"], href: "#trauma-signals" },
+      { terms: ["gruff", "squeeze", "dog language", "firmness", "shocking", "roadside", "recall game", "boss", "pack boss", "calibration", "gruff correction", "mouth hand"], href: "#dog-language" },
       { terms: ["daily", "practice", "three weeks", "routine"], href: "#daily" },
       { terms: ["graduation", "puppy dynamic", "relentless"], href: "#graduation" },
     ];
