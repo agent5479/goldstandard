@@ -104,6 +104,8 @@ export default function SectionLeash() {
       <h3>🚶 Walking position</h3>
       <p>You lead. The dog walks beside or slightly behind, not ahead. This is not just about control — it's about what the dog understands about the relationship. A dog that walks ahead of you has concluded it is responsible for the pair. That's a burden, and it produces anxiety — the same gap described in <a href="#owner-mindset">Owner mindset</a>. Walking beside you means you're in charge of what's out there, and the dog can simply be a dog.</p>
 
+      <p>On rural sealed roads and gravel shoulders, position beside you is also survival geometry — see <a href="#road-safety">Road safety</a> for the car protocol: evacuate off the sealed edge, gutter sit, hold until release.</p>
+
       <p>For dogs over seven months, cutting in front or surging ahead is not excused by excitement — the <a href="#i-dont-care">I don't care</a> standard applies on every walk. Reset with <a href="#leash-jerk">downward leash jerk</a> or position correction; the line does not move because the dog is "just happy to be out."</p>
 
       <div className="callout pro-tip">

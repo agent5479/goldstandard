@@ -10,6 +10,7 @@ const BODY_LANGUAGE_SLOTS = 4;
 const RELATIONSHIP_SLOTS = 2;
 const EQUIPMENT_SLOTS = 2;
 const OFF_LEASH_SOCIAL_SLOTS = 2;
+const ROAD_SAFETY_SLOTS = 2;
 const TRAINER_TOTAL = 40;
 const TRAINER_PER_CATEGORY = 2;
 const TRAINER_ADVANCED = 10;
@@ -101,10 +102,25 @@ export function buildOwnerExam(categories: BreedCategory[]): PreparedQuestion[] 
     OFF_LEASH_SOCIAL_SLOTS,
     used
   );
-  const remaining = OWNER_UNIVERSAL - bodyLanguage.length - relationship.length - equipment.length - offLeashSocial.length;
+  const roadSafety = sampleUnique(
+    universal.filter((q) => q.topic === 'Road safety'),
+    ROAD_SAFETY_SLOTS,
+    used
+  );
+  const remaining =
+    OWNER_UNIVERSAL -
+    bodyLanguage.length -
+    relationship.length -
+    equipment.length -
+    offLeashSocial.length -
+    roadSafety.length;
   const filler = sampleUnique(universal, remaining, used);
 
-  return shuffle(bodyLanguage.concat(relationship, equipment, offLeashSocial, filler).concat(breedSpecific)).map(prepareQuestion);
+  return shuffle(
+    bodyLanguage
+      .concat(relationship, equipment, offLeashSocial, roadSafety, filler)
+      .concat(breedSpecific)
+  ).map(prepareQuestion);
 }
 
 export function buildTrainerExam(): PreparedQuestion[] {

@@ -527,6 +527,106 @@ export const examQuestions: Question[] = [
     guideLink: '#controlled-crucible'
   },
 
+  // ── Road safety (rural NZ) ────────────────────────────────────────────────
+  {
+    topic: 'Road safety',
+    breedCategory: 'all',
+    track: 'both',
+    text: 'How does road safety differ from the controlled crucible used in off-lead social development?',
+    options: [
+      'Beside traffic there is zero tolerance — mistakes are fatal, not instructive; the reflex is built on-lead with no controlled failure',
+      'Road safety uses the same fail-safely frame as playgroup socialisation',
+      'Traffic only matters for dogs under seven months',
+      'Off-lead access beside roads is granted once recall is solid in a paddock'
+    ],
+    explanation: 'Social crucibles allow controlled failure. Roadside, a boundary violation is not a learning opportunity — the standard is an invariant reflex drilled on-lead first.',
+    guideLink: '#road-safety'
+  },
+  {
+    topic: 'Road safety',
+    breedCategory: 'all',
+    track: 'both',
+    text: 'What is "semantic hijacking" in the car protocol?',
+    options: [
+      'Repurposing the existing word "Car" with a sharp, high-intent alert tone — same word, completely different psychological delivery',
+      'Inventing a new traffic cue the dog has never heard before',
+      'Saying "Car" repeatedly louder until the dog complies',
+      'Using the dog\'s name instead of a traffic-specific word'
+    ],
+    explanation: 'Most dogs already associate "Car" with outings. The protocol hijacks that familiarity — shifting delivery from casual invitation to non-negotiable alert.',
+    guideLink: '#semantic-hijacking'
+  },
+  {
+    topic: 'Road safety',
+    breedCategory: 'all',
+    track: 'both',
+    text: 'An oncoming vehicle appears on a rural walk. What is the correct physical sequence after the high-intent "Car!" cue?',
+    options: [
+      'Immediate evacuation off the sealed edge → structured sit in the gutter or verge → hold still while tracking the passing vehicle → calm release only after it has fully passed',
+      'Sit on the pavement and watch the car pass',
+      'Recall to the handler across the road',
+      'Lie down in the centre of the road to maximise visibility'
+    ],
+    explanation: 'Cross the hard boundary onto earth or grass, anchor in a gutter sit, tolerate engine and tyre noise without breaking posture, release only when the threat is gone.',
+    guideLink: '#car-protocol'
+  },
+  {
+    topic: 'Road safety',
+    breedCategory: 'all',
+    track: 'both',
+    text: 'Why must the dog hold a stationary gutter sit while the vehicle passes?',
+    options: [
+      'Auditory tracking and immobility — the dog tolerates engine, tyre, and air pressure without drifting back toward the hazard',
+      'So passing drivers can photograph the dog',
+      'Because sitting on pavement is illegal',
+      'To practise a generic stay command unrelated to traffic'
+    ],
+    explanation: 'The anchor eliminates spatial drift. Holding still while the sound rises and falls teaches that car presence locks the body until the handler releases.',
+    guideLink: '#car-protocol'
+  },
+  {
+    topic: 'Road safety',
+    breedCategory: 'all',
+    track: 'both',
+    text: 'A dog hesitates at the pavement edge or breaks the gutter sit as a car approaches. How does the guide treat this?',
+    options: [
+      'High-stakes failure — a definitive correction inside the one-second window; hesitation beside traffic is not everyday calibration',
+      'A mild verbal reminder is enough — traffic training should stay soft',
+      'Ignore it if the car is still distant',
+      'End the walk and never train near roads again'
+    ],
+    explanation: 'On a normal walk, delay might earn a reset. Beside traffic, hesitation is systemic failure — corrections land with life-and-death intensity, then immediate calm release.',
+    guideLink: '#road-safety'
+  },
+  {
+    topic: 'Road safety',
+    breedCategory: 'all',
+    track: 'both',
+    text: 'What does the "seven-month road crucible" mean?',
+    options: [
+      'A minimum of seven months strictly on-lead while the car reflex is drilled — separate from the I don\'t care adult standard — before off-lead access near roads is considered',
+      'Dogs under seven months must never walk on rural roads',
+      'The same seven-month rule as I don\'t care — adult behaviour standard only',
+      'Seven months without any corrections near traffic'
+    ],
+    explanation: 'The road crucible is its own extended leashed runway. I don\'t care names adult behavioural rules; the gutter reflex must be muscle memory before freedom beside a roadway.',
+    guideLink: '#road-seven-months'
+  },
+  {
+    topic: 'Road safety',
+    breedCategory: 'all',
+    track: 'both',
+    text: 'When may off-leash freedom be granted within proximity of a rural roadway?',
+    options: [
+      'Only after the on-lead car protocol is automated through months of repetition — a graduation decision, not a default from recall confidence elsewhere',
+      'As soon as the dog is seven months old and knows sit',
+      'Whenever the road looks quiet',
+      'Never — all dogs must stay on-lead forever'
+    ],
+    explanation: 'Recall in a paddock does not transfer to sealed edges. Off-lead near roads is earned only after the leashed crucible — hundreds of reps under mechanical control.',
+    guideLink: '#road-seven-months'
+  },
+
   /* ── Corrections ── */
   {
     topic: 'Corrections',

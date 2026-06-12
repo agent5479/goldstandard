@@ -22,7 +22,7 @@ export default function SectionDogLanguage() {
       <div className="two-col">
         <div className="col-card">
           <h4>🚨 Life and death</h4>
-          <p>Roadside, traffic, immediate safety — when hesitation costs more than a sharp reset. The correction is brief, shocking, and released the instant the dog yields. No lecture, no prolonged grip. The message is: <em>this is not negotiable.</em></p>
+          <p>Roadside, traffic, immediate safety — when hesitation costs more than a sharp reset. The correction is brief, shocking, and released the instant the dog yields. No lecture, no prolonged grip. The message is: <em>this is not negotiable.</em> For the full rural road protocol — semantic hijacking of <em>Car</em>, gutter sit, and the seven-month leashed crucible — see <a href="#road-safety">Road safety</a>.</p>
         </div>
         <div className="col-card">
           <h4>🔄 Boundary negotiation</h4>

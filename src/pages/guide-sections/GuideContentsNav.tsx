@@ -58,6 +58,10 @@ export default function GuideContentsNav() {
               <li><a href="#access">🔓 Access training</a></li>
               <li><a href="#controlled-crucible">🔥 Controlled crucible</a></li>
               <li><a href="#off-lead-intervention">🛑 Off-lead intervention</a></li>
+              <li><a href="#road-safety">🛣️ Road safety (rural NZ)</a></li>
+              <li><a href="#semantic-hijacking">🚗 Car cue hijacking</a></li>
+              <li><a href="#car-protocol">📐 Car protocol</a></li>
+              <li><a href="#road-seven-months">⏳ Seven-month road crucible</a></li>
               <li><a href="#timing">⏱️ Timing</a></li>
               <li><a href="#rewards">🦴 Rewards</a></li>
             </ul>
