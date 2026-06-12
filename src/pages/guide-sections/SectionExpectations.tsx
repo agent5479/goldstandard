@@ -31,7 +31,7 @@ export default function SectionExpectations() {
 
       <h3 id="im-over-it">🛑 Misbehaviour: the "I'm over it" rule</h3>
 
-      <p>When the dog misbehaves — pushes a boundary, tests you, yap-yaps, jumps, bolts — the winning attitude is not drama, negotiation, or repeated pleading. It is: <strong>I'm over it.</strong> Not cold cruelty, not performed anger — the calm certainty that this behaviour does not move you, does not entertain you, and cannot win.</p>
+      <p>When the dog misbehaves — pushes a boundary, tests you, yap-yaps, jumps, bolts — the winning attitude is not drama, negotiation, or repeated pleading. It is: <strong>I'm over it.</strong> Not cold cruelty, not performed anger — the calm certainty that this behaviour does not move you, does not entertain you, and cannot win. From seven months onward, that attitude backs the <a href="#i-dont-care">I don't care</a> adult standard — doors, jumping, permission, and walk position.</p>
 
       <p>This is not a game. You are the adult. The energy lives in your being and in your arm — the same forward, settled presence as the <a href="#ready-stance">ready stance</a>, not hope or hesitation dressed up as patience. The pack needs a boss, and you are that boss. That is the new pack structure, and it needs to be adapted immediately — not negotiated into place over weeks of mixed messages.</p>
 
@@ -42,6 +42,26 @@ export default function SectionExpectations() {
       </div>
 
       <p>Say it aloud when you need to lock the attitude into your body — see <a href="#speaking-aloud">Speak it aloud</a>. Short. Matter-of-fact. The words affirm the energy before your hands need to move; the dog reads that energy long before any <a href="#corrections">correction</a> lands. Correct inside the <a href="#timing">one-second window</a>, then move on as if the moment barely registered. That is the relentlessness: the standard does not waver, and neither does your composure.</p>
+
+      <h3 id="i-dont-care">🎓 The "I don't care" rule — dogs over seven months</h3>
+
+      <p><em>I'm over it</em> is the attitude. <strong>I don't care</strong> is the adult standard that attitude enforces. Once a dog is past roughly seven months, the puppy-excuse window is closed. Those days are over. The dog is expected to understand — not perfectly on day one, but without negotiation forever. You are going to be an adult now.</p>
+
+      <p>This does not mean ignoring genuine fear or trauma — see <a href="#trauma-signals">Trauma signals</a> and <a href="#dog-language">calibration in Dog language</a>. It means nervousness and excitement are no longer valid reasons to bolt through a door, jump on people, move without permission, or cut in front of you on a walk. The handler does not soothe, excuse, or lower the bar because the dog is "just excited." The standard holds. <em>I don't care</em> that you are nervous or wound up — you still wait at the <a href="#front-door">door</a>, you still do not jump on others, you still check in before you act, and you still walk beside or behind, not ahead.</p>
+
+      <div className="mantra">
+        <p>"I don't care that you're nervous or excited. You're an adult now. The standard doesn't move."</p>
+      </div>
+
+      <ul className="checklist">
+        <li><strong>No bolting through doors</strong> — wait, permission, then move. Reset every surge without drama</li>
+        <li><strong>No jumping on people</strong> — four paws down or <a href="#collar-snatch">collar grab</a> reset; excitement is not an excuse</li>
+        <li><strong>No action without permission</strong> — doors, leash clips, releases, and access all require your assent</li>
+        <li><strong>No crossing in front on walks</strong> — you lead; the dog walks beside or slightly behind — see <a href="#leash">Leash &amp; line</a></li>
+        <li><strong>Same rules for every handler</strong> — mixed messages from family who miss the puppy days slow <a href="#graduation">graduation</a> exponentially</li>
+      </ul>
+
+      <p>Say it when you feel yourself softening because the dog "looks scared" or "is just happy" — pair with <a href="#speaking-aloud">Speak it aloud</a> and <a href="#im-over-it">I'm over it</a>. Compassion does not mean collapsing the standard. It means holding the line calmly while the dog learns they can meet it.</p>
 
       <h3 id="social-regulation">🤝 Self-regulation around other dogs</h3>
 

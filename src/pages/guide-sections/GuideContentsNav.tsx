@@ -13,6 +13,8 @@ export default function GuideContentsNav() {
             <ul className="guide-contents-list">
               <li><a href="#owner-mindset">👤 Owner mindset</a></li>
               <li><a href="#expectations">🎯 Expectations</a></li>
+              <li><a href="#im-over-it">🛑 I'm over it</a></li>
+              <li><a href="#i-dont-care">🎓 I don't care (7+ months)</a></li>
               <li><a href="#trust-not-just-love">🤝 Trust, not just love</a></li>
               <li><a href="#speaking-aloud">🗣️ Speak it aloud</a></li>
               <li><a href="#cue-once">1️⃣ Say it once</a></li>
@@ -46,7 +48,10 @@ export default function GuideContentsNav() {
           <div className="guide-contents-group">
             <p className="guide-contents-group-label">🛠️ Techniques</p>
             <ul className="guide-contents-list">
-              <li><a href="#leash">🦮 Leash work</a></li>
+              <li><a href="#leash">🦮 Leash &amp; line</a></li>
+              <li><a href="#collar-selection">🛡️ Collar selection</a></li>
+              <li><a href="#leash-selection">🧭 Leash selection</a></li>
+              <li><a href="#leash-weight">⚓ Line weight &amp; dangle</a></li>
               <li><a href="#sniff-breaks">👃 Sniff breaks</a></li>
               <li><a href="#access">🔓 Access training</a></li>
               <li><a href="#timing">⏱️ Timing</a></li>

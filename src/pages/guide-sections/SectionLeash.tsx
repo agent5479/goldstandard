@@ -2,8 +2,86 @@ export default function SectionLeash() {
   return (
     <section className="guide-section" id="leash">
       <div className="guide-section-inner">
-      <p className="section-num">13 — Leash technique</p>
-      <h2>🦮 Downward correction. Slack line. No tension.</h2>
+      <p className="section-num">13 — Leash &amp; line</p>
+      <h2>🦮 The leash is a communication line.</h2>
+
+      <p>In this methodology, the leash is never a tool to physically restrain or tie the dog to your body. It is a high-fidelity communication line. Every micro-tension you create tells the dog something; every micro-tension the dog creates tells you something. That requires the right equipment and the right hands — selection first, technique second.</p>
+
+      <h3 id="leash-selection">🧭 Leash selection: what we use and why</h3>
+
+      <p>We use a <strong>medium-length, strong fixed line</strong> with weight matched to the dog. Length is adjusted dynamically by hand — shortened for close-quarters engagement, extended to grant decompression space — so you are always actively managing the spatial conversation. Bungee and extending leashes are excluded.</p>
+
+      <div className="two-col">
+        <div className="col-card">
+          <h4>⛔ Bungee leashes</h4>
+          <p>Elastic cores absorb shock — comfortable for a pulling dog, destructive for pressure-and-release training. When you apply pressure, the bungee stretches first, delaying the signal. When the dog stops pulling, the elastic does not release instantly — it snaps back slowly. That delayed feedback prevents the dog from learning the exact millisecond it made the correct choice — see <a href="#timing">Timing</a>.</p>
+        </div>
+        <div className="col-card">
+          <h4>⛔ Extending / Flexi leashes</h4>
+          <p>Spring-loaded mechanisms maintain continuous tension on the collar. They teach the dog that tight pressure equals freedom — to get more line, the dog must push forward against resistance. That builds a permanent habit of tension and makes a relaxed, cooperative loose leash impossible. Thin cords offer no tactical control and present severe safety risks.</p>
+        </div>
+      </div>
+
+      <h3 id="leash-weight">⚓ Line weight and the "U" dangle</h3>
+
+      <p>Line thickness and snap-hook mass are matched to the dog's size and emotional threshold:</p>
+
+      <ul className="checklist">
+        <li><strong>The dangle as dashboard:</strong> a properly selected line loops down in a loose "U" shape between your hand and the dog's neck when they walk cooperatively — your visual proof the dog is regulating space</li>
+        <li><strong>Sensitivity balance:</strong> for a sensitive or smaller dog, a line too heavy applies unintentional constant downward pressure and clouds focus. For a massive, thick-necked breed, a line too light won't register through physical density. When weight is correct, slack alone provides subtle grounding without effort</li>
+        <li><strong>Length by hand:</strong> shorten for triggers and close work; extend for earned decompression — never outsource length to a spring mechanism</li>
+      </ul>
+
+      <h3 id="leash-handling">🤲 Biomechanical handling</h3>
+
+      <p>A fixed line lets you use your entire body as anchor and communication centre — unlike automated leashes:</p>
+
+      <ul className="checklist">
+        <li><strong>Low-line correction:</strong> when delivering a light touch or corrective tug to interrupt fixation, drop the hand <em>below</em> the dog's neck line. This angles pressure downward and slightly sideways — cleanly disrupting forward momentum without choking the throat or triggering an upward pull reflex. Same principle as the <a href="#leash-jerk">downward leash jerk</a></li>
+        <li><strong>Behind-the-back control:</strong> for highly reactive or powerful dogs, holding the line behind your back leverages core, hips, and centre of gravity — preventing the dog from pulling your arms forward and keeping a stable, immovable anchor</li>
+        <li><strong>Knee-brace squat:</strong> shorten the line, drop into a low squat, and brace the line behind the back of the knee. The dog's pulling force routes into the ground through your leg muscles — safe, steady, and unyielding without arm strength alone</li>
+      </ul>
+
+      <div className="pillars guide-glossary">
+        <table className="pillars-table" aria-label="Leash equipment summary">
+          <thead>
+            <tr>
+              <th scope="col">Equipment / technique</th>
+              <th scope="col">Stance</th>
+              <th scope="col">Core reason</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Medium fixed line</strong></td>
+              <td>Preferred</td>
+              <td>Instantaneous pressure-and-release; length managed entirely by hand</td>
+            </tr>
+            <tr>
+              <td><strong>Bungee leash</strong></td>
+              <td>Never used</td>
+              <td>Delays corrections and blurs the crucial release signal</td>
+            </tr>
+            <tr>
+              <td><strong>Extending lead</strong></td>
+              <td>Never used</td>
+              <td>Teaches constant pulling; eliminates handler control</td>
+            </tr>
+            <tr>
+              <td><strong>"U" leash dangle</strong></td>
+              <td>Mandatory goal</td>
+              <td>Visual proof the dog is choosing cooperation on slack</td>
+            </tr>
+            <tr>
+              <td><strong>Body anchoring</strong></td>
+              <td>Advanced practice</td>
+              <td>Behind-back and knee-brace techniques maximise leverage for safety</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>⬇️ Downward correction. Slack line. No tension.</h3>
 
       <p>How you hold the leash is doing constant communication. A tight, upward-pulled leash tells the dog you're nervous and reactive. It creates a feedback loop — you tighten, the dog feels it and escalates, you tighten more.</p>
 
@@ -25,6 +103,8 @@ export default function SectionLeash() {
 
       <h3>🚶 Walking position</h3>
       <p>You lead. The dog walks beside or slightly behind, not ahead. This is not just about control — it's about what the dog understands about the relationship. A dog that walks ahead of you has concluded it is responsible for the pair. That's a burden, and it produces anxiety — the same gap described in <a href="#owner-mindset">Owner mindset</a>. Walking beside you means you're in charge of what's out there, and the dog can simply be a dog.</p>
+
+      <p>For dogs over seven months, cutting in front or surging ahead is not excused by excitement — the <a href="#i-dont-care">I don't care</a> standard applies on every walk. Reset with <a href="#leash-jerk">downward leash jerk</a> or position correction; the line does not move because the dog is "just happy to be out."</p>
 
       <div className="callout pro-tip">
         <strong>🪵 Stick assist for downward correction</strong>

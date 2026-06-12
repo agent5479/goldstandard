@@ -28,7 +28,8 @@ const ALIASES: { terms: string[]; href: string }[] = [
   { terms: ['sit', 'wait', 'earned access', 'nothing for free', 'consent', 'release'], href: '#pillars' },
   { terms: ['bark', 'barking', 'yap', 'fixation', 'reactive', 'reactivity'], href: '#butt-push' },
   { terms: ['jump', 'jumping', 'lunging', 'mouthing'], href: '#collar-snatch' },
-  { terms: ['pulling', 'slack leash', 'heel'], href: '#leash' },
+  { terms: ['pulling', 'slack leash', 'heel', 'bungee', 'flexi', 'extending leash', 'fixed line', 'u dangle', 'leash dangle'], href: '#leash' },
+  { terms: ['collar', 'harness', 'halter', 'gentle leader', 'halti', 'prong', 'choke chain', 'slip lead', 'flat collar', 'opposition reflex'], href: '#collar-selection' },
   { terms: ['off lead', 'off-lead', 'freedom', 'access'], href: '#access' },
   { terms: ['treat', 'treats', 'reward', 'food motivated', 'overused treat', 'treat exploit', 'training only treat', 'reserved treat', 'not hungry', 'reward currency', 'food motivated diagnostic'], href: '#rewards' },
   { terms: ['one second', 'timing', 'association window'], href: '#timing' },
@@ -49,7 +50,8 @@ const ALIASES: { terms: string[]; href: string }[] = [
   { terms: ['gruff', 'squeeze', 'dog language', 'firmness', 'shocking', 'roadside', 'recall game', 'boss', 'pack boss', 'calibration', 'gruff correction', 'mouth hand'], href: '#dog-language' },
   { terms: ['unique sound', 'unique touch', 'correction mechanic', 'hey', 'clap', 'flank', 'jawbone', 'habituation'], href: '#unique-sound-touch' },
   { terms: ['daily', 'practice', 'three weeks', 'routine'], href: '#daily' },
-  { terms: ['graduation', 'puppy dynamic', 'relentless'], href: '#graduation' }
+  { terms: ['graduation', 'puppy dynamic', 'relentless'], href: '#graduation' },
+  { terms: ['seven months', '7 months', 'adult dog', "i don't care", 'dont care', 'im over it'], href: '#i-dont-care' }
 ];
 
 /** Walk the rendered guide DOM to build the search index (port of guide-search.js). */

@@ -20,6 +20,7 @@ export default function SectionFrontDoor() {
         <li>Calm wait before the leash goes on, before the door opens, before they step through</li>
         <li>If they surge or push past, reset: back inside, sit, wait — then try again without drama</li>
         <li>Carry that mindset forward: permission before action, not action until stopped</li>
+        <li>For dogs over seven months, the <a href="#i-dont-care">I don't care</a> rule applies here first — nervous or excited is not a reason to bolt</li>
       </ul>
 
       <div className="callout">

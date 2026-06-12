@@ -2059,5 +2059,191 @@ export const examQuestions: Question[] = [
     ],
     explanation: 'Trust is earned by advocating for the dog. Love without consistent advocacy does not build the trust reactive dogs need.',
     guideLink: '#trust-not-just-love'
+  },
+
+  // ── Equipment ─────────────────────────────────────────────────────────────
+  {
+    topic: 'Equipment',
+    breedCategory: 'all',
+    track: 'both',
+    text: 'Which collar types does the guide prefer for pressure-and-release communication?',
+    options: [
+      'Flat collar or properly positioned slip lead',
+      'Chest harness with front clip',
+      'Prong collar for strong pullers',
+      'Heavy choke chain for instant control'
+    ],
+    explanation: 'Flat collar and properly used slip lead allow precise, instant pressure-and-release that teaches the dog to choose calm.',
+    guideLink: '#collar-selection'
+  },
+  {
+    topic: 'Equipment',
+    breedCategory: 'all',
+    track: 'both',
+    text: 'Under what conditions might a head halter be appropriate in this methodology?',
+    options: [
+      'Strictly as a temporary safety brake — extreme handler/dog size mismatch or severe handler physical limitation',
+      'As the default collar for all reactive dogs from day one',
+      'Whenever the dog pulls on walks',
+      'Only for puppies under six months'
+    ],
+    explanation: 'The head halter is never a core teaching tool — only a temporary management device for handler safety or breaking an explosive visual lock.',
+    guideLink: '#head-halter'
+  },
+  {
+    topic: 'Equipment',
+    breedCategory: 'all',
+    track: 'both',
+    text: 'Why does the guide exclude chest harnesses?',
+    options: [
+      'They trigger the opposition reflex — encouraging the dog to pull harder against pressure on the chest',
+      'They are too expensive for most owners',
+      'Dogs cannot sit while wearing a harness',
+      'Harnesses only work on small breeds'
+    ],
+    explanation: 'Chest harnesses wrap the strongest parts of the body and engage the opposition reflex — communicating pull, not cooperation.',
+    guideLink: '#collars-excluded'
+  },
+  {
+    topic: 'Equipment',
+    breedCategory: 'all',
+    track: 'both',
+    text: 'Why are spiked / prong collars excluded from this methodology?',
+    options: [
+      'Sharp pain triggers fight-or-flight and closes the brain to calm, accountable learning',
+      'They are illegal in all countries',
+      'Dogs become immune to prong pressure after one week',
+      'They only work on thick-coated breeds'
+    ],
+    explanation: 'Pain spikes arousal and anxiety. A dog cannot learn accountability if its brain is wired shut by pain — see Collar selection.',
+    guideLink: '#collars-excluded'
+  },
+  {
+    topic: 'Equipment',
+    breedCategory: 'all',
+    track: 'both',
+    text: 'Why are bungee leashes excluded?',
+    options: [
+      'Elastic delays pressure and release — the dog cannot learn the exact millisecond it made the correct choice',
+      'They are too short for large breeds',
+      'Dogs are afraid of the bouncing sensation',
+      'They prevent the handler from holding the leash at all'
+    ],
+    explanation: 'Bungee leashes stretch before the dog feels pressure and snap back slowly after — muddying the pressure-and-release conversation.',
+    guideLink: '#leash-selection'
+  },
+  {
+    topic: 'Equipment',
+    breedCategory: 'all',
+    track: 'both',
+    text: 'Why are extending / Flexi leashes excluded?',
+    options: [
+      'They maintain constant tension and teach the dog that pulling equals freedom',
+      'They are banned by local council bylaws everywhere',
+      'Dogs cannot smell properly on a long line',
+      'They only break in cold weather'
+    ],
+    explanation: 'Extending leashes rely on spring tension — the dog must push forward to get line. That builds permanent pulling habits and eliminates handler control.',
+    guideLink: '#leash-selection'
+  },
+  {
+    topic: 'Equipment',
+    breedCategory: 'all',
+    track: 'both',
+    text: 'What does a loose "U" shape in the leash between your hand and the dog\'s neck indicate?',
+    options: [
+      'The line weight is matched and the dog is regulating space — choosing cooperation on slack',
+      'The leash is too long and must be replaced',
+      'The dog is about to bolt',
+      'You are holding the leash incorrectly'
+    ],
+    explanation: 'The dangle is your dashboard — a properly weighted line loops in a U when the dog walks cooperatively on slack.',
+    guideLink: '#leash-weight'
+  },
+  {
+    topic: 'Equipment',
+    breedCategory: 'all',
+    track: 'both',
+    text: 'When delivering a low-line corrective tug, where should your hand be positioned?',
+    options: [
+      'Below the dog\'s neck line — angling pressure downward and sideways, not upward at the throat',
+      'Above the dog\'s head for maximum leverage',
+      'At full arm extension behind you',
+      'Wrapped twice around your wrist for security'
+    ],
+    explanation: 'Low-line correction drops the hand below neck level — disrupting momentum without choking or triggering an upward pull reflex.',
+    guideLink: '#leash-handling'
+  },
+
+  // ── Adult expectations ("I don't care") ───────────────────────────────────
+  {
+    topic: 'Adult expectations',
+    breedCategory: 'all',
+    track: 'both',
+    text: 'From roughly seven months onward, what does the "I don\'t care" rule mean?',
+    options: [
+      'The adult standard holds — nervousness and excitement do not excuse bolting, jumping, acting without permission, or walking ahead',
+      'The handler should ignore the dog entirely until it is two years old',
+      'All corrections stop because the dog is now an adult',
+      'Only fear-based behaviour gets a pass — excitement still requires structure'
+    ],
+    explanation: 'I don\'t care is the adult standard I\'m over it enforces. Past seven months, puppy excuses are closed — the line holds calmly.',
+    guideLink: '#i-dont-care'
+  },
+  {
+    topic: 'Adult expectations',
+    breedCategory: 'all',
+    track: 'both',
+    text: 'How does "I don\'t care" relate to "I\'m over it"?',
+    options: [
+      'I\'m over it is the attitude; I don\'t care is the adult standard that attitude enforces from seven months onward',
+      'They mean the same thing and can be used interchangeably',
+      'I don\'t care replaces I\'m over it once the dog is an adult',
+      'I\'m over it applies only to puppies; I don\'t care applies only to seniors'
+    ],
+    explanation: 'I\'m over it is calm certainty that misbehaviour cannot win. I don\'t care names the non-negotiable adult rules that attitude protects.',
+    guideLink: '#i-dont-care'
+  },
+  {
+    topic: 'Adult expectations',
+    breedCategory: 'all',
+    track: 'both',
+    text: 'An eight-month-old dog surges through the front door because it is "excited for the walk." What does the guide say?',
+    options: [
+      'Reset — back inside, sit, wait. Excitement is not a reason to bolt; the I don\'t care standard applies',
+      'Let it go — excitement at the door is normal for young dogs',
+      'Only correct if someone is watching',
+      'Switch to a harness so the surge does not hurt the neck'
+    ],
+    explanation: 'No bolting through doors — wait, permission, then move. For dogs over seven months, nervous or excited is not an excuse.',
+    guideLink: '#front-door'
+  },
+  {
+    topic: 'Adult expectations',
+    breedCategory: 'all',
+    track: 'both',
+    text: 'A nine-month-old dog jumps on visitors "because it is friendly." What is the guide-aligned response?',
+    options: [
+      'Hold the standard — four paws down or collar grab reset. Friendly excitement is not an excuse',
+      'Allow jumping on people the dog knows well',
+      'Redirect with treats only — no physical correction after seven months',
+      'Keep the dog in another room permanently'
+    ],
+    explanation: 'No jumping on people — the I don\'t care rule applies. Compassion does not mean collapsing the standard.',
+    guideLink: '#i-dont-care'
+  },
+  {
+    topic: 'Adult expectations',
+    breedCategory: 'all',
+    track: 'both',
+    text: 'On a walk, an adult dog repeatedly cuts in front of you, pulling ahead with excitement. What does the guide expect?',
+    options: [
+      'Reset position — the dog walks beside or slightly behind; excitement does not excuse surging ahead',
+      'Allow it — a happy dog should lead the walk',
+      'Switch to a Flexi leash for more freedom',
+      'Stop walking until the dog is over one year old'
+    ],
+    explanation: 'You lead. Cutting in front is not excused by excitement — see I don\'t care and Leash & line.',
+    guideLink: '#leash'
   }
 ];

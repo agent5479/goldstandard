@@ -7,7 +7,7 @@ export default function SectionCorrections() {
 
       <p>Corrections are not punishment in anger — they are fast, calm interruptions that redirect attention and reset the dog's body. Used inside the <a href="#timing">one-second window</a>, they teach the same lesson dogs teach each other: the line is real, and you are holding it.</p>
 
-      <p>Most handlers start with physical tools and progress toward <a href="#verbal-correction">verbal association</a> — a sharp command or bark that can replace the hands once the association is solid. The methods below are the core toolkit Warwick uses in sessions; each has its place depending on what the dog is doing and where you are in the training arc. How hard any correction lands — and when intensity rises — is covered in <a href="#dog-language">Dog language &amp; gruff correction</a>.</p>
+      <p>Most handlers start with physical tools and progress toward <a href="#verbal-correction">verbal association</a> — a sharp command or bark that can replace the hands once the association is solid. The methods below are the core toolkit Warwick uses in sessions; each has its place depending on what the dog is doing and where you are in the training arc. How hard any correction lands — and when intensity rises — is covered in <a href="#dog-language">Dog language &amp; gruff correction</a>. The collar and line must support that conversation — see <a href="#collar-selection">Collar selection</a> and <a href="#leash">Leash &amp; line</a>.</p>
 
       <h3 id="unique-sound-touch">⚡ The mechanic: unique sound, then unique touch</h3>
 

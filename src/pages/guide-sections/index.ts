@@ -11,6 +11,7 @@ import SectionLeashJerk from './SectionLeashJerk';
 import SectionVerbalCorrection from './SectionVerbalCorrection';
 import SectionCollarSnatch from './SectionCollarSnatch';
 import SectionPinHold from './SectionPinHold';
+import SectionCollarSelection from './SectionCollarSelection';
 import SectionLeash from './SectionLeash';
 import SectionAccess from './SectionAccess';
 import SectionTiming from './SectionTiming';
@@ -35,6 +36,7 @@ export const guideSections = [
   SectionVerbalCorrection,
   SectionCollarSnatch,
   SectionPinHold,
+  SectionCollarSelection,
   SectionLeash,
   SectionAccess,
   SectionTiming,
