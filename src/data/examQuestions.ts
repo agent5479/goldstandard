@@ -358,7 +358,7 @@ export const examQuestions: Question[] = [
     topic: 'Reading signals',
     breedCategory: 'all',
     track: 'both',
-    text: 'Which play bow is a warning sign rather than an invitation?',
+    text: 'Which play bow is ambivalent rather than a clear play invitation?',
     options: [
       'A stiff bow with a fixed stare',
       'Elbows down, rear up, fluid movement',
@@ -1886,7 +1886,7 @@ export const examQuestions: Question[] = [
       'Only at the very start of the walk'
     ],
     explanation: 'The nose is the dog\'s strongest drive — which makes sniff time powerful currency. Heel earns the sniff break; pulling toward a scent loses it. Access training with the nose as the reward.',
-    guideLink: '#access'
+    guideLink: '#sniff-breaks'
   },
   {
     topic: 'Breed temperament',
@@ -1966,12 +1966,12 @@ export const examQuestions: Question[] = [
     track: 'both',
     text: 'A livestock guardian type barks at every passer-by from the yard. What does the guide-aligned response look like?',
     options: [
-      'Interrupt with the butt push, reward the quiet — and build calm leadership so the dog stops running the watch alone',
+      'Butt push to interrupt the cycle; calm leadership and earned access so the dog stops running the watch alone',
       'Reassure the dog warmly each time so it feels safe',
       'Encourage it — guarding is what the breed is for',
       'Leave it outside more so barking loses novelty'
     ],
-    explanation: 'Guardian instinct plus no leadership equals a dog on permanent duty. Interrupt the rehearsal, reward calm, and take the decision-making burden off the dog through structure.',
+    explanation: 'Guardian instinct plus no leadership equals a dog on permanent duty. Interrupt the rehearsal with a butt push, correct and move on — then build calm leadership so vigilance is not the dog\'s job. Save warm affirmation for earned calm, not during or just after the reactive episode.',
     guideLink: '#butt-push'
   },
 
