@@ -12,13 +12,18 @@ export default function Quiz({ contextLabel, questions, onFinish, onQuit }: Quiz
   const [index, setIndex] = useState(0);
   const [selected, setSelected] = useState<number | null>(null);
   const [answers, setAnswers] = useState<Answer[]>([]);
+  /** True only after the user clicks Next — feedback never shows on selection alone. */
+  const [submitted, setSubmitted] = useState(false);
   const [feedbackOpen, setFeedbackOpen] = useState(false);
   const continueRef = useRef<HTMLButtonElement>(null);
+  /** Holds the answer batch including the current wrong response until the popup closes. */
+  const committedAnswersRef = useRef<Answer[]>([]);
 
   const question = questions[index];
   const total = questions.length;
   const progress = Math.round((index / total) * 100);
   const isLast = index === total - 1;
+  const locked = submitted || feedbackOpen;
 
   useEffect(() => {
     document.body.classList.toggle('exam-feedback-open', feedbackOpen);
@@ -35,27 +40,33 @@ export default function Quiz({ contextLabel, questions, onFinish, onQuit }: Quiz
     if (index < total - 1) {
       setIndex(index + 1);
       setSelected(null);
+      setSubmitted(false);
       setFeedbackOpen(false);
+      committedAnswersRef.current = [];
     } else {
       onFinish(allAnswers);
     }
   };
 
   const handleNext = () => {
-    if (selected === null) return;
+    if (selected === null || locked) return;
+
     const correct = selected === question.correctIndex;
-    const nextAnswers = [...answers, { question, selected, correct }];
+    const nextAnswers: Answer[] = [...answers, { question, selected, correct }];
     setAnswers(nextAnswers);
+    setSubmitted(true);
+
     if (correct) {
       advance(nextAnswers);
     } else {
+      committedAnswersRef.current = nextAnswers;
       setFeedbackOpen(true);
     }
   };
 
   const closeFeedback = () => {
     setFeedbackOpen(false);
-    advance(answers);
+    advance(committedAnswersRef.current);
   };
 
   useEffect(() => {
@@ -66,7 +77,9 @@ export default function Quiz({ contextLabel, questions, onFinish, onQuit }: Quiz
     document.addEventListener('keydown', onKeyDown);
     return () => document.removeEventListener('keydown', onKeyDown);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [feedbackOpen, answers, index]);
+  }, [feedbackOpen]);
+
+  const showFeedback = feedbackOpen && submitted && selected !== null;
 
   return (
     <section className="exam-step" id="exam-quiz" aria-labelledby="exam-quiz-heading">
@@ -92,7 +105,7 @@ export default function Quiz({ contextLabel, questions, onFinish, onQuit }: Quiz
           {question.options.map((option, i) => {
             const classes = ['exam-option'];
             if (i === selected) classes.push('is-selected');
-            if (feedbackOpen) {
+            if (showFeedback) {
               if (i === question.correctIndex) classes.push('is-correct');
               if (i === selected) classes.push('is-wrong');
             }
@@ -102,8 +115,10 @@ export default function Quiz({ contextLabel, questions, onFinish, onQuit }: Quiz
                 className={classes.join(' ')}
                 key={i}
                 aria-pressed={i === selected}
-                disabled={feedbackOpen}
-                onClick={() => setSelected(i)}
+                disabled={locked}
+                onClick={() => {
+                  if (!locked) setSelected(i);
+                }}
               >
                 <span className="exam-option-key">{String.fromCharCode(65 + i)}</span>
                 <span className="exam-option-text">{option}</span>
@@ -113,13 +128,20 @@ export default function Quiz({ contextLabel, questions, onFinish, onQuit }: Quiz
         </div>
       </div>
       <div className="exam-quiz-footer">
-        <button className="btn btn-secondary" type="button" onClick={onQuit}>Quit exam</button>
-        <button className="btn btn-primary" type="button" disabled={selected === null || feedbackOpen} onClick={handleNext}>
+        <button className="btn btn-secondary" type="button" onClick={onQuit} disabled={feedbackOpen}>
+          Quit exam
+        </button>
+        <button
+          className="btn btn-primary"
+          type="button"
+          disabled={selected === null || locked}
+          onClick={handleNext}
+        >
           {isLast ? 'See results →' : 'Next question →'}
         </button>
       </div>
 
-      {feedbackOpen && selected !== null && (
+      {showFeedback && (
         <div
           className="exam-feedback-overlay"
           onClick={(event) => {
