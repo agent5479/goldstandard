@@ -34,6 +34,7 @@ export default function GuideContentsNav() {
             <p className="guide-contents-group-label">⚡ Corrections</p>
             <ul className="guide-contents-list">
               <li><a href="#corrections">🛠️ Corrections overview</a></li>
+              <li><a href="#unique-sound-touch">⚡ Unique sound &amp; touch</a></li>
               <li><a href="#dog-language">🗣️ Dog language &amp; gruff correction</a></li>
               <li><a href="#butt-push">👋 Butt push</a></li>
               <li><a href="#leash-jerk">⬇️ Downward leash jerk</a></li>

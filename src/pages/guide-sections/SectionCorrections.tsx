@@ -9,6 +9,22 @@ export default function SectionCorrections() {
 
       <p>Most handlers start with physical tools and progress toward <a href="#verbal-correction">verbal association</a> — a sharp command or bark that can replace the hands once the association is solid. The methods below are the core toolkit Warwick uses in sessions; each has its place depending on what the dog is doing and where you are in the training arc. How hard any correction lands — and when intensity rises — is covered in <a href="#dog-language">Dog language &amp; gruff correction</a>.</p>
 
+      <h3 id="unique-sound-touch">⚡ The mechanic: unique sound, then unique touch</h3>
+
+      <p>Teaching commands like sit and down is basic and straightforward — repetition, reward, clarity. Stopping unwanted behaviour requires a completely different communication strategy. Dogs are highly habituated to their owner's everyday voice: the same words, the same frustrated tone, the same predictable touch. When a dog misbehaves, repeating its name or scolding in that familiar register often fails to register at all.</p>
+
+      <p>What cuts through is a <strong>unique sound</strong> delivered the exact instant the incorrect behaviour begins, followed immediately by a <strong>unique touch</strong> — a stimulating boundary the dog does not associate with ordinary affection or nagging. Together they snap the dog out of its current mindset and redirect attention back to you as the authority holding the line. Every tool in this section is a variation on that two-step pattern, timed inside the <a href="#timing">one-second window</a>.</p>
+
+      <ol className="steps">
+        <li><strong>The unique sound</strong> — a sharp, sudden signal at the exact millisecond the behaviour starts: a bark-like "Hey!", a clap, or the single-syllable <a href="#verbal-correction">verbal pop</a>. Not the dog's name. Not a drawn-out scold.</li>
+        <li><strong>The unique touch</strong> — immediately follow with a distinct physical contact that creates a clean boundary. The two most communicative spots: the <strong>flank</strong> (firm flat hand at the side — see <a href="#butt-push">butt push</a>) and the <strong>jawbone / base of neck</strong> (flat hand under the jaw or side of the neck to steer momentum away from the trigger — see <a href="#collar-snatch">collar grab</a>).</li>
+      </ol>
+
+      <div className="callout">
+        <strong>📋 Real-world example</strong>
+        <p>A large dog keeps jumping onto an outdoor table. The moment the paw begins to lift — not after four paws are up — give a sharp "Hey!" and place a flat hand to the side of the neck to steer the dog's weight away cleanly. The dog stops, looks at you, and walks away because it has never been communicated with in such a clean, authoritative manner. That is correction: interrupt in the act, then move on.</p>
+      </div>
+
       <table className="pillars-table" aria-label="Correction methods">
         <thead>
           <tr>

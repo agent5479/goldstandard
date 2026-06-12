@@ -47,6 +47,7 @@ const ALIASES: { terms: string[]; href: string }[] = [
   { terms: ['dog fight', 'dog meeting', 'socialisation', 'socialization'], href: '#dog-meetings' },
   { terms: ['trauma', 'fearful', 'shutdown'], href: '#trauma-signals' },
   { terms: ['gruff', 'squeeze', 'dog language', 'firmness', 'shocking', 'roadside', 'recall game', 'boss', 'pack boss', 'calibration', 'gruff correction', 'mouth hand'], href: '#dog-language' },
+  { terms: ['unique sound', 'unique touch', 'correction mechanic', 'hey', 'clap', 'flank', 'jawbone', 'habituation'], href: '#unique-sound-touch' },
   { terms: ['daily', 'practice', 'three weeks', 'routine'], href: '#daily' },
   { terms: ['graduation', 'puppy dynamic', 'relentless'], href: '#graduation' }
 ];

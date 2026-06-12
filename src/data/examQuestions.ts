@@ -481,8 +481,78 @@ export const examQuestions: Question[] = [
       'A consequence delivered after the outing, once you are home',
       'Any expression of displeasure, including sighing and scolding'
     ],
-    explanation: 'Corrections are not punishment in anger — they are fast, calm interruptions used inside the one-second window.',
+    explanation: 'Corrections are not punishment in anger — they are fast, calm interruptions used inside the one-second window. The core mechanic is a unique sound followed immediately by a unique touch.',
     guideLink: '#corrections'
+  },
+  {
+    topic: 'Corrections',
+    breedCategory: 'all',
+    track: 'both',
+    text: 'Why does yelling a dog\'s name during misbehaviour often fail to stop it?',
+    options: [
+      'Dogs are habituated to their owner\'s everyday voice and predictable touch — it no longer registers as an interruption',
+      'Dogs cannot hear their name when excited',
+      'Using the dog\'s name is always wrong in every context',
+      'Dogs interpret their name as a reward signal'
+    ],
+    explanation: 'Dogs habituate to familiar tone, repetitive words, and predictable touch. A unique sound at the exact instant of the behaviour snaps attention back — see Unique sound & touch.',
+    guideLink: '#unique-sound-touch'
+  },
+  {
+    topic: 'Corrections',
+    breedCategory: 'all',
+    track: 'both',
+    text: 'What is the core two-step pattern for stopping unwanted behaviour (as distinct from teaching commands like sit)?',
+    options: [
+      'A unique sound at the exact instant the behaviour starts, followed immediately by a unique touch',
+      'Repeat the command until the dog complies, then reward',
+      'Wait until the behaviour finishes, then scold',
+      'Use the same everyday voice with increasing volume'
+    ],
+    explanation: 'Teaching commands is repetition and reward. Stopping unwanted behaviour requires a unique sound plus unique touch — a stimulating boundary the dog has not learned to ignore.',
+    guideLink: '#unique-sound-touch'
+  },
+  {
+    topic: 'Corrections',
+    breedCategory: 'all',
+    track: 'both',
+    text: 'Which two body locations does the guide name as the most communicative for the unique touch?',
+    options: [
+      'The flank (side) and the jawbone / base of neck',
+      'The top of the head and the tail',
+      'The chest and the paws',
+      'The back and the belly'
+    ],
+    explanation: 'The flank touch (butt push) breaks in-place reactivity; the jawbone/neck touch steers momentum away from triggers — collar grab & forced sit.',
+    guideLink: '#unique-sound-touch'
+  },
+  {
+    topic: 'Corrections',
+    breedCategory: 'all',
+    track: 'both',
+    text: 'A dog begins lifting a paw onto a table. When should the unique sound be delivered?',
+    options: [
+      'The exact millisecond the incorrect behaviour starts — as the paw begins to lift',
+      'After all four paws are on the table',
+      'Once you are back home and can scold properly',
+      'Only if the dog ignores a third verbal warning'
+    ],
+    explanation: 'The sound must land at the instant the behaviour begins — inside the one-second window. Delayed correction does not interrupt the live impulse.',
+    guideLink: '#unique-sound-touch'
+  },
+  {
+    topic: 'Corrections',
+    breedCategory: 'all',
+    track: 'both',
+    text: 'Which of these is an effective unique sound for a correction?',
+    options: [
+      'A sharp "Hey!", clap, or bark-like verbal pop — not the dog\'s name or a drawn-out scold',
+      'The dog\'s name repeated louder each time',
+      'A long, soothing "Nooooo" so they hear disapproval',
+      'Baby talk to calm them down'
+    ],
+    explanation: 'The sound must be unique — a sharp interruption, not everyday voice. Pair with the touch in the same instant until the association is solid.',
+    guideLink: '#verbal-correction'
   },
   {
     topic: 'Corrections',

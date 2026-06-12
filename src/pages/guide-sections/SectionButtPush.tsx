@@ -7,6 +7,8 @@ export default function SectionButtPush() {
 
       <p>When your dog is barking, yap-yapping, fixating, or escalating, the goal is not to punish — it's to interrupt. A firm push to the dog's hindquarters (the butt push) breaks the nervous system cycle and re-anchors the dog to the pack. It works because it bypasses the dog's excited mental state and communicates physically: <em>I'm here, I'm in charge, this isn't necessary.</em></p>
 
+      <p>This is the flank touch — one of the two most communicative contact points in the <a href="#unique-sound-touch">unique sound, then unique touch</a> pattern. Pair a sharp verbal pop with the push in the same instant; the touch is firm and flat at the side, not a casual pat.</p>
+
       <p>This is the primary tool for in-place reactivity — the continuous bark, the stare at a trigger, the stiffening that feeds on itself. Pair it with the <a href="#ready-stance">ready stance</a> so you reach the dog inside the <a href="#timing">one-second window</a>.</p>
 
       <ol className="steps">

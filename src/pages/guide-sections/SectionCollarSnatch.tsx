@@ -7,6 +7,8 @@ export default function SectionCollarSnatch() {
 
       <p>For behaviours that come <em>at you</em> — jumping up, lunging toward a trigger, licking, mouthing — catch the dog in the act, within that <a href="#timing">one-second window</a>. That speed depends on the <a href="#ready-stance">ready stance</a>: a pre-engaged core and a body already set to move before the dog does. On the <a href="#escalation-ladder">escalation ladder</a>, collar grab is often the hand speaking before any rise in intensity — see <a href="#dog-language">Dog language</a>.</p>
 
+      <p>This is the jawbone / base-of-neck touch — the second key contact point in the <a href="#unique-sound-touch">unique sound, then unique touch</a> pattern. A flat, straight hand placed under the jaw or at the side of the neck steers the dog's physical momentum away from the trigger or temptation cleanly and confidently — not a shove, not a choke, but a boundary the dog has not learned to ignore.</p>
+
       <p id="jumping-up">Grab the collar at the neckline, give a clear verbal command — <strong>"No"</strong> or your chosen reset word — walk the dog backwards, and sit them down. Over time the verbal alone should be enough when association is built — see <a href="#verbal-correction">Verbal correction</a>. The same pattern applies to jumping, lunging, licking, and mouthing: interrupt, reposition, settle.</p>
 
       <p>Lunging is the same correction as jumping — the dog is coming off the ground or forward on impulse. Do not meet it with tension or a pulled-up leash. Snatch the collar, reset position, sit. Relentless persistence applies here too: one firm reset is not a lesson. The dog learns when the standard never wavers — see <a href="#expectations">Expectations</a>.</p>
