@@ -21,6 +21,19 @@ export default function SectionSpeakingAloud() {
         <li>Match the words to the standard you are actually willing to enforce</li>
         <li>If you cannot say it calmly, pause and reset before continuing the outing</li>
       </ul>
+
+      <h3 id="cue-once">1️⃣ Say it once</h3>
+
+      <p>Repeating commands over and over — "Sit, sit, come on, sit…" — teaches your dog that the first prompt is completely optional and dilutes the meaning of your words. Say sit, come, or wait exactly once. If they ignore it, do not repeat yourself louder.</p>
+
+      <p>Instead, calmly step in using spatial pressure, your body, or a light leash correction to guide them into the position, then reward it. Consistency beats volume — the same principle as <a href="#verbal-correction">Verbal correction</a>, applied to everyday cues. Pair with <a href="#collar-snatch">collar grab</a> or <a href="#leash">Leash work</a> when the body needs guidance, not more words.</p>
+
+      <ul className="checklist">
+        <li>One cue, one expectation — no nagging, no pleading</li>
+        <li>If ignored: guide with body or leash, then reward the completed behaviour</li>
+        <li>Repeating louder trains the dog to wait you out</li>
+        <li>Your voice marks the standard; your hands enforce it when needed</li>
+      </ul>
       </div>
     </section>
   );

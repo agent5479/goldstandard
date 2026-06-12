@@ -6,6 +6,8 @@ import type { BreedCategory } from '../../data/breeds';
 export const PASS_MARK = 0.8;
 const OWNER_UNIVERSAL = 15;
 const OWNER_BREED = 5;
+const BODY_LANGUAGE_SLOTS = 4;
+const RELATIONSHIP_SLOTS = 2;
 const TRAINER_TOTAL = 40;
 const TRAINER_PER_CATEGORY = 2;
 const TRAINER_ADVANCED = 10;
@@ -68,9 +70,22 @@ export function buildOwnerExam(categories: BreedCategory[]): PreparedQuestion[] 
   });
 
   const universal = examQuestions.filter((q) => q.breedCategory === 'all' && q.track === 'both');
-  return shuffle(
-    sample(universal, OWNER_UNIVERSAL).concat(breedSpecific)
-  ).map(prepareQuestion);
+  const bodyLanguage = sample(
+    universal.filter((q) => q.topic === 'Body language'),
+    BODY_LANGUAGE_SLOTS
+  );
+  const relationship = sample(
+    universal.filter((q) => q.topic === 'Relationship habits'),
+    RELATIONSHIP_SLOTS
+  );
+  const reserved = new Set([...bodyLanguage, ...relationship]);
+  const remaining = OWNER_UNIVERSAL - bodyLanguage.length - relationship.length;
+  const filler = sample(
+    universal.filter((q) => !reserved.has(q)),
+    remaining
+  );
+
+  return shuffle(bodyLanguage.concat(relationship, filler).concat(breedSpecific)).map(prepareQuestion);
 }
 
 export function buildTrainerExam(): PreparedQuestion[] {

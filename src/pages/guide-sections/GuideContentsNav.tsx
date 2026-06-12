@@ -13,7 +13,9 @@ export default function GuideContentsNav() {
             <ul className="guide-contents-list">
               <li><a href="#owner-mindset">👤 Owner mindset</a></li>
               <li><a href="#expectations">🎯 Expectations</a></li>
+              <li><a href="#trust-not-just-love">🤝 Trust, not just love</a></li>
               <li><a href="#speaking-aloud">🗣️ Speak it aloud</a></li>
+              <li><a href="#cue-once">1️⃣ Say it once</a></li>
               <li><a href="#ready-stance">🥋 Ready stance</a></li>
             </ul>
           </div>
@@ -21,6 +23,7 @@ export default function GuideContentsNav() {
             <p className="guide-contents-group-label">👀 Reading your dog</p>
             <ul className="guide-contents-list">
               <li><a href="#reading-dog">📖 Reading your dog</a></li>
+              <li><a href="#three-second-pause">⏸️ Three-second pause</a></li>
               <li><a href="#breed-temperament">🐾 Breed variance</a></li>
               <li><a href="#common-pitfalls">⚠️ Common pitfalls</a></li>
               <li><a href="#symptom-glossary">📋 Symptom glossary</a></li>
@@ -43,6 +46,7 @@ export default function GuideContentsNav() {
             <p className="guide-contents-group-label">🛠️ Techniques</p>
             <ul className="guide-contents-list">
               <li><a href="#leash">🦮 Leash work</a></li>
+              <li><a href="#sniff-breaks">👃 Sniff breaks</a></li>
               <li><a href="#access">🔓 Access training</a></li>
               <li><a href="#timing">⏱️ Timing</a></li>
               <li><a href="#rewards">🦴 Rewards</a></li>
@@ -52,6 +56,7 @@ export default function GuideContentsNav() {
             <p className="guide-contents-group-label">🚪 Relationship &amp; outings</p>
             <ul className="guide-contents-list">
               <li><a href="#front-door">🚪 Front door</a></li>
+              <li><a href="#home-return">🏠 Coming home</a></li>
               <li><a href="#check-in-seven">👁️ 7-second check-in</a></li>
             </ul>
           </div>

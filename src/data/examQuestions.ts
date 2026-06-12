@@ -1789,5 +1789,205 @@ export const examQuestions: Question[] = [
     ],
     explanation: 'Guardian instinct plus no leadership equals a dog on permanent duty. Interrupt the rehearsal, reward calm, and take the decision-making burden off the dog through structure.',
     guideLink: '#butt-push'
+  },
+
+  // ── Body language (gesture identification) ────────────────────────────────
+  {
+    topic: 'Body language',
+    breedCategory: 'all',
+    track: 'both',
+    text: 'A dog turns its head away from you but keeps watching — the whites of its eyes clearly visible. What does this usually mean?',
+    options: [
+      'Discomfort or conflict avoidance — the dog is stressed and not ready for interaction',
+      'Playfulness — the dog wants to chase',
+      'Dominance — the dog is challenging you',
+      'Tiredness — the dog needs a nap'
+    ],
+    explanation: 'Whale eye — whites visible with head turned away — is a stress signal. Pair with stiff body or weight back before engaging. See Symptom glossary.',
+    guideLink: '#symptom-glossary'
+  },
+  {
+    topic: 'Body language',
+    breedCategory: 'all',
+    track: 'both',
+    text: 'Your dog yawns at the front door when you arrive home, with no sign of tiredness. What is the most likely meaning?',
+    options: [
+      'Displacement stress — tension release, not tiredness',
+      'The dog is bored and wants to go for a walk',
+      'The dog is hungry and wants dinner',
+      'The dog is relaxed and happy to see you'
+    ],
+    explanation: 'Yawning is displacement stress, not necessarily tiredness — often seen at thresholds: doorways, greetings, before a correction lands.',
+    guideLink: '#symptom-glossary'
+  },
+  {
+    topic: 'Body language',
+    breedCategory: 'all',
+    track: 'both',
+    text: 'A dog licks its lips repeatedly when no food is present and you have just leaned toward them. What does this signal?',
+    options: [
+      'Appeasement or stress processing — the nervous system managing discomfort',
+      'The dog is hungry and wants a treat',
+      'The dog has tasted something on the floor',
+      'The dog is about to bark playfully'
+    ],
+    explanation: 'Lip licking is displacement or appeasement — nervous system processing stress. Watch what happened in the second before.',
+    guideLink: '#symptom-glossary'
+  },
+  {
+    topic: 'Body language',
+    breedCategory: 'all',
+    track: 'both',
+    text: 'As you reach to pet your dog, their body stiffens and weight shifts onto their back legs. What should you do?',
+    options: [
+      'Create space — they are not ready for interaction; wait or approach differently',
+      'Pet them anyway to show you mean no harm',
+      'Give a verbal correction for being unfriendly',
+      'Offer a treat to change their mind'
+    ],
+    explanation: 'Stiff posture with weight back means not ready for interaction. The three-second pause exists to catch this before you push through.',
+    guideLink: '#three-second-pause'
+  },
+  {
+    topic: 'Body language',
+    breedCategory: 'all',
+    track: 'both',
+    text: 'One dog approaches another with hackles raised and a stiff, silent body. What does this usually indicate?',
+    options: [
+      'Escalation precursor — real conflict risk, not healthy play',
+      'Healthy excitement before a play bow',
+      'Submission — the dog is yielding space',
+      'Indifference — the dogs will ignore each other'
+    ],
+    explanation: 'Stiff approach with sustained hackles and silent hard staring are early conflict flags. See Dog meetings and Symptom glossary.',
+    guideLink: '#dog-meetings'
+  },
+  {
+    topic: 'Body language',
+    breedCategory: 'all',
+    track: 'both',
+    text: 'A dog drops into a play bow — elbows down, rear up — but the body stays stiff and the stare is fixed. What does this mean?',
+    options: [
+      'Ambivalent, not playful — pair with tail, movement, and what happens next',
+      'Clear invitation to play — always safe to engage',
+      'Submission — the dog is asking to be left alone',
+      'Aggression — immediate separation required'
+    ],
+    explanation: 'A stiff bow with a fixed stare is ambivalent. A loose bow with fluid movement is a genuine play invitation.',
+    guideLink: '#symptom-glossary'
+  },
+  {
+    topic: 'Body language',
+    breedCategory: 'all',
+    track: 'both',
+    text: 'After a tense greeting with a stranger, your dog does a full-body shake-off. What does this usually mean?',
+    options: [
+      'Stress reset — the dog marking that a moment has passed',
+      'The dog is wet or uncomfortable from the collar',
+      'The dog wants to play with the stranger',
+      'The dog is about to lunge'
+    ],
+    explanation: 'Shake-off is reset after stress. Repeated shake-offs without settling may mean ongoing load.',
+    guideLink: '#symptom-glossary'
+  },
+  {
+    topic: 'Body language',
+    breedCategory: 'all',
+    track: 'both',
+    text: 'Your adolescent dog repeatedly pushes past you through doorways and into your space shoulder-first. What is this behaviour?',
+    options: [
+      'Rank or momentum testing — information to correct early, not a personality flaw',
+      'Affection — the dog wants to be close to you',
+      'Fear — the dog is trying to hide behind you',
+      'Playfulness that should be encouraged'
+    ],
+    explanation: 'Shoulder barging tests rank or momentum. Treat as information and correct early — collar grab or butt push depending on the behaviour.',
+    guideLink: '#symptom-glossary'
+  },
+
+  // ── Relationship habits ───────────────────────────────────────────────────
+  {
+    topic: 'Relationship habits',
+    breedCategory: 'all',
+    track: 'both',
+    text: 'When you arrive home, your dog greets you with frantic helicopter tail-wagging and jumping. What does the guide recommend?',
+    options: [
+      'Enter quietly, ignore for about sixty seconds, engage only after calm with four paws on the floor',
+      'Match their energy immediately so they feel loved',
+      'Give a verbal correction for jumping every time',
+      'Ignore the dog permanently — no greeting ever'
+    ],
+    explanation: 'Matching frantic greeting energy raises the arousal baseline. Wait for settled body before engaging — calm earns connection.',
+    guideLink: '#home-return'
+  },
+  {
+    topic: 'Relationship habits',
+    breedCategory: 'all',
+    track: 'both',
+    text: 'Why does the guide recommend a three-second pause before petting or approaching your dog?',
+    options: [
+      'To read micro-signals — ears, eyes, weight — before pushing into an interaction they cannot comfortably exit',
+      'To make the dog wait as a dominance display',
+      'Because dogs cannot process touch for three seconds after movement',
+      'To build anticipation for a treat reward'
+    ],
+    explanation: 'The pause lets you read comfort level. Ignoring micro-signals leads to learned helplessness and behaviour owners call "snapping out of nowhere."',
+    guideLink: '#three-second-pause'
+  },
+  {
+    topic: 'Relationship habits',
+    breedCategory: 'all',
+    track: 'both',
+    text: 'Why is practising commands only in a quiet living room insufficient?',
+    options: [
+      'Dogs do not generalize easily — real progress happens when you reinforce spontaneous good choices in real environments',
+      'Living rooms are too small for proper training',
+      'Treats do not work indoors',
+      'Dogs cannot hear commands in quiet spaces'
+    ],
+    explanation: 'Carry reserved treats on real outings. Catch and reward spontaneous good choices — looking at you instead of a trigger, waiting without a prompt.',
+    guideLink: '#expectations'
+  },
+  {
+    topic: 'Relationship habits',
+    breedCategory: 'all',
+    track: 'both',
+    text: 'Your dog ignores your first "sit" cue. What does the guide instruct?',
+    options: [
+      'Do not repeat louder — guide with body or leash, then reward the completed behaviour',
+      'Repeat the command until the dog complies',
+      'Give up and try again tomorrow',
+      'Shout the command to show you mean it'
+    ],
+    explanation: 'Repeating teaches the first prompt is optional. Say it once; if ignored, step in with spatial pressure or leash guidance, then reward.',
+    guideLink: '#cue-once'
+  },
+  {
+    topic: 'Relationship habits',
+    breedCategory: 'all',
+    track: 'both',
+    text: 'How should sniffing fit into a structured on-lead walk?',
+    options: [
+      'Heel earns explicit sniff breaks; pulling toward a scent before release loses the break',
+      'Sniffing should be banned — it causes pulling',
+      'Let the dog pull to every scent — sniffing is always allowed',
+      'Sniff only at the end of the walk as a single reward'
+    ],
+    explanation: 'Scenting is how dogs decompress. Structured heel work opens sniff breaks; pulling toward scent loses them. See Sniff breaks.',
+    guideLink: '#sniff-breaks'
+  },
+  {
+    topic: 'Relationship habits',
+    breedCategory: 'all',
+    track: 'both',
+    text: 'Your dog shows discomfort around a stranger reaching to pet them. What builds trust?',
+    options: [
+      'Step in, create distance, and be a calm anchor — do not push them through for others',
+      'Encourage the stranger to keep petting so the dog learns people are safe',
+      'Pick the dog up and reassure them with baby talk',
+      'Leave immediately and avoid all strangers forever'
+    ],
+    explanation: 'Trust is earned by advocating for the dog. Love without consistent advocacy does not build the trust reactive dogs need.',
+    guideLink: '#trust-not-just-love'
   }
 ];

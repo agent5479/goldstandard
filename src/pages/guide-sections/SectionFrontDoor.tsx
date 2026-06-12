@@ -26,6 +26,19 @@ export default function SectionFrontDoor() {
         <strong>🚪 Why the door matters so much</strong>
         <p>Dogs that bolt through doors learn that their impulse sets the pace for the whole walk. A dog that waits learns the opposite: the structure is already in place before they reach the world. That mindset is harder to undo than it is to install — which is why every exit counts.</p>
       </div>
+
+      <h3 id="home-return">🏠 Coming home: do not match the frenzy</h3>
+
+      <p>The threshold works both ways. Matching your dog's frantic, high-energy helicopter tail-wagging the moment you walk in accidentally reinforces emotional dysregulation. It continuously pushes their nervous system's arousal threshold higher and builds a chronically stressed baseline.</p>
+
+      <p>When you arrive home, walk in quietly, set your things down, and ignore them for the first sixty seconds. Wait for ten to thirty seconds of calm behaviour — all four paws on the floor, body settled — before you engage. That is not coldness; it is structure. You are teaching the dog that calm earns connection, not chaos.</p>
+
+      <ul className="checklist">
+        <li>Enter quietly — no high-pitched greeting that matches their energy</li>
+        <li>Ignore jumping, circling, and vocalising for the first minute</li>
+        <li>Engage only when the body settles — four paws down, loose posture</li>
+        <li>Watch for displacement signals at greetings — <a href="#symptom-glossary">yawning, lip lick</a>, weight back</li>
+      </ul>
       </div>
     </section>
   );

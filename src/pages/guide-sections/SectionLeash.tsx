@@ -30,6 +30,19 @@ export default function SectionLeash() {
         <strong>🪵 Stick assist for downward correction</strong>
         <p>If downward leash pressure is hard to apply — common with small dogs or for handlers with less grip strength — bolt or attach the leash to a short stick. When the stick is held against the ground, the dog is pulled down through the leash without you fighting upward tension on the collar. A simple trick that makes the <a href="#leash-jerk">downward leash jerk</a> achievable and consistent.</p>
       </div>
+
+      <h3 id="sniff-breaks">👃 Heel earns the sniff break</h3>
+
+      <p>Treating a walk purely as a point-A to point-B physical exercise drill misses a dog's most critical sensory requirement. Scenting is how dogs process the world and decompress — research shows letting dogs sniff dramatically lowers their stress hormones compared to physical distance alone.</p>
+
+      <p>Implement a clear structured protocol: walk nicely on heel, then grant regular, explicit breaks to stop and sniff. The break is earned — calm heel work opens it; pulling toward a scent loses it. That is the same frame as <a href="#access">Access training</a>, applied on-lead. When the break ends, heel resumes without negotiation.</p>
+
+      <ol className="steps">
+        <li>Structured heel on slack leash — you set the pace and direction</li>
+        <li>Release cue for an explicit sniff break — stop, let the nose work</li>
+        <li>Pulling toward a scent before release costs the break — reset to heel</li>
+        <li>Recall or heel cue ends the break; repeat the cycle through the walk</li>
+      </ol>
       </div>
     </section>
   );

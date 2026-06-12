@@ -105,6 +105,19 @@ export default function SectionReadingDog() {
 
       <p>If you recognise this in your household, it is fixable. The method in this guide — <a href="#access">access</a>, <a href="#timing">timing</a>, <a href="#corrections">corrections without drama</a>, and <a href="#speaking-aloud">speaking structure aloud</a> — rebuilds the relationship frame. Mention it in sessions so the recovery plan matches the dog you actually have, not the dog you wish you had started with.</p>
 
+      <h3 id="three-second-pause">⏸️ The three-second pause</h3>
+
+      <p>Before you pet your dog, call them over, or move toward them — pause for three seconds. Use that brief moment to read what their body is actually saying: ear position, eye softness, where their weight sits. Weight shifted back, ears pinned, or a turned head means they are not ready. A loose body with weight forward and soft eyes means safer to engage.</p>
+
+      <p>Failing to read these micro-signals pushes dogs into interactions they cannot comfortably exit. Over time that creates learned helplessness — the dog stops signalling because signalling did not work. What owners then call "snapping out of nowhere" is often the end of a conversation they never learned to hear. Cross-check every pause against the <a href="#symptom-glossary">Symptom glossary</a> below.</p>
+
+      <ul className="checklist">
+        <li>Pause before touch, approach, or calling over — not only around strangers</li>
+        <li>Read ears, eyes, and weight distribution before you decide to engage</li>
+        <li>Weight back or stiff posture = create space; do not push through</li>
+        <li>When in doubt, wait — the dog will tell you when they are ready</li>
+      </ul>
+
       <h3 id="symptom-glossary">📋 Symptom glossary</h3>
 
       <p>These signals overlap. Context — what just happened, who is present, heat vs stress — matters as much as the gesture itself. Use this as a working reference, not a verdict.</p>
@@ -183,6 +196,21 @@ export default function SectionReadingDog() {
               <td><strong>Stiffening / freeze</strong></td>
               <td>Precursor to reaction — the body locks before bark, lunge, or snap</td>
               <td>Catch here if you can; once fully escalated, you are often inside the <a href="#timing">one-second window</a> already — use the <a href="#butt-push">butt push</a> or <a href="#collar-snatch">collar grab</a> as appropriate</td>
+            </tr>
+            <tr>
+              <td><strong>Whale eye</strong></td>
+              <td>Whites of the eyes visible, head turned away — stress, discomfort, or conflict avoidance</td>
+              <td>Often missed because the tail may still wag; pair with stiff body or weight back before engaging — see <a href="#three-second-pause">three-second pause</a></td>
+            </tr>
+            <tr>
+              <td><strong>Stiff posture / weight back</strong></td>
+              <td>Braced body with weight shifted rearward — not ready for interaction or approach</td>
+              <td>Common before greetings, vet handling, or when a stranger reaches; create distance rather than push through</td>
+            </tr>
+            <tr>
+              <td><strong>Helicopter tail (high arousal)</strong></td>
+              <td>Fast circular wagging at greetings — excitement dysregulation, not calm happiness</td>
+              <td>Matching this energy at the door raises the arousal baseline; wait for settled body before engaging — see <a href="#home-return">coming home</a></td>
             </tr>
           </tbody>
         </table>

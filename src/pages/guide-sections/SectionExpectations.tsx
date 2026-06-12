@@ -51,10 +51,25 @@ export default function SectionExpectations() {
 
       <p>A difficult situation — another dog, a busy market, a distraction at the beach — is not something to avoid. It's the training environment. Controlled exposure to real triggers is what turns learned behaviour into reliable behaviour — use the <a href="#ready-stance">ready stance</a> and <a href="#butt-push">butt push</a> when reactivity builds. The goal isn't a dog that only behaves in quiet conditions. It's a dog that can be trusted anywhere.</p>
 
+      <p>Dogs do not generalize easily. Practising commands exclusively in a quiet living room at seven in the evening with a treat bag does not produce a dog that holds the standard at the front door, on walks, or around real distractions. Carry your <a href="#treat-diagnostic">reserved training treats</a> out in the real world. Real progress happens when you catch and reinforce spontaneous good choices — choosing to look at you instead of a trigger, waiting patiently without a prompt, holding position when nothing was asked. That is the work — see <a href="#rewards">Rewards</a> and <a href="#daily">Daily practice</a>.</p>
+
       <div className="callout">
         <strong>🤝 Safe negotiation</strong>
         <p>Dogs need to stretch tolerances sometimes — a good sniff, a moment of curiosity, a small push against the boundary. That's healthy. It grows their brain and their confidence. The key is that it happens on your terms, within a structure you control — the same frame as <a href="#access">earned access</a>. It's not about the dog. But it is for the dog.</p>
       </div>
+
+      <h3 id="trust-not-just-love">🤝 Trust, not just love</h3>
+
+      <p>Love alone is not enough. Dogs who only love their owners often remain reactive or anxious because they do not trust their owner to safely navigate the environment. Trust is earned through unwavering consistency and by advocating for them — not through affection alone.</p>
+
+      <p>When your dog shows discomfort around kids, strangers, or at the vet, do not push them through it to satisfy others. Step in, create distance, get down on their level, and be a calm anchor so they know you have things handled. That is the difference between a dog that loves you and a dog that chooses you in the moments that matter — the same frame as <a href="#common-pitfalls">guardian-breed pitfalls</a> and <a href="#access">earned access</a>.</p>
+
+      <ul className="checklist">
+        <li>Advocate before the dog has to escalate — read the <a href="#three-second-pause">three-second pause</a> signals</li>
+        <li>Create distance when discomfort shows; do not negotiate with strangers or children</li>
+        <li>Be the calm anchor — your certainty is what they borrow when the world is loud</li>
+        <li>Consistency builds trust faster than comfort-talk ever will</li>
+      </ul>
 
       <h3>❤️ What your dog gives back.</h3>
 

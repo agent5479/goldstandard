@@ -27,6 +27,11 @@ export default function SectionOwnerMindset() {
         <strong>💡 Why this matters</strong>
         <p>Dogs don't misbehave out of malice — they fill whatever role the situation requires. If you're anxious, they become your guardian. If you're calm and certain, they relax into being your companion. Most "difficult" behaviour disappears when the owner regulation improves.</p>
       </div>
+
+      <div className="callout">
+        <strong>🎯 The relationship is the project</strong>
+        <p>Your dog is not the project — the relationship is. When you stop micromanaging and instead build an environment of calm follow-through and active listening, your dog naturally chooses you in the moments that matter most.</p>
+      </div>
       </div>
     </section>
   );
