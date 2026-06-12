@@ -4,6 +4,8 @@ import SiteHeader from '../components/SiteHeader';
 import SiteFooter from '../components/SiteFooter';
 import TrackChooser from './exam/TrackChooser';
 import BreedPicker from './exam/BreedPicker';
+import MixPicker from './exam/MixPicker';
+import type { MixSelection } from './exam/MixPicker';
 import Quiz from './exam/Quiz';
 import Results from './exam/Results';
 import { buildOwnerExam, buildTrainerExam } from './exam/engine';
@@ -14,6 +16,7 @@ import type { BreedCategory } from '../data/breeds';
 type ExamState =
   | { step: 'start' }
   | { step: 'breed' }
+  | { step: 'mix' }
   | { step: 'quiz'; track: 'owner' | 'trainer'; breedName: string | null; contextLabel: string; questions: PreparedQuestion[] }
   | { step: 'results'; track: 'owner' | 'trainer'; breedName: string | null; answers: Answer[] };
 
@@ -32,7 +35,19 @@ export default function ExamPage() {
       track: 'owner',
       breedName,
       contextLabel: `🏡 Owner Exam — ${breedName ? `${breedName} (${catLabel})` : catLabel}`,
-      questions: buildOwnerExam(category)
+      questions: buildOwnerExam([category])
+    });
+  };
+
+  const startMixExam = (selection: MixSelection) => {
+    const mixName = `${selection.parentA.name} × ${selection.parentB ? selection.parentB.name : 'unknown'} mix`;
+    const personalityLabel = breedCategories[selection.personality].label;
+    toStep({
+      step: 'quiz',
+      track: 'owner',
+      breedName: mixName,
+      contextLabel: `🏡 Owner Exam — ${mixName} (${personalityLabel} personality)`,
+      questions: buildOwnerExam([selection.personality, selection.working, selection.physical])
     });
   };
 
@@ -74,7 +89,15 @@ export default function ExamPage() {
         {state.step === 'breed' && (
           <BreedPicker
             onSelect={startOwnerExam}
+            onMixed={() => toStep({ step: 'mix' })}
             onBack={() => toStep({ step: 'start' })}
+          />
+        )}
+
+        {state.step === 'mix' && (
+          <MixPicker
+            onSelect={startMixExam}
+            onBack={() => toStep({ step: 'breed' })}
           />
         )}
 

@@ -4,6 +4,7 @@ import type { Breed, BreedCategory } from '../../data/breeds';
 
 interface BreedPickerProps {
   onSelect: (category: BreedCategory, breedName: string | null) => void;
+  onMixed: () => void;
   onBack: () => void;
 }
 
@@ -13,7 +14,7 @@ function filterBreeds(query: string): Breed[] {
   return breeds.filter((b) => b.name.toLowerCase().includes(q)).slice(0, 8);
 }
 
-export default function BreedPicker({ onSelect, onBack }: BreedPickerProps) {
+export default function BreedPicker({ onSelect, onMixed, onBack }: BreedPickerProps) {
   const [query, setQuery] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -61,7 +62,12 @@ export default function BreedPicker({ onSelect, onBack }: BreedPickerProps) {
           ))}
         </ul>
       </div>
-      <p className="exam-breed-or">Mixed breed, or not on the list? Choose the closest temperament:</p>
+      <p className="exam-breed-or">Got a cross?</p>
+      <button type="button" className="exam-category-card exam-mix-card" onClick={onMixed}>
+        <span className="exam-category-label">🐾 Mongrel / mix / cross</span>
+        <span className="exam-category-note">Pick the two parent breeds (or your best guess) and tell us which traits your dog inherited from each — personality, working style, and build often come from different sides.</span>
+      </button>
+      <p className="exam-breed-or">Not sure of the cross, or breed not listed? Choose the closest temperament:</p>
       <div className="exam-category-cards" id="exam-category-cards">
         {categoryKeys.map((key) => (
           <button type="button" className="exam-category-card" key={key} onClick={() => onSelect(key, null)}>

@@ -139,7 +139,7 @@ export const examQuestions: Question[] = [
       'By immediately throwing another treat further away',
       'By unclipping the leash as the recall reward'
     ],
-    explanation: 'Reward with the treat at your feet — affection can follow once the dog is calm at your side. Excited cuddling re-elevates the energy you just called them out of.',
+    explanation: 'Reward with the treat at your feet — affection can follow once the dog is calm at your side. Excited cuddling re-elevates the energy you just called them out of. The go-get treat must be the reserved training currency — a favourite the dog gets in sessions and nowhere else — not an overused everyday snack.',
     guideLink: '#go-get-recall'
   },
   {
@@ -676,27 +676,69 @@ export const examQuestions: Question[] = [
     track: 'both',
     text: 'If using treats, what kind works best as a reward signal?',
     options: [
-      'A rare, high-value treat the dog hasn\'t been overexposed to — like dried liver',
+      'A rare, high-value treat the dog hasn\'t been overexposed to — like dried liver — kept training-only',
+      'Their favourite treat, given whenever they do anything good throughout the day',
       'The dog\'s normal kibble, so rewards stay consistent with meals',
-      'Large treats, so the reward takes longer to eat',
-      'Whatever is cheapest, since quantity matters more than quality'
+      'Large treats, so the reward takes longer to eat'
     ],
-    explanation: 'Use a rare, high-value treat. The rarer the treat, the stronger its value as a reward signal.',
+    explanation: 'Use a rare, high-value treat and reserve it for training sessions only. The rarer the treat, the stronger its value as a reward signal — handing it out through the day drains exactly the value training depends on.',
     guideLink: '#rewards'
   },
   {
     topic: 'Access & rewards',
     breedCategory: 'all',
     track: 'both',
-    text: 'Your dog is not food-motivated. What does the guide say to do?',
+    text: 'A dog ignores treats in training. According to the guide, what should you check before switching to a different reward currency?',
     options: [
-      'Identify what the dog actually wants — access, play, or social interaction — and use that',
+      'Whether the treat has been overused, the dog is hungry, and a favourite is reserved for training only — then consider access, play, or social rewards',
+      'Nothing — a dog that ignores treats is not food-motivated, so move straight to access rewards',
       'Withhold meals until food becomes motivating',
-      'Train without rewards; obedience should not depend on payment',
-      'Keep trying different treats until one works'
+      'Keep trying random new treats until one works'
     ],
-    explanation: 'Not every dog is food-motivated. A dog that wants to run gets to run when it behaves. For environmental drives, access training is often the primary currency.',
-    guideLink: '#rewards'
+    explanation: 'Ignoring treats is usually a setup problem, not a temperament verdict. Run the checks in order — overuse, hunger, training-only reservation — before concluding the dog needs a different currency.',
+    guideLink: '#treat-diagnostic'
+  },
+  {
+    topic: 'Access & rewards',
+    breedCategory: 'all',
+    track: 'both',
+    text: 'Your dog shows no interest in food during sessions, yet eats dinner enthusiastically every night. What is the most likely explanation?',
+    options: [
+      'A setup problem — the training treat is overexposed, not reserved for sessions, or the dog isn\'t hungry at training time',
+      'The dog is genuinely not food-oriented and needs access rewards instead',
+      'The dog is unwell and should see a vet before training continues',
+      'The dog has learned that refusing treats earns more attention'
+    ],
+    explanation: 'A dog that eats meals well clearly values food. Fix the setup first — rarity, reservation, and appetite — before concluding the temperament isn\'t food-oriented.',
+    guideLink: '#treat-diagnostic'
+  },
+  {
+    topic: 'Access & rewards',
+    breedCategory: 'all',
+    track: 'both',
+    text: 'You train right after your dog has eaten its meal, and it ignores the treats. What has gone wrong?',
+    options: [
+      'The dog isn\'t hungry — appetite is part of what the food reward depends on',
+      'The treats are too small to compete with a full meal',
+      'Nothing — full dogs learn just as well as hungry ones',
+      'The dog is being stubborn and needs a firmer correction'
+    ],
+    explanation: 'Training straight after a meal, or with kibble available all day, removes the appetite the reward depends on. Check hunger as part of the treat diagnostic before changing anything else.',
+    guideLink: '#treat-diagnostic'
+  },
+  {
+    topic: 'Access & rewards',
+    breedCategory: 'all',
+    track: 'both',
+    text: 'Why should the dog\'s single favourite treat be reserved exclusively for training sessions?',
+    options: [
+      'Rarity keeps it powerful — given freely, it stops being currency and loses its value as a reward signal',
+      'So the dog doesn\'t gain weight from too many treats',
+      'Because favourite treats are usually expensive',
+      'To prevent other family members from confusing the dog'
+    ],
+    explanation: 'The ultimate treat must never be overused or it loses its value — the rarity supports the process. Reserve it for sessions: not walks, not settling, not "just because."',
+    guideLink: '#treat-diagnostic'
   },
   {
     topic: 'Access & rewards',
@@ -711,6 +753,62 @@ export const examQuestions: Question[] = [
     ],
     explanation: '"Good boy" during or just after a reactive episode rewards the episode. Save verbal praise for calm, correct behaviour — delivered calmly.',
     guideLink: '#rewards'
+  },
+  {
+    topic: 'Access & rewards',
+    breedCategory: 'all',
+    track: 'both',
+    text: 'You give your dog\'s favourite treat throughout the day for minor behaviours. In training sessions, it ignores that same treat. Why?',
+    options: [
+      'Overuse has drained its value — rarity supports the process, so it must be reserved for training only',
+      'The dog has developed an allergy to the treat',
+      'The treat was never actually the dog\'s favourite',
+      'Training sessions are inherently less rewarding than daily life'
+    ],
+    explanation: 'This is the treat exploit being abused. The ultimate treat must never be overused or it loses its value — handed out casually, it stops being currency exactly when you need it in training.',
+    guideLink: '#treat-diagnostic'
+  },
+  {
+    topic: 'Access & rewards',
+    breedCategory: 'all',
+    track: 'both',
+    text: 'With treat setup ruled out, a dog still ignores food but pulls hard toward sniffing spots and fixates on movement. What currency should you train with?',
+    options: [
+      'Access and environmental rewards — earned off-leash time, sniffing, and running',
+      'A higher-value treat than the one currently used',
+      'Verbal praise delivered in an excited, high-energy tone',
+      'Longer walks so the dog tires out and accepts treats again'
+    ],
+    explanation: 'Pulling toward sniffing and fixating on movement are signals of an access-oriented dog. Earned off-lead time, sniff, and run become the primary currency — the core of access training.',
+    guideLink: '#orientation-signals'
+  },
+  {
+    topic: 'Access & rewards',
+    breedCategory: 'all',
+    track: 'both',
+    text: 'A people-focused dog works hard for calm approval but shows little interest in treats. How should its reward currency be delivered?',
+    options: [
+      'As calm affection after correct behaviour — never during reactivity',
+      'As excited cuddling the moment the dog does anything right',
+      'Treats should still be forced as the primary reward for consistency',
+      'Approval should be withheld entirely so the dog works harder for it'
+    ],
+    explanation: 'Socially-oriented dogs respond strongly to calm approval. Deliver affection calmly after correct behaviour — excited delivery re-elevates energy, and affection during reactivity rewards the episode.',
+    guideLink: '#orientation-signals'
+  },
+  {
+    topic: 'Access & rewards',
+    breedCategory: 'all',
+    track: 'both',
+    text: 'The diagnostic checks are done: no overuse, the dog was hungry, a favourite was reserved — and food still doesn\'t land. What now?',
+    options: [
+      'Identify what the dog actually wants — access, play, or social interaction — and use that as the currency',
+      'Repeat the diagnostic checks until food starts working',
+      'Train without rewards, since this dog cannot be motivated',
+      'Withhold meals so hunger eventually makes treats valuable'
+    ],
+    explanation: 'Only after the setup checks are ruled out can you conclude the dog genuinely isn\'t food-oriented. Then read the orientation signals — access, play, or social — and match the motivator to the dog, not the other way around.',
+    guideLink: '#orientation-signals'
   },
 
   /* ── Timing ── */
@@ -1403,5 +1501,293 @@ export const examQuestions: Question[] = [
     ],
     explanation: 'Constant carrying and over-sheltering from normal dog learning is one of the classic human-baby-trap pitfalls. Undoing learned dependency is slower and harder than building the right frame early.',
     guideLink: '#common-pitfalls'
+  },
+
+  /* ── Breed: sighthound / chase ── */
+  {
+    topic: 'Breed temperament',
+    breedCategory: 'sighthound',
+    track: 'both',
+    text: 'Your sighthound is calm all day, then explodes after a rabbit mid-walk. Where does the training work actually happen?',
+    options: [
+      'In the precursor window — the head-snap and body-lock before the launch; no correction outruns a chase already underway',
+      'Mid-chase, with louder and louder recall commands',
+      'After the chase, with a firm correction so the dog connects the two',
+      'Nowhere — chase instinct cannot be managed in sighthounds'
+    ],
+    explanation: 'Once a sighthound launches, the correction window has closed. Read the precursor — the visual lock and weight shift — and interrupt there, inside the one-second rule.',
+    guideLink: '#breed-temperament'
+  },
+  {
+    topic: 'Breed temperament',
+    breedCategory: 'sighthound',
+    track: 'both',
+    text: 'How should correction intensity be calibrated for a typical soft-tempered sighthound?',
+    options: [
+      'Lighter entry — harsh delivery shuts these dogs down rather than teaching them; the standard holds, the volume drops',
+      'Extra firm, because their chase drive needs matching force',
+      'No corrections at all — sighthounds only respond to rewards',
+      'The same fixed intensity used for every breed'
+    ],
+    explanation: 'Age and breed together set the floor. Sighthounds are typically soft-tempered: the same technique applies with lighter delivery and quicker recovery — hold the standard, soften the drama.',
+    guideLink: '#correction-intensity'
+  },
+  {
+    topic: 'Breed temperament',
+    breedCategory: 'sighthound',
+    track: 'both',
+    text: 'A greyhound sleeps most of the day. Does it still need the structure of waits and earned access?',
+    options: [
+      'Yes — low energy at rest does not mean low need for leadership; the chase trigger is managed by structure built in calm moments',
+      'No — a lazy dog has nothing to correct',
+      'Only if it has already chased something',
+      'Structure only matters for working breeds'
+    ],
+    explanation: 'Sighthounds are calm, even lazy, at rest — then explosive on trigger. The structure built at doors, meals, and on leash in calm moments is exactly what holds when movement flashes.',
+    guideLink: '#breed-temperament'
+  },
+  {
+    topic: 'Breed temperament',
+    breedCategory: 'sighthound',
+    track: 'both',
+    text: 'When is off-leash freedom appropriate for a chase-driven sighthound?',
+    options: [
+      'When it is earned and the environment is controlled — access is granted where the chase trigger can be managed, not hoped about',
+      'Always — sighthounds need to run, so freedom comes first',
+      'Never — chase breeds can never be off leash anywhere',
+      'Whenever the dog has been calm for a full day'
+    ],
+    explanation: 'Access training applies: freedom is earned and granted where you can hold the contract. A fenced run area manages the trigger; an open field next to a road does not.',
+    guideLink: '#access'
+  },
+  {
+    topic: 'Breed temperament',
+    breedCategory: 'sighthound',
+    track: 'both',
+    text: 'Your sighthound failed and chased. It returns two minutes later. How do you receive it?',
+    options: [
+      'Calmly — leash on, access ends, no anger at the return; punishing the come-back teaches the dog not to come back',
+      'With a firm correction the moment it reaches you',
+      'With excited praise so it knows returning was right',
+      'By ignoring it completely for the rest of the walk'
+    ],
+    explanation: 'Never punish the return — you would be correcting the recall, not the chase. The consequence is calm and structural: leash on, access lost, reset.',
+    guideLink: '#access'
+  },
+
+  /* ── Breed: spitz / sled ── */
+  {
+    topic: 'Breed temperament',
+    breedCategory: 'spitz',
+    track: 'both',
+    text: 'Your husky-type ignores recall drills it performed perfectly last week. What is the most likely reading?',
+    options: [
+      'Independence and boredom — repetition drills bore spitz types into defiance; earned access and varied outlets are the better currency',
+      'The dog has forgotten the command and needs more identical drills',
+      'Hearing loss — vet check before anything else',
+      'The dog is dominant and needs a harder correction'
+    ],
+    explanation: 'Spitz and sled types are independent by design. Endless repetition reads as pointless to them — structure the outcome they want (run, explore) as the earned reward instead.',
+    guideLink: '#breed-temperament'
+  },
+  {
+    topic: 'Breed temperament',
+    breedCategory: 'spitz',
+    track: 'both',
+    text: 'How should escape attempts — fence-jumping, door-darting — be treated with a spitz or sled type?',
+    options: [
+      'As part of the training picture from day one — thresholds, waits, and containment are core work, not an afterthought',
+      'As a phase that adolescent spitz dogs grow out of',
+      'With punishment after the dog is recovered',
+      'By giving more freedom so escape loses its appeal'
+    ],
+    explanation: 'Strong escape instincts are baked into the type. The front-door wait, gate manners, and earned access are the primary tools — and punishing a recovered escapee corrects the return, not the escape.',
+    guideLink: '#front-door'
+  },
+  {
+    topic: 'Breed temperament',
+    breedCategory: 'spitz',
+    track: 'both',
+    text: 'Your malamute "talks back" — howling and vocalising when asked to wait. What is it?',
+    options: [
+      'Breed-typical vocal communication — hold the standard calmly; the noise is not defiance to be punished or distress to be soothed',
+      'Defiance that needs escalating correction until silent',
+      'Distress that should end the training session',
+      'A sign the dog is in pain'
+    ],
+    explanation: 'Spitz types are famously vocal. Read it as information, hold the wait, and release on calm — rewarding the noise with release teaches the dog that volume opens doors.',
+    guideLink: '#breed-temperament'
+  },
+  {
+    topic: 'Breed temperament',
+    breedCategory: 'spitz',
+    track: 'both',
+    text: 'What exercise pattern suits an endurance-bred sled type that is becoming destructive at home?',
+    options: [
+      'Structured, earned outlets — running, pulling work, long varied walks — destruction is unmet drive, not bad character',
+      'A backyard is enough if it is large',
+      'Less exercise, so the dog has less energy for destruction',
+      'Free dog-park time daily, regardless of behaviour'
+    ],
+    explanation: 'Endurance breeds were built to work for hours. Denied outlets, the drive surfaces as destruction or escape. The outlets are earned through structure — access training, not free-for-all.',
+    guideLink: '#access'
+  },
+  {
+    topic: 'Breed temperament',
+    breedCategory: 'spitz',
+    track: 'both',
+    text: 'Given a spitz type\'s weak default recall, how is off-leash access structured?',
+    options: [
+      'Earned in controlled environments with the seven-second check-in enforced — open-country freedom may never be appropriate for some individuals',
+      'Granted normally — recall trains the same in every breed',
+      'Never granted under any circumstances',
+      'Granted only in winter when the breed is comfortable'
+    ],
+    explanation: 'The access contract is the same; the venue is chosen honestly. Some spitz individuals can earn open freedom, others hold it only in fenced spaces — read the dog, not the wish.',
+    guideLink: '#check-in-seven'
+  },
+
+  /* ── Breed: scenthound / nose-led ── */
+  {
+    topic: 'Breed temperament',
+    breedCategory: 'scenthound',
+    track: 'both',
+    text: 'Your beagle\'s recall is perfect at home but vanishes when its nose hits a trail. What is happening?',
+    options: [
+      'The nose has engaged and the ears have switched off — it is biology, not defiance; recall must be trained before the lock-on',
+      'The dog is being deliberately disobedient and needs firmer punishment',
+      'The dog never learned the recall properly',
+      'Scenthounds cannot be trained to recall at all'
+    ],
+    explanation: 'When a scenthound\'s nose engages, recall fails on scent, not on respect. Interrupt in the precursor window — head dropping, tail rate changing — before the trail takes over.',
+    guideLink: '#breed-temperament'
+  },
+  {
+    topic: 'Breed temperament',
+    breedCategory: 'scenthound',
+    track: 'both',
+    text: 'What reward currency is usually strongest for a scenthound, and what is the catch?',
+    options: [
+      'Food — most are strongly food-motivated, but the treat must be high-value and reserved for training or it loses to the scent',
+      'Affection — scenthounds are primarily people-focused',
+      'Toys — prey drive beats appetite in hounds',
+      'None — scenthounds do not respond to rewards'
+    ],
+    explanation: 'Most scenthounds are strongly food-driven, but an everyday snack cannot compete with a fresh trail. Run the treat diagnostic: rare, high-value, training-only.',
+    guideLink: '#treat-diagnostic'
+  },
+  {
+    topic: 'Breed temperament',
+    breedCategory: 'scenthound',
+    track: 'both',
+    text: 'Your basset bays loudly at interesting smells on walks. How should this be read?',
+    options: [
+      'As breed-typical communication — manage the arousal with structure, but do not treat the voice itself as naughtiness',
+      'As aggression that needs immediate firm correction',
+      'As separation anxiety',
+      'As a request for food'
+    ],
+    explanation: 'Baying is how scenthounds communicate. Correct the behaviour you actually need changed — pulling, fixation — not the voice itself, and never reward the noise with excitement.',
+    guideLink: '#breed-temperament'
+  },
+  {
+    topic: 'Breed temperament',
+    breedCategory: 'scenthound',
+    track: 'both',
+    text: 'Where should sniffing fit in a nose-led dog\'s walk?',
+    options: [
+      'As earned access — structured sniff time is one of the strongest rewards available for this type',
+      'Banned entirely — sniffing feeds the problem',
+      'Unlimited — denying the nose is cruel',
+      'Only at the very start of the walk'
+    ],
+    explanation: 'The nose is the dog\'s strongest drive — which makes sniff time powerful currency. Heel earns the sniff break; pulling toward a scent loses it. Access training with the nose as the reward.',
+    guideLink: '#access'
+  },
+  {
+    topic: 'Breed temperament',
+    breedCategory: 'scenthound',
+    track: 'both',
+    text: 'A dachshund-type freezes, head down, locked on a scent trail, about to launch. What is the correct response?',
+    options: [
+      'Interrupt now — this is the precursor window; the butt push or leash correction lands here, not after the trail takes over',
+      'Wait to see whether the dog chooses to leave the trail',
+      'Call the recall repeatedly from a distance',
+      'Drag the dog away while soothing it'
+    ],
+    explanation: 'The freeze-and-lock is the precursor. The one-second rule applies: act in the window before the nose fully engages, because after that the correction teaches nothing.',
+    guideLink: '#timing'
+  },
+
+  /* ── Breed: giant / livestock guardian ── */
+  {
+    topic: 'Breed temperament',
+    breedCategory: 'giant',
+    track: 'both',
+    text: 'Why are leash manners non-negotiable from day one with a giant breed puppy?',
+    options: [
+      'Habits cute at eight kilograms are dangerous at sixty — the standard must be set before the size arrives',
+      'Giant puppies are stronger than adult dogs of other breeds',
+      'They are not — giant breeds are too young to train before one year',
+      'Because giant breeds cannot learn after six months'
+    ],
+    explanation: 'A jumping, pulling giant-breed adult is a safety problem no one can muscle through. Build the wait, the heel, and calm greetings while the dog is still small enough to correct easily.',
+    guideLink: '#breed-temperament'
+  },
+  {
+    topic: 'Breed temperament',
+    breedCategory: 'giant',
+    track: 'both',
+    text: 'Your Maremma-type ignores commands and patrols the property line instead. What is the correct reading?',
+    options: [
+      'Independence by design — livestock guardians were bred to decide without instruction; structure must make compliance worthwhile, not assume biddability',
+      'Dominance that requires harsh confrontation',
+      'Deafness or a medical issue',
+      'Laziness typical of large breeds'
+    ],
+    explanation: 'Livestock guardian breeds were selected to work alone and make their own calls. They are not defiant — they are unconvinced. Earned access and consistent structure carry more weight than repetition.',
+    guideLink: '#breed-temperament'
+  },
+  {
+    topic: 'Breed temperament',
+    breedCategory: 'giant',
+    track: 'both',
+    text: 'How does slow maturity change training expectations for a giant breed?',
+    options: [
+      'Adolescent testing arrives later and lasts longer — hold the same standard with patience; do not mistake a two-year-old for a finished adult',
+      'It does not — all breeds mature at the same rate',
+      'Training should not start until maturity at three years',
+      'Slow maturity means corrections are never appropriate'
+    ],
+    explanation: 'Giant breeds can be developmentally adolescent well past two. The standard holds throughout — but read rank-testing as developmental, correct it calmly, and expect the arc to be longer.',
+    guideLink: '#breed-age-intensity'
+  },
+  {
+    topic: 'Breed temperament',
+    breedCategory: 'giant',
+    track: 'both',
+    text: 'Your giant breed leans on visitors and pushes through doorways first. Why does this matter more than in a small dog?',
+    options: [
+      'The same rank-testing is physically unmanageable at this size — thresholds and body-space rules are safety equipment, not etiquette',
+      'It does not matter more — size is irrelevant to structure',
+      'Giant breeds lean as affection and should be allowed',
+      'Because visitors might be allergic'
+    ],
+    explanation: 'Shoulder-barging and leaning are the same boundary tests every dog runs — but at sixty kilograms they knock people over. The front-door wait and butt push apply with full consistency.',
+    guideLink: '#front-door'
+  },
+  {
+    topic: 'Breed temperament',
+    breedCategory: 'giant',
+    track: 'both',
+    text: 'A livestock guardian type barks at every passer-by from the yard. What does the guide-aligned response look like?',
+    options: [
+      'Interrupt with the butt push, reward the quiet — and build calm leadership so the dog stops running the watch alone',
+      'Reassure the dog warmly each time so it feels safe',
+      'Encourage it — guarding is what the breed is for',
+      'Leave it outside more so barking loses novelty'
+    ],
+    explanation: 'Guardian instinct plus no leadership equals a dog on permanent duty. Interrupt the rehearsal, reward calm, and take the decision-making burden off the dog through structure.',
+    guideLink: '#butt-push'
   }
 ];

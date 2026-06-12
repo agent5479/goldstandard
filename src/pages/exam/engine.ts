@@ -47,11 +47,29 @@ function prepareQuestion(q: Question): PreparedQuestion {
   };
 }
 
-export function buildOwnerExam(categoryKey: BreedCategory): PreparedQuestion[] {
+/**
+ * Build the owner exam from one or more temperament categories.
+ * A single category (pure breed / temperament card) gets all OWNER_BREED
+ * questions. A mix passes [personality, working style, physical build];
+ * weights favour personality (3/1/1), with duplicates collapsing together.
+ */
+export function buildOwnerExam(categories: BreedCategory[]): PreparedQuestion[] {
+  const weights = categories.length === 1 ? [OWNER_BREED] : [3, 1, 1];
+  const counts = new Map<BreedCategory, number>();
+  categories.forEach((cat, i) => {
+    counts.set(cat, (counts.get(cat) ?? 0) + (weights[i] ?? 0));
+  });
+
+  let breedSpecific: Question[] = [];
+  counts.forEach((n, cat) => {
+    breedSpecific = breedSpecific.concat(
+      sample(examQuestions.filter((q) => q.breedCategory === cat), n)
+    );
+  });
+
   const universal = examQuestions.filter((q) => q.breedCategory === 'all' && q.track === 'both');
-  const breedSpecific = examQuestions.filter((q) => q.breedCategory === categoryKey);
   return shuffle(
-    sample(universal, OWNER_UNIVERSAL).concat(sample(breedSpecific, OWNER_BREED))
+    sample(universal, OWNER_UNIVERSAL).concat(breedSpecific)
   ).map(prepareQuestion);
 }
 

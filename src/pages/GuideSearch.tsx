@@ -30,7 +30,7 @@ const ALIASES: { terms: string[]; href: string }[] = [
   { terms: ['jump', 'jumping', 'lunging', 'mouthing'], href: '#collar-snatch' },
   { terms: ['pulling', 'slack leash', 'heel'], href: '#leash' },
   { terms: ['off lead', 'off-lead', 'freedom', 'access'], href: '#access' },
-  { terms: ['treat', 'treats', 'reward', 'food motivated'], href: '#rewards' },
+  { terms: ['treat', 'treats', 'reward', 'food motivated', 'overused treat', 'treat exploit', 'training only treat', 'reserved treat', 'not hungry', 'reward currency', 'food motivated diagnostic'], href: '#rewards' },
   { terms: ['one second', 'timing', 'association window'], href: '#timing' },
   { terms: ['door', 'doorway', 'threshold', 'front door'], href: '#front-door' },
   { terms: ['check in', 'check-in', 'seven seconds', '7 second'], href: '#check-in-seven' },
