@@ -41,6 +41,14 @@ function sample<T>(arr: T[], n: number): T[] {
   return shuffle(arr).slice(0, n);
 }
 
+/** Sample without reusing questions already chosen (matched by prompt text). */
+function sampleUnique(pool: Question[], n: number, used: Set<string>): Question[] {
+  const available = pool.filter((q) => !used.has(q.text));
+  const picked = sample(available, Math.min(n, available.length));
+  picked.forEach((q) => used.add(q.text));
+  return picked;
+}
+
 /** Source options always list the correct answer first; shuffle for play. */
 function prepareQuestion(q: Question): PreparedQuestion {
   const order = shuffle(q.options.map((_, i) => i));
@@ -58,6 +66,7 @@ function prepareQuestion(q: Question): PreparedQuestion {
  * weights favour personality (3/1/1), with duplicates collapsing together.
  */
 export function buildOwnerExam(categories: BreedCategory[]): PreparedQuestion[] {
+  const used = new Set<string>();
   const weights = categories.length === 1 ? [OWNER_BREED] : [3, 1, 1];
   const counts = new Map<BreedCategory, number>();
   categories.forEach((cat, i) => {
@@ -67,45 +76,50 @@ export function buildOwnerExam(categories: BreedCategory[]): PreparedQuestion[] 
   let breedSpecific: Question[] = [];
   counts.forEach((n, cat) => {
     breedSpecific = breedSpecific.concat(
-      sample(examQuestions.filter((q) => q.breedCategory === cat), n)
+      sampleUnique(examQuestions.filter((q) => q.breedCategory === cat), n, used)
     );
   });
 
   const universal = examQuestions.filter((q) => q.breedCategory === 'all' && q.track === 'both');
-  const bodyLanguage = sample(
+  const bodyLanguage = sampleUnique(
     universal.filter((q) => q.topic === 'Body language'),
-    BODY_LANGUAGE_SLOTS
+    BODY_LANGUAGE_SLOTS,
+    used
   );
-  const relationship = sample(
+  const relationship = sampleUnique(
     universal.filter((q) => q.topic === 'Relationship habits'),
-    RELATIONSHIP_SLOTS
+    RELATIONSHIP_SLOTS,
+    used
   );
-  const equipment = sample(
+  const equipment = sampleUnique(
     universal.filter((q) => q.topic === 'Equipment'),
-    EQUIPMENT_SLOTS
+    EQUIPMENT_SLOTS,
+    used
   );
-  const offLeashSocial = sample(
+  const offLeashSocial = sampleUnique(
     universal.filter((q) => q.topic === 'Off-leash social'),
-    OFF_LEASH_SOCIAL_SLOTS
+    OFF_LEASH_SOCIAL_SLOTS,
+    used
   );
-  const reserved = new Set([...bodyLanguage, ...relationship, ...equipment, ...offLeashSocial]);
   const remaining = OWNER_UNIVERSAL - bodyLanguage.length - relationship.length - equipment.length - offLeashSocial.length;
-  const filler = sample(
-    universal.filter((q) => !reserved.has(q)),
-    remaining
-  );
+  const filler = sampleUnique(universal, remaining, used);
 
   return shuffle(bodyLanguage.concat(relationship, equipment, offLeashSocial, filler).concat(breedSpecific)).map(prepareQuestion);
 }
 
 export function buildTrainerExam(): PreparedQuestion[] {
+  const used = new Set<string>();
   const categories = Object.keys(breedCategories) as BreedCategory[];
   let picked: Question[] = [];
   categories.forEach((key) => {
-    picked = picked.concat(sample(examQuestions.filter((q) => q.breedCategory === key), TRAINER_PER_CATEGORY));
+    picked = picked.concat(
+      sampleUnique(examQuestions.filter((q) => q.breedCategory === key), TRAINER_PER_CATEGORY, used)
+    );
   });
-  picked = picked.concat(sample(examQuestions.filter((q) => q.track === 'trainer'), TRAINER_ADVANCED));
+  picked = picked.concat(
+    sampleUnique(examQuestions.filter((q) => q.track === 'trainer'), TRAINER_ADVANCED, used)
+  );
   const universal = examQuestions.filter((q) => q.breedCategory === 'all' && q.track === 'both');
-  picked = picked.concat(sample(universal, TRAINER_TOTAL - picked.length));
+  picked = picked.concat(sampleUnique(universal, TRAINER_TOTAL - picked.length, used));
   return shuffle(picked).map(prepareQuestion);
 }

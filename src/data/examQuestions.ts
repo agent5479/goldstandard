@@ -232,20 +232,6 @@ export const examQuestions: Question[] = [
     topic: 'Reading signals',
     breedCategory: 'all',
     track: 'both',
-    text: 'Your dog licks its lips when no food is around. What is the typical meaning?',
-    options: [
-      'Displacement or appeasement — processing stress, uncertainty, or a recent correction',
-      'Hunger — the dog is asking for its meal',
-      'A precursor to a bite — remove the dog immediately',
-      'Simple boredom with the session'
-    ],
-    explanation: 'Lip licking is displacement or appeasement — the nervous system processing stress. Watch what happened in the second before.',
-    guideLink: '#symptom-glossary'
-  },
-  {
-    topic: 'Reading signals',
-    breedCategory: 'all',
-    track: 'both',
     text: 'A dog is panting with no heat and no exertion. What does this usually indicate?',
     options: [
       'Stress arousal — the body cooling an activated mind',
@@ -302,34 +288,6 @@ export const examQuestions: Question[] = [
     topic: 'Reading signals',
     breedCategory: 'all',
     track: 'both',
-    text: 'A dog yawning at a doorway or before a greeting most likely indicates:',
-    options: [
-      'Displacement stress — a tension release or self-regulation attempt',
-      'Tiredness — the dog needs a nap before continuing',
-      'Boredom with the routine',
-      'Low blood sugar'
-    ],
-    explanation: 'Yawning is displacement stress, not necessarily tiredness — often seen at thresholds: doorways, greetings, before a correction lands.',
-    guideLink: '#symptom-glossary'
-  },
-  {
-    topic: 'Reading signals',
-    breedCategory: 'all',
-    track: 'both',
-    text: 'After a tense greeting, a dog does a full-body shake-off. What does this usually mean?',
-    options: [
-      'A reset — the dog marking that a stressful moment has passed',
-      'The dog is wet or itchy',
-      'An attempt to remove the collar',
-      'The first stage of a seizure — call a vet'
-    ],
-    explanation: 'Shake-off is reset after stress. Repeated shake-offs without settling may mean ongoing load.',
-    guideLink: '#symptom-glossary'
-  },
-  {
-    topic: 'Reading signals',
-    breedCategory: 'all',
-    track: 'both',
     text: 'A dog with its tail down or tucked is telling you what?',
     options: [
       'Fear, deference, or submission — read safety, not guilt',
@@ -352,20 +310,6 @@ export const examQuestions: Question[] = [
       'Restrict water before greetings'
     ],
     explanation: 'Submissive urination is deference under pressure — often triggered by greeting, looming, or a sharp voice. Lower your energy and rebuild through small wins.',
-    guideLink: '#symptom-glossary'
-  },
-  {
-    topic: 'Reading signals',
-    breedCategory: 'all',
-    track: 'both',
-    text: 'Which play bow is ambivalent rather than a clear play invitation?',
-    options: [
-      'A stiff bow with a fixed stare',
-      'Elbows down, rear up, fluid movement',
-      'A bow followed by a bouncy retreat',
-      'A bow with a loose, wagging body'
-    ],
-    explanation: 'A play bow with a loose body is an invitation. A stiff bow with a fixed stare is ambivalent — pair it with tail, movement, and what happens next.',
     guideLink: '#symptom-glossary'
   },
   {
@@ -984,7 +928,7 @@ export const examQuestions: Question[] = [
     topic: 'Access & rewards',
     breedCategory: 'all',
     track: 'both',
-    text: 'The diagnostic checks are done: no overuse, the dog was hungry, a favourite was reserved — and food still doesn\'t land. What now?',
+    text: 'You have ruled out the usual treat setup problems — the treat is not overused, the dog is hungry at training time, and a favourite is reserved for sessions only — but the dog still ignores food in training. What should you do next?',
     options: [
       'Identify what the dog actually wants — access, play, or social interaction — and use that as the currency',
       'Repeat the diagnostic checks until food starts working',
@@ -1415,6 +1359,20 @@ export const examQuestions: Question[] = [
     topic: 'Breed temperament',
     breedCategory: 'herding',
     track: 'both',
+    text: 'Your herding-type dog circles and nips at moving feet during a family gathering. How should you read this?',
+    options: [
+      'Movement-triggered herding instinct — interrupt at the precursor and channel outlets through structured access, not unstructured chasing games',
+      'Playfulness that should be encouraged so the dog burns energy',
+      'Aggression toward children that requires the dog to be kept away from all gatherings',
+      'A training failure that means herding breeds cannot live with families'
+    ],
+    explanation: 'Herding types are wired to track and intercept movement. Correct early, hold the standard calmly, and give earned outlets — not endless kid-chase as a substitute for structure.',
+    guideLink: '#breed-temperament'
+  },
+  {
+    topic: 'Breed temperament',
+    breedCategory: 'herding',
+    track: 'both',
     text: 'Why is extended face-to-face gazing risky with a visual, herding-type dog?',
     options: [
       'It can build attachment distortion — the dog treats you as an idealised, ever-present figure rather than a calm leader',
@@ -1452,21 +1410,6 @@ export const examQuestions: Question[] = [
     ],
     explanation: 'It is often attachment distortion, not a medical mystery. Structure, access training, reduced face-gazing intimacy, and environmental outlets can rebuild a healthier frame.',
     guideLink: '#common-pitfalls'
-  },
-
-  {
-    topic: 'Breed temperament',
-    breedCategory: 'herding',
-    track: 'both',
-    text: 'Your herding-type dog locks its eyes onto a passing bike. Where is the correction window?',
-    options: [
-      'At the eye-lock itself — for these dogs the stare can become a full fixation before the body ever moves',
-      'When the dog starts running after the bike',
-      'After the bike has passed, as a delayed lesson',
-      'There is no window — chasing movement is unfixable in herding breeds'
-    ],
-    explanation: 'Herding types lock onto movement. Watch for the eye-lock before the lunge — the precursor window matters even more, and slack-leash walking is what lets you see it build.',
-    guideLink: '#breed-temperament'
   },
 
   /* ── Breed: terrier / high-drive ── */
@@ -1880,12 +1823,12 @@ export const examQuestions: Question[] = [
     track: 'both',
     text: 'Where should sniffing fit in a nose-led dog\'s walk?',
     options: [
-      'As earned access — structured sniff time is one of the strongest rewards available for this type',
+      'Structured earned access with frequent proactive thresholds — explicit sniff breaks are powerful currency, released on your cue and calibrated to the dog; pulling before release loses the break',
       'Banned entirely — sniffing feeds the problem',
       'Unlimited — denying the nose is cruel',
       'Only at the very start of the walk'
     ],
-    explanation: 'The nose is the dog\'s strongest drive — which makes sniff time powerful currency. Heel earns the sniff break; pulling toward a scent loses it. Access training with the nose as the reward.',
+    explanation: 'The nose is the dog\'s strongest drive — which makes sniff time powerful currency. Nose-led types often need more frequent, proactive release so heel stays coherent; the frame is still yours: earned breaks, your cue to end, no pulling into scent. See Sniff breaks.',
     guideLink: '#sniff-breaks'
   },
   {
@@ -2052,12 +1995,12 @@ export const examQuestions: Question[] = [
     track: 'both',
     text: 'A dog drops into a play bow — elbows down, rear up — but the body stays stiff and the stare is fixed. What does this mean?',
     options: [
-      'Ambivalent, not playful — pair with tail, movement, and what happens next',
+      'Not a reliable play invitation — ambiguous; read tail, movement, and what happens next before engaging',
       'Clear invitation to play — always safe to engage',
-      'Submission — the dog is asking to be left alone',
-      'Aggression — immediate separation required'
+      'Confirmed calming signal — always safe to engage',
+      'Confirmed aggression — immediate separation required'
     ],
-    explanation: 'A stiff bow with a fixed stare is ambivalent. A loose bow with fluid movement is a genuine play invitation.',
+    explanation: 'The posture mimics a play bow, but stiffness and a fixed stare are not a safe play invite. The same shape can mean appeasement, stress, calming, or predatory arousal — context decides. A loose, bouncy bow is genuine play language. Do not assume play or that a fight is already underway.',
     guideLink: '#symptom-glossary'
   },
   {
@@ -2166,12 +2109,12 @@ export const examQuestions: Question[] = [
     track: 'both',
     text: 'How should sniffing fit into a structured on-lead walk?',
     options: [
-      'Heel earns explicit sniff breaks; pulling toward a scent before release loses the break',
-      'Sniffing should be banned — it causes pulling',
-      'Let the dog pull to every scent — sniffing is always allowed',
-      'Sniff only at the end of the walk as a single reward'
+      'Balance earned breaks with proactive release — heel earns explicit sniff breaks, but grant scent access when the dog needs a threshold to refocus; calibrate frequency to age and drive; pulling before release loses the break',
+      'Sniffing should be banned on-lead — it causes pulling and breaks heel',
+      'Let the dog pull to every scent — denying the nose is cruel',
+      'Hold rigid heel until a fixed distance is covered, then allow one sniff at the end of the walk'
     ],
-    explanation: 'Scenting is how dogs decompress. Structured heel work opens sniff breaks; pulling toward scent loses them. See Sniff breaks.',
+    explanation: 'Scenting is how dogs decompress — not a prize withheld until exhaustion. Structure still holds: you release on your cue, heel resumes on yours, and pulling toward scent before release costs the break. Proactively grant short thresholds when puppies, adolescents, or nose-led dogs need them so focus stays coherent. See Sniff breaks.',
     guideLink: '#sniff-breaks'
   },
   {

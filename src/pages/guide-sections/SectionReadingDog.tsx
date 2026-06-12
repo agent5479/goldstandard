@@ -184,8 +184,8 @@ export default function SectionReadingDog() {
             </tr>
             <tr>
               <td><strong>Play bow</strong></td>
-              <td>Invitation to play when the body stays loose — elbows down, rear up, movement fluid</td>
-              <td>A stiff bow with a fixed stare is ambivalent; pair with tail, movement, and what happens next</td>
+              <td>Invitation to play when the body stays loose — elbows down, rear up, bouncy or fluid movement</td>
+              <td>A stiff bow with a fixed stare is not a reliable play invitation — it may be appeasement, stress, calming, or predatory arousal; the same posture carries different meanings. Read tail, movement, reciprocity, and what happens next; do not assume play or that a fight is already underway</td>
             </tr>
             <tr>
               <td><strong>Eye contact (duration)</strong></td>
@@ -292,7 +292,7 @@ export default function SectionReadingDog() {
         </div>
       </div>
 
-      <p><strong>Early signs to watch:</strong> tail position dropping, submissive urination, a play bow that does not soften the body, prolonged eye contact without release, circling that tightens rather than opens — cross-check <a href="#symptom-glossary">Symptom glossary</a>. The question is not "was there noise?" but "can both dogs disengage?" — intervene when one cannot, not when two adults are simply negotiating rank.</p>
+      <p><strong>Early signs to watch:</strong> tail position dropping, submissive urination, a play bow that does not soften the body — a look-alike that is context-dependent, not a clear invite — prolonged eye contact without release, circling that tightens rather than opens — cross-check <a href="#symptom-glossary">Symptom glossary</a>. The question is not "was there noise?" but "can both dogs disengage?" — intervene when one cannot, not when two adults are simply negotiating rank.</p>
 
       <div className="callout">
         <strong>😰 Your anxiety makes it worse</strong>
