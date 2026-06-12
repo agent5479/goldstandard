@@ -22,11 +22,38 @@
 ## Site
 
 - **Live site:** [agent5479.github.io/goldstandard](https://agent5479.github.io/goldstandard/)  
-- **Client guide:** [guide.html](https://agent5479.github.io/goldstandard/guide.html) — reference for clients (principles, corrections, leash work, access training, timing, rewards, daily practice).
-- **About page:** [about.html](https://agent5479.github.io/goldstandard/about.html)  
-- **Contact page:** [contact.html](https://agent5479.github.io/goldstandard/contact.html)
+- **Client guide:** [/guide](https://agent5479.github.io/goldstandard/guide) — reference for clients (principles, corrections, leash work, access training, timing, rewards, daily practice).
+- **Knowledge exam:** [/exam](https://agent5479.github.io/goldstandard/exam) — breed-aware multiple-choice exam for owners, plus a full trainer track.
+- **About page:** [/about](https://agent5479.github.io/goldstandard/about)  
+- **Contact page:** [/contact](https://agent5479.github.io/goldstandard/contact)
+
+Old `.html` URLs (e.g. `guide.html`) still work — they redirect to the new routes.
 
 Open Graph / social previews use `images/dog1024.jpg`. Favicons and install icons use `images/dog16.jpg` through `dog512.jpg` plus `site.webmanifest`. For best LinkedIn and Facebook large previews, a dedicated **1200×627 px** image is still ideal; `1024×1024` works but may be cropped by some platforms.
+
+## Development (React + Vite + TypeScript)
+
+The site is a single-page React app built with Vite. Source lives in `src/`, static assets in `public/`, and the production build is committed to `docs/`, which GitHub Pages serves.
+
+```bash
+npm install        # once
+npm run dev        # dev server with hot reload
+npm run build      # type-check + build to docs/
+npm run preview    # serve the built docs/ folder locally
+```
+
+**Deploying:** run `npm run build`, then commit and push — including the `docs/` folder. GitHub Pages serves the committed build.
+
+> **One-time setup:** in the GitHub repo, go to **Settings → Pages** and set the source to **Deploy from a branch**, branch `main`, folder **/docs**. Until this is changed, Pages will keep serving the (now removed) root files.
+
+Key layout:
+
+- `src/pages/` — one component per page (`HomePage`, `AboutPage`, `ContactPage`, `GuidePage`, `ExamPage`)
+- `src/pages/guide-sections/` — the client guide content, one component per section
+- `src/pages/exam/` — exam flow (track chooser, breed picker, quiz, results) and sampling engine
+- `src/data/` — typed data: `examQuestions.ts` (question bank), `breeds.ts` (breed → temperament map), `formConfig.ts` (contact form endpoint)
+- `src/styles/style.css` — the original site stylesheet, unchanged
+- `public/404.html` — GitHub Pages SPA fallback so deep links like `/guide` load correctly
 
 ## Contact form setup (Google Sheets + Apps Script)
 
@@ -64,20 +91,20 @@ Each time you change the script, use **Deploy → Manage deployments → Edit �
 
 ### Step 4 — Connect the site
 
-1. Open [`form-config.js`](form-config.js).
-2. Set `window.GSDT_FORM_ENDPOINT` to your Web app URL:
+1. Open [`src/data/formConfig.ts`](src/data/formConfig.ts).
+2. Set `FORM_ENDPOINT` to your Web app URL:
 
-   ```javascript
-   window.GSDT_FORM_ENDPOINT = "https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec";
+   ```typescript
+   export const FORM_ENDPOINT = 'https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec';
    ```
 
-3. Commit and push. GitHub Pages will serve the updated config.
+3. Run `npm run build`, then commit and push (including `docs/`). GitHub Pages will serve the updated build.
 
 If the URL is blank, the form still works for direct phone/email contact; the submit button shows an error only when someone tries to send.
 
 ### Step 5 — Test
 
-1. Open [contact.html](contact.html) on the live site (or locally).
+1. Open the [contact page](https://agent5479.github.io/goldstandard/contact) on the live site (or `npm run dev` locally).
 2. Submit a test enquiry with all required fields filled in.
 3. Confirm a new row appears in the Sheet with the correct timestamp.
 4. Confirm the success message appears in the browser.
