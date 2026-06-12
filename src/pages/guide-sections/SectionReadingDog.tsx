@@ -232,7 +232,54 @@ export default function SectionReadingDog() {
 
       <p>Not every noisy interaction is a fight. Owners often interrupt the exact moment that would have taught the dog something valuable — a clear correction from a calm, experienced, socially competent dog is sometimes the best teacher a pushy youngster will ever get. That is <strong>dog-to-dog</strong> boundary-setting, not a licence for chaos. Compassionate hardline between dogs is not cruelty: it is one dog teaching another in a language humans often misread — the same pack language your hand speaks when calibrated correctly; see <a href="#dog-language">Dog language</a>.</p>
 
-      <p><strong>Relative condition:</strong> let dogs negotiate when both are free to yield, bodies stay loose, and the moment ends cleanly. Intervene when the dynamic is one-sided, trapped, or unsafe — regardless of noise level.</p>
+      <p><strong>Relative condition:</strong> let dogs negotiate when both are free to yield, bodies stay loose, and the moment ends cleanly. Intervene when the dynamic is one-sided, trapped, or unsafe — regardless of noise level. True off-lead reliability requires reading the exact millisecond play becomes predatory or dominant — see <a href="#social-friction">Micro-signals of social friction</a> below.</p>
+
+      <h3 id="social-friction">⚡ Micro-signals of social friction</h3>
+
+      <p>In a group setting, antisocial behaviour often presents as subtle power plays rather than explosive aggression. The gap between these postures and a fast snap can be milliseconds — missing them pushes dogs past threshold into chaotic overcorrections, injury, and vet visits.</p>
+
+      <div className="pillars guide-glossary">
+        <table className="pillars-table" aria-label="Canine social friction signals">
+          <thead>
+            <tr>
+              <th scope="col">Signal</th>
+              <th scope="col">What it usually means</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>T-bone position</strong></td>
+              <td>Dog approaches perpendicular from the side, resting chin, chest, or head over the other dog's shoulders or spine — a physical claim of dominance to force submission or escalate</td>
+            </tr>
+            <tr>
+              <td><strong>Over-the-neck stand</strong></td>
+              <td>Intensified T-bone: stiff limbs, flagged tail, looming directly over head or neck to assert maximum height and authority</td>
+            </tr>
+            <tr>
+              <td><strong>Invasive sniffing / barging</strong></td>
+              <td>Rough, spatially intrusive contact — pushing into another dog's space without invitation</td>
+            </tr>
+            <tr>
+              <td><strong>Locked eye contact / mounting</strong></td>
+              <td>Fixation and rank pressure — often precedes a snap if not interrupted early</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p><strong>Two kinds of fast snap:</strong> a defensive dog snaps as a panic button to escape spatial pressure; an entitled dog snaps to force compliance when its posturing is challenged. Undersocialised, spoiled, or traumatised dogs compress the timeline — read early, act in the <a href="#timing">one-second window</a>, or extract before the moment runs away from you.</p>
+
+      <h3 id="master-dog">🐕‍🦺 The master dog: silent authority</h3>
+
+      <p>Humans are limited by mass and reaction time — we must move our whole body across a space, often arriving after escalation has already occurred. A stable, neutral <strong>master dog</strong> — a socially competent adult with a deep off-switch and strong spatial presence — can act as a biological balancer within the flow of canine communication. Facilitated socialisation with suitable dogs in sessions provides this: a regulated dog is one that reads other animals and responds calmly rather than reactively.</p>
+
+      <ul className="checklist">
+        <li><strong>Proximity and preemption:</strong> senses shifting tension before a T-bone or over-neck stand solidifies — locked eyes, rigid tail flags</li>
+        <li><strong>Biological correction:</strong> clean body block or precise flank bump to the instigator — the same language as a <a href="#butt-push">butt push</a>, delivered dog-to-dog</li>
+        <li><strong>Vacuum of neutrality:</strong> the instant the correction lands, arousal drops to absolute zero — no grudge, no lingering tension. Young or reactive dogs learn natural boundaries without human emotional contamination</li>
+      </ul>
+
+      <p>A master dog is not a licence for chaos — it is a teacher in a language humans often misread. Your role remains tactical: sharp boundaries, <a href="#off-lead-intervention">removal of access</a> when needed, and reading the micro-signals before they become snaps.</p>
 
       <div className="two-col">
         <div className="col-card">

@@ -469,6 +469,120 @@ export const examQuestions: Question[] = [
     guideLink: '#dog-meetings'
   },
 
+  // ── Off-leash social ──────────────────────────────────────────────────────
+  {
+    topic: 'Off-leash social',
+    breedCategory: 'all',
+    track: 'both',
+    text: 'What is the "controlled crucible" in off-lead development?',
+    options: [
+      'A structured setting where the dog can fail safely — mistakes are part of learning, repetition is mandatory',
+      'Keeping the dog permanently on-leash until it is two years old',
+      'Avoiding all contact with other dogs until recall is perfect',
+      'Letting dogs work out all conflicts without handler involvement'
+    ],
+    explanation: 'Permanent containment is a dead end for real-world recall. The handler provides controlled exposure where mistakes are instructive and freedom is earned.',
+    guideLink: '#controlled-crucible'
+  },
+  {
+    topic: 'Off-leash social',
+    breedCategory: 'all',
+    track: 'both',
+    text: 'A dog approaches another perpendicular from the side and rests its head over the other dog\'s shoulders. What is this?',
+    options: [
+      'T-bone position — a physical claim of dominance that can force submission or escalate',
+      'A play bow invitation',
+      'Normal mutual greeting with no rank implication',
+      'Submission — the approaching dog is yielding'
+    ],
+    explanation: 'The T-bone is a subtle power play, not play. Read it in the millisecond window before it escalates — see Social friction signals.',
+    guideLink: '#social-friction'
+  },
+  {
+    topic: 'Off-leash social',
+    breedCategory: 'all',
+    track: 'both',
+    text: 'What characterises an over-the-neck stand between dogs?',
+    options: [
+      'Stiff limbs, flagged tail, looming over head or neck — maximum physical authority',
+      'Loose bodies with role reversal and pauses',
+      'Both dogs lying down side by side',
+      'A submissive dog offering its belly'
+    ],
+    explanation: 'An intensified T-bone — stiff, looming, flagged tail. Intervene early or extract before the snap.',
+    guideLink: '#social-friction'
+  },
+  {
+    topic: 'Off-leash social',
+    breedCategory: 'all',
+    track: 'both',
+    text: 'Your dog initiates rude off-lead behaviour toward another dog. What is the handler sequence?',
+    options: [
+      'Unique sound the exact millisecond it starts — then immediate leash-on if blown off; leash removes access, not punishment',
+      'Wait until the other owner complains, then apologise',
+      'Shout the dog\'s name repeatedly from a distance',
+      'Physically pick up your dog and comfort it'
+    ],
+    explanation: 'Sharp interruption breaks fixation; leash-on collapses freedom. Anti-social behaviour costs access; calm neutrality earns it back.',
+    guideLink: '#off-lead-intervention'
+  },
+  {
+    topic: 'Off-leash social',
+    breedCategory: 'all',
+    track: 'both',
+    text: 'When the leash goes back on after antisocial off-lead behaviour, how should the handler frame it?',
+    options: [
+      'Neutral removal of access — calm disappointment, not anger or a lecture',
+      'Punishment — the dog must feel pain or fear to learn',
+      'A reward for coming back to you',
+      'Ignore it and unclip again immediately'
+    ],
+    explanation: 'The leash is not punishment. It removes access until behaviour earns freedom again — see Access training.',
+    guideLink: '#off-lead-intervention'
+  },
+  {
+    topic: 'Off-leash social',
+    breedCategory: 'all',
+    track: 'both',
+    text: 'What role does a stable "master dog" play in facilitated socialisation?',
+    options: [
+      'Biological balancer — preempts tension, delivers clean dog-to-dog corrections, then drops arousal to zero with no grudge',
+      'A dog that all others must submit to permanently',
+      'A playmate that teaches puppies to wrestle harder',
+      'Replacement for any human handler intervention'
+    ],
+    explanation: 'A master dog senses tension early, body-blocks or bumps the instigator, then returns to absolute neutrality — teaching boundaries without human emotional contamination.',
+    guideLink: '#master-dog'
+  },
+  {
+    topic: 'Off-leash social',
+    breedCategory: 'all',
+    track: 'both',
+    text: 'Why is missing micro-signals of social friction dangerous?',
+    options: [
+      'The gap to a fast snap can be milliseconds — late intervention risks injury, chaos, and vet visits',
+      'Dogs forget commands when signals are missed',
+      'It only matters for dogs over forty kilograms',
+      'Micro-signals are only relevant indoors'
+    ],
+    explanation: 'Undersocialised, spoiled, or traumatised dogs compress the timeline. Read T-bone, over-neck, locked eyes, and mounting before the snap.',
+    guideLink: '#social-friction'
+  },
+  {
+    topic: 'Off-leash social',
+    breedCategory: 'all',
+    track: 'both',
+    text: 'What is the training objective for off-lead social development — as distinct from avoiding all antisocial moments?',
+    options: [
+      'A dog that navigates real exposure, handles social friction, and looks to the handler when boundaries blur',
+      'A dog that never meets another dog until fully trained',
+      'Absolute elimination of all mounting, staring, and sniffing',
+      'A dog that depends on the handler to carry it past every trigger'
+    ],
+    explanation: 'The goal is learned accountability and self-regulation — not permanent mechanical management. Freedom is earned through structured repetition.',
+    guideLink: '#controlled-crucible'
+  },
+
   /* ── Corrections ── */
   {
     topic: 'Corrections',
@@ -723,7 +837,7 @@ export const examQuestions: Question[] = [
       'You end the walk and go straight home in silence',
       'You withhold dinner that evening so the lesson lands'
     ],
-    explanation: 'Misbehaviour costs access: leash on, calm disappointed tone — not anger, not a lecture. Clip on, reset, walk on without dwelling on it.',
+    explanation: 'Misbehaviour costs access: leash on, calm disappointed tone — not anger, not a lecture. The leash removes freedom, not as punishment but as neutral consequence. Clip on, reset, walk on without dwelling on it.',
     guideLink: '#access'
   },
   {
@@ -1163,7 +1277,7 @@ export const examQuestions: Question[] = [
       'Play that got out of hand',
       'Evidence the adult dog is dangerous around young dogs'
     ],
-    explanation: 'A clear correction from a calm, experienced dog is dog-to-dog boundary-setting in a language humans often misread. Compassionate hardline between dogs is not cruelty.',
+    explanation: 'A clear correction from a calm, experienced dog is dog-to-dog boundary-setting — then arousal drops to zero with no grudge. Compassionate hardline between dogs is not cruelty.',
     guideLink: '#dog-meetings'
   },
   {

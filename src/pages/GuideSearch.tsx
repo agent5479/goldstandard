@@ -31,6 +31,8 @@ const ALIASES: { terms: string[]; href: string }[] = [
   { terms: ['pulling', 'slack leash', 'heel', 'bungee', 'flexi', 'extending leash', 'fixed line', 'u dangle', 'leash dangle'], href: '#leash' },
   { terms: ['collar', 'harness', 'halter', 'gentle leader', 'halti', 'prong', 'choke chain', 'slip lead', 'flat collar', 'opposition reflex'], href: '#collar-selection' },
   { terms: ['off lead', 'off-lead', 'freedom', 'access'], href: '#access' },
+  { terms: ['controlled crucible', 'fail safely', 'crucible', 'off-lead development'], href: '#controlled-crucible' },
+  { terms: ['t-bone', 'over the neck', 'social friction', 'master dog', 'body block', 'antisocial'], href: '#social-friction' },
   { terms: ['treat', 'treats', 'reward', 'food motivated', 'overused treat', 'treat exploit', 'training only treat', 'reserved treat', 'not hungry', 'reward currency', 'food motivated diagnostic'], href: '#rewards' },
   { terms: ['one second', 'timing', 'association window'], href: '#timing' },
   { terms: ['door', 'doorway', 'threshold', 'front door'], href: '#front-door' },

@@ -29,6 +29,30 @@ export default function SectionAccess() {
       </div>
 
       <p>The key is consistency. Every exit to the world is an opportunity — and it begins at the door. See <a href="#front-door">It starts at the front door</a> and <a href="#check-in-seven">The seven-second check-in</a> for how earned access plays out on every outing.</p>
+
+      <h3 id="controlled-crucible">🔥 The controlled crucible: failing safely off-lead</h3>
+
+      <p>For everyday safety, keep your dog leashed — that is the general rule. But if the goal is true behavioural reliability and real-world recall, permanent containment is a dead end. Mistakes are not unexpected hiccups; they are part of the learning sequence, and repetition in a controlled setting is mandatory. Your responsibility is to provide a structured crucible: the opportunity to <strong>fail safely</strong>.</p>
+
+      <p>The objective is not the absolute avoidance of every antisocial moment — it is a dog that can handle healthy exposure, navigate <a href="#social-friction">canine social friction</a>, and look to you for regulation when boundaries blur. That means earned off-lead access in controlled environments, with instant consequences when the standard breaks.</p>
+
+      <ul className="checklist">
+        <li><strong>Everyday default:</strong> leash for safety until the standard is proven in real conditions</li>
+        <li><strong>Developing reliability:</strong> controlled off-lead exposure where mistakes are possible — and immediately instructive</li>
+        <li><strong>Freedom earned, not given:</strong> calm neutrality unlocks access; antisocial choices collapse it</li>
+      </ul>
+
+      <h3 id="off-lead-intervention">🛑 Off-lead antisocial behaviour: sound, then access removed</h3>
+
+      <p>When rude or antisocial behaviour appears off-lead — fixation on another dog, invasive approach, mounting, locked staring — intervene the exact millisecond it starts:</p>
+
+      <ol className="steps">
+        <li><strong>Unique sound</strong> — a sharp "Hey!", clap, or <a href="#verbal-correction">verbal pop</a> to break hyper-fixation — see <a href="#unique-sound-touch">Unique sound, then unique touch</a></li>
+        <li><strong>Immediate leash-on</strong> if the sound is blown off — reclaim space and remove freedom. The leash is not punishment; it is a neutral tool for removing access</li>
+        <li><strong>Calm reset</strong> — disappointed tone, walk on, no lecture. Freedom returns only when behaviour earns it again</li>
+      </ol>
+
+      <p>The dog learns that antisocial behaviour instantly collapses its world, while a calm, neutral state of mind is the only key that unlocks freedom. Pair with <a href="#dog-meetings">Dog meetings</a> and, where available, a stable <a href="#master-dog">master dog</a> in structured social sessions.</p>
       </div>
     </section>
   );

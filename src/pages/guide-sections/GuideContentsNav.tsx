@@ -30,6 +30,8 @@ export default function GuideContentsNav() {
               <li><a href="#common-pitfalls">⚠️ Common pitfalls</a></li>
               <li><a href="#symptom-glossary">📋 Symptom glossary</a></li>
               <li><a href="#dog-meetings">🐕‍🦺 Dog meetings</a></li>
+              <li><a href="#social-friction">⚡ Social friction signals</a></li>
+              <li><a href="#master-dog">🐕‍🦺 Master dog</a></li>
             </ul>
           </div>
           <div className="guide-contents-group">
@@ -54,6 +56,8 @@ export default function GuideContentsNav() {
               <li><a href="#leash-weight">⚓ Line weight &amp; dangle</a></li>
               <li><a href="#sniff-breaks">👃 Sniff breaks</a></li>
               <li><a href="#access">🔓 Access training</a></li>
+              <li><a href="#controlled-crucible">🔥 Controlled crucible</a></li>
+              <li><a href="#off-lead-intervention">🛑 Off-lead intervention</a></li>
               <li><a href="#timing">⏱️ Timing</a></li>
               <li><a href="#rewards">🦴 Rewards</a></li>
             </ul>

@@ -9,6 +9,7 @@ const OWNER_BREED = 5;
 const BODY_LANGUAGE_SLOTS = 4;
 const RELATIONSHIP_SLOTS = 2;
 const EQUIPMENT_SLOTS = 2;
+const OFF_LEASH_SOCIAL_SLOTS = 2;
 const TRAINER_TOTAL = 40;
 const TRAINER_PER_CATEGORY = 2;
 const TRAINER_ADVANCED = 10;
@@ -83,14 +84,18 @@ export function buildOwnerExam(categories: BreedCategory[]): PreparedQuestion[] 
     universal.filter((q) => q.topic === 'Equipment'),
     EQUIPMENT_SLOTS
   );
-  const reserved = new Set([...bodyLanguage, ...relationship, ...equipment]);
-  const remaining = OWNER_UNIVERSAL - bodyLanguage.length - relationship.length - equipment.length;
+  const offLeashSocial = sample(
+    universal.filter((q) => q.topic === 'Off-leash social'),
+    OFF_LEASH_SOCIAL_SLOTS
+  );
+  const reserved = new Set([...bodyLanguage, ...relationship, ...equipment, ...offLeashSocial]);
+  const remaining = OWNER_UNIVERSAL - bodyLanguage.length - relationship.length - equipment.length - offLeashSocial.length;
   const filler = sample(
     universal.filter((q) => !reserved.has(q)),
     remaining
   );
 
-  return shuffle(bodyLanguage.concat(relationship, equipment, filler).concat(breedSpecific)).map(prepareQuestion);
+  return shuffle(bodyLanguage.concat(relationship, equipment, offLeashSocial, filler).concat(breedSpecific)).map(prepareQuestion);
 }
 
 export function buildTrainerExam(): PreparedQuestion[] {
