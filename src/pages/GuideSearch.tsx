@@ -24,39 +24,80 @@ const firstSnippet = (root: Element) => {
 };
 
 const ALIASES: { terms: string[]; href: string }[] = [
-  { terms: ['recall', 'come back', 'come when called', 'bolting', 'run away'], href: '#expectations' },
-  { terms: ['sit', 'wait', 'earned access', 'nothing for free', 'consent', 'release'], href: '#pillars' },
-  { terms: ['bark', 'barking', 'yap', 'fixation', 'reactive', 'reactivity'], href: '#butt-push' },
-  { terms: ['jump', 'jumping', 'lunging', 'mouthing'], href: '#collar-snatch' },
-  { terms: ['pulling', 'slack leash', 'heel', 'bungee', 'flexi', 'extending leash', 'fixed line', 'u dangle', 'leash dangle'], href: '#leash' },
-  { terms: ['collar', 'harness', 'halter', 'gentle leader', 'halti', 'prong', 'choke chain', 'slip lead', 'flat collar', 'opposition reflex'], href: '#collar-selection' },
-  { terms: ['off lead', 'off-lead', 'freedom', 'access'], href: '#access' },
-  { terms: ['controlled crucible', 'fail safely', 'crucible', 'off-lead development'], href: '#controlled-crucible' },
-  { terms: ['road safety', 'traffic', 'car cue', 'semantic hijacking', 'gutter sit', 'pavement', 'rural road', 'vehicle', 'road crucible'], href: '#road-safety' },
-  { terms: ['car protocol', 'car!', 'off pavement', 'gutter', 'verge', 'auditory tracking'], href: '#car-protocol' },
-  { terms: ['seven month road', 'road seven months', 'leashed traffic', 'traffic conditioning'], href: '#road-seven-months' },
-  { terms: ['t-bone', 'over the neck', 'social friction', 'master dog', 'body block', 'antisocial'], href: '#social-friction' },
-  { terms: ['treat', 'treats', 'reward', 'food motivated', 'overused treat', 'treat exploit', 'training only treat', 'reserved treat', 'not hungry', 'reward currency', 'food motivated diagnostic'], href: '#rewards' },
-  { terms: ['one second', 'timing', 'association window'], href: '#timing' },
-  { terms: ['door', 'doorway', 'threshold', 'front door'], href: '#front-door' },
-  { terms: ['check in', 'check-in', 'seven seconds', '7 second'], href: '#check-in-seven' },
-  { terms: ['anxiety', 'calm leadership', 'owner energy'], href: '#owner-mindset' },
-  { terms: ['staffy', 'collie', 'breed', 'terrier'], href: '#breed-temperament' },
-  { terms: ['baby talk', 'lap dog', 'eye gazing', 'pitfalls'], href: '#common-pitfalls' },
-  { terms: ['panting', 'lip lick', 'shake off', 'stiffening', 'whale eye', 'body language', 'weight back', 'helicopter tail'], href: '#symptom-glossary' },
-  { terms: ['3 second pause', 'three second pause', 'three-second pause', 'micro-signals'], href: '#three-second-pause' },
-  { terms: ['coming home', 'home return', 'greeting', 'helicopter wag'], href: '#home-return' },
-  { terms: ['sniff break', 'sniffing', 'decompress', 'heel earns'], href: '#sniff-breaks' },
-  { terms: ['trust', 'advocate', 'trust not love'], href: '#trust-not-just-love' },
-  { terms: ['repeat command', 'say it once', 'cue once', 'nagging', 'heard command', 'second cue', 'third repeat'], href: '#cue-once' },
-  { terms: ['real world', 'generalize', 'generalisation', 'spontaneous'], href: '#expectations' },
-  { terms: ['dog fight', 'dog meeting', 'socialisation', 'socialization'], href: '#dog-meetings' },
-  { terms: ['trauma', 'fearful', 'shutdown'], href: '#trauma-signals' },
-  { terms: ['gruff', 'squeeze', 'dog language', 'firmness', 'shocking', 'roadside', 'recall game', 'boss', 'pack boss', 'calibration', 'gruff correction', 'mouth hand'], href: '#dog-language' },
-  { terms: ['unique sound', 'unique touch', 'correction mechanic', 'hey', 'clap', 'flank', 'jawbone', 'habituation'], href: '#unique-sound-touch' },
-  { terms: ['daily', 'practice', 'three weeks', 'routine'], href: '#daily' },
-  { terms: ['graduation', 'puppy dynamic', 'relentless'], href: '#graduation' },
-  { terms: ['seven months', '7 months', 'adult dog', "i don't care", 'dont care', 'im over it'], href: '#i-dont-care' }
+  /* Foundation */
+  { terms: ['pillars', 'three pillars', 'preparation', 'consistency', 'real world wins', 'gold standard rule', 'authority', 'drain the tank', 'sit', 'wait', 'nothing for free', 'consent', 'release'], href: '#pillars' },
+
+  /* Owner mindset & expectations */
+  { terms: ['owner mindset', 'anxiety', 'calm leadership', 'owner energy', 'nervous handler', 'reassurance', 'shush', "it's okay"], href: '#owner-mindset' },
+  { terms: ['expectations', 'triggers', 'opportunities', 'difficult situations', 'market', 'beach', 'real world', 'generalize', 'generalisation', 'spontaneous', 'living room training'], href: '#expectations' },
+  { terms: ['recall', 'come back', 'come when called', 'bolting', 'run away', 'bolt', 'pursuit', 'joyless', 'chase recall'], href: '#expectations' },
+  { terms: ['go-get', 'go get recall', 'go get method', 'treat at feet', 'reserved treat recall'], href: '#go-get-recall' },
+  { terms: ["im over it", "i'm over it", 'misbehaviour attitude', 'calm certainty', 'not negotiating', 'over it rule'], href: '#im-over-it' },
+  { terms: ["i don't care", 'dont care', 'adult standard', 'seven months behaviour', '7 months adult', 'puppy excuse', 'excited not excuse', 'nervous not excuse', 'adult dog'], href: '#i-dont-care' },
+  { terms: ['trust', 'advocate', 'trust not love', 'stranger petting', 'vet fear', 'kids discomfort'], href: '#trust-not-just-love' },
+  { terms: ['leaning', 'dependency', 'self-regulation', 'lean against', 'social regulation', 'other dogs support'], href: '#social-regulation' },
+  { terms: ['speak aloud', 'speaking aloud', 'voice principle', 'declare expectation', 'say it aloud'], href: '#speaking-aloud' },
+  { terms: ['repeat command', 'say it once', 'cue once', 'nagging', 'heard command', 'second cue', 'third repeat', 'ear flick', 'head turn', 'huff', 'fixation cue', 'renegotiation'], href: '#cue-once' },
+  { terms: ['ready stance', 'athletic stance', 'pre-engaged', 'martial arts stance', 'readiness'], href: '#ready-stance' },
+
+  /* Reading your dog */
+  { terms: ['reading dog', 'learning edge', 'looks worse', 'cognitive overload', 'forgets commands'], href: '#reading-dog' },
+  { terms: ['3 second pause', 'three second pause', 'three-second pause', 'micro-signals', 'before petting'], href: '#three-second-pause' },
+  { terms: ['staffy', 'collie', 'breed', 'terrier', 'sighthound', 'scenthound', 'guardian', 'spitz', 'giant breed', 'small breed', 'clingy', 'herding', 'breed variance'], href: '#breed-temperament' },
+  { terms: ['age intensity', 'breed age', 'puppy correction', 'adolescent testing', 'trauma calibration', 'how hard', 'volume of hand'], href: '#breed-age-intensity' },
+  { terms: ['baby talk', 'lap dog', 'eye gazing', 'pitfalls', 'human baby', 'carrying', 'hand feeding', 'cute excuse'], href: '#common-pitfalls' },
+  { terms: ['panting', 'lip lick', 'shake off', 'stiffening', 'whale eye', 'body language', 'weight back', 'helicopter tail', 'play bow', 'mounting', 'freeze', 'symptom', 'tail tucked', 'submissive urination', 'eye contact dogs'], href: '#symptom-glossary' },
+  { terms: ['trauma', 'fearful', 'shutdown', 'flinching', 'cowering', 'refusing food'], href: '#trauma-signals' },
+  { terms: ['dog fight', 'dog meeting', 'socialisation', 'socialization', 'rumble', 'negotiation', 'disengage'], href: '#dog-meetings' },
+  { terms: ['t-bone', 'over the neck', 'social friction', 'body block', 'invasive sniffing', 'micro signals', 'locked stare dogs'], href: '#social-friction' },
+  { terms: ['master dog', 'balancer', 'facilitated socialisation', 'silent authority', 'dog teacher'], href: '#master-dog' },
+
+  /* Corrections toolkit */
+  { terms: ['correction', 'correction toolkit', 'interruption', 'reset body'], href: '#corrections' },
+  { terms: ['unique sound', 'unique touch', 'correction mechanic', 'hey', 'clap', 'flank', 'jawbone', 'habituation', 'table paw'], href: '#unique-sound-touch' },
+  { terms: ['gruff', 'squeeze', 'dog language', 'firmness', 'shocking', 'boss', 'pack boss', 'calibration', 'gruff correction', 'mouth hand', 'hand as mouth'], href: '#dog-language' },
+  { terms: ['not a game', 'someone boss', 'boundary negotiation game', 'pack boss'], href: '#not-a-game' },
+  { terms: ['life and death', 'life-and-death', 'roadside', 'when firmer', 'high stakes correction', 'recall game', 'boundary negotiation recall'], href: '#when-firmer' },
+  { terms: ['when not firmer', 'trauma correction', 'venting', 'angry correction', 'exhausted handler'], href: '#when-not-firmer' },
+  { terms: ['correction intensity', 'calibrate firmness', 'soft dog', 'hard dog', 'delivery volume'], href: '#correction-intensity' },
+  { terms: ['escalation ladder', 'verbal pop ladder', 'shocking squeeze ladder', 'collar grab ladder'], href: '#escalation-ladder' },
+  { terms: ['bark', 'barking', 'yap', 'fixation', 'reactive', 'reactivity', 'in place', 'butt push', 'hindquarters'], href: '#butt-push' },
+  { terms: ['leash jerk', 'downward jerk', 'downward pull', 'slack after jerk'], href: '#leash-jerk' },
+  { terms: ['verbal correction', 'verbal pop', 'bark command', 'tsht', 'never repeat louder', 'correction bark'], href: '#verbal-correction' },
+  { terms: ['jump', 'jumping', 'lunging', 'mouthing', 'collar grab', 'collar snatch', 'forced sit', 'walk backwards', 'jumping up'], href: '#collar-snatch' },
+  { terms: ['pin and hold', 'pin hold', 'advanced correction', 'sessions only', 'improvise pin'], href: '#pin-hold' },
+
+  /* Equipment & leash */
+  { terms: ['collar', 'slip lead', 'flat collar', 'collar selection', 'pressure release'], href: '#collar-selection' },
+  { terms: ['head halter', 'halti', 'gentle leader', 'halter exception', 'safety brake'], href: '#head-halter' },
+  { terms: ['harness', 'prong', 'choke chain', 'spiked collar', 'collars excluded', 'chest harness', 'opposition reflex', 'bungee'], href: '#collars-excluded' },
+  { terms: ['pulling', 'slack leash', 'heel', 'walking position', 'walk beside', 'walk behind', 'stick assist', 'rural road walk', 'surge ahead'], href: '#leash' },
+  { terms: ['flexi', 'extending leash', 'fixed line', 'leash selection', 'biothane', 'long line'], href: '#leash-selection' },
+  { terms: ['u dangle', 'leash dangle', 'line weight', 'u shape', 'slack information', 'dashboard dangle'], href: '#leash-weight' },
+  { terms: ['leash handling', 'low line', 'biomechanical', 'hand position', 'below neck', 'corrective tug'], href: '#leash-handling' },
+  { terms: ['sniff break', 'sniffing', 'decompress', 'heel earns', 'proactive sniff', 'sniff threshold', 'scent break', 'nose led walk'], href: '#sniff-breaks' },
+
+  /* Access, off-lead & road safety */
+  { terms: ['off lead', 'off-lead', 'freedom', 'access training', 'earned access', 'leash on disappointed', 'misbehaviour costs access'], href: '#access' },
+  { terms: ['controlled crucible', 'fail safely', 'crucible', 'off-lead development', 'safe failure', 'social development'], href: '#controlled-crucible' },
+  { terms: ['off-lead intervention', 'off lead antisocial', 'antisocial off lead', 'sound then leash', 'leash back on off lead'], href: '#off-lead-intervention' },
+  { terms: ['road safety', 'traffic', 'rural nz', 'new zealand road', 'zero tolerance traffic', 'absolute boundary', 'sealed road', 'stock truck', 'fatal mistake'], href: '#road-safety' },
+  { terms: ['semantic hijacking', 'car cue', 'car word', 'repurpose car', 'high intent alert', 'car enthusiasm'], href: '#semantic-hijacking' },
+  { terms: ['car protocol', 'car!', 'off pavement', 'gutter sit', 'gutter', 'verge', 'auditory tracking', 'evacuate', 'anchor sit', 'vehicle passes', 'gravel shoulder'], href: '#car-protocol' },
+  { terms: ['seven month road', 'road seven months', 'road crucible', 'leashed traffic', 'traffic conditioning', 'on lead traffic', 'off lead near road', 'months before off lead road'], href: '#road-seven-months' },
+
+  /* Rewards & timing */
+  { terms: ['one second', 'timing', 'association window', 'precursor', 'delayed correction', 'missed window'], href: '#timing' },
+  { terms: ['treat', 'treats', 'reward', 'life rewards', 'good boy mistake', 'praise reactive'], href: '#rewards' },
+  { terms: ['food motivated', 'overused treat', 'treat exploit', 'training only treat', 'reserved treat', 'not hungry', 'treat diagnostic', 'dried liver', 'appetite'], href: '#treat-diagnostic' },
+  { terms: ['orientation signals', 'reward currency', 'access oriented', 'play reward', 'social reward', 'not food motivated', 'sniff currency'], href: '#orientation-signals' },
+
+  /* Outings & consolidation */
+  { terms: ['door', 'doorway', 'threshold', 'front door', 'gateway', 'car boot', 'yard gate', 'surge door'], href: '#front-door' },
+  { terms: ['coming home', 'home return', 'greeting', 'helicopter wag', 'sixty seconds', 'four paws', 'ignore greeting'], href: '#home-return' },
+  { terms: ['check in', 'check-in', 'seven seconds', '7 second', 'hide tactic', 'glance back', 'pack check'], href: '#check-in-seven' },
+  { terms: ['daily', 'practice', 'three weeks', 'routine', 'ten minutes', 'every walk'], href: '#daily' },
+  { terms: ['graduation', 'puppy dynamic', 'relentless', 'mixed messages', 'family members', 'partner excuses'], href: '#graduation' }
 ];
 
 /** Walk the rendered guide DOM to build the search index (port of guide-search.js). */
