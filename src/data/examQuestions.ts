@@ -1214,14 +1214,14 @@ export const examQuestions: Question[] = [
     topic: 'Breed temperament',
     breedCategory: 'clingy',
     track: 'both',
-    text: 'Your people-focused dog (staffy-type) needs a correction. What must stay true about the delivery?',
+    text: 'Your clingy, people-focused dog needs a correction. What must stay true about the delivery?',
     options: [
       'Calm and matter-of-fact, never personal — these dogs are susceptible to emotional damage from harsh rejection',
       'Extra firm, because clingy dogs ignore soft corrections',
       'Skipped entirely — corrections damage bonded dogs',
       'Followed by prolonged coldness so the lesson sinks in'
     ],
-    explanation: 'Staffy-types bond intensely and can be damaged by corrections delivered with frustration or cold withdrawal. The tools still apply; the energy stays calm and matter-of-fact.',
+    explanation: 'People-focused breeds bond intensely and can be damaged by corrections delivered with frustration or cold withdrawal. The tools still apply; the energy stays calm and matter-of-fact.',
     guideLink: '#breed-temperament'
   },
   {
@@ -1294,7 +1294,7 @@ export const examQuestions: Question[] = [
       'Only when barking begins',
       'After the lunge, when the behaviour is undeniable'
     ],
-    explanation: 'Collies and other herding types may lock onto movement — eye contact can become a full fixation before the body moves. Watch for the eye-lock before the lunge.',
+    explanation: 'Herding types may lock onto movement — eye contact can become a full fixation before the body moves. Watch for the eye-lock before the lunge.',
     guideLink: '#breed-temperament'
   },
   {
@@ -1308,7 +1308,7 @@ export const examQuestions: Question[] = [
       'It causes eye strain in dogs bred for distance vision',
       'It is not risky — gazing builds healthy bonds in all breeds'
     ],
-    explanation: 'A collie raised on face-to-face gazing may treat their person as something beyond ordinary. Leave the room and they may vocalise, refuse food, or look depressed — attachment distortion, not a medical mystery.',
+    explanation: 'A herding-type dog raised on face-to-face gazing may treat their person as something beyond ordinary. Leave the room and they may vocalise, refuse food, or look depressed — attachment distortion, not a medical mystery.',
     guideLink: '#common-pitfalls'
   },
   {
@@ -1351,7 +1351,7 @@ export const examQuestions: Question[] = [
       'After the bike has passed, as a delayed lesson',
       'There is no window — chasing movement is unfixable in herding breeds'
     ],
-    explanation: 'Collies and other herding types lock onto movement. Watch for the eye-lock before the lunge — the precursor window matters even more, and slack-leash walking is what lets you see it build.',
+    explanation: 'Herding types lock onto movement. Watch for the eye-lock before the lunge — the precursor window matters even more, and slack-leash walking is what lets you see it build.',
     guideLink: '#breed-temperament'
   },
 
@@ -1417,14 +1417,14 @@ export const examQuestions: Question[] = [
     topic: 'Breed temperament',
     breedCategory: 'terrier',
     track: 'both',
-    text: 'A soft adolescent staffy and a hard adult terrier both need the same correction technique. What differs?',
+    text: 'A soft adolescent terrier and a hard, confident adult terrier both need the same correction technique. What differs?',
     options: [
       'The firmness and recovery time — same tools, calibrated to the dog in front of you',
       'The technique itself — terriers need entirely different methods',
       'Nothing — every dog gets identical intensity',
       'Only the verbal command used'
     ],
-    explanation: 'Age and breed together set the floor: a soft adolescent staffy and a hard adult terrier may need the same technique with different firmness and recovery time.',
+    explanation: 'Age and temperament together set the floor: a soft adolescent and a hard adult may need the same technique with different firmness and recovery time.',
     guideLink: '#breed-temperament'
   },
 
@@ -1650,7 +1650,7 @@ export const examQuestions: Question[] = [
     topic: 'Breed temperament',
     breedCategory: 'spitz',
     track: 'both',
-    text: 'Your husky-type ignores recall drills it performed perfectly last week. What is the most likely reading?',
+    text: 'Your spitz or sled type ignores recall drills it performed perfectly last week. What is the most likely reading?',
     options: [
       'Independence and boredom — repetition drills bore spitz types into defiance; earned access and varied outlets are the better currency',
       'The dog has forgotten the command and needs more identical drills',
@@ -1678,7 +1678,7 @@ export const examQuestions: Question[] = [
     topic: 'Breed temperament',
     breedCategory: 'spitz',
     track: 'both',
-    text: 'Your malamute "talks back" — howling and vocalising when asked to wait. What is it?',
+    text: 'Your spitz type "talks back" — howling and vocalising when asked to wait. What is it?',
     options: [
       'Breed-typical vocal communication — hold the standard calmly; the noise is not defiance to be punished or distress to be soothed',
       'Defiance that needs escalating correction until silent',
@@ -1722,7 +1722,7 @@ export const examQuestions: Question[] = [
     topic: 'Breed temperament',
     breedCategory: 'scenthound',
     track: 'both',
-    text: 'Your beagle\'s recall is perfect at home but vanishes when its nose hits a trail. What is happening?',
+    text: 'Your scenthound\'s recall is perfect at home but vanishes when its nose hits a trail. What is happening?',
     options: [
       'The nose has engaged and the ears have switched off — it is biology, not defiance; recall must be trained before the lock-on',
       'The dog is being deliberately disobedient and needs firmer punishment',
@@ -1778,7 +1778,7 @@ export const examQuestions: Question[] = [
     topic: 'Breed temperament',
     breedCategory: 'scenthound',
     track: 'both',
-    text: 'A dachshund-type freezes, head down, locked on a scent trail, about to launch. What is the correct response?',
+    text: 'Your scenthound freezes, head down, locked on a scent trail, about to launch. What is the correct response?',
     options: [
       'Interrupt now — this is the precursor window; the butt push or leash correction lands here, not after the trail takes over',
       'Wait to see whether the dog chooses to leave the trail',
@@ -1808,7 +1808,7 @@ export const examQuestions: Question[] = [
     topic: 'Breed temperament',
     breedCategory: 'giant',
     track: 'both',
-    text: 'Your Maremma-type ignores commands and patrols the property line instead. What is the correct reading?',
+    text: 'Your giant or livestock guardian type ignores commands and patrols the property line instead. What is the correct reading?',
     options: [
       'Independence by design — livestock guardians were bred to decide without instruction; structure must make compliance worthwhile, not assume biddability',
       'Dominance that requires harsh confrontation',
@@ -2022,14 +2022,28 @@ export const examQuestions: Question[] = [
     topic: 'Relationship habits',
     breedCategory: 'all',
     track: 'both',
-    text: 'Your dog ignores your first "sit" cue. What does the guide instruct?',
+    text: 'Your dog does not sit on the first "sit" cue. What does the guide instruct?',
     options: [
-      'Do not repeat louder — guide with body or leash, then reward the completed behaviour',
-      'Repeat the command until the dog complies',
-      'Give up and try again tomorrow',
-      'Shout the command to show you mean it'
+      'Read whether they heard — ears, head turn, huff — then at most one sharper repeat if fixation explains it; otherwise guide with body or leash. Never a third verbal cue',
+      'Repeat the command calmly until the dog complies — patience teaches reliability',
+      'Assume defiance immediately and escalate to pin and hold',
+      'Say sit a third time louder — three tries is the fair standard'
     ],
-    explanation: 'Repeating teaches the first prompt is optional. Say it once; if ignored, step in with spatial pressure or leash guidance, then reward.',
+    explanation: 'Learn your dog\'s heard-it signals. Fixation may warrant one escalated second cue; otherwise treat silence as renegotiation and guide physically. A third repeat validates the game and puts the dog in charge.',
+    guideLink: '#cue-once'
+  },
+  {
+    topic: 'Relationship habits',
+    breedCategory: 'all',
+    track: 'both',
+    text: 'Why must a command never be repeated a third time?',
+    options: [
+      'It validates boundary renegotiation and turns compliance into a game the dog can win — you end up being led',
+      'Dogs cannot process language after the second repetition',
+      'The third repeat is when physical correction becomes illegal',
+      'It is only a problem for puppies under seven months'
+    ],
+    explanation: 'Two verbal attempts at most when fixation may explain the miss. A third repeat teaches the dog that holding out works — that is renegotiation, not training.',
     guideLink: '#cue-once'
   },
   {

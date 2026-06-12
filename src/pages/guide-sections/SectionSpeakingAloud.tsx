@@ -22,17 +22,20 @@ export default function SectionSpeakingAloud() {
         <li>If you cannot say it calmly, pause and reset before continuing the outing</li>
       </ul>
 
-      <h3 id="cue-once">1️⃣ Say it once</h3>
+      <h3 id="cue-once">1️⃣ Say it once — hear it, then enforce it</h3>
 
-      <p>Repeating commands over and over — "Sit, sit, come on, sit…" — teaches your dog that the first prompt is completely optional and dilutes the meaning of your words. Say sit, come, or wait exactly once. If they ignore it, do not repeat yourself louder.</p>
+      <p>Repeating commands over and over — "Sit, sit, come on, sit…" — teaches your dog that the first prompt is optional and that boundary negotiation is a game they can win. The standard is one clear cue first. What happens next depends on whether they actually heard you.</p>
 
-      <p>Instead, calmly step in using spatial pressure, your body, or a light leash correction to guide them into the position, then reward it. Consistency beats volume — the same principle as <a href="#verbal-correction">Verbal correction</a>, applied to everyday cues. Pair with <a href="#collar-snatch">collar grab</a> or <a href="#leash">Leash work</a> when the body needs guidance, not more words.</p>
+      <p>Sometimes a dog that looks like it ignored you simply did not hear — fixated on a scent, locked on a trigger, or tuned out. There is usually an indicator they registered the sound: ears flick, a small head turn, a huff. That varies across individuals; learn your dog's tells. When fixation explains the blank response, <strong>one</strong> second cue is fair — delivered with an escalation in tone intensity that carries your disinterest in renegotiating the compliance hierarchy this time. Not pleading. Not nagging. The energy of <a href="#im-over-it">I'm over it</a>.</p>
+
+      <p>When they showed they heard — or when there is no fixation excuse — treat silence as boundary renegotiation, not deafness. Do not drill the word a third time. A third repeat validates the negotiation and teaches the dog they are leading you. Step in with spatial pressure, your body, or a light leash correction, then reward the completed behaviour — see <a href="#collar-snatch">collar grab</a> and <a href="#leash">Leash work</a>.</p>
 
       <ul className="checklist">
-        <li>One cue, one expectation — no nagging, no pleading</li>
-        <li>If ignored: guide with body or leash, then reward the completed behaviour</li>
-        <li>Repeating louder trains the dog to wait you out</li>
-        <li>Your voice marks the standard; your hands enforce it when needed</li>
+        <li>First cue: clear, once, declarative — not repeated hoping they'll catch up</li>
+        <li>Watch for heard-it signals: ear movement, head turn, huff — learn what your dog does</li>
+        <li>Fixation or genuine miss: at most one second cue, sharper tone — then act, never a third word</li>
+        <li>Heard but holding out: physical guidance, not more pleading</li>
+        <li>Three repeats is always wrong — that is the dog training you</li>
       </ul>
       </div>
     </section>

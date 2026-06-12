@@ -43,7 +43,7 @@ const ALIASES: { terms: string[]; href: string }[] = [
   { terms: ['coming home', 'home return', 'greeting', 'helicopter wag'], href: '#home-return' },
   { terms: ['sniff break', 'sniffing', 'decompress', 'heel earns'], href: '#sniff-breaks' },
   { terms: ['trust', 'advocate', 'trust not love'], href: '#trust-not-just-love' },
-  { terms: ['repeat command', 'say it once', 'cue once', 'nagging'], href: '#cue-once' },
+  { terms: ['repeat command', 'say it once', 'cue once', 'nagging', 'heard command', 'second cue', 'third repeat'], href: '#cue-once' },
   { terms: ['real world', 'generalize', 'generalisation', 'spontaneous'], href: '#expectations' },
   { terms: ['dog fight', 'dog meeting', 'socialisation', 'socialization'], href: '#dog-meetings' },
   { terms: ['trauma', 'fearful', 'shutdown'], href: '#trauma-signals' },
