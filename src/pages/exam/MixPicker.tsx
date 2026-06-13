@@ -1,6 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 import { breedCategories, breeds } from '../../data/breeds';
 import type { Breed, BreedCategory } from '../../data/breeds';
+import {
+  AXES,
+  getBreedAxisProfile,
+  getBreedFullProfile,
+  getCategoryAxisHint,
+  type TraitAxis,
+} from '../../data/breedTraits';
 
 export interface MixSelection {
   parentA: Breed;
@@ -15,36 +22,61 @@ interface MixPickerProps {
   onBack: () => void;
 }
 
-type AxisKey = 'personality' | 'working' | 'physical';
-
 /** What the user picked for one trait axis. */
 interface AxisChoice {
   source: 'a' | 'b' | 'other';
   category: BreedCategory;
 }
 
-const AXES: { key: AxisKey; label: string; hint: string }[] = [
-  {
-    key: 'personality',
-    label: '🧠 Personality & drive',
-    hint: 'Temperament, sensitivity, how they respond to correction — this weighs heaviest in the assessment.'
-  },
-  {
-    key: 'working',
-    label: '⚡ Working style & energy',
-    hint: 'The engine — stamina, focus, and what the dog wants to do all day.'
-  },
-  {
-    key: 'physical',
-    label: '💪 Physical build & size',
-    hint: 'The body the dog actually has — size and strength change how handling and thresholds matter.'
-  }
-];
-
 function filterBreeds(query: string): Breed[] {
   const q = query.trim().toLowerCase();
   if (!q) return [];
   return breeds.filter((b) => b.name.toLowerCase().includes(q)).slice(0, 8);
+}
+
+interface TraitOptionProps {
+  selected: boolean;
+  name: string;
+  categoryLabel: string;
+  axisDetail: string;
+  onClick: () => void;
+}
+
+function TraitOption({ selected, name, categoryLabel, axisDetail, onClick }: TraitOptionProps) {
+  return (
+    <button
+      type="button"
+      className={`exam-trait-option exam-trait-option--detailed${selected ? ' is-selected' : ''}`}
+      onClick={onClick}
+    >
+      <span className="exam-trait-option-name">{name}</span>
+      <span className="exam-trait-option-cat">{categoryLabel}</span>
+      <span className="exam-trait-option-detail">{axisDetail}</span>
+    </button>
+  );
+}
+
+interface ParentReferenceProps {
+  label: string;
+  breed: Breed;
+}
+
+function ParentReference({ label, breed }: ParentReferenceProps) {
+  const profile = getBreedFullProfile(breed);
+  return (
+    <div className="exam-breed-ref-block">
+      <h4 className="exam-breed-ref-title">{label}: {breed.name}</h4>
+      <p className="exam-breed-ref-type">{breedCategories[breed.category].label}</p>
+      <dl className="exam-breed-ref-table">
+        {AXES.map((axis) => (
+          <div className="exam-breed-ref-row" key={axis.key}>
+            <dt>{axis.label}</dt>
+            <dd>{profile[axis.key]}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  );
 }
 
 interface ParentSearchProps {
@@ -114,6 +146,7 @@ function ParentSearch({ id, label, placeholder, selected, unknown, onPick, allow
               <button type="button" className="exam-breed-result" onClick={() => onPick(b)}>
                 <span className="exam-breed-name">{b.name}</span>
                 <span className="exam-breed-cat">{breedCategories[b.category].label}</span>
+                <span className="exam-breed-ref-snippet">{getBreedFullProfile(b).physical.split('.')[0]}.</span>
               </button>
             </li>
           ))}
@@ -132,13 +165,14 @@ export default function MixPicker({ onSelect, onBack }: MixPickerProps) {
   const [parentA, setParentA] = useState<Breed | null>(null);
   const [parentB, setParentB] = useState<Breed | null>(null);
   const [parentBUnknown, setParentBUnknown] = useState(false);
-  const [choices, setChoices] = useState<Partial<Record<AxisKey, AxisChoice>>>({});
-  const [otherOpen, setOtherOpen] = useState<AxisKey | null>(null);
+  const [choices, setChoices] = useState<Partial<Record<TraitAxis, AxisChoice>>>({});
+  const [otherOpen, setOtherOpen] = useState<TraitAxis | null>(null);
+  const [refOpen, setRefOpen] = useState(true);
 
   const parentsReady = parentA !== null && (parentB !== null || parentBUnknown);
   const categoryKeys = Object.keys(breedCategories) as BreedCategory[];
 
-  const setAxis = (axis: AxisKey, choice: AxisChoice) => {
+  const setAxis = (axis: TraitAxis, choice: AxisChoice) => {
     setChoices((prev) => ({ ...prev, [axis]: choice }));
     setOtherOpen(null);
   };
@@ -157,7 +191,7 @@ export default function MixPicker({ onSelect, onBack }: MixPickerProps) {
       parentB,
       personality: choices.personality!.category,
       working: choices.working!.category,
-      physical: choices.physical!.category
+      physical: choices.physical!.category,
     });
   };
 
@@ -192,60 +226,84 @@ export default function MixPicker({ onSelect, onBack }: MixPickerProps) {
       </div>
 
       {parentsReady && (
-        <div className="exam-mix-traits">
-          <p className="exam-breed-or">Which side did each trait come from?</p>
-          {AXES.map((axis) => {
-            const choice = choices[axis.key];
-            return (
-              <div className="exam-trait-axis" key={axis.key}>
-                <h3 className="exam-trait-label">{axis.label}</h3>
-                <p className="exam-trait-hint">{axis.hint}</p>
-                <div className="exam-trait-options">
-                  <button
-                    type="button"
-                    className={`exam-trait-option${choice?.source === 'a' ? ' is-selected' : ''}`}
-                    onClick={() => setAxis(axis.key, { source: 'a', category: parentA!.category })}
-                  >
-                    {parentA!.name}
-                  </button>
-                  {parentB && (
+        <>
+          <div className="exam-breed-ref-panel">
+            <button
+              type="button"
+              className="exam-breed-ref-toggle"
+              aria-expanded={refOpen}
+              onClick={() => setRefOpen((open) => !open)}
+            >
+              {refOpen ? 'Hide' : 'Show'} parent reference profiles
+            </button>
+            {refOpen && (
+              <div className="exam-breed-ref-grid">
+                <ParentReference label="Primary type" breed={parentA!} />
+                {parentB && <ParentReference label="Secondary type" breed={parentB} />}
+              </div>
+            )}
+          </div>
+
+          <div className="exam-mix-traits">
+            <p className="exam-breed-or">Which side did each trait come from?</p>
+            {AXES.map((axis) => {
+              const choice = choices[axis.key];
+              return (
+                <div className="exam-trait-axis" key={axis.key}>
+                  <h3 className="exam-trait-label">{axis.label}</h3>
+                  <p className="exam-trait-hint">{axis.hint}</p>
+                  <div className="exam-trait-options">
+                    <TraitOption
+                      selected={choice?.source === 'a'}
+                      name={parentA!.name}
+                      categoryLabel={breedCategories[parentA!.category].label}
+                      axisDetail={getBreedAxisProfile(parentA!, axis.key)}
+                      onClick={() => setAxis(axis.key, { source: 'a', category: parentA!.category })}
+                    />
+                    {parentB && (
+                      <TraitOption
+                        selected={choice?.source === 'b'}
+                        name={parentB.name}
+                        categoryLabel={breedCategories[parentB.category].label}
+                        axisDetail={getBreedAxisProfile(parentB, axis.key)}
+                        onClick={() => setAxis(axis.key, { source: 'b', category: parentB.category })}
+                      />
+                    )}
                     <button
                       type="button"
-                      className={`exam-trait-option${choice?.source === 'b' ? ' is-selected' : ''}`}
-                      onClick={() => setAxis(axis.key, { source: 'b', category: parentB.category })}
+                      className={`exam-trait-option exam-trait-option--detailed exam-trait-option--other${choice?.source === 'other' ? ' is-selected' : ''}`}
+                      onClick={() => setOtherOpen(otherOpen === axis.key ? null : axis.key)}
                     >
-                      {parentB.name}
+                      <span className="exam-trait-option-name">
+                        {choice?.source === 'other'
+                          ? `Something else: ${breedCategories[choice.category].label}`
+                          : 'Something else…'}
+                      </span>
+                      <span className="exam-trait-option-detail">
+                        Trait came from a different type than either parent — pick the closest match below.
+                      </span>
                     </button>
-                  )}
-                  <button
-                    type="button"
-                    className={`exam-trait-option${choice?.source === 'other' ? ' is-selected' : ''}`}
-                    onClick={() => setOtherOpen(otherOpen === axis.key ? null : axis.key)}
-                  >
-                    {choice?.source === 'other'
-                      ? `Something else: ${breedCategories[choice.category].label}`
-                      : 'Something else…'}
-                  </button>
-                </div>
-                {otherOpen === axis.key && (
-                  <div className="exam-category-cards exam-trait-other">
-                    {categoryKeys.map((key) => (
-                      <button
-                        type="button"
-                        className="exam-category-card"
-                        key={key}
-                        onClick={() => setAxis(axis.key, { source: 'other', category: key })}
-                      >
-                        <span className="exam-category-label">{breedCategories[key].label}</span>
-                        <span className="exam-category-note">{breedCategories[key].note}</span>
-                      </button>
-                    ))}
                   </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
+                  {otherOpen === axis.key && (
+                    <div className="exam-category-cards exam-trait-other">
+                      {categoryKeys.map((key) => (
+                        <button
+                          type="button"
+                          className="exam-category-card"
+                          key={key}
+                          onClick={() => setAxis(axis.key, { source: 'other', category: key })}
+                        >
+                          <span className="exam-category-label">{breedCategories[key].label}</span>
+                          <span className="exam-category-note">{getCategoryAxisHint(key, axis.key)}</span>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </>
       )}
 
       <div className="exam-mix-actions">
