@@ -3452,6 +3452,43 @@ body.page-intelligence {
   background: var(--surface-soft);
 }
 
+.intelligence-column-tip-rail {
+  min-height: 3.25rem;
+  margin-bottom: 0.65rem;
+  padding: 0.65rem 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  transition: border-color 0.12s ease, background-color 0.12s ease;
+}
+
+.intelligence-column-tip-rail.is-active {
+  border-color: rgba(45, 74, 45, 0.28);
+  background: var(--surface-soft);
+}
+
+.intelligence-column-tip-rail-label {
+  display: block;
+  margin-bottom: 0.2rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--forest);
+}
+
+.intelligence-column-tip-rail-text,
+.intelligence-column-tip-rail-placeholder {
+  margin: 0;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--text);
+}
+
+.intelligence-column-tip-rail-placeholder {
+  color: var(--light-text);
+}
+
 .intelligence-table-scroll {
   overflow-x: auto;
   overflow-y: visible;
@@ -3565,6 +3602,8 @@ body.page-intelligence {
   opacity: 1;
   visibility: visible;
 }
+
+/* Column header explanations render in IntelligenceColumnTipRail, not inline popovers. */
 
 .intelligence-col-tooltip--legend {
   left: 0;

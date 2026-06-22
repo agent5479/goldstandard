@@ -9,6 +9,10 @@ import IntelligenceBar, { getScoreCellStyle } from './IntelligenceBar';
 import IntelligenceColumnHeader from './IntelligenceColumnHeader';
 import IntelligenceLegendItem from './IntelligenceLegendItem';
 import BreedDetailTooltip from './BreedDetailTooltip';
+import {
+  IntelligenceColumnTipProvider,
+  IntelligenceColumnTipRail,
+} from './IntelligenceColumnTipRail';
 
 type SortCol = 'rank' | IntelligenceDimension;
 
@@ -97,6 +101,7 @@ export default function BreedIntelligenceTable() {
   );
 
   return (
+    <IntelligenceColumnTipProvider>
     <div className="intelligence-table-wrap">
       <h2 className="visually-hidden">
         Dog breeds ranked across nine dimensions. Hover a breed name for temperament details; click a row to pin it for comparison.
@@ -148,6 +153,8 @@ export default function BreedIntelligenceTable() {
         )}
       </div>
 
+      <IntelligenceColumnTipRail />
+
       <div className="intelligence-table-scroll">
         <table className="intelligence-table">
           <thead>
@@ -192,8 +199,7 @@ export default function BreedIntelligenceTable() {
 
       <p className="intelligence-tip">
         The <strong>IQ #</strong> column is overall IQ rank only. Other columns are independent — sort by any
-        heading to reorder. Hover a heading for what it measures. Cell shading runs green (high) through
-        gold and orange to gray (low).
+        heading to reorder. Cell shading runs green (high) through gold and orange to gray (low).
       </p>
       <p className="intelligence-tip">
         Hover a breed name for temperament details. Click a row to pin it for comparison.
@@ -204,5 +210,6 @@ export default function BreedIntelligenceTable() {
         estimation.
       </p>
     </div>
+    </IntelligenceColumnTipProvider>
   );
 }

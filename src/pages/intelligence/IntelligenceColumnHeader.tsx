@@ -1,4 +1,5 @@
 import type { CSSProperties, KeyboardEvent, MouseEvent } from 'react';
+import { useIntelligenceColumnTip } from './IntelligenceColumnTipRail';
 
 interface IntelligenceColumnHeaderProps {
   label: string;
@@ -19,10 +20,20 @@ export default function IntelligenceColumnHeader({
   style,
   className,
 }: IntelligenceColumnHeaderProps) {
+  const tipContext = useIntelligenceColumnTip();
   const sortable = Boolean(onClick);
+
+  const showDescription = () => {
+    tipContext?.showTip({ label, description });
+  };
+
+  const hideDescription = () => {
+    tipContext?.hideTip();
+  };
 
   const handleClick = (event: MouseEvent<HTMLTableCellElement>) => {
     onClick?.();
+    hideDescription();
     event.currentTarget.blur();
   };
 
@@ -31,6 +42,7 @@ export default function IntelligenceColumnHeader({
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault();
       onClick?.();
+      hideDescription();
       event.currentTarget.blur();
     }
   };
@@ -43,14 +55,16 @@ export default function IntelligenceColumnHeader({
       aria-sort={ariaSort}
       tabIndex={sortable ? 0 : undefined}
       onKeyDown={sortable ? handleKeyDown : undefined}
+      onMouseLeave={hideDescription}
       title={description}
     >
-      <span className="intelligence-th-tip-label">
+      <span
+        className="intelligence-th-tip-label"
+        onMouseEnter={showDescription}
+        onFocus={showDescription}
+      >
         {label}
         {sortIndicator}
-        <span className="intelligence-col-tooltip" aria-hidden="true">
-          {description}
-        </span>
       </span>
     </th>
   );
