@@ -67,9 +67,12 @@ export default function Seo({
     setMeta('name', 'twitter:description', social);
     setMeta('name', 'twitter:image', SITE_OG_IMAGE);
 
+    document.documentElement.dataset.seoReady = 'true';
+
     const previous = document.body.className;
     document.body.className = bodyClass ?? '';
     return () => {
+      delete document.documentElement.dataset.seoReady;
       document.body.className = previous;
     };
   }, [title, description, path, bodyClass, index, socialDescription]);

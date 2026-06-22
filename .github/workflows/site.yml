@@ -1,0 +1,57 @@
+name: Public site build
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/**'
+      - 'shared/**'
+      - 'public/**'
+      - 'scripts/prerender.mjs'
+      - 'index.html'
+      - 'vite.config.ts'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/site.yml'
+  pull_request:
+    paths:
+      - 'src/**'
+      - 'shared/**'
+      - 'public/**'
+      - 'scripts/prerender.mjs'
+      - 'index.html'
+      - 'vite.config.ts'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/site.yml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright Chromium
+        run: npx playwright install chromium --with-deps
+
+      - name: Build and prerender static HTML
+        run: npm run build
+
+      - name: Verify prerendered routes exist
+        run: |
+          test -f docs/index.html
+          test -f docs/about/index.html
+          test -f docs/contact/index.html
+          test -f docs/book/index.html
+          test -f docs/guide/index.html
+          test -f docs/exam/index.html
+          grep -q 'data-seo-ready="true"' docs/about/index.html
+          grep -q '<h1' docs/book/index.html

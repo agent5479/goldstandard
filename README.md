@@ -66,8 +66,10 @@ This repository powers a public marketing site indexed by Google, Bing, and othe
 - **Geo targeting:** Tasman Region (`NZ-TAS`) — Takaka, Golden Bay; service extends to Nelson Bays
 - **Structured data:** `LocalBusiness` JSON-LD in [`index.html`](index.html) (address, geo coordinates, service areas, phone, email)
 - **Per-route SEO:** titles, descriptions, canonical URLs, and Open Graph tags via [`src/components/Seo.tsx`](src/components/Seo.tsx) and defaults in [`src/data/siteConfig.ts`](src/data/siteConfig.ts)
+- **Static prerender (SSG):** `npm run build` runs Vite, then [`scripts/prerender.mjs`](scripts/prerender.mjs) exports each public route as fully rendered HTML under `docs/` (e.g. `docs/about/index.html`) so crawlers receive baked content instantly on GitHub Pages — no client-only shell for `/about`, `/book`, etc.
 - **Static crawl files:** [`public/robots.txt`](public/robots.txt) and [`public/sitemap.xml`](public/sitemap.xml) — copied into `docs/` on build
 - **Social preview:** `images/dog1024.jpg` (favicons: `dog16.jpg` … `dog512.jpg`, [`site.webmanifest`](public/site.webmanifest))
+- **CI:** [`.github/workflows/site.yml`](.github/workflows/site.yml) type-checks, builds, and verifies prerendered HTML on push/PR
 
 The private trainer app at [gsdt-trainer-private.web.app](https://gsdt-trainer-private.web.app/) is **not** indexed (`noindex`, separate `robots.txt`).
 
@@ -88,7 +90,7 @@ The private trainer app at [gsdt-trainer-private.web.app](https://gsdt-trainer-p
 ```bash
 npm install        # once
 npm run dev        # dev server with hot reload
-npm run build      # type-check + build to docs/
+npm run build      # type-check + Vite build + prerender routes to docs/
 npm run preview    # serve the built docs/ folder locally
 ```
 
