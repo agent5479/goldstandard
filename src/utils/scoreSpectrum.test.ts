@@ -6,8 +6,8 @@ describe('scoreSpectrum', () => {
     const high = getScoreSpectrumStyle(9.5);
     const low = getScoreSpectrumStyle(2);
 
-    expect(high.barFill).toContain('rgb(');
-    expect(low.barFill).toContain('rgb(');
+    expect(high.cellBackground).toMatch(/^rgb\(/);
+    expect(low.cellBackground).toMatch(/^rgb\(/);
     expect(high.cellBackground).not.toBe(low.cellBackground);
   });
 
@@ -19,6 +19,6 @@ describe('scoreSpectrum', () => {
   it('builds a gradient for score ranges', () => {
     const range = getScoreRangeSpectrumStyle(3.2, 8.1);
     expect(range.barRangeGradient).toContain('linear-gradient');
-    expect(range.cellBackground).toMatch(/^rgba\(/);
+    expect(range.cellBackground).toMatch(/^rgb\(/);
   });
 });

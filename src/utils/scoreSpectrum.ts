@@ -37,12 +37,19 @@ function interpolateRgb(value: number): Rgb {
   return SPECTRUM_STOPS[SPECTRUM_STOPS.length - 1].rgb;
 }
 
-function toRgba(rgb: Rgb, alpha: number): string {
-  return `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${alpha})`;
-}
 
 function toRgb(rgb: Rgb): string {
   return `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+}
+
+/** Opaque pastel — reads clearly on white, pinned, and hover row backgrounds. */
+function blendWithWhite(rgb: Rgb, colorWeight: number): Rgb {
+  const whiteWeight = 1 - colorWeight;
+  return {
+    r: Math.round(rgb.r * colorWeight + 255 * whiteWeight),
+    g: Math.round(rgb.g * colorWeight + 255 * whiteWeight),
+    b: Math.round(rgb.b * colorWeight + 255 * whiteWeight),
+  };
 }
 
 /** Slightly deepen bar colour so it reads on pale cell backgrounds. */
@@ -63,8 +70,8 @@ export interface ScoreSpectrumStyle {
 export function getScoreSpectrumStyle(value: number): ScoreSpectrumStyle {
   const rgb = interpolateRgb(value);
   return {
-    cellBackground: toRgba(rgb, 0.16),
-    barFill: toRgb(deepen(rgb)),
+    cellBackground: toRgb(blendWithWhite(rgb, 0.44)),
+    barFill: toRgb(deepen(rgb, 0.06)),
   };
 }
 

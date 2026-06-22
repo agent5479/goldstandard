@@ -14,7 +14,7 @@ import {
   IntelligenceColumnTipRail,
 } from './IntelligenceColumnTipRail';
 
-type SortCol = 'rank' | IntelligenceDimension;
+type SortKey = IntelligenceDimension | 'rank' | null;
 
 function matchesSearch(profile: DogIntelligenceProfile, query: string): boolean {
   const q = query.toLowerCase();
@@ -24,8 +24,7 @@ function matchesSearch(profile: DogIntelligenceProfile, query: string): boolean 
 
 export default function BreedIntelligenceTable() {
   const [search, setSearch] = useState('');
-  const [sortCol, setSortCol] = useState<SortCol>('rank');
-  const [sortKey, setSortKey] = useState<IntelligenceDimension | null>(null);
+  const [sortKey, setSortKey] = useState<SortKey>(null);
   const [sortDir, setSortDir] = useState<1 | -1>(1);
   const [pinned, setPinned] = useState<Set<string>>(() => new Set());
 
@@ -36,6 +35,16 @@ export default function BreedIntelligenceTable() {
     } else {
       setSortKey(key);
       setSortDir(sortKey === key && sortDir === 1 ? -1 : 1);
+    }
+  };
+
+  const toggleRankSort = () => {
+    if (sortKey === 'rank' && sortDir === -1) {
+      setSortKey(null);
+      setSortDir(1);
+    } else {
+      setSortKey('rank');
+      setSortDir(sortKey === 'rank' && sortDir === 1 ? -1 : 1);
     }
   };
 
@@ -51,9 +60,9 @@ export default function BreedIntelligenceTable() {
   const clearPins = () => setPinned(new Set());
 
   const sortFn = (a: DogIntelligenceProfile, b: DogIntelligenceProfile) => {
-    const sk = sortKey ?? (sortCol !== 'rank' ? sortCol : null);
-    if (!sk) return a.rank - b.rank;
-    return sortDir * (b.scores[sk as IntelligenceDimension] - a.scores[sk as IntelligenceDimension]);
+    if (!sortKey) return a.rank - b.rank;
+    if (sortKey === 'rank') return sortDir * (a.rank - b.rank);
+    return sortDir * (b.scores[sortKey] - a.scores[sortKey]);
   };
 
   const { pinnedList, unpinnedList } = useMemo(() => {
@@ -62,7 +71,7 @@ export default function BreedIntelligenceTable() {
       pinnedList: filtered.filter((p) => pinned.has(p.breed)).sort(sortFn),
       unpinnedList: filtered.filter((p) => !pinned.has(p.breed)).sort(sortFn),
     };
-  }, [search, pinned, sortCol, sortKey, sortDir]);
+  }, [search, pinned, sortKey, sortDir]);
 
   const renderRow = (profile: DogIntelligenceProfile, isPinned: boolean, showDivider: boolean) => (
     <tr
@@ -127,22 +136,6 @@ export default function BreedIntelligenceTable() {
           onChange={(e) => setSearch(e.target.value)}
           aria-label="Search breeds"
         />
-        <select
-          className="intelligence-sort-select"
-          value={sortCol}
-          onChange={(e) => {
-            setSortCol(e.target.value as SortCol);
-            setSortKey(null);
-          }}
-          aria-label="Sort column"
-        >
-          <option value="rank">Sort by rank</option>
-          {INTELLIGENCE_DIMENSIONS.map((dim) => (
-            <option key={dim.key} value={dim.key}>
-              Sort by {dim.label}
-            </option>
-          ))}
-        </select>
         {pinned.size > 0 && (
           <span className="intelligence-pin-count">{pinned.size} pinned</span>
         )}
@@ -159,9 +152,21 @@ export default function BreedIntelligenceTable() {
         <table className="intelligence-table">
           <thead>
             <tr>
-              <th className="intelligence-rank-col" style={{ width: 36 }} title="Overall IQ rank — not the rank for other columns">
-                IQ #
-              </th>
+              <IntelligenceColumnHeader
+                label="IQ #"
+                description="Overall IQ rank — not the rank for other columns. Click to sort by rank."
+                sortIndicator={sortKey === 'rank' ? (sortDir === 1 ? ' ▲' : ' ▼') : undefined}
+                onClick={toggleRankSort}
+                ariaSort={
+                  sortKey === 'rank'
+                    ? sortDir === 1
+                      ? 'ascending'
+                      : 'descending'
+                    : 'none'
+                }
+                className="intelligence-rank-col"
+                style={{ width: 36 }}
+              />
               <th className="intelligence-breed-col" style={{ minWidth: 130 }}>
                 Breed
               </th>

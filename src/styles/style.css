@@ -3418,17 +3418,13 @@ body.page-intelligence {
   align-items: center;
 }
 
-.intelligence-search,
-.intelligence-sort-select {
+.intelligence-search {
   font-size: 0.85rem;
   padding: 6px 10px;
   border-radius: 6px;
   border: 1px solid var(--border);
   background: var(--surface);
   color: var(--text);
-}
-
-.intelligence-search {
   flex: 1;
   min-width: 160px;
 }
@@ -3622,22 +3618,20 @@ body.page-intelligence {
 .intelligence-table tbody tr {
   border-bottom: 1px solid rgba(45, 74, 45, 0.08);
   cursor: pointer;
-  transition: background 0.12s;
 }
 
-.intelligence-table tbody tr:last-child {
-  border-bottom: none;
-}
-
-.intelligence-table tbody tr:hover {
+.intelligence-table tbody tr:hover td.intelligence-rank,
+.intelligence-table tbody tr:hover td.intelligence-breed {
   background: var(--surface-soft);
 }
 
-.intelligence-table tbody tr.is-pinned {
+.intelligence-table tbody tr.is-pinned td.intelligence-rank,
+.intelligence-table tbody tr.is-pinned td.intelligence-breed {
   background: #f0eef8;
 }
 
-.intelligence-table tbody tr.is-pinned:hover {
+.intelligence-table tbody tr.is-pinned:hover td.intelligence-rank,
+.intelligence-table tbody tr.is-pinned:hover td.intelligence-breed {
   background: #e4e0f4;
 }
 
@@ -3652,8 +3646,13 @@ body.page-intelligence {
   vertical-align: middle;
 }
 
+.intelligence-table tbody tr:last-child {
+  border-bottom: none;
+}
+
 .intelligence-table tbody td.intelligence-score-cell {
   padding: 6px 4px;
+  background-clip: padding-box;
 }
 
 .intelligence-rank {
@@ -3792,14 +3791,14 @@ body.page-intelligence {
 
 .intelligence-bar-bg {
   flex: 1;
-  height: 5px;
+  height: 6px;
   border-radius: 3px;
-  background: rgba(255, 255, 255, 0.55);
+  background: rgba(255, 255, 255, 0.72);
   overflow: hidden;
   min-width: 0;
   width: 100%;
   position: relative;
-  box-shadow: inset 0 0 0 1px rgba(45, 74, 45, 0.08);
+  box-shadow: inset 0 0 0 1px rgba(45, 74, 45, 0.12);
 }
 
 .intelligence-bar-fill {
