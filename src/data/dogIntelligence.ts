@@ -1,14 +1,30 @@
 /* ============================================================
    Dog intelligence profiles — Coren top 50 + estimated expansion
-   Scores on a 1–10 scale across six dimensions.
+   Scores on a 1–10 scale across nine dimensions.
    ============================================================ */
 
 import { breeds, type BreedCategory } from './breeds';
-import { getBreedNeuroticismInclination } from './breedTraits';
+import {
+  getBreedNeuroticismInclination,
+  getCategoryNeuroticismDefault,
+  type NeuroticismInclination,
+} from './breedTraits';
 
-export type IntelligenceDimension = 'iq' | 'inst' | 'adapt' | 'work' | 'ei' | 'si';
+export type IntelligenceDimension =
+  | 'iq'
+  | 'inst'
+  | 'adapt'
+  | 'work'
+  | 'ei'
+  | 'si'
+  | 'dom'
+  | 'prot'
+  | 'neuro';
 
 export type IntelligenceScores = Record<IntelligenceDimension, number>;
+
+/** Coren reference rows — six cognitive dimensions only; behavioural scores are derived. */
+type CorenScores = Pick<IntelligenceScores, 'iq' | 'inst' | 'adapt' | 'work' | 'ei' | 'si'>;
 
 export interface DogIntelligenceProfile {
   breed: string;
@@ -73,6 +89,30 @@ export const INTELLIGENCE_DIMENSIONS: {
     description:
       'Awareness of surroundings, distances, and object positions — navigation, visual memory, and spatial problem-solving in the environment.',
   },
+  {
+    key: 'dom',
+    label: 'Dominance',
+    shortLabel: 'Dom',
+    color: '#8B4513',
+    description:
+      'Tendency toward assertive or rank-seeking behaviour with people and other dogs — pushiness, guarding position, and challenging boundaries. Not the same as confidence or good leadership.',
+  },
+  {
+    key: 'prot',
+    label: 'Protectiveness',
+    shortLabel: 'Prot',
+    color: '#B44A4A',
+    description:
+      'Drive to guard household, territory, or family — alertness to strangers, vigilance, and protective reactions. Higher scores suit structured guardian types; upbringing strongly shapes expression.',
+  },
+  {
+    key: 'neuro',
+    label: 'Potential neuroticism',
+    shortLabel: 'Neur',
+    color: '#9B6B9E',
+    description:
+      'Estimated propensity for anxious looping, hyper-vigilance, or stress sensitivity in the breed type — not a label for any individual dog. Draws on breed temperament data where available.',
+  },
 ];
 
 export const INTELLIGENCE_DIMENSION_KEYS = INTELLIGENCE_DIMENSIONS.map((d) => d.key);
@@ -95,7 +135,7 @@ export const NAMED_CROSS_BREEDS = new Set([
   'Lurcher',
 ]);
 
-type RawCoren = IntelligenceScores & { breed: string; rank: number };
+type RawCoren = CorenScores & { breed: string; rank: number };
 
 const COREN_TOP_50: RawCoren[] = [
   { rank: 1, breed: 'Border Collie', iq: 9.8, inst: 9.5, adapt: 9.8, work: 9.9, ei: 8.2, si: 9.5 },
@@ -177,15 +217,15 @@ const BREED_SCORE_DELTAS: Record<string, Partial<IntelligenceScores>> = {
 };
 
 const CATEGORY_DEFAULTS: Record<BreedCategory, IntelligenceScores> = {
-  herding: { iq: 7.0, inst: 8.8, adapt: 7.5, work: 7.2, ei: 7.5, si: 8.5 },
-  clingy: { iq: 6.8, inst: 8.0, adapt: 7.0, work: 7.0, ei: 8.5, si: 7.0 },
-  sighthound: { iq: 5.0, inst: 9.0, adapt: 5.2, work: 4.6, ei: 6.8, si: 5.8 },
-  spitz: { iq: 5.8, inst: 7.8, adapt: 6.5, work: 5.5, ei: 8.0, si: 7.8 },
-  terrier: { iq: 6.0, inst: 8.2, adapt: 7.0, work: 5.8, ei: 7.2, si: 7.0 },
-  scenthound: { iq: 5.4, inst: 9.0, adapt: 6.8, work: 5.2, ei: 7.5, si: 7.2 },
-  guardian: { iq: 7.2, inst: 8.5, adapt: 7.8, work: 7.4, ei: 7.5, si: 8.0 },
-  giant: { iq: 5.8, inst: 7.5, adapt: 5.5, work: 5.5, ei: 8.5, si: 6.5 },
-  small: { iq: 6.2, inst: 6.8, adapt: 6.5, work: 6.0, ei: 7.8, si: 6.2 },
+  herding: { iq: 7.0, inst: 8.8, adapt: 7.5, work: 7.2, ei: 7.5, si: 8.5, dom: 6.0, prot: 5.0, neuro: 6.8 },
+  clingy: { iq: 6.8, inst: 8.0, adapt: 7.0, work: 7.0, ei: 8.5, si: 7.0, dom: 4.5, prot: 4.5, neuro: 5.0 },
+  sighthound: { iq: 5.0, inst: 9.0, adapt: 5.2, work: 4.6, ei: 6.8, si: 5.8, dom: 3.5, prot: 3.0, neuro: 5.0 },
+  spitz: { iq: 5.8, inst: 7.8, adapt: 6.5, work: 5.5, ei: 8.0, si: 7.8, dom: 5.5, prot: 5.0, neuro: 5.0 },
+  terrier: { iq: 6.0, inst: 8.2, adapt: 7.0, work: 5.8, ei: 7.2, si: 7.0, dom: 6.5, prot: 4.5, neuro: 6.8 },
+  scenthound: { iq: 5.4, inst: 9.0, adapt: 6.8, work: 5.2, ei: 7.5, si: 7.2, dom: 4.0, prot: 3.5, neuro: 3.0 },
+  guardian: { iq: 7.2, inst: 8.5, adapt: 7.8, work: 7.4, ei: 7.5, si: 8.0, dom: 7.5, prot: 9.0, neuro: 5.0 },
+  giant: { iq: 5.8, inst: 7.5, adapt: 5.5, work: 5.5, ei: 8.5, si: 6.5, dom: 7.0, prot: 8.5, neuro: 3.5 },
+  small: { iq: 6.2, inst: 6.8, adapt: 6.5, work: 6.0, ei: 7.8, si: 6.2, dom: 5.5, prot: 3.5, neuro: 6.8 },
 };
 
 /** Known estimates for breeds outside Coren top 50 (tier 2 hints). */
@@ -233,11 +273,103 @@ const NEUROTICISM_EI_DELTA: Record<string, number> = {
   high: 0.5,
 };
 
+const NEUROTICISM_SCORE: Record<NeuroticismInclination, number> = {
+  low: 3.0,
+  moderate: 5.0,
+  elevated: 6.8,
+  high: 8.2,
+};
+
+/** Category guess for Coren-only breed names used in the mix picker. */
+const COREN_BREED_CATEGORY: Record<string, BreedCategory> = {
+  'Border Collie': 'herding',
+  Poodle: 'clingy',
+  'German Shepherd': 'guardian',
+  'Golden Retriever': 'clingy',
+  'Doberman Pinscher': 'guardian',
+  'Shetland Sheepdog': 'herding',
+  'Labrador Retriever': 'clingy',
+  Papillon: 'small',
+  Rottweiler: 'guardian',
+  'Australian Cattle Dog': 'herding',
+  'Pembroke Welsh Corgi': 'herding',
+  'Miniature Schnauzer': 'terrier',
+  'English Springer Spaniel': 'clingy',
+  'Belgian Tervuren': 'guardian',
+  Schipperke: 'spitz',
+  'Belgian Sheepdog': 'guardian',
+  Collie: 'herding',
+  Keeshond: 'spitz',
+  'German Shorthaired Pointer': 'clingy',
+  'Flat-Coated Retriever': 'clingy',
+  'English Cocker Spaniel': 'clingy',
+  'Standard Schnauzer': 'terrier',
+  'Brittany Spaniel': 'clingy',
+  'Cocker Spaniel': 'clingy',
+  Weimaraner: 'clingy',
+  'Belgian Malinois': 'guardian',
+  'Bernese Mountain Dog': 'giant',
+  Pomeranian: 'small',
+  'Irish Water Spaniel': 'clingy',
+  Vizsla: 'clingy',
+  'Cardigan Welsh Corgi': 'herding',
+  'Chesapeake Bay Retriever': 'clingy',
+  'Yorkshire Terrier': 'small',
+  'Giant Schnauzer': 'guardian',
+  'Portuguese Water Dog': 'clingy',
+  'Airedale Terrier': 'terrier',
+  'Bouvier des Flandres': 'herding',
+  'Border Terrier': 'terrier',
+  'Siberian Husky': 'spitz',
+  'Australian Shepherd': 'herding',
+  'Irish Setter': 'clingy',
+  Boxer: 'clingy',
+  'Great Dane': 'giant',
+  Samoyed: 'spitz',
+  Dalmatian: 'clingy',
+  'Jack Russell Terrier': 'terrier',
+  Beagle: 'scenthound',
+  Bloodhound: 'scenthound',
+  Bulldog: 'clingy',
+  'Afghan Hound': 'sighthound',
+};
+
+/** Breed-specific behavioural overrides — breeds.ts and Coren canonical names. */
+const BEHAVIORAL_OVERRIDES: Record<string, Partial<Pick<IntelligenceScores, 'dom' | 'prot' | 'neuro'>>> = {
+  'German Shepherd': { dom: 7.5, prot: 9.2 },
+  'Doberman Pinscher': { dom: 7.2, prot: 9.0 },
+  Doberman: { dom: 7.2, prot: 9.0 },
+  Rottweiler: { dom: 8.0, prot: 9.5 },
+  'Belgian Malinois': { dom: 7.8, prot: 9.3 },
+  'Belgian Tervuren': { dom: 7.0, prot: 8.5 },
+  'Belgian Sheepdog': { dom: 7.0, prot: 8.5 },
+  Bullmastiff: { dom: 7.5, prot: 8.8 },
+  'Cane Corso': { dom: 8.0, prot: 9.2 },
+  Akita: { dom: 7.8, prot: 8.5 },
+  'Border Collie': { dom: 5.5, prot: 4.0 },
+  'Golden Retriever': { dom: 3.5, prot: 4.0 },
+  'Labrador Retriever': { dom: 3.5, prot: 4.0 },
+  'Flat-Coated Retriever': { dom: 3.8, prot: 4.2 },
+  Beagle: { dom: 4.5, prot: 3.5 },
+  'Siberian Husky': { dom: 6.0, prot: 4.5 },
+  'Great Dane': { dom: 5.5, prot: 6.5 },
+  Chihuahua: { neuro: 7.5 },
+  'Toy Poodle': { neuro: 8.0 },
+  'Miniature Poodle': { neuro: 7.0 },
+  'Cavalier King Charles Spaniel': { neuro: 7.2 },
+  'French Bulldog': { neuro: 6.5 },
+  Pug: { neuro: 6.0 },
+  'Jack Russell Terrier': { dom: 7.0, prot: 4.0 },
+  'Staffordshire Bull Terrier (Staffy)': { dom: 6.5, prot: 6.0 },
+  'Anatolian Shepherd / Maremma': { dom: 7.5, prot: 9.5 },
+  'Great Pyrenees (Pyrenean Mountain Dog)': { dom: 7.0, prot: 9.0 },
+};
+
 function roundScore(value: number): number {
   return Math.round(Math.max(1, Math.min(10, value)) * 10) / 10;
 }
 
-function extractScores(raw: RawCoren | IntelligenceScores): IntelligenceScores {
+function extractCorenScores(raw: CorenScores): CorenScores {
   return {
     iq: raw.iq,
     inst: raw.inst,
@@ -248,13 +380,59 @@ function extractScores(raw: RawCoren | IntelligenceScores): IntelligenceScores {
   };
 }
 
-function averageScores(list: IntelligenceScores[]): IntelligenceScores {
-  const keys = INTELLIGENCE_DIMENSION_KEYS;
-  const result = {} as IntelligenceScores;
+function averageCorenScores(list: CorenScores[]): CorenScores {
+  const keys: (keyof CorenScores)[] = ['iq', 'inst', 'adapt', 'work', 'ei', 'si'];
+  const result = {} as CorenScores;
   for (const key of keys) {
     result[key] = roundScore(list.reduce((sum, s) => sum + s[key], 0) / list.length);
   }
   return result;
+}
+
+function corenToFullScores(
+  raw: CorenScores,
+  breedName: string,
+  category: BreedCategory
+): IntelligenceScores {
+  return enrichBehavioralScores(breedName, category, {
+    ...extractCorenScores(raw),
+    dom: 0,
+    prot: 0,
+    neuro: 0,
+  });
+}
+
+function resolveNeuroticismScore(breedName: string, category: BreedCategory): number {
+  const inclination =
+    getBreedNeuroticismInclination(breedName) ?? getCategoryNeuroticismDefault(category);
+  return NEUROTICISM_SCORE[inclination];
+}
+
+function enrichBehavioralScores(
+  breedName: string,
+  category: BreedCategory,
+  scores: IntelligenceScores
+): IntelligenceScores {
+  const defaults = CATEGORY_DEFAULTS[category];
+  const lookupNames = [breedName, BREED_TO_COREN[breedName]].filter(Boolean) as string[];
+  let dom = defaults.dom;
+  let prot = defaults.prot;
+  let neuro = resolveNeuroticismScore(breedName, category);
+
+  for (const name of lookupNames) {
+    const override = BEHAVIORAL_OVERRIDES[name];
+    if (!override) continue;
+    if (override.dom !== undefined) dom = override.dom;
+    if (override.prot !== undefined) prot = override.prot;
+    if (override.neuro !== undefined) neuro = override.neuro;
+  }
+
+  return {
+    ...scores,
+    dom: roundScore(dom),
+    prot: roundScore(prot),
+    neuro: roundScore(neuro),
+  };
 }
 
 function applyDeltas(base: IntelligenceScores, deltas: Partial<IntelligenceScores>): IntelligenceScores {
@@ -275,22 +453,32 @@ function estimateFromCategory(breedName: string, category: BreedCategory): Intel
       if (tier2[key] !== undefined) scores[key] = roundScore(tier2[key]!);
     }
   }
-  const neuro = getBreedNeuroticismInclination(breedName);
-  if (neuro) {
-    scores.ei = roundScore(scores.ei + (NEUROTICISM_EI_DELTA[neuro] ?? 0));
+  const neuroIncl = getBreedNeuroticismInclination(breedName);
+  if (neuroIncl) {
+    scores.ei = roundScore(scores.ei + (NEUROTICISM_EI_DELTA[neuroIncl] ?? 0));
+    scores.neuro = roundScore(NEUROTICISM_SCORE[neuroIncl]);
   }
   const deltas = BREED_SCORE_DELTAS[breedName];
   if (deltas) scores = applyDeltas(scores, deltas);
-  return scores;
+  return enrichBehavioralScores(breedName, category, scores);
 }
 
 function resolveCorenScores(breedName: string): { scores: IntelligenceScores; source: 'coren' | 'estimated' } | null {
+  const category =
+    breeds.find((b) => b.name === breedName)?.category ??
+    COREN_BREED_CATEGORY[BREED_TO_COREN[breedName] ?? breedName] ??
+    'clingy';
+
   if (breedName === 'Welsh Corgi (Pembroke / Cardigan)') {
     const pembroke = corenByName.get('Pembroke Welsh Corgi');
     const cardigan = corenByName.get('Cardigan Welsh Corgi');
     if (pembroke && cardigan) {
       return {
-        scores: averageScores([extractScores(pembroke), extractScores(cardigan)]),
+        scores: corenToFullScores(
+          averageCorenScores([extractCorenScores(pembroke), extractCorenScores(cardigan)]),
+          breedName,
+          'herding'
+        ),
         source: 'coren',
       };
     }
@@ -301,7 +489,11 @@ function resolveCorenScores(breedName: string): { scores: IntelligenceScores; so
     const miniature = corenByName.get('Miniature Schnauzer');
     if (standard && miniature) {
       return {
-        scores: averageScores([extractScores(standard), extractScores(miniature)]),
+        scores: corenToFullScores(
+          averageCorenScores([extractCorenScores(standard), extractCorenScores(miniature)]),
+          breedName,
+          'terrier'
+        ),
         source: 'coren',
       };
     }
@@ -311,7 +503,7 @@ function resolveCorenScores(breedName: string): { scores: IntelligenceScores; so
   const coren = corenByName.get(corenName);
   if (!coren) return null;
 
-  let scores = extractScores(coren);
+  let scores = corenToFullScores(coren, breedName, category);
   const deltas = BREED_SCORE_DELTAS[breedName];
   if (deltas) scores = applyDeltas(scores, deltas);
 
@@ -382,11 +574,12 @@ export const PUREBRED_BREEDS_FOR_MIX: { name: string; profile: DogIntelligencePr
 
   for (const entry of COREN_TOP_50) {
     if (!seen.has(entry.breed)) {
+      const category = COREN_BREED_CATEGORY[entry.breed] ?? 'clingy';
       const profile: DogIntelligenceProfile = {
         breed: entry.breed,
         breedKeys: [entry.breed],
         rank: entry.rank,
-        scores: extractScores(entry),
+        scores: corenToFullScores(entry, entry.breed, category),
         source: 'coren',
       };
       seen.add(entry.breed);

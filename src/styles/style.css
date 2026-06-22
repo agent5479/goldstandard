@@ -3464,13 +3464,14 @@ body.page-intelligence {
 
 .intelligence-table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   font-size: 0.78rem;
 }
 
 .intelligence-table thead th {
-  text-align: left;
-  padding: 7px 6px;
+  text-align: center;
+  padding: 7px 5px;
   border-bottom: 1px solid var(--border);
   font-size: 0.72rem;
   color: var(--light-text);
@@ -3482,6 +3483,20 @@ body.page-intelligence {
   top: 0;
   background: var(--surface);
   z-index: 2;
+}
+
+.intelligence-rank-col,
+.intelligence-breed-col {
+  text-align: left;
+}
+
+.intelligence-score-col,
+.intelligence-score-cell {
+  border-left: 1px solid rgba(45, 74, 45, 0.16);
+  min-width: 68px;
+  max-width: 80px;
+  text-align: center;
+  vertical-align: middle;
 }
 
 .intelligence-table thead th:hover {
@@ -3594,9 +3609,13 @@ body.page-intelligence {
 }
 
 .intelligence-table tbody td {
-  padding: 6px 6px;
+  padding: 6px 5px;
   color: var(--text);
   vertical-align: middle;
+}
+
+.intelligence-table tbody td.intelligence-score-cell {
+  padding: 6px 4px;
 }
 
 .intelligence-rank {
@@ -3636,13 +3655,21 @@ body.page-intelligence {
   gap: 5px;
 }
 
+.intelligence-bar-wrap--stacked {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 3px;
+  width: 100%;
+}
+
 .intelligence-bar-bg {
   flex: 1;
   height: 5px;
   border-radius: 3px;
   background: var(--surface-soft);
   overflow: hidden;
-  min-width: 40px;
+  min-width: 0;
+  width: 100%;
   position: relative;
 }
 
@@ -3662,9 +3689,15 @@ body.page-intelligence {
 .intelligence-bar-label {
   font-size: 0.72rem;
   color: var(--light-text);
+  min-width: 0;
+  text-align: center;
+  white-space: nowrap;
+  line-height: 1.2;
+}
+
+.intelligence-bar-wrap:not(.intelligence-bar-wrap--stacked) .intelligence-bar-label {
   min-width: 28px;
   text-align: right;
-  white-space: nowrap;
 }
 
 .intelligence-tip {

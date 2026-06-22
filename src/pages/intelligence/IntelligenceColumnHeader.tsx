@@ -7,6 +7,7 @@ interface IntelligenceColumnHeaderProps {
   onClick?: () => void;
   ariaSort?: 'ascending' | 'descending' | 'none' | undefined;
   style?: CSSProperties;
+  className?: string;
 }
 
 export default function IntelligenceColumnHeader({
@@ -16,12 +17,13 @@ export default function IntelligenceColumnHeader({
   onClick,
   ariaSort,
   style,
+  className,
 }: IntelligenceColumnHeaderProps) {
   const sortable = Boolean(onClick);
 
   return (
     <th
-      className={`intelligence-th-tip${sortable ? ' intelligence-th-tip--sortable' : ''}`}
+      className={`intelligence-th-tip intelligence-score-col${sortable ? ' intelligence-th-tip--sortable' : ''}${className ? ` ${className}` : ''}`}
       style={style}
       onClick={onClick}
       aria-sort={ariaSort}

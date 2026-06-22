@@ -246,7 +246,7 @@ export default function MixIntelligenceExplorer() {
                   const dim = INTELLIGENCE_DIMENSIONS.find((d) => d.key === range.dimension)!;
                   return (
                     <tr key={range.dimension}>
-                      <td className="intelligence-dim-label intelligence-dim-label--tip">
+                      <td className="intelligence-dim-label intelligence-dim-label--tip intelligence-score-cell">
                         <span className="intelligence-th-tip-label">
                           {dim.label}
                           <span className="intelligence-col-tooltip" role="tooltip">
@@ -254,7 +254,7 @@ export default function MixIntelligenceExplorer() {
                           </span>
                         </span>
                       </td>
-                      <td>
+                      <td className="intelligence-score-cell">
                         <IntelligenceBar
                           mode="range"
                           low={range.likelyLow}

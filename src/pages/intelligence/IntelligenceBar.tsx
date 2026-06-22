@@ -39,7 +39,7 @@ export default function IntelligenceBar({
 
   const val = value ?? 0;
   return (
-    <div className="intelligence-bar-wrap">
+    <div className="intelligence-bar-wrap intelligence-bar-wrap--stacked">
       <div className="intelligence-bar-bg">
         <div
           className="intelligence-bar-fill"

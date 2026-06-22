@@ -83,7 +83,7 @@ export default function BreedIntelligenceTable() {
         )}
       </td>
       {INTELLIGENCE_DIMENSIONS.map((dim) => (
-        <td key={dim.key}>
+        <td key={dim.key} className="intelligence-score-cell">
           <IntelligenceBar value={profile.scores[dim.key]} color={dim.color} />
         </td>
       ))}
@@ -146,8 +146,12 @@ export default function BreedIntelligenceTable() {
         <table className="intelligence-table">
           <thead>
             <tr>
-              <th style={{ width: 28 }}>#</th>
-              <th style={{ minWidth: 130 }}>Breed</th>
+              <th className="intelligence-rank-col" style={{ width: 36 }} title="Overall IQ rank — not the rank for other columns">
+                IQ #
+              </th>
+              <th className="intelligence-breed-col" style={{ minWidth: 130 }}>
+                Breed
+              </th>
               {INTELLIGENCE_DIMENSIONS.map((dim) => (
                 <IntelligenceColumnHeader
                   key={dim.key}
@@ -162,7 +166,7 @@ export default function BreedIntelligenceTable() {
                         : 'descending'
                       : 'none'
                   }
-                  style={{ width: 90 }}
+                  style={{ width: 76 }}
                 />
               ))}
             </tr>
@@ -181,7 +185,8 @@ export default function BreedIntelligenceTable() {
       </div>
 
       <p className="intelligence-tip">
-        Hover a column heading (or colour in the legend) for what each dimension measures.
+        The <strong>IQ #</strong> column is overall IQ rank only. Other columns are independent — sort by any
+        heading to reorder. Hover a heading for what it measures.
       </p>
       <p className="intelligence-tip">
         Click any row to pin it to the top for comparison. Click again to unpin.

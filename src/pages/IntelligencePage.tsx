@@ -10,7 +10,7 @@ export default function IntelligencePage() {
     <>
       <Seo
         title="Dog Breed Intelligence Reference | Gold Standard Dog Training"
-        description="Compare dog breeds across six intelligence dimensions — overall IQ, instinctive, adaptive, working obedience, emotional, and spatial. Explore mix and cross estimates with probabilistic ranges."
+        description="Compare dog breeds across intelligence and temperament dimensions — IQ, instinctive, adaptive, working, emotional, spatial, dominance, protectiveness, and neuroticism estimates. Explore mix and cross estimates with probabilistic ranges."
         path="/intelligence"
         bodyClass="page-intelligence"
       />
@@ -21,7 +21,7 @@ export default function IntelligencePage() {
           <p className="section-label">Breed reference</p>
           <h1>Dog intelligence rankings</h1>
           <p>
-            Compare purebred intelligence across six dimensions on a 1–10 scale. Search, sort, and pin breeds
+            Compare purebred traits across nine dimensions on a 1–10 scale. Search, sort, and pin breeds
             for side-by-side comparison — then explore mongrel and cross-breed mixes with probabilistic ranges.
           </p>
         </div>
@@ -33,8 +33,8 @@ export default function IntelligencePage() {
           <h2>Breed intelligence table</h2>
           <p>
             Overall IQ draws on Stanley Coren&apos;s obedience/working intelligence rankings for the top tier.
-            Instinctive, adaptive, emotional, and spatial sub-scores are expert-informed estimates — useful for
-            comparison, not as fixed labels for any individual dog.
+            Cognitive sub-scores are expert-informed estimates; dominance, protectiveness, and neuroticism are
+            breed-type estimates from temperament data — useful for comparison, not fixed labels for any dog.
           </p>
           <BreedIntelligenceTable />
         </div>
