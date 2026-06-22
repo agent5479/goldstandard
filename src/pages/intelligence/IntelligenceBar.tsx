@@ -1,10 +1,9 @@
-import type { IntelligenceDimension } from '../../data/dogIntelligence';
+import { getScoreRangeSpectrumStyle, getScoreSpectrumStyle } from '../../utils/scoreSpectrum';
 
 interface IntelligenceBarProps {
   value?: number;
   low?: number;
   high?: number;
-  color: string;
   mode?: 'single' | 'range';
 }
 
@@ -12,10 +11,10 @@ export default function IntelligenceBar({
   value,
   low,
   high,
-  color,
   mode = 'single',
 }: IntelligenceBarProps) {
   if (mode === 'range' && low !== undefined && high !== undefined) {
+    const spectrum = getScoreRangeSpectrumStyle(low, high);
     const width = Math.max(0, (high - low) * 10);
     const left = low * 10;
     return (
@@ -26,7 +25,7 @@ export default function IntelligenceBar({
             style={{
               left: `${left}%`,
               width: `${width}%`,
-              background: color,
+              background: spectrum.barRangeGradient ?? spectrum.barFill,
             }}
           />
         </div>
@@ -38,12 +37,13 @@ export default function IntelligenceBar({
   }
 
   const val = value ?? 0;
+  const spectrum = getScoreSpectrumStyle(val);
   return (
     <div className="intelligence-bar-wrap intelligence-bar-wrap--stacked">
       <div className="intelligence-bar-bg">
         <div
           className="intelligence-bar-fill"
-          style={{ width: `${val * 10}%`, background: color }}
+          style={{ width: `${val * 10}%`, background: spectrum.barFill }}
         />
       </div>
       <span className="intelligence-bar-label">{val.toFixed(1)}</span>
@@ -51,9 +51,10 @@ export default function IntelligenceBar({
   );
 }
 
-export function getDimensionColor(
-  dimension: IntelligenceDimension,
-  dimensions: { key: IntelligenceDimension; color: string }[]
-): string {
-  return dimensions.find((d) => d.key === dimension)?.color ?? '#888';
+export function getScoreCellStyle(value: number): { backgroundColor: string } {
+  return { backgroundColor: getScoreSpectrumStyle(value).cellBackground };
+}
+
+export function getScoreRangeCellStyle(low: number, high: number): { backgroundColor: string } {
+  return { backgroundColor: getScoreRangeSpectrumStyle(low, high).cellBackground };
 }

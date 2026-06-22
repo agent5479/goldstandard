@@ -10,7 +10,7 @@ import {
   computeMixTemperamentNotes,
   type MixParentInput,
 } from '../../utils/intelligenceMix';
-import IntelligenceBar from './IntelligenceBar';
+import IntelligenceBar, { getScoreRangeCellStyle } from './IntelligenceBar';
 
 const FRACTION_OPTIONS = [
   { value: 0.5, label: '½ (50%)' },
@@ -254,15 +254,22 @@ export default function MixIntelligenceExplorer() {
                           </span>
                         </span>
                       </td>
-                      <td className="intelligence-score-cell">
+                      <td
+                        className="intelligence-score-cell"
+                        style={getScoreRangeCellStyle(range.likelyLow, range.likelyHigh)}
+                      >
                         <IntelligenceBar
                           mode="range"
                           low={range.likelyLow}
                           high={range.likelyHigh}
-                          color={dim.color}
                         />
                       </td>
-                      <td className="intelligence-mix-mid">~{range.expected.toFixed(1)}</td>
+                      <td
+                        className="intelligence-mix-mid"
+                        style={getScoreRangeCellStyle(range.expected, range.expected)}
+                      >
+                        ~{range.expected.toFixed(1)}
+                      </td>
                     </tr>
                   );
                 })}

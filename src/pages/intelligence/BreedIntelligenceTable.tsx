@@ -5,7 +5,7 @@ import {
   type DogIntelligenceProfile,
   type IntelligenceDimension,
 } from '../../data/dogIntelligence';
-import IntelligenceBar from './IntelligenceBar';
+import IntelligenceBar, { getScoreCellStyle } from './IntelligenceBar';
 import IntelligenceColumnHeader from './IntelligenceColumnHeader';
 import IntelligenceLegendItem from './IntelligenceLegendItem';
 import BreedDetailTooltip from './BreedDetailTooltip';
@@ -85,8 +85,12 @@ export default function BreedIntelligenceTable() {
         <BreedDetailTooltip breedName={profile.breed} breedKeys={profile.breedKeys} />
       </td>
       {INTELLIGENCE_DIMENSIONS.map((dim) => (
-        <td key={dim.key} className="intelligence-score-cell">
-          <IntelligenceBar value={profile.scores[dim.key]} color={dim.color} />
+        <td
+          key={dim.key}
+          className="intelligence-score-cell"
+          style={getScoreCellStyle(profile.scores[dim.key])}
+        >
+          <IntelligenceBar value={profile.scores[dim.key]} />
         </td>
       ))}
     </tr>
@@ -188,7 +192,8 @@ export default function BreedIntelligenceTable() {
 
       <p className="intelligence-tip">
         The <strong>IQ #</strong> column is overall IQ rank only. Other columns are independent — sort by any
-        heading to reorder. Hover a heading for what it measures.
+        heading to reorder. Hover a heading for what it measures. Cell shading runs green (high) through
+        gold and orange to gray (low).
       </p>
       <p className="intelligence-tip">
         Hover a breed name for temperament details. Click a row to pin it for comparison.
