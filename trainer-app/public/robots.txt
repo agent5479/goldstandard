@@ -1,0 +1,3 @@
+# Private staff app — do not index
+User-agent: *
+Disallow: /

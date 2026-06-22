@@ -1,0 +1,30 @@
+import type { TrainingFocus } from '@/types';
+
+/** GSDT guide-aligned training focus library. Canonical categories from the client guide. */
+export const DEFAULT_TRAINING_FOCUS: TrainingFocus[] = [
+  { id: 'focus_001', name: 'Access Training', category: 'Foundations', description: 'Nothing for Free — earned permissions', common: true },
+  { id: 'focus_002', name: 'Timing', category: 'Foundations', description: 'Correction and reward timing', common: true },
+  { id: 'focus_003', name: 'Rewards', category: 'Foundations', description: 'Life rewards vs treats', common: true },
+  { id: 'focus_004', name: 'Ready Stance', category: 'Foundations', description: 'Owner posture and energy', common: true },
+  { id: 'focus_010', name: 'Verbal Correction', category: 'Corrections', description: 'Calm, matter-of-fact verbal reset', common: true },
+  { id: 'focus_011', name: 'Leash Jerk', category: 'Corrections', description: 'Brief leash correction', common: true },
+  { id: 'focus_012', name: 'Collar Snatch', category: 'Corrections', description: 'Collar snatch correction', common: false },
+  { id: 'focus_013', name: 'Pin Hold', category: 'Corrections', description: 'Pin hold for serious defiance', common: false },
+  { id: 'focus_014', name: 'Butt Push', category: 'Corrections', description: 'Butt push for mounting/jumping', common: false },
+  { id: 'focus_020', name: 'Collar Selection', category: 'Equipment', description: 'Appropriate collar for dog and situation', common: true },
+  { id: 'focus_021', name: 'Leash Work', category: 'Equipment', description: 'Leash handling and slack-leash walking', common: true },
+  { id: 'focus_022', name: 'Halti / Head Collar', category: 'Equipment', description: 'Head collar for safety cases', common: false },
+  { id: 'focus_030', name: 'Front Door', category: 'Real-world', description: 'Door threshold and guest behaviour', common: true },
+  { id: 'focus_031', name: 'Check-In Seven', category: 'Real-world', description: 'Seven-day check-in protocol', common: true },
+  { id: 'focus_032', name: 'Daily Practice', category: 'Real-world', description: 'Between-session homework', common: true },
+  { id: 'focus_040', name: 'Reading Dog', category: 'Assessment', description: 'Body language and stress signals', common: true },
+  { id: 'focus_041', name: 'Dog Language', category: 'Assessment', description: 'Calming signals and communication', common: true },
+  { id: 'focus_042', name: 'Graduation Review', category: 'Assessment', description: 'Progress and graduation criteria', common: false },
+  { id: 'focus_050', name: 'Recall', category: 'Skills', description: 'Recall training and proofing', common: true },
+  { id: 'focus_051', name: 'Leash Reactivity', category: 'Skills', description: 'Reactive behaviour on leash', common: true },
+  { id: 'focus_052', name: 'Impulse Control', category: 'Skills', description: 'Wait, leave it, threshold control', common: true },
+  { id: 'focus_053', name: 'Socialisation', category: 'Skills', description: 'Structured social exposure', common: true },
+  { id: 'focus_054', name: 'Rehabilitation', category: 'Skills', description: 'Session note: trust-building / rehabituation work (not a graded dog skill)', common: false },
+  { id: 'focus_055', name: '7-Month Puppy Check-in', category: 'Assessment', description: 'Follow up when puppy reaches ~7 months — adult standard threshold', common: true },
+  { id: 'focus_056', name: '2-Year Check-in', category: 'Assessment', description: 'Follow up when dog reaches ~2 years — young adult milestone', common: true },
+];

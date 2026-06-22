@@ -1,0 +1,124 @@
+/** Central UI labels — no home-care wording in user-visible text. */
+export const labels = {
+  appName: 'Gold Standard Trainer',
+  appTagline: 'Private trainer catalog',
+
+  dashboard: 'Dashboard',
+  households: 'Households',
+  household: 'Household',
+  dogs: 'Dogs',
+  dog: 'Dog',
+  sessionLogs: 'Session Logs',
+  sessionLog: 'Session Log',
+  followUps: 'Follow-ups',
+  followUp: 'Follow-up',
+  focus: 'Training Focus',
+  reports: 'Reports',
+  integrity: 'Data Integrity',
+
+  addHousehold: 'Add Household',
+  editHousehold: 'Edit Household',
+  addDog: 'Add Dog',
+  editDog: 'Edit Dog',
+  logSession: 'Log Session',
+  scheduleFollowUp: 'Schedule Follow-up',
+
+  activeHouseholds: 'Active Households',
+  sessionsLogged: 'Sessions Logged',
+  overdueFollowUps: 'Overdue Follow-ups',
+  flaggedSessions: 'Flagged Sessions',
+  dogsInTraining: 'Dogs in training',
+  openHousehold: 'Open household',
+  dashboardQuickActions: 'Quick actions',
+  noOverdueFollowUps: 'No overdue follow-ups',
+  viewAllFollowUps: 'View all follow-ups',
+  dashboardToday: 'Today & upcoming',
+
+  searchHouseholds: 'Search households...',
+  searchDogs: 'Search dogs, breeds, issues, or household...',
+  showArchived: 'Show archived',
+  archiveHousehold: 'Archive household',
+  archiveHouseholdConfirm: 'Archive this household? It will be hidden from the main list but kept in your records.',
+  restoreHousehold: 'Restore household',
+  restoreHouseholdConfirm: 'Restore this household to the main list?',
+  archiveDog: 'Archive dog',
+  archiveDogConfirm: 'Archive this dog only? The household will stay active.',
+  discardSyncQueue: 'Discard queue',
+  discardSyncQueueHint: 'Remove failed local saves from this browser. This does not delete households already saved to Firebase.',
+  retrySync: 'Retry',
+  noHouseholds: 'No households found',
+  noDogs: 'No dogs found',
+  addFirstHousehold: 'Add your first household',
+
+  sessionHistory: 'Session History',
+  upcomingFollowUps: 'Upcoming Follow-ups',
+  trainingLocations: 'Training Locations',
+  calendarLinks: 'Calendar',
+  dogsInHousehold: 'Dogs',
+  householdTabOverview: 'Overview',
+  householdTabAssessment: 'Assessment',
+  householdTabActivity: 'Activity',
+  householdTabCalendar: 'Calendar',
+  fullContactAndMap: 'Full contact & map',
+  showSkillGrades: 'Show skill grades',
+  hideSkillGrades: 'Hide skill grades',
+  completeFollowUp: 'Complete',
+
+  openInCalendar: 'Open in Google Calendar',
+
+  bookingImport: 'Import Bookings',
+  bookingImportHint: 'Review confirmed website bookings — import into households or dismiss.',
+  bookingReview: 'Review',
+  bookingImportConfirm: 'Import booking',
+  bookingDismiss: 'Dismiss',
+  bookingDismissReason: 'Reason (optional)',
+  bookingPending: 'Pending bookings',
+  bookingRecentlyHandled: 'Recently handled',
+  bookingRemoveHistory: 'Remove from history',
+  upcomingBookings: 'Upcoming bookings',
+  upcomingBookingsHint: 'Next 14 days — pending website bookings and imported sessions.',
+  bookingBrief: 'Trainer brief',
+  reviewImportBooking: 'Review / import',
+  noUpcomingBookings: 'No upcoming bookings in the next two weeks.',
+  activityLog: 'Activity Log',
+  activityLogHint: 'Review trainer changes across households, dogs, sessions, and imports.',
+  pasteCalendarEventId: 'Calendar Event ID',
+  viewAllLogs: 'View all session logs',
+  clientReport: 'Client report',
+  clientReports: 'Client reports',
+  copyReport: 'Copy again',
+  copyToClipboard: 'Copy to clipboard',
+  saveReport: 'Save report',
+  skipReport: 'Skip',
+
+  trainer: 'Trainer',
+  archived: 'Archived',
+} as const;
+
+export const flagLabels: Record<string, string> = {
+  breakthrough: 'Breakthrough',
+  setback: 'Setback',
+  concern: 'Concern',
+  none: 'None',
+};
+
+export const ownerStatusLabels: Record<string, string> = {
+  active: 'Active',
+  graduated: 'Graduated',
+  paused: 'Paused',
+  archived: 'Archived',
+};
+
+/** @deprecated Legacy dog status — use trainingStage (ALL_DOG_STAGES) instead */
+export const dogStatusLabels: Record<string, string> = {
+  intake: 'Intake',
+  in_training: 'In Training',
+  graduated: 'Graduated',
+  archived: 'Archived',
+};
+
+export const priorityLabels: Record<string, string> = {
+  normal: 'Normal',
+  high: 'High',
+  urgent: 'Urgent',
+};

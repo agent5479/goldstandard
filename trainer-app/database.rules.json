@@ -1,0 +1,71 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+
+    "userMemberships": {
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        "$tenantId": {
+          ".write": "auth != null && root.child('tenants').child($tenantId).child('members').child(auth.uid).child('role').val() === 'admin'"
+        }
+      }
+    },
+
+    "tenants": {
+      "$tenantId": {
+        "meta": {
+          ".read": "auth != null && root.child('tenants').child($tenantId).child('members').child(auth.uid).exists()",
+          ".write": "auth != null && root.child('tenants').child($tenantId).child('members').child(auth.uid).child('role').val() === 'admin'"
+        },
+
+        "members": {
+          ".read": "auth != null && root.child('tenants').child($tenantId).child('members').child(auth.uid).exists()",
+          "$memberUid": {
+            ".write": "auth != null && root.child('tenants').child($tenantId).child('members').child(auth.uid).child('role').val() === 'admin'"
+          }
+        },
+
+        "owners": {
+          ".read": "auth != null && root.child('tenants').child($tenantId).child('members').child(auth.uid).exists()",
+          ".write": "auth != null && (root.child('tenants').child($tenantId).child('members').child(auth.uid).child('role').val() === 'admin' || root.child('tenants').child($tenantId).child('members').child(auth.uid).child('role').val() === 'trainer')"
+        },
+        "dogs": {
+          ".read": "auth != null && root.child('tenants').child($tenantId).child('members').child(auth.uid).exists()",
+          ".write": "auth != null && (root.child('tenants').child($tenantId).child('members').child(auth.uid).child('role').val() === 'admin' || root.child('tenants').child($tenantId).child('members').child(auth.uid).child('role').val() === 'trainer')"
+        },
+        "trainingLogs": {
+          ".read": "auth != null && root.child('tenants').child($tenantId).child('members').child(auth.uid).exists()",
+          ".write": "auth != null && (root.child('tenants').child($tenantId).child('members').child(auth.uid).child('role').val() === 'admin' || root.child('tenants').child($tenantId).child('members').child(auth.uid).child('role').val() === 'trainer')"
+        },
+        "scheduledSessions": {
+          ".read": "auth != null && root.child('tenants').child($tenantId).child('members').child(auth.uid).exists()",
+          ".write": "auth != null && (root.child('tenants').child($tenantId).child('members').child(auth.uid).child('role').val() === 'admin' || root.child('tenants').child($tenantId).child('members').child(auth.uid).child('role').val() === 'trainer')"
+        },
+        "trainingFocus": {
+          ".read": "auth != null && root.child('tenants').child($tenantId).child('members').child(auth.uid).exists()",
+          ".write": "auth != null && root.child('tenants').child($tenantId).child('members').child(auth.uid).child('role').val() === 'admin'"
+        },
+        "trainingSessions": {
+          ".read": "auth != null && root.child('tenants').child($tenantId).child('members').child(auth.uid).exists()",
+          ".write": "auth != null && (root.child('tenants').child($tenantId).child('members').child(auth.uid).child('role').val() === 'admin' || root.child('tenants').child($tenantId).child('members').child(auth.uid).child('role').val() === 'trainer')"
+        },
+        "clientReports": {
+          ".read": "auth != null && root.child('tenants').child($tenantId).child('members').child(auth.uid).exists()",
+          ".write": "auth != null && (root.child('tenants').child($tenantId).child('members').child(auth.uid).child('role').val() === 'admin' || root.child('tenants').child($tenantId).child('members').child(auth.uid).child('role').val() === 'trainer')"
+        },
+        "deletedRecords": {
+          ".read": "auth != null && root.child('tenants').child($tenantId).child('members').child(auth.uid).exists()",
+          ".write": "auth != null && root.child('tenants').child($tenantId).child('members').child(auth.uid).child('role').val() === 'admin'"
+        },
+        "activityLog": {
+          ".read": "auth != null && root.child('tenants').child($tenantId).child('members').child(auth.uid).child('role').val() === 'admin'",
+          ".write": "auth != null && (root.child('tenants').child($tenantId).child('members').child(auth.uid).child('role').val() === 'admin' || root.child('tenants').child($tenantId).child('members').child(auth.uid).child('role').val() === 'trainer')",
+          "$eventId": {
+            ".write": "!data.exists() || (!newData.exists() && root.child('tenants').child($tenantId).child('members').child(auth.uid).child('role').val() === 'admin')"
+          }
+        }
+      }
+    }
+  }
+}

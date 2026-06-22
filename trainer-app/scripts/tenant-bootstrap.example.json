@@ -1,0 +1,31 @@
+{
+  "tenants": {
+    "gsdt": {
+      "meta": {
+        "name": "Gold Standard Dog Training",
+        "slug": "gsdt",
+        "plan": "solo",
+        "createdAt": "2026-06-15T00:00:00.000Z"
+      },
+      "members": {
+        "REPLACE_WITH_FIREBASE_AUTH_UID": {
+          "uid": "REPLACE_WITH_FIREBASE_AUTH_UID",
+          "role": "admin",
+          "email": "your@email.com",
+          "displayName": "Warwick",
+          "active": true,
+          "joinedAt": "2026-06-15T00:00:00.000Z"
+        }
+      }
+    }
+  },
+  "userMemberships": {
+    "REPLACE_WITH_FIREBASE_AUTH_UID": {
+      "gsdt": {
+        "role": "admin",
+        "tenantName": "Gold Standard Dog Training",
+        "active": true
+      }
+    }
+  }
+}

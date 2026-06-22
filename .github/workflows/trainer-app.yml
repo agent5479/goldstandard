@@ -1,0 +1,74 @@
+name: Trainer App Deploy
+
+# workflow_dispatch: rerun from Actions tab after updating FIREBASE_SERVICE_ACCOUNT
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'trainer-app/**'
+      - 'shared/**'
+      - 'public/images/**'
+      - '.github/workflows/trainer-app.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: github-pages
+    defaults:
+      run:
+        working-directory: trainer-app
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: trainer-app/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        env:
+          VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
+          VITE_FIREBASE_AUTH_DOMAIN: ${{ secrets.VITE_FIREBASE_AUTH_DOMAIN }}
+          VITE_FIREBASE_DATABASE_URL: ${{ secrets.VITE_FIREBASE_DATABASE_URL }}
+          VITE_FIREBASE_PROJECT_ID: ${{ secrets.VITE_FIREBASE_PROJECT_ID }}
+          VITE_FIREBASE_STORAGE_BUCKET: ${{ secrets.VITE_FIREBASE_STORAGE_BUCKET }}
+          VITE_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.VITE_FIREBASE_MESSAGING_SENDER_ID }}
+          VITE_FIREBASE_APP_ID: ${{ secrets.VITE_FIREBASE_APP_ID }}
+          VITE_DEFAULT_TENANT_ID: gsdt
+          VITE_BOOKING_API_URL: ${{ secrets.VITE_BOOKING_API_URL }}
+          VITE_BOOKING_IMPORT_KEY: ${{ secrets.VITE_BOOKING_IMPORT_KEY }}
+        run: npm run build
+
+      - name: Validate Firebase deploy secret
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+        run: |
+          if [ -z "$FIREBASE_SERVICE_ACCOUNT" ]; then
+            echo "::error::FIREBASE_SERVICE_ACCOUNT secret is missing. Add it under Settings → Environments → github-pages → Environment secrets."
+            exit 1
+          fi
+          node -e "JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT); console.log('Service account JSON is valid')"
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+
+      - name: Install Firebase CLI
+        run: npm install -g firebase-tools@13.35.1
+
+      - name: Deploy database rules
+        run: firebase deploy --only database --non-interactive
+
+      - name: Deploy hosting
+        run: firebase deploy --only hosting --non-interactive

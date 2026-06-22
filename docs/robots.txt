@@ -1,0 +1,26 @@
+# Gold Standard Dog Training — dog trainer in Golden Bay, Takaka & Nelson Bays, New Zealand
+# Service area: Golden Bay · Takaka · Pohara · Nelson Bays · Motueka · Richmond · Greater Tasman Region
+# Website: https://agent5479.github.io/goldstandard/
+# Book online: https://agent5479.github.io/goldstandard/book
+# Contact: Warwick Marshall · 027 814 2222 · goldstandardtakaka@gmail.com
+# Address: Rangihaeata, Takaka 7182, Golden Bay, NZ
+
+User-agent: *
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+# Private staff app (separate host — not part of this site):
+# https://gsdt-trainer-private.web.app/ — noindex on that host
+
+Sitemap: https://agent5479.github.io/goldstandard/sitemap.xml
