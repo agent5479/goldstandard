@@ -9,7 +9,7 @@ export default function IntelligencePage() {
   return (
     <>
       <Seo
-        title="Dog Breed Intelligence Reference | Gold Standard Dog Training"
+        title="Breed Analysis | Gold Standard Dog Training"
         description="Compare dog breeds across intelligence and temperament dimensions — IQ, instinctive, adaptive, working, emotional, spatial, dominance, protectiveness, and neuroticism estimates. Explore mix and cross estimates with probabilistic ranges."
         path="/intelligence"
         bodyClass="page-intelligence"
@@ -19,7 +19,7 @@ export default function IntelligencePage() {
       <section className="page-hero">
         <div className="page-hero-inner">
           <p className="section-label">Breed reference</p>
-          <h1>Dog intelligence rankings</h1>
+          <h1>Breed analysis</h1>
           <p>
             Compare purebred traits across nine dimensions on a 1–10 scale. Search, sort, and pin breeds
             for side-by-side comparison — then explore mongrel and cross-breed mixes with probabilistic ranges.

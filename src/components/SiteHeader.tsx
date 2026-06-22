@@ -56,7 +56,7 @@ export default function SiteHeader() {
         <li><Link to="/about" onClick={close}>About</Link></li>
         <li><Link to="/#services" onClick={close}>Services</Link></li>
         <li><Link to="/exam" onClick={close}>Exam</Link></li>
-        <li><Link to="/intelligence" onClick={close}>Intelligence</Link></li>
+        <li><Link to="/intelligence" onClick={close}>Breed Analysis</Link></li>
         <li className="nav-cta"><Link to="/book" onClick={close}>Book</Link></li>
         <li><Link to="/contact" onClick={close}>Contact</Link></li>
         <li className="nav-highlight"><Link to="/guide" onClick={close}>Client Guide</Link></li>

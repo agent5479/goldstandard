@@ -19,7 +19,7 @@ export default function GuidePage() {
           <Link to="/" className="guide-sticky-nav-brand">Gold Standard Dog Training</Link>
           <div className="guide-sticky-nav-actions">
             <a href="#guide-contents" className="guide-sticky-nav-contents">Contents</a>
-            <Link to="/intelligence" className="guide-sticky-nav-contents">Intelligence</Link>
+            <Link to="/intelligence" className="guide-sticky-nav-contents">Breed Analysis</Link>
             <Link to="/exam" className="guide-sticky-nav-contents">Test yourself</Link>
             <Link to="/" className="guide-sticky-nav-back">Back to site</Link>
           </div>
@@ -55,7 +55,7 @@ export default function GuidePage() {
           <Link to="/#services">Services</Link>
           <Link to="/guide">Guide</Link>
           <Link to="/exam">Exam</Link>
-          <Link to="/intelligence">Intelligence</Link>
+          <Link to="/intelligence">Breed Analysis</Link>
           <Link to="/contact">Contact</Link>
         </nav>
         <p><Link to="/">Gold Standard Dog Training</Link> · Takaka, Golden Bay, New Zealand · <a href="tel:+64278142222">027 814 2222</a></p>

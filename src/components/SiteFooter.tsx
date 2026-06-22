@@ -9,7 +9,7 @@ export default function SiteFooter() {
         <Link to="/#services">Services</Link>
         <Link to="/guide">Guide</Link>
         <Link to="/exam">Exam</Link>
-        <Link to="/intelligence">Intelligence</Link>
+        <Link to="/intelligence">Breed Analysis</Link>
         <Link to="/contact">Contact</Link>
       </nav>
       <p>© 2026 <span>Gold Standard Dog Training</span> · Takaka, Golden Bay, New Zealand</p>

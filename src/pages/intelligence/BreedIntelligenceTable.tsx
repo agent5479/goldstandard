@@ -8,6 +8,7 @@ import {
 import IntelligenceBar from './IntelligenceBar';
 import IntelligenceColumnHeader from './IntelligenceColumnHeader';
 import IntelligenceLegendItem from './IntelligenceLegendItem';
+import BreedDetailTooltip from './BreedDetailTooltip';
 
 type SortCol = 'rank' | IntelligenceDimension;
 
@@ -75,12 +76,13 @@ export default function BreedIntelligenceTable() {
       aria-pressed={isPinned}
     >
       <td className="intelligence-rank">{profile.rank}</td>
-      <td className="intelligence-breed">
+      <td className="intelligence-breed intelligence-breed--tip">
         {isPinned && <span className="intelligence-pin-dot" aria-hidden="true" />}
-        {profile.breed}
+        <span className="intelligence-breed-label">{profile.breed}</span>
         {profile.source === 'estimated' && (
           <span className="intelligence-est-badge">est.</span>
         )}
+        <BreedDetailTooltip breedName={profile.breed} breedKeys={profile.breedKeys} />
       </td>
       {INTELLIGENCE_DIMENSIONS.map((dim) => (
         <td key={dim.key} className="intelligence-score-cell">
@@ -93,7 +95,7 @@ export default function BreedIntelligenceTable() {
   return (
     <div className="intelligence-table-wrap">
       <h2 className="visually-hidden">
-        Dog breeds ranked across six intelligence dimensions. Click a row to pin it to the top for comparison.
+        Dog breeds ranked across nine dimensions. Hover a breed name for temperament details; click a row to pin it for comparison.
       </h2>
 
       <div className="intelligence-legend">
@@ -189,7 +191,7 @@ export default function BreedIntelligenceTable() {
         heading to reorder. Hover a heading for what it measures.
       </p>
       <p className="intelligence-tip">
-        Click any row to pin it to the top for comparison. Click again to unpin.
+        Hover a breed name for temperament details. Click a row to pin it for comparison.
       </p>
       <p className="intelligence-tip">
         All scores are on a 1–10 scale. Overall IQ based on Coren&apos;s obedience/working rankings for the

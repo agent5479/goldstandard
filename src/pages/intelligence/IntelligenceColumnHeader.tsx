@@ -1,4 +1,4 @@
-import type { CSSProperties } from 'react';
+import type { CSSProperties, KeyboardEvent, MouseEvent } from 'react';
 
 interface IntelligenceColumnHeaderProps {
   label: string;
@@ -21,28 +21,34 @@ export default function IntelligenceColumnHeader({
 }: IntelligenceColumnHeaderProps) {
   const sortable = Boolean(onClick);
 
+  const handleClick = (event: MouseEvent<HTMLTableCellElement>) => {
+    onClick?.();
+    event.currentTarget.blur();
+  };
+
+  const handleKeyDown = (event: KeyboardEvent<HTMLTableCellElement>) => {
+    if (!sortable) return;
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      onClick?.();
+      event.currentTarget.blur();
+    }
+  };
+
   return (
     <th
       className={`intelligence-th-tip intelligence-score-col${sortable ? ' intelligence-th-tip--sortable' : ''}${className ? ` ${className}` : ''}`}
       style={style}
-      onClick={onClick}
+      onClick={sortable ? handleClick : undefined}
       aria-sort={ariaSort}
       tabIndex={sortable ? 0 : undefined}
-      onKeyDown={
-        sortable
-          ? (e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                onClick?.();
-              }
-            }
-          : undefined
-      }
+      onKeyDown={sortable ? handleKeyDown : undefined}
+      title={description}
     >
       <span className="intelligence-th-tip-label">
         {label}
         {sortIndicator}
-        <span className="intelligence-col-tooltip" role="tooltip">
+        <span className="intelligence-col-tooltip" aria-hidden="true">
           {description}
         </span>
       </span>
