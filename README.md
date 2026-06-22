@@ -69,7 +69,7 @@ This repository powers a public marketing site indexed by Google, Bing, and othe
 - **Static prerender (SSG):** `npm run build` runs Vite, then [`scripts/prerender.mjs`](scripts/prerender.mjs) exports each public route as fully rendered HTML under `docs/` (e.g. `docs/about/index.html`) so crawlers receive baked content instantly on GitHub Pages — no client-only shell for `/about`, `/book`, etc.
 - **Static crawl files:** [`public/robots.txt`](public/robots.txt) and [`public/sitemap.xml`](public/sitemap.xml) — copied into `docs/` on build
 - **Social preview:** `images/dog1024.jpg` (favicons: `dog16.jpg` … `dog512.jpg`, [`site.webmanifest`](public/site.webmanifest))
-- **CI:** [`.github/workflows/site.yml`](.github/workflows/site.yml) type-checks, builds, and verifies prerendered HTML on push/PR
+- **CI / deploy:** [`.github/workflows/site.yml`](.github/workflows/site.yml) builds, verifies prerendered HTML, and deploys `docs/` to GitHub Pages on push to `main`. In repo **Settings → Pages**, set **Source** to **GitHub Actions** (not “Deploy from branch”).
 
 The private trainer app at [gsdt-trainer-private.web.app](https://gsdt-trainer-private.web.app/) is **not** indexed (`noindex`, separate `robots.txt`).
 

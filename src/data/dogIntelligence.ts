@@ -23,13 +23,56 @@ export const INTELLIGENCE_DIMENSIONS: {
   label: string;
   shortLabel: string;
   color: string;
+  description: string;
 }[] = [
-  { key: 'iq', label: 'Overall IQ', shortLabel: 'IQ', color: '#378ADD' },
-  { key: 'inst', label: 'Instinctive', shortLabel: 'Inst', color: '#639922' },
-  { key: 'adapt', label: 'Adaptive', shortLabel: 'Adapt', color: '#1D9E75' },
-  { key: 'work', label: 'Working & obedience', shortLabel: 'Work', color: '#BA7517' },
-  { key: 'ei', label: 'Emotional', shortLabel: 'Emot', color: '#D4537E' },
-  { key: 'si', label: 'Spatial', shortLabel: 'Spat', color: '#534AB7' },
+  {
+    key: 'iq',
+    label: 'Overall IQ',
+    shortLabel: 'IQ',
+    color: '#378ADD',
+    description:
+      'Composite obedience/working intelligence — how quickly the breed typically learns commands and performs in structured training. Top-tier breeds are ranked from Stanley Coren\'s research.',
+  },
+  {
+    key: 'inst',
+    label: 'Instinctive',
+    shortLabel: 'Inst',
+    color: '#639922',
+    description:
+      'Innate talent for the work the breed was developed for — herding eye, nose tracking, retrieving, guarding, or chase drive — before formal training enters the picture.',
+  },
+  {
+    key: 'adapt',
+    label: 'Adaptive',
+    shortLabel: 'Adapt',
+    color: '#1D9E75',
+    description:
+      'Problem-solving and learning from experience without step-by-step instruction — figuring out puzzles, reading new situations, and generalising lessons on their own.',
+  },
+  {
+    key: 'work',
+    label: 'Working & obedience',
+    shortLabel: 'Work',
+    color: '#BA7517',
+    description:
+      'Responsiveness to handler direction during structured training — repetition learning, command reliability, and willingness to work cooperatively with a person.',
+  },
+  {
+    key: 'ei',
+    label: 'Emotional',
+    shortLabel: 'Emot',
+    color: '#D4537E',
+    description:
+      'Social and emotional attunement to people — reading household mood, bonding intensity, and sensitivity to human emotion. Not the same as anxiety or neuroticism alone.',
+  },
+  {
+    key: 'si',
+    label: 'Spatial',
+    shortLabel: 'Spat',
+    color: '#534AB7',
+    description:
+      'Awareness of surroundings, distances, and object positions — navigation, visual memory, and spatial problem-solving in the environment.',
+  },
 ];
 
 export const INTELLIGENCE_DIMENSION_KEYS = INTELLIGENCE_DIMENSIONS.map((d) => d.key);

@@ -1,4 +1,4 @@
-name: Public site build
+name: Public site build and deploy
 
 on:
   push:
@@ -24,6 +24,15 @@ on:
       - 'package.json'
       - 'package-lock.json'
       - '.github/workflows/site.yml'
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
 
 jobs:
   build:
@@ -55,6 +64,26 @@ jobs:
           test -f docs/exam/index.html
           test -f docs/intelligence/index.html
           test -f docs/.nojekyll
+          test -f docs/404.html
           grep -q 'data-seo-ready="true"' docs/about/index.html
           grep -q '<h1' docs/book/index.html
           grep -q 'Intelligence' docs/index.html
+          grep -q 'breed-rankings' docs/intelligence/index.html
+
+      - name: Upload Pages artifact
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+
+  deploy:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

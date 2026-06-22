@@ -6,6 +6,8 @@ import {
   type IntelligenceDimension,
 } from '../../data/dogIntelligence';
 import IntelligenceBar from './IntelligenceBar';
+import IntelligenceColumnHeader from './IntelligenceColumnHeader';
+import IntelligenceLegendItem from './IntelligenceLegendItem';
 
 type SortCol = 'rank' | IntelligenceDimension;
 
@@ -96,10 +98,12 @@ export default function BreedIntelligenceTable() {
 
       <div className="intelligence-legend">
         {INTELLIGENCE_DIMENSIONS.map((dim) => (
-          <div className="intelligence-legend-item" key={dim.key}>
-            <div className="intelligence-legend-dot" style={{ background: dim.color }} />
-            {dim.label}
-          </div>
+          <IntelligenceLegendItem
+            key={dim.key}
+            label={dim.label}
+            color={dim.color}
+            description={dim.description}
+          />
         ))}
       </div>
 
@@ -145,21 +149,21 @@ export default function BreedIntelligenceTable() {
               <th style={{ width: 28 }}>#</th>
               <th style={{ minWidth: 130 }}>Breed</th>
               {INTELLIGENCE_DIMENSIONS.map((dim) => (
-                <th
+                <IntelligenceColumnHeader
                   key={dim.key}
-                  style={{ width: 90 }}
+                  label={dim.shortLabel}
+                  description={dim.description}
+                  sortIndicator={sortKey === dim.key ? (sortDir === 1 ? ' ▲' : ' ▼') : undefined}
                   onClick={() => toggleSort(dim.key)}
-                  aria-sort={
+                  ariaSort={
                     sortKey === dim.key
                       ? sortDir === 1
                         ? 'ascending'
                         : 'descending'
                       : 'none'
                   }
-                >
-                  {dim.shortLabel}
-                  {sortKey === dim.key && (sortDir === 1 ? ' ▲' : ' ▼')}
-                </th>
+                  style={{ width: 90 }}
+                />
               ))}
             </tr>
           </thead>
@@ -176,6 +180,9 @@ export default function BreedIntelligenceTable() {
         </table>
       </div>
 
+      <p className="intelligence-tip">
+        Hover a column heading (or colour in the legend) for what each dimension measures.
+      </p>
       <p className="intelligence-tip">
         Click any row to pin it to the top for comparison. Click again to unpin.
       </p>

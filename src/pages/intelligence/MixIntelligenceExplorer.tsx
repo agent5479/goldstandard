@@ -246,7 +246,14 @@ export default function MixIntelligenceExplorer() {
                   const dim = INTELLIGENCE_DIMENSIONS.find((d) => d.key === range.dimension)!;
                   return (
                     <tr key={range.dimension}>
-                      <td>{dim.label}</td>
+                      <td className="intelligence-dim-label intelligence-dim-label--tip">
+                        <span className="intelligence-th-tip-label">
+                          {dim.label}
+                          <span className="intelligence-col-tooltip" role="tooltip">
+                            {dim.description}
+                          </span>
+                        </span>
+                      </td>
                       <td>
                         <IntelligenceBar
                           mode="range"

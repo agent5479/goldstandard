@@ -3395,6 +3395,15 @@ body.page-intelligence {
   color: var(--light-text);
 }
 
+.intelligence-legend-item--tip {
+  cursor: help;
+}
+
+.intelligence-legend-label {
+  position: relative;
+  border-bottom: 1px dotted rgba(45, 74, 45, 0.35);
+}
+
 .intelligence-legend-dot {
   width: 10px;
   height: 5px;
@@ -3445,7 +3454,12 @@ body.page-intelligence {
 
 .intelligence-table-scroll {
   overflow-x: auto;
+  overflow-y: visible;
   -webkit-overflow-scrolling: touch;
+}
+
+.intelligence-table thead th {
+  overflow: visible;
 }
 
 .intelligence-table {
@@ -3472,6 +3486,84 @@ body.page-intelligence {
 
 .intelligence-table thead th:hover {
   color: var(--text);
+}
+
+.intelligence-th-tip {
+  position: relative;
+}
+
+.intelligence-th-tip--sortable {
+  cursor: pointer;
+}
+
+.intelligence-th-tip-label {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted rgba(45, 74, 45, 0.35);
+  cursor: help;
+}
+
+.intelligence-th-tip--sortable .intelligence-th-tip-label {
+  cursor: pointer;
+}
+
+.intelligence-col-tooltip {
+  position: absolute;
+  left: 50%;
+  top: calc(100% + 8px);
+  transform: translateX(-50%);
+  z-index: 20;
+  width: max-content;
+  max-width: 240px;
+  padding: 0.55rem 0.65rem;
+  font-size: 0.72rem;
+  font-weight: 400;
+  line-height: 1.45;
+  letter-spacing: normal;
+  text-transform: none;
+  white-space: normal;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  box-shadow: 0 8px 24px rgba(24, 38, 24, 0.14);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.12s ease, visibility 0.12s ease;
+}
+
+.intelligence-col-tooltip::after {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-bottom-color: var(--border);
+}
+
+.intelligence-th-tip:hover .intelligence-col-tooltip,
+.intelligence-th-tip:focus .intelligence-col-tooltip,
+.intelligence-th-tip:focus-within .intelligence-col-tooltip,
+.intelligence-legend-item--tip:hover .intelligence-col-tooltip,
+.intelligence-dim-label--tip:hover .intelligence-col-tooltip {
+  opacity: 1;
+  visibility: visible;
+}
+
+.intelligence-col-tooltip--legend {
+  left: 0;
+  transform: none;
+}
+
+.intelligence-col-tooltip--legend::after {
+  left: 1.25rem;
+  transform: none;
+}
+
+.intelligence-dim-label--tip .intelligence-th-tip-label {
+  cursor: help;
 }
 
 .intelligence-table tbody tr {
