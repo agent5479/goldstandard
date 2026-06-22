@@ -6,6 +6,7 @@ import ContactPage from './pages/ContactPage';
 import BookPage from './pages/BookPage';
 import GuidePage from './pages/GuidePage';
 import ExamPage from './pages/ExamPage';
+import IntelligencePage from './pages/IntelligencePage';
 
 /** Redirect legacy .html URLs to their SPA routes, preserving the hash. */
 function LegacyRedirect({ to }: { to: string }) {
@@ -24,6 +25,7 @@ export default function App() {
         <Route path="/book" element={<BookPage />} />
         <Route path="/guide" element={<GuidePage />} />
         <Route path="/exam" element={<ExamPage />} />
+        <Route path="/intelligence" element={<IntelligencePage />} />
 
         <Route path="/index.html" element={<LegacyRedirect to="/" />} />
         <Route path="/about.html" element={<LegacyRedirect to="/about" />} />
@@ -31,6 +33,7 @@ export default function App() {
         <Route path="/book.html" element={<LegacyRedirect to="/book" />} />
         <Route path="/guide.html" element={<LegacyRedirect to="/guide" />} />
         <Route path="/exam.html" element={<LegacyRedirect to="/exam" />} />
+        <Route path="/intelligence.html" element={<LegacyRedirect to="/intelligence" />} />
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

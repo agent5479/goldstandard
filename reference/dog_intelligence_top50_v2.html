@@ -1,0 +1,202 @@
+
+<h2 class="sr-only">Top 50 dog breeds ranked across six intelligence dimensions. Click a row to pin it to the top for comparison.</h2>
+<style>
+.wrap { padding: 1rem 0; }
+.controls { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1rem; align-items: center; }
+.controls input { font-size: 13px; padding: 6px 10px; border-radius: var(--border-radius-md); border: 0.5px solid var(--color-border-secondary); background: var(--color-background-primary); color: var(--color-text-primary); flex: 1; min-width: 160px; }
+.controls select { font-size: 13px; padding: 6px 10px; border-radius: var(--border-radius-md); border: 0.5px solid var(--color-border-secondary); background: var(--color-background-primary); color: var(--color-text-primary); }
+.pin-count { font-size: 12px; color: var(--color-text-secondary); margin-left: 4px; }
+.clear-btn { font-size: 12px; padding: 5px 10px; border-radius: var(--border-radius-md); border: 0.5px solid var(--color-border-secondary); background: transparent; color: var(--color-text-secondary); cursor: pointer; }
+.clear-btn:hover { background: var(--color-background-secondary); }
+table { width: 100%; border-collapse: collapse; font-size: 12px; }
+thead th { text-align: left; padding: 7px 6px; border-bottom: 0.5px solid var(--color-border-secondary); font-size: 11px; color: var(--color-text-secondary); font-weight: 500; cursor: pointer; user-select: none; white-space: nowrap; position: sticky; top: 0; background: var(--color-background-primary); z-index: 2; }
+thead th:hover { color: var(--color-text-primary); }
+tbody tr { border-bottom: 0.5px solid var(--color-border-tertiary); cursor: pointer; transition: background 0.12s; }
+tbody tr:last-child { border-bottom: none; }
+tbody tr:hover { background: var(--color-background-secondary); }
+tbody tr.pinned { background: #EEEDFE; }
+tbody tr.pinned:hover { background: #CECBF6; }
+tbody tr.pin-divider td { border-bottom: 2px solid #7F77DD; padding-bottom: 2px; }
+tbody td { padding: 6px 6px; color: var(--color-text-primary); vertical-align: middle; }
+.rank { color: var(--color-text-secondary); font-size: 11px; width: 28px; }
+.breed { font-weight: 500; min-width: 130px; }
+.pin-dot { width: 10px; height: 10px; border-radius: 50%; background: #7F77DD; display: inline-block; margin-right: 4px; vertical-align: middle; }
+.bar-wrap { display: flex; align-items: center; gap: 5px; }
+.bar-bg { flex: 1; height: 5px; border-radius: 3px; background: var(--color-background-tertiary); overflow: hidden; min-width: 40px; }
+.bar-fill { height: 100%; border-radius: 3px; }
+.bar-label { font-size: 11px; color: var(--color-text-secondary); min-width: 20px; text-align: right; }
+.legend { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 0.75rem; }
+.legend-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--color-text-secondary); }
+.legend-dot { width: 10px; height: 5px; border-radius: 3px; }
+.tip { font-size: 11px; color: var(--color-text-secondary); margin-top: 0.75rem; }
+</style>
+<div class="wrap">
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#378ADD"></div>Overall IQ</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#639922"></div>Instinctive</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#1D9E75"></div>Adaptive</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#BA7517"></div>Working &amp; obedience</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#D4537E"></div>Emotional</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#534AB7"></div>Spatial</div>
+  </div>
+  <div class="controls">
+    <input type="text" id="search" placeholder="Search breed…" oninput="render()">
+    <select id="sortCol" onchange="render()">
+      <option value="rank">Sort by rank</option>
+      <option value="iq">Overall IQ</option>
+      <option value="inst">Instinctive</option>
+      <option value="adapt">Adaptive</option>
+      <option value="work">Working &amp; obedience</option>
+      <option value="ei">Emotional</option>
+      <option value="si">Spatial</option>
+    </select>
+    <span class="pin-count" id="pinCount"></span>
+    <button class="clear-btn" onclick="clearPins()">Clear pins</button>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th style="width:28px">#</th>
+        <th style="min-width:130px">Breed</th>
+        <th onclick="toggleSort('iq')" style="width:90px">Overall IQ <span id="arr-iq"></span></th>
+        <th onclick="toggleSort('inst')" style="width:90px">Instinctive <span id="arr-inst"></span></th>
+        <th onclick="toggleSort('adapt')" style="width:90px">Adaptive <span id="arr-adapt"></span></th>
+        <th onclick="toggleSort('work')" style="width:90px">Working &amp; obedience <span id="arr-work"></span></th>
+        <th onclick="toggleSort('ei')" style="width:90px">Emotional <span id="arr-ei"></span></th>
+        <th onclick="toggleSort('si')" style="width:90px">Spatial <span id="arr-si"></span></th>
+      </tr>
+    </thead>
+    <tbody id="tbody"></tbody>
+  </table>
+  <p class="tip">Click any row to pin it to the top for comparison. Click again to unpin.</p>
+  <p class="tip">All scores are on a 1–10 scale. Overall IQ based on Coren's obedience/working rankings; sub-scores are expert-informed estimates.</p>
+</div>
+<script>
+const dogs = [
+  {rank:1,  breed:"Border Collie",             iq:9.8, inst:9.5, adapt:9.8, work:9.9, ei:8.2, si:9.5},
+  {rank:2,  breed:"Poodle",                    iq:9.6, inst:8.5, adapt:9.5, work:9.7, ei:8.8, si:8.0},
+  {rank:3,  breed:"German Shepherd",           iq:9.4, inst:9.2, adapt:9.2, work:9.5, ei:9.0, si:8.8},
+  {rank:4,  breed:"Golden Retriever",          iq:9.2, inst:9.0, adapt:8.6, work:9.2, ei:9.5, si:7.8},
+  {rank:5,  breed:"Doberman Pinscher",         iq:9.0, inst:8.8, adapt:8.8, work:9.1, ei:8.5, si:8.6},
+  {rank:6,  breed:"Shetland Sheepdog",         iq:8.9, inst:9.2, adapt:8.5, work:9.0, ei:8.0, si:9.0},
+  {rank:7,  breed:"Labrador Retriever",        iq:8.8, inst:9.0, adapt:8.4, work:8.9, ei:9.4, si:7.6},
+  {rank:8,  breed:"Papillon",                  iq:8.7, inst:7.5, adapt:8.3, work:8.8, ei:7.5, si:8.0},
+  {rank:9,  breed:"Rottweiler",                iq:8.6, inst:8.8, adapt:8.5, work:8.7, ei:7.8, si:8.2},
+  {rank:10, breed:"Australian Cattle Dog",     iq:8.5, inst:9.3, adapt:8.6, work:8.6, ei:7.2, si:9.2},
+  {rank:11, breed:"Pembroke Welsh Corgi",      iq:8.4, inst:8.8, adapt:8.0, work:8.5, ei:8.0, si:8.8},
+  {rank:12, breed:"Miniature Schnauzer",       iq:8.3, inst:8.0, adapt:8.2, work:8.4, ei:7.6, si:7.5},
+  {rank:13, breed:"English Springer Spaniel",  iq:8.2, inst:8.8, adapt:7.8, work:8.3, ei:8.5, si:7.8},
+  {rank:14, breed:"Belgian Tervuren",          iq:8.1, inst:9.0, adapt:8.4, work:8.2, ei:7.8, si:9.0},
+  {rank:15, breed:"Schipperke",                iq:8.0, inst:7.8, adapt:7.9, work:8.1, ei:7.0, si:8.0},
+  {rank:16, breed:"Belgian Sheepdog",          iq:7.9, inst:8.8, adapt:8.0, work:8.0, ei:7.6, si:8.8},
+  {rank:17, breed:"Collie",                    iq:7.9, inst:8.5, adapt:7.7, work:7.9, ei:8.5, si:8.2},
+  {rank:18, breed:"Keeshond",                  iq:7.8, inst:7.5, adapt:7.4, work:7.8, ei:8.6, si:7.2},
+  {rank:19, breed:"German Shorthaired Pointer",iq:7.7, inst:9.2, adapt:7.8, work:7.7, ei:7.5, si:8.5},
+  {rank:20, breed:"Flat-Coated Retriever",     iq:7.7, inst:8.5, adapt:7.5, work:7.7, ei:8.4, si:7.4},
+  {rank:21, breed:"English Cocker Spaniel",    iq:7.6, inst:8.5, adapt:7.3, work:7.6, ei:8.7, si:7.0},
+  {rank:22, breed:"Standard Schnauzer",        iq:7.6, inst:7.8, adapt:7.7, work:7.6, ei:7.2, si:7.6},
+  {rank:23, breed:"Brittany Spaniel",          iq:7.5, inst:8.8, adapt:7.5, work:7.5, ei:7.8, si:8.0},
+  {rank:24, breed:"Cocker Spaniel",            iq:7.4, inst:8.2, adapt:7.0, work:7.4, ei:9.0, si:6.8},
+  {rank:25, breed:"Weimaraner",                iq:7.4, inst:9.0, adapt:7.6, work:7.4, ei:7.5, si:8.2},
+  {rank:26, breed:"Belgian Malinois",          iq:7.3, inst:9.2, adapt:8.2, work:7.3, ei:7.0, si:9.0},
+  {rank:27, breed:"Bernese Mountain Dog",      iq:7.2, inst:8.0, adapt:6.8, work:7.2, ei:9.0, si:7.0},
+  {rank:28, breed:"Pomeranian",                iq:7.1, inst:7.0, adapt:6.8, work:7.1, ei:8.0, si:6.5},
+  {rank:29, breed:"Irish Water Spaniel",       iq:7.1, inst:8.5, adapt:7.2, work:7.1, ei:7.5, si:7.5},
+  {rank:30, breed:"Vizsla",                    iq:7.0, inst:9.0, adapt:7.0, work:7.0, ei:8.8, si:7.8},
+  {rank:31, breed:"Cardigan Welsh Corgi",      iq:7.0, inst:8.5, adapt:7.2, work:7.0, ei:7.8, si:8.5},
+  {rank:32, breed:"Chesapeake Bay Retriever",  iq:6.9, inst:8.8, adapt:7.0, work:6.9, ei:7.5, si:7.5},
+  {rank:33, breed:"Yorkshire Terrier",         iq:6.8, inst:7.2, adapt:6.9, work:6.8, ei:7.8, si:6.4},
+  {rank:34, breed:"Giant Schnauzer",           iq:6.8, inst:8.2, adapt:7.5, work:6.8, ei:7.2, si:7.8},
+  {rank:35, breed:"Portuguese Water Dog",      iq:6.7, inst:8.5, adapt:7.0, work:6.7, ei:8.0, si:7.5},
+  {rank:36, breed:"Airedale Terrier",          iq:6.7, inst:8.0, adapt:7.2, work:6.7, ei:7.2, si:7.2},
+  {rank:37, breed:"Bouvier des Flandres",      iq:6.6, inst:8.8, adapt:7.4, work:6.6, ei:7.0, si:8.5},
+  {rank:38, breed:"Border Terrier",            iq:6.5, inst:8.0, adapt:7.0, work:6.5, ei:7.5, si:7.0},
+  {rank:39, breed:"Siberian Husky",            iq:6.4, inst:8.5, adapt:7.5, work:6.4, ei:8.2, si:8.8},
+  {rank:40, breed:"Australian Shepherd",       iq:6.4, inst:9.0, adapt:8.0, work:6.4, ei:8.0, si:9.0},
+  {rank:41, breed:"Irish Setter",              iq:6.3, inst:8.5, adapt:6.2, work:6.3, ei:8.5, si:6.8},
+  {rank:42, breed:"Boxer",                     iq:6.2, inst:7.8, adapt:6.5, work:6.2, ei:8.8, si:6.5},
+  {rank:43, breed:"Great Dane",                iq:6.1, inst:7.5, adapt:6.0, work:6.1, ei:8.5, si:6.5},
+  {rank:44, breed:"Samoyed",                   iq:6.0, inst:7.8, adapt:6.5, work:6.0, ei:8.5, si:7.0},
+  {rank:45, breed:"Dalmatian",                 iq:5.9, inst:7.5, adapt:6.8, work:5.9, ei:7.0, si:7.2},
+  {rank:46, breed:"Jack Russell Terrier",      iq:5.8, inst:8.5, adapt:7.8, work:5.8, ei:7.2, si:7.8},
+  {rank:47, breed:"Beagle",                    iq:5.6, inst:9.2, adapt:7.5, work:5.6, ei:7.8, si:7.5},
+  {rank:48, breed:"Bloodhound",                iq:5.5, inst:9.8, adapt:6.5, work:5.5, ei:7.5, si:8.8},
+  {rank:49, breed:"Bulldog",                   iq:5.0, inst:6.5, adapt:4.8, work:5.0, ei:7.5, si:5.0},
+  {rank:50, breed:"Afghan Hound",              iq:4.5, inst:9.0, adapt:5.0, work:4.5, ei:6.5, si:5.5},
+];
+
+const colors = { iq:"#378ADD", inst:"#639922", adapt:"#1D9E75", work:"#BA7517", ei:"#D4537E", si:"#534AB7" };
+const keys = ["iq","inst","adapt","work","ei","si"];
+let pinned = new Set();
+let sortKey = null, sortDir = 1;
+
+function toggleSort(k) {
+  sortKey = (sortKey === k && sortDir === -1) ? null : k;
+  if (sortKey) sortDir = (sortKey === k && sortDir === 1) ? -1 : 1;
+  keys.forEach(x => {
+    const el = document.getElementById("arr-"+x);
+    if (el) el.textContent = x === sortKey ? (sortDir === 1 ? "▲" : "▼") : "";
+  });
+  render();
+}
+
+function bar(val, color) {
+  return `<div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:${val*10}%;background:${color}"></div></div><span class="bar-label">${val.toFixed(1)}</span></div>`;
+}
+
+function clearPins() { pinned.clear(); render(); }
+
+function render() {
+  const q = document.getElementById("search").value.toLowerCase();
+  const col = document.getElementById("sortCol").value;
+  let list = dogs.filter(d => d.breed.toLowerCase().includes(q));
+
+  const sortFn = (a, b) => {
+    const sk = sortKey || (col !== "rank" ? col : null);
+    if (!sk) return a.rank - b.rank;
+    return sortDir * (b[sk] - a[sk]);
+  };
+
+  const pinnedList = list.filter(d => pinned.has(d.rank)).sort(sortFn);
+  const unpinnedList = list.filter(d => !pinned.has(d.rank)).sort(sortFn);
+
+  const pc = document.getElementById("pinCount");
+  pc.textContent = pinned.size > 0 ? `${pinned.size} pinned` : "";
+
+  const rows = [];
+  pinnedList.forEach((d, i) => {
+    const isLast = i === pinnedList.length - 1;
+    rows.push(`<tr class="pinned${isLast && unpinnedList.length ? " pin-divider" : ""}" onclick="togglePin(${d.rank})">
+      <td class="rank">${d.rank}</td>
+      <td class="breed"><span class="pin-dot"></span>${d.breed}</td>
+      <td>${bar(d.iq, colors.iq)}</td>
+      <td>${bar(d.inst, colors.inst)}</td>
+      <td>${bar(d.adapt, colors.adapt)}</td>
+      <td>${bar(d.work, colors.work)}</td>
+      <td>${bar(d.ei, colors.ei)}</td>
+      <td>${bar(d.si, colors.si)}</td>
+    </tr>`);
+  });
+  unpinnedList.forEach(d => {
+    rows.push(`<tr onclick="togglePin(${d.rank})">
+      <td class="rank">${d.rank}</td>
+      <td class="breed">${d.breed}</td>
+      <td>${bar(d.iq, colors.iq)}</td>
+      <td>${bar(d.inst, colors.inst)}</td>
+      <td>${bar(d.adapt, colors.adapt)}</td>
+      <td>${bar(d.work, colors.work)}</td>
+      <td>${bar(d.ei, colors.ei)}</td>
+      <td>${bar(d.si, colors.si)}</td>
+    </tr>`);
+  });
+
+  document.getElementById("tbody").innerHTML = rows.join("");
+}
+
+function togglePin(rank) {
+  if (pinned.has(rank)) pinned.delete(rank); else pinned.add(rank);
+  render();
+}
+
+render();
+</script>

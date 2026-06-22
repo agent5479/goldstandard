@@ -6,6 +6,7 @@ export const PRERENDER_ROUTES = [
   '/book',
   '/guide',
   '/exam',
+  '/intelligence',
 ] as const;
 
 export type PrerenderRoute = (typeof PRERENDER_ROUTES)[number];

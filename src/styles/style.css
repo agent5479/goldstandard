@@ -3357,3 +3357,397 @@ body.exam-feedback-open { overflow: hidden; }
   .exam-feedback-actions .btn { text-align: center; }
   .exam-feedback-link { text-align: center; }
 }
+
+/* ============================================================
+   Intelligence page — breed rankings & mix explorer
+   ============================================================ */
+
+body.page-intelligence {
+  background: var(--page-bg);
+}
+
+.intelligence-section {
+  padding: 3rem 0;
+}
+
+.intelligence-section--alt {
+  background: var(--surface-soft);
+}
+
+.intelligence-table-wrap {
+  margin-top: 1.5rem;
+}
+
+.intelligence-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 0.75rem;
+}
+
+.intelligence-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.78rem;
+  color: var(--light-text);
+}
+
+.intelligence-legend-dot {
+  width: 10px;
+  height: 5px;
+  border-radius: 3px;
+}
+
+.intelligence-controls {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+  align-items: center;
+}
+
+.intelligence-search,
+.intelligence-sort-select {
+  font-size: 0.85rem;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+}
+
+.intelligence-search {
+  flex: 1;
+  min-width: 160px;
+}
+
+.intelligence-pin-count {
+  font-size: 0.78rem;
+  color: var(--light-text);
+}
+
+.intelligence-clear-btn {
+  font-size: 0.78rem;
+  padding: 5px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--light-text);
+  cursor: pointer;
+}
+
+.intelligence-clear-btn:hover {
+  background: var(--surface-soft);
+}
+
+.intelligence-table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.intelligence-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.78rem;
+}
+
+.intelligence-table thead th {
+  text-align: left;
+  padding: 7px 6px;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.72rem;
+  color: var(--light-text);
+  font-weight: 500;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  position: sticky;
+  top: 0;
+  background: var(--surface);
+  z-index: 2;
+}
+
+.intelligence-table thead th:hover {
+  color: var(--text);
+}
+
+.intelligence-table tbody tr {
+  border-bottom: 1px solid rgba(45, 74, 45, 0.08);
+  cursor: pointer;
+  transition: background 0.12s;
+}
+
+.intelligence-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.intelligence-table tbody tr:hover {
+  background: var(--surface-soft);
+}
+
+.intelligence-table tbody tr.is-pinned {
+  background: #f0eef8;
+}
+
+.intelligence-table tbody tr.is-pinned:hover {
+  background: #e4e0f4;
+}
+
+.intelligence-table tbody tr.pin-divider td {
+  border-bottom: 2px solid #7a72c8;
+  padding-bottom: 2px;
+}
+
+.intelligence-table tbody td {
+  padding: 6px 6px;
+  color: var(--text);
+  vertical-align: middle;
+}
+
+.intelligence-rank {
+  color: var(--light-text);
+  font-size: 0.72rem;
+  width: 28px;
+}
+
+.intelligence-breed {
+  font-weight: 500;
+  min-width: 130px;
+}
+
+.intelligence-pin-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #7a72c8;
+  display: inline-block;
+  margin-right: 4px;
+  vertical-align: middle;
+}
+
+.intelligence-est-badge {
+  display: inline-block;
+  margin-left: 4px;
+  font-size: 0.65rem;
+  font-weight: 400;
+  color: var(--light-text);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.intelligence-bar-wrap {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.intelligence-bar-bg {
+  flex: 1;
+  height: 5px;
+  border-radius: 3px;
+  background: var(--surface-soft);
+  overflow: hidden;
+  min-width: 40px;
+  position: relative;
+}
+
+.intelligence-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+}
+
+.intelligence-bar-range {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  border-radius: 3px;
+  opacity: 0.75;
+}
+
+.intelligence-bar-label {
+  font-size: 0.72rem;
+  color: var(--light-text);
+  min-width: 28px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.intelligence-tip {
+  font-size: 0.78rem;
+  color: var(--light-text);
+  margin-top: 0.75rem;
+}
+
+/* Mix explorer */
+.intelligence-mix-wrap {
+  margin-top: 1.5rem;
+}
+
+.intelligence-mix-lead {
+  margin-bottom: 1.25rem;
+}
+
+.intelligence-mix-parents {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.intelligence-mix-parent {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+
+.intelligence-mix-parent .exam-breed-search {
+  flex: 1;
+  min-width: 200px;
+  position: relative;
+}
+
+.intelligence-fraction-select {
+  font-size: 0.85rem;
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  min-width: 110px;
+}
+
+.intelligence-mix-remove {
+  font-size: 0.78rem;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--light-text);
+  cursor: pointer;
+}
+
+.intelligence-mix-remove:hover {
+  background: var(--surface-soft);
+  color: var(--text);
+}
+
+.intelligence-mix-add {
+  margin-bottom: 1rem;
+}
+
+.intelligence-mix-fraction-hint {
+  margin-bottom: 1rem;
+}
+
+.intelligence-mix-results {
+  margin-top: 1.5rem;
+  padding: 1.25rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.intelligence-mix-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  color: var(--forest);
+  margin-bottom: 0.25rem;
+}
+
+.intelligence-mix-subtitle {
+  font-size: 0.85rem;
+  color: var(--light-text);
+  margin-bottom: 1rem;
+}
+
+.intelligence-mix-mid {
+  font-size: 0.78rem;
+  color: var(--light-text);
+  white-space: nowrap;
+}
+
+.intelligence-mix-temperament {
+  margin-top: 1.5rem;
+}
+
+.intelligence-mix-temperament h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem;
+  color: var(--forest);
+  margin-bottom: 0.5rem;
+}
+
+.intelligence-mix-temperament-lead {
+  font-size: 0.92rem;
+  color: var(--light-text);
+  margin-bottom: 1rem;
+}
+
+.intelligence-mix-temperament-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.intelligence-mix-temperament-card {
+  padding: 1rem 1.1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.intelligence-mix-temperament-card.is-wide-lottery {
+  border-left: 3px solid var(--gold);
+}
+
+.intelligence-mix-temperament-card h4 {
+  font-size: 0.95rem;
+  color: var(--forest);
+  margin-bottom: 0.5rem;
+}
+
+.intelligence-mix-temperament-summary {
+  font-size: 0.88rem;
+  color: var(--text);
+  margin-bottom: 0.75rem;
+}
+
+.intelligence-mix-temperament-parents {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--light-text);
+}
+
+.intelligence-mix-temperament-parents li {
+  margin-bottom: 0.5rem;
+  padding-left: 0.75rem;
+  border-left: 2px solid var(--border);
+}
+
+.intelligence-mix-disclaimer {
+  margin-top: 1.5rem;
+}
+
+@media (max-width: 700px) {
+  .intelligence-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .intelligence-search {
+    width: 100%;
+  }
+
+  .intelligence-mix-parent {
+    flex-direction: column;
+  }
+
+  .intelligence-fraction-select,
+  .intelligence-mix-remove {
+    width: 100%;
+  }
+}

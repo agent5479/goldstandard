@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 export default function SectionReadingDog() {
   return (
     <section className="guide-section" id="reading-dog">
@@ -16,7 +18,7 @@ export default function SectionReadingDog() {
 
       <h3 id="breed-temperament">🐾 Breed temperament: universal principles, flexible application</h3>
 
-      <p>The structure in this guide is universal — every dog needs clarity, consistency, and a calm handler. At the extremes of breed temperament, <em>how</em> you apply a correction or reward may shift slightly. The standard does not disappear; the delivery adjusts.</p>
+      <p>The structure in this guide is universal — every dog needs clarity, consistency, and a calm handler. At the extremes of breed temperament, <em>how</em> you apply a correction or reward may shift slightly. The standard does not disappear; the delivery adjusts. For breed intelligence comparisons and mix estimates, see the <Link to="/intelligence">Dog Intelligence reference</Link>.</p>
 
       <div className="two-col">
         <div className="col-card">
