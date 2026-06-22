@@ -75,9 +75,11 @@ body::before {
 
 .site-header-nav {
   display: flex;
-  gap: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem 1.25rem;
   list-style: none;
   align-items: center;
+  justify-content: flex-end;
   margin-left: auto;
 }
 

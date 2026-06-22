@@ -53,5 +53,8 @@ jobs:
           test -f docs/book/index.html
           test -f docs/guide/index.html
           test -f docs/exam/index.html
+          test -f docs/intelligence/index.html
+          test -f docs/.nojekyll
           grep -q 'data-seo-ready="true"' docs/about/index.html
           grep -q '<h1' docs/book/index.html
+          grep -q 'Intelligence' docs/index.html
