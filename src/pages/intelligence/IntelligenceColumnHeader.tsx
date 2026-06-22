@@ -55,7 +55,6 @@ export default function IntelligenceColumnHeader({
       aria-sort={ariaSort}
       tabIndex={sortable ? 0 : undefined}
       onKeyDown={sortable ? handleKeyDown : undefined}
-      onMouseLeave={hideDescription}
       title={description}
     >
       <span

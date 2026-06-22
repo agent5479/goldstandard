@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, type ReactNode } from 'react';
 import {
   dogIntelligenceProfiles,
   INTELLIGENCE_DIMENSIONS,
@@ -11,10 +11,96 @@ import IntelligenceLegendItem from './IntelligenceLegendItem';
 import BreedDetailTooltip from './BreedDetailTooltip';
 import {
   IntelligenceColumnTipProvider,
-  IntelligenceColumnTipRail,
+  IntelligenceColumnTipOverlay,
+  useIntelligenceColumnTip,
 } from './IntelligenceColumnTipRail';
 
 type SortKey = IntelligenceDimension | 'rank' | null;
+
+interface IntelligenceTableWithTipsProps {
+  sortKey: SortKey;
+  sortDir: 1 | -1;
+  toggleRankSort: () => void;
+  toggleSort: (key: IntelligenceDimension) => void;
+  pinnedList: DogIntelligenceProfile[];
+  unpinnedList: DogIntelligenceProfile[];
+  renderRow: (
+    profile: DogIntelligenceProfile,
+    isPinned: boolean,
+    showDivider: boolean
+  ) => ReactNode;
+}
+
+function IntelligenceTableWithTips({
+  sortKey,
+  sortDir,
+  toggleRankSort,
+  toggleSort,
+  pinnedList,
+  unpinnedList,
+  renderRow,
+}: IntelligenceTableWithTipsProps) {
+  const tipContext = useIntelligenceColumnTip();
+
+  return (
+    <div className="intelligence-table-anchor">
+      <IntelligenceColumnTipOverlay />
+      <div className="intelligence-table-scroll">
+        <table className="intelligence-table">
+          <thead onMouseLeave={() => tipContext?.hideTip()}>
+            <tr>
+              <IntelligenceColumnHeader
+                label="IQ #"
+                description="Overall IQ rank — not the rank for other columns. Click to sort by rank."
+                sortIndicator={sortKey === 'rank' ? (sortDir === 1 ? ' ▲' : ' ▼') : undefined}
+                onClick={toggleRankSort}
+                ariaSort={
+                  sortKey === 'rank'
+                    ? sortDir === 1
+                      ? 'ascending'
+                      : 'descending'
+                    : 'none'
+                }
+                className="intelligence-rank-col"
+                style={{ width: 36 }}
+              />
+              <th className="intelligence-breed-col" style={{ minWidth: 130 }}>
+                Breed
+              </th>
+              {INTELLIGENCE_DIMENSIONS.map((dim) => (
+                <IntelligenceColumnHeader
+                  key={dim.key}
+                  label={dim.shortLabel}
+                  description={dim.description}
+                  sortIndicator={sortKey === dim.key ? (sortDir === 1 ? ' ▲' : ' ▼') : undefined}
+                  onClick={() => toggleSort(dim.key)}
+                  ariaSort={
+                    sortKey === dim.key
+                      ? sortDir === 1
+                        ? 'ascending'
+                        : 'descending'
+                      : 'none'
+                  }
+                  style={{ width: 76 }}
+                />
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {pinnedList.map((profile, i) =>
+              renderRow(
+                profile,
+                true,
+                i === pinnedList.length - 1 && unpinnedList.length > 0
+              )
+            )}
+            {unpinnedList.map((profile) => renderRow(profile, false, false))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
 
 function matchesSearch(profile: DogIntelligenceProfile, query: string): boolean {
   const q = query.toLowerCase();
@@ -146,61 +232,15 @@ export default function BreedIntelligenceTable() {
         )}
       </div>
 
-      <IntelligenceColumnTipRail />
-
-      <div className="intelligence-table-scroll">
-        <table className="intelligence-table">
-          <thead>
-            <tr>
-              <IntelligenceColumnHeader
-                label="IQ #"
-                description="Overall IQ rank — not the rank for other columns. Click to sort by rank."
-                sortIndicator={sortKey === 'rank' ? (sortDir === 1 ? ' ▲' : ' ▼') : undefined}
-                onClick={toggleRankSort}
-                ariaSort={
-                  sortKey === 'rank'
-                    ? sortDir === 1
-                      ? 'ascending'
-                      : 'descending'
-                    : 'none'
-                }
-                className="intelligence-rank-col"
-                style={{ width: 36 }}
-              />
-              <th className="intelligence-breed-col" style={{ minWidth: 130 }}>
-                Breed
-              </th>
-              {INTELLIGENCE_DIMENSIONS.map((dim) => (
-                <IntelligenceColumnHeader
-                  key={dim.key}
-                  label={dim.shortLabel}
-                  description={dim.description}
-                  sortIndicator={sortKey === dim.key ? (sortDir === 1 ? ' ▲' : ' ▼') : undefined}
-                  onClick={() => toggleSort(dim.key)}
-                  ariaSort={
-                    sortKey === dim.key
-                      ? sortDir === 1
-                        ? 'ascending'
-                        : 'descending'
-                      : 'none'
-                  }
-                  style={{ width: 76 }}
-                />
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {pinnedList.map((profile, i) =>
-              renderRow(
-                profile,
-                true,
-                i === pinnedList.length - 1 && unpinnedList.length > 0
-              )
-            )}
-            {unpinnedList.map((profile) => renderRow(profile, false, false))}
-          </tbody>
-        </table>
-      </div>
+      <IntelligenceTableWithTips
+        sortKey={sortKey}
+        sortDir={sortDir}
+        toggleRankSort={toggleRankSort}
+        toggleSort={toggleSort}
+        pinnedList={pinnedList}
+        unpinnedList={unpinnedList}
+        renderRow={renderRow}
+      />
 
       <p className="intelligence-tip">
         The <strong>IQ #</strong> column is overall IQ rank only. Other columns are independent — sort by any

@@ -36,27 +36,16 @@ export function useIntelligenceColumnTip() {
   return useContext(IntelligenceColumnTipContext);
 }
 
-export function IntelligenceColumnTipRail() {
+export function IntelligenceColumnTipOverlay() {
   const context = useIntelligenceColumnTip();
-  if (!context) return null;
+  if (!context?.activeTip) return null;
 
   const { activeTip } = context;
 
   return (
-    <div
-      className={`intelligence-column-tip-rail${activeTip ? ' is-active' : ''}`}
-      aria-live="polite"
-    >
-      {activeTip ? (
-        <>
-          <span className="intelligence-column-tip-rail-label">{activeTip.label}</span>
-          <p className="intelligence-column-tip-rail-text">{activeTip.description}</p>
-        </>
-      ) : (
-        <p className="intelligence-column-tip-rail-placeholder">
-          Hover a column heading to see what it measures.
-        </p>
-      )}
+    <div className="intelligence-column-tip-overlay" role="tooltip" aria-live="polite">
+      <span className="intelligence-column-tip-overlay-label">{activeTip.label}</span>
+      <p className="intelligence-column-tip-overlay-text">{activeTip.description}</p>
     </div>
   );
 }
