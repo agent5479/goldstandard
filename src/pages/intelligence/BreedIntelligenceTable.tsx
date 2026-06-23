@@ -45,12 +45,17 @@ function IntelligenceTableWithTips({
   return (
     <div className="intelligence-table-anchor">
       <IntelligenceColumnTipOverlay />
-      <div className="intelligence-table-scroll">
+      <div
+        className="intelligence-table-scroll"
+        tabIndex={0}
+        aria-label="Breed rankings table — scroll to browse all breeds"
+      >
         <table className="intelligence-table">
           <thead onMouseLeave={() => tipContext?.hideTip()}>
             <tr>
               <IntelligenceColumnHeader
                 label="IQ #"
+                tipLabel="Overall IQ rank"
                 description="Overall IQ rank — not the rank for other columns. Click to sort by rank."
                 sortIndicator={sortKey === 'rank' ? (sortDir === 1 ? ' ▲' : ' ▼') : undefined}
                 onClick={toggleRankSort}
@@ -71,6 +76,7 @@ function IntelligenceTableWithTips({
                 <IntelligenceColumnHeader
                   key={dim.key}
                   label={dim.shortLabel}
+                  tipLabel={dim.label}
                   description={dim.description}
                   sortIndicator={sortKey === dim.key ? (sortDir === 1 ? ' ▲' : ' ▼') : undefined}
                   onClick={() => toggleSort(dim.key)}
@@ -242,6 +248,10 @@ export default function BreedIntelligenceTable() {
         renderRow={renderRow}
       />
 
+      <p className="intelligence-tip">
+        Scroll the table to browse all {pinnedList.length + unpinnedList.length} breeds
+        {search ? ' matching your search' : ''}.
+      </p>
       <p className="intelligence-tip">
         The <strong>IQ #</strong> column is overall IQ rank only. Other columns are independent — sort by any
         heading to reorder. Cell shading runs green (high) through gold and orange to gray (low).

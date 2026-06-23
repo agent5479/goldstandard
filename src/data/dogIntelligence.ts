@@ -75,7 +75,7 @@ export const INTELLIGENCE_DIMENSIONS: {
   },
   {
     key: 'ei',
-    label: 'Emotional',
+    label: 'Emotional intelligence',
     shortLabel: 'Emot',
     color: '#D4537E',
     description:

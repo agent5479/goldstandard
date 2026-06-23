@@ -3,6 +3,7 @@ import { useIntelligenceColumnTip } from './IntelligenceColumnTipRail';
 
 interface IntelligenceColumnHeaderProps {
   label: string;
+  tipLabel?: string;
   description: string;
   sortIndicator?: string;
   onClick?: () => void;
@@ -13,6 +14,7 @@ interface IntelligenceColumnHeaderProps {
 
 export default function IntelligenceColumnHeader({
   label,
+  tipLabel,
   description,
   sortIndicator,
   onClick,
@@ -24,7 +26,7 @@ export default function IntelligenceColumnHeader({
   const sortable = Boolean(onClick);
 
   const showDescription = () => {
-    tipContext?.showTip({ label, description });
+    tipContext?.showTip({ label: tipLabel ?? label, description });
   };
 
   const hideDescription = () => {

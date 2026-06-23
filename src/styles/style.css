@@ -3493,9 +3493,13 @@ body.page-intelligence {
 }
 
 .intelligence-table-scroll {
-  overflow-x: auto;
-  overflow-y: visible;
+  overflow: auto;
   -webkit-overflow-scrolling: touch;
+  /* ~20 data rows + header (row height matches stacked bar cells) */
+  max-height: calc(2.15rem + 2.35rem * 20);
+  border: 1px solid rgba(45, 74, 45, 0.14);
+  border-radius: 8px;
+  background: var(--surface);
 }
 
 .intelligence-table thead th {
