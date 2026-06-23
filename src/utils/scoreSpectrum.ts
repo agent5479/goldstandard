@@ -2,12 +2,15 @@ type Rgb = { r: number; g: number; b: number };
 
 /** Green (high) → yellow → orange → gray (low), aligned with site palette. */
 const SPECTRUM_STOPS: { score: number; rgb: Rgb }[] = [
-  { score: 1, rgb: { r: 176, g: 174, b: 168 } },
-  { score: 3, rgb: { r: 205, g: 132, b: 72 } },
-  { score: 5.5, rgb: { r: 212, g: 164, b: 58 } },
-  { score: 7.5, rgb: { r: 154, g: 176, b: 86 } },
-  { score: 10, rgb: { r: 74, g: 103, b: 65 } },
+  { score: 1, rgb: { r: 168, g: 162, b: 154 } },
+  { score: 3, rgb: { r: 224, g: 118, b: 52 } },
+  { score: 5.5, rgb: { r: 228, g: 168, b: 38 } },
+  { score: 7.5, rgb: { r: 132, g: 188, b: 62 } },
+  { score: 10, rgb: { r: 52, g: 118, b: 48 } },
 ];
+
+/** How much spectrum colour vs white in cell backgrounds (higher = more vivid). */
+const CELL_COLOR_WEIGHT = 0.62;
 
 function clampScore(value: number): number {
   return Math.max(1, Math.min(10, value));
@@ -70,14 +73,14 @@ export interface ScoreSpectrumStyle {
 export function getScoreSpectrumStyle(value: number): ScoreSpectrumStyle {
   const rgb = interpolateRgb(value);
   return {
-    cellBackground: toRgb(blendWithWhite(rgb, 0.44)),
-    barFill: toRgb(deepen(rgb, 0.06)),
+    cellBackground: toRgb(blendWithWhite(rgb, CELL_COLOR_WEIGHT)),
+    barFill: toRgb(deepen(rgb, 0.04)),
   };
 }
 
 export function getScoreRangeSpectrumStyle(low: number, high: number): ScoreSpectrumStyle {
-  const lowRgb = deepen(interpolateRgb(low));
-  const highRgb = deepen(interpolateRgb(high));
+  const lowRgb = deepen(interpolateRgb(low), 0.04);
+  const highRgb = deepen(interpolateRgb(high), 0.04);
   const mid = (low + high) / 2;
 
   return {
