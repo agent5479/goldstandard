@@ -23,14 +23,12 @@ import { inferBreedCategory } from '@/utils/breedCategoryFromLabel';
 import { pruneProfileTagNotes } from '@/utils/profileTagNotes';
 import { parseStructuredMixLabel } from '@/utils/dogBreedLabel';
 import { resolveMixAxisDisplayDetail } from '@/utils/mixAxisDisplay';
+import { DogAgeFields, emptyDogAgeFields, type DogAgeFieldsValue } from '@/components/DogAgeFields';
 import {
   applyLifeStageProfileTag,
-  formatDogAgeDisplay,
-  inferLifeStageFromAge,
+  hasStructuredAge,
   inferLifeStageFromDog,
-  isSlowMaturingBreed,
-  lifeStageSummary,
-  lifeStageSummaryForDog,
+  migrateLegacyDogAge,
 } from '@/utils/dogLifeStage';
 import type { Dog } from '@/types';
 
@@ -43,6 +41,8 @@ export type DogIntakeData = Partial<
     | 'breed'
     | 'breedCategory'
     | 'age'
+    | 'ageYearsAtRecord'
+    | 'ageMonthsAtRecord'
     | 'ageRecordedAt'
     | 'weight'
     | 'sex'
@@ -77,9 +77,13 @@ export function DogIntakeFields({
   };
 
   const handleBreedChange = (breedName: string) => {
-    const lifeStage = value.ageRecordedAt
-      ? inferLifeStageFromDog({ age: value.age, ageRecordedAt: value.ageRecordedAt, breed: breedName })
-      : inferLifeStageFromAge(value.age, breedName);
+    const ageRecord = migrateLegacyDogAge({
+      age: value.age,
+      ageYearsAtRecord: value.ageYearsAtRecord,
+      ageMonthsAtRecord: value.ageMonthsAtRecord,
+      ageRecordedAt: value.ageRecordedAt,
+    });
+    const lifeStage = inferLifeStageFromDog({ ...ageRecord, breed: breedName });
     onChange({
       breed: breedName,
       breedCategory: inferBreedCategory(breedName),
@@ -87,43 +91,38 @@ export function DogIntakeFields({
     });
   };
 
-  const handleAgeChange = (age: string) => {
-    const lifeStage = inferLifeStageFromAge(age, value.breed);
+  const handleAgeChange = (patch: Partial<DogAgeFieldsValue>) => {
+    const nextAge = {
+      ageYearsAtRecord: patch.ageYearsAtRecord ?? value.ageYearsAtRecord,
+      ageMonthsAtRecord: patch.ageMonthsAtRecord ?? value.ageMonthsAtRecord,
+      ageRecordedAt: patch.ageRecordedAt ?? value.ageRecordedAt,
+      age: patch.age ?? undefined,
+    };
+    const lifeStage = inferLifeStageFromDog({ ...nextAge, breed: value.breed });
     onChange({
-      age,
-      ageRecordedAt: undefined,
+      ...patch,
+      age: undefined,
       profileTags: applyLifeStageProfileTag(value.profileTags, lifeStage),
     });
   };
 
-  const inferredLifeStage = useMemo(() => {
-    if (value.ageRecordedAt) {
-      return inferLifeStageFromDog({
-        age: value.age,
-        ageRecordedAt: value.ageRecordedAt,
-        breed: value.breed,
-      });
-    }
-    return inferLifeStageFromAge(value.age, value.breed);
-  }, [value.age, value.ageRecordedAt, value.breed]);
-
-  const inferredLifeStageSummary = useMemo(() => {
-    if (value.ageRecordedAt) {
-      return lifeStageSummaryForDog({
-        age: value.age,
-        ageRecordedAt: value.ageRecordedAt,
-        breed: value.breed,
-      });
-    }
-    return lifeStageSummary(value.age, value.breed);
-  }, [value.age, value.ageRecordedAt, value.breed]);
-
-  const ageDisplayLine = useMemo(
+  const ageRecord = useMemo(
     () =>
-      value.ageRecordedAt
-        ? formatDogAgeDisplay({ age: value.age, ageRecordedAt: value.ageRecordedAt })
-        : null,
-    [value.age, value.ageRecordedAt, value.breed]
+      migrateLegacyDogAge({
+        age: value.age,
+        ageYearsAtRecord: value.ageYearsAtRecord,
+        ageMonthsAtRecord: value.ageMonthsAtRecord,
+        ageRecordedAt: value.ageRecordedAt,
+        updatedAt: undefined,
+      }),
+    [value.age, value.ageYearsAtRecord, value.ageMonthsAtRecord, value.ageRecordedAt]
+  );
+
+  const showLegacyHint = Boolean(value.age?.trim() && !hasStructuredAge(value));
+
+  const inferredLifeStage = useMemo(
+    () => inferLifeStageFromDog({ ...ageRecord, breed: value.breed }),
+    [ageRecord, value.breed]
   );
 
   const updateSkillGrade = (focusId: string, grade: SkillGrade) => {
@@ -298,35 +297,24 @@ export function DogIntakeFields({
             </div>
           </Col>
         )}
-        <Col md={3}>
+        <Col md={6}>
           <Form.Group>
             <Form.Label>Age at last update</Form.Label>
-            <Form.Control
-              value={value.age || ''}
+            <DogAgeFields
+              value={{
+                ageYearsAtRecord: ageRecord.ageYearsAtRecord,
+                ageMonthsAtRecord: ageRecord.ageMonthsAtRecord,
+                ageRecordedAt: ageRecord.ageRecordedAt,
+                age: value.age,
+              }}
+              onChange={handleAgeChange}
+              breed={value.breed}
               disabled={disabled}
-              onChange={(e) => handleAgeChange(e.target.value)}
-              placeholder="e.g. 8 months, 2 years"
+              yearsLabel="Years"
+              monthsLabel="Months"
+              recordedOnLabel="Recorded on"
+              showLegacyHint={showLegacyHint}
             />
-            {ageDisplayLine ? (
-              <Form.Text className="d-block mt-1 text-muted">{ageDisplayLine}</Form.Text>
-            ) : (
-              value.age?.trim() && (
-                <Form.Text className="d-block mt-1 text-muted">
-                  Anchored to today when you save — age will advance automatically from that date.
-                </Form.Text>
-              )
-            )}
-            {inferredLifeStage && (
-              <Form.Text className="d-block mt-1">
-                Life stage:{' '}
-                <Badge bg="secondary">{dogProfileTagLabel(inferredLifeStage)}</Badge>
-                {' '}({inferredLifeStageSummary}
-                {isSlowMaturingBreed(value.breed) && inferredLifeStage === 'adolescent'
-                  ? ' · adult at 4 years for this breed'
-                  : ''}
-                )
-              </Form.Text>
-            )}
           </Form.Group>
         </Col>
         <Col md={2}>
@@ -465,10 +453,10 @@ export function DogIntakeFields({
 }
 
 export const emptyDogIntake = (): DogIntakeData => ({
+  ...emptyDogAgeFields(),
   name: '',
   breed: '',
   breedCategory: undefined,
-  age: '',
   weight: '',
   trainingStage: DEFAULT_TRAINING_STAGE,
   challenges: '',

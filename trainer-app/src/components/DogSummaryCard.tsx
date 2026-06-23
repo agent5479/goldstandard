@@ -8,6 +8,7 @@ import { getDogProfileTag } from '@/data/dogProfileTags';
 import { formatBreedDisplayLabel } from '@/utils/dogBreedLabel';
 import { formatDogAgeCompact } from '@/utils/dogLifeStage';
 import { dogTrainingStageBadge, resolveDogTrainingStage } from '@/utils/householdHelpers';
+import { householdReturnPath, type HouseholdNavState } from '@/utils/householdNavigation';
 import type { Dog, Owner } from '@/types';
 
 interface DogSummaryCardProps {
@@ -21,6 +22,7 @@ interface DogSummaryCardProps {
 export function DogSummaryCard({ dog, ownerId, owner, ownerName, compact = false }: DogSummaryCardProps) {
   const editPath = `/households/${ownerId}/dogs/${dog.id}`;
   const householdPath = `/households/${ownerId}`;
+  const editNavState: HouseholdNavState = { returnTo: ownerName ? '/dogs' : householdReturnPath(ownerId) };
   const trainingStage = resolveDogTrainingStage(dog, owner);
   const ageLabel = formatDogAgeCompact(dog);
   const photoLabel = findHeroPhoto(dog.photoPath)?.label;
@@ -48,7 +50,7 @@ export function DogSummaryCard({ dog, ownerId, owner, ownerName, compact = false
               )}
               </div>
             </div>
-            <NavButton to={editPath} variant="outline-primary" size="sm">
+            <NavButton to={editPath} state={editNavState} variant="outline-primary" size="sm">
               Edit
             </NavButton>
           </div>
@@ -115,7 +117,7 @@ export function DogSummaryCard({ dog, ownerId, owner, ownerName, compact = false
           </Card.Text>
         )}
         <div className="d-flex flex-wrap gap-1">
-          <NavButton to={editPath} variant="outline-primary" size="sm">
+          <NavButton to={editPath} state={editNavState} variant="outline-primary" size="sm">
             Edit profile
           </NavButton>
           {ownerName && (

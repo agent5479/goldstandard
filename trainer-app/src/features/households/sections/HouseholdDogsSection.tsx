@@ -1,7 +1,9 @@
 import { Card, Row, Col, Button } from 'react-bootstrap';
+import { useLocation } from 'react-router-dom';
 import { NavButton } from '@/components/NavButton';
 import { HouseholdDogCard } from '@/components/HouseholdDogCard';
 import { labels } from '@/data/terminology';
+import { householdReturnPath, type HouseholdNavState } from '@/utils/householdNavigation';
 import type { SkillGrade } from '@/data/assessmentTaxonomy';
 import type { Dog, Owner } from '@/types';
 
@@ -28,6 +30,11 @@ export function HouseholdDogsSection({
   onSkillGradeChange,
   onArchive,
 }: HouseholdDogsSectionProps) {
+  const location = useLocation();
+  const dogFormNavState: HouseholdNavState = {
+    returnTo: householdReturnPath(ownerId, location.hash),
+  };
+
   return (
     <Card className="mb-4 hub-panel">
       <Card.Header className="d-flex justify-content-between align-items-center">
@@ -38,7 +45,12 @@ export function HouseholdDogsSection({
           </Button>
         )}
         {canManageDogs && !onOpenDogForm && (
-          <NavButton to={`/households/${ownerId}/dogs/new`} variant="outline-primary" size="sm">
+          <NavButton
+            to={`/households/${ownerId}/dogs/new`}
+            state={dogFormNavState}
+            variant="outline-primary"
+            size="sm"
+          >
             <i className="bi bi-plus" /> {labels.addDog}
           </NavButton>
         )}

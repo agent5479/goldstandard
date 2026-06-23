@@ -1,10 +1,11 @@
 import { useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Alert, Badge, Button, Card, Form, Row, Col, Spinner, Table } from 'react-bootstrap';
 import { useAuth } from '@/contexts/AuthContext';
 import { useTenantData } from '@/contexts/TenantDataContext';
 import { usePermissions } from '@/hooks/usePermissions';
 import { labels } from '@/data/terminology';
+import { householdReturnPath, type HouseholdNavState } from '@/utils/householdNavigation';
 import { mutate, tenantPath } from '@/services/mutations';
 import type { ActivityEvent } from '@/types';
 
@@ -39,6 +40,7 @@ function actionLabel(action: string): string {
 
 export default function ActivityPage() {
   const { user } = useAuth();
+  const location = useLocation();
   const { data, setData } = useTenantData();
   const { can } = usePermissions();
   const canView = can('ACTIVITY_VIEW');
@@ -174,6 +176,12 @@ export default function ActivityPage() {
             <tbody>
               {events.map((event) => {
                 const href = entityLink(event);
+                const linkState: HouseholdNavState | undefined =
+                  event.entityType === 'dogs' && event.meta?.ownerId
+                    ? {
+                        returnTo: householdReturnPath(String(event.meta.ownerId), '#activity'),
+                      }
+                    : undefined;
                 return (
                   <tr key={event.id}>
                     <td className="text-nowrap">{formatWhen(event.timestamp)}</td>
@@ -182,7 +190,9 @@ export default function ActivityPage() {
                     <td>{event.summary}</td>
                     <td className="text-end text-nowrap">
                       {href && (
-                        <Link to={href} className="small me-2">Open</Link>
+                        <Link to={href} state={linkState ?? location.state} className="small me-2">
+                          Open
+                        </Link>
                       )}
                       {canDeleteHistory && (
                         <Button

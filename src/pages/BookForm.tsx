@@ -50,10 +50,11 @@ import {
   emptyExtendedDetailsState,
   toggleProfileTag,
 } from '../data/bookingSelfAssessment';
+import { DogAgeFields, emptyDogAgeFields, type DogAgeFieldsValue } from '../components/DogAgeFields';
 import {
   applyLifeStageProfileTag,
-  inferLifeStageFromAge,
-  lifeStageSummary,
+  buildAgeLabel,
+  inferLifeStageFromDog,
 } from '../utils/dogLifeStage';
 
 type FormStatus =
@@ -139,7 +140,7 @@ export default function BookForm() {
   const [selectedSlot, setSelectedSlot] = useState('');
   const [selectedLocationId, setSelectedLocationId] = useState('');
   const [dogBreed, setDogBreed] = useState('');
-  const [dogAge, setDogAge] = useState('');
+  const [dogAgeFields, setDogAgeFields] = useState<DogAgeFieldsValue>(() => emptyDogAgeFields());
   const [loadingSlots, setLoadingSlots] = useState(true);
   const [refetchingSlots, setRefetchingSlots] = useState(false);
   const [slotsError, setSlotsError] = useState('');
@@ -245,15 +246,12 @@ export default function BookForm() {
   }, [selectedRegionId]);
 
   useEffect(() => {
-    const lifeStage = inferLifeStageFromAge(dogAge, dogBreed);
+    const lifeStage = inferLifeStageFromDog({ ...dogAgeFields, breed: dogBreed });
     setExtendedDetails((prev) => ({
       ...prev,
       profileTags: applyLifeStageProfileTag(prev.profileTags, lifeStage),
     }));
-  }, [dogAge, dogBreed]);
-
-  const inferredLifeStage = inferLifeStageFromAge(dogAge, dogBreed);
-  const inferredLifeStageSummary = lifeStageSummary(dogAge, dogBreed);
+  }, [dogAgeFields, dogBreed]);
 
   const scrollTo = (target: React.RefObject<HTMLDivElement | null>) => {
     requestAnimationFrame(() => {
@@ -378,7 +376,7 @@ export default function BookForm() {
     }
 
     const slot = slots.find((entry) => entry.start === selectedSlot);
-    const dogAgeValue = dogAge.trim();
+    const dogAgeValue = buildAgeLabel(dogAgeFields.ageYearsAtRecord, dogAgeFields.ageMonthsAtRecord) ?? '';
     let extendedJson: string | undefined;
     try {
       extendedJson = buildExtendedDetailsPayload(
@@ -959,21 +957,12 @@ export default function BookForm() {
               </div>
               <div className="form-field">
                 <label htmlFor="bookDogAge">Dog&apos;s age <span className="label-optional">(optional)</span></label>
-                <input
-                  id="bookDogAge"
-                  name="dog_age"
-                  type="text"
-                  value={dogAge}
-                  onChange={(e) => setDogAge(e.target.value)}
-                  placeholder="e.g. 8 months, 2 years, puppy"
-                  autoComplete="off"
+                <DogAgeFields
+                  value={dogAgeFields}
+                  onChange={(patch) => setDogAgeFields((prev) => ({ ...prev, ...patch }))}
+                  breed={dogBreed}
                   disabled={submitting}
                 />
-                {inferredLifeStage && inferredLifeStageSummary && (
-                  <p className="form-hint">
-                    Life stage: <strong>{inferredLifeStage}</strong> ({inferredLifeStageSummary})
-                  </p>
-                )}
               </div>
             </div>
             <div className="form-row">

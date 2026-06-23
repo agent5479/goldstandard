@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Card, Form, Button, Alert, Badge } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { NavButton } from '@/components/NavButton';
 import { SkillGradeSelect } from '@/components/SkillGradeSelect';
 import { DogProfileTagsSummary } from '@/components/DogProfileTagPicker';
@@ -19,6 +19,7 @@ import { DOG_TRAINING_STAGES } from '@/data/householdTypes';
 import { labels } from '@/data/terminology';
 import { evaluateDogGraduationHint } from '@/utils/assessmentHelpers';
 import { dogTrainingStageBadge, isDogArchived, resolveDogTrainingStage } from '@/utils/householdHelpers';
+import { householdReturnPath, type HouseholdNavState } from '@/utils/householdNavigation';
 import type { Dog, Owner } from '@/types';
 
 const skillFocusItems = getDogSkillFocusItems();
@@ -47,6 +48,7 @@ export function HouseholdDogCard({
   onOpenEditor,
 }: HouseholdDogCardProps) {
   const navigate = useNavigate();
+  const location = useLocation();
   const [showGrades, setShowGrades] = useState(false);
   const editPath = `/households/${ownerId}/dogs/${dog.id}`;
   const logPath = `/logs/new?ownerId=${ownerId}&dogId=${dog.id}`;
@@ -58,7 +60,11 @@ export function HouseholdDogCard({
 
   const openDogEditor = () => {
     if (onOpenEditor) onOpenEditor();
-    else navigate(editPath);
+    else {
+      navigate(editPath, {
+        state: { returnTo: householdReturnPath(ownerId, location.hash) } satisfies HouseholdNavState,
+      });
+    }
   };
 
   const stopCardNavigation = (event: React.MouseEvent | React.KeyboardEvent) => {

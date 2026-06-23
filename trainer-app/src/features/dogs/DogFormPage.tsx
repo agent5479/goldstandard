@@ -15,8 +15,9 @@ import { DogIntakeFields, emptyDogIntake, type DogIntakeData } from '@/component
 import { resolveDogTrainingStage } from '@/utils/householdHelpers';
 import {
   applyLifeStageProfileTag,
+  buildDogAgePayload,
   inferLifeStageFromDog,
-  resolveAgeRecordedAtOnSave,
+  migrateLegacyDogAge,
 } from '@/utils/dogLifeStage';
 import { migrateLegacyDogProfileFields, pruneProfileTagNotes } from '@/utils/profileTagNotes';
 import { resolveHouseholdReturnTo, type HouseholdNavState } from '@/utils/householdNavigation';
@@ -37,13 +38,21 @@ export default function DogFormPage() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
 
-  const owner = useMemo(
-    () => (ownerId ? data.owners.find((o) => String(o.id) === ownerId) : undefined),
-    [data.owners, ownerId]
+  const existingDog = useMemo(
+    () => (!isNew && dogId ? data.dogs.find((d) => String(d.id) === dogId) : undefined),
+    [data.dogs, dogId, isNew]
   );
+
+  const canonicalOwnerId = String(existingDog?.ownerId ?? ownerId ?? '');
+
+  const owner = useMemo(
+    () => (canonicalOwnerId ? data.owners.find((o) => String(o.id) === canonicalOwnerId) : undefined),
+    [data.owners, canonicalOwnerId]
+  );
+
   const householdBackPath = useMemo(
-    () => (ownerId ? resolveHouseholdReturnTo(returnTo, ownerId) : '/households'),
-    [ownerId, returnTo]
+    () => (canonicalOwnerId ? resolveHouseholdReturnTo(returnTo, canonicalOwnerId) : '/households'),
+    [canonicalOwnerId, returnTo]
   );
 
   useEffect(() => {
@@ -51,37 +60,48 @@ export default function DogFormPage() {
       navigate('/households/new', { replace: true });
     }
   }, [navigate, ownerId]);
+
   const dogFollowUps = useMemo(
     () => (!isNew && dogId ? getDogFollowUps(data, dogId) : []),
     [data, dogId, isNew]
   );
 
   useEffect(() => {
-    if (!isNew && dogId) {
-      const dog = data.dogs.find((d) => String(d.id) === dogId);
-      if (dog) {
-        const {
-          status: _legacyStatus,
-          achievementFocusIds: _legacyAchievements,
-          ownerId: _storedOwnerId,
-          goals: _legacyGoals,
-          calibrationNotes: _legacyCalibration,
-          ...dogFields
-        } = dog;
-        const migrated = migrateLegacyDogSkillAchievements(dogFields.profileTags, dog.achievementFocusIds);
-        const legacyProfile = migrateLegacyDogProfileFields(dog);
-        setForm({
-          ...dogFields,
-          ...legacyProfile,
-          trainingStage: resolveDogTrainingStage(dog, owner),
-          profileTags: applyLifeStageProfileTag(
-            migrated.profileTags,
-            inferLifeStageFromDog(dog)
-          ),
+    if (!isNew && dogId && existingDog) {
+      if (String(existingDog.ownerId) !== ownerId) {
+        navigate(`/households/${existingDog.ownerId}/dogs/${dogId}`, {
+          replace: true,
+          state: location.state,
         });
+        return;
       }
+
+      const {
+        status: _legacyStatus,
+        achievementFocusIds: _legacyAchievements,
+        ownerId: _storedOwnerId,
+        goals: _legacyGoals,
+        calibrationNotes: _legacyCalibration,
+        ...dogFields
+      } = existingDog;
+      const ageMigrated = migrateLegacyDogAge(existingDog);
+      const migrated = migrateLegacyDogSkillAchievements(dogFields.profileTags, existingDog.achievementFocusIds);
+      const legacyProfile = migrateLegacyDogProfileFields(existingDog);
+      setForm({
+        ...dogFields,
+        ...legacyProfile,
+        age: ageMigrated.age,
+        ageYearsAtRecord: ageMigrated.ageYearsAtRecord,
+        ageMonthsAtRecord: ageMigrated.ageMonthsAtRecord,
+        ageRecordedAt: ageMigrated.ageRecordedAt,
+        trainingStage: resolveDogTrainingStage(existingDog, owner),
+        profileTags: applyLifeStageProfileTag(
+          migrated.profileTags,
+          inferLifeStageFromDog(ageMigrated)
+        ),
+      });
     }
-  }, [dogId, isNew, data.dogs, owner]);
+  }, [dogId, existingDog, isNew, location.state, navigate, owner, ownerId]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -94,26 +114,31 @@ export default function DogFormPage() {
     setSaving(true);
     setError('');
     const newId = isNew ? `dog_${Date.now()}` : String(dogId);
-    const existingDog = !isNew ? data.dogs.find((d) => String(d.id) === newId) : undefined;
     const migrated = migrateLegacyDogSkillAchievements(
       form.profileTags,
       existingDog?.achievementFocusIds
     );
     const savedAt = new Date().toISOString();
-    const ageTrimmed = form.age?.trim();
-    const ageRecordedAt = resolveAgeRecordedAtOnSave(existingDog, ageTrimmed, new Date(savedAt));
+    const agePayload = buildDogAgePayload(
+      {
+        ageYearsAtRecord: form.ageYearsAtRecord,
+        ageMonthsAtRecord: form.ageMonthsAtRecord,
+        ageRecordedAt: form.ageRecordedAt,
+      },
+      existingDog,
+      new Date(savedAt)
+    );
     const { ownerId: _formOwnerId, ...dogFormFields } = form as DogIntakeData & { ownerId?: string };
     const profileTags = applyLifeStageProfileTag(
       migrated.profileTags,
-      inferLifeStageFromDog({ age: ageTrimmed, ageRecordedAt, breed: form.breed })
+      inferLifeStageFromDog({ ...agePayload, breed: form.breed })
     );
     const dogData: Dog = {
       ...dogFormFields,
+      ...agePayload,
       id: newId,
-      ownerId,
+      ownerId: canonicalOwnerId,
       name: form.name!.trim(),
-      age: ageTrimmed || undefined,
-      ageRecordedAt,
       trainingStage: form.trainingStage || resolveDogTrainingStage(form as Dog, owner),
       profileTags,
       profileTagNotes: pruneProfileTagNotes(profileTags, form.profileTagNotes),
@@ -146,7 +171,7 @@ export default function DogFormPage() {
     });
 
     setSaving(false);
-    navigate(resolveHouseholdReturnTo(returnTo, String(dogData.ownerId)));
+    navigate(resolveHouseholdReturnTo(returnTo, canonicalOwnerId));
   };
 
   if (ownerId === 'new') {

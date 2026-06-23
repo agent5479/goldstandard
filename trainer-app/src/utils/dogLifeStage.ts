@@ -66,10 +66,131 @@ export function parseDogAgeMonths(ageText?: string): number | null {
   return null;
 }
 
+export const MAX_AGE_YEARS = 25;
+
 export interface DogAgeRecord {
   age?: string;
+  ageYearsAtRecord?: number;
+  ageMonthsAtRecord?: number;
   ageRecordedAt?: string;
   updatedAt?: string;
+}
+
+export interface StructuredAgeInput {
+  ageYearsAtRecord?: number;
+  ageMonthsAtRecord?: number;
+  ageRecordedAt?: string;
+}
+
+export function hasStructuredAge(dog: DogAgeRecord): boolean {
+  return dog.ageYearsAtRecord != null || dog.ageMonthsAtRecord != null;
+}
+
+export function ageAtRecordTotalMonths(years = 0, months = 0): number {
+  return Math.max(0, years) * 12 + Math.max(0, Math.min(11, months));
+}
+
+export function splitAgeMonths(totalMonths: number): { years: number; months: number } {
+  const rounded = Math.max(0, Math.round(totalMonths));
+  return { years: Math.floor(rounded / 12), months: rounded % 12 };
+}
+
+export function buildAgeLabel(years?: number, months?: number): string | undefined {
+  if (years == null && months == null) return undefined;
+  const y = years ?? 0;
+  const m = months ?? 0;
+  if (y === 0 && m === 0) return undefined;
+  return formatAgeFromMonths(ageAtRecordTotalMonths(y, m));
+}
+
+/** Base age in months at the anchor date — prefers structured fields, falls back to legacy text. */
+export function resolveBaseAgeMonths(dog: DogAgeRecord): number | null {
+  if (hasStructuredAge(dog)) {
+    return ageAtRecordTotalMonths(dog.ageYearsAtRecord ?? 0, dog.ageMonthsAtRecord ?? 0);
+  }
+  return parseDogAgeMonths(dog.age);
+}
+
+export function resolveRecordedAgeLabel(dog: DogAgeRecord): string | null {
+  if (hasStructuredAge(dog)) {
+    const label = buildAgeLabel(dog.ageYearsAtRecord, dog.ageMonthsAtRecord);
+    return label ?? null;
+  }
+  return dog.age?.trim() || null;
+}
+
+export function toDateInputValue(iso?: string): string {
+  if (!iso) return '';
+  const trimmed = iso.trim();
+  if (/^\d{4}-\d{2}-\d{2}$/.test(trimmed)) return trimmed;
+  const parsed = new Date(trimmed);
+  if (Number.isNaN(parsed.getTime())) return '';
+  return parsed.toISOString().slice(0, 10);
+}
+
+export function dateInputToIso(dateValue: string): string | undefined {
+  const trimmed = dateValue.trim();
+  if (!trimmed) return undefined;
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(trimmed)) return undefined;
+  return `${trimmed}T12:00:00.000Z`;
+}
+
+export function defaultAgeRecordedDateInput(savedAt = new Date()): string {
+  return savedAt.toISOString().slice(0, 10);
+}
+
+export function isAgeInputEmpty(input: StructuredAgeInput): boolean {
+  const years = input.ageYearsAtRecord ?? 0;
+  const months = input.ageMonthsAtRecord ?? 0;
+  return years === 0 && months === 0;
+}
+
+/** Populate numeric age fields from legacy free-text when missing. */
+export function migrateLegacyDogAge<T extends DogAgeRecord>(dog: T): T {
+  if (hasStructuredAge(dog)) return dog;
+
+  const parsed = parseDogAgeMonths(dog.age);
+  if (parsed == null) {
+    if (!dog.ageRecordedAt && dog.updatedAt) {
+      return { ...dog, ageRecordedAt: dog.updatedAt };
+    }
+    return dog;
+  }
+
+  const { years, months } = splitAgeMonths(parsed);
+  return {
+    ...dog,
+    ageYearsAtRecord: years,
+    ageMonthsAtRecord: months,
+    ageRecordedAt: dog.ageRecordedAt || dog.updatedAt,
+    age: dog.age?.trim() || buildAgeLabel(years, months),
+  };
+}
+
+export function buildDogAgePayload(
+  input: StructuredAgeInput,
+  existing?: DogAgeRecord,
+  savedAt = new Date()
+): Pick<DogAgeRecord, 'age' | 'ageYearsAtRecord' | 'ageMonthsAtRecord' | 'ageRecordedAt'> {
+  if (isAgeInputEmpty(input)) {
+    return {
+      age: undefined,
+      ageYearsAtRecord: undefined,
+      ageMonthsAtRecord: undefined,
+      ageRecordedAt: undefined,
+    };
+  }
+
+  const years = input.ageYearsAtRecord ?? 0;
+  const months = input.ageMonthsAtRecord ?? 0;
+  const ageRecordedAt = resolveStructuredAgeRecordedAtOnSave(existing, input, savedAt);
+
+  return {
+    ageYearsAtRecord: years,
+    ageMonthsAtRecord: months,
+    ageRecordedAt,
+    age: buildAgeLabel(years, months),
+  };
 }
 
 /** Whole calendar months elapsed from `from` to `to` (minimum 0). */
@@ -88,7 +209,7 @@ export function resolveAgeRecordedAt(dog: DogAgeRecord): Date | null {
 
 /** Age in months at the anchor date plus elapsed time to `asOf`. */
 export function resolveCurrentAgeMonths(dog: DogAgeRecord, asOf = new Date()): number | null {
-  const baseMonths = parseDogAgeMonths(dog.age);
+  const baseMonths = resolveBaseAgeMonths(dog);
   if (baseMonths == null) return null;
   const recordedAt = resolveAgeRecordedAt(dog);
   if (!recordedAt) return baseMonths;
@@ -114,33 +235,33 @@ function formatAgeRecordedDate(date: Date): string {
   return date.toLocaleDateString(undefined, { month: 'short', year: 'numeric' });
 }
 
-/** Human-readable age line — e.g. "Currently 2 years 4 months · met at 2 years (Jun 2024)". */
+/** Human-readable age line — e.g. "Currently 2 years 4 months · recorded as 2 years (Jun 2024)". */
 export function formatDogAgeDisplay(dog: DogAgeRecord, asOf = new Date()): string | null {
-  if (!dog.age?.trim()) return null;
+  const recordedLabel = resolveRecordedAgeLabel(dog);
+  if (!recordedLabel) return null;
 
-  const baseMonths = parseDogAgeMonths(dog.age);
   const currentMonths = resolveCurrentAgeMonths(dog, asOf);
-  if (currentMonths == null) return dog.age.trim();
+  if (currentMonths == null) return recordedLabel;
 
   const current = formatAgeFromMonths(currentMonths);
   const recordedAt = resolveAgeRecordedAt(dog);
-  const recordedLabel = dog.age.trim();
 
-  if (!recordedAt || baseMonths == null) return current;
+  if (!recordedAt) return current;
 
   const elapsed = elapsedWholeMonths(recordedAt, asOf);
   if (elapsed <= 0) return current;
 
   const dateLabel = formatAgeRecordedDate(recordedAt);
-  return `Currently ${current} · met at ${recordedLabel} (${dateLabel})`;
+  return `Currently ${current} · recorded as ${recordedLabel} (${dateLabel})`;
 }
 
 /** Compact age for cards — current age, with met-at suffix when anchored. */
 export function formatDogAgeCompact(dog: DogAgeRecord, asOf = new Date()): string | null {
-  if (!dog.age?.trim()) return null;
+  const recordedLabel = resolveRecordedAgeLabel(dog);
+  if (!recordedLabel) return null;
 
   const currentMonths = resolveCurrentAgeMonths(dog, asOf);
-  if (currentMonths == null) return dog.age.trim();
+  if (currentMonths == null) return recordedLabel;
 
   const current = formatAgeFromMonths(currentMonths);
   const recordedAt = resolveAgeRecordedAt(dog);
@@ -149,9 +270,46 @@ export function formatDogAgeCompact(dog: DogAgeRecord, asOf = new Date()): strin
   const elapsed = elapsedWholeMonths(recordedAt, asOf);
   if (elapsed <= 0) return current;
 
-  return `${current} · met at ${dog.age.trim()}`;
+  return `${current} · recorded as ${recordedLabel}`;
 }
 
+function structuredAgePartsEqual(
+  a: StructuredAgeInput | DogAgeRecord | undefined,
+  b: StructuredAgeInput | DogAgeRecord | undefined
+): boolean {
+  return (a?.ageYearsAtRecord ?? 0) === (b?.ageYearsAtRecord ?? 0)
+    && (a?.ageMonthsAtRecord ?? 0) === (b?.ageMonthsAtRecord ?? 0);
+}
+
+function ageRecordedAtEqual(a?: string, b?: string): boolean {
+  if (!a || !b) return false;
+  return toDateInputValue(a) === toDateInputValue(b);
+}
+
+export function resolveStructuredAgeRecordedAtOnSave(
+  existing: DogAgeRecord | undefined,
+  next: StructuredAgeInput,
+  savedAt = new Date()
+): string | undefined {
+  if (isAgeInputEmpty(next)) return undefined;
+
+  const explicit = next.ageRecordedAt?.trim();
+  if (explicit) {
+    const iso = dateInputToIso(explicit) ?? explicit;
+    if (structuredAgePartsEqual(existing, next) && ageRecordedAtEqual(existing?.ageRecordedAt, iso)) {
+      return existing?.ageRecordedAt ?? iso;
+    }
+    return iso;
+  }
+
+  if (structuredAgePartsEqual(existing, next) && existing?.ageRecordedAt) {
+    return existing.ageRecordedAt;
+  }
+
+  return savedAt.toISOString();
+}
+
+/** @deprecated Use resolveStructuredAgeRecordedAtOnSave / buildDogAgePayload */
 export function resolveAgeRecordedAtOnSave(
   existing: DogAgeRecord | undefined,
   nextAge: string | undefined,
@@ -159,6 +317,16 @@ export function resolveAgeRecordedAtOnSave(
 ): string | undefined {
   const trimmed = nextAge?.trim();
   if (!trimmed) return undefined;
+
+  const parsed = parseDogAgeMonths(trimmed);
+  if (parsed != null) {
+    const { years, months } = splitAgeMonths(parsed);
+    return resolveStructuredAgeRecordedAtOnSave(
+      existing,
+      { ageYearsAtRecord: years, ageMonthsAtRecord: months },
+      savedAt
+    );
+  }
 
   const prev = existing?.age?.trim();
   if (trimmed === prev && existing?.ageRecordedAt) return existing.ageRecordedAt;

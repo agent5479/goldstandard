@@ -3,7 +3,15 @@ import { getLocationByName, isHomeVisitLocation } from '@/data/bookingLocations'
 import { DEFAULT_TRAINING_STAGE } from '@/data/householdTypes';
 import { resolveDogTrainingStage } from '@/utils/householdHelpers';
 import { inferBreedCategory } from '@/utils/breedCategoryFromLabel';
-import { applyLifeStageProfileTag, inferLifeStageFromDog, resolveAgeRecordedAtOnSave } from '@/utils/dogLifeStage';
+import {
+  applyLifeStageProfileTag,
+  buildDogAgePayload,
+  defaultAgeRecordedDateInput,
+  inferLifeStageFromDog,
+  parseDogAgeMonths,
+  splitAgeMonths,
+  toDateInputValue,
+} from '@/utils/dogLifeStage';
 import { planDogAgeMilestoneFollowUps } from '@/utils/puppyCheckIn';
 import {
   mergeImportedDogExtendedDetails,
@@ -185,14 +193,48 @@ export function planBookingImport(booking: PendingBooking, data: TenantData): Bo
   );
 
   const importedAge = booking.dogAge?.trim();
-  const age = importedAge || existingDog?.age;
-  const ageRecordedAt = age
-    ? resolveAgeRecordedAtOnSave(existingDog, age, new Date(now))
-    : existingDog?.ageRecordedAt;
+  const appointmentAnchor = start ?? new Date(now);
+  const anchorDateInput =
+    toDateInputValue(appointmentAnchor.toISOString()) ||
+    defaultAgeRecordedDateInput(appointmentAnchor);
+
+  let agePayload: Pick<Dog, 'age' | 'ageYearsAtRecord' | 'ageMonthsAtRecord' | 'ageRecordedAt'>;
+  if (importedAge) {
+    const parsed = parseDogAgeMonths(importedAge);
+    if (parsed != null) {
+      const { years, months } = splitAgeMonths(parsed);
+      agePayload = buildDogAgePayload(
+        {
+          ageYearsAtRecord: years,
+          ageMonthsAtRecord: months,
+          ageRecordedAt: anchorDateInput,
+        },
+        existingDog,
+        appointmentAnchor
+      );
+    } else {
+      agePayload = {
+        age: importedAge,
+        ageYearsAtRecord: existingDog?.ageYearsAtRecord,
+        ageMonthsAtRecord: existingDog?.ageMonthsAtRecord,
+        ageRecordedAt: existingDog?.ageRecordedAt ?? appointmentAnchor.toISOString(),
+      };
+    }
+  } else if (existingDog) {
+    agePayload = {
+      age: existingDog.age,
+      ageYearsAtRecord: existingDog.ageYearsAtRecord,
+      ageMonthsAtRecord: existingDog.ageMonthsAtRecord,
+      ageRecordedAt: existingDog.ageRecordedAt,
+    };
+  } else {
+    agePayload = {};
+  }
+
   const breed = booking.dogBreed?.trim() || existingDog?.breed;
   const mergedProfileTags = applyLifeStageProfileTag(
     extendedMerge.profileTags ?? existingDog?.profileTags,
-    inferLifeStageFromDog({ age, ageRecordedAt, breed })
+    inferLifeStageFromDog({ ...agePayload, breed })
   );
 
   const dog: Dog = {
@@ -202,8 +244,7 @@ export function planBookingImport(booking: PendingBooking, data: TenantData): Bo
     name: booking.dogName?.trim() || existingDog?.name || 'Dog',
     breed,
     breedCategory: inferBreedCategory(booking.dogBreed || '') ?? existingDog?.breedCategory,
-    age,
-    ageRecordedAt,
+    ...agePayload,
     trainingStage: existingDog
       ? resolveDogTrainingStage(existingDog)
       : DEFAULT_TRAINING_STAGE,
@@ -241,7 +282,16 @@ export function planBookingImport(booking: PendingBooking, data: TenantData): Bo
     updatedAt: now,
   };
 
-  const ageMilestoneFollowUps = dogIsNew ? planDogAgeMilestoneFollowUps(data, dog) : [];
+  const ageChanged = Boolean(
+    importedAge &&
+      (!existingDog ||
+        existingDog.age !== dog.age ||
+        existingDog.ageYearsAtRecord !== dog.ageYearsAtRecord ||
+        existingDog.ageMonthsAtRecord !== dog.ageMonthsAtRecord ||
+        existingDog.ageRecordedAt !== dog.ageRecordedAt)
+  );
+  const ageMilestoneFollowUps =
+    dogIsNew || ageChanged ? planDogAgeMilestoneFollowUps(data, dog) : [];
 
   return {
     owner,

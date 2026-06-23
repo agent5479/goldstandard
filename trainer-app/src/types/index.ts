@@ -95,7 +95,11 @@ export interface Dog {
   breed?: string;
   breedCategory?: BreedCategory;
   age?: string;
-  /** ISO date when `age` was last set — current age is computed from this anchor. */
+  /** Years component of age at `ageRecordedAt` anchor date. */
+  ageYearsAtRecord?: number;
+  /** Months component (0–11) of age at `ageRecordedAt` anchor date. */
+  ageMonthsAtRecord?: number;
+  /** ISO date when age was last recorded — current age is computed from this anchor. */
   ageRecordedAt?: string;
   weight?: string;
   sex?: DogSex;

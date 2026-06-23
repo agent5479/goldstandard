@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import type { FormEvent } from 'react';
 import DogBreedSelector from '../components/DogBreedSelector';
+import { DogAgeFields, emptyDogAgeFields, type DogAgeFieldsValue } from '../components/DogAgeFields';
 import { STANDARD_SERVICE, STANDARD_SERVICE_SUMMARY } from '../data/bookingConfig';
 import { FORM_ENDPOINT } from '../data/formConfig';
+import { buildAgeLabel } from '../utils/dogLifeStage';
 
 type Status =
   | { kind: 'idle' }
@@ -16,6 +18,7 @@ const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 export default function ContactForm() {
   const [status, setStatus] = useState<Status>({ kind: 'idle' });
   const [dogBreed, setDogBreed] = useState('');
+  const [dogAgeFields, setDogAgeFields] = useState<DogAgeFieldsValue>(() => emptyDogAgeFields());
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -52,7 +55,7 @@ export default function ContactForm() {
       email,
       dog_name: String(data.get('dog_name') ?? '').trim(),
       dog_breed: dogBreed,
-      dog_age: String(data.get('dog_age') ?? '').trim(),
+      dog_age: buildAgeLabel(dogAgeFields.ageYearsAtRecord, dogAgeFields.ageMonthsAtRecord) ?? '',
       message,
       website: honeypot
     };
@@ -72,6 +75,7 @@ export default function ContactForm() {
 
       form.reset();
       setDogBreed('');
+      setDogAgeFields(emptyDogAgeFields());
       setStatus({ kind: 'success' });
     } catch {
       setStatus({
@@ -105,13 +109,11 @@ export default function ContactForm() {
           <input id="dogName" name="dog_name" type="text" autoComplete="off" disabled={submitting} />
         </div>
         <div className="form-field">
-          <label htmlFor="dogAge">Dog&apos;s age <span className="label-optional">(optional)</span></label>
-          <input
-            id="dogAge"
-            name="dog_age"
-            type="text"
-            placeholder="e.g. 2 years, puppy"
-            autoComplete="off"
+          <span className="form-label">Dog&apos;s age <span className="label-optional">(optional)</span></span>
+          <DogAgeFields
+            value={dogAgeFields}
+            onChange={(patch) => setDogAgeFields((prev) => ({ ...prev, ...patch }))}
+            breed={dogBreed}
             disabled={submitting}
           />
         </div>

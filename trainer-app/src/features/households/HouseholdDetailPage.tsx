@@ -5,7 +5,7 @@ import { useTenantData } from '@/contexts/TenantDataContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { usePermissions } from '@/hooks/usePermissions';
 import { mutate, tenantPath, activityActorFromUser } from '@/services/mutations';
-import { resolveAgeRecordedAtOnSave, inferLifeStageFromDog, applyLifeStageProfileTag } from '@/utils/dogLifeStage';
+import { buildDogAgePayload, inferLifeStageFromDog, applyLifeStageProfileTag } from '@/utils/dogLifeStage';
 import { pruneProfileTagNotes } from '@/utils/profileTagNotes';
 import { scheduleDogAgeMilestoneFollowUpsIfNeeded } from '@/services/puppyFollowUp';
 import { emptyDogIntake, type DogIntakeData } from '@/components/DogIntakeFields';
@@ -137,7 +137,13 @@ export default function HouseholdDetailPage() {
   );
   const locationHistory = useMemo(() => (ownerId ? getLocationHistory(data, ownerId) : []), [data, ownerId]);
   const dogAgeSyncKey = useMemo(
-    () => dogs.map((dog) => `${dog.id}:${dog.age ?? ''}:${dog.ageRecordedAt ?? ''}`).join('|'),
+    () =>
+      dogs
+        .map(
+          (dog) =>
+            `${dog.id}:${dog.ageYearsAtRecord ?? ''}:${dog.ageMonthsAtRecord ?? ''}:${dog.age ?? ''}:${dog.ageRecordedAt ?? ''}`
+        )
+        .join('|'),
     [dogs]
   );
   const focusItems = data.trainingFocus.length > 0 ? data.trainingFocus : DEFAULT_TRAINING_FOCUS;
@@ -365,19 +371,25 @@ export default function HouseholdDetailPage() {
     if (dogDraft.name?.trim() && canManageDogs) {
       const dogId = `dog_${Date.now()}`;
       const savedAt = new Date().toISOString();
-      const ageTrimmed = dogDraft.age?.trim();
-      const ageRecordedAt = resolveAgeRecordedAtOnSave(undefined, ageTrimmed, new Date(savedAt));
+      const agePayload = buildDogAgePayload(
+        {
+          ageYearsAtRecord: dogDraft.ageYearsAtRecord,
+          ageMonthsAtRecord: dogDraft.ageMonthsAtRecord,
+          ageRecordedAt: dogDraft.ageRecordedAt,
+        },
+        undefined,
+        new Date(savedAt)
+      );
       const profileTags = applyLifeStageProfileTag(
         dogDraft.profileTags,
-        inferLifeStageFromDog({ age: ageTrimmed, ageRecordedAt, breed: dogDraft.breed })
+        inferLifeStageFromDog({ ...agePayload, breed: dogDraft.breed })
       );
       const dogData: Dog = {
         ...dogDraft,
+        ...agePayload,
         id: dogId,
         ownerId: newId,
         name: dogDraft.name.trim(),
-        age: ageTrimmed || undefined,
-        ageRecordedAt,
         profileTags,
         profileTagNotes: pruneProfileTagNotes(profileTags, dogDraft.profileTagNotes),
         goals: undefined,

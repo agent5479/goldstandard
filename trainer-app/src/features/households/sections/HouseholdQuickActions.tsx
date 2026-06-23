@@ -1,6 +1,8 @@
 import { Button } from 'react-bootstrap';
+import { useLocation } from 'react-router-dom';
 import { NavButton } from '@/components/NavButton';
 import { labels } from '@/data/terminology';
+import { householdReturnPath, type HouseholdNavState } from '@/utils/householdNavigation';
 
 interface HouseholdQuickActionsProps {
   ownerId: string;
@@ -19,6 +21,11 @@ export function HouseholdQuickActions({
   onScheduleFollowUp,
   onAddDog,
 }: HouseholdQuickActionsProps) {
+  const location = useLocation();
+  const dogFormNavState: HouseholdNavState = {
+    returnTo: householdReturnPath(ownerId, location.hash),
+  };
+
   return (
     <div className="household-quick-actions mb-3">
       {canLog && (
@@ -40,7 +47,12 @@ export function HouseholdQuickActions({
         </Button>
       )}
       {canManageDogs && !onAddDog && (
-        <NavButton to={`/households/${ownerId}/dogs/new`} variant="outline-secondary" size="sm">
+        <NavButton
+          to={`/households/${ownerId}/dogs/new`}
+          state={dogFormNavState}
+          variant="outline-secondary"
+          size="sm"
+        >
           <i className="bi bi-plus me-1" />
           {labels.addDog}
         </NavButton>
