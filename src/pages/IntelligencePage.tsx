@@ -35,6 +35,8 @@ export default function IntelligencePage() {
             Overall IQ draws on Stanley Coren&apos;s obedience/working intelligence rankings for the top tier.
             Cognitive sub-scores are expert-informed estimates; dominance, protectiveness, and neuroticism are
             breed-type estimates from temperament data — useful for comparison, not fixed labels for any dog.
+            Breeds outside Coren&apos;s obedience evaluation are placed using known tendencies and relationships
+            to ranked breeds in the same category.
           </p>
           <BreedIntelligenceTable />
         </div>

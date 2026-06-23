@@ -184,9 +184,6 @@ export default function BreedIntelligenceTable() {
       <td className="intelligence-breed intelligence-breed--tip">
         {isPinned && <span className="intelligence-pin-dot" aria-hidden="true" />}
         <span className="intelligence-breed-label">{profile.breed}</span>
-        {profile.source === 'estimated' && (
-          <span className="intelligence-est-badge">est.</span>
-        )}
         <BreedDetailTooltip breedName={profile.breed} breedKeys={profile.breedKeys} />
       </td>
       {INTELLIGENCE_DIMENSIONS.map((dim) => (
@@ -260,9 +257,8 @@ export default function BreedIntelligenceTable() {
         Hover a breed name for temperament details. Click a row to pin it for comparison.
       </p>
       <p className="intelligence-tip">
-        All scores are on a 1–10 scale. Overall IQ based on Coren&apos;s obedience/working rankings for the
-        top tier; sub-scores are expert-informed estimates. Breeds marked &ldquo;est.&rdquo; use category-based
-        estimation.
+        All scores are on a 1–10 scale. Coren&apos;s top-tier breeds use his obedience/working rankings; others
+        are estimated from category tendencies and kinship to ranked breeds.
       </p>
     </div>
     </IntelligenceColumnTipProvider>

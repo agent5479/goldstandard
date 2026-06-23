@@ -3777,16 +3777,6 @@ body.page-intelligence {
   vertical-align: middle;
 }
 
-.intelligence-est-badge {
-  display: inline-block;
-  margin-left: 4px;
-  font-size: 0.65rem;
-  font-weight: 400;
-  color: var(--light-text);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
 .intelligence-bar-wrap {
   display: flex;
   align-items: center;
