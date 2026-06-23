@@ -5,10 +5,12 @@ import {
   type DogIntelligenceProfile,
   type IntelligenceDimension,
 } from '../../data/dogIntelligence';
+import { INTELLIGENCE_NARROW_QUERY, useMediaQuery } from '../../hooks/useMediaQuery';
 import IntelligenceBar, { getScoreCellStyle } from './IntelligenceBar';
 import IntelligenceColumnHeader from './IntelligenceColumnHeader';
 import IntelligenceLegendItem from './IntelligenceLegendItem';
 import BreedDetailTooltip from './BreedDetailTooltip';
+import BreedIntelligenceTableNarrow from './BreedIntelligenceTableNarrow';
 import {
   IntelligenceColumnTipProvider,
   IntelligenceColumnTipOverlay,
@@ -115,10 +117,13 @@ function matchesSearch(profile: DogIntelligenceProfile, query: string): boolean 
 }
 
 export default function BreedIntelligenceTable() {
+  const isNarrow = useMediaQuery(INTELLIGENCE_NARROW_QUERY);
   const [search, setSearch] = useState('');
   const [sortKey, setSortKey] = useState<SortKey>(null);
   const [sortDir, setSortDir] = useState<1 | -1>(1);
   const [pinned, setPinned] = useState<Set<string>>(() => new Set());
+  const [activeDimension, setActiveDimension] = useState<IntelligenceDimension>('iq');
+  const [detailBreed, setDetailBreed] = useState<{ name: string; breedKeys: string[] } | null>(null);
 
   const toggleSort = (key: IntelligenceDimension) => {
     if (sortKey === key && sortDir === -1) {
@@ -165,7 +170,11 @@ export default function BreedIntelligenceTable() {
     };
   }, [search, pinned, sortKey, sortDir]);
 
-  const renderRow = (profile: DogIntelligenceProfile, isPinned: boolean, showDivider: boolean) => (
+  const renderDesktopRow = (
+    profile: DogIntelligenceProfile,
+    isPinned: boolean,
+    showDivider: boolean
+  ) => (
     <tr
       key={profile.breed}
       className={`${isPinned ? 'is-pinned' : ''}${showDivider ? ' pin-divider' : ''}`}
@@ -198,69 +207,106 @@ export default function BreedIntelligenceTable() {
     </tr>
   );
 
+  const tableContent = isNarrow ? (
+    <BreedIntelligenceTableNarrow
+      sortKey={sortKey}
+      sortDir={sortDir}
+      activeDimension={activeDimension}
+      onActiveDimensionChange={setActiveDimension}
+      toggleRankSort={toggleRankSort}
+      toggleSort={toggleSort}
+      togglePin={togglePin}
+      pinnedList={pinnedList}
+      unpinnedList={unpinnedList}
+      detailBreed={detailBreed}
+      onOpenDetail={(name, breedKeys) => setDetailBreed({ name, breedKeys })}
+      onCloseDetail={() => setDetailBreed(null)}
+    />
+  ) : (
+    <IntelligenceTableWithTips
+      sortKey={sortKey}
+      sortDir={sortDir}
+      toggleRankSort={toggleRankSort}
+      toggleSort={toggleSort}
+      pinnedList={pinnedList}
+      unpinnedList={unpinnedList}
+      renderRow={renderDesktopRow}
+    />
+  );
+
   return (
     <IntelligenceColumnTipProvider>
-    <div className="intelligence-table-wrap">
-      <h2 className="visually-hidden">
-        Dog breeds ranked across nine dimensions. Hover a breed name for temperament details; click a row to pin it for comparison.
-      </h2>
+      <div className="intelligence-table-wrap">
+        <h2 className="visually-hidden">
+          {isNarrow
+            ? 'Dog breeds ranked by dimension. Select a dimension, tap a breed for details, and use the pin button to compare breeds.'
+            : 'Dog breeds ranked across nine dimensions. Hover a breed name for temperament details; click a row to pin it for comparison.'}
+        </h2>
 
-      <div className="intelligence-legend">
-        {INTELLIGENCE_DIMENSIONS.map((dim) => (
-          <IntelligenceLegendItem
-            key={dim.key}
-            label={dim.label}
-            color={dim.color}
-            description={dim.description}
+        {!isNarrow && (
+          <div className="intelligence-legend">
+            {INTELLIGENCE_DIMENSIONS.map((dim) => (
+              <IntelligenceLegendItem
+                key={dim.key}
+                label={dim.label}
+                color={dim.color}
+                description={dim.description}
+              />
+            ))}
+          </div>
+        )}
+
+        <div className="intelligence-controls">
+          <input
+            type="text"
+            className="intelligence-search"
+            placeholder="Search breed…"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            aria-label="Search breeds"
           />
-        ))}
-      </div>
+          {pinned.size > 0 && (
+            <span className="intelligence-pin-count">{pinned.size} pinned</span>
+          )}
+          {pinned.size > 0 && (
+            <button type="button" className="intelligence-clear-btn" onClick={clearPins}>
+              Clear pins
+            </button>
+          )}
+        </div>
 
-      <div className="intelligence-controls">
-        <input
-          type="text"
-          className="intelligence-search"
-          placeholder="Search breed…"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          aria-label="Search breeds"
-        />
-        {pinned.size > 0 && (
-          <span className="intelligence-pin-count">{pinned.size} pinned</span>
+        {tableContent}
+
+        <p className="intelligence-tip">
+          Scroll the table to browse all {pinnedList.length + unpinnedList.length} breeds
+          {search ? ' matching your search' : ''}.
+        </p>
+        {isNarrow ? (
+          <>
+            <p className="intelligence-tip">
+              Select a dimension chip to choose which score column is shown. Tap a breed name for
+              temperament details; use the pin button to compare breeds.
+            </p>
+            <p className="intelligence-tip">
+              Cell shading runs green (high) through gold and orange to gray (low).
+            </p>
+          </>
+        ) : (
+          <>
+            <p className="intelligence-tip">
+              The <strong>IQ #</strong> column is overall IQ rank only. Other columns are independent — sort by any
+              heading to reorder. Cell shading runs green (high) through gold and orange to gray (low).
+            </p>
+            <p className="intelligence-tip">
+              Hover a breed name for temperament details. Click a row to pin it for comparison.
+            </p>
+          </>
         )}
-        {pinned.size > 0 && (
-          <button type="button" className="intelligence-clear-btn" onClick={clearPins}>
-            Clear pins
-          </button>
-        )}
+        <p className="intelligence-tip">
+          All scores are on a 1–10 scale. Coren&apos;s top-tier breeds use his obedience/working rankings; others
+          are estimated from category tendencies and kinship to ranked breeds.
+        </p>
       </div>
-
-      <IntelligenceTableWithTips
-        sortKey={sortKey}
-        sortDir={sortDir}
-        toggleRankSort={toggleRankSort}
-        toggleSort={toggleSort}
-        pinnedList={pinnedList}
-        unpinnedList={unpinnedList}
-        renderRow={renderRow}
-      />
-
-      <p className="intelligence-tip">
-        Scroll the table to browse all {pinnedList.length + unpinnedList.length} breeds
-        {search ? ' matching your search' : ''}.
-      </p>
-      <p className="intelligence-tip">
-        The <strong>IQ #</strong> column is overall IQ rank only. Other columns are independent — sort by any
-        heading to reorder. Cell shading runs green (high) through gold and orange to gray (low).
-      </p>
-      <p className="intelligence-tip">
-        Hover a breed name for temperament details. Click a row to pin it for comparison.
-      </p>
-      <p className="intelligence-tip">
-        All scores are on a 1–10 scale. Coren&apos;s top-tier breeds use his obedience/working rankings; others
-        are estimated from category tendencies and kinship to ranked breeds.
-      </p>
-    </div>
     </IntelligenceColumnTipProvider>
   );
 }

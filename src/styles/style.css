@@ -3990,6 +3990,218 @@ body.page-intelligence {
   margin-top: 1.5rem;
 }
 
+/* Narrow / touch: dimension-focus table */
+.intelligence-dimension-chips {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 0.35rem;
+  margin-bottom: 0.65rem;
+  scrollbar-width: thin;
+}
+
+.intelligence-dimension-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  min-height: 44px;
+  padding: 0.45rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.78rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color 0.12s ease, background-color 0.12s ease;
+}
+
+.intelligence-dimension-chip.is-active {
+  border-color: var(--forest);
+  background: var(--surface-soft);
+  box-shadow: inset 0 0 0 1px rgba(45, 74, 45, 0.12);
+}
+
+.intelligence-dimension-chip-dot {
+  width: 10px;
+  height: 5px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.intelligence-dimension-explainer {
+  margin-bottom: 0.65rem;
+  padding: 0.65rem 0.85rem;
+  border: 1px solid rgba(45, 74, 45, 0.2);
+  border-radius: 8px;
+  background: var(--surface-soft);
+}
+
+.intelligence-dimension-explainer-label {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--forest);
+}
+
+.intelligence-dimension-explainer-text {
+  margin: 0;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--text);
+}
+
+.intelligence-table-scroll--narrow {
+  overflow-x: hidden;
+}
+
+.intelligence-table--narrow {
+  table-layout: fixed;
+  width: 100%;
+}
+
+.intelligence-table--narrow .intelligence-breed-col {
+  width: auto;
+}
+
+.intelligence-narrow-actions-col,
+.intelligence-narrow-actions {
+  width: 36px;
+  text-align: center;
+  vertical-align: middle;
+  padding: 4px 2px;
+}
+
+.intelligence-breed--narrow {
+  min-width: 0;
+}
+
+.intelligence-breed-open-btn {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--forest);
+  font: inherit;
+  font-weight: 500;
+  text-align: left;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
+.intelligence-pin-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--light-text);
+  font-size: 0.85rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.intelligence-pin-btn.is-pinned {
+  border-color: #7a72c8;
+  background: #f0eef8;
+  color: #7a72c8;
+}
+
+.intelligence-table-row--narrow.is-pinned td.intelligence-rank,
+.intelligence-table-row--narrow.is-pinned td.intelligence-breed,
+.intelligence-table-row--narrow.is-pinned td.intelligence-narrow-actions {
+  background: #f0eef8;
+}
+
+.intelligence-breed-sheet-root {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.intelligence-breed-sheet-backdrop {
+  position: absolute;
+  inset: 0;
+  border: none;
+  background: rgba(24, 38, 24, 0.45);
+  cursor: pointer;
+}
+
+.intelligence-breed-detail-sheet {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 520px;
+  max-height: 85vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border-radius: 12px 12px 0 0;
+  background: var(--surface);
+  box-shadow: 0 -8px 32px rgba(24, 38, 24, 0.18);
+}
+
+.intelligence-breed-sheet-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 1rem 1rem 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.intelligence-breed-sheet-header .intelligence-breed-detail-title {
+  margin: 0;
+}
+
+.intelligence-breed-sheet-close {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--surface-soft);
+  color: var(--text);
+  font-size: 1.35rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.intelligence-breed-sheet-body {
+  overflow-y: auto;
+  padding: 0.75rem 1rem 1.25rem;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (hover: none) {
+  .intelligence-breed--tip:hover .intelligence-breed-detail,
+  .intelligence-legend-item--tip:hover .intelligence-col-tooltip {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@media (max-width: 900px) {
+  .intelligence-legend {
+    display: none;
+  }
+}
+
 @media (max-width: 700px) {
   .intelligence-controls {
     flex-direction: column;
