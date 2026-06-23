@@ -65,6 +65,7 @@ const REGIONS = {
 };
 const BUFFER_MINUTES = TRANSITION_MINUTES;
 const MIN_NOTICE_HOURS = 16;
+const GOLDEN_BAY_MIN_NOTICE_HOURS = 12;
 const MAX_DAYS_AHEAD = 60;
 
 /** Days that accept online bookings (0 = Sunday). */
@@ -721,7 +722,7 @@ function getAvailableSlots(date, regionId, locationName, bookingType) {
   const bufferMs = BUFFER_MINUTES * 60 * 1000;
   const calendarMs = durations.calendarBlockMinutes * 60 * 1000;
   const intervalMs = SLOT_INTERVAL_MINUTES * 60 * 1000;
-  const earliest = getEarliestBookableTime();
+  const earliest = getEarliestBookableTime(regionId);
   const slots = [];
 
   windows.forEach(function (window) {
@@ -757,7 +758,7 @@ function isSlotBookable(slotStart, calendarEnd, regionId, locationName, bookingT
     return false;
   }
 
-  const earliest = getEarliestBookableTime();
+  const earliest = getEarliestBookableTime(regionId);
   if (slotStart.getTime() < earliest.getTime()) {
     return false;
   }
@@ -1133,8 +1134,13 @@ function isDateBookable(date) {
   return target.getTime() >= today.getTime() && target.getTime() <= maxDate.getTime();
 }
 
-function getEarliestBookableTime() {
-  return new Date(Date.now() + MIN_NOTICE_HOURS * 60 * 60 * 1000);
+function getNoticeHoursForRegion(regionId) {
+  return regionId === "golden-bay" ? GOLDEN_BAY_MIN_NOTICE_HOURS : MIN_NOTICE_HOURS;
+}
+
+function getEarliestBookableTime(regionId) {
+  const noticeHours = getNoticeHoursForRegion(regionId);
+  return new Date(Date.now() + noticeHours * 60 * 60 * 1000);
 }
 
 function stripToDate(date) {
