@@ -44,6 +44,9 @@ export function BookingBriefPanel({ input, compact, className }: BookingBriefPan
             {desexedLabel}
           </Badge>
         )}
+        {parsed.returningClient && (
+          <Badge bg="info">Returning client</Badge>
+        )}
       </div>
 
       {brief.flags.length > 0 && (

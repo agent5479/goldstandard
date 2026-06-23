@@ -1,29 +1,22 @@
-import { Badge, Form } from 'react-bootstrap';
+import { Badge } from 'react-bootstrap';
 import {
   EXAM_TOPICS,
   GUIDE_ANCHORS,
   GUIDE_GROUPS,
   ALL_FOCUS_ITEMS,
-  OWNER_CAPACITY_DOMAINS,
   guideAnchorUrl,
   getGuideGroup,
   getFocusById,
   PUBLIC_GUIDE_URL,
 } from '@/data/assessmentTaxonomy';
-import {
-  getHouseholdAchievementsForDomain,
-  householdAchievementLabel,
-} from '@/data/trainingFocusAllocation';
 
 interface GuideBadgePickerProps {
   guideTags: string[];
   examTopicGaps: string[];
   pinnedFocusIds: string[];
-  competencyAchievementIds: string[];
   onGuideTagsChange: (tags: string[]) => void;
   onExamTopicGapsChange: (topics: string[]) => void;
   onPinnedFocusChange: (ids: string[]) => void;
-  onCompetencyAchievementsChange: (ids: string[]) => void;
   readOnly?: boolean;
 }
 
@@ -35,11 +28,9 @@ export function GuideBadgePicker({
   guideTags,
   examTopicGaps,
   pinnedFocusIds,
-  competencyAchievementIds,
   onGuideTagsChange,
   onExamTopicGapsChange,
   onPinnedFocusChange,
-  onCompetencyAchievementsChange,
   readOnly = false,
 }: GuideBadgePickerProps) {
   return (
@@ -57,7 +48,8 @@ export function GuideBadgePicker({
           Guide principles in practice
         </h6>
         <p className="small text-muted mb-2">
-          Tick guide topics you&apos;ve seen land with this handler — cue-once, ready stance, access training, etc.
+          Tick guide topics you&apos;ve seen land with this handler — cue-once, ready stance, access training,
+          leash jerk, timing, and the rest.
         </p>
         {GUIDE_GROUPS.map((group) => {
           const anchors = GUIDE_ANCHORS.filter((a) => a.groupId === group.id);
@@ -96,50 +88,6 @@ export function GuideBadgePicker({
                         </a>
                       )}
                     </Badge>
-                  );
-                })}
-              </div>
-            </div>
-          );
-        })}
-      </div>
-
-      <div className="mb-4">
-        <h6 className="text-muted mb-1">
-          <i className="bi bi-person-check me-1" />
-          Handler skills demonstrated
-        </h6>
-        <p className="small text-muted mb-3">
-          Specific competencies you&apos;ve seen or they&apos;ve clearly affirmed — independent of the capacity
-          grades on the owner profile.
-        </p>
-        {OWNER_CAPACITY_DOMAINS.map((domain) => {
-          const focusIds = getHouseholdAchievementsForDomain(domain.id);
-          if (focusIds.length === 0) return null;
-
-          return (
-            <div key={domain.id} className="mb-3">
-              <div className="small fw-semibold text-muted mb-1">{domain.label}</div>
-              <div className="achievement-tick-grid">
-                {focusIds.map((focusId) => {
-                  const checked = competencyAchievementIds.includes(focusId);
-                  return (
-                    <div
-                      key={focusId}
-                      className={`achievement-tick-chip${checked ? ' is-selected' : ''}`}
-                    >
-                      <Form.Check
-                        type="checkbox"
-                        id={`household-competency-${focusId}`}
-                        disabled={readOnly}
-                        label={householdAchievementLabel(focusId)}
-                        checked={checked}
-                        onChange={() =>
-                          onCompetencyAchievementsChange(toggleItem(competencyAchievementIds, focusId))
-                        }
-                        className="achievement-tick-check mb-0"
-                      />
-                    </div>
                   );
                 })}
               </div>
@@ -203,10 +151,7 @@ export function GuideBadgePicker({
         </div>
       </div>
 
-      {(guideTags.length > 0 ||
-        competencyAchievementIds.length > 0 ||
-        examTopicGaps.length > 0 ||
-        pinnedFocusIds.length > 0) && (
+      {(guideTags.length > 0 || examTopicGaps.length > 0 || pinnedFocusIds.length > 0) && (
         <div className="mt-3 pt-2 border-top">
           <small className="text-muted d-block mb-1">Selected summary</small>
           <div className="d-flex flex-wrap gap-1">
@@ -219,11 +164,6 @@ export function GuideBadgePicker({
                 </Badge>
               );
             })}
-            {competencyAchievementIds.map((id) => (
-              <Badge key={`c-${id}`} bg="info" className="small">
-                Skill: {householdAchievementLabel(id)}
-              </Badge>
-            ))}
             {pinnedFocusIds.map((id) => (
               <Badge key={`f-${id}`} bg="success" className="small">
                 Pin: {getFocusById(id)?.name || id}

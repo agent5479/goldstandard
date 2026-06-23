@@ -26,9 +26,14 @@ import {
   markBookingDismissed,
   markBookingImported,
   planBookingImport,
-  type BookingImportPlan,
+  type BookingLinkMode,
   type PendingBooking,
 } from '@/services/bookingImport';
+import {
+  BookingImportMatchPanel,
+  pendingBookingSuggestionBadge,
+  planPreviewBadges,
+} from '@/features/imports/bookingImportUi';
 import { activityActorFromUser, mutate, tenantPath } from '@/services/mutations';
 import { buildOwnerDenormalizedUpdates } from '@/utils/householdHelpers';
 import type { ActivityEvent } from '@/types';
@@ -55,28 +60,6 @@ function formatTimestamp(value: string): string {
     hour: 'numeric',
     minute: '2-digit',
   });
-}
-
-function planPreviewBadges(plan: BookingImportPlan | null) {
-  if (!plan) {
-    return <Badge bg="secondary">Session already imported or missing required fields</Badge>;
-  }
-  return (
-    <>
-      <Badge bg={plan.ownerIsNew ? 'success' : 'info'} className="me-1">
-        {plan.ownerIsNew ? 'New household' : 'Match household by email'}
-      </Badge>
-      <Badge bg={plan.dogIsNew ? 'success' : 'info'} className="me-1">
-        {plan.dogIsNew ? 'New dog' : 'Existing dog'}
-      </Badge>
-      <Badge bg="light" text="dark" className="me-1">+ scheduled session</Badge>
-      {plan.ageMilestoneFollowUps.map((followUp) => (
-        <Badge key={followUp.id} bg="warning" text="dark" className="me-1">
-          + {followUp.taskName || 'check-in'} {followUp.scheduledDate}
-        </Badge>
-      ))}
-    </>
-  );
 }
 
 function extendedAssessmentBadges(booking: PendingBooking) {
@@ -106,14 +89,33 @@ export default function BookingImportPage() {
   const [dismissBooking, setDismissBooking] = useState<PendingBooking | null>(null);
   const [dismissReason, setDismissReason] = useState('');
   const [importedOwnerId, setImportedOwnerId] = useState('');
+  const [linkMode, setLinkMode] = useState<BookingLinkMode>('auto');
+  const [overrideOwnerId, setOverrideOwnerId] = useState('');
+
+  const importOptions = useMemo(
+    () => ({ linkMode, overrideOwnerId: overrideOwnerId || undefined }),
+    [linkMode, overrideOwnerId]
+  );
+
+  const reviewPlan = useMemo(
+    () =>
+      reviewBooking
+        ? planBookingImport(reviewBooking, data, importOptions)
+        : null,
+    [reviewBooking, data, importOptions]
+  );
+
+  const importBlocked =
+    linkMode === 'existing' && !overrideOwnerId;
 
   const configured = isBookingImportConfigured();
   const actor = user?.tenantId ? activityActorFromUser(user) : undefined;
 
-  const reviewPlan = useMemo(
-    () => (reviewBooking ? planBookingImport(reviewBooking, data) : null),
-    [reviewBooking, data]
-  );
+  const resetReviewState = () => {
+    setReviewBooking(null);
+    setLinkMode('auto');
+    setOverrideOwnerId('');
+  };
 
   const handledBookings = useMemo(
     () => data.activityLog
@@ -155,7 +157,12 @@ export default function BookingImportPage() {
   const handleImport = async (booking: PendingBooking) => {
     if (!user?.tenantId || !actor) return;
 
-    const plan = planBookingImport(booking, data);
+    if (linkMode === 'existing' && !overrideOwnerId) {
+      setError('Select a household before importing with “Link to existing household”.');
+      return;
+    }
+
+    const plan = planBookingImport(booking, data, importOptions);
     if (!plan) {
       setError('This booking is already imported or missing required fields.');
       return;
@@ -222,6 +229,8 @@ export default function BookingImportPage() {
           email: booking.email,
           ownerIsNew: plan.ownerIsNew,
           dogIsNew: plan.dogIsNew,
+          ownerMatchReason: plan.ownerMatchReason,
+          priorSessionCount: plan.priorSessionCount,
           ownerId: plan.owner.id,
           dogId: plan.dog.id,
         },
@@ -229,7 +238,7 @@ export default function BookingImportPage() {
       appendActivity(activityEvent);
 
       setBookings((prev) => prev.filter((row) => row.rowIndex !== booking.rowIndex));
-      setReviewBooking(null);
+      resetReviewState();
       setImportedOwnerId(String(plan.owner.id));
       setMessage(`Imported ${booking.name}${booking.dogName ? ` (${booking.dogName})` : ''}.`);
     } catch (err) {
@@ -371,6 +380,7 @@ export default function BookingImportPage() {
                 <tbody>
                   {bookings.map((booking) => {
                     const plan = planBookingImport(booking, data);
+                    const topSuggestion = pendingBookingSuggestionBadge(booking, data);
                     return (
                       <tr key={booking.rowIndex}>
                         <td>{formatWhen(booking)}</td>
@@ -390,14 +400,22 @@ export default function BookingImportPage() {
                             <Badge bg="secondary" className="mt-1">{booking.region.replace('-', ' ')}</Badge>
                           )}
                         </td>
-                        <td><div className="d-flex flex-wrap gap-1">{planPreviewBadges(plan)}{extendedAssessmentBadges(booking)}</div></td>
+                        <td><div className="d-flex flex-wrap gap-1">{planPreviewBadges(plan)}{extendedAssessmentBadges(booking)}{topSuggestion && plan?.ownerIsNew && (
+                          <Badge bg="light" text="dark" className="me-1" title={topSuggestion.reasons.join(', ')}>
+                            Possible: {topSuggestion.owner.name || topSuggestion.owner.id}
+                          </Badge>
+                        )}</div></td>
                         <td className="text-end text-nowrap">
                           <Button
                             size="sm"
                             variant="outline-primary"
                             className="me-1"
                             disabled={!canImport || busyRow === booking.rowIndex}
-                            onClick={() => setReviewBooking(booking)}
+                            onClick={() => {
+                              setLinkMode('auto');
+                              setOverrideOwnerId('');
+                              setReviewBooking(booking);
+                            }}
                           >
                             {labels.bookingReview}
                           </Button>
@@ -477,7 +495,11 @@ export default function BookingImportPage() {
         </Card.Body>
       </Card>
 
-      <Modal show={Boolean(reviewBooking)} onHide={() => setReviewBooking(null)} size="lg">
+      <Modal
+        show={Boolean(reviewBooking)}
+        onHide={resetReviewState}
+        size="lg"
+      >
         <Modal.Header closeButton>
           <Modal.Title>{labels.bookingImportConfirm}</Modal.Title>
         </Modal.Header>
@@ -485,6 +507,15 @@ export default function BookingImportPage() {
           {reviewBooking && (
             <>
               <div className="mb-3">{planPreviewBadges(reviewPlan)}</div>
+              <BookingImportMatchPanel
+                booking={reviewBooking}
+                plan={reviewPlan}
+                data={data}
+                linkMode={linkMode}
+                onLinkModeChange={setLinkMode}
+                overrideOwnerId={overrideOwnerId}
+                onOverrideOwnerIdChange={setOverrideOwnerId}
+              />
               <dl className="row mb-0 small">
                 <dt className="col-sm-3">Submitted</dt>
                 <dd className="col-sm-9">{formatTimestamp(reviewBooking.timestamp)}</dd>
@@ -531,10 +562,18 @@ export default function BookingImportPage() {
           )}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setReviewBooking(null)}>Cancel</Button>
+          <Button variant="secondary" onClick={resetReviewState}>
+            Cancel
+          </Button>
           <Button
             variant="primary"
-            disabled={!reviewBooking || !reviewPlan || !canImport || busyRow === reviewBooking?.rowIndex}
+            disabled={
+              !reviewBooking ||
+              !reviewPlan ||
+              importBlocked ||
+              !canImport ||
+              busyRow === reviewBooking?.rowIndex
+            }
             onClick={() => reviewBooking && void handleImport(reviewBooking)}
           >
             {busyRow === reviewBooking?.rowIndex ? 'Importing…' : labels.bookingImportConfirm}
@@ -577,8 +616,7 @@ export default function BookingImportPage() {
       </Modal>
 
       <p className="small text-muted mt-3">
-        Review each confirmed booking — import creates or updates a household by email, adds the dog, and links the scheduled session.
-        Dismiss clears the row from the queue without importing. Open households from <Link to="/households">Households</Link>.
+        Review each confirmed booking — auto-match by email or phone, search suggested households when contact details differ, or create a new record. Each import adds a scheduled session. Dismiss clears the row without importing. Open households from <Link to="/households">Households</Link>.
       </p>
     </div>
   );

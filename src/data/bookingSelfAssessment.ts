@@ -81,6 +81,8 @@ export interface ExtendedDetailsPayload {
   clientAddress?: string;
   isHomeAddress?: boolean;
   locationKind?: 'standard' | 'home_visit' | 'elite_coaching';
+  /** Client indicated they have booked before — helps trainer link sessions on import. */
+  returningClient?: boolean;
 }
 
 export type AddressBookingDetails = {
@@ -98,7 +100,8 @@ export function buildExtendedDetailsPayload(
   desexed?: ClientDesexedStatus,
   profileTagNotes?: ClientProfileTagNotes,
   sex?: ClientDogSex,
-  addressBooking?: AddressBookingDetails
+  addressBooking?: AddressBookingDetails,
+  returningClient?: boolean
 ): string | undefined {
   const grades = Object.fromEntries(
     Object.entries(skillGrades).filter(([, grade]) => grade >= 1 && grade <= 5)
@@ -115,7 +118,8 @@ export function buildExtendedDetailsPayload(
     Object.keys(notes).length === 0 &&
     !desexed &&
     !sex &&
-    !addressBooking
+    !addressBooking &&
+    !returningClient
   ) {
     return undefined;
   }
@@ -123,6 +127,7 @@ export function buildExtendedDetailsPayload(
   const payload: ExtendedDetailsPayload = {
     v: EXTENDED_DETAILS_SCHEMA_VERSION,
   };
+  if (returningClient) payload.returningClient = true;
   if (sex) payload.sex = sex;
   if (desexed) payload.desexed = desexed;
   if (Object.keys(grades).length > 0) payload.skillGrades = grades;

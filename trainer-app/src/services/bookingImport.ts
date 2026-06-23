@@ -45,6 +45,17 @@ export interface BookingImportPlan {
   ageMilestoneFollowUps: ScheduledSession[];
   ownerIsNew: boolean;
   dogIsNew: boolean;
+  ownerMatchReason: 'email' | 'phone' | 'override' | 'new';
+  priorSessionCount: number;
+  possibleDuplicateOwners: Owner[];
+}
+
+export type BookingLinkMode = 'auto' | 'existing' | 'force_new';
+
+export interface BookingImportOptions {
+  linkMode?: BookingLinkMode;
+  /** Required when linkMode === 'existing'. */
+  overrideOwnerId?: string;
 }
 
 export function isBookingImportConfigured(): boolean {
@@ -93,6 +104,8 @@ function normalizePhone(phone: string): string {
   return phone.replace(/\D/g, '');
 }
 
+export { normalizeEmail as normalizeBookingEmail, normalizePhone as normalizeBookingPhone };
+
 function ownerIdFromPhone(phone: string): string {
   const digits = normalizePhone(phone);
   return `owner_phone_${digits || Date.now()}`;
@@ -101,6 +114,18 @@ function ownerIdFromPhone(phone: string): string {
 function ownerIdFromEmail(email: string): string {
   const slug = normalizeEmail(email).replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '');
   return `owner_${slug || Date.now()}`;
+}
+
+function allocateNewOwnerId(
+  booking: Pick<PendingBooking, 'email' | 'phone'>,
+  data: TenantData
+): string {
+  const emailRaw = booking.email?.trim();
+  const phone = booking.phone?.trim();
+  const base = emailRaw ? ownerIdFromEmail(emailRaw) : ownerIdFromPhone(phone || '');
+  if (!data.owners.some((owner) => String(owner.id) === base)) return base;
+  const suffix = normalizePhone(phone || '') || String(Date.now());
+  return `${base}_${suffix}`;
 }
 
 /** Firebase RTDB path keys cannot contain . # $ [ ] / */
@@ -128,13 +153,66 @@ function formatTimeOnly(date: Date): string {
   return date.toTimeString().slice(0, 5);
 }
 
-export function planBookingImport(booking: PendingBooking, data: TenantData): BookingImportPlan | null {
+export function findBookingOwnerByContact(
+  booking: Pick<PendingBooking, 'email' | 'phone'>,
+  data: TenantData
+): { owner: Owner; reason: 'email' | 'phone' } | null {
+  const emailRaw = booking.email?.trim();
+  if (emailRaw) {
+    const byEmail = data.owners.find(
+      (owner) => normalizeEmail(owner.email || '') === normalizeEmail(emailRaw)
+    );
+    if (byEmail) return { owner: byEmail, reason: 'email' };
+  }
+
+  const phone = booking.phone?.trim();
+  if (phone) {
+    const normPhone = normalizePhone(phone);
+    const byPhone = data.owners.find((owner) => normalizePhone(owner.phone || '') === normPhone);
+    if (byPhone) return { owner: byPhone, reason: 'phone' };
+  }
+
+  return null;
+}
+
+/** Households with the same client name — possible duplicates when auto-match creates a new record. */
+export function findPossibleDuplicateOwnersByName(
+  booking: Pick<PendingBooking, 'name'>,
+  data: TenantData,
+  excludeOwnerId?: string
+): Owner[] {
+  const name = booking.name?.trim().toLowerCase();
+  if (!name || name.length < 2) return [];
+
+  return data.owners.filter((owner) => {
+    if (excludeOwnerId && String(owner.id) === excludeOwnerId) return false;
+    return owner.name?.trim().toLowerCase() === name;
+  });
+}
+
+export function countOwnerTrainingSessions(data: TenantData, ownerId: string): number {
+  return data.trainingSessions.filter((session) => String(session.ownerId) === String(ownerId)).length;
+}
+
+export function planBookingImport(
+  booking: PendingBooking,
+  data: TenantData,
+  options: BookingImportOptions = {}
+): BookingImportPlan | null {
   const phone = booking.phone?.trim();
   const dogName = booking.dogName?.trim();
   if (!phone || !dogName) return null;
 
   if (data.trainingSessions.some((session) => session.calendarEventId === booking.calendarEventId)) {
     return null;
+  }
+
+  const linkMode = options.linkMode ?? (options.overrideOwnerId ? 'existing' : 'auto');
+  if (linkMode === 'existing') {
+    const overrideOwner = options.overrideOwnerId
+      ? data.owners.find((owner) => String(owner.id) === String(options.overrideOwnerId))
+      : undefined;
+    if (!overrideOwner) return null;
   }
 
   const emailRaw = booking.email?.trim();
@@ -144,19 +222,32 @@ export function planBookingImport(booking: PendingBooking, data: TenantData): Bo
     extended.locationKind === 'home_visit' || isHomeVisitLocation(booking.location);
   const location = getLocationByName(booking.location);
 
-  let existingOwner = emailRaw
-    ? data.owners.find((owner) => normalizeEmail(owner.email || '') === normalizeEmail(emailRaw))
-    : undefined;
-  if (!existingOwner && phone) {
-    const normPhone = normalizePhone(phone);
-    existingOwner = data.owners.find((owner) => normalizePhone(owner.phone || '') === normPhone);
+  let existingOwner: Owner | undefined;
+  let ownerMatchReason: BookingImportPlan['ownerMatchReason'] = 'new';
+
+  if (linkMode === 'force_new') {
+    existingOwner = undefined;
+    ownerMatchReason = 'new';
+  } else if (linkMode === 'existing' && options.overrideOwnerId) {
+    existingOwner = data.owners.find((owner) => String(owner.id) === String(options.overrideOwnerId));
+    if (existingOwner) {
+      ownerMatchReason = 'override';
+    }
+  } else if (linkMode === 'auto') {
+    const contactMatch = findBookingOwnerByContact(booking, data);
+    if (contactMatch) {
+      existingOwner = contactMatch.owner;
+      ownerMatchReason = contactMatch.reason;
+    }
   }
 
   const ownerId = existingOwner
     ? String(existingOwner.id)
-    : emailRaw
-      ? ownerIdFromEmail(emailRaw)
-      : ownerIdFromPhone(phone);
+    : linkMode === 'force_new'
+      ? allocateNewOwnerId(booking, data)
+      : emailRaw
+        ? ownerIdFromEmail(emailRaw)
+        : ownerIdFromPhone(phone);
   const start = parseSheetDate(booking.appointmentStart);
   const end = parseSheetDate(booking.appointmentEnd);
   const now = new Date().toISOString();
@@ -175,7 +266,12 @@ export function planBookingImport(booking: PendingBooking, data: TenantData): Bo
     latitude: isHomeVisit ? existingOwner?.latitude : location?.lat ?? existingOwner?.latitude,
     longitude: isHomeVisit ? existingOwner?.longitude : location?.lng ?? existingOwner?.longitude,
     status: existingOwner?.status || 'active',
-    notes: mergeNotes(existingOwner?.notes, booking.message),
+    notes: mergeNotes(
+      existingOwner?.notes,
+      extended.returningClient
+        ? mergeNotes(booking.message, 'Client indicated they have booked before.')
+        : booking.message
+    ),
     updatedAt: now,
   };
 
@@ -293,13 +389,24 @@ export function planBookingImport(booking: PendingBooking, data: TenantData): Bo
   const ageMilestoneFollowUps =
     dogIsNew || ageChanged ? planDogAgeMilestoneFollowUps(data, dog) : [];
 
+  const priorSessionCount = countOwnerTrainingSessions(data, ownerId);
+  const possibleDuplicateOwners =
+    ownerMatchReason === 'new'
+      ? findPossibleDuplicateOwnersByName(booking, data)
+      : [];
+
+  const ownerIsNew = linkMode === 'force_new' || !existingOwner;
+
   return {
     owner,
     dog,
     session,
     ageMilestoneFollowUps,
-    ownerIsNew: !existingOwner,
+    ownerIsNew,
     dogIsNew: !existingDog,
+    ownerMatchReason,
+    priorSessionCount,
+    possibleDuplicateOwners,
   };
 }
 

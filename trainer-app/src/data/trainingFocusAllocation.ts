@@ -1,22 +1,39 @@
 import type { DogProfileTagId } from '@/data/dogProfileTags';
 import { getFocusById, type OwnerCapacityDomain } from '@/data/assessmentTaxonomy';
 
-/** Focus areas demonstrated by the household / handler — not the dog alone. */
+/** Focus areas demonstrated by the household / handler — merged into guideTags (see FOCUS_TO_GUIDE_ANCHOR). */
 export const HOUSEHOLD_COMPETENCY_FOCUS_IDS = [
-  'focus_001', // Access Training
-  'focus_002', // Timing
-  'focus_003', // Rewards
-  'focus_004', // Ready Stance
-  'focus_010', // Verbal Correction
-  'focus_011', // Leash Jerk
-  'focus_020', // Collar Selection
-  'focus_021', // Leash Work
-  'focus_030', // Front Door
-  'focus_031', // Check-In Seven
-  'focus_032', // Daily Practice
-  'focus_040', // Reading Dog
-  'focus_041', // Dog Language
+  'focus_001', // Access Training → access
+  'focus_002', // Timing → timing
+  'focus_003', // Rewards → rewards
+  'focus_004', // Ready Stance → ready-stance
+  'focus_010', // Verbal Correction → verbal-correction
+  'focus_011', // Leash Jerk → leash-jerk
+  'focus_020', // Collar Selection → collar-selection
+  'focus_021', // Leash Work → leash
+  'focus_030', // Front Door → front-door
+  'focus_031', // Check-In Seven → check-in-seven
+  'focus_032', // Daily Practice → daily
+  'focus_040', // Reading Dog → reading-dog
+  'focus_041', // Dog Language → dog-language
 ] as const;
+
+/** Maps legacy household competency focus IDs to public guide anchor IDs. */
+export const FOCUS_TO_GUIDE_ANCHOR: Record<string, string> = {
+  focus_001: 'access',
+  focus_002: 'timing',
+  focus_003: 'rewards',
+  focus_004: 'ready-stance',
+  focus_010: 'verbal-correction',
+  focus_011: 'leash-jerk',
+  focus_020: 'collar-selection',
+  focus_021: 'leash',
+  focus_030: 'front-door',
+  focus_031: 'check-in-seven',
+  focus_032: 'daily',
+  focus_040: 'reading-dog',
+  focus_041: 'dog-language',
+};
 
 /** Legacy dog skill achievement IDs (removed from UI — migrated to profile tags). */
 export const LEGACY_DOG_SKILL_ACHIEVEMENT_IDS = [
@@ -55,6 +72,39 @@ export const FOCUS_TO_OWNER_CAPACITY_DOMAIN: Record<string, OwnerCapacityDomain>
   focus_040: 'reading_signals',
   focus_041: 'reading_signals',
 };
+
+export function guideAnchorForCompetencyFocus(focusId: string): string | undefined {
+  return FOCUS_TO_GUIDE_ANCHOR[focusId];
+}
+
+export function mergeCompetencyFocusIntoGuideTags(
+  guideTags: string[] | undefined,
+  competencyFocusIds: string[]
+): string[] {
+  const tags = new Set(guideTags || []);
+  for (const focusId of competencyFocusIds) {
+    const anchorId = guideAnchorForCompetencyFocus(focusId);
+    if (anchorId) tags.add(anchorId);
+  }
+  return [...tags];
+}
+
+/** Merge legacy competencyAchievementIds (and dog copies) into guideTags; clear the old field. */
+export function normalizeOwnerGuideTags(
+  owner: { guideTags?: string[]; competencyAchievementIds?: string[] },
+  dogAchievementIds: string[][] = []
+): { guideTags: string[]; competencyAchievementIds: string[]; changed: boolean } {
+  const competencyIds = resolveOwnerCompetencyAchievementIds(
+    owner.competencyAchievementIds,
+    dogAchievementIds
+  );
+  const guideTags = mergeCompetencyFocusIntoGuideTags(owner.guideTags, competencyIds);
+  const changed =
+    competencyIds.length > 0 ||
+    guideTags.length !== (owner.guideTags || []).length ||
+    (owner.competencyAchievementIds || []).length > 0;
+  return { guideTags, competencyAchievementIds: [], changed };
+}
 
 export function isHouseholdCompetencyFocus(focusId: string): boolean {
   return HOUSEHOLD_COMPETENCY_SET.has(focusId);

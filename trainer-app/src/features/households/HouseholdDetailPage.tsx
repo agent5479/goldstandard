@@ -13,7 +13,7 @@ import {
   isHouseholdCompetencyFocus,
   isLegacyDogSkillAchievementFocus,
   migrateLegacyDogSkillAchievements,
-  resolveOwnerCompetencyAchievementIds,
+  normalizeOwnerGuideTags,
 } from '@/data/trainingFocusAllocation';
 import { labels } from '@/data/terminology';
 import { ARCHIVED_DOG_STAGE, DEFAULT_TRAINING_STAGE } from '@/data/householdTypes';
@@ -121,10 +121,28 @@ export default function HouseholdDetailPage() {
     if (loadedOwnerIdRef.current === id) return;
     const owner = data.owners.find((o) => String(o.id) === id);
     if (!owner) return;
-    setForm({ ...owner });
-    formRef.current = { ...owner };
+    const ownerDogs = getOwnerDogs(data, id);
+    const normalized = normalizeOwnerGuideTags(
+      owner,
+      ownerDogs.map((dog) => dog.achievementFocusIds || [])
+    );
+    const ownerData = {
+      ...owner,
+      guideTags: normalized.guideTags,
+      competencyAchievementIds: normalized.competencyAchievementIds,
+    };
+    setForm(ownerData);
+    formRef.current = ownerData;
     loadedOwnerIdRef.current = id;
-  }, [id, isNew, data.owners]);
+
+    if (normalized.changed && canEdit && user?.tenantId) {
+      void persistOwnerRef.current(
+        { guideTags: normalized.guideTags, competencyAchievementIds: [] },
+        'owner_competency_migrate'
+      );
+      void migrateLegacyHouseholdAchievementsFromDogs(ownerDogs);
+    }
+  }, [canEdit, id, isNew, data.owners, data.dogs, user?.tenantId]);
 
   const ownerId = isNew ? '' : String(id);
   const dogs = useMemo(() => (ownerId ? getOwnerDogs(data, ownerId) : []), [data, ownerId]);
@@ -148,14 +166,6 @@ export default function HouseholdDetailPage() {
   );
   const focusItems = data.trainingFocus.length > 0 ? data.trainingFocus : DEFAULT_TRAINING_FOCUS;
   const activityMeta = user?.tenantId ? { actor: activityActorFromUser(user) } : undefined;
-  const competencyAchievements = useMemo(
-    () =>
-      resolveOwnerCompetencyAchievementIds(
-        form.competencyAchievementIds,
-        dogs.map((dog) => dog.achievementFocusIds || [])
-      ),
-    [form.competencyAchievementIds, dogs]
-  );
 
   useEffect(() => {
     if (isNew || !user?.tenantId || !canManageDogs || dogs.length === 0) return;
@@ -527,9 +537,9 @@ export default function HouseholdDetailPage() {
     await persistOwner({ ownerCapacity }, 'owner_capacity');
   };
 
-  const migrateLegacyHouseholdAchievementsFromDogs = async () => {
+  const migrateLegacyHouseholdAchievementsFromDogs = async (dogsToMigrate = dogs) => {
     if (!user?.tenantId || !canManageDogs) return;
-    for (const dog of dogs) {
+    for (const dog of dogsToMigrate) {
       const legacyIds = dog.achievementFocusIds || [];
       const hasLegacy = legacyIds.some(
         (id) => isHouseholdCompetencyFocus(id) || isLegacyDogSkillAchievementFocus(id)
@@ -556,15 +566,6 @@ export default function HouseholdDetailPage() {
         activityMeta
       );
     }
-  };
-
-  const handleCompetencyAchievementChange = async (ids: string[]) => {
-    if (!canEdit) return;
-    const competencyAchievementIds = ids.filter(isHouseholdCompetencyFocus);
-    setForm((prev) => ({ ...prev, competencyAchievementIds }));
-    if (isNew) return;
-    await persistOwner({ competencyAchievementIds }, 'owner_competency');
-    await migrateLegacyHouseholdAchievementsFromDogs();
   };
 
   const handleDogSkillGradeChange = async (dogId: string, focusId: string, grade: SkillGrade) => {
@@ -779,8 +780,6 @@ export default function HouseholdDetailPage() {
                 <div>
                   <HouseholdAssessmentSection
                     {...formProps}
-                    competencyAchievements={competencyAchievements}
-                    onCompetencyAchievementChange={(ids) => void handleCompetencyAchievementChange(ids)}
                     onOwnerCapacityChange={(domain, grade) => void handleOwnerCapacityChange(domain, grade)}
                   />
                 </div>
@@ -826,8 +825,6 @@ export default function HouseholdDetailPage() {
               {activeTab === 'assessment' && (
                 <HouseholdAssessmentSection
                   {...formProps}
-                  competencyAchievements={competencyAchievements}
-                  onCompetencyAchievementChange={(ids) => void handleCompetencyAchievementChange(ids)}
                   onOwnerCapacityChange={(domain, grade) => void handleOwnerCapacityChange(domain, grade)}
                 />
               )}

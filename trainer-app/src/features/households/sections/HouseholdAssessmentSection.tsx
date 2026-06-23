@@ -1,13 +1,10 @@
 import { Card, Row, Col, Form } from 'react-bootstrap';
 import { GuideBadgePicker } from '@/components/GuideBadgePicker';
 import { SkillGradeSelect } from '@/components/SkillGradeSelect';
-import { isHouseholdCompetencyFocus } from '@/data/trainingFocusAllocation';
 import { OWNER_CAPACITY_DOMAINS, type OwnerCapacityDomain, type SkillGrade } from '@/data/assessmentTaxonomy';
 import type { HouseholdFormProps } from './types';
 
 interface HouseholdAssessmentSectionProps extends HouseholdFormProps {
-  competencyAchievements: string[];
-  onCompetencyAchievementChange: (ids: string[]) => void;
   onOwnerCapacityChange: (domain: OwnerCapacityDomain, grade: SkillGrade) => void;
 }
 
@@ -17,8 +14,6 @@ export function HouseholdAssessmentSection({
   canEdit,
   update,
   persistOwner,
-  competencyAchievements,
-  onCompetencyAchievementChange,
   onOwnerCapacityChange,
 }: HouseholdAssessmentSectionProps) {
   return (
@@ -26,14 +21,13 @@ export function HouseholdAssessmentSection({
       <Card className="mb-4 hub-panel">
         <Card.Header>
           <i className="bi bi-bookmark-check me-2" />
-          Practice demonstrated — guide, skills &amp; pins
+          Practice demonstrated — guide &amp; pins
         </Card.Header>
         <Card.Body>
           <GuideBadgePicker
             guideTags={form.guideTags || []}
             examTopicGaps={form.examTopicGaps || []}
             pinnedFocusIds={form.pinnedFocusIds || []}
-            competencyAchievementIds={competencyAchievements}
             onGuideTagsChange={(tags) => {
               update('guideTags', tags, false);
               if (!isNew) void persistOwner({ guideTags: tags });
@@ -45,13 +39,6 @@ export function HouseholdAssessmentSection({
             onPinnedFocusChange={(ids) => {
               update('pinnedFocusIds', ids, false);
               if (!isNew) void persistOwner({ pinnedFocusIds: ids });
-            }}
-            onCompetencyAchievementsChange={(ids) => {
-              if (isNew) {
-                update('competencyAchievementIds', ids.filter(isHouseholdCompetencyFocus), false);
-                return;
-              }
-              void onCompetencyAchievementChange(ids);
             }}
             readOnly={!canEdit}
           />

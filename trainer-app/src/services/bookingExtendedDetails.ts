@@ -54,6 +54,7 @@ export interface ParsedBookingExtendedDetails {
   clientAddress?: string;
   isHomeAddress?: boolean;
   locationKind?: 'standard' | 'home_visit' | 'elite_coaching';
+  returningClient?: boolean;
   hasData: boolean;
 }
 
@@ -105,6 +106,7 @@ export function parseBookingExtendedDetails(json?: string): ParsedBookingExtende
       clientAddress?: string;
       isHomeAddress?: boolean;
       locationKind?: string;
+      returningClient?: boolean;
     };
     if (raw.v !== EXTENDED_DETAILS_SCHEMA_VERSION) return empty;
 
@@ -149,6 +151,7 @@ export function parseBookingExtendedDetails(json?: string): ParsedBookingExtende
       raw.locationKind === 'standard'
         ? raw.locationKind
         : undefined;
+    const returningClient = raw.returningClient === true;
     const hasData =
       Object.keys(skillGrades).length > 0 ||
       profileTags.length > 0 ||
@@ -157,7 +160,8 @@ export function parseBookingExtendedDetails(json?: string): ParsedBookingExtende
       Boolean(sex) ||
       Boolean(desexed) ||
       Boolean(clientAddress) ||
-      Boolean(locationKind);
+      Boolean(locationKind) ||
+      returningClient;
     if (!hasData) return empty;
 
     const mergedTags = profileTags.length > 0 ? profileTags : undefined;
@@ -171,6 +175,7 @@ export function parseBookingExtendedDetails(json?: string): ParsedBookingExtende
       clientAddress,
       isHomeAddress,
       locationKind,
+      returningClient: returningClient || undefined,
       hasData: true,
     };
   } catch {

@@ -149,6 +149,7 @@ export default function BookForm() {
   const [extendedDetails, setExtendedDetails] = useState(emptyExtendedDetailsState);
   const [clientAddress, setClientAddress] = useState('');
   const [isHomeAddress, setIsHomeAddress] = useState<boolean | null>(null);
+  const [returningClient, setReturningClient] = useState(false);
 
   useEffect(() => {
     if (status.kind !== 'success') return;
@@ -391,7 +392,8 @@ export default function BookForm() {
               isHomeAddress: isHomeAddress === true,
               bookingType: selectedServiceType,
             }
-          : undefined
+          : undefined,
+        returningClient
       );
     } catch (extError) {
       setStatus({
@@ -434,6 +436,7 @@ export default function BookForm() {
       setClientAddress('');
       setIsHomeAddress(null);
       setExtendedDetails(emptyExtendedDetailsState());
+      setReturningClient(false);
       setStatus({
         kind: 'success',
         slotLabel: slot?.label ?? 'your selected time',
@@ -935,6 +938,20 @@ export default function BookForm() {
           </p>
         ) : (
           <>
+            <div className="form-field">
+              <label className="form-checkbox-label">
+                <input
+                  type="checkbox"
+                  checked={returningClient}
+                  disabled={submitting}
+                  onChange={(e) => setReturningClient(e.target.checked)}
+                />
+                {' '}I&apos;ve booked with Warwick before
+              </label>
+              <p className="form-hint">
+                Use the same phone number (and email if you have one) as your previous booking so we can link your sessions.
+              </p>
+            </div>
             <div className="form-row">
               <div className="form-field">
                 <label htmlFor="bookName">Your name <span className="label-optional">(optional)</span></label>

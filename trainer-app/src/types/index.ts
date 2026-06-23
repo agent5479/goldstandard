@@ -77,7 +77,7 @@ export interface Owner {
   guideTags?: string[];
   examTopicGaps?: string[];
   ownerCapacity?: Partial<Record<OwnerCapacityDomain, SkillGrade>>;
-  /** Handler / household focus areas already demonstrated (see trainingFocusAllocation.ts). */
+  /** @deprecated Merged into guideTags — migrated on household load via normalizeOwnerGuideTags. */
   competencyAchievementIds?: string[];
   pinnedFocusIds?: string[];
   /** Household-specific words for standard vocal functions (see vocalCalls.ts) */
