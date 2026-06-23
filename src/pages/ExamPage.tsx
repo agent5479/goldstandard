@@ -96,6 +96,7 @@ export default function ExamPage() {
         description="Test your dog training knowledge. Breed-aware exam for owners and full trainer track — Gold Standard Dog Training, Golden Bay & Nelson Bays, NZ."
         path="/exam"
         bodyClass="page-exam"
+        iconSet="exam"
       />
       <SiteHeader />
 

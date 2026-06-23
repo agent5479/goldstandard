@@ -13,6 +13,7 @@ export default function IntelligencePage() {
         description="Compare dog breeds across intelligence and temperament dimensions — IQ, instinctive, adaptive, working, emotional, spatial, dominance, protectiveness, and neuroticism estimates. Explore mix and cross estimates with probabilistic ranges."
         path="/intelligence"
         bodyClass="page-intelligence"
+        iconSet="breedanalysis"
       />
       <SiteHeader />
 

@@ -12,6 +12,7 @@ export default function GuidePage() {
         description="The dog you always wanted is already in there. Client guide for Gold Standard Dog Training in Golden Bay and Nelson Bays, NZ — techniques, corrections, leash work, and access training by Warwick Marshall."
         path="/guide"
         bodyClass="page-guide"
+        iconSet="guide"
       />
 
       <header className="guide-sticky-nav" aria-label="Guide navigation">

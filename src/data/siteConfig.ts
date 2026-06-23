@@ -43,7 +43,7 @@ export const SITE_META_DESCRIPTION = `${SITE_TAGLINE} ${SITE_REGION_LABEL}, NZ. 
 /** Open Graph / Twitter preview — light emoji for link shares (Facebook, etc.). */
 export const SITE_OG_DESCRIPTION = `🐕 ${SITE_TAGLINE} ${SITE_REGION_LABEL} · 027 814 2222`;
 
-export const SITE_OG_IMAGE = `${SITE_URL}/images/dog1024.jpg`;
+export const SITE_OG_IMAGE = `${SITE_URL}/images/icons/dog1024.jpg`;
 
 export function siteUrl(path = ''): string {
   if (!path || path === '/') return `${SITE_URL}/`;

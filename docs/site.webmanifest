@@ -4,13 +4,13 @@
   "description": "Dog training, rehabilitation, and in-person coaching in Golden Bay, Nelson Bays and Greater Tasman Region, New Zealand. Proven, structured methods — trust, obedience, and peace for dogs and owners.",
   "icons": [
     {
-      "src": "images/dog192.jpg",
+      "src": "images/icons/dog192.jpg",
       "sizes": "192x192",
       "type": "image/jpeg",
       "purpose": "any"
     },
     {
-      "src": "images/dog512.jpg",
+      "src": "images/icons/dog512.jpg",
       "sizes": "512x512",
       "type": "image/jpeg",
       "purpose": "any"

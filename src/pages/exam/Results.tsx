@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { iconAsset } from '../../data/siteIcons';
 import { PASS_MARK } from './engine';
 import type { Answer } from './engine';
 
@@ -42,6 +43,14 @@ export default function Results({ track, breedName, answers, onRetake }: Results
     <section className="exam-step" id="exam-results" aria-labelledby="exam-results-heading">
       <h2 id="exam-results-heading" className="visually-hidden">Your results</h2>
       <div className="exam-score-card">
+        <img
+          src={iconAsset('graduated', 'hero')}
+          alt="Gold Standard knowledge exam"
+          className="exam-results-mascot"
+          width={160}
+          height={160}
+          decoding="async"
+        />
         <p className="exam-score-label">{scoreLabel}</p>
         <p className={`exam-score-number ${passed ? 'is-pass' : 'is-fail'}`}>
           {correct} / {total} ({Math.round(ratio * 100)}%)
