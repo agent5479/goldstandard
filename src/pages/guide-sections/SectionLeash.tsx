@@ -117,13 +117,13 @@ export default function SectionLeash() {
 
       <p>Treating a walk purely as a point-A to point-B physical exercise drill misses a dog's most critical sensory requirement. Scenting is how dogs process the world and decompress — research shows letting dogs sniff dramatically lowers their stress hormones compared to physical distance alone.</p>
 
-      <p>Implement a clear structured protocol: walk nicely on heel, then grant regular, explicit breaks to stop and sniff. The break is earned — calm heel work opens it; pulling toward a scent loses it. That is the same frame as <a href="#access">Access training</a>, applied on-lead. When the break ends, heel resumes without negotiation.</p>
+      <p>Implement a clear structured protocol: walk nicely on heel, then grant regular, explicit breaks to stop and sniff or toilet. The break is earned — calm heel work opens it; pulling toward a scent or marking spot loses it. That is the same frame as <a href="#access">Access training</a>, applied on-lead. When the break ends, heel resumes without negotiation.</p>
 
       <p>This is not a rigid heel-versus-sniff competition on every post. Scent is part of the walk, not a prize withheld until the dog is exhausted. For puppies, adolescents, and nose-led or high-drive types, proactively releasing a short sniff threshold — at the start of the outing, after a trigger, or when arousal is building — often keeps focus clearer than forcing heel past every scent. You still hold the line: you choose when, how long, and when heel resumes. A pushy adult may need fewer, tighter breaks; a young scenthound may need more frequent release to decompress and return to cooperation. Calibrate to the dog in front of you — see <a href="#breed-temperament">breed temperament</a> and <a href="#breed-age-intensity">age × temperament</a>.</p>
 
       <ol className="steps">
         <li>Structured heel on slack leash — you set the pace and direction</li>
-        <li>Release cue for an explicit sniff break — stop, let the nose work; grant proactively when the dog needs a threshold to refocus</li>
+        <li>Release cue for an explicit sniff or pee break — stop, let the nose work or toilet; grant proactively when the dog needs a threshold to refocus</li>
         <li>Pulling toward a scent before release costs the break — reset to heel</li>
         <li>Recall or heel cue ends the break; repeat the cycle through the walk</li>
       </ol>

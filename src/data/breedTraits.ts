@@ -94,7 +94,7 @@ const POODLE_CORE: Partial<AxisProfile> = {
   personality:
     'Highly intelligent and handler-attuned — reads mood closely and sensitive to unfair correction. Bonds to people; delivery matters as much as the rule.',
   working:
-    'Puzzle and problem-solving drive — self-entertaining when given structure; needs mental work, not just physical reps. Access and earned tasks land well.',
+    'Puzzle and problem-solving drive — self-entertaining when given structure; needs mental work, not just physical reps. Access and earned tasks land well. Owner frustration and shouting can gamify the relationship for these dogs — they read it as an interactive challenge, not a deterrent.',
 };
 
 const categoryNeuroticismDefault: Record<BreedCategory, NeuroticismInclination> = {
@@ -527,6 +527,25 @@ export function getNeuroticismPropensityNote(
   if (level === 'low' && audience === 'client') return undefined;
   const map = audience === 'trainer' ? NEUROTICISM_PROPENSITY_TRAINER : NEUROTICISM_PROPENSITY_CLIENT;
   return map[level];
+}
+
+export interface BreedNeuroticismPropensityDetail {
+  level: NeuroticismInclination;
+  label: string;
+  note: string;
+}
+
+/** Client-facing stress-looping propensity — always includes note, including low inclination. */
+export function getBreedNeuroticismPropensityDetail(
+  breedName: string
+): BreedNeuroticismPropensityDetail | undefined {
+  const level = getBreedNeuroticismInclination(breedName);
+  if (!level) return undefined;
+  return {
+    level,
+    label: NEUROTICISM_LABELS[level],
+    note: NEUROTICISM_PROPENSITY_CLIENT[level],
+  };
 }
 
 function softenMixAxisCopy(text: string): string {

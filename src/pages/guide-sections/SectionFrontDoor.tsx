@@ -18,10 +18,16 @@ export default function SectionFrontDoor() {
       <ul className="checklist">
         <li>Same standard at every gateway — front door, car boot, yard gate. No door is a free pass</li>
         <li>Calm wait before the leash goes on, before the door opens, before they step through</li>
+        <li>Barking, whining, or vocal pressure at the threshold never earns release — calm, stable body only</li>
         <li>If they surge or push past, reset: back inside, sit, wait — then try again without drama</li>
         <li>Carry that mindset forward: permission before action, not action until stopped</li>
         <li>For dogs over seven months, the <a href="#i-dont-care">I don't care</a> rule applies here first — nervous or excited is not a reason to bolt</li>
       </ul>
+
+      <div className="callout">
+        <strong>🔊 Vocalising to earn access</strong>
+        <p>Some dogs learn that frantic yapping at a trigger — a passing vehicle, movement outside the window, another dog in the distance — earns them a trip outdoors. That is a rewarded loop, not anxiety to soothe. Do not open the door to stop the noise; reset the threshold and wait for calm before permission. See <a href="#rewards">Rewards</a> and <a href="#symptom-glossary">Symptom glossary</a> (trigger vocalising).</p>
+      </div>
 
       <div className="callout">
         <strong>🚪 Why the door matters so much</strong>

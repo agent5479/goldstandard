@@ -3708,6 +3708,66 @@ body.page-intelligence {
   transition: opacity 0.12s ease, visibility 0.12s ease;
 }
 
+.intelligence-breed-detail--columns {
+  max-width: min(720px, calc(100vw - 2rem));
+  padding: 0.65rem 0.85rem 0.75rem;
+}
+
+.intelligence-breed-detail-columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10.5rem, 1fr));
+  gap: 0 0.85rem;
+  align-items: start;
+}
+
+.intelligence-breed-detail-panel {
+  min-width: 0;
+}
+
+.intelligence-breed-detail-panel + .intelligence-breed-detail-panel {
+  padding-left: 0.85rem;
+  border-left: 1px solid var(--border);
+}
+
+.intelligence-breed-detail-panel-title {
+  margin: 0 0 0.35rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--forest);
+}
+
+.intelligence-breed-detail--columns .intelligence-breed-detail-title {
+  margin-bottom: 0.45rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.intelligence-breed-detail--columns .intelligence-breed-detail-type {
+  margin-bottom: 0.35rem;
+}
+
+.intelligence-breed-detail--columns .intelligence-breed-detail-category {
+  margin-bottom: 0;
+}
+
+.intelligence-breed-detail--columns .intelligence-breed-detail-row {
+  grid-template-columns: 1fr;
+  gap: 0.12rem;
+  margin-bottom: 0.45rem;
+}
+
+.intelligence-breed-detail--columns .intelligence-breed-detail-neuro {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+}
+
+.intelligence-breed-detail--columns .intelligence-breed-detail-neuro-title {
+  margin-top: 0;
+}
+
 .intelligence-breed--tip:hover .intelligence-breed-detail {
   opacity: 1;
   visibility: visible;
@@ -3765,6 +3825,77 @@ body.page-intelligence {
   border-top: 1px solid var(--border);
   font-size: 0.7rem;
   color: var(--light-text);
+}
+
+.intelligence-breed-detail-neuro {
+  margin-top: 0.65rem;
+  padding-top: 0.55rem;
+  border-top: 1px solid var(--border);
+}
+
+.intelligence-breed-detail-neuro-title {
+  margin: 0 0 0.4rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--forest);
+}
+
+.intelligence-breed-detail-neuro-level {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.5rem;
+  margin: 0 0 0.35rem;
+}
+
+.intelligence-breed-detail-neuro-badge {
+  display: inline-block;
+  padding: 0.15rem 0.45rem;
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.intelligence-breed-detail-neuro-badge--success {
+  background: rgba(74, 103, 65, 0.12);
+  color: var(--forest);
+}
+
+.intelligence-breed-detail-neuro-badge--secondary {
+  background: rgba(45, 74, 45, 0.08);
+  color: var(--light-text);
+}
+
+.intelligence-breed-detail-neuro-badge--warning {
+  background: rgba(212, 164, 58, 0.2);
+  color: #7a5a12;
+}
+
+.intelligence-breed-detail-neuro-badge--danger {
+  background: rgba(180, 74, 74, 0.14);
+  color: #8b3a3a;
+}
+
+.intelligence-breed-detail-neuro-level-label {
+  font-size: 0.7rem;
+  color: var(--light-text);
+}
+
+.intelligence-breed-detail-neuro-note,
+.intelligence-breed-detail-neuro-score {
+  margin: 0 0 0.35rem;
+  font-size: 0.72rem;
+  line-height: 1.45;
+  color: var(--text);
+}
+
+.intelligence-breed-detail-neuro-score:last-child,
+.intelligence-breed-detail-neuro-note:last-child {
+  margin-bottom: 0;
 }
 
 .intelligence-pin-dot {

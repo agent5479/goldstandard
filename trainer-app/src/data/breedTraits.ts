@@ -94,7 +94,7 @@ const POODLE_CORE: Partial<AxisProfile> = {
   personality:
     'Highly intelligent and handler-attuned — reads mood closely and sensitive to unfair correction. Bonds to people; delivery matters as much as the rule.',
   working:
-    'Puzzle and problem-solving drive — self-entertaining when given structure; needs mental work, not just physical reps. Access and earned tasks land well.',
+    'Puzzle and problem-solving drive — self-entertaining when given structure; needs mental work, not just physical reps. Access and earned tasks land well. Owner frustration and shouting can gamify the relationship for these dogs — they read it as an interactive challenge, not a deterrent.',
 };
 
 const categoryNeuroticismDefault: Record<BreedCategory, NeuroticismInclination> = {

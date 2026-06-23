@@ -66,6 +66,11 @@ export default function SectionReadingDog() {
 
       <p>Breed is not an excuse for bad behaviour — it is context for reading signals and choosing the right currency. If your dog sits at an extreme of temperament, mention it in sessions so the approach can be tuned without dropping the method.</p>
 
+      <div className="callout" id="distraction-processing">
+        <strong>👁️ Distraction processing window</strong>
+        <p>On-lead, a dog may need a brief moment to notice and process an environmental distraction — a look toward a trigger, a pause at movement — before returning to heel on their own. Allow that window when the body stays loose and arousal is not building. If fixation locks in — stiffening, sustained stare, vocalising — step in within the <a href="#timing">one-second window</a> using the <a href="#butt-push">butt push</a> or <a href="#leash-jerk">downward jerk</a>. This is not the same as the <a href="#check-in-seven">seven-second check-in</a>, which applies after earned off-lead release. Calibrate the allowance to age and temperament — adolescents and puzzle-driven types often benefit from a slightly longer self-regulation beat; confident pushy dogs may need a tighter line.</p>
+      </div>
+
       <h3 id="common-pitfalls">⚠️ Common pitfalls: the human-baby trap</h3>
 
       <p>Many owners love their dogs deeply — and unconsciously raise them like human babies: extended eye gazing, constant lap or carry time, baby talk, and a relationship with no clear leadership frame. Dogs are not children. They read attention, proximity, and gaze differently from us, and several classic patterns predictably backfire — often in ways that look breed-specific once you know what to watch for.</p>
@@ -208,6 +213,11 @@ export default function SectionReadingDog() {
               <td><strong>Stiff posture / weight back</strong></td>
               <td>Braced body with weight shifted rearward — not ready for interaction or approach</td>
               <td>Common before greetings, vet handling, or when a stranger reaches; create distance rather than push through</td>
+            </tr>
+            <tr>
+              <td><strong>Trigger vocalising (indoors)</strong></td>
+              <td>Frantic yapping or barking at movement outside — often a learned loop to earn outdoor access, not anxiety to soothe</td>
+              <td>Common in puzzle-driven adolescents; do not open the door to stop the noise — see <a href="#front-door">It starts at the front door</a></td>
             </tr>
             <tr>
               <td><strong>Helicopter tail (high arousal)</strong></td>

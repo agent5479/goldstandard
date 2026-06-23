@@ -371,6 +371,26 @@ export const SESSION_REPORT_SNIPPETS: SessionReportSnippet[] = [
     requireTags: ['leash_reactive', 'dog_reactive', 'reactive'],
     common: true,
   },
+  {
+    id: 'prac_puzzle_no_shout',
+    section: 'practice',
+    category: 'Owner mindset',
+    label: 'No shouting — puzzle-solvers gamify it',
+    text: 'Do not shout at {{dogName}} when he tests boundaries — for puzzle-driven dogs, your frustration becomes an interactive challenge, not a deterrent. Stay calm, enforce the line mechanically, and remove the game from the relationship.',
+    guideAnchor: 'verbal-correction',
+    requireTags: ['puzzle_driven'],
+    relatedFocusIds: ['focus_004', 'focus_010'],
+  },
+  {
+    id: 'prac_puzzle_yap_access',
+    section: 'practice',
+    category: 'Thresholds',
+    label: 'Yap-to-get-outside loop',
+    text: 'If {{dogName}} yap-barks at triggers indoors to earn a trip outside, do not open the door to stop the noise — that rewards the loop. Reset at the threshold and wait for calm before permission.',
+    guideAnchor: 'front-door',
+    requireTags: ['puzzle_driven'],
+    relatedFocusIds: ['focus_030', 'focus_001'],
+  },
 
   // — Concerns —
   {

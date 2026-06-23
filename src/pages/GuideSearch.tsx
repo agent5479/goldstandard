@@ -80,7 +80,8 @@ const ALIASES: { terms: string[]; href: string }[] = [
   { terms: ['flexi', 'extending leash', 'fixed line', 'leash selection', 'biothane', 'long line'], href: '#leash-selection' },
   { terms: ['u dangle', 'leash dangle', 'line weight', 'u shape', 'slack information', 'dashboard dangle'], href: '#leash-weight' },
   { terms: ['leash handling', 'low line', 'biomechanical', 'hand position', 'below neck', 'corrective tug'], href: '#leash-handling' },
-  { terms: ['sniff break', 'sniffing', 'decompress', 'heel earns', 'proactive sniff', 'sniff threshold', 'scent break', 'nose led walk'], href: '#sniff-breaks' },
+  { terms: ['sniff break', 'sniffing', 'pee break', 'toilet break', 'decompress', 'heel earns', 'proactive sniff', 'sniff threshold', 'scent break', 'nose led walk'], href: '#sniff-breaks' },
+  { terms: ['distraction processing', 'look at distraction', 'self regulate distraction', 'fixation window', 'process distraction'], href: '#distraction-processing' },
 
   /* Access, off-lead & road safety */
   { terms: ['off lead', 'off-lead', 'freedom', 'access training', 'earned access', 'leash on disappointed', 'misbehaviour costs access', 'continued perfection', 'failure leash time'], href: '#access' },
