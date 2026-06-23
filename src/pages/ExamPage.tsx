@@ -47,7 +47,7 @@ export default function ExamPage() {
       track: 'owner',
       breedName,
       contextLabel: `🏡 Owner Exam — ${breedName ? `${breedName} (${catLabel})` : catLabel}`,
-      questions: buildOwnerExam([category])
+      questions: buildOwnerExam([category], breedName)
     });
   };
 
@@ -62,12 +62,20 @@ export default function ExamPage() {
           : mix.personalitySource === 'c' && mix.parentC
             ? mix.parentC.name
             : breedCategories[mix.personality].label;
+    const personalityBreedName =
+      mix.personalitySource === 'a'
+        ? mix.parentA.name
+        : mix.personalitySource === 'b' && mix.parentB
+          ? mix.parentB.name
+          : mix.personalitySource === 'c' && mix.parentC
+            ? mix.parentC.name
+            : null;
     toStep({
       step: 'quiz',
       track: 'owner',
       breedName: mixName,
       contextLabel: `🏡 Owner Exam — ${mixName} (personality: ${personalitySide})`,
-      questions: buildOwnerExam([mix.personality, mix.working, mix.physical])
+      questions: buildOwnerExam([mix.personality, mix.working, mix.physical], personalityBreedName)
     });
   };
 
@@ -95,7 +103,7 @@ export default function ExamPage() {
         <div className="page-hero-inner">
           <p className="section-label">🎓 Knowledge Exam</p>
           <h1>🐾 Do you know your dog?</h1>
-          <p>Test yourself on the principles behind the Gold Standard method — reading signals, corrections, timing, and access training. Owners get an exam tuned to their breed; trainers face the full bank. Your results stay on this page — nothing is stored or sent.</p>
+          <p>Test yourself on the principles behind the Gold Standard method — reading signals, corrections, timing, and access training. Owners get a 24-question exam tuned to their breed, including a trait quiz for their selection; trainers face the full bank. Your results stay on this page — nothing is stored or sent.</p>
         </div>
       </section>
 

@@ -80,6 +80,8 @@ export const GUIDE_ANCHORS: GuideAnchor[] = [
   { id: 'reading-dog', label: 'Reading your dog', icon: 'bi-book', groupId: 'reading' },
   { id: 'three-second-pause', label: 'Three-second pause', icon: 'bi-pause-circle', groupId: 'reading' },
   { id: 'breed-temperament', label: 'Breed variance', icon: 'bi-paw', groupId: 'reading' },
+  { id: 'breed-age-intensity', label: 'Age × temperament', icon: 'bi-sliders', groupId: 'reading' },
+  { id: 'distraction-processing', label: 'Distraction processing', icon: 'bi-eye', groupId: 'reading' },
   { id: 'common-pitfalls', label: 'Common pitfalls', icon: 'bi-exclamation-triangle', groupId: 'reading' },
   { id: 'symptom-glossary', label: 'Symptom glossary', icon: 'bi-journal-medical', groupId: 'reading' },
   { id: 'dog-meetings', label: 'Dog meetings', icon: 'bi-people', groupId: 'reading' },

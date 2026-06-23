@@ -13,7 +13,7 @@ export default function TrackChooser({ onOwner, onTrainer }: TrackChooserProps) 
         <button className="exam-track-card" type="button" onClick={onOwner}>
           <span className="exam-track-icon">🏡</span>
           <span className="exam-track-title">Owner Exam</span>
-          <span className="exam-track-desc">20 questions tuned to your dog. Select your breed and test the knowledge that matters most for your household.</span>
+          <span className="exam-track-desc">24 questions tuned to your dog — including a breed trait quiz. Select your breed and test the knowledge that matters most for your household.</span>
           <span className="exam-track-meta">~10 minutes · pass at 80%</span>
         </button>
         <button className="exam-track-card" type="button" onClick={onTrainer}>

@@ -4,9 +4,18 @@
 
    The FIRST option of every question is the correct one; the exam
    engine shuffles option order at play time.
+
+   Authoring distractors (keep options equally plausible):
+   - Match correct-answer length and grammar (full clauses, em-dashes).
+   - Mix misreads: too soft, too harsh, wrong frame, skips context/timing.
+   - Owner track: client-safe wording; occasional "— not the guide" tags.
+   - Avoid one obviously short or joke option.
    ============================================================ */
 
 import type { BreedCategory } from './breeds';
+import type { DogProfileTagId } from './dogProfileTags';
+import type { NeuroticismInclination, SizeClass } from './breedTraits';
+import { traitExamQuestions } from './examTraitQuestions';
 
 export type QuestionCategory = BreedCategory | 'all';
 export type Track = 'both' | 'trainer';
@@ -23,6 +32,24 @@ export interface Question {
   explanation: string;
   /** Anchor into the guide page, e.g. '#timing'. */
   guideLink: string;
+  /** Exact breed match for owner trait quiz (e.g. 'Border Collie'). */
+  breedNames?: string[];
+  /** Fire when breed suggestedProfileTags overlap. */
+  profileTags?: DogProfileTagId[];
+  /** Fire when resolved breed sizeClass matches. */
+  sizeClasses?: SizeClass[];
+  /** Fire when breed neuroticism inclination is at least this level. */
+  neuroticismMin?: NeuroticismInclination;
+}
+
+/** True when question is part of the breed-aware trait quiz pool. */
+export function isTraitQuestion(q: Question): boolean {
+  return Boolean(
+    q.breedNames?.length ||
+      q.profileTags?.length ||
+      q.sizeClasses?.length ||
+      q.neuroticismMin
+  );
 }
 
 export const examQuestions: Question[] = [
@@ -2416,5 +2443,7 @@ export const examQuestions: Question[] = [
     ],
     explanation: 'You lead. Cutting in front is not excused by excitement — see I don\'t care and Leash & line.',
     guideLink: '#leash'
-  }
+  },
+
+  ...traitExamQuestions,
 ];
