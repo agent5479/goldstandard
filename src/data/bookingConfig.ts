@@ -10,6 +10,7 @@ export const TRANSITION_MINUTES = 5;
 export const SLOT_INTERVAL_MINUTES = 15;
 export const MAX_BOOKING_DAYS_AHEAD = 60;
 export const MIN_NOTICE_HOURS = 16;
+export const GOLDEN_BAY_MIN_NOTICE_HOURS = 12;
 
 export const STANDARD_SERVICE_SUMMARY = `${SESSION_MINUTES}-minute session with Warwick — customised to you and your dog on the day.`;
 
@@ -47,6 +48,8 @@ export type BookingWindowInfo = {
 export type AvailabilityResult = {
   slots: BookingSlot[];
   region?: string;
+  min_notice_hours?: number;
+  earliest_bookable?: string;
   booking_window?: BookingWindowInfo;
   nelson_service_day?: boolean;
 };

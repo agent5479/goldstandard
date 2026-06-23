@@ -17,7 +17,7 @@
  *   { action: "availability", date, region, location? }  — available booking slots for a date
  *   { action: "book", region, slot_start, location, ... }
  *
- * Script version: 2026-06-18-v10
+ * Script version: 2026-06-23-v11
  *   - Multi-region: golden-bay | nelson-bays (region required on availability/book)
  *   - 15-min slot grid; 55 min sessions; 5 min handover; commute buffer between locations
  *   - Nelson Bays: bookable only on days with an all-day NELSON calendar event;
@@ -278,10 +278,14 @@ function handleAvailability(data) {
     };
   });
 
+  const noticeHours = getNoticeHoursForRegion(region);
+
   return jsonResponse({
     success: true,
     region: region,
     slots: slots,
+    min_notice_hours: noticeHours,
+    earliest_bookable: formatLocalIso(getEarliestBookableTime(region)),
     booking_window: {
       start_label: formatHourLabel(bookingWindow.startHour),
       last_start_label: formatHourLabel(bookingWindow.lastStartHour),
