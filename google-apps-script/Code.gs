@@ -17,7 +17,7 @@
  *   { action: "availability", date, region, location? }  — available booking slots for a date
  *   { action: "book", region, slot_start, location, ... }
  *
- * Script version: 2026-06-24-v18 (pricing + Nelson booking policy)
+ * Script version: 2026-06-24-v19 (booking email site URL + SEO copy)
  *   - Multi-region: golden-bay | nelson-bays (region required on availability/book)
  *   - 15-min slot grid; 55 min sessions; 5 min handover; commute buffer between locations
  *   - Nelson Bays: bookable only on days with an all-day NELSON calendar event;
