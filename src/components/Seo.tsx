@@ -65,6 +65,17 @@ function applyFavicons(iconSet: IconSetId) {
   setMeta('name', 'msapplication-TileImage', links.tileImage);
 }
 
+function applySocialImage(set: (typeof ICON_SETS)[IconSetId], image: string, imageAlt: string) {
+  setMeta('property', 'og:image', image);
+  setMeta('property', 'og:image:secure_url', image);
+  setMeta('property', 'og:image:type', 'image/jpeg');
+  setMeta('property', 'og:image:width', String(set.ogImageWidth));
+  setMeta('property', 'og:image:height', String(set.ogImageHeight));
+  setMeta('property', 'og:image:alt', imageAlt);
+  setMeta('name', 'twitter:image', image);
+  setMeta('name', 'twitter:image:alt', imageAlt);
+}
+
 /** Per-route document title, meta description, canonical, Open Graph, and body class. */
 export default function Seo({
   title,
@@ -97,15 +108,12 @@ export default function Seo({
     setMeta('property', 'og:description', social);
     setMeta('property', 'og:type', 'website');
     setMeta('property', 'og:url', url);
-    setMeta('property', 'og:image', image);
-    setMeta('property', 'og:image:alt', imageAlt);
+    applySocialImage(set, image, imageAlt);
     setMeta('property', 'og:site_name', SITE_NAME);
 
     setMeta('name', 'twitter:card', 'summary_large_image');
     setMeta('name', 'twitter:title', title);
     setMeta('name', 'twitter:description', social);
-    setMeta('name', 'twitter:image', image);
-    setMeta('name', 'twitter:image:alt', imageAlt);
 
     applyFavicons(iconSet);
 
@@ -117,10 +125,7 @@ export default function Seo({
       delete document.documentElement.dataset.seoReady;
       document.body.className = previous;
       applyFavicons('site');
-      setMeta('property', 'og:image', SITE_OG_IMAGE);
-      setMeta('property', 'og:image:alt', ICON_SETS.site.ogImageAlt);
-      setMeta('name', 'twitter:image', SITE_OG_IMAGE);
-      setMeta('name', 'twitter:image:alt', ICON_SETS.site.ogImageAlt);
+      applySocialImage(ICON_SETS.site, SITE_OG_IMAGE, ICON_SETS.site.ogImageAlt);
     };
   }, [title, description, path, bodyClass, index, socialDescription, iconSet, ogImage, ogImageAlt]);
 

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import Seo from '../components/Seo';
+import SectionIcon from '../components/SectionIcon';
 import SiteHeader from '../components/SiteHeader';
 import SiteFooter from '../components/SiteFooter';
 
@@ -68,7 +69,10 @@ export default function AboutPage() {
               </ul>
             </div>
           </div>
-          <p className="service-note">📘 Already working with Warwick? The <Link to="/guide">Client Reference Guide</Link> gives you key principles and reminders between sessions.</p>
+          <p className="service-note label-with-icon">
+            <SectionIcon set="guide" size="sm" />
+            <span>Already working with Warwick? The <Link to="/guide">Client Reference Guide</Link> gives you key principles and reminders between sessions.</span>
+          </p>
         </div>
       </section>
 

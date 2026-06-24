@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { iconAsset } from '../../data/siteIcons';
+import SectionIcon from '../../components/SectionIcon';
 import type { Answer, PreparedQuestion } from './engine';
 
 interface QuizProps {
@@ -150,15 +150,11 @@ export default function Quiz({ contextLabel, questions, onFinish, onQuit }: Quiz
           }}
         >
           <div className="exam-feedback-dialog" role="dialog" aria-modal="true" aria-labelledby="exam-feedback-heading">
-            <img
-              src={iconAsset('graduated', 192)}
-              alt=""
-              className="exam-feedback-mascot"
-              width={96}
-              height={96}
-              decoding="async"
-            />
-            <p className="exam-feedback-kicker">📖 Learning moment</p>
+            <SectionIcon set="exam" size="card" className="exam-feedback-mascot" />
+            <p className="exam-feedback-kicker label-with-icon">
+              <SectionIcon set="guide" size="sm" />
+              Learning moment
+            </p>
             <h3 id="exam-feedback-heading">Not quite — here's the principle.</h3>
             <p className="exam-feedback-question">{question.source.text}</p>
             <p className="exam-feedback-yours"><strong>Your answer:</strong> <span>{question.options[selected]}</span></p>

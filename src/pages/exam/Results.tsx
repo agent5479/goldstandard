@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { iconAsset } from '../../data/siteIcons';
+import SectionIcon from '../../components/SectionIcon';
 import { PASS_MARK } from './engine';
 import type { Answer } from './engine';
 
@@ -26,9 +26,10 @@ export default function Results({ track, breedName, answers, onRetake }: Results
 
   const wrong = answers.filter((a) => !a.correct);
 
-  const scoreLabel = track === 'owner'
-    ? `🏡 Owner Exam${breedName ? ` — ${breedName}` : ''}`
-    : '🥇 Trainer Exam';
+  const scoreLabelText = track === 'owner'
+    ? `Owner Exam${breedName ? ` — ${breedName}` : ''}`
+    : 'Trainer Exam';
+  const scoreIconSet = track === 'owner' ? 'site' : 'exam';
 
   let message: string;
   if (passed) {
@@ -36,22 +37,20 @@ export default function Results({ track, breedName, answers, onRetake }: Results
       ? '✅ Passed. You know the method — now hold the standard every day. Relentlessness is not harshness; it is clarity, repeated until it lands.'
       : '✅ Passed. You can read the dog in front of you and calibrate the hand to match — the heart of the Gold Standard method.';
   } else {
-    message = `📖 Not yet — the pass mark is ${Math.round(PASS_MARK * 100)}%. Review the explanations below, revisit the guide sections, and retake when ready. Consolidation takes as long as it takes.`;
+    message = `Not yet — the pass mark is ${Math.round(PASS_MARK * 100)}%. Review the explanations below, revisit the guide sections, and retake when ready. Consolidation takes as long as it takes.`;
   }
 
   return (
     <section className="exam-step" id="exam-results" aria-labelledby="exam-results-heading">
       <h2 id="exam-results-heading" className="visually-hidden">Your results</h2>
       <div className="exam-score-card">
-        <img
-          src={iconAsset('graduated', 'hero')}
-          alt="Gold Standard knowledge exam"
-          className="exam-results-mascot"
-          width={160}
-          height={160}
-          decoding="async"
-        />
-        <p className="exam-score-label">{scoreLabel}</p>
+        <SectionIcon set="exam" size="hero" className="exam-results-mascot" alt="Gold Standard knowledge exam" />
+        <p className="exam-score-label">
+          <span className="label-with-icon">
+            <SectionIcon set={scoreIconSet} size="sm" />
+            {scoreLabelText}
+          </span>
+        </p>
         <p className={`exam-score-number ${passed ? 'is-pass' : 'is-fail'}`}>
           {correct} / {total} ({Math.round(ratio * 100)}%)
         </p>
@@ -78,7 +77,16 @@ export default function Results({ track, breedName, answers, onRetake }: Results
       </div>
 
       <div className="exam-review">
-        <h3>{wrong.length === 0 ? '🌟 Nothing to review' : `📖 Review what you missed (${wrong.length})`}</h3>
+        <h3>
+          {wrong.length === 0 ? (
+            '🌟 Nothing to review'
+          ) : (
+            <span className="label-with-icon">
+              <SectionIcon set="guide" size="sm" />
+              {`Review what you missed (${wrong.length})`}
+            </span>
+          )}
+        </h3>
         <div>
           {wrong.length === 0 ? (
             <p className="exam-review-perfect">A clean sheet — every answer correct.</p>

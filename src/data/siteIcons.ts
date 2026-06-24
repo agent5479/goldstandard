@@ -8,6 +8,8 @@ export interface IconSet {
   prefix: string;
   ogImage: string;
   ogImageAlt: string;
+  ogImageWidth: number;
+  ogImageHeight: number;
 }
 
 export const ICON_SETS: Record<IconSetId, IconSet> = {
@@ -16,21 +18,29 @@ export const ICON_SETS: Record<IconSetId, IconSet> = {
     ogImage: `${SITE_URL}/${ICONS_DIR}/dog1024.jpg`,
     ogImageAlt:
       'Gold Standard Dog Training — dog training in Golden Bay, Nelson Bays and Greater Tasman Region, New Zealand',
+    ogImageWidth: 1024,
+    ogImageHeight: 1024,
   },
   exam: {
     prefix: 'graduated',
     ogImage: `${SITE_URL}/${ICONS_DIR}/graduated.jpg`,
     ogImageAlt: 'Gold Standard Dog Training knowledge exam — graduated dog mascot',
+    ogImageWidth: 965,
+    ogImageHeight: 965,
   },
   guide: {
     prefix: 'studyguide',
     ogImage: `${SITE_URL}/${ICONS_DIR}/studyguide.jpg`,
     ogImageAlt: 'Gold Standard Dog Training client reference guide',
+    ogImageWidth: 966,
+    ogImageHeight: 966,
   },
   breedanalysis: {
     prefix: 'breedanalysis',
     ogImage: `${SITE_URL}/${ICONS_DIR}/breedanalysis.jpg`,
     ogImageAlt: 'Gold Standard Dog Training breed analysis reference',
+    ogImageWidth: 937,
+    ogImageHeight: 937,
   },
 };
 
@@ -50,6 +60,11 @@ export function iconUrl(prefix: string, size: number | 'hero'): string {
 /** Prefixed with Vite base URL for in-page img src. */
 export function iconAsset(prefix: string, size: number | 'hero'): string {
   return import.meta.env.BASE_URL + iconPath(prefix, size);
+}
+
+/** Icon asset for a named section set (exam, guide, breed analysis, or site). */
+export function iconAssetForSet(set: IconSetId, size: number | 'hero'): string {
+  return iconAsset(ICON_SETS[set].prefix, size);
 }
 
 export function faviconLinksForSet(iconSet: IconSetId): {

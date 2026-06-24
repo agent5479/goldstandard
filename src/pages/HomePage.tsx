@@ -5,8 +5,8 @@ import SiteFooter from '../components/SiteFooter';
 import HeroGallery from './HeroGallery';
 import { SESSION_MINUTES } from '../data/bookingConfig';
 import { SITE_DEFAULT_TITLE, SITE_META_DESCRIPTION, SITE_OG_DESCRIPTION } from '../data/siteConfig';
-import { iconAsset } from '../data/siteIcons';
 import { asset } from '../asset';
+import SectionIcon from '../components/SectionIcon';
 
 export default function HomePage() {
   return (
@@ -131,23 +131,15 @@ export default function HomePage() {
 
       <section className="resources" id="resources">
         <div className="section-inner">
-          <p className="section-label">📖 Explore &amp; test</p>
-          <h2>🎓 Learn the method</h2>
+          <p className="section-label">Explore &amp; test</p>
+          <h2>Learn the method</h2>
           <p className="resources-lead">
             Between sessions, use the guide to stay consistent, compare breeds when choosing or training a mix,
             and test your knowledge when you are ready.
           </p>
           <div className="resource-cards">
             <Link to="/guide" className="resource-card">
-              <img
-                src={iconAsset('studyguide', 192)}
-                alt=""
-                className="resource-card-icon"
-                width={96}
-                height={96}
-                loading="lazy"
-                decoding="async"
-              />
+              <SectionIcon set="guide" size="card" className="resource-card-icon" />
               <strong className="resource-card-title">Client Reference Guide</strong>
               <span className="resource-card-desc">
                 Corrections, leash work, access training, and the principles behind what you experienced with Warwick.
@@ -155,15 +147,7 @@ export default function HomePage() {
               <span className="resource-card-cta">Read the guide →</span>
             </Link>
             <Link to="/exam" className="resource-card">
-              <img
-                src={iconAsset('graduated', 192)}
-                alt=""
-                className="resource-card-icon"
-                width={96}
-                height={96}
-                loading="lazy"
-                decoding="async"
-              />
+              <SectionIcon set="exam" size="card" className="resource-card-icon" />
               <strong className="resource-card-title">Knowledge Exam</strong>
               <span className="resource-card-desc">
                 A breed-aware owner exam or the full trainer track — find your gaps and consolidate the method.
@@ -171,15 +155,7 @@ export default function HomePage() {
               <span className="resource-card-cta">Take the exam →</span>
             </Link>
             <Link to="/intelligence" className="resource-card">
-              <img
-                src={iconAsset('breedanalysis', 192)}
-                alt=""
-                className="resource-card-icon"
-                width={96}
-                height={96}
-                loading="lazy"
-                decoding="async"
-              />
+              <SectionIcon set="breedanalysis" size="card" className="resource-card-icon" />
               <strong className="resource-card-title">Breed Analysis</strong>
               <span className="resource-card-desc">
                 Compare breeds across intelligence and temperament, then explore probabilistic ranges for mixes.

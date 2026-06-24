@@ -614,6 +614,14 @@ h2 {
   font-weight: 600;
 }
 
+.service-note.label-with-icon {
+  align-items: flex-start;
+}
+
+.service-note.label-with-icon .section-icon {
+  margin-top: 0.15rem;
+}
+
 /* resources — guide, exam, breed analysis invitations */
 .resources {
   background: var(--surface-soft);
@@ -774,6 +782,14 @@ h2 {
   color: var(--forest);
   line-height: 1.15;
   margin-bottom: 1rem;
+}
+
+.guide-header .page-title-row {
+  margin-bottom: 1rem;
+}
+
+.guide-header .page-title-row h1 {
+  margin-bottom: 0;
 }
 
 .guide-header p { color: var(--light-text); max-width: 620px; font-size: 1.05rem; }
@@ -1297,6 +1313,41 @@ body.page-guide {
   max-width: var(--content-width);
   margin: 0 auto;
 }
+
+.page-title-row {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+.page-title-row h1 {
+  margin-bottom: 0;
+}
+
+.page-title-icon {
+  flex-shrink: 0;
+  width: 72px;
+  height: auto;
+}
+
+.label-with-icon {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.section-icon {
+  display: block;
+  flex-shrink: 0;
+  height: auto;
+}
+
+.section-icon--sm { width: 20px; }
+.section-icon--md { width: 40px; }
+.section-icon--lg { width: 72px; }
+.section-icon--card { width: 88px; }
+.section-icon--hero { width: 160px; }
 
 .page-hero p {
   color: var(--light-text);
@@ -2429,6 +2480,7 @@ body.page-guide {
     max-width: calc((100% - 5 * 0.45rem) / 6);
   }
   section { padding: 3.5rem 1.25rem; }
+  .page-title-icon { width: 56px; }
   .feature-image--small { max-width: 100%; margin: 2rem auto; }
   .philosophy-grid { grid-template-columns: 1fr; gap: 2rem; }
   .guide-header, .page-hero { padding-left: 1.25rem; padding-right: 1.25rem; }
@@ -2500,6 +2552,18 @@ body.page-guide {
 }
 
 .exam-track-icon { font-size: 2rem; line-height: 1; }
+
+.exam-track-card .section-icon--md {
+  margin-bottom: 0.15rem;
+}
+
+.exam-feedback-kicker.label-with-icon {
+  justify-content: center;
+}
+
+.exam-score-label .label-with-icon {
+  justify-content: center;
+}
 
 .exam-track-title {
   font-family: 'Playfair Display', serif;

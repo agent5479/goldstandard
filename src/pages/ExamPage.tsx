@@ -13,6 +13,7 @@ import type { Answer, PreparedQuestion } from './exam/engine';
 import { breedCategories } from '../data/breeds';
 import type { BreedCategory } from '../data/breeds';
 import { normalizeMixSelection, formatMixTitle, resolveCrossParentNamesFromBreed } from '../utils/dogBreedLabel';
+import SectionIcon from '../components/SectionIcon';
 
 type ExamState =
   | { step: 'start' }
@@ -46,7 +47,7 @@ export default function ExamPage() {
       step: 'quiz',
       track: 'owner',
       breedName,
-      contextLabel: `🏡 Owner Exam — ${breedName ? `${breedName} (${catLabel})` : catLabel}`,
+      contextLabel: `Owner Exam — ${breedName ? `${breedName} (${catLabel})` : catLabel}`,
       questions: buildOwnerExam([category], breedName)
     });
   };
@@ -74,7 +75,7 @@ export default function ExamPage() {
       step: 'quiz',
       track: 'owner',
       breedName: mixName,
-      contextLabel: `🏡 Owner Exam — ${mixName} (personality: ${personalitySide})`,
+      contextLabel: `Owner Exam — ${mixName} (personality: ${personalitySide})`,
       questions: buildOwnerExam([mix.personality, mix.working, mix.physical], personalityBreedName)
     });
   };
@@ -84,7 +85,7 @@ export default function ExamPage() {
       step: 'quiz',
       track: 'trainer',
       breedName: null,
-      contextLabel: '🥇 Trainer Exam — full question bank',
+      contextLabel: 'Trainer Exam — full question bank',
       questions: buildTrainerExam()
     });
   };
@@ -102,8 +103,14 @@ export default function ExamPage() {
 
       <section className="page-hero">
         <div className="page-hero-inner">
-          <p className="section-label">🎓 Knowledge Exam</p>
-          <h1>🐾 Do you know your dog?</h1>
+          <p className="section-label label-with-icon">
+            <SectionIcon set="exam" size="sm" />
+            Knowledge Exam
+          </p>
+          <div className="page-title-row">
+            <SectionIcon set="exam" size="lg" className="page-title-icon" />
+            <h1>Do you know your dog?</h1>
+          </div>
           <p>Test yourself on the principles behind the Gold Standard method — reading signals, corrections, timing, and access training. Owners get a 24-question exam tuned to their breed, including a trait quiz for their selection; trainers face the full bank. Your results stay on this page — nothing is stored or sent.</p>
         </div>
       </section>

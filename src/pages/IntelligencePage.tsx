@@ -4,6 +4,7 @@ import SiteHeader from '../components/SiteHeader';
 import SiteFooter from '../components/SiteFooter';
 import BreedIntelligenceTable from './intelligence/BreedIntelligenceTable';
 import MixIntelligenceExplorer from './intelligence/MixIntelligenceExplorer';
+import SectionIcon from '../components/SectionIcon';
 
 export default function IntelligencePage() {
   return (
@@ -19,8 +20,14 @@ export default function IntelligencePage() {
 
       <section className="page-hero">
         <div className="page-hero-inner">
-          <p className="section-label">Breed reference</p>
-          <h1>Breed analysis</h1>
+          <p className="section-label label-with-icon">
+            <SectionIcon set="breedanalysis" size="sm" />
+            Breed reference
+          </p>
+          <div className="page-title-row">
+            <SectionIcon set="breedanalysis" size="lg" className="page-title-icon" />
+            <h1>Breed analysis</h1>
+          </div>
           <p>
             Compare purebred traits across nine dimensions on a 1–10 scale. Search, sort, and pin breeds
             for side-by-side comparison — then explore mongrel and cross-breed mixes with probabilistic ranges.

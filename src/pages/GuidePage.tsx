@@ -3,6 +3,7 @@ import Seo from '../components/Seo';
 import GuideSearch from './GuideSearch';
 import GuideContentsNav from './guide-sections/GuideContentsNav';
 import { guideSections } from './guide-sections';
+import SectionIcon from '../components/SectionIcon';
 
 export default function GuidePage() {
   return (
@@ -29,8 +30,14 @@ export default function GuidePage() {
 
       <header className="guide-header">
         <div className="guide-header-inner">
-          <p className="header-label">📘 Client Reference Guide</p>
-          <h1>🐾 The principles behind<br />your dog's training.</h1>
+          <p className="header-label label-with-icon">
+            <SectionIcon set="guide" size="sm" />
+            Client Reference Guide
+          </p>
+          <div className="page-title-row">
+            <SectionIcon set="guide" size="lg" className="page-title-icon" />
+            <h1>The principles behind<br />your dog's training.</h1>
+          </div>
           <p>A reference for clients to revisit between sessions. These are the core ideas behind what you experienced with Warwick — use this to stay consistent at home.</p>
         </div>
       </header>
