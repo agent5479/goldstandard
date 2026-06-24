@@ -6,4 +6,4 @@
  */
 export const FORM_ENDPOINT =
   import.meta.env.VITE_FORM_ENDPOINT ||
-  'https://script.google.com/macros/s/AKfycbxPnFKYw3Eu_EkWnRWWv3TCv0si6pEeWBy4652CVTR8k-CCPtI_Bx0pp99Wj5rBe6YA_w/exec';
+  'https://script.google.com/macros/s/AKfycbx1c4LpNTJxbK0FV7lI8kqp6QZeGwLpgtsOZ6SV_SS-uJzQ48gVyRIOfwmh9ER1lBhd9A/exec';
