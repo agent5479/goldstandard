@@ -46,6 +46,15 @@ export interface Answer {
   correct: boolean;
 }
 
+export interface SamplingState {
+  usedTexts: Set<string>;
+  usedGroups: Set<string>;
+}
+
+export function createSamplingState(): SamplingState {
+  return { usedTexts: new Set(), usedGroups: new Set() };
+}
+
 function shuffle<T>(arr: T[]): T[] {
   const a = arr.slice();
   for (let i = a.length - 1; i > 0; i--) {
@@ -59,12 +68,35 @@ function sample<T>(arr: T[], n: number): T[] {
   return shuffle(arr).slice(0, n);
 }
 
-/** Sample without reusing questions already chosen (matched by prompt text). */
-function sampleUnique(pool: Question[], n: number, used: Set<string>): Question[] {
-  const available = pool.filter((q) => !used.has(q.text));
+function isAvailable(q: Question, state: SamplingState): boolean {
+  if (state.usedTexts.has(q.text)) return false;
+  if (q.dedupGroup && state.usedGroups.has(q.dedupGroup)) return false;
+  return true;
+}
+
+function markUsed(q: Question, state: SamplingState): void {
+  state.usedTexts.add(q.text);
+  if (q.dedupGroup) state.usedGroups.add(q.dedupGroup);
+}
+
+/** Sample without reusing prompt text or dedupGroup. */
+function sampleUnique(pool: Question[], n: number, state: SamplingState): Question[] {
+  const available = pool.filter((q) => isAvailable(q, state));
   const picked = sample(available, Math.min(n, available.length));
-  picked.forEach((q) => used.add(q.text));
+  picked.forEach((q) => markUsed(q, state));
   return picked;
+}
+
+/** True when question names a specific breed that does not match the selected breed. */
+export function isWrongBreedQuestion(q: Question, breedName: string | null | undefined): boolean {
+  if (!q.breedNames?.length) return false;
+  if (!breedName) return true;
+  const resolved = resolveBreedName(breedName);
+  return !resolved || !q.breedNames.includes(resolved);
+}
+
+function filterBreedEligible(pool: Question[], breedName: string | null | undefined): Question[] {
+  return pool.filter((q) => !isWrongBreedQuestion(q, breedName));
 }
 
 /** Source options always list the correct answer first; shuffle for play. */
@@ -89,15 +121,18 @@ export function meetsNeuroticismMin(
 export function selectTraitQuestions(
   breedName: string | null | undefined,
   categories: BreedCategory[],
-  used: Set<string>,
+  state: SamplingState,
   count = OWNER_TRAIT
 ): Question[] {
-  const pool = examQuestions.filter((q) => isTraitQuestion(q) && q.track === 'both');
+  const pool = filterBreedEligible(
+    examQuestions.filter((q) => isTraitQuestion(q) && q.track === 'both'),
+    breedName
+  );
   const picked: Question[] = [];
 
   const take = (candidates: Question[], n: number) => {
     if (n <= 0) return;
-    picked.push(...sampleUnique(candidates, n, used));
+    picked.push(...sampleUnique(candidates, n, state));
   };
 
   const resolvedName = breedName ? resolveBreedName(breedName) : undefined;
@@ -139,7 +174,10 @@ export function selectTraitQuestions(
   if (picked.length < count) {
     for (const cat of categories) {
       if (picked.length >= count) break;
-      const catPool = examQuestions.filter((q) => q.breedCategory === cat);
+      const catPool = filterBreedEligible(
+        examQuestions.filter((q) => q.breedCategory === cat),
+        breedName
+      );
       take(catPool, count - picked.length);
     }
   }
@@ -157,7 +195,7 @@ export function buildOwnerExam(
   categories: BreedCategory[],
   breedName?: string | null
 ): PreparedQuestion[] {
-  const used = new Set<string>();
+  const state = createSamplingState();
   const weights = categories.length === 1 ? [OWNER_BREED] : [3, 1, 1];
   const counts = new Map<BreedCategory, number>();
   categories.forEach((cat, i) => {
@@ -167,11 +205,11 @@ export function buildOwnerExam(
   let breedSpecific: Question[] = [];
   counts.forEach((n, cat) => {
     breedSpecific = breedSpecific.concat(
-      sampleUnique(examQuestions.filter((q) => q.breedCategory === cat), n, used)
+      sampleUnique(examQuestions.filter((q) => q.breedCategory === cat), n, state)
     );
   });
 
-  const traitSpecific = selectTraitQuestions(breedName, categories, used, OWNER_TRAIT);
+  const traitSpecific = selectTraitQuestions(breedName, categories, state, OWNER_TRAIT);
 
   const universal = examQuestions.filter(
     (q) => q.breedCategory === 'all' && q.track === 'both' && !isTraitQuestion(q)
@@ -179,27 +217,27 @@ export function buildOwnerExam(
   const bodyLanguage = sampleUnique(
     universal.filter((q) => q.topic === 'Body language'),
     BODY_LANGUAGE_SLOTS,
-    used
+    state
   );
   const relationship = sampleUnique(
     universal.filter((q) => q.topic === 'Relationship habits'),
     RELATIONSHIP_SLOTS,
-    used
+    state
   );
   const equipment = sampleUnique(
     universal.filter((q) => q.topic === 'Equipment'),
     EQUIPMENT_SLOTS,
-    used
+    state
   );
   const offLeashSocial = sampleUnique(
     universal.filter((q) => q.topic === 'Off-leash social'),
     OFF_LEASH_SOCIAL_SLOTS,
-    used
+    state
   );
   const roadSafety = sampleUnique(
     universal.filter((q) => q.topic === 'Road safety'),
     ROAD_SAFETY_SLOTS,
-    used
+    state
   );
   const remaining =
     OWNER_UNIVERSAL -
@@ -208,7 +246,7 @@ export function buildOwnerExam(
     equipment.length -
     offLeashSocial.length -
     roadSafety.length;
-  const filler = sampleUnique(universal, remaining, used);
+  const filler = sampleUnique(universal, remaining, state);
 
   return shuffle(
     bodyLanguage
@@ -218,20 +256,20 @@ export function buildOwnerExam(
 }
 
 export function buildTrainerExam(): PreparedQuestion[] {
-  const used = new Set<string>();
+  const state = createSamplingState();
   const categories = Object.keys(breedCategories) as BreedCategory[];
   let picked: Question[] = [];
   categories.forEach((key) => {
     picked = picked.concat(
-      sampleUnique(examQuestions.filter((q) => q.breedCategory === key), TRAINER_PER_CATEGORY, used)
+      sampleUnique(examQuestions.filter((q) => q.breedCategory === key), TRAINER_PER_CATEGORY, state)
     );
   });
   picked = picked.concat(
-    sampleUnique(examQuestions.filter((q) => q.track === 'trainer'), TRAINER_ADVANCED, used)
+    sampleUnique(examQuestions.filter((q) => q.track === 'trainer'), TRAINER_ADVANCED, state)
   );
   const universal = examQuestions.filter(
     (q) => q.breedCategory === 'all' && q.track === 'both' && !isTraitQuestion(q)
   );
-  picked = picked.concat(sampleUnique(universal, TRAINER_TOTAL - picked.length, used));
+  picked = picked.concat(sampleUnique(universal, TRAINER_TOTAL - picked.length, state));
   return shuffle(picked).map(prepareQuestion);
 }
