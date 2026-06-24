@@ -1284,7 +1284,7 @@ function buildEventDescription(name, phone, email, dogName, dogBreed, dogAge, me
   });
 
   return (
-    "Booking via goldstandardtakaka.github.io\n\n" +
+    "Booking via https://agent5479.github.io/goldstandard/\n\n" +
     submissionSummary +
     "\n\n" +
     BOOKING_POLICY_NOTE +

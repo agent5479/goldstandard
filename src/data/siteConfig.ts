@@ -31,17 +31,20 @@ export const SITE_KEYWORDS =
   'dog training Golden Bay, dog training Takaka, dog trainer Pohara, dog trainer Nelson Bays, dog trainer Motueka, dog trainer Richmond, Greater Tasman Region dog training, Tasman dog trainer, dog rehabilitation NZ, Beckman dog training NZ, Warwick Marshall dog training, obedience training Golden Bay, recall training Takaka, puppy training Nelson Bays, book dog training Golden Bay, elite dog coaching Tasman, dog breed intelligence, breed temperament comparison, Stanley Coren dog IQ, dog training knowledge exam NZ';
 
 /** Default document / Open Graph title for the home page and static HTML shell. */
-export const SITE_DEFAULT_TITLE = `Gold Standard Dog Training | ${SITE_REGION_LABEL}`;
+export const SITE_DEFAULT_TITLE =
+  'Warwick Marshall | Dog Training Takaka & Golden Bay | Gold Standard Dog Training';
 
 /** Core brand line — aligned with the Facebook page bio. */
 export const SITE_TAGLINE =
   'Dog training, rehabilitation, and in-person coaching. Using proven, structured methods. Dogs find peace and freedom when they know their place and learn trust and obedience.';
 
 /** Default meta description (plain text — no emoji for search snippets). */
-export const SITE_META_DESCRIPTION = `${SITE_TAGLINE} ${SITE_REGION_LABEL}, NZ. Call Warwick: 027 814 2222.`;
+export const SITE_META_DESCRIPTION =
+  'Warwick Marshall — dog training and rehabilitation in Takaka and Golden Bay, NZ. Structured Beckman-method coaching with lasting results. Call 027 814 2222.';
 
 /** Open Graph / Twitter preview — light emoji for link shares (Facebook, etc.). */
-export const SITE_OG_DESCRIPTION = `🐕 ${SITE_TAGLINE} ${SITE_REGION_LABEL} · 027 814 2222`;
+export const SITE_OG_DESCRIPTION =
+  '🐕 Warwick Marshall — dog training in Takaka & Golden Bay · Gold Standard Dog Training · 027 814 2222';
 
 export const SITE_OG_IMAGE = `${SITE_URL}/images/icons/dog1024.jpg`;
 
