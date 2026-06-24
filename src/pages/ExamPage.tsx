@@ -94,7 +94,7 @@ export default function ExamPage() {
     <>
       <Seo
         title="Knowledge Exam | Gold Standard Dog Training"
-        description="Test your dog training knowledge. Breed-aware exam for owners and full trainer track — Gold Standard Dog Training, Golden Bay & Nelson Bays, NZ."
+        description="Test your dog training knowledge with a 24-question breed-aware owner exam or the full trainer track. Covers corrections, timing, and access training — Gold Standard Dog Training, Golden Bay & Nelson Bays, NZ."
         path="/exam"
         bodyClass="page-exam"
         iconSet="exam"

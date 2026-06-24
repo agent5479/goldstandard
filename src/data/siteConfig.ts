@@ -28,7 +28,7 @@ export const SITE_SERVICE_AREAS = [
 
 /** Comma-separated keywords for the static HTML shell. */
 export const SITE_KEYWORDS =
-  'dog training Golden Bay, dog training Takaka, dog trainer Nelson Bays, dog trainer Motueka, Greater Tasman Region dog training, dog rehabilitation NZ, Beckman dog training NZ, Warwick Marshall dog training, book dog training Golden Bay, puppy training Takaka, obedience training Nelson';
+  'dog training Golden Bay, dog training Takaka, dog trainer Pohara, dog trainer Nelson Bays, dog trainer Motueka, dog trainer Richmond, Greater Tasman Region dog training, Tasman dog trainer, dog rehabilitation NZ, Beckman dog training NZ, Warwick Marshall dog training, obedience training Golden Bay, recall training Takaka, puppy training Nelson Bays, book dog training Golden Bay, elite dog coaching Tasman, dog breed intelligence, breed temperament comparison, Stanley Coren dog IQ, dog training knowledge exam NZ';
 
 /** Default document / Open Graph title for the home page and static HTML shell. */
 export const SITE_DEFAULT_TITLE = `Gold Standard Dog Training | ${SITE_REGION_LABEL}`;

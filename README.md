@@ -45,10 +45,11 @@ Sessions include obedience, recall, leash work, reactivity, rehabilitation, owne
 | **Book a session** | [/book](https://agent5479.github.io/goldstandard/book) |
 | **Contact / enquiry** | [/contact](https://agent5479.github.io/goldstandard/contact) |
 | **Client guide** | [/guide](https://agent5479.github.io/goldstandard/guide) — principles, corrections, leash work, access training, timing, rewards |
-| **Knowledge exam** | [/exam](https://agent5479.github.io/goldstandard/exam) — breed-aware exam for owners + full trainer track |
+| **Knowledge exam** | [/exam](https://agent5479.github.io/goldstandard/exam) — 24-question breed-aware owner exam + full trainer track |
+| **Breed analysis** | [/intelligence](https://agent5479.github.io/goldstandard/intelligence) — breed IQ & temperament comparison, mix explorer |
 | **About** | [/about](https://agent5479.github.io/goldstandard/about) |
 
-Legacy `.html` URLs (e.g. `guide.html`) redirect to the routes above.
+Legacy `.html` URLs (e.g. `guide.html`, `intelligence.html`) redirect to the routes above.
 
 **Staff trainer app (private):** [gsdt-trainer-private.web.app](https://gsdt-trainer-private.web.app/) — linked from the public site header; Firebase Auth required. See [`trainer-app/README.md`](trainer-app/README.md).
 
@@ -94,15 +95,16 @@ npm run build      # type-check + Vite build + prerender routes to docs/
 npm run preview    # serve the built docs/ folder locally
 ```
 
-**Deploying:** run `npm run build`, then commit and push — including the `docs/` folder. GitHub Pages serves `main` → `/docs`.
+**Deploying:** push to `main` — [`.github/workflows/site.yml`](.github/workflows/site.yml) runs `npm run build`, verifies prerendered HTML, and deploys `docs/` via GitHub Actions. For local verification: `npm run build`, then `npm run preview`.
 
-> **One-time setup:** repo **Settings → Pages** → source **Deploy from a branch**, branch `main`, folder **/docs**.
+> **One-time setup:** repo **Settings → Pages** → source **GitHub Actions** (not “Deploy from branch”).
 
 Key source folders:
 
-- `src/pages/` — Home, About, Contact, Book, Guide, Exam
+- `src/pages/` — Home, About, Contact, Book, Guide, Exam, Intelligence
 - `src/pages/guide-sections/` — client guide content
 - `src/pages/exam/` — exam flow and question engine
+- `src/pages/intelligence/` — breed analysis table and mix explorer
 - `src/data/` — exam questions, breeds, booking config, site URLs
 
 ## Contact form & booking (Google Sheets)
@@ -131,4 +133,4 @@ The local `demosuite/` folder was gitignored reference material — keep your ow
 
 ## Keywords (search)
 
-Dog training Golden Bay, dog training Takaka, dog trainer Pohara, dog trainer Nelson Bays, dog trainer Motueka, dog trainer Richmond, Greater Tasman Region dog training, Tasman dog trainer, dog rehabilitation NZ, Beckman dog training NZ, Warwick Marshall dog training, obedience training Golden Bay, recall training Takaka, puppy training Nelson Bays, book dog training Golden Bay, elite dog coaching Tasman.
+Dog training Golden Bay, dog training Takaka, dog trainer Pohara, dog trainer Nelson Bays, dog trainer Motueka, dog trainer Richmond, Greater Tasman Region dog training, Tasman dog trainer, dog rehabilitation NZ, Beckman dog training NZ, Warwick Marshall dog training, obedience training Golden Bay, recall training Takaka, puppy training Nelson Bays, book dog training Golden Bay, elite dog coaching Tasman, dog breed intelligence, breed temperament comparison, Stanley Coren dog IQ, dog training knowledge exam NZ.
