@@ -36,6 +36,16 @@ const SESSION_MINUTES = 55;
 const ELITE_SESSION_MINUTES = 150;
 const ELITE_CALENDAR_BLOCK_MINUTES = 240;
 const ELITE_LAST_START_HOUR = 12;
+const STANDARD_SESSION_PRICE_DOLLARS = 50;
+const ADDITIONAL_PERSON_PRICE_DOLLARS = 10;
+const STANDARD_PRICE_LABEL = "$" + STANDARD_SESSION_PRICE_DOLLARS;
+const STANDARD_ADDITIONAL_PERSON_NOTE = "+$" + ADDITIONAL_PERSON_PRICE_DOLLARS + " per additional person attending";
+
+/** Flip to true when Nelson beach sessions open on advertised dates. Keep in sync with shared/bookingRegions.ts */
+const NELSON_STANDARD_ONLINE_BOOKING = false;
+
+/** Flip to true when Nelson elite coaching accepts online slot booking. Keep in sync with shared/bookingRegions.ts */
+const NELSON_ELITE_ONLINE_BOOKING = false;
 
 /** Keep in sync with shared/bookingServiceTypes.ts */
 const BOOKING_TYPES = {
@@ -43,7 +53,7 @@ const BOOKING_TYPES = {
     label: "Standard training session",
     sessionMinutes: SESSION_MINUTES,
     calendarBlockMinutes: SESSION_MINUTES,
-    priceLabel: ""
+    priceLabel: STANDARD_PRICE_LABEL
   },
   elite_coaching: {
     label: "Private Household Transformations & Elite Coaching",
@@ -322,6 +332,20 @@ function handleBooking(data) {
 
   if (!REGIONS[region]) {
     return jsonResponse({ success: false, message: "Invalid region." });
+  }
+
+  if (region === "nelson-bays" && bookingType === "standard_beach" && !NELSON_STANDARD_ONLINE_BOOKING) {
+    return jsonResponse({
+      success: false,
+      message: "Nelson Bays beach sessions are not open for online booking yet."
+    });
+  }
+
+  if (region === "nelson-bays" && bookingType === "elite_coaching" && !NELSON_ELITE_ONLINE_BOOKING) {
+    return jsonResponse({
+      success: false,
+      message: "Nelson Bays elite coaching is arranged by enquiry — please use the contact form."
+    });
   }
 
   if (email && !isValidEmail(email)) {
@@ -1474,7 +1498,11 @@ function buildBookingSubmissionSummary(options) {
     submissionLine("Location", options.locationLabel)
   ];
   if (durations.priceLabel) {
-    sessionLines.push(submissionLine("Price", durations.priceLabel));
+    var priceLine =
+      bookingType === "standard_beach"
+        ? durations.priceLabel + " (" + STANDARD_ADDITIONAL_PERSON_NOTE + ")"
+        : durations.priceLabel;
+    sessionLines.push(submissionLine("Price", priceLine));
   }
 
   var blocks = [

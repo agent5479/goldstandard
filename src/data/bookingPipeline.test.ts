@@ -11,6 +11,11 @@ import {
   EXTENDED_DETAILS_SCHEMA_VERSION,
 } from './bookingSelfAssessment';
 import { formatBookingSubmissionSummary } from '@shared/bookingSubmissionSummary';
+import {
+  isRegionServiceBookableOnline,
+  NELSON_STANDARD_ONLINE_BOOKING,
+  NELSON_ELITE_ONLINE_BOOKING,
+} from '@shared/bookingRegions';
 
 describe('booking pipeline — form extended JSON', () => {
   it('builds extended JSON with sex, desexed, tags, notes, and skill grades', () => {
@@ -111,6 +116,17 @@ describe('booking pipeline — form extended JSON', () => {
     });
 
     expect(summary).toContain('Standard training session');
+    expect(summary).toContain('$50');
+    expect(summary).toContain('per additional person attending');
     expect(summary).not.toContain('$400');
+  });
+
+  it('documents Nelson online booking policy flags', () => {
+    expect(NELSON_STANDARD_ONLINE_BOOKING).toBe(false);
+    expect(NELSON_ELITE_ONLINE_BOOKING).toBe(false);
+    expect(isRegionServiceBookableOnline('golden-bay', 'standard_beach')).toBe(true);
+    expect(isRegionServiceBookableOnline('golden-bay', 'elite_coaching')).toBe(true);
+    expect(isRegionServiceBookableOnline('nelson-bays', 'standard_beach')).toBe(false);
+    expect(isRegionServiceBookableOnline('nelson-bays', 'elite_coaching')).toBe(false);
   });
 });

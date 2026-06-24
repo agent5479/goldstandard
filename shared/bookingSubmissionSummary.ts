@@ -5,6 +5,7 @@ import {
   clientBookingTagLabel,
   isTrainingPriorityTag,
 } from './clientBookingTags';
+import { formatStandardPriceLine } from './bookingPricing';
 import {
   BOOKING_SERVICE_TYPES,
   type BookingServiceType,
@@ -114,7 +115,12 @@ export function formatBookingSubmissionSummary(input: BookingSubmissionSummaryIn
     line('Location', input.locationLabel),
   ];
   if (service.priceLabel) {
-    sessionLines.push(line('Price', service.priceLabel));
+    sessionLines.push(
+      line(
+        'Price',
+        bookingType === 'standard_beach' ? formatStandardPriceLine() : service.priceLabel
+      )
+    );
   }
 
   const blocks: (string | null)[] = [

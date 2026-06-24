@@ -1,5 +1,7 @@
 /** Booking regions — keep in sync with google-apps-script/Code.gs REGIONS. */
 
+import type { BookingServiceType } from './bookingServiceTypes';
+
 export type BookingRegionId = 'golden-bay' | 'nelson-bays';
 
 export type BookingRegionStatus = 'active' | 'coming_soon';
@@ -14,6 +16,36 @@ export const BOOKING_REGIONS: BookingRegion[] = [
   { id: 'golden-bay', label: 'Golden Bay', status: 'active' },
   { id: 'nelson-bays', label: 'Nelson Bays', status: 'active' },
 ];
+
+/** Flip to true when Nelson beach sessions open on advertised dates (NELSON calendar events). */
+export const NELSON_STANDARD_ONLINE_BOOKING = false;
+
+/** Flip to true when Nelson elite coaching accepts online slot booking. */
+export const NELSON_ELITE_ONLINE_BOOKING = false;
+
+export const NELSON_STANDARD_COMING_SOON_NOTE =
+  'Nelson beach sessions will open on advertised dates — likely a weekend when Warwick runs a Nelson push. Enquire to hear when dates are set.';
+
+export const NELSON_ELITE_CONTACT_NOTE =
+  '$400 elite coaching at your home or a custom location in Nelson Bays — travel included. Arrange by enquiry rather than instant online booking.';
+
+export function isRegionServiceBookableOnline(
+  regionId: BookingRegionId,
+  serviceType: BookingServiceType
+): boolean {
+  if (regionId === 'golden-bay') {
+    return true;
+  }
+  if (regionId === 'nelson-bays') {
+    if (serviceType === 'standard_beach') {
+      return NELSON_STANDARD_ONLINE_BOOKING;
+    }
+    if (serviceType === 'elite_coaching') {
+      return NELSON_ELITE_ONLINE_BOOKING;
+    }
+  }
+  return false;
+}
 
 export const NELSON_BAYS_MAP_CENTER: [number, number] = [-41.27, 173.28];
 

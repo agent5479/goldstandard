@@ -3,7 +3,8 @@ import Seo from '../components/Seo';
 import SiteHeader from '../components/SiteHeader';
 import SiteFooter from '../components/SiteFooter';
 import HeroGallery from './HeroGallery';
-import { SESSION_MINUTES } from '../data/bookingConfig';
+import { SESSION_MINUTES, STANDARD_PRICING_NOTE } from '../data/bookingConfig';
+import { NELSON_ELITE_CONTACT_NOTE, NELSON_STANDARD_COMING_SOON_NOTE } from '@shared/bookingRegions';
 import { SITE_DEFAULT_TITLE, SITE_META_DESCRIPTION, SITE_OG_DESCRIPTION } from '../data/siteConfig';
 import { asset } from '../asset';
 import SectionIcon from '../components/SectionIcon';
@@ -124,6 +125,9 @@ export default function HomePage() {
           </div>
           <p className="service-note">
             Every session is {SESSION_MINUTES} minutes with Warwick, customised to your dog.{' '}
+            Golden Bay: {STANDARD_PRICING_NOTE}{' '}
+            {NELSON_STANDARD_COMING_SOON_NOTE}{' '}
+            {NELSON_ELITE_CONTACT_NOTE}{' '}
             <Link to="/book">Book online</Link> or <Link to="/contact">send an enquiry</Link> to get started.
           </p>
         </div>

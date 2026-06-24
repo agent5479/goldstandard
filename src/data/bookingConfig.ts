@@ -1,3 +1,8 @@
+import {
+  STANDARD_ADDITIONAL_PERSON_NOTE,
+  STANDARD_PRICE_LABEL,
+} from '@shared/bookingPricing';
+
 /** Fixed offering — customised session with Warwick on the day. */
 export const STANDARD_SERVICE = 'Training session' as const;
 
@@ -12,7 +17,9 @@ export const MAX_BOOKING_DAYS_AHEAD = 60;
 export const MIN_NOTICE_HOURS = 16;
 export const GOLDEN_BAY_MIN_NOTICE_HOURS = 12;
 
-export const STANDARD_SERVICE_SUMMARY = `${SESSION_MINUTES}-minute session with Warwick — customised to you and your dog on the day.`;
+export const STANDARD_SERVICE_SUMMARY = `${SESSION_MINUTES}-minute session with Warwick — ${STANDARD_PRICE_LABEL}. ${STANDARD_ADDITIONAL_PERSON_NOTE}.`;
+
+export const STANDARD_PRICING_NOTE = `${STANDARD_PRICE_LABEL} · ${SESSION_MINUTES}-minute session. ${STANDARD_ADDITIONAL_PERSON_NOTE}.`;
 
 export const ELITE_SERVICE_SUMMARY =
   '2.5-hour session at your home or a custom location — $400. Warwick reserves 4 hours in his calendar for travel and preparation.';

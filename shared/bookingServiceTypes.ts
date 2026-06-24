@@ -1,5 +1,7 @@
 /** Public booking service offerings — keep in sync with google-apps-script/Code.gs BOOKING_TYPES. */
 
+import { STANDARD_PRICE_LABEL } from './bookingPricing';
+
 export type BookingServiceType = 'standard_beach' | 'elite_coaching';
 
 export interface BookingServiceTypeConfig {
@@ -15,10 +17,10 @@ export const BOOKING_SERVICE_TYPES: Record<BookingServiceType, BookingServiceTyp
   standard_beach: {
     id: 'standard_beach',
     label: 'Standard training session',
-    headline: '55-minute session at a public beach or reserve',
+    headline: `55-minute session at a public beach or reserve — ${STANDARD_PRICE_LABEL}`,
     sessionMinutes: 55,
     calendarBlockMinutes: 55,
-    priceLabel: null,
+    priceLabel: STANDARD_PRICE_LABEL,
   },
   elite_coaching: {
     id: 'elite_coaching',

@@ -23,10 +23,13 @@ export default function BookPage() {
               <h1>Choose your service, pick a time, and confirm online. Automatically receive a calendar confirmation by email.</h1>
               <ul className="booking-hero-facts">
                 <li>
-                  <strong>Standard session</strong> — 55&nbsp;min at a public beach or reserve
+                  <strong>Standard session</strong> — 55&nbsp;min at a public beach or reserve ($50)
                 </li>
                 <li>
                   <strong>Elite coaching</strong> — 2.5&nbsp;hr at your home or a custom location ($400)
+                </li>
+                <li>
+                  <strong>Nelson Bays</strong> — beach sessions opening on advertised dates; elite coaching by enquiry ($400, travel included)
                 </li>
               </ul>
             </div>

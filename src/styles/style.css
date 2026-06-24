@@ -1846,6 +1846,14 @@ body.page-guide {
   background: rgba(184, 131, 42, 0.06);
 }
 
+.booking-nelson-contact-panel {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+
 .booking-home-address-options {
   display: contents;
 }

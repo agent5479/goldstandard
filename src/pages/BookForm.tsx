@@ -19,6 +19,7 @@ import {
   ELITE_SERVICE,
   ELITE_SERVICE_SUMMARY,
   ELITE_PRICING_NOTE,
+  STANDARD_PRICING_NOTE,
   ELITE_CLIENT_SLOT_HOURS,
   shortSlotLabel,
   BOOKING_CLIENT_SLOT_HOURS,
@@ -35,7 +36,14 @@ import {
   NELSON_BAYS_PLACEHOLDER_ID,
   type BookingLocation,
 } from '../data/bookingLocations';
-import { BOOKING_REGIONS, type BookingRegionId } from '@shared/bookingRegions';
+import {
+  BOOKING_REGIONS,
+  isRegionServiceBookableOnline,
+  NELSON_ELITE_CONTACT_NOTE,
+  NELSON_STANDARD_COMING_SOON_NOTE,
+  NELSON_STANDARD_ONLINE_BOOKING,
+  type BookingRegionId,
+} from '@shared/bookingRegions';
 import {
   BOOKING_SERVICE_TYPE_LIST,
   BOOKING_SERVICE_TYPES,
@@ -159,7 +167,12 @@ export default function BookForm() {
   }, [status]);
 
   useEffect(() => {
-    if (!FORM_ENDPOINT || !selectedRegionId || !selectedServiceType) {
+    if (
+      !FORM_ENDPOINT ||
+      !selectedRegionId ||
+      !selectedServiceType ||
+      !isRegionServiceBookableOnline(selectedRegionId, selectedServiceType)
+    ) {
       setSlots([]);
       setLoadingSlots(false);
       setRefetchingSlots(false);
@@ -276,7 +289,9 @@ export default function BookForm() {
     setSelectedSlot('');
     setSelectedLocationId('');
     setStatus({ kind: 'idle' });
-    scrollTo(timeRef);
+    if (selectedServiceType && isRegionServiceBookableOnline(regionId, selectedServiceType)) {
+      scrollTo(timeRef);
+    }
   };
 
   const handleSlotSelect = (slotStart: string) => {
@@ -326,6 +341,17 @@ export default function BookForm() {
 
     if (!selectedRegionId) {
       setStatus({ kind: 'error', message: 'Please choose a training region.' });
+      return;
+    }
+
+    if (!isRegionServiceBookableOnline(selectedRegionId, selectedServiceType)) {
+      setStatus({
+        kind: 'error',
+        message:
+          selectedServiceType === 'elite_coaching'
+            ? 'Nelson Bays elite coaching is arranged by enquiry — please use the contact form.'
+            : 'Nelson Bays beach sessions are not open for online booking yet.',
+      });
       return;
     }
 
@@ -478,6 +504,11 @@ export default function BookForm() {
     (!isEliteService || eliteLocationReady);
   const stepDetailsReady = stepLocationDone;
   const isNelsonRegion = selectedRegionId === 'nelson-bays';
+  const nelsonContactOnly =
+    isNelsonRegion &&
+    isEliteService &&
+    Boolean(selectedRegionId) &&
+    !isRegionServiceBookableOnline('nelson-bays', 'elite_coaching');
   const eliteSelected = isEliteCoachingLocation(selectedLocationId);
 
   const locationSummaryLabel = (() => {
@@ -627,13 +658,20 @@ export default function BookForm() {
         {!stepServiceDone ? (
           <p className="form-hint">Choose a service type above to continue.</p>
         ) : (
+        <>
         <div className="booking-region-picker" role="radiogroup" aria-label="Training region">
-          {BOOKING_REGIONS.map((region) => (
+          {BOOKING_REGIONS.map((region) => {
+            const nelsonStandardClosed =
+              region.id === 'nelson-bays' &&
+              selectedServiceType === 'standard_beach' &&
+              !NELSON_STANDARD_ONLINE_BOOKING;
+
+            return (
             <button
               key={region.id}
               type="button"
               className={`booking-region-btn${selectedRegionId === region.id ? ' is-selected' : ''}`}
-              disabled={endpointMissing || submitting}
+              disabled={endpointMissing || submitting || nelsonStandardClosed}
               aria-pressed={selectedRegionId === region.id}
               onClick={() => handleRegionSelect(region.id)}
             >
@@ -641,8 +679,10 @@ export default function BookForm() {
               {region.id === 'nelson-bays' ? (
                 <span className="booking-region-note">
                   {isEliteService
-                    ? 'Elite coaching at your home or a custom location — NELSON calendar days only'
-                    : 'By appointment — NELSON calendar days only'}
+                    ? 'Elite coaching — $400, travel included (arrange by enquiry)'
+                    : nelsonStandardClosed
+                      ? 'Beach sessions — opening on advertised dates'
+                      : 'By appointment — NELSON calendar days only'}
                 </span>
               ) : (
                 <span className="booking-region-note">
@@ -652,8 +692,21 @@ export default function BookForm() {
                 </span>
               )}
             </button>
-          ))}
+            );
+          })}
         </div>
+        {selectedServiceType === 'standard_beach' && !NELSON_STANDARD_ONLINE_BOOKING ? (
+          <p className="form-hint">{NELSON_STANDARD_COMING_SOON_NOTE}</p>
+        ) : null}
+        {nelsonContactOnly ? (
+          <div className="booking-nelson-contact-panel">
+            <p className="form-hint booking-home-visit-pricing">{NELSON_ELITE_CONTACT_NOTE}</p>
+            <Link to="/contact" className="btn btn-primary">
+              Send an enquiry
+            </Link>
+          </div>
+        ) : null}
+        </>
         )}
         </div>
       </section>
@@ -679,6 +732,10 @@ export default function BookForm() {
         <div className="booking-step-body">
         {!stepRegionDone ? (
           <p className="form-hint">Choose a region above to see available times.</p>
+        ) : nelsonContactOnly ? (
+          <p className="form-hint">
+            Nelson Bays elite coaching is arranged by enquiry — use the contact link in step 2 above.
+          </p>
         ) : (
           <>
         <div className="form-field">
@@ -1029,6 +1086,9 @@ export default function BookForm() {
               {' — '}
               {isEliteService ? ELITE_SERVICE_SUMMARY : STANDARD_SERVICE_SUMMARY}
             </p>
+            {!isEliteService ? (
+              <p className="form-hint booking-home-visit-pricing">{STANDARD_PRICING_NOTE}</p>
+            ) : null}
             <div className="form-field">
               <DogBreedSelector
                 value={dogBreed}
