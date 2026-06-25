@@ -8,7 +8,7 @@ import { fileURLToPath } from 'url';
 import sharp from 'sharp';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const sourceDir = join(__dirname, '..', 'public', 'images');
+const sourceDir = join(__dirname, '..', 'public', 'images', 'icons');
 const targetDir = join(__dirname, '..', 'public', 'favicon');
 const SIZES = [16, 32, 48, 180, 192, 512];
 const BORDER_RED = { r: 220, g: 53, b: 69 }; // #dc3545
