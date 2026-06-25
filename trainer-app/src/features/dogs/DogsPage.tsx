@@ -1,26 +1,55 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, type CSSProperties } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { Row, Col, Card, Form, InputGroup } from 'react-bootstrap';
 import { DogSummaryCard } from '@/components/DogSummaryCard';
 import { useTenantData } from '@/contexts/TenantDataContext';
 import { labels } from '@/data/terminology';
-import { getOwnerName, isDogArchived, matchesDogSearch } from '@/utils/householdHelpers';
+import { ALL_DOG_STAGES, DOG_TRAINING_STAGE_META, type DogTrainingStage } from '@/data/householdTypes';
+import { getOwnerName, isDogArchived, matchesDogSearch, resolveDogTrainingStage } from '@/utils/householdHelpers';
 import type { Dog } from '@/types';
+
+function parseStageFilter(value: string | null): DogTrainingStage | null {
+  if (!value) return null;
+  return ALL_DOG_STAGES.includes(value as DogTrainingStage) ? (value as DogTrainingStage) : null;
+}
 
 export default function DogsPage() {
   const { data } = useTenantData();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [search, setSearch] = useState('');
   const [showArchived, setShowArchived] = useState(false);
+  const [stageFilter, setStageFilter] = useState<DogTrainingStage | null>(() => parseStageFilter(searchParams.get('stage')));
+
+  useEffect(() => {
+    setStageFilter(parseStageFilter(searchParams.get('stage')));
+  }, [searchParams]);
+
+  const toggleStageFilter = (stage: DogTrainingStage) => {
+    const next = stageFilter === stage ? null : stage;
+    setStageFilter(next);
+    if (next) {
+      setSearchParams({ stage: next }, { replace: true });
+    } else {
+      setSearchParams({}, { replace: true });
+    }
+  };
 
   const filteredDogs = useMemo(() => {
     const query = search.trim().toLowerCase();
     return data.dogs
       .filter((dog) => {
         const owner = data.owners.find((entry) => String(entry.id) === String(dog.ownerId));
+        const stage = resolveDogTrainingStage(dog, owner);
+
+        if (stageFilter) {
+          return stage === stageFilter;
+        }
+
         return showArchived ? isDogArchived(dog, owner) : !isDogArchived(dog, owner);
       })
       .filter((dog) => !query || matchesDogSearch(dog, query, getOwnerName(data, dog.ownerId)))
       .sort((a, b) => (a.name || '').localeCompare(b.name || ''));
-  }, [data, search, showArchived]);
+  }, [data, search, showArchived, stageFilter]);
 
   const grouped = useMemo(() => {
     const groups: Record<string, Dog[]> = {};
@@ -39,7 +68,7 @@ export default function DogsPage() {
       </div>
 
       <Row className="mb-3 g-2">
-        <Col md={6}>
+        <Col lg={8}>
           <InputGroup>
             <InputGroup.Text><i className="bi bi-search" /></InputGroup.Text>
             <Form.Control
@@ -48,14 +77,35 @@ export default function DogsPage() {
               onChange={(e) => setSearch(e.target.value)}
             />
           </InputGroup>
+          <div className="training-stage-filter-tags mt-2" role="group" aria-label={labels.filterByTrainingStage}>
+            {ALL_DOG_STAGES.map((stage) => {
+              const meta = DOG_TRAINING_STAGE_META[stage];
+              const selected = stageFilter === stage;
+              return (
+                <button
+                  key={stage}
+                  type="button"
+                  className={`training-stage-filter-tag${selected ? ' training-stage-filter-tag--active' : ''}`}
+                  style={{ '--stage-color': meta.color } as CSSProperties}
+                  aria-pressed={selected}
+                  onClick={() => toggleStageFilter(stage)}
+                >
+                  <i className={`bi ${meta.icon}`} aria-hidden="true" />
+                  {stage}
+                </button>
+              );
+            })}
+          </div>
         </Col>
-        <Col md={6} className="d-flex align-items-center">
-          <Form.Check
-            type="switch"
-            label={labels.showArchived}
-            checked={showArchived}
-            onChange={(e) => setShowArchived(e.target.checked)}
-          />
+        <Col lg={4} className="d-flex align-items-start align-items-lg-center pt-lg-0 pt-1">
+          {!stageFilter && (
+            <Form.Check
+              type="switch"
+              label={labels.showArchived}
+              checked={showArchived}
+              onChange={(e) => setShowArchived(e.target.checked)}
+            />
+          )}
         </Col>
       </Row>
 

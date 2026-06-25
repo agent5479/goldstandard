@@ -131,3 +131,8 @@ export function getLocationMapsUrl(location: BookingLocation): string {
 }
 
 export { inferRegionFromLocationName };
+
+export const BOOKING_REGION_META: Record<BookingRegionId, { icon: string; color: string }> = {
+  'golden-bay': { icon: 'bi-sun', color: '#b8832a' },
+  'nelson-bays': { icon: 'bi-water', color: '#3d6b8c' },
+};

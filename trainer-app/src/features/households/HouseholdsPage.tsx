@@ -1,6 +1,8 @@
-import { useState, useMemo } from 'react';
+import { useEffect, useMemo, useState, type CSSProperties } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { Row, Col, Card, Form, Badge, InputGroup, Button, Modal } from 'react-bootstrap';
 import { NavButton } from '@/components/NavButton';
+import { BookingRegionBadge } from '@/components/BookingRegionBadge';
 import { useTenantData } from '@/contexts/TenantDataContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { usePermissions } from '@/hooks/usePermissions';
@@ -10,9 +12,22 @@ import { VocalCallsSummary } from '@/components/VocalCallsEditor';
 import { DogSummaryCard } from '@/components/DogSummaryCard';
 import { GUIDE_ANCHORS, getFocusById } from '@/data/assessmentTaxonomy';
 import { ARCHIVED_DOG_STAGE, HOUSEHOLD_TYPES } from '@/data/householdTypes';
-import { getOwnerDogs, isDogArchived, ownerStatusBadge, resolveOwnerMobility } from '@/utils/householdHelpers';
+import { BOOKING_REGION_META, type BookingRegionId } from '@/data/bookingLocations';
+import { BOOKING_REGIONS } from '@shared/bookingRegions';
+import {
+  getOwnerDogs,
+  isDogArchived,
+  ownerStatusBadge,
+  resolveOwnerBookingRegion,
+  resolveOwnerMobility,
+} from '@/utils/householdHelpers';
 import { mobilityLabel } from '@/data/dogMobility';
 import type { Dog, Owner } from '@/types';
+
+function parseRegionFilter(value: string | null): BookingRegionId | null {
+  if (!value) return null;
+  return BOOKING_REGIONS.some((region) => region.id === value) ? (value as BookingRegionId) : null;
+}
 
 export default function HouseholdsPage() {
   const { data, setData } = useTenantData();
@@ -20,17 +35,34 @@ export default function HouseholdsPage() {
   const { can } = usePermissions();
   const canCreate = can('OWNER_CREATE');
   const canArchive = can('OWNER_UPDATE');
+  const [searchParams, setSearchParams] = useSearchParams();
   const [search, setSearch] = useState('');
   const [showArchived, setShowArchived] = useState(false);
+  const [regionFilter, setRegionFilter] = useState<BookingRegionId | null>(() => parseRegionFilter(searchParams.get('region')));
   const [archiveTarget, setArchiveTarget] = useState<Owner | null>(null);
   const [archiving, setArchiving] = useState(false);
+
+  useEffect(() => {
+    setRegionFilter(parseRegionFilter(searchParams.get('region')));
+  }, [searchParams]);
+
+  const toggleRegionFilter = (regionId: BookingRegionId) => {
+    const next = regionFilter === regionId ? null : regionId;
+    setRegionFilter(next);
+    if (next) {
+      setSearchParams({ region: next }, { replace: true });
+    } else {
+      setSearchParams({}, { replace: true });
+    }
+  };
 
   const filteredOwners = useMemo(() => {
     return data.owners
       .filter((o) => (showArchived ? o.archived : !o.archived))
+      .filter((o) => !regionFilter || resolveOwnerBookingRegion(o) === regionFilter)
       .filter((o) => !search || o.name?.toLowerCase().includes(search.toLowerCase()))
       .sort((a, b) => (a.name || '').localeCompare(b.name || ''));
-  }, [data.owners, search, showArchived]);
+  }, [data.owners, search, showArchived, regionFilter]);
 
   const grouped = useMemo(() => {
     const groups: Record<string, Owner[]> = {};
@@ -111,7 +143,7 @@ export default function HouseholdsPage() {
       </div>
 
       <Row className="mb-3 g-2">
-        <Col md={6}>
+        <Col lg={8}>
           <InputGroup>
             <InputGroup.Text><i className="bi bi-search" /></InputGroup.Text>
             <Form.Control
@@ -120,8 +152,27 @@ export default function HouseholdsPage() {
               onChange={(e) => setSearch(e.target.value)}
             />
           </InputGroup>
+          <div className="training-stage-filter-tags mt-2" role="group" aria-label={labels.filterByRegion}>
+            {BOOKING_REGIONS.map((region) => {
+              const meta = BOOKING_REGION_META[region.id];
+              const selected = regionFilter === region.id;
+              return (
+                <button
+                  key={region.id}
+                  type="button"
+                  className={`training-stage-filter-tag${selected ? ' training-stage-filter-tag--active' : ''}`}
+                  style={{ '--stage-color': meta.color } as CSSProperties}
+                  aria-pressed={selected}
+                  onClick={() => toggleRegionFilter(region.id)}
+                >
+                  <i className={`bi ${meta.icon}`} aria-hidden="true" />
+                  {region.label}
+                </button>
+              );
+            })}
+          </div>
         </Col>
-        <Col md={6} className="d-flex align-items-center">
+        <Col lg={4} className="d-flex align-items-start align-items-lg-center pt-lg-0 pt-1">
           <Form.Check
             type="switch"
             label={labels.showArchived}
@@ -141,6 +192,7 @@ export default function HouseholdsPage() {
               const typeInfo = HOUSEHOLD_TYPES[owner.householdType as string] || HOUSEHOLD_TYPES.other;
               const dogs = getOwnerDogs(data, String(owner.id));
               const householdMobility = resolveOwnerMobility(owner, dogs);
+              const bookingRegion = resolveOwnerBookingRegion(owner);
               return (
                 <Col key={String(owner.id)} md={6} lg={4}>
                   <Card className={`household-card h-100 ${owner.archived ? 'opacity-75' : ''}`}>
@@ -157,6 +209,7 @@ export default function HouseholdsPage() {
                       </Card.Text>
                       <div className="d-flex gap-1 flex-wrap mb-2">
                         <Badge bg="light" text="dark">{typeInfo.name}</Badge>
+                        {bookingRegion && <BookingRegionBadge regionId={bookingRegion} />}
                         {owner.status && (
                           <Badge bg={ownerStatusBadge(owner.status)}>{ownerStatusLabels[owner.status] || owner.status}</Badge>
                         )}

@@ -1,9 +1,9 @@
-import { useMemo } from 'react';
+import { useMemo, type CSSProperties } from 'react';
 import { Link } from 'react-router-dom';
-import { Badge, Card } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 import { labels } from '@/data/terminology';
-import { ALL_DOG_STAGES } from '@/data/householdTypes';
-import { countDogsByTrainingStage, dogTrainingStageBadge } from '@/utils/householdHelpers';
+import { DOG_TRAINING_STAGES, DOG_TRAINING_STAGE_META } from '@/data/householdTypes';
+import { countDogsByTrainingStage } from '@/utils/householdHelpers';
 import type { TenantData } from '@/types';
 
 interface TrainingStageSummaryProps {
@@ -21,14 +21,23 @@ export function TrainingStageSummary({ data }: TrainingStageSummaryProps) {
       </Card.Header>
       <Card.Body>
         <div className="training-stage-summary">
-          {ALL_DOG_STAGES.map((stage) => (
-            <div key={stage} className="training-stage-stat">
-              <div className="training-stage-stat__count">{counts[stage]}</div>
-              <Badge bg={dogTrainingStageBadge(stage)} className="training-stage-stat__badge">
-                {stage}
-              </Badge>
-            </div>
-          ))}
+          {DOG_TRAINING_STAGES.map((stage) => {
+            const meta = DOG_TRAINING_STAGE_META[stage];
+            return (
+              <Link
+                key={stage}
+                to={`/dogs?stage=${encodeURIComponent(stage)}`}
+                className="training-stage-card text-decoration-none"
+                style={{ '--stage-color': meta.color } as CSSProperties}
+              >
+                <div className="training-stage-card__icon">
+                  <i className={`bi ${meta.icon}`} />
+                </div>
+                <div className="training-stage-card__count">{counts[stage]}</div>
+                <div className="training-stage-card__label">{stage}</div>
+              </Link>
+            );
+          })}
         </div>
       </Card.Body>
     </Card>

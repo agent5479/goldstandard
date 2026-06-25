@@ -4,6 +4,12 @@ import { formatBreedDisplayLabel } from '@/utils/dogBreedLabel';
 import { dogDesexedLabel, dogSexLabel } from '@/data/dogDemographics';
 import { profileTagNotesForSearch } from '@/utils/profileTagNotes';
 import {
+  getLocationByName,
+  inferRegionFromLocationName,
+  type BookingRegionId,
+} from '@/data/bookingLocations';
+import { isValidRegionId } from '@shared/bookingRegions';
+import {
   ALL_DOG_STAGES,
   ARCHIVED_DOG_STAGE,
   DEFAULT_TRAINING_STAGE,
@@ -69,6 +75,17 @@ export function getOwnerDogs(data: TenantData, ownerId: string) {
 export function getOwnerName(data: TenantData, ownerId: string | number | undefined): string | undefined {
   if (ownerId == null) return undefined;
   return data.owners.find((owner) => String(owner.id) === String(ownerId))?.name;
+}
+
+export function resolveOwnerBookingRegion(owner: Pick<Owner, 'preferredLocation'>): BookingRegionId | null {
+  const locationName = owner.preferredLocation?.trim();
+  if (!locationName) return null;
+
+  const byName = getLocationByName(locationName);
+  if (byName) return byName.regionId;
+
+  const inferred = inferRegionFromLocationName(locationName);
+  return inferred && isValidRegionId(inferred) ? inferred : null;
 }
 
 export function matchesDogSearch(dog: TenantData['dogs'][number], query: string, ownerName?: string): boolean {

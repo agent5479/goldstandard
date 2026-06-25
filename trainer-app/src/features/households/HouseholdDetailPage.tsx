@@ -16,6 +16,7 @@ import {
   normalizeOwnerGuideTags,
 } from '@/data/trainingFocusAllocation';
 import { labels } from '@/data/terminology';
+import { BookingRegionBadge } from '@/components/BookingRegionBadge';
 import { ARCHIVED_DOG_STAGE, DEFAULT_TRAINING_STAGE } from '@/data/householdTypes';
 import { BOOKING_LOCATIONS, BOOKING_MAP_CENTER } from '@/data/bookingLocations';
 import { DEFAULT_TRAINING_FOCUS } from '@/data/trainingFocus';
@@ -29,6 +30,7 @@ import {
   getLocationHistory,
   buildOwnerDenormalizedUpdates,
   isDogArchived,
+  resolveOwnerBookingRegion,
 } from '@/utils/householdHelpers';
 import type { HouseholdVocalCalls } from '@/data/vocalCalls';
 import type { OwnerCapacityDomain, SkillGrade } from '@/data/assessmentTaxonomy';
@@ -154,6 +156,10 @@ export default function HouseholdDetailPage() {
     [data, ownerId]
   );
   const locationHistory = useMemo(() => (ownerId ? getLocationHistory(data, ownerId) : []), [data, ownerId]);
+  const bookingRegion = useMemo(
+    () => resolveOwnerBookingRegion({ preferredLocation: form.preferredLocation }),
+    [form.preferredLocation]
+  );
   const dogAgeSyncKey = useMemo(
     () =>
       dogs
@@ -686,12 +692,15 @@ export default function HouseholdDetailPage() {
   return (
     <div>
       <div className="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
-        <h2>
-          <i className="bi bi-people me-2" />
-          {isNew ? labels.addHousehold : labels.editHousehold}
-          {!isNew && canEdit && saving && (
-            <span className="fs-6 fw-normal text-muted ms-2">Saving…</span>
-          )}
+        <h2 className="d-flex align-items-center flex-wrap gap-2 mb-0">
+          <span>
+            <i className="bi bi-people me-2" />
+            {isNew ? labels.addHousehold : labels.editHousehold}
+            {!isNew && canEdit && saving && (
+              <span className="fs-6 fw-normal text-muted ms-2">Saving…</span>
+            )}
+          </span>
+          {!isNew && bookingRegion && <BookingRegionBadge regionId={bookingRegion} />}
         </h2>
         <div className="d-flex flex-wrap gap-2">
           {!isNew && canArchive && form.archived && (

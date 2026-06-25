@@ -39,6 +39,8 @@ export const labels = {
 
   searchHouseholds: 'Search households...',
   searchDogs: 'Search dogs, breeds, issues, or household...',
+  filterByTrainingStage: 'Filter by training stage',
+  filterByRegion: 'Filter by region',
   showArchived: 'Show archived',
   archiveHousehold: 'Archive household',
   archiveHouseholdConfirm: 'Archive this household? It will be hidden from the main list but kept in your records.',

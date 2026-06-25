@@ -64,6 +64,7 @@ export function inferRegionFromLocationName(locationName: string): BookingRegion
   const name = locationName.trim().toLowerCase();
   if (!name) return '';
   if (name.includes('nelson')) return 'nelson-bays';
+  if (name.includes('golden bay')) return 'golden-bay';
   const goldenBayNames = [
     'pohara beach',
     'rototai reserve',
