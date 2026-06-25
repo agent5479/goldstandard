@@ -17,7 +17,7 @@
  *   { action: "availability", date, region, location? }  — available booking slots for a date
  *   { action: "book", region, slot_start, location, ... }
  *
- * Script version: 2026-06-24-v19 (booking email site URL + SEO copy)
+ * Script version: 2026-06-24-v20 (standard session $60)
  *   - Multi-region: golden-bay | nelson-bays (region required on availability/book)
  *   - 15-min slot grid; 55 min sessions; 5 min handover; commute buffer between locations
  *   - Nelson Bays: bookable only on days with an all-day NELSON calendar event;
@@ -36,7 +36,7 @@ const SESSION_MINUTES = 55;
 const ELITE_SESSION_MINUTES = 150;
 const ELITE_CALENDAR_BLOCK_MINUTES = 240;
 const ELITE_LAST_START_HOUR = 12;
-const STANDARD_SESSION_PRICE_DOLLARS = 50;
+const STANDARD_SESSION_PRICE_DOLLARS = 60;
 const ADDITIONAL_PERSON_PRICE_DOLLARS = 10;
 const STANDARD_PRICE_LABEL = "$" + STANDARD_SESSION_PRICE_DOLLARS;
 const STANDARD_ADDITIONAL_PERSON_NOTE = "+$" + ADDITIONAL_PERSON_PRICE_DOLLARS + " per additional person attending";

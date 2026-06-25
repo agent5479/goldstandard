@@ -3,6 +3,7 @@ import Seo from '../components/Seo';
 import SiteHeader from '../components/SiteHeader';
 import SiteFooter from '../components/SiteFooter';
 import BookForm from './BookForm';
+import { STANDARD_PRICE_LABEL } from '@shared/bookingPricing';
 
 export default function BookPage() {
   return (
@@ -23,7 +24,7 @@ export default function BookPage() {
               <h1>Choose your service, pick a time, and confirm online. Automatically receive a calendar confirmation by email.</h1>
               <ul className="booking-hero-facts">
                 <li>
-                  <strong>Standard session</strong> — 55&nbsp;min at a public beach or reserve ($50)
+                  <strong>Standard session</strong> — 55&nbsp;min at a public beach or reserve ({STANDARD_PRICE_LABEL})
                 </li>
                 <li>
                   <strong>Elite coaching</strong> — 2.5&nbsp;hr at your home or a custom location ($400)

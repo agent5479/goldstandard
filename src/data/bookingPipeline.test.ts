@@ -116,7 +116,7 @@ describe('booking pipeline — form extended JSON', () => {
     });
 
     expect(summary).toContain('Standard training session');
-    expect(summary).toContain('$50');
+    expect(summary).toContain('$60');
     expect(summary).toContain('per additional person attending');
     expect(summary).not.toContain('$400');
   });
