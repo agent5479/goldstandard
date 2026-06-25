@@ -485,6 +485,7 @@ function resolveCorenScores(breedName: string): { scores: IntelligenceScores; so
   }
 
   if (breedName === 'Schnauzer (Standard / Miniature)') {
+    // Deprecated merged label — averaged Coren profile for legacy stored breed strings.
     const standard = corenByName.get('Standard Schnauzer');
     const miniature = corenByName.get('Miniature Schnauzer');
     if (standard && miniature) {

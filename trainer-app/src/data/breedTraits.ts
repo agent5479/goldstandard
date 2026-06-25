@@ -395,7 +395,26 @@ const breedOverrideMap: Record<string, BreedTraitProfile> = {
     sizeClass: 'large',
   },
   'Patterdale Terrier': { sizeClass: 'small' },
-  'Schnauzer (Standard / Miniature)': { sizeClass: 'medium' },
+  'Standard Schnauzer': {
+    sizeClass: 'medium',
+    clientSummary: 'Versatile mid-size terrier — bold, trainable, and athletic; less lap-dog than the miniature.',
+    overrides: {
+      personality:
+        'Bold, versatile terrier — confident and handler-attuned; more measured than the miniature but still direct, alert, and terrier-honest.',
+      working:
+        'Athletic working terrier drive — stamina and focus for obedience, sports, or practical jobs; needs structure and purpose, not just walks.',
+    },
+  },
+  'Miniature Schnauzer': {
+    sizeClass: 'small',
+    clientSummary: 'Compact alert terrier — bright, vocal, and people-focused; needs clear boundaries despite small size.',
+    overrides: {
+      personality:
+        'Alert, vocal companion terrier — bright and people-focused; small size often invites permissiveness, so boundaries must be as serious as for a large dog.',
+      working:
+        'High terrier spark in a small package — puzzle-minded and busy; boredom becomes barking, patrolling, or reactivity without structure.',
+    },
+  },
   'Pig Dog (NZ hunting cross)': {
     sizeClass: 'large',
     overrides: {

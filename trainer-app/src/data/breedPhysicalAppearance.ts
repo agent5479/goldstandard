@@ -261,8 +261,10 @@ export const breedPhysicalAppearance: Record<string, string> = {
     '~15–18 kg. Medium soft-coated terrier — blue-grey curly coat and bearded head.',
   'Soft-Coated Wheaten Terrier':
     '~14–20 kg. Medium terrier — silky wheaten coat, square build, and softer outline than wiry types.',
-  'Schnauzer (Standard / Miniature)':
-    '~5–20 kg by variant. Square terrier-type — harsh coat, beard, and eyebrows; Miniature under ~9 kg.',
+  'Standard Schnauzer':
+    '~14–20 kg. Medium square terrier — harsh wiry coat, beard, and eyebrows; athletic build scaled up from the miniature.',
+  'Miniature Schnauzer':
+    '~5–9 kg. Small square terrier — same silhouette as the standard in compact form; harsh wiry coat, beard, and eyebrows.',
   'Pig Dog (NZ hunting cross)':
     '~25–40 kg typically. NZ hunting cross — muscular mesomorph build; short coat; size varies by cross.',
   'Bull Arab':

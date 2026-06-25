@@ -5,8 +5,11 @@ export const POODLE_BREED_NAMES = [
   'Toy Poodle',
 ] as const;
 
-export const SCHNAUZER_STANDARD_MINI = 'Schnauzer (Standard / Miniature)' as const;
+export const STANDARD_SCHNAUZER = 'Standard Schnauzer' as const;
+export const MINIATURE_SCHNAUZER = 'Miniature Schnauzer' as const;
 export const SCHNAUZER_GIANT = 'Giant Schnauzer' as const;
+/** @deprecated Merged label — use Standard Schnauzer or Miniature Schnauzer. */
+export const SCHNAUZER_LEGACY_MERGED = 'Schnauzer (Standard / Miniature)' as const;
 
 export type PoodleSize = 'standard' | 'miniature' | 'toy';
 
@@ -19,7 +22,8 @@ const POODLE_BY_SIZE: Record<PoodleSize, (typeof POODLE_BREED_NAMES)[number]> = 
 type ParentPattern =
   | string
   | 'any-poodle'
-  | 'standard-mini-schnauzer'
+  | 'standard-schnauzer'
+  | 'miniature-schnauzer'
   | 'giant-schnauzer'
   | 'any-schnauzer';
 
@@ -73,7 +77,7 @@ export const COLLOQUIAL_MIX_DEFINITIONS: ColloquialMixDefinition[] = [
   {
     title: 'Schnoodle',
     canonicalBreed: 'Schnoodle',
-    parents: ['standard-mini-schnauzer', 'any-poodle'],
+    parents: ['any-schnauzer', 'any-poodle'],
   },
   {
     title: 'Giant Schnoodle',
@@ -105,87 +109,87 @@ export const COLLOQUIAL_MIX_DEFINITIONS: ColloquialMixDefinition[] = [
   // ── Schnauzer crosses (standard / miniature) ──
   {
     title: 'Snorkie',
-    parents: ['standard-mini-schnauzer', 'Yorkshire Terrier'],
+    parents: ['miniature-schnauzer', 'Yorkshire Terrier'],
     aliases: ['Schorkie'],
   },
   {
     title: 'Schnug',
-    parents: ['standard-mini-schnauzer', 'Pug'],
+    parents: ['miniature-schnauzer', 'Pug'],
   },
   {
     title: 'Chonzer',
-    parents: ['standard-mini-schnauzer', 'Bichon Frise'],
+    parents: ['miniature-schnauzer', 'Bichon Frise'],
     aliases: ['Bonzer'],
   },
   {
     title: 'Schnocker',
-    parents: ['standard-mini-schnauzer', 'Cocker Spaniel'],
+    parents: ['miniature-schnauzer', 'Cocker Spaniel'],
   },
   {
     title: 'Schnese',
-    parents: ['standard-mini-schnauzer', 'Havanese'],
+    parents: ['miniature-schnauzer', 'Havanese'],
   },
   {
     title: 'Schweenie',
-    parents: ['standard-mini-schnauzer', 'Miniature Dachshund'],
+    parents: ['miniature-schnauzer', 'Miniature Dachshund'],
   },
   {
     title: 'Schweenie',
-    parents: ['standard-mini-schnauzer', 'Dachshund'],
+    parents: ['miniature-schnauzer', 'Dachshund'],
   },
   {
     title: 'Schapso',
-    parents: ['standard-mini-schnauzer', 'Lhasa Apso'],
+    parents: ['miniature-schnauzer', 'Lhasa Apso'],
   },
   {
     title: 'Sniffon',
-    parents: ['standard-mini-schnauzer', 'Brussels Griffon'],
+    parents: ['miniature-schnauzer', 'Brussels Griffon'],
   },
   {
     title: 'Schnauzer Pei',
-    parents: ['standard-mini-schnauzer', 'Shar Pei'],
+    parents: ['miniature-schnauzer', 'Shar Pei'],
   },
   {
     title: 'Minibozer',
-    parents: ['standard-mini-schnauzer', 'Boston Terrier'],
+    parents: ['miniature-schnauzer', 'Boston Terrier'],
   },
   {
     title: 'Snarnie',
-    parents: ['standard-mini-schnauzer', 'Miniature Pinscher'],
+    parents: ['miniature-schnauzer', 'Miniature Pinscher'],
     aliases: ['Schnauzer Pinscher'],
   },
   {
     title: 'Pom-A-Schnauzer',
-    parents: ['standard-mini-schnauzer', 'Pomeranian'],
+    parents: ['miniature-schnauzer', 'Pomeranian'],
     aliases: ['Pomchauzer'],
   },
   {
     title: 'Schnauzer cross',
-    parents: ['standard-mini-schnauzer', 'Maltese'],
+    parents: ['miniature-schnauzer', 'Maltese'],
     aliases: ['Maltese Schnauzer cross'],
   },
   {
     title: 'Schnauzer cross',
-    parents: ['standard-mini-schnauzer', 'Jack Russell Terrier'],
+    parents: ['miniature-schnauzer', 'Jack Russell Terrier'],
     aliases: ['Jack Schnauzer'],
   },
   {
     title: 'Schnauzer cross',
-    parents: ['standard-mini-schnauzer', 'Chihuahua'],
+    parents: ['miniature-schnauzer', 'Chihuahua'],
     aliases: ['Chihuahua Schnauzer cross'],
   },
   {
     title: 'Schnauzer cross',
-    parents: ['standard-mini-schnauzer', 'Shih Tzu'],
+    parents: ['miniature-schnauzer', 'Shih Tzu'],
     aliases: ['Shih Tzu Schnauzer cross'],
   },
   {
     title: 'Schnauzer cross',
-    parents: ['standard-mini-schnauzer', 'French Bulldog'],
+    parents: ['miniature-schnauzer', 'French Bulldog'],
   },
   {
     title: 'Schnauzer cross',
-    parents: ['standard-mini-schnauzer', 'Staffordshire Bull Terrier (Staffy)'],
+    parents: ['miniature-schnauzer', 'Staffordshire Bull Terrier (Staffy)'],
     aliases: ['Staffy Schnauzer cross'],
   },
 
@@ -459,7 +463,8 @@ export const COLLOQUIAL_MIX_DEFINITIONS: ColloquialMixDefinition[] = [
 ];
 
 const SCHNAUZER_PATTERNS = new Set<ParentPattern>([
-  'standard-mini-schnauzer',
+  'standard-schnauzer',
+  'miniature-schnauzer',
   'giant-schnauzer',
   'any-schnauzer',
 ]);
@@ -483,7 +488,8 @@ export function resolveParentPatternToBreedName(
     }
     return 'Miniature Poodle';
   }
-  if (pattern === 'standard-mini-schnauzer') return SCHNAUZER_STANDARD_MINI;
+  if (pattern === 'standard-schnauzer') return STANDARD_SCHNAUZER;
+  if (pattern === 'miniature-schnauzer') return MINIATURE_SCHNAUZER;
   if (pattern === 'giant-schnauzer') return SCHNAUZER_GIANT;
   return pattern;
 }
@@ -561,11 +567,12 @@ function matchesPoodle(breedName: string, sizes?: PoodleSize[]): boolean {
 
 function matchesSchnauzer(
   breedName: string,
-  pattern: 'standard-mini-schnauzer' | 'giant-schnauzer' | 'any-schnauzer'
+  pattern: 'standard-schnauzer' | 'miniature-schnauzer' | 'giant-schnauzer' | 'any-schnauzer'
 ): boolean {
-  if (pattern === 'standard-mini-schnauzer') return breedName === SCHNAUZER_STANDARD_MINI;
+  if (pattern === 'standard-schnauzer') return breedName === STANDARD_SCHNAUZER;
+  if (pattern === 'miniature-schnauzer') return breedName === MINIATURE_SCHNAUZER;
   if (pattern === 'giant-schnauzer') return breedName === SCHNAUZER_GIANT;
-  return breedName === SCHNAUZER_STANDARD_MINI || breedName === SCHNAUZER_GIANT;
+  return breedName === STANDARD_SCHNAUZER || breedName === MINIATURE_SCHNAUZER;
 }
 
 function matchesParent(pattern: ParentPattern, breedName: string, poodleSizes?: PoodleSize[]): boolean {
@@ -573,7 +580,7 @@ function matchesParent(pattern: ParentPattern, breedName: string, poodleSizes?: 
   if (SCHNAUZER_PATTERNS.has(pattern)) {
     return matchesSchnauzer(
       breedName,
-      pattern as 'standard-mini-schnauzer' | 'giant-schnauzer' | 'any-schnauzer'
+      pattern as 'standard-schnauzer' | 'miniature-schnauzer' | 'giant-schnauzer' | 'any-schnauzer'
     );
   }
   return pattern === breedName;
@@ -617,9 +624,9 @@ export function resolveColloquialMixCanonicalBreed(title: string): string {
 
 /*
  * Validation checklist (parent strings must match breeds.ts exactly):
- * - Standard Schnauzer + Miniature Poodle → Schnoodle
+ * - Standard or Miniature Schnauzer + Poodle → Schnoodle
  * - Giant Schnauzer + Standard Poodle → Giant Schnoodle
- * - Standard Schnauzer + Yorkshire Terrier → Snorkie
+ * - Miniature Schnauzer + Yorkshire Terrier → Snorkie
  * - Golden + Lab → Goldador
  * - Three parents → no colloquial title
  */
