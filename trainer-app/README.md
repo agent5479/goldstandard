@@ -155,7 +155,7 @@ Workflow: [`.github/workflows/trainer-app.yml`](../.github/workflows/trainer-app
 | `VITE_FIREBASE_*` | Build-time Firebase web config (see `.env.example` for key names) |
 | `VITE_BOOKING_API_URL` | Apps Script `/exec` URL for booking import |
 | `VITE_BOOKING_IMPORT_KEY` | Must match Apps Script Script property `TRAINER_IMPORT_KEY` |
-| `FIREBASE_SERVICE_ACCOUNT` | Deploy hosting + database rules |
+| `FIREBASE_SERVICE_ACCOUNT` | Deploy hosting + database rules — needs **Firebase Admin** (or at minimum Hosting Admin + Firebase Realtime Database Admin) on project `gsdt-trainer-private` |
 
 Do **not** commit `.env.local`, service account JSON, or `VITE_ADMIN_PASSWORD` in production builds. Offline dev credentials are for local use only.
 
