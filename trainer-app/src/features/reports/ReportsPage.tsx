@@ -21,7 +21,7 @@ import {
   getPinnedSkillIds,
 } from '@/utils/assessmentHelpers';
 import { downloadCsv, rowsToCsv } from '@/utils/csvExport';
-import { getOwnerDogs, resolveDogTrainingStage, isDogArchived } from '@/utils/householdHelpers';
+import { getOwnerDogs, resolveDogTrainingStage, isDogArchived, countDogsByTrainingStage } from '@/utils/householdHelpers';
 
 const COLORS = ['#2d4a2d', '#4a6741', '#b8832a', '#5c3d1e', '#28a745', '#ffc107'];
 
@@ -36,14 +36,11 @@ export default function ReportsPage() {
   );
 
   const stageData = useMemo(() => {
-    const counts: Record<string, number> = {};
-    data.dogs.forEach((dog) => {
-      const owner = data.owners.find((entry) => String(entry.id) === String(dog.ownerId));
-      const stage = resolveDogTrainingStage(dog, owner);
-      counts[stage] = (counts[stage] || 0) + 1;
-    });
-    return Object.entries(counts).map(([name, value]) => ({ name, value }));
-  }, [data.dogs, data.owners]);
+    const counts = countDogsByTrainingStage(data);
+    return Object.entries(counts)
+      .filter(([, value]) => value > 0)
+      .map(([name, value]) => ({ name, value }));
+  }, [data]);
 
   const logsByCategory = useMemo(() => {
     const counts: Record<string, number> = {};

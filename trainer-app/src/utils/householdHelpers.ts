@@ -7,6 +7,7 @@ import {
   ALL_DOG_STAGES,
   ARCHIVED_DOG_STAGE,
   DEFAULT_TRAINING_STAGE,
+  DOG_TRAINING_STAGES,
   type DogTrainingStage,
 } from '@/data/householdTypes';
 
@@ -42,6 +43,23 @@ export function resolveDogTrainingStage(dog: Dog, owner?: Owner): DogTrainingSta
 
 export function isDogArchived(dog: Dog, owner?: Owner): boolean {
   return resolveDogTrainingStage(dog, owner) === ARCHIVED_DOG_STAGE;
+}
+
+/** Count dogs per training stage (includes Archived). Stages with zero dogs are included. */
+export function countDogsByTrainingStage(data: Pick<TenantData, 'dogs' | 'owners'>): Record<DogTrainingStage, number> {
+  const counts = Object.fromEntries(ALL_DOG_STAGES.map((stage) => [stage, 0])) as Record<DogTrainingStage, number>;
+  for (const dog of data.dogs) {
+    const owner = data.owners.find((entry) => String(entry.id) === String(dog.ownerId));
+    const stage = resolveDogTrainingStage(dog, owner);
+    counts[stage] += 1;
+  }
+  return counts;
+}
+
+/** Dogs in active coaching stages (Intake through Proofing — excludes Graduated and Archived). */
+export function countActivePipelineDogs(data: Pick<TenantData, 'dogs' | 'owners'>): number {
+  const counts = countDogsByTrainingStage(data);
+  return DOG_TRAINING_STAGES.filter((stage) => stage !== 'Graduated').reduce((sum, stage) => sum + counts[stage], 0);
 }
 
 export function getOwnerDogs(data: TenantData, ownerId: string) {

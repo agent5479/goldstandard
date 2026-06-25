@@ -8,13 +8,13 @@ import { useTenantData } from '@/contexts/TenantDataContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { usePermissions } from '@/hooks/usePermissions';
 import { labels, flagLabels } from '@/data/terminology';
-import { ARCHIVED_DOG_STAGE } from '@/data/householdTypes';
 import {
   flagBadgeVariant,
   findDogForBookingContact,
   isFollowUpOverdue,
-  resolveDogTrainingStage,
+  countActivePipelineDogs,
 } from '@/utils/householdHelpers';
+import { TrainingStageSummary } from '@/features/dashboard/TrainingStageSummary';
 import {
   fetchPendingBookings,
   isBookingImportConfigured,
@@ -31,7 +31,6 @@ import {
 import type { ScheduledSession } from '@/types';
 
 const UPCOMING_WINDOW_DAYS = 14;
-const ACTIVE_TRAINING_STAGES = new Set(['Foundations', 'In Training', 'Proofing']);
 
 type UpcomingItem =
   | { kind: 'pending'; key: string; start: Date; booking: PendingBooking }
@@ -125,15 +124,11 @@ export default function DashboardPage() {
       (session) => session.status !== 'completed' && isFollowUpOverdue(session)
     );
     const flaggedLogs = data.trainingLogs.filter((log) => log.flag && log.flag !== 'none' && !log.deleted);
-    const dogsInTraining = data.dogs.filter((dog) => {
-      const owner = data.owners.find((entry) => String(entry.id) === String(dog.ownerId));
-      const stage = resolveDogTrainingStage(dog, owner);
-      return ACTIVE_TRAINING_STAGES.has(stage) && stage !== ARCHIVED_DOG_STAGE;
-    }).length;
+    const activePipelineDogs = countActivePipelineDogs(data);
 
     return {
       activeOwners: activeOwners.length,
-      dogsInTraining,
+      activePipelineDogs,
       overdueFollowUps: overdueFollowUps.length,
       flaggedLogs: flaggedLogs.length,
     };
@@ -246,8 +241,8 @@ export default function DashboardPage() {
           to="/dogs"
           iconClass="bi-dog"
           iconColorClass="text-success"
-          value={stats.dogsInTraining}
-          label={labels.dogsInTraining}
+          value={stats.activePipelineDogs}
+          label={labels.activePipelineDogs}
         />
         <StatCard
           to="/schedule"
@@ -264,6 +259,10 @@ export default function DashboardPage() {
           label={labels.flaggedSessions}
         />
       </Row>
+
+      <div className="mb-4">
+        <TrainingStageSummary data={data} />
+      </div>
 
       <Row className="g-3 mb-4">
         <Col lg={8}>
