@@ -14,7 +14,7 @@ import {
 import IntelligenceBar, {
   getDimensionCellStyle,
   getScoreRangeCellStyle,
-  getSegmentCellStyle,
+  getSegmentCellStyleForDimension,
 } from './IntelligenceBar';
 
 const FRACTION_OPTIONS = [
@@ -251,12 +251,22 @@ export default function MixIntelligenceExplorer() {
                   const dim = INTELLIGENCE_DIMENSIONS.find((d) => d.key === range.dimension)!;
                   const cellStyle =
                     range.dimension === 'inst'
-                      ? getSegmentCellStyle(intelligenceResult.instinctSegments)
+                      ? getSegmentCellStyleForDimension(
+                          intelligenceResult.instinctSegments,
+                          range.dimension
+                        )
                       : range.dimension === 'neuro'
-                        ? getSegmentCellStyle(intelligenceResult.neuroSegments)
+                        ? getSegmentCellStyleForDimension(
+                            intelligenceResult.neuroSegments,
+                            range.dimension
+                          )
                         : isTraitTypedDimension(range.dimension)
                           ? getDimensionCellStyle(range.dimension, range.expected)
-                          : getScoreRangeCellStyle(range.likelyLow, range.likelyHigh);
+                          : getScoreRangeCellStyle(
+                              range.likelyLow,
+                              range.likelyHigh,
+                              range.dimension
+                            );
 
                   const rangeBar =
                     range.dimension === 'inst' ? (
@@ -274,17 +284,32 @@ export default function MixIntelligenceExplorer() {
                         dimension={range.dimension}
                       />
                     ) : (
-                      <IntelligenceBar mode="range" low={range.likelyLow} high={range.likelyHigh} />
+                      <IntelligenceBar
+                        mode="range"
+                        low={range.likelyLow}
+                        high={range.likelyHigh}
+                        dimension={range.dimension}
+                      />
                     );
 
                   const midpointStyle =
                     range.dimension === 'inst'
-                      ? getSegmentCellStyle(intelligenceResult.instinctSegments)
+                      ? getSegmentCellStyleForDimension(
+                          intelligenceResult.instinctSegments,
+                          range.dimension
+                        )
                       : range.dimension === 'neuro'
-                        ? getSegmentCellStyle(intelligenceResult.neuroSegments)
+                        ? getSegmentCellStyleForDimension(
+                            intelligenceResult.neuroSegments,
+                            range.dimension
+                          )
                         : isTraitTypedDimension(range.dimension)
                           ? getDimensionCellStyle(range.dimension, range.expected)
-                          : getScoreRangeCellStyle(range.expected, range.expected);
+                          : getScoreRangeCellStyle(
+                              range.expected,
+                              range.expected,
+                              range.dimension
+                            );
 
                   return (
                     <tr key={range.dimension}>

@@ -1,10 +1,11 @@
 type Rgb = { r: number; g: number; b: number };
 
-/** Cognitive columns — vivid green at 10, near-transparent at 1. */
+/** Cognitive columns — vivid green at ceiling, faded at column floor. */
 export const COGNITIVE_GREEN_HUE = '#6AAF56';
 
-function clampScore(value: number): number {
-  return Math.max(1, Math.min(10, value));
+export interface ScoreIntensityBounds {
+  floor: number;
+  ceiling?: number;
 }
 
 function toRgb(rgb: Rgb): string {
@@ -53,19 +54,23 @@ function parseHexHue(hex: string): Rgb {
   };
 }
 
-/** Score 10 → full saturation; score 1 → none (white). */
-const TRAIT_MIN_COLOR_WEIGHT = 0;
-
-function traitColorWeight(score: number): number {
-  const clamped = clampScore(score);
-  const t = (clamped - 1) / 9;
-  return TRAIT_MIN_COLOR_WEIGHT + t * (1 - TRAIT_MIN_COLOR_WEIGHT);
+/** Ceiling → full saturation; floor → none (white). */
+function traitColorWeight(score: number, bounds?: ScoreIntensityBounds): number {
+  const floor = bounds?.floor ?? 1;
+  const ceiling = bounds?.ceiling ?? 10;
+  const span = Math.max(ceiling - floor, 0.1);
+  const t = Math.max(0, Math.min(1, (score - floor) / span));
+  return t;
 }
 
-/** Hue identifies trait subtype; vividness encodes score strength (1–10). */
-export function getTraitIntensityStyle(hue: string, score: number): ScoreSpectrumStyle {
+/** Hue identifies trait subtype; vividness encodes score strength within column bounds. */
+export function getTraitIntensityStyle(
+  hue: string,
+  score: number,
+  bounds?: ScoreIntensityBounds
+): ScoreSpectrumStyle {
   const rgb = parseHexHue(hue);
-  const weight = traitColorWeight(score);
+  const weight = traitColorWeight(score, bounds);
   const pastel = blendWithWhite(rgb, weight);
   const barRgb = deepen(rgb, 0.04);
   const barPastel = blendWithWhite(barRgb, Math.min(1, weight + 0.08));
@@ -77,17 +82,24 @@ export function getTraitIntensityStyle(hue: string, score: number): ScoreSpectru
 }
 
 /** IQ, Adapt, Work, EI, Spatial — green vividness encodes score. */
-export function getScoreSpectrumStyle(value: number): ScoreSpectrumStyle {
-  return getTraitIntensityStyle(COGNITIVE_GREEN_HUE, value);
+export function getScoreSpectrumStyle(
+  value: number,
+  bounds?: ScoreIntensityBounds
+): ScoreSpectrumStyle {
+  return getTraitIntensityStyle(COGNITIVE_GREEN_HUE, value, bounds);
 }
 
-export function getScoreRangeSpectrumStyle(low: number, high: number): ScoreSpectrumStyle {
-  const lowStyle = getTraitIntensityStyle(COGNITIVE_GREEN_HUE, low);
-  const highStyle = getTraitIntensityStyle(COGNITIVE_GREEN_HUE, high);
+export function getScoreRangeSpectrumStyle(
+  low: number,
+  high: number,
+  bounds?: ScoreIntensityBounds
+): ScoreSpectrumStyle {
+  const lowStyle = getTraitIntensityStyle(COGNITIVE_GREEN_HUE, low, bounds);
+  const highStyle = getTraitIntensityStyle(COGNITIVE_GREEN_HUE, high, bounds);
   const mid = (low + high) / 2;
 
   return {
-    cellBackground: getTraitIntensityStyle(COGNITIVE_GREEN_HUE, mid).cellBackground,
+    cellBackground: getTraitIntensityStyle(COGNITIVE_GREEN_HUE, mid, bounds).cellBackground,
     barFill: highStyle.barFill,
     barRangeGradient: `linear-gradient(90deg, ${lowStyle.barFill}, ${highStyle.barFill})`,
   };
@@ -107,18 +119,23 @@ export interface SegmentColorInput {
 }
 
 /** Cell background blended from segment hues weighted by proportion and score intensity. */
-export function getSegmentCellStyle(segments: SegmentColorInput[]): { backgroundColor: string } {
+export function getSegmentCellStyle(
+  segments: SegmentColorInput[],
+  bounds?: ScoreIntensityBounds
+): { backgroundColor: string } {
   if (segments.length === 0) return getTraitNeutralCellStyle();
   if (segments.length === 1) {
     const seg = segments[0];
-    return { backgroundColor: getTraitIntensityStyle(seg.hue, seg.score).cellBackground };
+    return {
+      backgroundColor: getTraitIntensityStyle(seg.hue, seg.score, bounds).cellBackground,
+    };
   }
 
   let r = 0;
   let g = 0;
   let b = 0;
   for (const seg of segments) {
-    const pastel = blendWithWhite(parseHexHue(seg.hue), traitColorWeight(seg.score));
+    const pastel = blendWithWhite(parseHexHue(seg.hue), traitColorWeight(seg.score, bounds));
     r += pastel.r * seg.weight;
     g += pastel.g * seg.weight;
     b += pastel.b * seg.weight;

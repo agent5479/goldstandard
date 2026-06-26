@@ -75,9 +75,9 @@ export function isSegmentedDimension(key: IntelligenceDimension): boolean {
 export const DOM_HUE = '#6AAF56';
 export const PROT_HUE = '#6AAF56';
 /** Red for neuroticism column and stress-pattern segments. */
-export const NEURO_HUE = '#B44A4A';
+export const NEURO_HUE = '#D97272';
 /** Orange for vocal / barking column. */
-export const VOCAL_HUE = '#E8870A';
+export const VOCAL_HUE = '#F0A84A';
 
 export const INSTINCT_SUBTYPE_META: {
   key: InstinctSubtype;
@@ -88,49 +88,49 @@ export const INSTINCT_SUBTYPE_META: {
   {
     key: 'herding_eye',
     label: 'Herding eye',
-    hue: '#639922',
+    hue: '#8BC45A',
     description: 'Motion tracking, gather instinct, and eye-lock before movement.',
   },
   {
     key: 'chase',
     label: 'Chase',
-    hue: '#534AB7',
+    hue: '#7A73C9',
     description: 'Sighthound-style visual chase trigger and prey pursuit.',
   },
   {
     key: 'scent',
     label: 'Scent',
-    hue: '#BA7517',
+    hue: '#D99A45',
     description: 'Nose-led tracking, trailing, and scent fixation.',
   },
   {
     key: 'guard',
     label: 'Guard',
-    hue: '#B44A4A',
+    hue: '#D97272',
     description: 'Bred-for guarding, patrol, and territorial assessment talent.',
   },
   {
     key: 'retrieve',
     label: 'Retrieve',
-    hue: '#1D9E75',
+    hue: '#4DB892',
     description: 'Soft mouth, fetch, and people-oriented working partnership.',
   },
   {
     key: 'hunt_dig',
     label: 'Hunt / dig',
-    hue: '#C45B2A',
+    hue: '#E08855',
     description: 'Terrier-style earth work, vermin drive, and problem-solving hunt.',
   },
   {
     key: 'sled_endurance',
     label: 'Sled / endurance',
-    hue: '#378ADD',
+    hue: '#6AADE8',
     description: 'Spitz-type endurance, independence, and long-range drive.',
   },
   {
     key: 'companion',
     label: 'Companion',
-    hue: '#D4537E',
+    hue: '#E88AA8',
     description: 'People-focused companion drive rather than specialised field work.',
   },
 ];
@@ -144,31 +144,31 @@ export const NEURO_PATTERN_META: {
   {
     key: 'separation',
     label: 'Separation stress',
-    hue: '#C0392B',
+    hue: '#E06658',
     description: 'Distress when left alone or separated from the handler.',
   },
   {
     key: 'hyper_vigilant',
     label: 'Hyper-vigilant',
-    hue: '#922B21',
+    hue: '#B8554D',
     description: 'Anxious looping, fixation, and persistent scanning for threat.',
   },
   {
     key: 'handler_sensitive',
     label: 'Handler-sensitive',
-    hue: '#E74C3C',
+    hue: '#F07068',
     description: 'Clingy bonding, mood-reading, and sensitivity to handler tension.',
   },
   {
     key: 'noise_reactive',
     label: 'Noise reactive',
-    hue: '#A93226',
+    hue: '#C85A50',
     description: 'Startle and stress sensitivity to sounds and environmental noise.',
   },
   {
     key: 'fear_reactive',
     label: 'Fear reactive',
-    hue: '#7B241C',
+    hue: '#A04540',
     description: 'Caution, withdrawal, or defensive patterns toward novel stimuli.',
   },
 ];
@@ -249,7 +249,7 @@ export const INTELLIGENCE_DIMENSIONS: {
     key: 'iq',
     label: 'Overall IQ',
     shortLabel: 'IQ',
-    color: '#378ADD',
+    color: '#6AADE8',
     description:
       'Composite obedience/working intelligence — how quickly the breed typically learns commands and performs in structured training. Top-tier breeds are ranked from Stanley Coren\'s research.',
   },
@@ -257,7 +257,7 @@ export const INTELLIGENCE_DIMENSIONS: {
     key: 'inst',
     label: 'Instinctive',
     shortLabel: 'Inst',
-    color: '#639922',
+    color: '#8BC45A',
     description:
       'Innate talent for the work the breed was developed for — bar colour shows instinct type (herding eye, chase, scent, guard, etc.); vividness shows strength (1–10). Not the same as protectiveness.',
   },
@@ -265,7 +265,7 @@ export const INTELLIGENCE_DIMENSIONS: {
     key: 'adapt',
     label: 'Adaptive',
     shortLabel: 'Adapt',
-    color: '#1D9E75',
+    color: '#4DB892',
     description:
       'Problem-solving and learning from experience without step-by-step instruction — figuring out puzzles, reading new situations, and generalising lessons on their own.',
   },
@@ -273,7 +273,7 @@ export const INTELLIGENCE_DIMENSIONS: {
     key: 'work',
     label: 'Working & obedience',
     shortLabel: 'Work',
-    color: '#BA7517',
+    color: '#D99A45',
     description:
       'Responsiveness to handler direction during structured training — repetition learning, command reliability, and willingness to work cooperatively with a person.',
   },
@@ -281,7 +281,7 @@ export const INTELLIGENCE_DIMENSIONS: {
     key: 'ei',
     label: 'Emotional intelligence',
     shortLabel: 'Emot',
-    color: '#D4537E',
+    color: '#E88AA8',
     description:
       'Social and emotional attunement to people — reading household mood, bonding intensity, and sensitivity to human emotion. Not the same as anxiety or neuroticism alone.',
   },
@@ -289,7 +289,7 @@ export const INTELLIGENCE_DIMENSIONS: {
     key: 'si',
     label: 'Spatial',
     shortLabel: 'Spat',
-    color: '#534AB7',
+    color: '#7A73C9',
     description:
       'Awareness of surroundings, distances, and object positions — navigation, visual memory, and spatial problem-solving in the environment.',
   },
@@ -861,6 +861,28 @@ function buildAllProfiles(): DogIntelligenceProfile[] {
 }
 
 export const dogIntelligenceProfiles: DogIntelligenceProfile[] = buildAllProfiles();
+
+export const INTELLIGENCE_SCORE_CEILING = 10;
+
+function computeScoreFloors(
+  profiles: DogIntelligenceProfile[]
+): Record<IntelligenceDimension, number> {
+  const floors = {} as Record<IntelligenceDimension, number>;
+  for (const dim of INTELLIGENCE_DIMENSION_KEYS) {
+    floors[dim] = Math.min(...profiles.map((p) => p.scores[dim]));
+  }
+  return floors;
+}
+
+export const INTELLIGENCE_SCORE_FLOORS: Record<IntelligenceDimension, number> =
+  computeScoreFloors(dogIntelligenceProfiles);
+
+export function scoreBoundsFor(dimension: IntelligenceDimension): {
+  floor: number;
+  ceiling: number;
+} {
+  return { floor: INTELLIGENCE_SCORE_FLOORS[dimension], ceiling: INTELLIGENCE_SCORE_CEILING };
+}
 
 const profileByName = new Map<string, DogIntelligenceProfile>();
 for (const profile of dogIntelligenceProfiles) {

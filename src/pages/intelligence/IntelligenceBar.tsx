@@ -4,6 +4,7 @@ import {
   isTraitTypedDimension,
   NEURO_HUE,
   PROT_HUE,
+  scoreBoundsFor,
   type IntelligenceDimension,
   type TraitSegment,
   VOCAL_HUE,
@@ -13,6 +14,7 @@ import {
   getScoreSpectrumStyle,
   getSegmentCellStyle,
   getTraitIntensityStyle,
+  type ScoreIntensityBounds,
 } from '../../utils/scoreSpectrum';
 
 interface IntelligenceBarProps {
@@ -32,6 +34,10 @@ function dimensionHue(key: IntelligenceDimension): string {
   return INTELLIGENCE_DIMENSIONS.find((d) => d.key === key)?.color ?? '#888888';
 }
 
+function boundsFor(dimension: IntelligenceDimension): ScoreIntensityBounds {
+  return scoreBoundsFor(dimension);
+}
+
 function buildSegmentAriaLabel(segments: TraitSegment[], totalScore: number): string {
   const parts = segments.map(
     (s) => `${s.label} ${(s.weight * 100).toFixed(0)}% at ${s.score.toFixed(1)}`
@@ -47,9 +53,10 @@ export default function IntelligenceBar({
   segments = [],
   dimension,
 }: IntelligenceBarProps) {
-  if (mode === 'segments' && segments.length > 0) {
+  if (mode === 'segments' && segments.length > 0 && dimension) {
     const totalScore = value ?? 0;
     const barWidth = totalScore * 10;
+    const bounds = boundsFor(dimension);
 
     return (
       <div
@@ -64,7 +71,7 @@ export default function IntelligenceBar({
                 className="intelligence-bar-segment"
                 style={{
                   flex: seg.weight,
-                  background: getTraitIntensityStyle(seg.hue, seg.score).barFill,
+                  background: getTraitIntensityStyle(seg.hue, seg.score, bounds).barFill,
                 }}
                 title={`${seg.label}: ${seg.score.toFixed(1)}`}
               />
@@ -76,8 +83,9 @@ export default function IntelligenceBar({
     );
   }
 
-  if (mode === 'range' && low !== undefined && high !== undefined) {
-    const spectrum = getScoreRangeSpectrumStyle(low, high);
+  if (mode === 'range' && low !== undefined && high !== undefined && dimension) {
+    const bounds = boundsFor(dimension);
+    const spectrum = getScoreRangeSpectrumStyle(low, high, bounds);
     const width = Math.max(0, (high - low) * 10);
     const left = low * 10;
     return (
@@ -103,7 +111,8 @@ export default function IntelligenceBar({
 
   if (dimension && isTraitTypedDimension(dimension)) {
     const hue = dimensionHue(dimension);
-    const spectrum = getTraitIntensityStyle(hue, val);
+    const bounds = boundsFor(dimension);
+    const spectrum = getTraitIntensityStyle(hue, val, bounds);
     return (
       <div className="intelligence-bar-wrap intelligence-bar-wrap--stacked">
         <div className="intelligence-bar-bg">
@@ -117,7 +126,8 @@ export default function IntelligenceBar({
     );
   }
 
-  const spectrum = getScoreSpectrumStyle(val);
+  const cognitiveBounds = dimension ? boundsFor(dimension) : undefined;
+  const spectrum = getScoreSpectrumStyle(val, cognitiveBounds);
   return (
     <div className="intelligence-bar-wrap intelligence-bar-wrap--stacked">
       <div className="intelligence-bar-bg">
@@ -131,15 +141,31 @@ export default function IntelligenceBar({
   );
 }
 
-export function getScoreCellStyle(value: number): { backgroundColor: string } {
-  return { backgroundColor: getScoreSpectrumStyle(value).cellBackground };
+export function getScoreCellStyle(
+  value: number,
+  dimension: IntelligenceDimension
+): { backgroundColor: string } {
+  return {
+    backgroundColor: getScoreSpectrumStyle(value, boundsFor(dimension)).cellBackground,
+  };
 }
 
-export function getScoreRangeCellStyle(low: number, high: number): { backgroundColor: string } {
-  return { backgroundColor: getScoreRangeSpectrumStyle(low, high).cellBackground };
+export function getScoreRangeCellStyle(
+  low: number,
+  high: number,
+  dimension: IntelligenceDimension
+): { backgroundColor: string } {
+  return {
+    backgroundColor: getScoreRangeSpectrumStyle(low, high, boundsFor(dimension)).cellBackground,
+  };
 }
 
-export { getSegmentCellStyle };
+export function getSegmentCellStyleForDimension(
+  segments: TraitSegment[],
+  dimension: IntelligenceDimension
+): { backgroundColor: string } {
+  return getSegmentCellStyle(segments, boundsFor(dimension));
+}
 
 export function getDimensionCellStyle(
   dimension: IntelligenceDimension,
@@ -147,7 +173,9 @@ export function getDimensionCellStyle(
 ): { backgroundColor: string } {
   if (isTraitTypedDimension(dimension)) {
     const hue = dimensionHue(dimension);
-    return { backgroundColor: getTraitIntensityStyle(hue, value).cellBackground };
+    return {
+      backgroundColor: getTraitIntensityStyle(hue, value, boundsFor(dimension)).cellBackground,
+    };
   }
-  return getScoreCellStyle(value);
+  return getScoreCellStyle(value, dimension);
 }

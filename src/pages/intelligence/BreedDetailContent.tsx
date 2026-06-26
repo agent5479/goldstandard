@@ -1,5 +1,10 @@
 import { breedCategories } from '../../data/breeds';
-import { findIntelligenceByBreedName, type TraitSegment, VOCAL_HUE } from '../../data/dogIntelligence';
+import {
+  findIntelligenceByBreedName,
+  scoreBoundsFor,
+  type TraitSegment,
+  VOCAL_HUE,
+} from '../../data/dogIntelligence';
 import {
   AXES,
   findBreedByName,
@@ -35,12 +40,16 @@ function SegmentBreakdown({
   title,
   segments,
   totalScore,
+  dimension,
 }: {
   title: string;
   segments: TraitSegment[];
   totalScore: number;
+  dimension: 'inst' | 'neuro';
 }) {
   if (segments.length === 0) return null;
+
+  const bounds = scoreBoundsFor(dimension);
 
   return (
     <section className="intelligence-breed-detail-segments">
@@ -54,7 +63,7 @@ function SegmentBreakdown({
             <span className="intelligence-breed-detail-segment-label">
               <span
                 className="intelligence-breed-detail-segment-dot"
-                style={{ background: getTraitIntensityStyle(seg.hue, seg.score).barFill }}
+                style={{ background: getTraitIntensityStyle(seg.hue, seg.score, bounds).barFill }}
               />
               {seg.label}
               <span className="intelligence-breed-detail-segment-weight">
@@ -66,7 +75,7 @@ function SegmentBreakdown({
                 className="intelligence-breed-detail-segment-bar"
                 style={{
                   width: `${seg.score * 10}%`,
-                  background: getTraitIntensityStyle(seg.hue, seg.score).barFill,
+                  background: getTraitIntensityStyle(seg.hue, seg.score, bounds).barFill,
                 }}
               />
               <span className="intelligence-breed-detail-segment-score">{seg.score.toFixed(1)}</span>
@@ -128,11 +137,13 @@ function ScoreExtras({
         title="Instinct composition"
         segments={intelligenceProfile.instinctSegments}
         totalScore={intelligenceProfile.scores.inst}
+        dimension="inst"
       />
       <SegmentBreakdown
         title="Stress pattern composition"
         segments={intelligenceProfile.neuroSegments}
         totalScore={intelligenceProfile.scores.neuro}
+        dimension="neuro"
       />
       {vocalScore !== undefined && (
         <p className="intelligence-breed-detail-vocal">
@@ -140,7 +151,8 @@ function ScoreExtras({
           <span
             className="intelligence-breed-detail-segment-dot"
             style={{
-              background: getTraitIntensityStyle(VOCAL_HUE, vocalScore).barFill,
+              background: getTraitIntensityStyle(VOCAL_HUE, vocalScore, scoreBoundsFor('vocal'))
+                .barFill,
               marginLeft: '0.35rem',
             }}
           />
