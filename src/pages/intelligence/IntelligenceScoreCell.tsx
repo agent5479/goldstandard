@@ -1,6 +1,9 @@
 import type { DogIntelligenceProfile, IntelligenceDimension } from '../../data/dogIntelligence';
 import { isSegmentedDimension, isTraitTypedDimension } from '../../data/dogIntelligence';
-import IntelligenceBar, { getDimensionCellStyle } from './IntelligenceBar';
+import IntelligenceBar, {
+  getDimensionCellStyle,
+  getSegmentCellStyle,
+} from './IntelligenceBar';
 
 interface IntelligenceScoreCellProps {
   profile: DogIntelligenceProfile;
@@ -14,7 +17,7 @@ export default function IntelligenceScoreCell({ profile, dimension }: Intelligen
     return (
       <td
         className="intelligence-score-cell intelligence-score-cell--segments"
-        style={getDimensionCellStyle(dimension, score)}
+        style={getSegmentCellStyle(profile.instinctSegments)}
       >
         <IntelligenceBar
           mode="segments"
@@ -30,7 +33,7 @@ export default function IntelligenceScoreCell({ profile, dimension }: Intelligen
     return (
       <td
         className="intelligence-score-cell intelligence-score-cell--segments"
-        style={getDimensionCellStyle(dimension, score)}
+        style={getSegmentCellStyle(profile.neuroSegments)}
       >
         <IntelligenceBar
           mode="segments"

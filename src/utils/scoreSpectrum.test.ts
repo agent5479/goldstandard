@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   getScoreRangeSpectrumStyle,
   getScoreSpectrumStyle,
+  getSegmentCellStyle,
   getTraitIntensityStyle,
 } from './scoreSpectrum';
 
@@ -40,5 +41,18 @@ describe('getTraitIntensityStyle', () => {
   it('clamps out-of-range trait scores', () => {
     expect(() => getTraitIntensityStyle('#378ADD', 0)).not.toThrow();
     expect(() => getTraitIntensityStyle('#378ADD', 12)).not.toThrow();
+  });
+});
+
+describe('getSegmentCellStyle', () => {
+  it('blends segment hues by weight', () => {
+    const blend = getSegmentCellStyle([
+      { hue: '#534AB7', weight: 0.5, score: 8 },
+      { hue: '#B44A4A', weight: 0.5, score: 8 },
+    ]);
+    const single = getSegmentCellStyle([{ hue: '#534AB7', weight: 1, score: 8 }]);
+
+    expect(blend.backgroundColor).toMatch(/^rgb\(/);
+    expect(blend.backgroundColor).not.toBe(single.backgroundColor);
   });
 });

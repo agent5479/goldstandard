@@ -1,7 +1,7 @@
 type Rgb = { r: number; g: number; b: number };
 
 /** Cognitive columns — vivid green at 10, near-transparent at 1. */
-export const COGNITIVE_GREEN_HUE = '#347430';
+export const COGNITIVE_GREEN_HUE = '#6AAF56';
 
 function clampScore(value: number): number {
   return Math.max(1, Math.min(10, value));
@@ -98,4 +98,37 @@ export const TRAIT_NEUTRAL_CELL = 'rgb(255, 255, 255)';
 
 export function getTraitNeutralCellStyle(): { backgroundColor: string } {
   return { backgroundColor: TRAIT_NEUTRAL_CELL };
+}
+
+export interface SegmentColorInput {
+  hue: string;
+  weight: number;
+  score: number;
+}
+
+/** Cell background blended from segment hues weighted by proportion and score intensity. */
+export function getSegmentCellStyle(segments: SegmentColorInput[]): { backgroundColor: string } {
+  if (segments.length === 0) return getTraitNeutralCellStyle();
+  if (segments.length === 1) {
+    const seg = segments[0];
+    return { backgroundColor: getTraitIntensityStyle(seg.hue, seg.score).cellBackground };
+  }
+
+  let r = 0;
+  let g = 0;
+  let b = 0;
+  for (const seg of segments) {
+    const pastel = blendWithWhite(parseHexHue(seg.hue), traitColorWeight(seg.score));
+    r += pastel.r * seg.weight;
+    g += pastel.g * seg.weight;
+    b += pastel.b * seg.weight;
+  }
+
+  return {
+    backgroundColor: toRgb({
+      r: Math.round(r),
+      g: Math.round(g),
+      b: Math.round(b),
+    }),
+  };
 }

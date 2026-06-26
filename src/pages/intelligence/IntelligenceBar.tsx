@@ -11,8 +11,8 @@ import {
 import {
   getScoreRangeSpectrumStyle,
   getScoreSpectrumStyle,
+  getSegmentCellStyle,
   getTraitIntensityStyle,
-  getTraitNeutralCellStyle,
 } from '../../utils/scoreSpectrum';
 
 interface IntelligenceBarProps {
@@ -139,14 +139,13 @@ export function getScoreRangeCellStyle(low: number, high: number): { backgroundC
   return { backgroundColor: getScoreRangeSpectrumStyle(low, high).cellBackground };
 }
 
+export { getSegmentCellStyle };
+
 export function getDimensionCellStyle(
   dimension: IntelligenceDimension,
   value: number
 ): { backgroundColor: string } {
   if (isTraitTypedDimension(dimension)) {
-    if (dimension === 'inst' || dimension === 'neuro') {
-      return getTraitNeutralCellStyle();
-    }
     const hue = dimensionHue(dimension);
     return { backgroundColor: getTraitIntensityStyle(hue, value).cellBackground };
   }

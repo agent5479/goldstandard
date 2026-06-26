@@ -11,7 +11,11 @@ import {
   computeMixTemperamentNotes,
   type MixParentInput,
 } from '../../utils/intelligenceMix';
-import IntelligenceBar, { getDimensionCellStyle, getScoreRangeCellStyle } from './IntelligenceBar';
+import IntelligenceBar, {
+  getDimensionCellStyle,
+  getScoreRangeCellStyle,
+  getSegmentCellStyle,
+} from './IntelligenceBar';
 
 const FRACTION_OPTIONS = [
   { value: 0.5, label: '½ (50%)' },
@@ -245,9 +249,14 @@ export default function MixIntelligenceExplorer() {
               <tbody>
                 {intelligenceResult.ranges.map((range) => {
                   const dim = INTELLIGENCE_DIMENSIONS.find((d) => d.key === range.dimension)!;
-                  const cellStyle = isTraitTypedDimension(range.dimension)
-                    ? getDimensionCellStyle(range.dimension, range.expected)
-                    : getScoreRangeCellStyle(range.likelyLow, range.likelyHigh);
+                  const cellStyle =
+                    range.dimension === 'inst'
+                      ? getSegmentCellStyle(intelligenceResult.instinctSegments)
+                      : range.dimension === 'neuro'
+                        ? getSegmentCellStyle(intelligenceResult.neuroSegments)
+                        : isTraitTypedDimension(range.dimension)
+                          ? getDimensionCellStyle(range.dimension, range.expected)
+                          : getScoreRangeCellStyle(range.likelyLow, range.likelyHigh);
 
                   const rangeBar =
                     range.dimension === 'inst' ? (
@@ -268,9 +277,14 @@ export default function MixIntelligenceExplorer() {
                       <IntelligenceBar mode="range" low={range.likelyLow} high={range.likelyHigh} />
                     );
 
-                  const midpointStyle = isTraitTypedDimension(range.dimension)
-                    ? getDimensionCellStyle(range.dimension, range.expected)
-                    : getScoreRangeCellStyle(range.expected, range.expected);
+                  const midpointStyle =
+                    range.dimension === 'inst'
+                      ? getSegmentCellStyle(intelligenceResult.instinctSegments)
+                      : range.dimension === 'neuro'
+                        ? getSegmentCellStyle(intelligenceResult.neuroSegments)
+                        : isTraitTypedDimension(range.dimension)
+                          ? getDimensionCellStyle(range.dimension, range.expected)
+                          : getScoreRangeCellStyle(range.expected, range.expected);
 
                   return (
                     <tr key={range.dimension}>

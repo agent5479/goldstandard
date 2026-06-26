@@ -72,8 +72,8 @@ export function isSegmentedDimension(key: IntelligenceDimension): boolean {
 }
 
 /** Green for dominance and protectiveness columns. */
-export const DOM_HUE = '#347430';
-export const PROT_HUE = '#347430';
+export const DOM_HUE = '#6AAF56';
+export const PROT_HUE = '#6AAF56';
 /** Red for neuroticism column and stress-pattern segments. */
 export const NEURO_HUE = '#B44A4A';
 /** Orange for vocal / barking column. */
