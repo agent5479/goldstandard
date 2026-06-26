@@ -29,7 +29,7 @@ export default function IntelligencePage() {
             <h1>Breed analysis</h1>
           </div>
           <p>
-            Compare purebred traits across nine dimensions on a 1–10 scale. Search, sort, and pin breeds
+            Compare purebred traits across ten dimensions on a 1–10 scale. Search, sort, and pin breeds
             for side-by-side comparison — then explore mongrel and cross-breed mixes with probabilistic ranges.
           </p>
         </div>

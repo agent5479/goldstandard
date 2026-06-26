@@ -3555,6 +3555,63 @@ body.page-intelligence {
   margin-bottom: 0.75rem;
 }
 
+.intelligence-legend--typed {
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.intelligence-legend-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 0.5rem 0.75rem;
+}
+
+.intelligence-legend-row-title {
+  flex: 0 0 100%;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--light-text);
+}
+
+.intelligence-legend-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+}
+
+.intelligence-legend-intensity {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+}
+
+.intelligence-legend-intensity-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.intelligence-legend-intensity-score {
+  font-size: 0.65rem;
+  color: var(--light-text);
+}
+
+.intelligence-legend-intensity-hint {
+  font-size: 0.72rem;
+  color: var(--light-text);
+  font-style: italic;
+}
+
+.intelligence-legend-dot--intensity {
+  width: 28px;
+  height: 8px;
+}
+
 .intelligence-legend-item {
   display: flex;
   align-items: center;
@@ -4105,6 +4162,103 @@ body.page-intelligence {
   height: 100%;
   border-radius: 3px;
   box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.08);
+}
+
+.intelligence-bar-segments {
+  display: flex;
+  height: 100%;
+  min-width: 0;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.intelligence-bar-segment {
+  min-width: 2px;
+  height: 100%;
+}
+
+.intelligence-bar-wrap--segments .intelligence-bar-bg {
+  overflow: hidden;
+}
+
+.intelligence-score-cell--segments {
+  background: rgb(255, 255, 255) !important;
+}
+
+.intelligence-breed-detail-segments {
+  margin-top: 0.75rem;
+}
+
+.intelligence-breed-detail-segments-title {
+  font-size: 0.85rem;
+  margin: 0 0 0.35rem;
+}
+
+.intelligence-breed-detail-segments-total {
+  font-size: 0.78rem;
+  margin: 0 0 0.5rem;
+  color: var(--light-text);
+}
+
+.intelligence-breed-detail-segment-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.intelligence-breed-detail-segment-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  font-size: 0.78rem;
+}
+
+.intelligence-breed-detail-segment-label {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.intelligence-breed-detail-segment-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.intelligence-breed-detail-segment-weight {
+  color: var(--light-text);
+  font-size: 0.72rem;
+}
+
+.intelligence-breed-detail-segment-bar-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.intelligence-breed-detail-segment-bar {
+  display: block;
+  height: 6px;
+  border-radius: 3px;
+  max-width: 100%;
+}
+
+.intelligence-breed-detail-segment-score {
+  font-size: 0.72rem;
+  color: var(--light-text);
+  min-width: 1.5rem;
+}
+
+.intelligence-breed-detail-vocal {
+  font-size: 0.78rem;
+  margin: 0.5rem 0;
+  display: flex;
+  align-items: center;
 }
 
 .intelligence-bar-range {

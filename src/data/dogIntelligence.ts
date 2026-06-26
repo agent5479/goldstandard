@@ -1,14 +1,18 @@
 /* ============================================================
    Dog intelligence profiles — Coren top 50 + estimated expansion
-   Scores on a 1–10 scale across nine dimensions.
+   Scores on a 1–10 scale across ten dimensions.
    ============================================================ */
 
 import { breeds, type BreedCategory } from './breeds';
 import {
   getBreedNeuroticismInclination,
   getCategoryNeuroticismDefault,
+  getNeuroPatternsForBreed,
+  type NeuroPattern,
   type NeuroticismInclination,
 } from './breedTraits';
+
+export type { NeuroPattern };
 
 export type IntelligenceDimension =
   | 'iq'
@@ -19,9 +23,202 @@ export type IntelligenceDimension =
   | 'si'
   | 'dom'
   | 'prot'
-  | 'neuro';
+  | 'neuro'
+  | 'vocal';
+
+export type InstinctSubtype =
+  | 'herding_eye'
+  | 'chase'
+  | 'scent'
+  | 'guard'
+  | 'retrieve'
+  | 'hunt_dig'
+  | 'sled_endurance'
+  | 'companion';
+
+export interface TraitSegment {
+  key: InstinctSubtype | NeuroPattern;
+  label: string;
+  hue: string;
+  weight: number;
+  score: number;
+}
 
 export type IntelligenceScores = Record<IntelligenceDimension, number>;
+
+/** Dimensions using hue + intensity encoding (not green-gray spectrum). */
+export const TRAIT_TYPED_DIMENSIONS: IntelligenceDimension[] = [
+  'inst',
+  'dom',
+  'prot',
+  'neuro',
+  'vocal',
+];
+
+export const COGNITIVE_DIMENSIONS: IntelligenceDimension[] = [
+  'iq',
+  'adapt',
+  'work',
+  'ei',
+  'si',
+];
+
+export function isTraitTypedDimension(key: IntelligenceDimension): boolean {
+  return TRAIT_TYPED_DIMENSIONS.includes(key);
+}
+
+export function isSegmentedDimension(key: IntelligenceDimension): boolean {
+  return key === 'inst' || key === 'neuro';
+}
+
+/** Amber hue for the vocal column. */
+export const VOCAL_HUE = '#E8A020';
+
+export const INSTINCT_SUBTYPE_META: {
+  key: InstinctSubtype;
+  label: string;
+  hue: string;
+  description: string;
+}[] = [
+  {
+    key: 'herding_eye',
+    label: 'Herding eye',
+    hue: '#639922',
+    description: 'Motion tracking, gather instinct, and eye-lock before movement.',
+  },
+  {
+    key: 'chase',
+    label: 'Chase',
+    hue: '#534AB7',
+    description: 'Sighthound-style visual chase trigger and prey pursuit.',
+  },
+  {
+    key: 'scent',
+    label: 'Scent',
+    hue: '#BA7517',
+    description: 'Nose-led tracking, trailing, and scent fixation.',
+  },
+  {
+    key: 'guard',
+    label: 'Guard',
+    hue: '#B44A4A',
+    description: 'Bred-for guarding, patrol, and territorial assessment talent.',
+  },
+  {
+    key: 'retrieve',
+    label: 'Retrieve',
+    hue: '#1D9E75',
+    description: 'Soft mouth, fetch, and people-oriented working partnership.',
+  },
+  {
+    key: 'hunt_dig',
+    label: 'Hunt / dig',
+    hue: '#C45B2A',
+    description: 'Terrier-style earth work, vermin drive, and problem-solving hunt.',
+  },
+  {
+    key: 'sled_endurance',
+    label: 'Sled / endurance',
+    hue: '#378ADD',
+    description: 'Spitz-type endurance, independence, and long-range drive.',
+  },
+  {
+    key: 'companion',
+    label: 'Companion',
+    hue: '#D4537E',
+    description: 'People-focused companion drive rather than specialised field work.',
+  },
+];
+
+export const NEURO_PATTERN_META: {
+  key: NeuroPattern;
+  label: string;
+  hue: string;
+  description: string;
+}[] = [
+  {
+    key: 'separation',
+    label: 'Separation stress',
+    hue: '#9B6B9E',
+    description: 'Distress when left alone or separated from the handler.',
+  },
+  {
+    key: 'hyper_vigilant',
+    label: 'Hyper-vigilant',
+    hue: '#7B4F8A',
+    description: 'Anxious looping, fixation, and persistent scanning for threat.',
+  },
+  {
+    key: 'handler_sensitive',
+    label: 'Handler-sensitive',
+    hue: '#D4537E',
+    description: 'Clingy bonding, mood-reading, and sensitivity to handler tension.',
+  },
+  {
+    key: 'noise_reactive',
+    label: 'Noise reactive',
+    hue: '#BA7517',
+    description: 'Startle and stress sensitivity to sounds and environmental noise.',
+  },
+  {
+    key: 'fear_reactive',
+    label: 'Fear reactive',
+    hue: '#6B7280',
+    description: 'Caution, withdrawal, or defensive patterns toward novel stimuli.',
+  },
+];
+
+const instinctMetaByKey = new Map(INSTINCT_SUBTYPE_META.map((m) => [m.key, m]));
+const neuroMetaByKey = new Map(NEURO_PATTERN_META.map((m) => [m.key, m]));
+
+const CATEGORY_INSTINCT_SUBTYPE: Record<BreedCategory, InstinctSubtype> = {
+  herding: 'herding_eye',
+  sighthound: 'chase',
+  scenthound: 'scent',
+  guardian: 'guard',
+  giant: 'guard',
+  terrier: 'hunt_dig',
+  spitz: 'sled_endurance',
+  clingy: 'retrieve',
+  small: 'companion',
+};
+
+/** Multi-segment instinct blends for breeds that span types. */
+const INSTINCT_SEGMENT_OVERRIDES: Record<string, Partial<Record<InstinctSubtype, number>>> = {
+  'Rhodesian Ridgeback': { chase: 0.45, guard: 0.55 },
+  Beagle: { scent: 0.85, companion: 0.15 },
+  'Basset Hound': { scent: 0.9, companion: 0.1 },
+  Dachshund: { hunt_dig: 0.7, scent: 0.3 },
+  'Miniature Dachshund': { hunt_dig: 0.75, scent: 0.25 },
+  Dalmatian: { retrieve: 0.5, chase: 0.5 },
+  Boxer: { retrieve: 0.6, guard: 0.4 },
+  'Bull Terrier': { retrieve: 0.55, hunt_dig: 0.45 },
+  'German Wirehaired Pointer': { retrieve: 0.5, scent: 0.5 },
+  Vizsla: { retrieve: 0.7, scent: 0.3 },
+  Weimaraner: { retrieve: 0.65, chase: 0.35 },
+  'Lagotto Romagnolo': { retrieve: 0.4, scent: 0.6 },
+  'Nova Scotia Duck Tolling Retriever': { retrieve: 0.75, chase: 0.25 },
+  'Portuguese Water Dog': { retrieve: 0.6, scent: 0.4 },
+  'Jack Russell Terrier': { hunt_dig: 0.85, chase: 0.15 },
+  'Parson Russell Terrier': { hunt_dig: 0.85, chase: 0.15 },
+  'Border Terrier': { hunt_dig: 0.8, herding_eye: 0.2 },
+  'Airedale Terrier': { hunt_dig: 0.7, guard: 0.3 },
+  'Standard Schnauzer': { hunt_dig: 0.6, guard: 0.4 },
+  'Giant Schnauzer': { guard: 0.65, hunt_dig: 0.35 },
+  'Miniature Schnauzer': { hunt_dig: 0.7, companion: 0.3 },
+  'Belgian Malinois': { guard: 0.7, herding_eye: 0.3 },
+  'German Shepherd': { guard: 0.75, herding_eye: 0.25 },
+  'Doberman Pinscher': { guard: 0.8, retrieve: 0.2 },
+  Doberman: { guard: 0.8, retrieve: 0.2 },
+  'White Swiss Shepherd': { herding_eye: 0.55, guard: 0.45 },
+  'Australian Cattle Dog': { herding_eye: 0.85, hunt_dig: 0.15 },
+  Kelpie: { herding_eye: 0.9, hunt_dig: 0.1 },
+  'NZ Huntaway': { herding_eye: 0.5, scent: 0.5 },
+  'Shiba Inu': { sled_endurance: 0.5, guard: 0.5 },
+  Basenji: { hunt_dig: 0.5, chase: 0.5 },
+  'Cane Corso': { guard: 0.85, retrieve: 0.15 },
+  Bullmastiff: { guard: 0.9, retrieve: 0.1 },
+};
 
 /** Coren reference rows — six cognitive dimensions only; behavioural scores are derived. */
 type CorenScores = Pick<IntelligenceScores, 'iq' | 'inst' | 'adapt' | 'work' | 'ei' | 'si'>;
@@ -31,6 +228,8 @@ export interface DogIntelligenceProfile {
   breedKeys: string[];
   rank: number;
   scores: IntelligenceScores;
+  instinctSegments: TraitSegment[];
+  neuroSegments: TraitSegment[];
   source: 'coren' | 'estimated';
 }
 
@@ -55,7 +254,7 @@ export const INTELLIGENCE_DIMENSIONS: {
     shortLabel: 'Inst',
     color: '#639922',
     description:
-      'Innate talent for the work the breed was developed for — herding eye, nose tracking, retrieving, guarding, or chase drive — before formal training enters the picture.',
+      'Innate talent for the work the breed was developed for — bar colour shows instinct type (herding eye, chase, scent, guard, etc.); vividness shows strength (1–10). Not the same as protectiveness.',
   },
   {
     key: 'adapt',
@@ -95,7 +294,7 @@ export const INTELLIGENCE_DIMENSIONS: {
     shortLabel: 'Dom',
     color: '#8B4513',
     description:
-      'Tendency toward assertive or rank-seeking behaviour with people and other dogs — pushiness, guarding position, and challenging boundaries. Not the same as confidence or good leadership.',
+      'Tendency toward assertive or rank-seeking behaviour with people and other dogs — pushiness, guarding position, and challenging boundaries. Bar vividness shows strength; not a good/bad scale.',
   },
   {
     key: 'prot',
@@ -103,7 +302,7 @@ export const INTELLIGENCE_DIMENSIONS: {
     shortLabel: 'Prot',
     color: '#B44A4A',
     description:
-      'Drive to guard household, territory, or family — alertness to strangers, vigilance, and protective reactions. Higher scores suit structured guardian types; upbringing strongly shapes expression.',
+      'Drive to guard household, territory, or family — alertness to strangers and vigilance. Bar vividness shows strength. Distinct from guard instinct talent in the Inst column.',
   },
   {
     key: 'neuro',
@@ -111,7 +310,15 @@ export const INTELLIGENCE_DIMENSIONS: {
     shortLabel: 'Neur',
     color: '#9B6B9E',
     description:
-      'Estimated propensity for anxious looping, hyper-vigilance, or stress sensitivity in the breed type — not a label for any individual dog. Draws on breed temperament data where available.',
+      'Estimated propensity for stress-looping patterns — bar segments show which patterns (separation, hyper-vigilance, handler-sensitivity, etc.); vividness shows strength. Not a label for any individual dog.',
+  },
+  {
+    key: 'vocal',
+    label: 'Vocal / barking',
+    shortLabel: 'Vocal',
+    color: VOCAL_HUE,
+    description:
+      'Typical vocal output — alert barking, baying, yapping, or habitual noise. Bar vividness shows how vocal the breed type tends to be; upbringing and structure strongly shape expression.',
   },
 ];
 
@@ -217,15 +424,15 @@ const BREED_SCORE_DELTAS: Record<string, Partial<IntelligenceScores>> = {
 };
 
 const CATEGORY_DEFAULTS: Record<BreedCategory, IntelligenceScores> = {
-  herding: { iq: 7.0, inst: 8.8, adapt: 7.5, work: 7.2, ei: 7.5, si: 8.5, dom: 6.0, prot: 5.0, neuro: 6.8 },
-  clingy: { iq: 6.8, inst: 8.0, adapt: 7.0, work: 7.0, ei: 8.5, si: 7.0, dom: 4.5, prot: 4.5, neuro: 5.0 },
-  sighthound: { iq: 5.0, inst: 9.0, adapt: 5.2, work: 4.6, ei: 6.8, si: 5.8, dom: 3.5, prot: 3.0, neuro: 5.0 },
-  spitz: { iq: 5.8, inst: 7.8, adapt: 6.5, work: 5.5, ei: 8.0, si: 7.8, dom: 5.5, prot: 5.0, neuro: 5.0 },
-  terrier: { iq: 6.0, inst: 8.2, adapt: 7.0, work: 5.8, ei: 7.2, si: 7.0, dom: 6.5, prot: 4.5, neuro: 6.8 },
-  scenthound: { iq: 5.4, inst: 9.0, adapt: 6.8, work: 5.2, ei: 7.5, si: 7.2, dom: 4.0, prot: 3.5, neuro: 3.0 },
-  guardian: { iq: 7.2, inst: 8.5, adapt: 7.8, work: 7.4, ei: 7.5, si: 8.0, dom: 7.5, prot: 9.0, neuro: 5.0 },
-  giant: { iq: 5.8, inst: 7.5, adapt: 5.5, work: 5.5, ei: 8.5, si: 6.5, dom: 7.0, prot: 8.5, neuro: 3.5 },
-  small: { iq: 6.2, inst: 6.8, adapt: 6.5, work: 6.0, ei: 7.8, si: 6.2, dom: 5.5, prot: 3.5, neuro: 6.8 },
+  herding: { iq: 7.0, inst: 8.8, adapt: 7.5, work: 7.2, ei: 7.5, si: 8.5, dom: 6.0, prot: 5.0, neuro: 6.8, vocal: 5.0 },
+  clingy: { iq: 6.8, inst: 8.0, adapt: 7.0, work: 7.0, ei: 8.5, si: 7.0, dom: 4.5, prot: 4.5, neuro: 5.0, vocal: 4.0 },
+  sighthound: { iq: 5.0, inst: 9.0, adapt: 5.2, work: 4.6, ei: 6.8, si: 5.8, dom: 3.5, prot: 3.0, neuro: 5.0, vocal: 3.0 },
+  spitz: { iq: 5.8, inst: 7.8, adapt: 6.5, work: 5.5, ei: 8.0, si: 7.8, dom: 5.5, prot: 5.0, neuro: 5.0, vocal: 8.5 },
+  terrier: { iq: 6.0, inst: 8.2, adapt: 7.0, work: 5.8, ei: 7.2, si: 7.0, dom: 6.5, prot: 4.5, neuro: 6.8, vocal: 7.0 },
+  scenthound: { iq: 5.4, inst: 9.0, adapt: 6.8, work: 5.2, ei: 7.5, si: 7.2, dom: 4.0, prot: 3.5, neuro: 3.0, vocal: 8.0 },
+  guardian: { iq: 7.2, inst: 8.5, adapt: 7.8, work: 7.4, ei: 7.5, si: 8.0, dom: 7.5, prot: 9.0, neuro: 5.0, vocal: 6.5 },
+  giant: { iq: 5.8, inst: 7.5, adapt: 5.5, work: 5.5, ei: 8.5, si: 6.5, dom: 7.0, prot: 8.5, neuro: 3.5, vocal: 4.5 },
+  small: { iq: 6.2, inst: 6.8, adapt: 6.5, work: 6.0, ei: 7.8, si: 6.2, dom: 5.5, prot: 3.5, neuro: 6.8, vocal: 7.5 },
 };
 
 /** Known estimates for breeds outside Coren top 50 (tier 2 hints). */
@@ -335,7 +542,10 @@ const COREN_BREED_CATEGORY: Record<string, BreedCategory> = {
 };
 
 /** Breed-specific behavioural overrides — breeds.ts and Coren canonical names. */
-const BEHAVIORAL_OVERRIDES: Record<string, Partial<Pick<IntelligenceScores, 'dom' | 'prot' | 'neuro'>>> = {
+const BEHAVIORAL_OVERRIDES: Record<
+  string,
+  Partial<Pick<IntelligenceScores, 'dom' | 'prot' | 'neuro' | 'vocal'>>
+> = {
   'German Shepherd': { dom: 7.5, prot: 9.2 },
   'Doberman Pinscher': { dom: 7.2, prot: 9.0 },
   Doberman: { dom: 7.2, prot: 9.0 },
@@ -350,19 +560,29 @@ const BEHAVIORAL_OVERRIDES: Record<string, Partial<Pick<IntelligenceScores, 'dom
   'Golden Retriever': { dom: 3.5, prot: 4.0 },
   'Labrador Retriever': { dom: 3.5, prot: 4.0 },
   'Flat-Coated Retriever': { dom: 3.8, prot: 4.2 },
-  Beagle: { dom: 4.5, prot: 3.5 },
-  'Siberian Husky': { dom: 6.0, prot: 4.5 },
+  Beagle: { dom: 4.5, prot: 3.5, vocal: 8.5 },
+  'Siberian Husky': { dom: 6.0, prot: 4.5, vocal: 8.8 },
   'Great Dane': { dom: 5.5, prot: 6.5 },
-  Chihuahua: { neuro: 7.5 },
-  'Toy Poodle': { neuro: 8.0 },
-  'Miniature Poodle': { neuro: 7.0 },
-  'Cavalier King Charles Spaniel': { neuro: 7.2 },
-  'French Bulldog': { neuro: 6.5 },
-  Pug: { neuro: 6.0 },
-  'Jack Russell Terrier': { dom: 7.0, prot: 4.0 },
+  Chihuahua: { neuro: 7.5, vocal: 8.0 },
+  'Toy Poodle': { neuro: 8.0, vocal: 6.5 },
+  'Miniature Poodle': { neuro: 7.0, vocal: 6.0 },
+  'Cavalier King Charles Spaniel': { neuro: 7.2, vocal: 5.5 },
+  'French Bulldog': { neuro: 6.5, vocal: 6.0 },
+  Pug: { neuro: 6.0, vocal: 5.5 },
+  'Jack Russell Terrier': { dom: 7.0, prot: 4.0, vocal: 7.5 },
   'Staffordshire Bull Terrier (Staffy)': { dom: 6.5, prot: 6.0 },
   'Anatolian Shepherd / Maremma': { dom: 7.5, prot: 9.5 },
   'Great Pyrenees (Pyrenean Mountain Dog)': { dom: 7.0, prot: 9.0 },
+  Basenji: { vocal: 2.0 },
+  Bloodhound: { vocal: 8.5 },
+  Samoyed: { vocal: 8.0 },
+  Keeshond: { vocal: 8.2 },
+  Schipperke: { vocal: 7.5 },
+  'Yorkshire Terrier': { vocal: 8.5 },
+  Pomeranian: { vocal: 8.0 },
+  'Basset Hound': { vocal: 8.5 },
+  Bulldog: { vocal: 3.5 },
+  'Bulldog (British)': { vocal: 3.5 },
 };
 
 function roundScore(value: number): number {
@@ -399,7 +619,92 @@ function corenToFullScores(
     dom: 0,
     prot: 0,
     neuro: 0,
+    vocal: 0,
   });
+}
+
+function resolveInstinctBlend(
+  breedName: string,
+  category: BreedCategory
+): Partial<Record<InstinctSubtype, number>> {
+  const lookupNames = [breedName, BREED_TO_COREN[breedName]].filter(Boolean) as string[];
+  for (const name of lookupNames) {
+    const override = INSTINCT_SEGMENT_OVERRIDES[name];
+    if (override) return override;
+  }
+  const primary = CATEGORY_INSTINCT_SUBTYPE[category];
+  return { [primary]: 1 };
+}
+
+export function buildInstinctSegments(
+  breedName: string,
+  category: BreedCategory,
+  instScore: number
+): TraitSegment[] {
+  const blend = resolveInstinctBlend(breedName, category);
+  const entries = Object.entries(blend) as [InstinctSubtype, number][];
+  const totalWeight = entries.reduce((sum, [, w]) => sum + w, 0);
+  return entries.map(([key, weight]) => {
+    const meta = instinctMetaByKey.get(key)!;
+    return {
+      key,
+      label: meta.label,
+      hue: meta.hue,
+      weight: weight / totalWeight,
+      score: roundScore(instScore),
+    };
+  });
+}
+
+export function buildNeuroSegments(breedName: string, neuroScore: number): TraitSegment[] {
+  const patterns = getNeuroPatternsForBreed(breedName);
+  const weight = 1 / patterns.length;
+  return patterns.map((key) => {
+    const meta = neuroMetaByKey.get(key)!;
+    return {
+      key,
+      label: meta.label,
+      hue: meta.hue,
+      weight,
+      score: roundScore(neuroScore),
+    };
+  });
+}
+
+/** Weighted-average segment blend for mix explorer. */
+export function blendTraitSegments(
+  segmentLists: { segments: TraitSegment[]; fraction: number }[]
+): TraitSegment[] {
+  const byKey = new Map<string, { meta: TraitSegment; weightSum: number; scoreSum: number }>();
+
+  for (const { segments, fraction } of segmentLists) {
+    for (const seg of segments) {
+      const key = String(seg.key);
+      const contribution = seg.weight * fraction;
+      const existing = byKey.get(key);
+      if (existing) {
+        existing.weightSum += contribution;
+        existing.scoreSum += seg.score * contribution;
+      } else {
+        byKey.set(key, {
+          meta: seg,
+          weightSum: contribution,
+          scoreSum: seg.score * contribution,
+        });
+      }
+    }
+  }
+
+  const total = [...byKey.values()].reduce((sum, v) => sum + v.weightSum, 0);
+  if (total === 0) return [];
+
+  return [...byKey.values()].map(({ meta, weightSum, scoreSum }) => ({
+    key: meta.key,
+    label: meta.label,
+    hue: meta.hue,
+    weight: weightSum / total,
+    score: roundScore(scoreSum / weightSum),
+  }));
 }
 
 function resolveNeuroticismScore(breedName: string, category: BreedCategory): number {
@@ -418,6 +723,7 @@ function enrichBehavioralScores(
   let dom = defaults.dom;
   let prot = defaults.prot;
   let neuro = resolveNeuroticismScore(breedName, category);
+  let vocal = defaults.vocal;
 
   for (const name of lookupNames) {
     const override = BEHAVIORAL_OVERRIDES[name];
@@ -425,6 +731,7 @@ function enrichBehavioralScores(
     if (override.dom !== undefined) dom = override.dom;
     if (override.prot !== undefined) prot = override.prot;
     if (override.neuro !== undefined) neuro = override.neuro;
+    if (override.vocal !== undefined) vocal = override.vocal;
   }
 
   return {
@@ -432,6 +739,7 @@ function enrichBehavioralScores(
     dom: roundScore(dom),
     prot: roundScore(prot),
     neuro: roundScore(neuro),
+    vocal: roundScore(vocal),
   };
 }
 
@@ -525,6 +833,8 @@ function buildProfileForBreed(breedName: string, category: BreedCategory): DogIn
     breedKeys: aliasKeys,
     rank: 0,
     scores,
+    instinctSegments: buildInstinctSegments(breedName, category, scores.inst),
+    neuroSegments: buildNeuroSegments(breedName, scores.neuro),
     source,
   };
 }
@@ -576,11 +886,14 @@ export const PUREBRED_BREEDS_FOR_MIX: { name: string; profile: DogIntelligencePr
   for (const entry of COREN_TOP_50) {
     if (!seen.has(entry.breed)) {
       const category = COREN_BREED_CATEGORY[entry.breed] ?? 'clingy';
+      const scores = corenToFullScores(entry, entry.breed, category);
       const profile: DogIntelligenceProfile = {
         breed: entry.breed,
         breedKeys: [entry.breed],
         rank: entry.rank,
-        scores: corenToFullScores(entry, entry.breed, category),
+        scores,
+        instinctSegments: buildInstinctSegments(entry.breed, category, scores.inst),
+        neuroSegments: buildNeuroSegments(entry.breed, scores.neuro),
         source: 'coren',
       };
       seen.add(entry.breed);

@@ -6,11 +6,11 @@ import {
   type IntelligenceDimension,
 } from '../../data/dogIntelligence';
 import { INTELLIGENCE_NARROW_QUERY, useMediaQuery } from '../../hooks/useMediaQuery';
-import IntelligenceBar, { getScoreCellStyle } from './IntelligenceBar';
 import IntelligenceColumnHeader from './IntelligenceColumnHeader';
-import IntelligenceLegendItem from './IntelligenceLegendItem';
+import IntelligenceTableLegend from './IntelligenceTableLegend';
 import BreedDetailTooltip from './BreedDetailTooltip';
 import BreedIntelligenceTableNarrow from './BreedIntelligenceTableNarrow';
+import IntelligenceScoreCell from './IntelligenceScoreCell';
 import {
   IntelligenceColumnTipProvider,
   IntelligenceColumnTipOverlay,
@@ -196,13 +196,7 @@ export default function BreedIntelligenceTable() {
         <BreedDetailTooltip breedName={profile.breed} breedKeys={profile.breedKeys} />
       </td>
       {INTELLIGENCE_DIMENSIONS.map((dim) => (
-        <td
-          key={dim.key}
-          className="intelligence-score-cell"
-          style={getScoreCellStyle(profile.scores[dim.key])}
-        >
-          <IntelligenceBar value={profile.scores[dim.key]} />
-        </td>
+        <IntelligenceScoreCell key={dim.key} profile={profile} dimension={dim.key} />
       ))}
     </tr>
   );
@@ -240,21 +234,10 @@ export default function BreedIntelligenceTable() {
         <h2 className="visually-hidden">
           {isNarrow
             ? 'Dog breeds ranked by dimension. Select a dimension, tap a breed for details, and use the pin button to compare breeds.'
-            : 'Dog breeds ranked across nine dimensions. Hover a breed name for temperament details; click a row to pin it for comparison.'}
+            : 'Dog breeds ranked across ten dimensions. Hover a breed name for temperament details; click a row to pin it for comparison.'}
         </h2>
 
-        {!isNarrow && (
-          <div className="intelligence-legend">
-            {INTELLIGENCE_DIMENSIONS.map((dim) => (
-              <IntelligenceLegendItem
-                key={dim.key}
-                label={dim.label}
-                color={dim.color}
-                description={dim.description}
-              />
-            ))}
-          </div>
-        )}
+        {!isNarrow && <IntelligenceTableLegend />}
 
         <div className="intelligence-controls">
           <input
@@ -288,14 +271,16 @@ export default function BreedIntelligenceTable() {
               temperament details; use the pin button to compare breeds.
             </p>
             <p className="intelligence-tip">
-              Cell shading runs green (high) through gold and orange to gray (low).
+              Cognitive columns use green (high) → gray (low). Behavioural columns use colour for
+              type and vividness for strength.
             </p>
           </>
         ) : (
           <>
             <p className="intelligence-tip">
               The <strong>IQ #</strong> column is overall IQ rank only. Other columns are independent — sort by any
-              heading to reorder. Cell shading runs green (high) through gold and orange to gray (low).
+              heading to reorder. Cognitive columns shade green (high) to gray (low); behavioural columns use
+              colour for type and vividness for strength.
             </p>
             <p className="intelligence-tip">
               Hover a breed name for temperament details. Click a row to pin it for comparison.

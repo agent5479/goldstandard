@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import {
   filterMixBreeds,
   INTELLIGENCE_DIMENSIONS,
+  isTraitTypedDimension,
   type DogIntelligenceProfile,
 } from '../../data/dogIntelligence';
 import {
@@ -10,7 +11,7 @@ import {
   computeMixTemperamentNotes,
   type MixParentInput,
 } from '../../utils/intelligenceMix';
-import IntelligenceBar, { getScoreRangeCellStyle } from './IntelligenceBar';
+import IntelligenceBar, { getDimensionCellStyle, getScoreRangeCellStyle } from './IntelligenceBar';
 
 const FRACTION_OPTIONS = [
   { value: 0.5, label: '½ (50%)' },
@@ -244,6 +245,33 @@ export default function MixIntelligenceExplorer() {
               <tbody>
                 {intelligenceResult.ranges.map((range) => {
                   const dim = INTELLIGENCE_DIMENSIONS.find((d) => d.key === range.dimension)!;
+                  const cellStyle = isTraitTypedDimension(range.dimension)
+                    ? getDimensionCellStyle(range.dimension, range.expected)
+                    : getScoreRangeCellStyle(range.likelyLow, range.likelyHigh);
+
+                  const rangeBar =
+                    range.dimension === 'inst' ? (
+                      <IntelligenceBar
+                        mode="segments"
+                        segments={intelligenceResult.instinctSegments}
+                        value={range.expected}
+                        dimension={range.dimension}
+                      />
+                    ) : range.dimension === 'neuro' ? (
+                      <IntelligenceBar
+                        mode="segments"
+                        segments={intelligenceResult.neuroSegments}
+                        value={range.expected}
+                        dimension={range.dimension}
+                      />
+                    ) : (
+                      <IntelligenceBar mode="range" low={range.likelyLow} high={range.likelyHigh} />
+                    );
+
+                  const midpointStyle = isTraitTypedDimension(range.dimension)
+                    ? getDimensionCellStyle(range.dimension, range.expected)
+                    : getScoreRangeCellStyle(range.expected, range.expected);
+
                   return (
                     <tr key={range.dimension}>
                       <td className="intelligence-dim-label intelligence-dim-label--tip intelligence-score-cell">
@@ -254,20 +282,10 @@ export default function MixIntelligenceExplorer() {
                           </span>
                         </span>
                       </td>
-                      <td
-                        className="intelligence-score-cell"
-                        style={getScoreRangeCellStyle(range.likelyLow, range.likelyHigh)}
-                      >
-                        <IntelligenceBar
-                          mode="range"
-                          low={range.likelyLow}
-                          high={range.likelyHigh}
-                        />
+                      <td className="intelligence-score-cell" style={cellStyle}>
+                        {rangeBar}
                       </td>
-                      <td
-                        className="intelligence-mix-mid"
-                        style={getScoreRangeCellStyle(range.expected, range.expected)}
-                      >
+                      <td className="intelligence-mix-mid" style={midpointStyle}>
                         ~{range.expected.toFixed(1)}
                       </td>
                     </tr>

@@ -1,5 +1,5 @@
 import { breedCategories } from '../../data/breeds';
-import { findIntelligenceByBreedName } from '../../data/dogIntelligence';
+import { findIntelligenceByBreedName, type TraitSegment, VOCAL_HUE } from '../../data/dogIntelligence';
 import {
   AXES,
   findBreedByName,
@@ -8,6 +8,7 @@ import {
   getBreedNeuroticismPropensityDetail,
   NEUROTICISM_VARIANT,
 } from '../../data/breedTraits';
+import { getTraitIntensityStyle } from '../../utils/scoreSpectrum';
 
 export function resolveBreedForDetail(breedName: string, breedKeys: string[] = []) {
   return (
@@ -28,6 +29,53 @@ interface BreedDetailContentProps {
   breedKeys?: string[];
   /** stack = vertical (mobile sheet); columns = side-by-side panels (desktop hover) */
   layout?: 'stack' | 'columns';
+}
+
+function SegmentBreakdown({
+  title,
+  segments,
+  totalScore,
+}: {
+  title: string;
+  segments: TraitSegment[];
+  totalScore: number;
+}) {
+  if (segments.length === 0) return null;
+
+  return (
+    <section className="intelligence-breed-detail-segments">
+      <h4 className="intelligence-breed-detail-segments-title">{title}</h4>
+      <p className="intelligence-breed-detail-segments-total">
+        Overall estimate: <strong>{totalScore.toFixed(1)}/10</strong>
+      </p>
+      <ul className="intelligence-breed-detail-segment-list">
+        {segments.map((seg) => (
+          <li key={String(seg.key)} className="intelligence-breed-detail-segment-item">
+            <span className="intelligence-breed-detail-segment-label">
+              <span
+                className="intelligence-breed-detail-segment-dot"
+                style={{ background: getTraitIntensityStyle(seg.hue, seg.score).barFill }}
+              />
+              {seg.label}
+              <span className="intelligence-breed-detail-segment-weight">
+                ({Math.round(seg.weight * 100)}%)
+              </span>
+            </span>
+            <span className="intelligence-breed-detail-segment-bar-wrap">
+              <span
+                className="intelligence-breed-detail-segment-bar"
+                style={{
+                  width: `${seg.score * 10}%`,
+                  background: getTraitIntensityStyle(seg.hue, seg.score).barFill,
+                }}
+              />
+              <span className="intelligence-breed-detail-segment-score">{seg.score.toFixed(1)}</span>
+            </span>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
 }
 
 function NeuroSection({
@@ -76,6 +124,7 @@ export default function BreedDetailContent({
   const intelligenceProfile = resolveIntelligenceProfile(breedName, breedKeys);
   const neuroDetail = breed ? getBreedNeuroticismPropensityDetail(breed.name) : undefined;
   const neuroScore = intelligenceProfile?.scores.neuro;
+  const vocalScore = intelligenceProfile?.scores.vocal;
   const isEstimated = intelligenceProfile?.source === 'estimated';
 
   if (!breed) {
@@ -120,8 +169,35 @@ export default function BreedDetailContent({
             ))}
           </dl>
         </section>
-        {(neuroDetail || neuroScore !== undefined) && (
+        {(neuroDetail || neuroScore !== undefined || intelligenceProfile) && (
           <section className="intelligence-breed-detail-panel">
+            {intelligenceProfile && (
+              <>
+                <SegmentBreakdown
+                  title="Instinct composition"
+                  segments={intelligenceProfile.instinctSegments}
+                  totalScore={intelligenceProfile.scores.inst}
+                />
+                <SegmentBreakdown
+                  title="Stress pattern composition"
+                  segments={intelligenceProfile.neuroSegments}
+                  totalScore={intelligenceProfile.scores.neuro}
+                />
+                {vocalScore !== undefined && (
+                  <p className="intelligence-breed-detail-vocal">
+                    Vocal tendency:{' '}
+                    <strong>{vocalScore.toFixed(1)}/10</strong>
+                    <span
+                      className="intelligence-breed-detail-segment-dot"
+                      style={{
+                        background: getTraitIntensityStyle(VOCAL_HUE, vocalScore).barFill,
+                        marginLeft: '0.35rem',
+                      }}
+                    />
+                  </p>
+                )}
+              </>
+            )}
             <NeuroSection
               neuroDetail={neuroDetail}
               neuroScore={neuroScore}
@@ -148,6 +224,32 @@ export default function BreedDetailContent({
         ))}
       </dl>
       <NeuroSection neuroDetail={neuroDetail} neuroScore={neuroScore} isEstimated={isEstimated} />
+      {intelligenceProfile && (
+        <>
+          <SegmentBreakdown
+            title="Instinct composition"
+            segments={intelligenceProfile.instinctSegments}
+            totalScore={intelligenceProfile.scores.inst}
+          />
+          <SegmentBreakdown
+            title="Stress pattern composition"
+            segments={intelligenceProfile.neuroSegments}
+            totalScore={intelligenceProfile.scores.neuro}
+          />
+          {vocalScore !== undefined && (
+            <p className="intelligence-breed-detail-vocal">
+              Vocal tendency: <strong>{vocalScore.toFixed(1)}/10</strong>
+              <span
+                className="intelligence-breed-detail-segment-dot"
+                style={{
+                  background: getTraitIntensityStyle(VOCAL_HUE, vocalScore).barFill,
+                  marginLeft: '0.35rem',
+                }}
+              />
+            </p>
+          )}
+        </>
+      )}
     </>
   );
 }

@@ -4,9 +4,9 @@ import {
   type DogIntelligenceProfile,
   type IntelligenceDimension,
 } from '../../data/dogIntelligence';
-import IntelligenceBar, { getScoreCellStyle } from './IntelligenceBar';
 import IntelligenceColumnHeader from './IntelligenceColumnHeader';
 import IntelligenceDimensionChip from './IntelligenceDimensionChip';
+import IntelligenceScoreCell from './IntelligenceScoreCell';
 import BreedDetailSheet from './BreedDetailSheet';
 
 type SortKey = IntelligenceDimension | 'rank' | null;
@@ -34,8 +34,6 @@ function renderNarrowRow(
   togglePin: (breed: string) => void,
   onOpenDetail: (name: string, breedKeys: string[]) => void
 ): ReactNode {
-  const activeDim = INTELLIGENCE_DIMENSIONS.find((d) => d.key === activeDimension)!;
-
   return (
     <tr
       key={profile.breed}
@@ -63,13 +61,7 @@ function renderNarrowRow(
           {isPinned ? '●' : '○'}
         </button>
       </td>
-      <td
-        className="intelligence-score-cell"
-        style={getScoreCellStyle(profile.scores[activeDimension])}
-      >
-        <IntelligenceBar value={profile.scores[activeDimension]} />
-        <span className="visually-hidden">{activeDim.label}</span>
-      </td>
+      <IntelligenceScoreCell profile={profile} dimension={activeDimension} />
     </tr>
   );
 }

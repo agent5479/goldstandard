@@ -603,6 +603,53 @@ export function getBreedSuggestedProfileTags(breedName: string): DogProfileTagId
   return profile.suggestedProfileTags ?? [];
 }
 
+/** Neuroticism stress patterns inferred from booking profile tags. */
+export type NeuroPattern =
+  | 'separation'
+  | 'hyper_vigilant'
+  | 'handler_sensitive'
+  | 'noise_reactive'
+  | 'fear_reactive';
+
+const TAG_TO_NEURO_PATTERN: Record<string, NeuroPattern> = {
+  separation_stress: 'separation',
+  separation_priority: 'separation',
+  neurotic: 'hyper_vigilant',
+  fixation_priority: 'hyper_vigilant',
+  anxious: 'handler_sensitive',
+  clingy: 'handler_sensitive',
+  noise_sensitive: 'noise_reactive',
+  fearful: 'fear_reactive',
+};
+
+const NEUROTICISM_INCLINATION_FALLBACK_PATTERN: Record<NeuroticismInclination, NeuroPattern> = {
+  low: 'handler_sensitive',
+  moderate: 'handler_sensitive',
+  elevated: 'hyper_vigilant',
+  high: 'hyper_vigilant',
+};
+
+/** Collect distinct neuro patterns for a breed from suggested tags, with inclination fallback. */
+export function getNeuroPatternsForBreed(breedName: string): NeuroPattern[] {
+  const tags = getBreedSuggestedProfileTags(breedName);
+  const patterns = new Set<NeuroPattern>();
+  for (const tag of tags) {
+    const pattern = TAG_TO_NEURO_PATTERN[tag];
+    if (pattern) patterns.add(pattern);
+  }
+  if (patterns.size > 0) return [...patterns];
+
+  const inclination = getBreedNeuroticismInclination(breedName);
+  if (inclination) return [NEUROTICISM_INCLINATION_FALLBACK_PATTERN[inclination]];
+
+  const breed = findBreedByName(breedName);
+  if (breed) {
+    const defaultIncl = categoryNeuroticismDefault[breed.category];
+    return [NEUROTICISM_INCLINATION_FALLBACK_PATTERN[defaultIncl]];
+  }
+  return ['handler_sensitive'];
+}
+
 export function getBreedTrainerSummary(breedName: string): string | undefined {
   const breed = findBreedByName(breedName);
   if (!breed) return undefined;

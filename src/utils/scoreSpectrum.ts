@@ -89,3 +89,50 @@ export function getScoreRangeSpectrumStyle(low: number, high: number): ScoreSpec
     barRangeGradient: `linear-gradient(90deg, ${toRgb(lowRgb)}, ${toRgb(highRgb)})`,
   };
 }
+
+/** Parse #RRGGBB or #RGB hex to RGB. */
+function parseHexHue(hex: string): Rgb {
+  const normalized = hex.replace('#', '');
+  if (normalized.length === 3) {
+    return {
+      r: parseInt(normalized[0] + normalized[0], 16),
+      g: parseInt(normalized[1] + normalized[1], 16),
+      b: parseInt(normalized[2] + normalized[2], 16),
+    };
+  }
+  return {
+    r: parseInt(normalized.slice(0, 2), 16),
+    g: parseInt(normalized.slice(2, 4), 16),
+    b: parseInt(normalized.slice(4, 6), 16),
+  };
+}
+
+/** Score 10 → full saturation; score 1 → ~8% color weight on white. */
+const TRAIT_MIN_COLOR_WEIGHT = 0.08;
+
+function traitColorWeight(score: number): number {
+  const clamped = clampScore(score);
+  const t = (clamped - 1) / 9;
+  return TRAIT_MIN_COLOR_WEIGHT + t * (1 - TRAIT_MIN_COLOR_WEIGHT);
+}
+
+/** Hue identifies trait subtype; vividness encodes score strength (1–10). */
+export function getTraitIntensityStyle(hue: string, score: number): ScoreSpectrumStyle {
+  const rgb = parseHexHue(hue);
+  const weight = traitColorWeight(score);
+  const pastel = blendWithWhite(rgb, weight);
+  const barRgb = deepen(rgb, 0.04);
+  const barPastel = blendWithWhite(barRgb, Math.min(1, weight + 0.08));
+
+  return {
+    cellBackground: toRgb(pastel),
+    barFill: toRgb(barPastel),
+  };
+}
+
+/** Neutral cell background for segmented trait columns (color lives in the bar). */
+export const TRAIT_NEUTRAL_CELL = 'rgb(255, 255, 255)';
+
+export function getTraitNeutralCellStyle(): { backgroundColor: string } {
+  return { backgroundColor: TRAIT_NEUTRAL_CELL };
+}

@@ -1,8 +1,10 @@
 import {
+  blendTraitSegments,
   findIntelligenceByBreedName,
   INTELLIGENCE_DIMENSION_KEYS,
   type IntelligenceDimension,
   type IntelligenceScores,
+  type TraitSegment,
 } from '../data/dogIntelligence';
 import { AXES, findBreedByName, getBreedMixAxisProfile, type TraitAxis } from '../data/breedTraits';
 
@@ -24,6 +26,8 @@ export interface MixIntelligenceResult {
   fractionSum: number;
   mixTitle: string;
   ranges: IntelligenceRange[];
+  instinctSegments: TraitSegment[];
+  neuroSegments: TraitSegment[];
 }
 
 export interface MixTemperamentNote {
@@ -86,6 +90,8 @@ export function computeMixIntelligence(parents: MixParentInput[]): MixIntelligen
     fractionSum: sum,
     mixTitle: '',
     ranges: [],
+    instinctSegments: [],
+    neuroSegments: [],
   };
   if (!valid) return empty;
 
@@ -117,6 +123,18 @@ export function computeMixIntelligence(parents: MixParentInput[]): MixIntelligen
     fractionSum: sum,
     mixTitle: formatMixTitle(parents),
     ranges,
+    instinctSegments: blendTraitSegments(
+      resolved.map((p) => ({
+        segments: p.profile!.instinctSegments,
+        fraction: p.fraction,
+      }))
+    ),
+    neuroSegments: blendTraitSegments(
+      resolved.map((p) => ({
+        segments: p.profile!.neuroSegments,
+        fraction: p.fraction,
+      }))
+    ),
   };
 }
 
