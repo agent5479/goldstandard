@@ -3938,6 +3938,61 @@ body.page-intelligence {
   padding: 0.65rem 0.85rem 0.75rem;
 }
 
+.intelligence-breed-detail--tooltip {
+  width: min(268px, calc(100vw - 1.5rem));
+  max-width: min(268px, calc(100vw - 1.5rem));
+  padding: 0.45rem 0.55rem 0.5rem;
+  font-size: 0.71rem;
+  line-height: 1.35;
+  left: auto;
+  right: 0;
+}
+
+.intelligence-breed-detail--tooltip .intelligence-breed-detail-title {
+  margin-bottom: 0.3rem;
+  font-size: 0.78rem;
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.intelligence-breed-detail--tooltip .intelligence-breed-detail-type {
+  margin-bottom: 0.2rem;
+  font-size: 0.7rem;
+}
+
+.intelligence-breed-detail--tooltip .intelligence-breed-detail-category {
+  margin-bottom: 0.35rem;
+  font-size: 0.68rem;
+}
+
+.intelligence-breed-detail-table--compact .intelligence-breed-detail-row {
+  grid-template-columns: 4.5rem 1fr;
+  gap: 0.25rem 0.4rem;
+  margin-bottom: 0.3rem;
+}
+
+.intelligence-breed-detail-table--compact .intelligence-breed-detail-row dt {
+  font-size: 0.65rem;
+}
+
+.intelligence-breed-detail-table--compact .intelligence-breed-detail-row dd {
+  font-size: 0.68rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.intelligence-breed-detail-neuro-compact {
+  margin: 0.25rem 0 0;
+  font-size: 0.68rem;
+  line-height: 1.4;
+}
+
+.intelligence-breed-detail-neuro-compact-score {
+  color: var(--light-text);
+}
+
 .intelligence-breed-detail-columns {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(10.5rem, 1fr));

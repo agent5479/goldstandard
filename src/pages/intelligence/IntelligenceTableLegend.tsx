@@ -1,14 +1,16 @@
 import {
   COGNITIVE_DIMENSIONS,
+  DOM_HUE,
   INSTINCT_SUBTYPE_META,
   INTELLIGENCE_DIMENSIONS,
+  NEURO_HUE,
   NEURO_PATTERN_META,
+  PROT_HUE,
   VOCAL_HUE,
 } from '../../data/dogIntelligence';
-import { getTraitIntensityStyle } from '../../utils/scoreSpectrum';
+import { COGNITIVE_GREEN_HUE, getTraitIntensityStyle } from '../../utils/scoreSpectrum';
 import IntelligenceLegendItem from './IntelligenceLegendItem';
 
-const INTENSITY_SAMPLE_HUE = '#639922';
 const INTENSITY_SCORES = [10, 7, 5, 3, 1] as const;
 
 export default function IntelligenceTableLegend() {
@@ -19,18 +21,18 @@ export default function IntelligenceTableLegend() {
   return (
     <div className="intelligence-legend intelligence-legend--typed">
       <div className="intelligence-legend-row">
-        <span className="intelligence-legend-row-title">Intensity (behavioural columns)</span>
+        <span className="intelligence-legend-row-title">Intensity (score strength)</span>
         <div className="intelligence-legend-intensity">
           {INTENSITY_SCORES.map((score) => (
             <div className="intelligence-legend-intensity-item" key={score}>
               <div
                 className="intelligence-legend-dot intelligence-legend-dot--intensity"
-                style={{ background: getTraitIntensityStyle(INTENSITY_SAMPLE_HUE, score).barFill }}
+                style={{ background: getTraitIntensityStyle(COGNITIVE_GREEN_HUE, score).barFill }}
               />
               <span className="intelligence-legend-intensity-score">{score}</span>
             </div>
           ))}
-          <span className="intelligence-legend-intensity-hint">vivid → pale</span>
+          <span className="intelligence-legend-intensity-hint">vivid → none</span>
         </div>
       </div>
 
@@ -49,7 +51,7 @@ export default function IntelligenceTableLegend() {
       </div>
 
       <div className="intelligence-legend-row">
-        <span className="intelligence-legend-row-title">Stress patterns</span>
+        <span className="intelligence-legend-row-title">Stress patterns (red)</span>
         <div className="intelligence-legend-chips">
           {NEURO_PATTERN_META.map((meta) => (
             <IntelligenceLegendItem
@@ -68,26 +70,31 @@ export default function IntelligenceTableLegend() {
           <IntelligenceLegendItem
             label="Vocal / barking"
             color={VOCAL_HUE}
-            description="Typical vocal output — alert barking, baying, or yapping tendency."
+            description="Orange — typical vocal output (alert barking, baying, yapping)."
+          />
+          <IntelligenceLegendItem
+            label="Dominance"
+            color={DOM_HUE}
+            description="Green — assertive or rank-seeking behaviour; vividness shows strength."
+          />
+          <IntelligenceLegendItem
+            label="Protectiveness"
+            color={PROT_HUE}
+            description="Green — guarding household and territory; distinct from guard instinct talent."
+          />
+          <IntelligenceLegendItem
+            label="Neuroticism"
+            color={NEURO_HUE}
+            description="Red — stress-looping patterns; segment shade shows which pattern."
           />
           {cognitiveDims.map((dim) => (
             <IntelligenceLegendItem
               key={dim.key}
               label={dim.label}
-              color={dim.color}
-              description={`${dim.description} Uses green (high) → gray (low) shading.`}
+              color={COGNITIVE_GREEN_HUE}
+              description={`${dim.description} Green vividness encodes score (pale at low).`}
             />
           ))}
-          <IntelligenceLegendItem
-            label="Dominance"
-            color="#8B4513"
-            description="Assertive or rank-seeking behaviour — hue + intensity encoding."
-          />
-          <IntelligenceLegendItem
-            label="Protectiveness"
-            color="#B44A4A"
-            description="Guarding household and territory — distinct from guard instinct talent."
-          />
         </div>
       </div>
     </div>

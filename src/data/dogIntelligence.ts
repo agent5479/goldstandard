@@ -71,8 +71,13 @@ export function isSegmentedDimension(key: IntelligenceDimension): boolean {
   return key === 'inst' || key === 'neuro';
 }
 
-/** Amber hue for the vocal column. */
-export const VOCAL_HUE = '#E8A020';
+/** Green for dominance and protectiveness columns. */
+export const DOM_HUE = '#347430';
+export const PROT_HUE = '#347430';
+/** Red for neuroticism column and stress-pattern segments. */
+export const NEURO_HUE = '#B44A4A';
+/** Orange for vocal / barking column. */
+export const VOCAL_HUE = '#E8870A';
 
 export const INSTINCT_SUBTYPE_META: {
   key: InstinctSubtype;
@@ -139,31 +144,31 @@ export const NEURO_PATTERN_META: {
   {
     key: 'separation',
     label: 'Separation stress',
-    hue: '#9B6B9E',
+    hue: '#C0392B',
     description: 'Distress when left alone or separated from the handler.',
   },
   {
     key: 'hyper_vigilant',
     label: 'Hyper-vigilant',
-    hue: '#7B4F8A',
+    hue: '#922B21',
     description: 'Anxious looping, fixation, and persistent scanning for threat.',
   },
   {
     key: 'handler_sensitive',
     label: 'Handler-sensitive',
-    hue: '#D4537E',
+    hue: '#E74C3C',
     description: 'Clingy bonding, mood-reading, and sensitivity to handler tension.',
   },
   {
     key: 'noise_reactive',
     label: 'Noise reactive',
-    hue: '#BA7517',
+    hue: '#A93226',
     description: 'Startle and stress sensitivity to sounds and environmental noise.',
   },
   {
     key: 'fear_reactive',
     label: 'Fear reactive',
-    hue: '#6B7280',
+    hue: '#7B241C',
     description: 'Caution, withdrawal, or defensive patterns toward novel stimuli.',
   },
 ];
@@ -292,7 +297,7 @@ export const INTELLIGENCE_DIMENSIONS: {
     key: 'dom',
     label: 'Dominance',
     shortLabel: 'Dom',
-    color: '#8B4513',
+    color: DOM_HUE,
     description:
       'Tendency toward assertive or rank-seeking behaviour with people and other dogs — pushiness, guarding position, and challenging boundaries. Bar vividness shows strength; not a good/bad scale.',
   },
@@ -300,7 +305,7 @@ export const INTELLIGENCE_DIMENSIONS: {
     key: 'prot',
     label: 'Protectiveness',
     shortLabel: 'Prot',
-    color: '#B44A4A',
+    color: PROT_HUE,
     description:
       'Drive to guard household, territory, or family — alertness to strangers and vigilance. Bar vividness shows strength. Distinct from guard instinct talent in the Inst column.',
   },
@@ -308,9 +313,9 @@ export const INTELLIGENCE_DIMENSIONS: {
     key: 'neuro',
     label: 'Potential neuroticism',
     shortLabel: 'Neur',
-    color: '#9B6B9E',
+    color: NEURO_HUE,
     description:
-      'Estimated propensity for stress-looping patterns — bar segments show which patterns (separation, hyper-vigilance, handler-sensitivity, etc.); vividness shows strength. Not a label for any individual dog.',
+      'Estimated propensity for stress-looping patterns — red bar segments show which patterns (separation, hyper-vigilance, handler-sensitivity, etc.); vividness shows strength. Not a label for any individual dog.',
   },
   {
     key: 'vocal',

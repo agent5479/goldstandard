@@ -27,8 +27,8 @@ function resolveIntelligenceProfile(breedName: string, breedKeys: string[] = [])
 interface BreedDetailContentProps {
   breedName: string;
   breedKeys?: string[];
-  /** stack = vertical (mobile sheet); columns = side-by-side panels (desktop hover) */
-  layout?: 'stack' | 'columns';
+  /** Compact summary for table hover tooltip */
+  compact?: boolean;
 }
 
 function SegmentBreakdown({
@@ -82,12 +82,35 @@ function NeuroSection({
   neuroDetail,
   neuroScore,
   isEstimated,
+  compact = false,
 }: {
   neuroDetail: ReturnType<typeof getBreedNeuroticismPropensityDetail>;
   neuroScore: number | undefined;
   isEstimated: boolean;
+  compact?: boolean;
 }) {
   if (!neuroDetail && neuroScore === undefined) return null;
+
+  if (compact) {
+    return (
+      <p className="intelligence-breed-detail-neuro-compact">
+        {neuroDetail && (
+          <span
+            className={`intelligence-breed-detail-neuro-badge intelligence-breed-detail-neuro-badge--${NEUROTICISM_VARIANT[neuroDetail.level]}`}
+          >
+            {neuroDetail.label}
+          </span>
+        )}
+        {neuroScore !== undefined && (
+          <span className="intelligence-breed-detail-neuro-compact-score">
+            {neuroDetail ? ' · ' : ''}
+            Neuro {neuroScore.toFixed(1)}/10
+            {isEstimated ? ' (est.)' : ''}
+          </span>
+        )}
+      </p>
+    );
+  }
 
   return (
     <section className="intelligence-breed-detail-neuro">
@@ -118,7 +141,7 @@ function NeuroSection({
 export default function BreedDetailContent({
   breedName,
   breedKeys = [],
-  layout = 'stack',
+  compact = false,
 }: BreedDetailContentProps) {
   const breed = resolveBreedForDetail(breedName, breedKeys);
   const intelligenceProfile = resolveIntelligenceProfile(breedName, breedKeys);
@@ -148,83 +171,45 @@ export default function BreedDetailContent({
 
   const category = breedCategories[breed.category];
 
-  if (layout === 'columns') {
-    return (
-      <div className="intelligence-breed-detail-columns">
-        <section className="intelligence-breed-detail-panel">
-          <h4 className="intelligence-breed-detail-panel-title">Overview</h4>
-          <p className="intelligence-breed-detail-type">{getBreedClientMixTraitLabel(breed.name)}</p>
-          <p className="intelligence-breed-detail-category">
-            <strong>{category.label}</strong> — {category.note}
-          </p>
-        </section>
-        <section className="intelligence-breed-detail-panel">
-          <h4 className="intelligence-breed-detail-panel-title">Temperament axes</h4>
-          <dl className="intelligence-breed-detail-table">
-            {AXES.map((axis) => (
-              <div className="intelligence-breed-detail-row" key={axis.key}>
-                <dt>{axis.label}</dt>
-                <dd>{getBreedAxisProfile(breed, axis.key)}</dd>
-              </div>
-            ))}
-          </dl>
-        </section>
-        {(neuroDetail || neuroScore !== undefined || intelligenceProfile) && (
-          <section className="intelligence-breed-detail-panel">
-            {intelligenceProfile && (
-              <>
-                <SegmentBreakdown
-                  title="Instinct composition"
-                  segments={intelligenceProfile.instinctSegments}
-                  totalScore={intelligenceProfile.scores.inst}
-                />
-                <SegmentBreakdown
-                  title="Stress pattern composition"
-                  segments={intelligenceProfile.neuroSegments}
-                  totalScore={intelligenceProfile.scores.neuro}
-                />
-                {vocalScore !== undefined && (
-                  <p className="intelligence-breed-detail-vocal">
-                    Vocal tendency:{' '}
-                    <strong>{vocalScore.toFixed(1)}/10</strong>
-                    <span
-                      className="intelligence-breed-detail-segment-dot"
-                      style={{
-                        background: getTraitIntensityStyle(VOCAL_HUE, vocalScore).barFill,
-                        marginLeft: '0.35rem',
-                      }}
-                    />
-                  </p>
-                )}
-              </>
-            )}
-            <NeuroSection
-              neuroDetail={neuroDetail}
-              neuroScore={neuroScore}
-              isEstimated={isEstimated}
-            />
-          </section>
-        )}
-      </div>
-    );
-  }
-
   return (
     <>
       <p className="intelligence-breed-detail-type">{getBreedClientMixTraitLabel(breed.name)}</p>
       <p className="intelligence-breed-detail-category">
-        <strong>{category.label}</strong> — {category.note}
+        {compact ? (
+          <strong>{category.label}</strong>
+        ) : (
+          <>
+            <strong>{category.label}</strong> — {category.note}
+          </>
+        )}
       </p>
-      <dl className="intelligence-breed-detail-table">
-        {AXES.map((axis) => (
-          <div className="intelligence-breed-detail-row" key={axis.key}>
-            <dt>{axis.label}</dt>
-            <dd>{getBreedAxisProfile(breed, axis.key)}</dd>
-          </div>
-        ))}
-      </dl>
-      <NeuroSection neuroDetail={neuroDetail} neuroScore={neuroScore} isEstimated={isEstimated} />
-      {intelligenceProfile && (
+      {!compact && (
+        <dl className="intelligence-breed-detail-table">
+          {AXES.map((axis) => (
+            <div className="intelligence-breed-detail-row" key={axis.key}>
+              <dt>{axis.label}</dt>
+              <dd>{getBreedAxisProfile(breed, axis.key)}</dd>
+            </div>
+          ))}
+        </dl>
+      )}
+      {compact && (
+        <dl className="intelligence-breed-detail-table intelligence-breed-detail-table--compact">
+          {AXES.map((axis) => (
+            <div className="intelligence-breed-detail-row" key={axis.key}>
+              <dt>{axis.label.replace(/^[^\s]+\s/, '')}</dt>
+              <dd>{getBreedAxisProfile(breed, axis.key)}</dd>
+            </div>
+          ))}
+        </dl>
+      )}
+      <NeuroSection
+        neuroDetail={neuroDetail}
+        neuroScore={neuroScore}
+        isEstimated={isEstimated}
+        compact={compact}
+      />
+      {!compact && intelligenceProfile && (
         <>
           <SegmentBreakdown
             title="Instinct composition"

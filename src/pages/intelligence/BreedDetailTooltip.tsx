@@ -10,9 +10,9 @@ export default function BreedDetailTooltip({ breedName, breedKeys = [] }: BreedD
   if (!breed) return null;
 
   return (
-    <div className="intelligence-breed-detail intelligence-breed-detail--columns" role="tooltip">
+    <div className="intelligence-breed-detail intelligence-breed-detail--tooltip" role="tooltip">
       <p className="intelligence-breed-detail-title">{breed.name}</p>
-      <BreedDetailContent breedName={breedName} breedKeys={breedKeys} layout="columns" />
+      <BreedDetailContent breedName={breedName} breedKeys={breedKeys} compact />
     </div>
   );
 }

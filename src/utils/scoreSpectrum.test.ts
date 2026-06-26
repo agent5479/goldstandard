@@ -6,12 +6,12 @@ import {
 } from './scoreSpectrum';
 
 describe('scoreSpectrum', () => {
-  it('returns greener tones for higher scores', () => {
+  it('returns greener tones for higher scores and white for low', () => {
     const high = getScoreSpectrumStyle(9.5);
-    const low = getScoreSpectrumStyle(2);
+    const low = getScoreSpectrumStyle(1);
 
     expect(high.cellBackground).toMatch(/^rgb\(/);
-    expect(low.cellBackground).toMatch(/^rgb\(/);
+    expect(low.cellBackground).toBe('rgb(255, 255, 255)');
     expect(high.cellBackground).not.toBe(low.cellBackground);
   });
 

@@ -1,6 +1,9 @@
 import {
   INTELLIGENCE_DIMENSIONS,
+  DOM_HUE,
   isTraitTypedDimension,
+  NEURO_HUE,
+  PROT_HUE,
   type IntelligenceDimension,
   type TraitSegment,
   VOCAL_HUE,
@@ -23,6 +26,9 @@ interface IntelligenceBarProps {
 
 function dimensionHue(key: IntelligenceDimension): string {
   if (key === 'vocal') return VOCAL_HUE;
+  if (key === 'dom') return DOM_HUE;
+  if (key === 'prot') return PROT_HUE;
+  if (key === 'neuro') return NEURO_HUE;
   return INTELLIGENCE_DIMENSIONS.find((d) => d.key === key)?.color ?? '#888888';
 }
 

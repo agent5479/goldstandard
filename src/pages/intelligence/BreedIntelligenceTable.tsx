@@ -271,7 +271,7 @@ export default function BreedIntelligenceTable() {
               temperament details; use the pin button to compare breeds.
             </p>
             <p className="intelligence-tip">
-              Cognitive columns use green (high) → gray (low). Behavioural columns use colour for
+              Cognitive columns use green vividness (pale at low scores). Behavioural columns use colour for
               type and vividness for strength.
             </p>
           </>
@@ -279,7 +279,7 @@ export default function BreedIntelligenceTable() {
           <>
             <p className="intelligence-tip">
               The <strong>IQ #</strong> column is overall IQ rank only. Other columns are independent — sort by any
-              heading to reorder. Cognitive columns shade green (high) to gray (low); behavioural columns use
+              heading to reorder. Cognitive columns shade green (vivid at high, pale at low); behavioural columns use
               colour for type and vividness for strength.
             </p>
             <p className="intelligence-tip">
