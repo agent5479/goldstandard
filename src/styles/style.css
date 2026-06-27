@@ -274,15 +274,6 @@ body::before {
   animation: fadeUp 0.6s 0.2s forwards;
 }
 
-.hero-trainer {
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--forest);
-  margin-bottom: 1.25rem;
-  opacity: 0;
-  animation: fadeUp 0.6s 0.3s forwards;
-}
-
 .hero h1 {
   font-family: 'Playfair Display', serif;
   font-size: clamp(2.6rem, 7vw, 5rem);

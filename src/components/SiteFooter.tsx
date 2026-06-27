@@ -12,7 +12,7 @@ export default function SiteFooter() {
         <Link to="/intelligence">Breed Analysis</Link>
         <Link to="/contact">Contact</Link>
       </nav>
-      <p>© 2026 <span>Gold Standard Dog Training</span> · Warwick Marshall · Takaka, Golden Bay, New Zealand</p>
+      <p>© 2026 <span>Gold Standard Dog Training</span> · Warwick Marshall · Golden Bay, New Zealand</p>
     </footer>
   );
 }

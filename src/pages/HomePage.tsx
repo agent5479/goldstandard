@@ -23,8 +23,7 @@ export default function HomePage() {
 
       <section className="hero">
         <div className="hero-body">
-          <p className="hero-eyebrow">🌿 Golden Bay · Takaka · New Zealand</p>
-          <p className="hero-trainer">Warwick Marshall — dog trainer, Takaka &amp; Golden Bay</p>
+          <p className="hero-eyebrow">🌿 Golden Bay &amp; Tasman Region · New Zealand</p>
           <h1>🐾 The dog you always wanted<br /><span>is already in there.</span></h1>
           <HeroGallery />
           <p className="hero-lead">✨ Effective dog training and rehabilitation — Results are quick and lasting!</p>

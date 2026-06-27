@@ -17,7 +17,7 @@ export const ICON_SETS: Record<IconSetId, IconSet> = {
     prefix: 'dog',
     ogImage: `${SITE_URL}/${ICONS_DIR}/dog1024.jpg`,
     ogImageAlt:
-      'Gold Standard Dog Training — dog training in Golden Bay, Nelson Bays and Greater Tasman Region, New Zealand',
+      'Gold Standard Dog Training — dog training in Golden Bay & Tasman Region, New Zealand',
     ogImageWidth: 1024,
     ogImageHeight: 1024,
   },
