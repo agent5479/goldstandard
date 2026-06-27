@@ -3681,8 +3681,15 @@ body.page-intelligence {
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 0.5rem;
+  gap: 0.35rem 0.75rem;
   margin-bottom: 0.65rem;
+}
+
+.intelligence-table-filters-hint {
+  flex: 1 1 100%;
+  font-size: 0.72rem;
+  color: var(--light-text);
+  font-style: italic;
 }
 
 .intelligence-table-filters-title {
@@ -3748,9 +3755,32 @@ body.page-intelligence {
 }
 
 .intelligence-filter-badge.is-active {
-  border-color: var(--forest);
-  background: var(--surface);
-  box-shadow: inset 0 0 0 1px rgba(45, 74, 45, 0.15);
+  border-color: var(--filter-badge-color, var(--forest));
+  background: color-mix(in srgb, var(--filter-badge-color, var(--forest)) 22%, var(--surface));
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--filter-badge-color, var(--forest)) 40%, transparent),
+    0 1px 3px rgba(0, 0, 0, 0.08);
+  color: var(--text);
+  font-weight: 600;
+}
+
+.intelligence-filter-badge-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--filter-badge-color, var(--forest));
+  color: #fff;
+  font-size: 0.62rem;
+  font-weight: 700;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.intelligence-filter-badge.is-active .intelligence-filter-badge-dot {
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.6);
 }
 
 .intelligence-filter-badge-dot {

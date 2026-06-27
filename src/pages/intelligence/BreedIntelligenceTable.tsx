@@ -343,8 +343,8 @@ export default function BreedIntelligenceTable() {
           <>
             <p className="intelligence-tip">
               Select a dimension chip to choose which score column is shown. Tap filter badges to narrow breeds
-              by instinct, stress pattern, or column strength. Tap a breed name for temperament details; use the
-              pin button to compare breeds.
+              by instinct, stress pattern, or column strength — breeds must match every selected filter. Tap a
+              breed name for details; use the pin button to compare breeds.
             </p>
             <p className="intelligence-tip">
               Cognitive columns use green vividness (pale at low scores). Behavioural columns use colour for
@@ -360,7 +360,7 @@ export default function BreedIntelligenceTable() {
             </p>
             <p className="intelligence-tip">
               Tap filter badges to narrow the breed list by instinct type, stress pattern, or column strength.
-              Multiple filters match any selected type (OR). Tick a row checkbox to open temperament details above
+              Breeds must match every selected filter. Tick a row checkbox to open temperament details above
               the table; click a row to pin it for comparison.
             </p>
           </>

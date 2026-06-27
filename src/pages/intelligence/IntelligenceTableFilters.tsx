@@ -36,17 +36,19 @@ export function matchesTableFilters(
     if (filter.startsWith('inst:')) {
       const key = filter.slice(5) as InstinctSubtype;
       if (
-        profile.instinctSegments.some((seg) => seg.key === key && seg.weight >= SEGMENT_FILTER_MIN_WEIGHT)
+        !profile.instinctSegments.some((seg) => seg.key === key && seg.weight >= SEGMENT_FILTER_MIN_WEIGHT)
       ) {
-        return true;
+        return false;
       }
       continue;
     }
 
     if (filter.startsWith('neuro:')) {
       const key = filter.slice(6) as NeuroPattern;
-      if (profile.neuroSegments.some((seg) => seg.key === key && seg.weight >= SEGMENT_FILTER_MIN_WEIGHT)) {
-        return true;
+      if (
+        !profile.neuroSegments.some((seg) => seg.key === key && seg.weight >= SEGMENT_FILTER_MIN_WEIGHT)
+      ) {
+        return false;
       }
       continue;
     }
@@ -58,11 +60,11 @@ export function matchesTableFilters(
         key === 'iq' || key === 'adapt' || key === 'work' || key === 'ei' || key === 'si'
           ? COGNITIVE_SCORE_MIN
           : BEHAVIORAL_SCORE_MIN;
-      if (score >= min) return true;
+      if (score < min) return false;
     }
   }
 
-  return false;
+  return true;
 }
 
 export function toggleTableFilter(
@@ -106,6 +108,11 @@ export default function IntelligenceTableFilters({
     <div className="intelligence-table-filters">
       <div className="intelligence-table-filters-header">
         <span className="intelligence-table-filters-title">Filter by type</span>
+        <span className="intelligence-table-filters-hint">
+          {activeFilters.size > 0
+            ? 'Showing breeds that match all selected filters'
+            : 'Select badges to require matching traits'}
+        </span>
         {activeFilters.size > 0 && (
           <button type="button" className="intelligence-clear-btn" onClick={onClear}>
             Clear filters ({activeFilters.size})
