@@ -68,6 +68,7 @@ function SegmentCardContent({
   }
 
   const bounds = scoreBoundsFor(dimension);
+  const barWidth = totalScore * 10;
 
   return (
     <>
@@ -76,29 +77,41 @@ function SegmentCardContent({
           Overall: <strong>{totalScore.toFixed(1)}/10</strong>
         </p>
       )}
-      <ul className="intelligence-breed-detail-segment-list intelligence-breed-detail-segment-list--card">
-        {segments.map((seg) => (
-          <li key={String(seg.key)} className="intelligence-breed-detail-segment-item">
-            <span className="intelligence-breed-detail-segment-label">
-              <span
-                className="intelligence-breed-detail-segment-dot"
-                style={{ background: getTraitIntensityStyle(seg.hue, seg.score, bounds).barFill }}
-              />
-              {seg.label}
-              <span className="intelligence-breed-detail-segment-weight">
-                ({Math.round(seg.weight * 100)}%)
-              </span>
-            </span>
-            <span className="intelligence-breed-detail-segment-bar-wrap">
-              <span
-                className="intelligence-breed-detail-segment-bar"
+      <div
+        className="intelligence-breed-detail-combo-bar"
+        aria-label={segments
+          .map((s) => `${s.label} ${(s.weight * 100).toFixed(0)}% at ${s.score.toFixed(1)}`)
+          .join('; ')}
+      >
+        <div className="intelligence-bar-bg intelligence-breed-detail-combo-bar-bg">
+          <div className="intelligence-bar-segments" style={{ width: `${barWidth}%` }}>
+            {segments.map((seg) => (
+              <div
+                key={String(seg.key)}
+                className="intelligence-bar-segment"
                 style={{
-                  width: `${seg.score * 10}%`,
+                  flex: seg.weight,
                   background: getTraitIntensityStyle(seg.hue, seg.score, bounds).barFill,
                 }}
+                title={`${seg.label}: ${seg.score.toFixed(1)}`}
               />
-              <span className="intelligence-breed-detail-segment-score">{seg.score.toFixed(1)}</span>
+            ))}
+          </div>
+        </div>
+        <span className="intelligence-breed-detail-combo-bar-score">{totalScore.toFixed(1)}</span>
+      </div>
+      <ul className="intelligence-breed-detail-segment-legend">
+        {segments.map((seg) => (
+          <li key={String(seg.key)} className="intelligence-breed-detail-segment-legend-item">
+            <span
+              className="intelligence-breed-detail-segment-dot"
+              style={{ background: getTraitIntensityStyle(seg.hue, seg.score, bounds).barFill }}
+            />
+            <span className="intelligence-breed-detail-segment-legend-label">{seg.label}</span>
+            <span className="intelligence-breed-detail-segment-weight">
+              ({Math.round(seg.weight * 100)}%)
             </span>
+            <span className="intelligence-breed-detail-segment-legend-score">{seg.score.toFixed(1)}</span>
           </li>
         ))}
       </ul>
