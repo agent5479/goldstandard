@@ -3874,15 +3874,6 @@ body.page-intelligence {
   min-width: 0;
 }
 
-.intelligence-breed-detail-combo-bar-score {
-  flex-shrink: 0;
-  font-size: 0.68rem;
-  font-weight: 600;
-  color: var(--light-text);
-  min-width: 1.5rem;
-  text-align: right;
-}
-
 .intelligence-breed-detail-segment-legend {
   list-style: none;
   margin: 0;

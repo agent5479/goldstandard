@@ -57,11 +57,14 @@ function SegmentCardContent({
   totalScore,
   dimension,
   showOverall = true,
+  minLegendWeight = 0,
 }: {
   segments: TraitSegment[];
   totalScore: number;
   dimension: 'inst' | 'neuro';
   showOverall?: boolean;
+  /** Hide legend rows below this weight (e.g. 0.05 for stress card). */
+  minLegendWeight?: number;
 }) {
   if (segments.length === 0) {
     return <p className="intelligence-breed-detail-card-empty">No breakdown available.</p>;
@@ -69,6 +72,9 @@ function SegmentCardContent({
 
   const bounds = scoreBoundsFor(dimension);
   const barWidth = totalScore * 10;
+  const legendSegments = [...segments]
+    .filter((seg) => seg.weight >= minLegendWeight)
+    .sort((a, b) => b.weight - a.weight);
 
   return (
     <>
@@ -98,10 +104,9 @@ function SegmentCardContent({
             ))}
           </div>
         </div>
-        <span className="intelligence-breed-detail-combo-bar-score">{totalScore.toFixed(1)}</span>
       </div>
       <ul className="intelligence-breed-detail-segment-legend">
-        {segments.map((seg) => (
+        {legendSegments.map((seg) => (
           <li key={String(seg.key)} className="intelligence-breed-detail-segment-legend-item">
             <span
               className="intelligence-breed-detail-segment-dot"
@@ -111,7 +116,11 @@ function SegmentCardContent({
             <span className="intelligence-breed-detail-segment-weight">
               ({Math.round(seg.weight * 100)}%)
             </span>
-            <span className="intelligence-breed-detail-segment-legend-score">{seg.score.toFixed(1)}</span>
+            {Math.abs(seg.score - totalScore) > 0.05 && (
+              <span className="intelligence-breed-detail-segment-legend-score">
+                {seg.score.toFixed(1)}
+              </span>
+            )}
           </li>
         ))}
       </ul>
@@ -157,6 +166,7 @@ function StressCard({
         totalScore={totalScore}
         dimension="neuro"
         showOverall={neuroScore === undefined}
+        minLegendWeight={0.05}
       />
     </DetailCard>
   );

@@ -603,51 +603,136 @@ export function getBreedSuggestedProfileTags(breedName: string): DogProfileTagId
   return profile.suggestedProfileTags ?? [];
 }
 
-/** Neuroticism stress patterns inferred from booking profile tags. */
+/** Stress-looping patterns for neuro column segments and detail cards. */
 export type NeuroPattern =
   | 'separation'
   | 'hyper_vigilant'
   | 'handler_sensitive'
+  | 'anxious_attachment'
+  | 'fixation_loop'
+  | 'frenetic_arousal'
+  | 'frustration_reactive'
+  | 'barrier_frustration'
+  | 'territorial_vigilance'
   | 'noise_reactive'
   | 'fear_reactive';
 
-const TAG_TO_NEURO_PATTERN: Record<string, NeuroPattern> = {
-  separation_stress: 'separation',
-  separation_priority: 'separation',
-  neurotic: 'hyper_vigilant',
-  fixation_priority: 'hyper_vigilant',
-  anxious: 'handler_sensitive',
-  clingy: 'handler_sensitive',
-  noise_sensitive: 'noise_reactive',
-  fearful: 'fear_reactive',
+/** Default multi-pattern stress blends by breed category. */
+export const CATEGORY_NEURO_BLEND: Record<BreedCategory, Partial<Record<NeuroPattern, number>>> = {
+  herding: {
+    fixation_loop: 0.3,
+    hyper_vigilant: 0.25,
+    anxious_attachment: 0.25,
+    handler_sensitive: 0.2,
+  },
+  terrier: {
+    frustration_reactive: 0.35,
+    fixation_loop: 0.25,
+    hyper_vigilant: 0.25,
+    frenetic_arousal: 0.15,
+  },
+  clingy: {
+    handler_sensitive: 0.3,
+    anxious_attachment: 0.25,
+    separation: 0.25,
+    hyper_vigilant: 0.2,
+  },
+  small: {
+    anxious_attachment: 0.3,
+    separation: 0.25,
+    handler_sensitive: 0.25,
+    hyper_vigilant: 0.2,
+  },
+  guardian: {
+    territorial_vigilance: 0.3,
+    hyper_vigilant: 0.25,
+    handler_sensitive: 0.2,
+    barrier_frustration: 0.15,
+    fear_reactive: 0.1,
+  },
+  spitz: {
+    frustration_reactive: 0.3,
+    frenetic_arousal: 0.25,
+    separation: 0.25,
+    noise_reactive: 0.2,
+  },
+  sighthound: {
+    fear_reactive: 0.35,
+    handler_sensitive: 0.3,
+    noise_reactive: 0.2,
+    hyper_vigilant: 0.15,
+  },
+  scenthound: {
+    fixation_loop: 0.35,
+    frustration_reactive: 0.25,
+    separation: 0.2,
+    frenetic_arousal: 0.2,
+  },
+  giant: {
+    fear_reactive: 0.3,
+    handler_sensitive: 0.3,
+    frustration_reactive: 0.25,
+    hyper_vigilant: 0.15,
+  },
 };
 
-const NEUROTICISM_INCLINATION_FALLBACK_PATTERN: Record<NeuroticismInclination, NeuroPattern> = {
-  low: 'handler_sensitive',
-  moderate: 'handler_sensitive',
-  elevated: 'hyper_vigilant',
-  high: 'hyper_vigilant',
+/** Tags boost pattern weights on the resolved blend (+0.15 each, then renormalized). */
+const TAG_NEURO_BOOSTS: Record<string, NeuroPattern[]> = {
+  separation_stress: ['separation'],
+  separation_priority: ['separation'],
+  neurotic: ['hyper_vigilant'],
+  anxious: ['anxious_attachment'],
+  clingy: ['anxious_attachment'],
+  fearful: ['fear_reactive'],
+  noise_sensitive: ['noise_reactive'],
+  trigger_movement: ['fixation_loop'],
+  fixation_priority: ['fixation_loop'],
+  leash_reactive: ['barrier_frustration'],
+  reactivity_priority: ['barrier_frustration'],
+  door_threshold_priority: ['barrier_frustration'],
+  reactive: ['barrier_frustration', 'fear_reactive'],
+  dog_reactive: ['barrier_frustration', 'fear_reactive'],
+  human_reactive: ['barrier_frustration', 'fear_reactive'],
+  attention_priority: ['anxious_attachment'],
+  jumping_priority: ['frenetic_arousal'],
+  hierarchy_priority: ['territorial_vigilance'],
 };
 
-/** Collect distinct neuro patterns for a breed from suggested tags, with inclination fallback. */
-export function getNeuroPatternsForBreed(breedName: string): NeuroPattern[] {
-  const tags = getBreedSuggestedProfileTags(breedName);
-  const patterns = new Set<NeuroPattern>();
-  for (const tag of tags) {
-    const pattern = TAG_TO_NEURO_PATTERN[tag];
-    if (pattern) patterns.add(pattern);
-  }
-  if (patterns.size > 0) return [...patterns];
+const NEURO_TAG_BOOST = 0.15;
 
-  const inclination = getBreedNeuroticismInclination(breedName);
-  if (inclination) return [NEUROTICISM_INCLINATION_FALLBACK_PATTERN[inclination]];
+function normalizeNeuroBlend(
+  blend: Partial<Record<NeuroPattern, number>>
+): Partial<Record<NeuroPattern, number>> {
+  const entries = Object.entries(blend).filter(([, w]) => w > 0) as [NeuroPattern, number][];
+  const total = entries.reduce((sum, [, w]) => sum + w, 0);
+  if (total === 0) return { handler_sensitive: 1 };
+  return Object.fromEntries(entries.map(([key, weight]) => [key, weight / total])) as Partial<
+    Record<NeuroPattern, number>
+  >;
+}
 
-  const breed = findBreedByName(breedName);
-  if (breed) {
-    const defaultIncl = categoryNeuroticismDefault[breed.category];
-    return [NEUROTICISM_INCLINATION_FALLBACK_PATTERN[defaultIncl]];
+/** Apply booking profile tag boosts to a base neuro blend. */
+export function applyNeuroTagBoosts(
+  blend: Partial<Record<NeuroPattern, number>>,
+  breedName: string
+): Partial<Record<NeuroPattern, number>> {
+  const boosted = { ...blend };
+  for (const tag of getBreedSuggestedProfileTags(breedName)) {
+    const patterns = TAG_NEURO_BOOSTS[tag];
+    if (!patterns) continue;
+    for (const pattern of patterns) {
+      boosted[pattern] = (boosted[pattern] ?? 0) + NEURO_TAG_BOOST;
+    }
   }
-  return ['handler_sensitive'];
+  return normalizeNeuroBlend(boosted);
+}
+
+/** Merge tag boosts onto a base blend (from category default or breed override). */
+export function resolveNeuroBlend(
+  breedName: string,
+  baseBlend: Partial<Record<NeuroPattern, number>>
+): Partial<Record<NeuroPattern, number>> {
+  return applyNeuroTagBoosts(baseBlend, breedName);
 }
 
 export function getBreedTrainerSummary(breedName: string): string | undefined {
