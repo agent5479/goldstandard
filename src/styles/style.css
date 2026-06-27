@@ -489,6 +489,26 @@ body::before {
   font-weight: 600;
 }
 
+.about-teaser {
+  background: var(--surface-soft);
+  border-top: 2px solid rgba(184, 131, 42, 0.35);
+}
+
+.about-teaser p {
+  color: var(--text);
+  max-width: 42rem;
+  margin-bottom: 1.25rem;
+}
+
+.about-teaser .resource-card-cta {
+  display: inline-block;
+  text-decoration: none;
+}
+
+.about-teaser .resource-card-cta:hover {
+  color: var(--forest);
+}
+
 /* feature images — small, centered */
 .feature-image { margin: 0; padding: 0; line-height: 0; }
 .feature-image img { display: block; width: 100%; height: auto; }
@@ -1364,6 +1384,11 @@ body.page-guide {
 
 .page-hero-lead {
   max-width: 42rem;
+}
+
+.page-hero-bio {
+  max-width: 42rem;
+  margin: 1.5rem 0 2rem;
 }
 
 .page-hero--book .page-hero-book-grid {

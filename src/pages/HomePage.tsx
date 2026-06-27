@@ -38,50 +38,31 @@ export default function HomePage() {
 
         <div className="hero-footer">
           <div className="hero-stat">
-            <strong>📍 Golden Bay</strong>
-            Local to Takaka &amp; surrounds
+            <strong>📍 Tasman region</strong>
+            Based in Golden Bay &amp; Takaka
           </div>
           <div className="hero-stat">
             <strong>🏆 Beckman Method</strong>
             Proven, structured technique
           </div>
           <div className="hero-stat">
-            <strong>🐕 All breeds</strong>
-            From puppies to rehabilitation
+            <strong>🐕 All dogs</strong>
+            Every age, breed, and temperament
           </div>
         </div>
       </section>
 
-      <section className="philosophy" id="about">
+      <section className="about-teaser">
         <div className="section-inner">
-          <p className="section-label">💡 The philosophy</p>
-          <h2>🌱 Healthy habits for dogs<br />and their humans.</h2>
-          <div className="philosophy-grid">
-            <div className="philosophy-text">
-              <p>Dogs find peace and freedom when they know their place and learn trust and obedience. Gold Standard uses the core techniques and philosophy of Beckman's dog training school — clear, structured methods that work with how dogs actually think.</p>
-              <p>Training the owner is key. Warwick coaches you through each step so you can maintain the results at home with confidence instead of second-guessing.</p>
-            </div>
-            <div className="outcomes">
-              <h3>📚 What you will learn</h3>
-              <ul>
-                <li>✅ How to correct effectively — and when not to</li>
-                <li>🎯 How to reward the right behaviour at the right moment</li>
-                <li>⚡ How to hold your energy and attention as a training tool</li>
-                <li>👀 How to read your dog before it reacts</li>
-                <li>🔄 How to maintain the results yourself, every day</li>
-              </ul>
-            </div>
-            <div className="outcomes">
-              <h3>🐕 What your dog will achieve</h3>
-              <ul>
-                <li>📣 Consistent recall</li>
-                <li>🦮 Slack-leash walking</li>
-                <li>🛑 Impulse control</li>
-                <li>🚫 No more jumping</li>
-                <li>😌 Calm, trusting behaviour</li>
-              </ul>
-            </div>
-          </div>
+          <p className="section-label">👋 Meet your trainer</p>
+          <h2>🐾 Warwick Marshall</h2>
+          <p>
+            Based in Takaka, Golden Bay — working with dogs and owners across the Tasman region. Clear
+            structure, Beckman-method coaching, and real-world session work tailored to your goals.
+          </p>
+          <Link to="/about" className="resource-card-cta">
+            Read about Warwick and the approach →
+          </Link>
         </div>
       </section>
 
@@ -167,19 +148,6 @@ export default function HomePage() {
               </span>
               <span className="resource-card-cta">Explore breeds →</span>
             </Link>
-          </div>
-        </div>
-      </section>
-
-      <section className="approach" id="approach">
-        <div className="section-inner">
-          <p className="section-label">🧭 How it works</p>
-          <h2>🎯 The approach</h2>
-          <div className="approach-body approach-body--linear">
-            <p>When a dog understands its place in the relationship, it is a safer, happier, and more relaxed dog. Gold Standard training is built around harnessing the power of a dog's pack instinct — using strong expectations and clear, consistent boundaries. Understanding dog psychology is one aspect, but shaping their place with you requires fast and firm <Link to="/guide#corrections">correction</Link> from a calm place — just like dogs do with each other, which Warwick is able to provide to start the process of changing your pack. That firmness is <Link to="/guide#dog-language">measured to the dog</Link> — breed, age, and history — not one intensity for every temperament. Learning and using Warwick's techniques supports your dog to know the line is real in a way they can understand and find security within, without the risk of injury.</p>
-            <p>Sessions are held in Golden Bay and are tailored to the dog and the owner. The goal is always to give you the tools to keep the training going long after the session ends.</p>
-            <blockquote className="approach-quote">"Both pet and owner's needs are met — and stress is reduced."</blockquote>
-            <p className="approach-tagline">🏆 Results-focused · 🤝 Individualised care · 📍 Local to Golden Bay</p>
           </div>
         </div>
       </section>
