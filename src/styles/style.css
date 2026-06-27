@@ -3664,8 +3664,104 @@ body.page-intelligence {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
   align-items: center;
+}
+
+.intelligence-table-filters {
+  margin-bottom: 1rem;
+  padding: 0.75rem 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface-soft);
+}
+
+.intelligence-table-filters-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.65rem;
+}
+
+.intelligence-table-filters-title {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--light-text);
+}
+
+.intelligence-filter-intensity {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+  margin-bottom: 0.65rem;
+  padding-bottom: 0.65rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.intelligence-filter-group {
+  margin-bottom: 0.6rem;
+}
+
+.intelligence-filter-group:last-child {
+  margin-bottom: 0;
+}
+
+.intelligence-filter-group-label {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--light-text);
+}
+
+.intelligence-filter-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 8px;
+}
+
+.intelligence-filter-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0.3rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.74rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color 0.12s ease, background-color 0.12s ease, box-shadow 0.12s ease;
+}
+
+.intelligence-filter-badge:hover {
+  border-color: rgba(45, 74, 45, 0.35);
+  background: var(--surface);
+}
+
+.intelligence-filter-badge.is-active {
+  border-color: var(--forest);
+  background: var(--surface);
+  box-shadow: inset 0 0 0 1px rgba(45, 74, 45, 0.15);
+}
+
+.intelligence-filter-badge-dot {
+  width: 10px;
+  height: 5px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.intelligence-filter-badge-label {
+  line-height: 1.2;
 }
 
 .intelligence-search {

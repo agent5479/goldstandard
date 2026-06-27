@@ -7,7 +7,11 @@ import {
 } from '../../data/dogIntelligence';
 import { INTELLIGENCE_NARROW_QUERY, useMediaQuery } from '../../hooks/useMediaQuery';
 import IntelligenceColumnHeader from './IntelligenceColumnHeader';
-import IntelligenceTableLegend from './IntelligenceTableLegend';
+import IntelligenceTableFilters, {
+  matchesTableFilters,
+  toggleTableFilter,
+  type TableFilterKey,
+} from './IntelligenceTableFilters';
 import BreedIntelligenceTableNarrow from './BreedIntelligenceTableNarrow';
 import IntelligenceScoreCell from './IntelligenceScoreCell';
 import { BreedDetailPanel, BreedDetailTipProvider, useBreedDetailTip } from './BreedDetailTipRail';
@@ -215,6 +219,7 @@ export default function BreedIntelligenceTable() {
   const [sortKey, setSortKey] = useState<SortKey>(null);
   const [sortDir, setSortDir] = useState<1 | -1>(1);
   const [pinned, setPinned] = useState<Set<string>>(() => new Set());
+  const [activeFilters, setActiveFilters] = useState<Set<TableFilterKey>>(() => new Set());
   const [activeDimension, setActiveDimension] = useState<IntelligenceDimension>('iq');
   const [detailBreed, setDetailBreed] = useState<{ name: string; breedKeys: string[] } | null>(null);
 
@@ -256,12 +261,14 @@ export default function BreedIntelligenceTable() {
   };
 
   const { pinnedList, unpinnedList } = useMemo(() => {
-    const filtered = dogIntelligenceProfiles.filter((p) => matchesSearch(p, search));
+    const filtered = dogIntelligenceProfiles.filter(
+      (p) => matchesSearch(p, search) && matchesTableFilters(p, activeFilters)
+    );
     return {
       pinnedList: filtered.filter((p) => pinned.has(p.breed)).sort(sortFn),
       unpinnedList: filtered.filter((p) => !pinned.has(p.breed)).sort(sortFn),
     };
-  }, [search, pinned, sortKey, sortDir]);
+  }, [search, pinned, sortKey, sortDir, activeFilters]);
 
   const tableContent = isNarrow ? (
     <BreedIntelligenceTableNarrow
@@ -300,8 +307,6 @@ export default function BreedIntelligenceTable() {
             : 'Dog breeds ranked across ten dimensions. Tick a row checkbox to read temperament details above the table; click a row to pin it for comparison.'}
         </h2>
 
-        {!isNarrow && <IntelligenceTableLegend />}
-
         <div className="intelligence-controls">
           <input
             type="text"
@@ -321,17 +326,25 @@ export default function BreedIntelligenceTable() {
           )}
         </div>
 
+        <IntelligenceTableFilters
+          activeFilters={activeFilters}
+          onToggle={(key) => setActiveFilters((prev) => toggleTableFilter(prev, key))}
+          onClear={() => setActiveFilters(new Set())}
+        />
+
         {tableContent}
 
         <p className="intelligence-tip">
           Scroll the table to browse all {pinnedList.length + unpinnedList.length} breeds
-          {search ? ' matching your search' : ''}.
+          {search ? ' matching your search' : ''}
+          {activeFilters.size > 0 ? ' matching your filters' : ''}.
         </p>
         {isNarrow ? (
           <>
             <p className="intelligence-tip">
-              Select a dimension chip to choose which score column is shown. Tap a breed name for
-              temperament details; use the pin button to compare breeds.
+              Select a dimension chip to choose which score column is shown. Tap filter badges to narrow breeds
+              by instinct, stress pattern, or column strength. Tap a breed name for temperament details; use the
+              pin button to compare breeds.
             </p>
             <p className="intelligence-tip">
               Cognitive columns use green vividness (pale at low scores). Behavioural columns use colour for
@@ -346,8 +359,9 @@ export default function BreedIntelligenceTable() {
               colour for type and vividness for strength.
             </p>
             <p className="intelligence-tip">
-              Tick the checkbox on a row to open full temperament details in the panel above the table
-              (one breed at a time). Click a row to pin it for comparison.
+              Tap filter badges to narrow the breed list by instinct type, stress pattern, or column strength.
+              Multiple filters match any selected type (OR). Tick a row checkbox to open temperament details above
+              the table; click a row to pin it for comparison.
             </p>
           </>
         )}
