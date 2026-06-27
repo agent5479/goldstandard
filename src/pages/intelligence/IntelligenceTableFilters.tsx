@@ -14,13 +14,19 @@ import {
   type IntelligenceDimension,
   type NeuroPattern,
 } from '../../data/dogIntelligence';
+import { SIZE_CLASS_META } from '../../data/breedSizeGrades';
 import { COGNITIVE_GREEN_HUE, getTraitIntensityStyle } from '../../utils/scoreSpectrum';
 import IntelligenceFilterBadge from './IntelligenceFilterBadge';
 
 export type InstinctFilterKey = `inst:${InstinctSubtype}`;
 export type NeuroFilterKey = `neuro:${NeuroPattern}`;
 export type DimensionFilterKey = `dim:${IntelligenceDimension}`;
-export type TableFilterKey = InstinctFilterKey | NeuroFilterKey | DimensionFilterKey;
+export type SizeFilterKey = `size:${(typeof SIZE_CLASS_META)[number]['key']}`;
+export type TableFilterKey =
+  | InstinctFilterKey
+  | NeuroFilterKey
+  | DimensionFilterKey
+  | SizeFilterKey;
 
 const SEGMENT_FILTER_MIN_WEIGHT = 0.08;
 const BEHAVIORAL_SCORE_MIN = 6;
@@ -50,6 +56,12 @@ export function matchesTableFilters(
       ) {
         return false;
       }
+      continue;
+    }
+
+    if (filter.startsWith('size:')) {
+      const key = filter.slice(5) as DogIntelligenceProfile['sizeClass'];
+      if (profile.sizeClass !== key) return false;
       continue;
     }
 
@@ -135,6 +147,25 @@ export default function IntelligenceTableFilters({
             </div>
           ))}
           <span className="intelligence-legend-intensity-hint">10 = vivid · column min = none</span>
+        </div>
+      </div>
+
+      <div className="intelligence-filter-group">
+        <span className="intelligence-filter-group-label">Size</span>
+        <div className="intelligence-filter-badges" role="group" aria-label="Size filters">
+          {SIZE_CLASS_META.map((meta) => {
+            const key = `size:${meta.key}` as TableFilterKey;
+            return (
+              <IntelligenceFilterBadge
+                key={meta.key}
+                label={meta.label}
+                color={meta.hue}
+                description={meta.description}
+                active={activeFilters.has(key)}
+                onToggle={() => onToggle(key)}
+              />
+            );
+          })}
         </div>
       </div>
 

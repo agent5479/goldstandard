@@ -8,9 +8,16 @@ import type { Breed, BreedCategory } from './breeds';
 import type { DogProfileTagId } from './dogProfileTags';
 import { COLLOQUIAL_MIX_LEGACY_LABELS, resolveColloquialMixCanonicalBreed } from './colloquialMixNames';
 import { breedPhysicalAppearance, composePhysicalFallback } from './breedPhysicalAppearance';
+import {
+  BREED_SIZE_GRADES,
+  assertAllBreedsSizeGraded,
+  registerSizeClassOverrides,
+  resolveBreedSizeGrade,
+  type SizeClass,
+} from './breedSizeGrades';
 
+export type { SizeClass };
 export type TraitAxis = 'personality' | 'working' | 'physical';
-export type SizeClass = 'toy' | 'small' | 'medium' | 'large' | 'giant';
 export type NeuroticismInclination = 'low' | 'moderate' | 'elevated' | 'high';
 
 export const NEUROTICISM_LABELS: Record<NeuroticismInclination, string> = {
@@ -560,7 +567,7 @@ export const breedTraitProfiles: Record<string, BreedTraitProfile> = Object.from
 function resolvePhysical(breed: Breed, profile: BreedTraitProfile): string {
   if (profile.overrides?.physical) return profile.overrides.physical;
   if (breedPhysicalAppearance[breed.name]) return breedPhysicalAppearance[breed.name];
-  const sizeClass = profile.sizeClass ?? defaultSizeByCategory[breed.category];
+  const sizeClass = BREED_SIZE_GRADES[breed.name] ?? defaultSizeByCategory[breed.category];
   return composePhysicalFallback(sizeClass, breed.category);
 }
 
@@ -845,8 +852,7 @@ export function getBreedAxisProfile(breed: Breed, axis: TraitAxis): string {
 }
 
 export function getBreedSizeClass(breed: Breed): SizeClass {
-  const profile = breedTraitProfiles[breed.name] ?? {};
-  return profile.sizeClass ?? defaultSizeByCategory[breed.category];
+  return BREED_SIZE_GRADES[breed.name] ?? resolveBreedSizeGrade(breed.name, breed.category);
 }
 
 /** Ensure every breed has a profile entry — throws in dev if any are missing. */
@@ -858,3 +864,8 @@ export function assertAllBreedsProfiled(): void {
 }
 
 assertAllBreedsProfiled();
+registerSizeClassOverrides(breedOverrideMap);
+for (const breed of breeds) {
+  breedTraitProfiles[breed.name].sizeClass = BREED_SIZE_GRADES[breed.name];
+}
+assertAllBreedsSizeGraded();

@@ -12,6 +12,7 @@ import {
   type NeuroPattern,
   type NeuroticismInclination,
 } from './breedTraits';
+import { BREED_SIZE_GRADES, type SizeClass } from './breedSizeGrades';
 
 export type { NeuroPattern };
 
@@ -499,6 +500,7 @@ export interface DogIntelligenceProfile {
   breed: string;
   breedKeys: string[];
   rank: number;
+  sizeClass: SizeClass;
   scores: IntelligenceScores;
   instinctSegments: TraitSegment[];
   neuroSegments: TraitSegment[];
@@ -1126,6 +1128,7 @@ function buildProfileForBreed(breedName: string, category: BreedCategory): DogIn
     breed: breedName,
     breedKeys: aliasKeys,
     rank: 0,
+    sizeClass: BREED_SIZE_GRADES[breedName] ?? 'medium',
     scores,
     instinctSegments: buildInstinctSegments(breedName, category, scores.inst),
     neuroSegments: buildNeuroSegments(breedName, category, scores.neuro),
@@ -1207,6 +1210,7 @@ export const PUREBRED_BREEDS_FOR_MIX: { name: string; profile: DogIntelligencePr
         breed: entry.breed,
         breedKeys: [entry.breed],
         rank: entry.rank,
+        sizeClass: BREED_SIZE_GRADES[entry.breed] ?? 'medium',
         scores,
         instinctSegments: buildInstinctSegments(entry.breed, category, scores.inst),
         neuroSegments: buildNeuroSegments(entry.breed, category, scores.neuro),

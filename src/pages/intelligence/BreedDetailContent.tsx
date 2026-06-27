@@ -13,10 +13,12 @@ import {
   getBreedAxisProfile,
   getBreedClientMixTraitLabel,
   getBreedNeuroticismPropensityDetail,
+  getBreedSizeClass,
   getBreedSuggestedProfileTags,
   NEUROTICISM_VARIANT,
   type TraitAxis,
 } from '../../data/breedTraits';
+import { SIZE_CLASS_META } from '../../data/breedSizeGrades';
 import { getTraitIntensityStyle } from '../../utils/scoreSpectrum';
 
 export function resolveBreedForDetail(breedName: string, breedKeys: string[] = []) {
@@ -280,11 +282,13 @@ function BreedDetailCardGrid({
   }
 
   const category = breedCategories[breed.category];
+  const sizeLabel = SIZE_CLASS_META.find((m) => m.key === getBreedSizeClass(breed))?.label ?? '';
 
   return (
     <div className="intelligence-breed-detail-card-grid">
       <p className="intelligence-breed-detail-grid-meta">
-        {getBreedClientMixTraitLabel(breed.name)} · <strong>{category.label}</strong> — {category.note}
+        {getBreedClientMixTraitLabel(breed.name)} · <strong>{category.label}</strong>
+        {sizeLabel ? ` · ${sizeLabel}` : ''} — {category.note}
       </p>
 
       <AxisCard breed={breed} axis="personality" title="🧠 Personality & drive" />
