@@ -77,6 +77,26 @@ describe('buildNeuroSegments', () => {
     expect(segments.length).toBeLessThanOrEqual(3);
     expect(segments.reduce((sum, s) => sum + s.weight, 0)).toBeCloseTo(1, 5);
   });
+
+  it('Staffy stress blend emphasises handler-mediated patterns not fixation', () => {
+    const blend = capSegmentBlend(
+      getResolvedNeuroBlend('Staffordshire Bull Terrier (Staffy)', 'clingy')
+    );
+    const segments = buildNeuroSegments('Staffordshire Bull Terrier (Staffy)', 'clingy', 5.0);
+
+    expect(blend.handler_sensitive).toBeGreaterThan(0);
+    expect(blend.anxious_attachment).toBeGreaterThan(0);
+    expect(blend.barrier_frustration).toBeGreaterThan(0);
+    expect(blend.fixation_loop).toBeUndefined();
+
+    const kelpie = capSegmentBlend(getResolvedNeuroBlend('Kelpie', 'herding'));
+    expect((blend.handler_sensitive ?? 0) + (blend.anxious_attachment ?? 0)).toBeGreaterThan(
+      (kelpie.handler_sensitive ?? 0) + (kelpie.anxious_attachment ?? 0)
+    );
+    expect(kelpie.fixation_loop ?? 0).toBeGreaterThan(blend.fixation_loop ?? 0);
+
+    expect(segments.length).toBeLessThanOrEqual(3);
+  });
 });
 
 describe('blendTraitSegments', () => {

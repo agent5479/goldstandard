@@ -76,6 +76,8 @@ export interface BreedTypeProfile extends AxisProfile {
 export interface BreedTraitProfile {
   sizeClass?: SizeClass;
   neuroticismInclination?: NeuroticismInclination;
+  /** Overrides the generic level note in intelligence detail / propensity badges. */
+  neuroticismPropensityNote?: string;
   suggestedProfileTags?: DogProfileTagId[];
   trainerSummary?: string;
   /** Client-safe one-liner for mix picker / booking — no neuroticism language. */
@@ -224,10 +226,58 @@ const defaultSizeByCategory: Record<BreedCategory, SizeClass> = {
   small: 'small',
 };
 
+const BULL_COMPANION_PERSONALITY =
+  'Bonds intensely to people and reads handler mood closely — affection is real currency. Baseline stress sensitivity is moderate, but cold withdrawal after correction, indulgence without structure, or excitement-matching often worsens anxious attachment and leash frustration. Calm matter-of-fact correction, then quick rebuild.';
+
+const BULL_COMPANION_NEURO_NOTE =
+  'Baseline stress sensitivity is moderate, but handler coldness, indulgence, or excitement-matching often worsens anxious attachment and reactive frustration — upbringing strongly shapes expression.';
+
 const breedOverrideMap: Record<string, BreedTraitProfile> = {
   // ── Clingy ──
   'Staffordshire Bull Terrier (Staffy)': {
     sizeClass: 'medium',
+    neuroticismInclination: 'moderate',
+    neuroticismPropensityNote: BULL_COMPANION_NEURO_NOTE,
+    suggestedProfileTags: ['clingy', 'attention_priority', 'anxious'],
+    trainerSummary:
+      'People-bonded bull companion — moderate baseline neuroticism but handler coldness or indulgence often worsens anxious loops; calm structure with quick rebuild.',
+    clientSummary:
+      'Affectionate people-dog — thrives on calm structure and consistent warmth after corrections.',
+    overrides: {
+      personality: BULL_COMPANION_PERSONALITY,
+      working:
+        'People-pleasing engine — cooperative and play-motivated when structure is clear. May ignore food when access to you is the real reward; excited praise during reactions reinforces the episode.',
+    },
+  },
+  'American Staffordshire Terrier': {
+    sizeClass: 'medium',
+    neuroticismInclination: 'moderate',
+    neuroticismPropensityNote: BULL_COMPANION_NEURO_NOTE,
+    suggestedProfileTags: ['clingy', 'attention_priority', 'anxious'],
+    trainerSummary:
+      'Athletic bull companion — same handler-attuned bond as Staffy; moderate baseline stress that handler management often amplifies.',
+    clientSummary:
+      'Athletic, handler-attuned companion — needs calm boundaries and warmth after resets.',
+    overrides: {
+      personality: BULL_COMPANION_PERSONALITY,
+      working:
+        'Athletic people-focused engine — needs clear outlets and calm leadership; frustration surfaces on leash when structure is inconsistent.',
+    },
+  },
+  'Pit Bull type': {
+    sizeClass: 'medium',
+    neuroticismInclination: 'moderate',
+    neuroticismPropensityNote: BULL_COMPANION_NEURO_NOTE,
+    suggestedProfileTags: ['clingy', 'attention_priority', 'anxious'],
+    trainerSummary:
+      'Variable bull-type companion — intense bond and handler sensitivity; moderate baseline neuroticism often worsens with cold withdrawal or unstructured indulgence.',
+    clientSummary:
+      'Loyal people-dog — bonds hard; calm consistency matters more than extra affection during mistakes.',
+    overrides: {
+      personality: BULL_COMPANION_PERSONALITY,
+      working:
+        'People-motivated working partner when employed — under-structure and handler inconsistency push frustration onto leash and thresholds.',
+    },
   },
   'American Bulldog': { sizeClass: 'large' },
   'Boxer': { sizeClass: 'large' },
@@ -558,12 +608,15 @@ export interface BreedNeuroticismPropensityDetail {
 export function getBreedNeuroticismPropensityDetail(
   breedName: string
 ): BreedNeuroticismPropensityDetail | undefined {
+  const breed = findBreedByName(breedName);
+  if (!breed) return undefined;
   const level = getBreedNeuroticismInclination(breedName);
   if (!level) return undefined;
+  const profile = breedTraitProfiles[breed.name] ?? {};
   return {
     level,
     label: NEUROTICISM_LABELS[level],
-    note: NEUROTICISM_PROPENSITY_CLIENT[level],
+    note: profile.neuroticismPropensityNote ?? NEUROTICISM_PROPENSITY_CLIENT[level],
   };
 }
 

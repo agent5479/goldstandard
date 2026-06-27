@@ -348,16 +348,16 @@ const NEURO_SEGMENT_OVERRIDES: Record<string, Partial<Record<NeuroPattern, numbe
   'Border Terrier': { frustration_reactive: 0.35, fixation_loop: 0.35, barrier_frustration: 0.3 },
   'Bull Terrier': { frustration_reactive: 0.4, fixation_loop: 0.35, frenetic_arousal: 0.25 },
   'Staffordshire Bull Terrier (Staffy)': {
-    frustration_reactive: 0.35,
-    barrier_frustration: 0.35,
-    fixation_loop: 0.3,
+    handler_sensitive: 0.35,
+    anxious_attachment: 0.35,
+    barrier_frustration: 0.3,
   },
   'American Staffordshire Terrier': {
-    frustration_reactive: 0.35,
-    barrier_frustration: 0.35,
-    fixation_loop: 0.3,
+    handler_sensitive: 0.35,
+    anxious_attachment: 0.35,
+    barrier_frustration: 0.3,
   },
-  'Pit Bull type': { frustration_reactive: 0.35, barrier_frustration: 0.35, fixation_loop: 0.3 },
+  'Pit Bull type': { handler_sensitive: 0.35, anxious_attachment: 0.35, barrier_frustration: 0.3 },
   'West Highland White Terrier (Westie)': {
     frustration_reactive: 0.35,
     fixation_loop: 0.35,
@@ -527,7 +527,7 @@ export const INTELLIGENCE_DIMENSIONS: {
     shortLabel: 'Neur',
     color: NEURO_HUE,
     description:
-      'Estimated propensity for stress-looping patterns — red bar segments show which patterns (separation, hyper-vigilance, handler-sensitivity, etc.); vividness shows strength. Not a label for any individual dog.',
+      'Estimated baseline propensity for stress-looping — red bar segments show which patterns tend to express (separation, hyper-vigilance, handler-sensitivity, etc.); vividness shows strength. Handler-attuned breeds may present higher anxiety than the baseline when structure or warmth is inconsistent. Not a label for any individual dog.',
   },
   {
     key: 'vocal',

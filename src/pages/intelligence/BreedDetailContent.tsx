@@ -156,10 +156,17 @@ function StressCard({
         </div>
       )}
       {neuroScore !== undefined && (
-        <p className="intelligence-breed-detail-card-score">
-          Table estimate: <strong>{neuroScore.toFixed(1)}/10</strong>
-          {isEstimated ? ' (category-based)' : ''}
-        </p>
+        <>
+          <p className="intelligence-breed-detail-card-score">
+            Table estimate: <strong>{neuroScore.toFixed(1)}/10</strong>
+            {isEstimated ? ' (category-based)' : ''}
+          </p>
+          <p className="intelligence-breed-detail-neuro-baseline-hint">
+            Baseline type-level propensity — the pattern bar below shows how stress tends to express.
+            Handler-attuned breeds may present higher anxiety than this score when structure or warmth is
+            inconsistent.
+          </p>
+        </>
       )}
       <SegmentCardContent
         segments={segments}

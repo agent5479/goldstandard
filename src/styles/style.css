@@ -3984,6 +3984,14 @@ body.page-intelligence {
   margin-bottom: 0;
 }
 
+.intelligence-breed-detail-neuro-baseline-hint {
+  margin: 0.25rem 0 0.5rem;
+  font-size: 0.72rem;
+  line-height: 1.45;
+  color: var(--light-text);
+  font-style: italic;
+}
+
 .intelligence-breed-detail-segment-list--card {
   margin-top: 0;
 }
