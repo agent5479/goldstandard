@@ -35,6 +35,12 @@ Questions live in `examQuestions.ts` and `examTraitQuestions.ts`. The **first op
 - `clingy-correction-warmth` — cold after correction / avoiding firmness
 - `distraction-glance` — brief glance at distraction processing
 - `lap-bed-access` — constant lap/bed access
+- `stretch-bow-medical` — prayer position vs play bow
+- `context-contact` — training vs living mode contact
+- `whale-eye-response` — response to whale eye (not identification)
+- `demanding-paw` — attention demand pawing
+- `sigh-context` — sigh with body state
+- `pack-guarding` — bathroom follow / pack guard
 
 ## Before / after examples
 

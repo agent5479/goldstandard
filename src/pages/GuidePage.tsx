@@ -46,6 +46,10 @@ export default function GuidePage() {
         <div className="guide-contents-inner">
           <GuideSearch />
           <h2 id="guide-contents-heading">📑 Contents</h2>
+          <p className="guide-contents-intro">
+            First read: Foundation → Leadership → Understanding → Social needs (within Understanding) → Training → Daily life.
+            Use search to jump back to any topic.
+          </p>
           <GuideContentsNav />
         </div>
       </section>

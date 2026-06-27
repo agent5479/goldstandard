@@ -1042,6 +1042,72 @@ h2 {
   margin-bottom: 1.25rem;
 }
 
+.guide-contents-intro {
+  font-size: 0.95rem;
+  color: var(--text-muted, #5a6a5a);
+  margin: -0.5rem 0 1.25rem;
+  max-width: 42rem;
+  line-height: 1.5;
+}
+
+.guide-theme-divider {
+  background: linear-gradient(135deg, var(--forest) 0%, #2d4a38 100%);
+  color: #f8f6f0;
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+}
+
+.guide-theme-divider-inner {
+  max-width: 36rem;
+  margin: 0 auto;
+}
+
+.guide-theme-divider-part {
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin: 0 0 0.5rem;
+  font-weight: 600;
+}
+
+.guide-theme-divider-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0 0 0.65rem;
+  color: #fff;
+}
+
+.guide-theme-divider-desc {
+  font-size: 1rem;
+  margin: 0;
+  opacity: 0.9;
+  line-height: 1.5;
+}
+
+.guide-in-section-theme {
+  margin: 2.5rem 0 1.5rem;
+  padding: 1rem 1.25rem;
+  border-left: 4px solid var(--gold);
+  background: rgba(201, 168, 76, 0.08);
+}
+
+.guide-in-section-theme-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 700;
+  margin: 0 0 0.35rem;
+}
+
+.guide-in-section-theme-desc {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--text-muted, #5a6a5a);
+}
+
 .guide-contents-group-label {
   font-size: 0.72rem;
   letter-spacing: 0.16em;
@@ -3973,6 +4039,49 @@ body.page-intelligence {
 
 .intelligence-breed-detail-neuro-inline .intelligence-breed-detail-neuro-note {
   margin-bottom: 0;
+}
+
+.intelligence-breed-detail-expressions {
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.intelligence-breed-detail-expressions-title {
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 600;
+  margin: 0 0 0.5rem;
+}
+
+.intelligence-breed-detail-expressions-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.intelligence-breed-detail-expressions-list a {
+  font-size: 0.92rem;
+  color: var(--forest);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.intelligence-breed-detail-living-mode-hint {
+  margin: 1rem 0 0;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  color: var(--text-muted, #5a6a5a);
+}
+
+.intelligence-breed-detail-living-mode-hint a {
+  color: var(--forest);
+  font-weight: 600;
 }
 
 .intelligence-breed-detail-neuro-baseline-hint {

@@ -65,7 +65,7 @@ export default function SectionExpectations() {
 
       <h3 id="social-regulation">🤝 Self-regulation around other dogs</h3>
 
-      <p>During training and new exposures — meeting other dogs, busy environments, first greetings — neither your dog nor any other dog should be allowed to lean against you for support. Leaning is dependency, not calm. The dog needs to learn to stand on its own feet and self-regulate while you hold the structure. You lead; they manage their body without using you as a crutch — the same frame as <a href="#dog-meetings">Dog meetings</a> and <a href="#owner-mindset">Owner mindset</a>.</p>
+      <p>During <strong>training mode</strong> — new exposures, meeting other dogs, busy environments, first greetings — neither your dog nor any other dog should be allowed to lean against you for support. Leaning is dependency, not calm. The dog needs to learn to stand on its own feet and self-regulate while you hold the structure. You lead; they manage their body without using you as a crutch — the same frame as <a href="#dog-meetings">Dog meetings</a> and <a href="#owner-mindset">Owner mindset</a>. This does not apply during calm <a href="#context-of-contact">living mode</a> rest contact.</p>
 
       <h3>🌟 Triggers are opportunities, not failures.</h3>
 

@@ -2,7 +2,9 @@ import type { ReactNode } from 'react';
 import { breedCategories } from '../../data/breeds';
 import {
   findIntelligenceByBreedName,
+  getNeuroPatternSignals,
   scoreBoundsFor,
+  type NeuroPattern,
   type TraitSegment,
   VOCAL_HUE,
 } from '../../data/dogIntelligence';
@@ -11,6 +13,7 @@ import {
   getBreedAxisProfile,
   getBreedClientMixTraitLabel,
   getBreedNeuroticismPropensityDetail,
+  getBreedSuggestedProfileTags,
   NEUROTICISM_VARIANT,
   type TraitAxis,
 } from '../../data/breedTraits';
@@ -134,13 +137,33 @@ function StressCard({
   neuroDetail,
   neuroScore,
   isEstimated,
+  breedName,
 }: {
   segments: TraitSegment[];
   totalScore: number;
   neuroDetail: ReturnType<typeof getBreedNeuroticismPropensityDetail>;
   neuroScore: number | undefined;
   isEstimated: boolean;
+  breedName?: string;
 }) {
+  const dominantPatterns = segments
+    .filter((seg) => seg.weight >= 0.08)
+    .map((seg) => seg.key as NeuroPattern);
+
+  const seenSignals = new Set<string>();
+  const expressionSignals = dominantPatterns.flatMap((pattern) =>
+    getNeuroPatternSignals(pattern).filter((signal) => {
+      const key = `${signal.guideAnchor}|${signal.label}`;
+      if (seenSignals.has(key)) return false;
+      seenSignals.add(key);
+      return true;
+    })
+  );
+
+  const suggestedTags = breedName ? getBreedSuggestedProfileTags(breedName) : [];
+  const showLivingModeCallout =
+    suggestedTags.includes('clingy') || suggestedTags.includes('anxious');
+
   return (
     <DetailCard title="😵‍💫 Stress pattern composition and propensity">
       {neuroDetail && (
@@ -175,6 +198,25 @@ function StressCard({
         showOverall={neuroScore === undefined}
         minLegendWeight={0.05}
       />
+      {expressionSignals.length > 0 && (
+        <div className="intelligence-breed-detail-expressions">
+          <p className="intelligence-breed-detail-expressions-title">Typical stress expressions</p>
+          <ul className="intelligence-breed-detail-expressions-list">
+            {expressionSignals.map((signal) => (
+              <li key={`${signal.guideAnchor}-${signal.label}`}>
+                <a href={`/guide${signal.guideAnchor}`}>{signal.label}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+      {showLivingModeCallout && (
+        <p className="intelligence-breed-detail-living-mode-hint">
+          Velcro types: distinguish{' '}
+          <a href="/guide#context-of-contact">training mode vs living mode</a> contact — structure
+          on outings, trust lean at rest.
+        </p>
+      )}
     </DetailCard>
   );
 }
@@ -269,6 +311,7 @@ function BreedDetailCardGrid({
         neuroDetail={neuroDetail}
         neuroScore={neuroScore}
         isEstimated={isEstimated}
+        breedName={breed.name}
       />
 
       {vocalScore !== undefined ? (

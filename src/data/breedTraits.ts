@@ -227,7 +227,7 @@ const defaultSizeByCategory: Record<BreedCategory, SizeClass> = {
 };
 
 const BULL_COMPANION_PERSONALITY =
-  'Bonds intensely to people and reads handler mood closely — affection is real currency. Baseline stress sensitivity is moderate, but cold withdrawal after correction, indulgence without structure, or excitement-matching often worsens anxious attachment and leash frustration. Calm matter-of-fact correction, then quick rebuild.';
+  'Bonds intensely to people and reads handler mood closely — affection is real currency. In living mode, voluntary lean against your legs is trust; in training mode, no leaning for support. Demanding paw when spoiled is common. Baseline stress sensitivity is moderate, but cold withdrawal after correction, indulgence without structure, or excitement-matching often worsens anxious attachment. Calm matter-of-fact correction, then quick rebuild.';
 
 const BULL_COMPANION_NEURO_NOTE =
   'Baseline stress sensitivity is moderate, but handler coldness, indulgence, or excitement-matching often worsens anxious attachment and reactive frustration — upbringing strongly shapes expression.';
@@ -238,7 +238,7 @@ const breedOverrideMap: Record<string, BreedTraitProfile> = {
     sizeClass: 'medium',
     neuroticismInclination: 'moderate',
     neuroticismPropensityNote: BULL_COMPANION_NEURO_NOTE,
-    suggestedProfileTags: ['clingy', 'attention_priority', 'anxious'],
+    suggestedProfileTags: ['clingy', 'attention_priority', 'attention_demand', 'anxious'],
     trainerSummary:
       'People-bonded bull companion — moderate baseline neuroticism but handler coldness or indulgence often worsens anxious loops; calm structure with quick rebuild.',
     clientSummary:
@@ -253,7 +253,7 @@ const breedOverrideMap: Record<string, BreedTraitProfile> = {
     sizeClass: 'medium',
     neuroticismInclination: 'moderate',
     neuroticismPropensityNote: BULL_COMPANION_NEURO_NOTE,
-    suggestedProfileTags: ['clingy', 'attention_priority', 'anxious'],
+    suggestedProfileTags: ['clingy', 'attention_priority', 'attention_demand', 'anxious'],
     trainerSummary:
       'Athletic bull companion — same handler-attuned bond as Staffy; moderate baseline stress that handler management often amplifies.',
     clientSummary:
@@ -268,7 +268,7 @@ const breedOverrideMap: Record<string, BreedTraitProfile> = {
     sizeClass: 'medium',
     neuroticismInclination: 'moderate',
     neuroticismPropensityNote: BULL_COMPANION_NEURO_NOTE,
-    suggestedProfileTags: ['clingy', 'attention_priority', 'anxious'],
+    suggestedProfileTags: ['clingy', 'attention_priority', 'attention_demand', 'anxious'],
     trainerSummary:
       'Variable bull-type companion — intense bond and handler sensitivity; moderate baseline neuroticism often worsens with cold withdrawal or unstructured indulgence.',
     clientSummary:
@@ -310,8 +310,8 @@ const breedOverrideMap: Record<string, BreedTraitProfile> = {
   'Miniature Poodle': {
     sizeClass: 'small',
     neuroticismInclination: 'elevated',
-    suggestedProfileTags: ['puzzle_driven', 'neurotic', 'anxious', 'clingy', 'separation_stress'],
-    trainerSummary: 'Intelligent companion poodle — elevated neuroticism vs retriever-stable types; small indulgence pitfalls apply.',
+    suggestedProfileTags: ['puzzle_driven', 'neurotic', 'anxious', 'clingy', 'separation_stress', 'attention_demand'],
+    trainerSummary: 'Intelligent companion poodle — elevated neuroticism vs retriever-stable types; whale eye often misread as sass; small indulgence pitfalls apply.',
     clientSummary: 'Intelligent companion poodle — puzzle-driven; needs structure like any dog.',
     overrides: {
       personality: `${POODLE_CORE.personality} Companion scale — more prone to anxious and neurotic loops than Golden Retriever or Standard Poodle; easily spoiled if treated as fragile.`,
@@ -321,7 +321,7 @@ const breedOverrideMap: Record<string, BreedTraitProfile> = {
   'Toy Poodle': {
     sizeClass: 'toy',
     neuroticismInclination: 'high',
-    suggestedProfileTags: ['puzzle_driven', 'neurotic', 'anxious', 'clingy', 'separation_stress'],
+    suggestedProfileTags: ['puzzle_driven', 'neurotic', 'anxious', 'clingy', 'separation_stress', 'attention_demand'],
     trainerSummary: 'Toy poodle — high neuroticism risk; puzzle-driven but fragile; intensified indulgence pitfalls.',
     clientSummary: 'Toy poodle — puzzle-driven and handler-attuned; same rules despite size.',
     overrides: {
@@ -486,8 +486,11 @@ const breedOverrideMap: Record<string, BreedTraitProfile> = {
 
   // ── Guardian ──
   'German Shepherd': {
+    suggestedProfileTags: ['pack_guarding', 'hierarchy_priority', 'high_drive'],
     overrides: {
       working: 'Versatile working engine — patrol, track, and engage; needs job-like structure; idle GSDs become anxious and vocal.',
+      personality:
+        'Alert guardian — may follow handler to bathroom or perimeter (pack guarding instinct, not pure annoyance). Handler-sensitive; whale eye and appeasement misread as guilt when structure is inconsistent.',
     },
   },
   'Belgian Malinois': {
@@ -737,6 +740,8 @@ const TAG_NEURO_BOOSTS: Record<string, NeuroPattern[]> = {
   dog_reactive: ['barrier_frustration', 'fear_reactive'],
   human_reactive: ['barrier_frustration', 'fear_reactive'],
   attention_priority: ['anxious_attachment'],
+  attention_demand: ['anxious_attachment', 'frenetic_arousal'],
+  pack_guarding: ['territorial_vigilance'],
   jumping_priority: ['frenetic_arousal'],
   hierarchy_priority: ['territorial_vigilance'],
 };

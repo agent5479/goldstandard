@@ -159,14 +159,15 @@ export const NEURO_PATTERN_META: {
     key: 'handler_sensitive',
     label: 'Handler-sensitive',
     hue: '#F07068',
-    description: 'Reads handler mood and tension; may shut down or spin up with handler state.',
+    description:
+      'Reads handler mood and tension; sigh and micro-signals track handler state; may shut down or spin up with handler energy.',
   },
   {
     key: 'anxious_attachment',
     label: 'Anxious attachment',
     hue: '#F08888',
     description:
-      'Velcro bonding, gazing rituals, and small-dog handler indulgence — not the same as separation.',
+      'Velcro bonding, demanding paw, gazing rituals, and small-dog handler indulgence — not the same as separation.',
   },
   {
     key: 'fixation_loop',
@@ -178,7 +179,8 @@ export const NEURO_PATTERN_META: {
     key: 'frenetic_arousal',
     label: 'Frenetic arousal',
     hue: '#E87870',
-    description: 'Cannot settle; matches excited handler energy; spin-up and pacing.',
+    description:
+      'Cannot settle; matches excited handler energy; demanding paw and helicopter tail at greetings.',
   },
   {
     key: 'frustration_reactive',
@@ -196,7 +198,7 @@ export const NEURO_PATTERN_META: {
     key: 'territorial_vigilance',
     label: 'Territorial vigilance',
     hue: '#9A3838',
-    description: 'Home and perimeter patrol arousal; alert-at-boundary guardian job stress.',
+    description: 'Home and perimeter patrol arousal; pack guarding during handler vulnerability (bathroom, sleep).',
   },
   {
     key: 'noise_reactive',
@@ -209,9 +211,62 @@ export const NEURO_PATTERN_META: {
     label: 'Fear reactive',
     hue: '#A04540',
     description:
-      'Caution, withdrawal, or defensive snappy patterns toward novel stimuli, strangers, or dogs.',
+      'Caution, withdrawal, or defensive snappy patterns — whale eye, stiff freeze, weight back (often misread as guilt).',
   },
 ];
+
+export interface NeuroPatternSignal {
+  label: string;
+  guideAnchor: string;
+}
+
+export const NEURO_PATTERN_SIGNALS: Record<NeuroPattern, NeuroPatternSignal[]> = {
+  separation: [
+    { label: 'Distress vocalising when left alone', guideAnchor: '#symptom-glossary' },
+  ],
+  hyper_vigilant: [
+    { label: 'Persistent scanning and difficulty switching off', guideAnchor: '#symptom-glossary' },
+  ],
+  handler_sensitive: [
+    { label: 'Sigh tracks handler mood — safe vs disappointed', guideAnchor: '#three-second-pause' },
+    { label: 'Whale eye when handler looms or reaches', guideAnchor: '#symptom-glossary' },
+  ],
+  anxious_attachment: [
+    { label: 'Demanding paw for attention', guideAnchor: '#symptom-glossary' },
+    { label: 'Demand lean at thresholds vs trust lean at rest', guideAnchor: '#context-of-contact' },
+    { label: 'Whale eye misread as sass or guilt', guideAnchor: '#common-pitfalls' },
+  ],
+  fixation_loop: [
+    { label: 'Stiffening / freeze before lunge', guideAnchor: '#symptom-glossary' },
+    { label: 'Locked stare at triggers', guideAnchor: '#dog-ready-stance' },
+  ],
+  frenetic_arousal: [
+    { label: 'Demanding paw and nudging', guideAnchor: '#symptom-glossary' },
+    { label: 'Helicopter tail at greetings', guideAnchor: '#home-return' },
+  ],
+  frustration_reactive: [
+    { label: 'Destructive outbursts when outlets denied', guideAnchor: '#access' },
+  ],
+  barrier_frustration: [
+    { label: 'Leash / fence lunging when access blocked', guideAnchor: '#leash' },
+  ],
+  territorial_vigilance: [
+    { label: 'Pack guarding — bathroom follow, facing away', guideAnchor: '#pack-guarding' },
+    { label: 'Perimeter patrol at boundaries', guideAnchor: '#front-door' },
+  ],
+  noise_reactive: [
+    { label: 'Startle to sudden sounds', guideAnchor: '#symptom-glossary' },
+  ],
+  fear_reactive: [
+    { label: 'Whale eye — whites visible, head turned', guideAnchor: '#symptom-glossary' },
+    { label: 'Weight back / stiff posture', guideAnchor: '#three-second-pause' },
+    { label: 'Tail tucked — read safety, not guilt', guideAnchor: '#symptom-glossary' },
+  ],
+};
+
+export function getNeuroPatternSignals(pattern: NeuroPattern): NeuroPatternSignal[] {
+  return NEURO_PATTERN_SIGNALS[pattern] ?? [];
+}
 
 const instinctMetaByKey = new Map(INSTINCT_SUBTYPE_META.map((m) => [m.key, m]));
 const neuroMetaByKey = new Map(NEURO_PATTERN_META.map((m) => [m.key, m]));

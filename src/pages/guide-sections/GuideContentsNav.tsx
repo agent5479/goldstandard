@@ -9,13 +9,14 @@ export default function GuideContentsNav() {
             </ul>
           </div>
           <div className="guide-contents-group">
-            <p className="guide-contents-group-label">👤 Owner</p>
+            <p className="guide-contents-group-label">👤 Leadership</p>
             <ul className="guide-contents-list">
               <li><a href="#owner-mindset">👤 Owner mindset</a></li>
               <li><a href="#expectations">🎯 Expectations</a></li>
               <li><a href="#im-over-it">🛑 I'm over it</a></li>
               <li><a href="#i-dont-care">🎓 I don't care (7+ months)</a></li>
               <li><a href="#trust-not-just-love">🤝 Trust, not just love</a></li>
+              <li><a href="#social-regulation">🤝 Self-regulation (training mode)</a></li>
               <li><a href="#speaking-aloud">🗣️ Speak it aloud</a></li>
               <li><a href="#cue-once">1️⃣ Say it once</a></li>
               <li><a href="#ready-stance">🥋 Ready stance</a></li>
@@ -23,13 +24,21 @@ export default function GuideContentsNav() {
             </ul>
           </div>
           <div className="guide-contents-group">
-            <p className="guide-contents-group-label">👀 Reading your dog</p>
+            <p className="guide-contents-group-label">🧠 Understanding</p>
             <ul className="guide-contents-list">
               <li><a href="#reading-dog">📖 Reading your dog</a></li>
               <li><a href="#three-second-pause">⏸️ Three-second pause</a></li>
+              <li><a href="#context-of-contact">🛋️ Context of contact</a></li>
               <li><a href="#breed-temperament">🐾 Breed variance</a></li>
               <li><a href="#common-pitfalls">⚠️ Common pitfalls</a></li>
               <li><a href="#symptom-glossary">📋 Symptom glossary</a></li>
+              <li><a href="#trauma-signals">💙 Trauma signals</a></li>
+              <li><a href="#pack-guarding">🚪 Pack guarding</a></li>
+            </ul>
+          </div>
+          <div className="guide-contents-group">
+            <p className="guide-contents-group-label">🐕‍🦺 Social needs</p>
+            <ul className="guide-contents-list">
               <li><a href="#dog-meetings">🐕‍🦺 Dog meetings</a></li>
               <li><a href="#dog-meetings-leash">🔗 Leash until maturity</a></li>
               <li><a href="#dominance-navigation">🧭 Dominance navigation</a></li>
@@ -40,7 +49,7 @@ export default function GuideContentsNav() {
             </ul>
           </div>
           <div className="guide-contents-group">
-            <p className="guide-contents-group-label">⚡ Corrections</p>
+            <p className="guide-contents-group-label">⚡ Training</p>
             <ul className="guide-contents-list">
               <li><a href="#corrections">🛠️ Corrections overview</a></li>
               <li><a href="#unique-sound-touch">⚡ Unique sound &amp; touch</a></li>
@@ -50,11 +59,6 @@ export default function GuideContentsNav() {
               <li><a href="#verbal-correction">📢 Verbal correction</a></li>
               <li><a href="#collar-snatch">✋ Collar grab &amp; forced sit</a></li>
               <li><a href="#pin-hold">⚠️ Pin &amp; hold (advanced)</a></li>
-            </ul>
-          </div>
-          <div className="guide-contents-group">
-            <p className="guide-contents-group-label">🛠️ Techniques</p>
-            <ul className="guide-contents-list">
               <li><a href="#leash">🦮 Leash &amp; line</a></li>
               <li><a href="#collar-selection">🛡️ Collar selection</a></li>
               <li><a href="#leash-selection">🧭 Leash selection</a></li>
@@ -72,16 +76,11 @@ export default function GuideContentsNav() {
             </ul>
           </div>
           <div className="guide-contents-group">
-            <p className="guide-contents-group-label">🚪 Relationship &amp; outings</p>
+            <p className="guide-contents-group-label">🏠 Daily life</p>
             <ul className="guide-contents-list">
               <li><a href="#front-door">🚪 Front door</a></li>
               <li><a href="#home-return">🏠 Coming home</a></li>
               <li><a href="#check-in-seven">👁️ 7-second check-in</a></li>
-            </ul>
-          </div>
-          <div className="guide-contents-group">
-            <p className="guide-contents-group-label">🎯 Consolidation</p>
-            <ul className="guide-contents-list">
               <li><a href="#daily">📅 Daily practice</a></li>
               <li><a href="#graduation">🎓 Graduation</a></li>
             </ul>

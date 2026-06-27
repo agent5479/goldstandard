@@ -9,7 +9,7 @@ export default function SectionButtPush() {
 
       <p>This is the flank touch — one of the two most communicative contact points in the <a href="#unique-sound-touch">unique sound, then unique touch</a> pattern. Pair a sharp verbal pop with the push in the same instant; the touch is firm and flat at the side, not a casual pat.</p>
 
-      <p>This is the primary tool for in-place reactivity — the continuous bark, the stare at a trigger, the stiffening that feeds on itself. Pair it with the <a href="#ready-stance">ready stance</a> so you reach the dog inside the <a href="#timing">one-second window</a>.</p>
+      <p>This is the primary tool for in-place reactivity — the continuous bark, the stare at a trigger, the stiffening that feeds on itself. Pair it with the <a href="#ready-stance">ready stance</a> so you reach the dog inside the <a href="#timing">one-second window</a>. This is for <a href="#context-of-contact">training mode</a> accountability — not for pushing a dog away during calm living-mode rest contact.</p>
 
       <ol className="steps">
         <li>Notice the behaviour starting — fixation, the first bark, body stiffening</li>

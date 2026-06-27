@@ -88,6 +88,11 @@ export default function SectionReadingDog() {
           <p>Intense baby-style nurturing without boundaries amplifies what is already a people-focused temperament. The dog becomes an emotional mirror: corrections feel like betrayal, separation feels like abandonment, and the household quietly revolves around managing their distress.</p>
           <p>Warmth without structure is not kindness here — it is instability. Hold the standard with calm, matter-of-fact affection. Do not negotiate with crying or guilt. Rebuild quickly after a reset; see <a href="#breed-temperament">breed temperament</a> for delivery notes.</p>
         </div>
+        <div className="col-card">
+          <h4>😏 The guilt / sass trap</h4>
+          <p>Social media loves the &quot;sassy side-eye&quot; — but <strong>whale eye</strong> (head turned away, whites visible, eyes locked on you) is a physiological stress response, not comedy or human guilt. The head avoids conflict while prey drive forces monitoring of a perceived threat.</p>
+          <p>Scolding, laughing, or forcing spatial compliance here validates panic and can trigger severe defensive bites. Create space instead — see <a href="#symptom-glossary">Symptom glossary</a>. The same trap applies to tucked tails and appeasement gestures misread as &quot;guilty&quot; behaviour.</p>
+        </div>
       </div>
 
       <div className="callout">
@@ -121,8 +126,33 @@ export default function SectionReadingDog() {
       <ul className="checklist">
         <li>Pause before touch, approach, or calling over — not only around strangers</li>
         <li>Read ears, eyes, and weight distribution before you decide to engage</li>
+        <li>Read audio cues too — a deep sigh with half-closed eyes and loose muscles usually means decompression; a sigh while wide-eyed, upright, and staring at you often means they have given up waiting and are still loading pressure</li>
         <li>Weight back or stiff posture = create space; do not push through</li>
         <li>When in doubt, wait — the dog will tell you when they are ready</li>
+      </ul>
+
+      <h3 id="context-of-contact">🛋️ The context of contact: training mode vs living mode</h3>
+
+      <p>Structural corrections and spatial pressure — the <a href="#butt-push">butt push</a>, <a href="#collar-snatch">collar grab</a>, pushing a dog off your space — are for <strong>training mode</strong>: active work, thresholds, greetings, corrections, and new exposures. They yield accountability when the dog is testing boundaries or loading arousal.</p>
+
+      <p><strong>Living mode</strong> is different. When the household is at peace and the dog voluntarily leans their full weight against your legs during rest, that is often an ultimate expression of trust — a tool for security, not dependency. Pushing a dog away during a calm living-mode moment can shatter that trust. The Gold Standard Rule is not about being cold or mechanical; it is about absolute clarity so the dog can step into their role as a peaceful centerpiece of the home.</p>
+
+      <div className="two-col">
+        <div className="col-card">
+          <h4>🏋️ Training mode</h4>
+          <p>Outings, doorways, greetings, corrections, new exposures, <a href="#ready-stance">ready stance</a> active. No leaning for support — the dog stands on their own feet and self-regulates. See <a href="#social-regulation">self-regulation around other dogs</a>.</p>
+        </div>
+        <div className="col-card">
+          <h4>🛋️ Living mode</h4>
+          <p>Household calm, both decompressed, dog chooses contact with a loose body. Accept firm, calm contact — do not push away. Structural corrections are inappropriate here.</p>
+        </div>
+      </div>
+
+      <ul className="checklist">
+        <li><strong>Demand lean</strong> at a threshold or during active work = training-mode dependency — create space</li>
+        <li><strong>Trust lean</strong> during rest with loose muscles = living-mode security — accept it</li>
+        <li>When unsure which mode you are in, read the body first — see <a href="#three-second-pause">three-second pause</a> and <a href="#symptom-glossary">Symptom glossary</a></li>
+        <li>Clingy breeds need both: structure in training mode and warmth in living mode — see <a href="#breed-temperament">breed temperament</a> and <a href="#trust-not-just-love">Trust, not just love</a></li>
       </ul>
 
       <h3 id="symptom-glossary">📋 Symptom glossary</h3>
@@ -191,8 +221,13 @@ export default function SectionReadingDog() {
             </tr>
             <tr>
               <td><strong>Play bow</strong></td>
-              <td>Invitation to play when the body stays loose — elbows down, rear up, bouncy or fluid movement</td>
-              <td>A stiff bow with a fixed stare is not a reliable play invitation — it may be appeasement, stress, calming, or predatory arousal; the same posture carries different meanings. Read tail, movement, reciprocity, and what happens next; do not assume play or that a fight is already underway</td>
+              <td>Invitation to play when the body stays loose — elbows down, rear up, bouncy or fluid movement, often with a wagging tail</td>
+              <td>A stiff bow with a fixed stare is not a reliable play invitation — it may be appeasement, stress, calming, or predatory arousal. Distinguish from the <strong>prayer position</strong> below. Read tail, movement, reciprocity, and what happens next</td>
+            </tr>
+            <tr>
+              <td><strong>Prayer position</strong></td>
+              <td>Rigid front-down stretch held in place — stressed eyes, tail often down — a desperate medical signal, not a greeting bow</td>
+              <td>Can indicate severe abdominal pain or life-threatening pancreatitis. Contact a vet urgently; do not treat as play or appeasement. Loose bow + wag = behavioural; rigid hold + stare = medical until proven otherwise</td>
             </tr>
             <tr>
               <td><strong>Eye contact (duration)</strong></td>
@@ -206,8 +241,18 @@ export default function SectionReadingDog() {
             </tr>
             <tr>
               <td><strong>Whale eye</strong></td>
-              <td>Whites of the eyes visible, head turned away — stress, discomfort, or conflict avoidance</td>
-              <td>Often missed because the tail may still wag; pair with stiff body or weight back before engaging — see <a href="#three-second-pause">three-second pause</a></td>
+              <td>Whites of the eyes visible, head turned away — extreme anxiety, discomfort, or conflict avoidance</td>
+              <td>Often misread as &quot;sass&quot; or guilt on social media; biologically the head avoids conflict while the eyes monitor a perceived threat. Do not scold or force interaction — create space. See <a href="#common-pitfalls">guilt / sass trap</a> and <a href="#three-second-pause">three-second pause</a></td>
+            </tr>
+            <tr>
+              <td><strong>Demanding paw</strong></td>
+              <td>Forceful, repeated pawing for attention or a dopamine hit — demand behaviour, not affection</td>
+              <td>Rewarding it builds a loop with no off-switch. Become a rock: look away, fold arms, withhold attention until calm — see <a href="#rewards">Rewards</a> and <a href="#ready-stance">ready stance</a></td>
+            </tr>
+            <tr>
+              <td><strong>Sigh</strong></td>
+              <td>Highly contextual audio cue — meaning depends entirely on body state at the same moment</td>
+              <td>Half-closed eyes + loose muscles + deep sigh = physiological off-switch, dog feels safe. Wide-eyed + upright + sigh while staring at you = disappointed pressure still loading. Pair with <a href="#three-second-pause">three-second pause</a></td>
             </tr>
             <tr>
               <td><strong>Stiff posture / weight back</strong></td>
@@ -239,6 +284,17 @@ export default function SectionReadingDog() {
         <li>Escalating to shocking physical correction on a trauma-signalling dog can confirm the world is unsafe — structure still matters; intensity must drop. See <a href="#dog-language">Dog language</a> for when firmer treatment is and is not appropriate</li>
         <li>Progress may be non-linear; a bad day after a good week is common</li>
       </ul>
+
+      <h3 id="pack-guarding">🚪 Pack guarding: the bathroom follow</h3>
+
+      <p>When your dog follows you into the bathroom and sits facing away from you, it is often not annoyance or pure separation anxiety — it is deep evolutionary pack behaviour. In the wild, eliminating leaves an animal completely vulnerable; the pack stands guard. Your dog views you as a valuable pack member worth protecting.</p>
+
+      <p>Understanding this instinct helps shift resentment to clarity <em>before</em> you step into strict <a href="#access">access training</a> protocols. Understanding pack logic does not mean unlimited permission — thresholds still apply in training mode — but it reframes what you are seeing. See also <a href="#context-of-contact">training mode vs living mode</a>.</p>
+
+      <div className="guide-in-section-theme" id="guide-social-needs">
+        <p className="guide-in-section-theme-label">Social needs</p>
+        <p className="guide-in-section-theme-desc">Dog-to-dog dynamics, meetings, and friction signals — applying what you read above.</p>
+      </div>
 
       <h3 id="dog-meetings">🐕‍🦺 When dogs meet: play, correction, and real conflict</h3>
 

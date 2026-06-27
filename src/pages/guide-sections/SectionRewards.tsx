@@ -78,6 +78,7 @@ export default function SectionRewards() {
         <strong>🗣️ Note on verbal praise</strong>
         <p>"Good boy" during or just after a reactive episode rewards the episode. Save verbal praise for calm, correct behaviour — and use it calmly, not in an excited tone that re-elevates the dog's energy. The same applies to shushing or reassuring during a reaction (<a href="#corrections">Corrections overview</a>, <a href="#owner-mindset">Owner mindset</a>).</p>
         <p>Correct compliance is the expected baseline — not an event that earns a celebration every time. If you deliver active praise each time the dog returns to heel or holds position, puzzle-driven and access-oriented dogs may learn to <em>delay</em> compliance to trigger a predictable praise cycle. Let calm heel, steady position, and routine obedience pass in silence; the earned access — the walk continuing, the <a href="#sniff-breaks">sniff break</a>, the release — is the payoff. See <a href="#access">Access training</a> and <a href="#breed-temperament">breed temperament</a>.</p>
+        <p>Do not reward <strong>demanding paw</strong> — forceful repeated pawing for attention. Become a rock: look away, fold arms, withhold engagement until the body settles. See <a href="#symptom-glossary">Symptom glossary</a>.</p>
       </div>
 
       <div className="callout">

@@ -20,15 +20,24 @@ import SectionFrontDoor from './SectionFrontDoor';
 import SectionCheckInSeven from './SectionCheckInSeven';
 import SectionDaily from './SectionDaily';
 import SectionGraduation from './SectionGraduation';
+import {
+  GuideThemeDailyLife,
+  GuideThemeLeadership,
+  GuideThemeTraining,
+  GuideThemeUnderstanding,
+} from './guideThemeDividers';
 
 /** All guide sections in document order. */
 export const guideSections = [
   SectionPillars,
+  GuideThemeLeadership,
   SectionOwnerMindset,
   SectionExpectations,
   SectionSpeakingAloud,
   SectionReadyStance,
+  GuideThemeUnderstanding,
   SectionReadingDog,
+  GuideThemeTraining,
   SectionCorrections,
   SectionDogLanguage,
   SectionButtPush,
@@ -41,6 +50,7 @@ export const guideSections = [
   SectionAccess,
   SectionTiming,
   SectionRewards,
+  GuideThemeDailyLife,
   SectionFrontDoor,
   SectionCheckInSeven,
   SectionDaily,

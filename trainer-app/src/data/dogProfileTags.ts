@@ -52,6 +52,8 @@ export type DogProfileTagId =
   | 'door_threshold_priority'
   | 'vocal_priority'
   | 'attention_priority'
+  | 'attention_demand'
+  | 'pack_guarding'
   | 'hierarchy_priority'
   | 'fixation_priority'
   | 'jumping_priority'
@@ -185,6 +187,8 @@ export const DOG_PROFILE_TAG_GROUPS: DogProfileTagGroup[] = [
       { id: 'vocal', label: 'Vocal', description: 'Barking, baying, whining as communication', variant: 'primary' },
       { id: 'resource_guarding', label: 'Resource guarding', description: 'Food, space, or objects guarded', variant: 'danger' },
       { id: 'separation_stress', label: 'Separation stress', description: 'Distress when left or apart from key person', variant: 'warning' },
+      { id: 'pack_guarding', label: 'Pack guarding', description: 'Follows handler to bathroom/perimeter; sits facing away — evolutionary guard', variant: 'primary' },
+      { id: 'attention_demand', label: 'Attention demand', description: 'Forceful pawing or nudging for handler focus — not affection', variant: 'warning' },
     ],
   },
   {
