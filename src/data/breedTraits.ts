@@ -617,62 +617,52 @@ export type NeuroPattern =
   | 'noise_reactive'
   | 'fear_reactive';
 
-/** Default multi-pattern stress blends by breed category. */
+/** Default multi-pattern stress blends by breed category (max 3 patterns). */
 export const CATEGORY_NEURO_BLEND: Record<BreedCategory, Partial<Record<NeuroPattern, number>>> = {
   herding: {
-    fixation_loop: 0.3,
-    hyper_vigilant: 0.25,
-    anxious_attachment: 0.25,
-    handler_sensitive: 0.2,
+    fixation_loop: 0.35,
+    hyper_vigilant: 0.35,
+    anxious_attachment: 0.3,
   },
   terrier: {
-    frustration_reactive: 0.35,
-    fixation_loop: 0.25,
-    hyper_vigilant: 0.25,
-    frenetic_arousal: 0.15,
+    frustration_reactive: 0.4,
+    fixation_loop: 0.35,
+    barrier_frustration: 0.25,
   },
   clingy: {
+    separation: 0.35,
+    anxious_attachment: 0.35,
     handler_sensitive: 0.3,
-    anxious_attachment: 0.25,
-    separation: 0.25,
-    hyper_vigilant: 0.2,
   },
   small: {
-    anxious_attachment: 0.3,
-    separation: 0.25,
-    handler_sensitive: 0.25,
-    hyper_vigilant: 0.2,
+    anxious_attachment: 0.4,
+    separation: 0.35,
+    fear_reactive: 0.25,
   },
   guardian: {
-    territorial_vigilance: 0.3,
-    hyper_vigilant: 0.25,
-    handler_sensitive: 0.2,
-    barrier_frustration: 0.15,
-    fear_reactive: 0.1,
+    territorial_vigilance: 0.4,
+    hyper_vigilant: 0.35,
+    barrier_frustration: 0.25,
   },
   spitz: {
-    frustration_reactive: 0.3,
-    frenetic_arousal: 0.25,
-    separation: 0.25,
-    noise_reactive: 0.2,
+    frustration_reactive: 0.35,
+    frenetic_arousal: 0.35,
+    separation: 0.3,
   },
   sighthound: {
-    fear_reactive: 0.35,
-    handler_sensitive: 0.3,
+    fear_reactive: 0.45,
+    handler_sensitive: 0.35,
     noise_reactive: 0.2,
-    hyper_vigilant: 0.15,
   },
   scenthound: {
-    fixation_loop: 0.35,
-    frustration_reactive: 0.25,
+    fixation_loop: 0.45,
+    frustration_reactive: 0.35,
     separation: 0.2,
-    frenetic_arousal: 0.2,
   },
   giant: {
-    fear_reactive: 0.3,
-    handler_sensitive: 0.3,
-    frustration_reactive: 0.25,
-    hyper_vigilant: 0.15,
+    fear_reactive: 0.35,
+    handler_sensitive: 0.35,
+    frustration_reactive: 0.3,
   },
 };
 

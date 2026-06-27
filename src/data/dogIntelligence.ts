@@ -90,25 +90,26 @@ export const INSTINCT_SUBTYPE_META: {
     key: 'herding_eye',
     label: 'Herding eye',
     hue: '#8BC45A',
-    description: 'Motion tracking, gather instinct, and eye-lock before movement.',
+    description:
+      'Motion tracking, gather instinct, and eye-lock before movement (heeler nip — not protectiveness).',
   },
   {
     key: 'chase',
     label: 'Chase',
     hue: '#7A73C9',
-    description: 'Sighthound-style visual chase trigger and prey pursuit.',
+    description: 'Sighthound-style visual chase trigger and prey pursuit (lunge after movement flash).',
   },
   {
     key: 'scent',
     label: 'Scent',
     hue: '#D99A45',
-    description: 'Nose-led tracking, trailing, and scent fixation.',
+    description: 'Nose-led tracking, trailing, and scent fixation (recall fails on scent, not defiance).',
   },
   {
     key: 'guard',
     label: 'Guard',
     hue: '#D97272',
-    description: 'Bred-for guarding, patrol, and territorial assessment talent.',
+    description: 'Bred-for guarding, patrol, and territorial assessment talent (distinct from stress vigilance).',
   },
   {
     key: 'retrieve',
@@ -146,7 +147,7 @@ export const NEURO_PATTERN_META: {
     key: 'separation',
     label: 'Separation stress',
     hue: '#E06658',
-    description: 'Distress when left alone or separated from the handler.',
+    description: 'Distress when left alone or separated from the handler (not handler-present velcro).',
   },
   {
     key: 'hyper_vigilant',
@@ -164,13 +165,14 @@ export const NEURO_PATTERN_META: {
     key: 'anxious_attachment',
     label: 'Anxious attachment',
     hue: '#F08888',
-    description: 'Velcro bonding, gazing rituals, and attachment distortion from handler-matching culture.',
+    description:
+      'Velcro bonding, gazing rituals, and small-dog handler indulgence — not the same as separation.',
   },
   {
     key: 'fixation_loop',
     label: 'Fixation loop',
     hue: '#D96A62',
-    description: 'Motion, stare, or scent lock — cannot break focus before action.',
+    description: 'Motion, stare, or scent lock — cannot break focus (stare-lock before lunge, yap-in-place).',
   },
   {
     key: 'frenetic_arousal',
@@ -188,7 +190,7 @@ export const NEURO_PATTERN_META: {
     key: 'barrier_frustration',
     label: 'Barrier frustration',
     hue: '#B84840',
-    description: 'Restraint stress on leash, fence, window, or threshold when access to a trigger is blocked.',
+    description: 'Restraint stress on leash, fence, or threshold (leash/fence lunging when access blocked).',
   },
   {
     key: 'territorial_vigilance',
@@ -206,12 +208,28 @@ export const NEURO_PATTERN_META: {
     key: 'fear_reactive',
     label: 'Fear reactive',
     hue: '#A04540',
-    description: 'Caution, withdrawal, or defensive patterns toward novel stimuli, strangers, or dogs.',
+    description:
+      'Caution, withdrawal, or defensive snappy patterns toward novel stimuli, strangers, or dogs.',
   },
 ];
 
 const instinctMetaByKey = new Map(INSTINCT_SUBTYPE_META.map((m) => [m.key, m]));
 const neuroMetaByKey = new Map(NEURO_PATTERN_META.map((m) => [m.key, m]));
+
+const MAX_SEGMENT_COUNT = 3;
+
+export function capSegmentBlend<T extends string>(
+  blend: Partial<Record<T, number>>,
+  max = MAX_SEGMENT_COUNT
+): Partial<Record<T, number>> {
+  const entries = (Object.entries(blend) as [T, number][])
+    .filter(([, w]) => w > 0)
+    .sort(([, a], [, b]) => b - a)
+    .slice(0, max);
+  if (entries.length === 0) return {} as Partial<Record<T, number>>;
+  const total = entries.reduce((sum, [, w]) => sum + w, 0);
+  return Object.fromEntries(entries.map(([k, w]) => [k, w / total])) as Partial<Record<T, number>>;
+}
 
 const CATEGORY_INSTINCT_SUBTYPE: Record<BreedCategory, InstinctSubtype> = {
   herding: 'herding_eye',
@@ -227,6 +245,12 @@ const CATEGORY_INSTINCT_SUBTYPE: Record<BreedCategory, InstinctSubtype> = {
 
 /** Multi-segment instinct blends for breeds that span types. */
 const INSTINCT_SEGMENT_OVERRIDES: Record<string, Partial<Record<InstinctSubtype, number>>> = {
+  'Border Collie': { herding_eye: 0.85, chase: 0.15 },
+  'Rough / Smooth Collie': { herding_eye: 0.8, chase: 0.2 },
+  'Staffordshire Bull Terrier (Staffy)': { retrieve: 0.6, hunt_dig: 0.4 },
+  'American Staffordshire Terrier': { retrieve: 0.6, hunt_dig: 0.4 },
+  'Pit Bull type': { retrieve: 0.6, hunt_dig: 0.4 },
+  'American Bulldog': { retrieve: 0.55, guard: 0.45 },
   'Rhodesian Ridgeback': { chase: 0.45, guard: 0.55 },
   Beagle: { scent: 0.85, companion: 0.15 },
   'Basset Hound': { scent: 0.9, companion: 0.1 },
@@ -254,6 +278,7 @@ const INSTINCT_SEGMENT_OVERRIDES: Record<string, Partial<Record<InstinctSubtype,
   Doberman: { guard: 0.8, retrieve: 0.2 },
   'White Swiss Shepherd': { herding_eye: 0.55, guard: 0.45 },
   'Australian Cattle Dog': { herding_eye: 0.85, hunt_dig: 0.15 },
+  'Australian Cattle Dog (Blue Heeler)': { herding_eye: 0.85, hunt_dig: 0.15 },
   Kelpie: { herding_eye: 0.9, hunt_dig: 0.1 },
   'NZ Huntaway': { herding_eye: 0.5, scent: 0.5 },
   'Shiba Inu': { sled_endurance: 0.5, guard: 0.5 },
@@ -262,184 +287,134 @@ const INSTINCT_SEGMENT_OVERRIDES: Record<string, Partial<Record<InstinctSubtype,
   Bullmastiff: { guard: 0.9, retrieve: 0.1 },
 };
 
-/** Multi-segment stress-pattern blends for breeds that span types. */
+/** Multi-segment stress-pattern blends for breeds that span types (max 3 each). */
 const NEURO_SEGMENT_OVERRIDES: Record<string, Partial<Record<NeuroPattern, number>>> = {
-  'Border Collie': {
-    fixation_loop: 0.35,
-    hyper_vigilant: 0.25,
-    anxious_attachment: 0.25,
-    handler_sensitive: 0.15,
-  },
-  Collie: { fixation_loop: 0.3, hyper_vigilant: 0.25, anxious_attachment: 0.25, handler_sensitive: 0.2 },
-  'Shetland Sheepdog (Sheltie)': {
-    fixation_loop: 0.3,
-    anxious_attachment: 0.3,
-    hyper_vigilant: 0.25,
-    handler_sensitive: 0.15,
-  },
-  Kelpie: { fixation_loop: 0.4, barrier_frustration: 0.25, hyper_vigilant: 0.2, handler_sensitive: 0.15 },
-  'Australian Cattle Dog': {
-    fixation_loop: 0.35,
-    barrier_frustration: 0.3,
-    hyper_vigilant: 0.2,
-    handler_sensitive: 0.15,
-  },
+  // Herding
+  'Border Collie': { fixation_loop: 0.4, anxious_attachment: 0.35, hyper_vigilant: 0.25 },
+  'Rough / Smooth Collie': { fixation_loop: 0.35, anxious_attachment: 0.35, hyper_vigilant: 0.3 },
+  Collie: { fixation_loop: 0.35, anxious_attachment: 0.35, hyper_vigilant: 0.3 },
+  'Shetland Sheepdog (Sheltie)': { fixation_loop: 0.35, anxious_attachment: 0.35, hyper_vigilant: 0.3 },
+  Kelpie: { fixation_loop: 0.4, barrier_frustration: 0.35, frustration_reactive: 0.25 },
+  'Australian Cattle Dog': { fixation_loop: 0.35, barrier_frustration: 0.35, frustration_reactive: 0.3 },
   'Australian Cattle Dog (Blue Heeler)': {
     fixation_loop: 0.35,
-    barrier_frustration: 0.3,
-    hyper_vigilant: 0.2,
-    handler_sensitive: 0.15,
+    barrier_frustration: 0.35,
+    frustration_reactive: 0.3,
   },
-  'NZ Huntaway': {
-    frenetic_arousal: 0.3,
-    territorial_vigilance: 0.25,
-    fixation_loop: 0.25,
-    hyper_vigilant: 0.2,
-  },
-  'NZ Heading Dog': {
+  'NZ Huntaway': { frenetic_arousal: 0.35, fixation_loop: 0.35, territorial_vigilance: 0.3 },
+  'NZ Heading Dog': { fixation_loop: 0.4, hyper_vigilant: 0.35, anxious_attachment: 0.25 },
+  'Australian Shepherd': { fixation_loop: 0.35, anxious_attachment: 0.35, hyper_vigilant: 0.3 },
+  'Mini Australian Shepherd': { fixation_loop: 0.35, anxious_attachment: 0.35, hyper_vigilant: 0.3 },
+  'Welsh Corgi (Pembroke / Cardigan)': { fixation_loop: 0.35, anxious_attachment: 0.35, hyper_vigilant: 0.3 },
+  'Old English Sheepdog': { fixation_loop: 0.35, anxious_attachment: 0.35, handler_sensitive: 0.3 },
+  'Belgian Shepherd (Groenendael / Tervuren)': {
     fixation_loop: 0.35,
-    hyper_vigilant: 0.3,
-    anxious_attachment: 0.2,
-    handler_sensitive: 0.15,
-  },
-  'German Shepherd': {
+    hyper_vigilant: 0.35,
     territorial_vigilance: 0.3,
-    hyper_vigilant: 0.25,
+  },
+  // Guardians
+  'German Shepherd': { territorial_vigilance: 0.35, hyper_vigilant: 0.35, barrier_frustration: 0.3 },
+  'Belgian Malinois': { territorial_vigilance: 0.35, hyper_vigilant: 0.35, barrier_frustration: 0.3 },
+  'Doberman Pinscher': { territorial_vigilance: 0.35, hyper_vigilant: 0.35, barrier_frustration: 0.3 },
+  Doberman: { territorial_vigilance: 0.35, hyper_vigilant: 0.35, barrier_frustration: 0.3 },
+  Rottweiler: { territorial_vigilance: 0.4, hyper_vigilant: 0.35, fear_reactive: 0.25 },
+  Akita: { territorial_vigilance: 0.4, fear_reactive: 0.35, handler_sensitive: 0.25 },
+  'Cane Corso': { territorial_vigilance: 0.4, hyper_vigilant: 0.35, handler_sensitive: 0.25 },
+  Bullmastiff: { territorial_vigilance: 0.4, hyper_vigilant: 0.35, fear_reactive: 0.25 },
+  'Rhodesian Ridgeback': { territorial_vigilance: 0.4, hyper_vigilant: 0.35, barrier_frustration: 0.25 },
+  'Mastiff (English / Bull / Neapolitan)': {
+    territorial_vigilance: 0.4,
+    fear_reactive: 0.35,
     handler_sensitive: 0.25,
-    barrier_frustration: 0.2,
   },
-  'Belgian Malinois': {
-    territorial_vigilance: 0.25,
-    hyper_vigilant: 0.3,
-    handler_sensitive: 0.25,
-    barrier_frustration: 0.2,
-  },
-  'Doberman Pinscher': {
-    territorial_vigilance: 0.3,
-    hyper_vigilant: 0.3,
-    handler_sensitive: 0.25,
-    barrier_frustration: 0.15,
-  },
-  Doberman: {
-    territorial_vigilance: 0.3,
-    hyper_vigilant: 0.3,
-    handler_sensitive: 0.25,
-    barrier_frustration: 0.15,
-  },
-  Rottweiler: {
-    territorial_vigilance: 0.35,
-    hyper_vigilant: 0.25,
-    handler_sensitive: 0.25,
-    fear_reactive: 0.15,
-  },
-  'Golden Retriever': { handler_sensitive: 0.55, separation: 0.45 },
-  'Labrador Retriever': { handler_sensitive: 0.5, separation: 0.5 },
-  'Miniature Poodle': {
-    separation: 0.3,
-    anxious_attachment: 0.3,
-    hyper_vigilant: 0.25,
-    handler_sensitive: 0.15,
-  },
-  'Toy Poodle': {
-    separation: 0.3,
-    anxious_attachment: 0.35,
-    hyper_vigilant: 0.25,
-    handler_sensitive: 0.1,
-  },
-  'Standard Poodle': {
-    handler_sensitive: 0.35,
-    anxious_attachment: 0.25,
-    separation: 0.25,
-    hyper_vigilant: 0.15,
-  },
-  Cavoodle: {
-    separation: 0.3,
-    anxious_attachment: 0.35,
-    hyper_vigilant: 0.2,
-    handler_sensitive: 0.15,
-  },
-  'Jack Russell Terrier': {
-    frustration_reactive: 0.3,
-    fixation_loop: 0.25,
-    barrier_frustration: 0.25,
-    noise_reactive: 0.2,
-  },
-  'Miniature Schnauzer': {
-    frustration_reactive: 0.3,
-    fixation_loop: 0.25,
-    barrier_frustration: 0.25,
-    noise_reactive: 0.2,
-  },
-  'Border Terrier': {
-    frustration_reactive: 0.3,
-    fixation_loop: 0.3,
-    barrier_frustration: 0.25,
-    hyper_vigilant: 0.15,
-  },
-  'Bull Terrier': {
+  Boerboel: { territorial_vigilance: 0.4, hyper_vigilant: 0.35, fear_reactive: 0.25 },
+  'Shar Pei': { territorial_vigilance: 0.35, fear_reactive: 0.35, handler_sensitive: 0.3 },
+  'Chow Chow': { territorial_vigilance: 0.4, fear_reactive: 0.35, handler_sensitive: 0.25 },
+  // Clingy / retriever types
+  'Golden Retriever': { handler_sensitive: 0.5, separation: 0.35, anxious_attachment: 0.15 },
+  'Labrador Retriever': { handler_sensitive: 0.45, separation: 0.4, anxious_attachment: 0.15 },
+  'Miniature Poodle': { separation: 0.35, anxious_attachment: 0.35, hyper_vigilant: 0.3 },
+  'Toy Poodle': { separation: 0.35, anxious_attachment: 0.4, hyper_vigilant: 0.25 },
+  'Standard Poodle': { handler_sensitive: 0.35, anxious_attachment: 0.35, separation: 0.3 },
+  'Poodle (Standard)': { handler_sensitive: 0.35, anxious_attachment: 0.35, separation: 0.3 },
+  Cavoodle: { separation: 0.35, anxious_attachment: 0.4, hyper_vigilant: 0.25 },
+  'Cavoodle / Spoodle': { separation: 0.35, anxious_attachment: 0.4, hyper_vigilant: 0.25 },
+  Boxer: { handler_sensitive: 0.35, separation: 0.35, frenetic_arousal: 0.3 },
+  'Bulldog (British)': { separation: 0.35, anxious_attachment: 0.35, handler_sensitive: 0.3 },
+  'French Bulldog': { anxious_attachment: 0.35, separation: 0.35, fear_reactive: 0.3 },
+  // Terriers
+  'Jack Russell Terrier': { frustration_reactive: 0.35, fixation_loop: 0.35, barrier_frustration: 0.3 },
+  'Miniature Schnauzer': { frustration_reactive: 0.35, fixation_loop: 0.35, barrier_frustration: 0.3 },
+  'Border Terrier': { frustration_reactive: 0.35, fixation_loop: 0.35, barrier_frustration: 0.3 },
+  'Bull Terrier': { frustration_reactive: 0.4, fixation_loop: 0.35, frenetic_arousal: 0.25 },
+  'Staffordshire Bull Terrier (Staffy)': {
     frustration_reactive: 0.35,
+    barrier_frustration: 0.35,
     fixation_loop: 0.3,
-    frenetic_arousal: 0.2,
-    barrier_frustration: 0.15,
   },
-  Beagle: { fixation_loop: 0.4, frustration_reactive: 0.3, separation: 0.3 },
-  'Basset Hound': { fixation_loop: 0.45, frustration_reactive: 0.3, separation: 0.25 },
-  'Rhodesian Ridgeback': {
-    territorial_vigilance: 0.35,
-    hyper_vigilant: 0.25,
-    fear_reactive: 0.2,
-    barrier_frustration: 0.2,
+  'American Staffordshire Terrier': {
+    frustration_reactive: 0.35,
+    barrier_frustration: 0.35,
+    fixation_loop: 0.3,
   },
-  Akita: { territorial_vigilance: 0.4, fear_reactive: 0.3, handler_sensitive: 0.3 },
-  'Cane Corso': { territorial_vigilance: 0.4, hyper_vigilant: 0.3, handler_sensitive: 0.3 },
-  Bullmastiff: { territorial_vigilance: 0.4, hyper_vigilant: 0.3, fear_reactive: 0.3 },
-  'Siberian Husky': {
-    frustration_reactive: 0.3,
-    frenetic_arousal: 0.25,
-    separation: 0.25,
-    noise_reactive: 0.2,
+  'Pit Bull type': { frustration_reactive: 0.35, barrier_frustration: 0.35, fixation_loop: 0.3 },
+  'West Highland White Terrier (Westie)': {
+    frustration_reactive: 0.35,
+    fixation_loop: 0.35,
+    barrier_frustration: 0.3,
   },
-  Chihuahua: {
-    anxious_attachment: 0.35,
-    separation: 0.3,
-    handler_sensitive: 0.2,
-    noise_reactive: 0.15,
-  },
-  'Yorkshire Terrier': {
-    anxious_attachment: 0.35,
-    separation: 0.3,
-    handler_sensitive: 0.2,
-    hyper_vigilant: 0.15,
-  },
-  'Cocker Spaniel': {
-    handler_sensitive: 0.35,
-    separation: 0.3,
-    anxious_attachment: 0.2,
-    hyper_vigilant: 0.15,
-  },
+  'Fox Terrier': { frustration_reactive: 0.35, fixation_loop: 0.35, barrier_frustration: 0.3 },
+  'Airedale Terrier': { frustration_reactive: 0.35, fixation_loop: 0.35, barrier_frustration: 0.3 },
+  Dachshund: { fixation_loop: 0.4, frustration_reactive: 0.35, separation: 0.25 },
+  'Miniature Dachshund': { fixation_loop: 0.4, frustration_reactive: 0.35, separation: 0.25 },
+  // Scenthounds
+  Beagle: { fixation_loop: 0.4, frustration_reactive: 0.35, separation: 0.25 },
+  'Basset Hound': { fixation_loop: 0.45, frustration_reactive: 0.35, separation: 0.2 },
+  Bloodhound: { fixation_loop: 0.45, frustration_reactive: 0.35, separation: 0.2 },
+  Coonhound: { fixation_loop: 0.4, frustration_reactive: 0.35, separation: 0.25 },
+  'Foxhound (English / American)': { fixation_loop: 0.4, frustration_reactive: 0.35, separation: 0.25 },
+  // Spitz
+  'Siberian Husky': { frustration_reactive: 0.35, frenetic_arousal: 0.35, separation: 0.3 },
+  'Alaskan Malamute': { frustration_reactive: 0.35, frenetic_arousal: 0.35, separation: 0.3 },
+  Samoyed: { frustration_reactive: 0.35, frenetic_arousal: 0.3, separation: 0.35 },
+  Keeshond: { frustration_reactive: 0.35, hyper_vigilant: 0.35, separation: 0.3 },
+  'Shiba Inu': { territorial_vigilance: 0.35, fear_reactive: 0.35, handler_sensitive: 0.3 },
+  // Sighthounds
   Whippet: { fear_reactive: 0.4, handler_sensitive: 0.35, noise_reactive: 0.25 },
-  'German Shorthaired Pointer': {
-    fixation_loop: 0.3,
-    frustration_reactive: 0.3,
-    frenetic_arousal: 0.25,
-    separation: 0.15,
+  Greyhound: { fear_reactive: 0.4, handler_sensitive: 0.35, noise_reactive: 0.25 },
+  // Giants
+  'Bernese Mountain Dog': { handler_sensitive: 0.4, separation: 0.35, fear_reactive: 0.25 },
+  'Great Dane': { fear_reactive: 0.35, handler_sensitive: 0.35, separation: 0.3 },
+  'Anatolian Shepherd / Maremma': { fear_reactive: 0.35, territorial_vigilance: 0.35, handler_sensitive: 0.3 },
+  'Great Pyrenees (Pyrenean Mountain Dog)': {
+    fear_reactive: 0.35,
+    territorial_vigilance: 0.35,
+    handler_sensitive: 0.3,
   },
-  'Bernese Mountain Dog': {
-    handler_sensitive: 0.4,
-    separation: 0.35,
-    fear_reactive: 0.25,
-  },
-  'Shiba Inu': {
-    territorial_vigilance: 0.3,
-    fear_reactive: 0.3,
-    handler_sensitive: 0.25,
-    frustration_reactive: 0.15,
-  },
+  Newfoundland: { handler_sensitive: 0.4, separation: 0.35, fear_reactive: 0.25 },
+  'St Bernard': { handler_sensitive: 0.4, separation: 0.35, fear_reactive: 0.25 },
+  // Small breeds
+  Chihuahua: { anxious_attachment: 0.4, fear_reactive: 0.35, separation: 0.25 },
+  'Yorkshire Terrier': { anxious_attachment: 0.4, fear_reactive: 0.35, separation: 0.25 },
+  Pomeranian: { anxious_attachment: 0.4, fear_reactive: 0.35, separation: 0.25 },
+  Maltese: { anxious_attachment: 0.4, fear_reactive: 0.35, separation: 0.25 },
+  Papillon: { anxious_attachment: 0.35, fear_reactive: 0.35, separation: 0.3 },
+  'Bichon Frise': { anxious_attachment: 0.35, separation: 0.35, handler_sensitive: 0.3 },
+  'Shih Tzu': { anxious_attachment: 0.4, fear_reactive: 0.35, separation: 0.25 },
+  'Maltese Shih Tzu cross': { anxious_attachment: 0.4, fear_reactive: 0.35, separation: 0.25 },
+  Pug: { anxious_attachment: 0.35, separation: 0.35, fear_reactive: 0.3 },
+  'Boston Terrier': { anxious_attachment: 0.35, separation: 0.35, frenetic_arousal: 0.3 },
   'Cavalier King Charles Spaniel': {
     handler_sensitive: 0.35,
-    anxious_attachment: 0.3,
-    separation: 0.25,
-    hyper_vigilant: 0.1,
+    anxious_attachment: 0.35,
+    separation: 0.3,
+  },
+  // Spaniels / pointers
+  'Cocker Spaniel': { handler_sensitive: 0.4, separation: 0.35, anxious_attachment: 0.25 },
+  'German Shorthaired Pointer': {
+    fixation_loop: 0.35,
+    frustration_reactive: 0.35,
+    frenetic_arousal: 0.3,
   },
 };
 
@@ -883,7 +858,7 @@ export function buildInstinctSegments(
   category: BreedCategory,
   instScore: number
 ): TraitSegment[] {
-  const blend = resolveInstinctBlend(breedName, category);
+  const blend = capSegmentBlend(resolveInstinctBlend(breedName, category));
   const entries = Object.entries(blend) as [InstinctSubtype, number][];
   const totalWeight = entries.reduce((sum, [, w]) => sum + w, 0);
   return entries.map(([key, weight]) => {
@@ -903,7 +878,7 @@ export function buildNeuroSegments(
   category: BreedCategory,
   neuroScore: number
 ): TraitSegment[] {
-  const blend = getResolvedNeuroBlend(breedName, category);
+  const blend = capSegmentBlend(getResolvedNeuroBlend(breedName, category));
   const entries = Object.entries(blend) as [NeuroPattern, number][];
   const totalWeight = entries.reduce((sum, [, w]) => sum + w, 0);
   return entries.map(([key, weight]) => {
@@ -945,12 +920,29 @@ export function blendTraitSegments(
   const total = [...byKey.values()].reduce((sum, v) => sum + v.weightSum, 0);
   if (total === 0) return [];
 
-  return [...byKey.values()].map(({ meta, weightSum, scoreSum }) => ({
+  const merged = [...byKey.values()].map(({ meta, weightSum, scoreSum }) => ({
     key: meta.key,
     label: meta.label,
     hue: meta.hue,
     weight: weightSum / total,
     score: roundScore(scoreSum / weightSum),
+  }));
+
+  const capped = capSegmentBlend(
+    Object.fromEntries(merged.map((seg) => [seg.key, seg.weight])) as Partial<
+      Record<InstinctSubtype | NeuroPattern, number>
+    >
+  );
+  type SegmentKey = InstinctSubtype | NeuroPattern;
+  const cappedSegments = merged.filter((seg) => capped[seg.key as SegmentKey] !== undefined);
+  const cappedTotal = cappedSegments.reduce(
+    (sum, seg) => sum + (capped[seg.key as SegmentKey] ?? 0),
+    0
+  );
+
+  return cappedSegments.map((seg) => ({
+    ...seg,
+    weight: (capped[seg.key as SegmentKey] ?? 0) / (cappedTotal || 1),
   }));
 }
 
