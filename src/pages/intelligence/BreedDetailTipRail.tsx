@@ -74,7 +74,7 @@ export function BreedDetailPanel() {
         </button>
       </div>
       <div className="intelligence-breed-detail-panel-body">
-        <BreedDetailContent breedName={breedName} breedKeys={breedKeys} layout="overlay" />
+        <BreedDetailContent breedName={breedName} breedKeys={breedKeys} />
       </div>
     </div>
   );

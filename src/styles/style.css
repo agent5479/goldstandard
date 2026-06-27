@@ -3761,9 +3761,106 @@ body.page-intelligence {
 }
 
 .intelligence-breed-detail-panel-body {
-  max-height: min(420px, 50vh);
+  max-height: min(520px, 62vh);
   overflow: auto;
-  padding: 0.55rem 0.85rem 0.7rem;
+  padding: 0.5rem 0.65rem 0.65rem;
+}
+
+.intelligence-breed-detail-card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.45rem;
+}
+
+.intelligence-breed-detail-grid-meta {
+  grid-column: 1 / -1;
+  margin: 0 0 0.1rem;
+  font-size: 0.7rem;
+  line-height: 1.35;
+  color: var(--light-text);
+}
+
+.intelligence-breed-detail-card {
+  border: 1px solid rgba(45, 74, 45, 0.14);
+  border-radius: 6px;
+  padding: 0.4rem 0.5rem;
+  background: rgba(255, 255, 255, 0.65);
+  min-width: 0;
+}
+
+.intelligence-breed-detail-card-title {
+  margin: 0 0 0.3rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--forest);
+}
+
+.intelligence-breed-detail-card-body {
+  font-size: 0.71rem;
+  line-height: 1.38;
+  color: var(--text);
+}
+
+.intelligence-breed-detail-card-body p {
+  margin: 0;
+}
+
+.intelligence-breed-detail-card-body p + p {
+  margin-top: 0.35rem;
+}
+
+.intelligence-breed-detail-card-score {
+  margin: 0 0 0.35rem !important;
+  font-size: 0.7rem;
+  color: var(--light-text);
+}
+
+.intelligence-breed-detail-card-empty {
+  color: var(--light-text);
+  font-style: italic;
+}
+
+.intelligence-breed-detail-neuro-inline {
+  margin-bottom: 0.35rem;
+}
+
+.intelligence-breed-detail-neuro-inline .intelligence-breed-detail-neuro-level {
+  margin-bottom: 0.25rem;
+}
+
+.intelligence-breed-detail-neuro-inline .intelligence-breed-detail-neuro-note {
+  margin-bottom: 0;
+}
+
+.intelligence-breed-detail-segment-list--card {
+  margin-top: 0;
+}
+
+.intelligence-breed-detail-segment-list--card .intelligence-breed-detail-segment-item {
+  margin-bottom: 0.3rem;
+}
+
+.intelligence-breed-detail-segment-list--card .intelligence-breed-detail-segment-item:last-child {
+  margin-bottom: 0;
+}
+
+.intelligence-breed-detail-vocal-bar-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0.35rem 0;
+}
+
+.intelligence-breed-detail-vocal-bar {
+  flex: 1;
+  max-width: 100%;
+  height: 0.45rem;
+}
+
+.intelligence-breed-detail-vocal-hint {
+  font-size: 0.68rem !important;
+  color: var(--light-text) !important;
 }
 
 .intelligence-breed-detail-panel .intelligence-breed-detail-overlay-columns {
@@ -4686,16 +4783,14 @@ body.page-intelligence {
     display: none;
   }
 
-  .intelligence-breed-detail-overlay-columns {
-    grid-template-columns: 1fr;
+  .intelligence-breed-detail-card-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+}
 
-  .intelligence-breed-detail-overlay-panel + .intelligence-breed-detail-overlay-panel {
-    padding-left: 0;
-    border-left: none;
-    padding-top: 0.65rem;
-    margin-top: 0.65rem;
-    border-top: 1px solid var(--border);
+@media (max-width: 560px) {
+  .intelligence-breed-detail-card-grid {
+    grid-template-columns: 1fr;
   }
 }
 

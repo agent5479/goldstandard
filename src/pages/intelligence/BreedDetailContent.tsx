@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import { breedCategories } from '../../data/breeds';
 import {
   findIntelligenceByBreedName,
@@ -6,12 +7,12 @@ import {
   VOCAL_HUE,
 } from '../../data/dogIntelligence';
 import {
-  AXES,
   findBreedByName,
   getBreedAxisProfile,
   getBreedClientMixTraitLabel,
   getBreedNeuroticismPropensityDetail,
   NEUROTICISM_VARIANT,
+  type TraitAxis,
 } from '../../data/breedTraits';
 import { getTraitIntensityStyle } from '../../utils/scoreSpectrum';
 
@@ -32,32 +33,50 @@ function resolveIntelligenceProfile(breedName: string, breedKeys: string[] = [])
 interface BreedDetailContentProps {
   breedName: string;
   breedKeys?: string[];
-  /** stack = mobile sheet; overlay = full-width panel above the table */
-  layout?: 'stack' | 'overlay';
 }
 
-function SegmentBreakdown({
-  title,
+function DetailCard({ title, children }: { title: string; children: ReactNode }) {
+  return (
+    <article className="intelligence-breed-detail-card">
+      <h4 className="intelligence-breed-detail-card-title">{title}</h4>
+      <div className="intelligence-breed-detail-card-body">{children}</div>
+    </article>
+  );
+}
+
+function AxisCard({ breed, axis, title }: { breed: NonNullable<ReturnType<typeof resolveBreedForDetail>>; axis: TraitAxis; title: string }) {
+  return (
+    <DetailCard title={title}>
+      <p>{getBreedAxisProfile(breed, axis)}</p>
+    </DetailCard>
+  );
+}
+
+function SegmentCardContent({
   segments,
   totalScore,
   dimension,
+  showOverall = true,
 }: {
-  title: string;
   segments: TraitSegment[];
   totalScore: number;
   dimension: 'inst' | 'neuro';
+  showOverall?: boolean;
 }) {
-  if (segments.length === 0) return null;
+  if (segments.length === 0) {
+    return <p className="intelligence-breed-detail-card-empty">No breakdown available.</p>;
+  }
 
   const bounds = scoreBoundsFor(dimension);
 
   return (
-    <section className="intelligence-breed-detail-segments">
-      <h4 className="intelligence-breed-detail-segments-title">{title}</h4>
-      <p className="intelligence-breed-detail-segments-total">
-        Overall estimate: <strong>{totalScore.toFixed(1)}/10</strong>
-      </p>
-      <ul className="intelligence-breed-detail-segment-list">
+    <>
+      {showOverall && (
+        <p className="intelligence-breed-detail-card-score">
+          Overall: <strong>{totalScore.toFixed(1)}/10</strong>
+        </p>
+      )}
+      <ul className="intelligence-breed-detail-segment-list intelligence-breed-detail-segment-list--card">
         {segments.map((seg) => (
           <li key={String(seg.key)} className="intelligence-breed-detail-segment-item">
             <span className="intelligence-breed-detail-segment-label">
@@ -83,90 +102,86 @@ function SegmentBreakdown({
           </li>
         ))}
       </ul>
-    </section>
+    </>
   );
 }
 
-function NeuroSection({
+function StressCard({
+  segments,
+  totalScore,
   neuroDetail,
   neuroScore,
   isEstimated,
 }: {
+  segments: TraitSegment[];
+  totalScore: number;
   neuroDetail: ReturnType<typeof getBreedNeuroticismPropensityDetail>;
   neuroScore: number | undefined;
   isEstimated: boolean;
 }) {
-  if (!neuroDetail && neuroScore === undefined) return null;
-
   return (
-    <section className="intelligence-breed-detail-neuro">
-      <h4 className="intelligence-breed-detail-neuro-title">Stress-looping propensity</h4>
+    <DetailCard title="😵‍💫 Stress pattern composition and propensity">
       {neuroDetail && (
-        <>
+        <div className="intelligence-breed-detail-neuro-inline">
           <p className="intelligence-breed-detail-neuro-level">
             <span
               className={`intelligence-breed-detail-neuro-badge intelligence-breed-detail-neuro-badge--${NEUROTICISM_VARIANT[neuroDetail.level]}`}
             >
               {neuroDetail.label}
             </span>
-            <span className="intelligence-breed-detail-neuro-level-label">inclination for this type</span>
           </p>
           <p className="intelligence-breed-detail-neuro-note">{neuroDetail.note}</p>
-        </>
+        </div>
       )}
       {neuroScore !== undefined && (
-        <p className="intelligence-breed-detail-neuro-score">
-          Breed analysis estimate: <strong>{neuroScore.toFixed(1)}/10</strong> potential neuroticism
-          {isEstimated ? ' (category-based)' : ''}.
+        <p className="intelligence-breed-detail-card-score">
+          Table estimate: <strong>{neuroScore.toFixed(1)}/10</strong>
+          {isEstimated ? ' (category-based)' : ''}
         </p>
       )}
-    </section>
-  );
-}
-
-function ScoreExtras({
-  intelligenceProfile,
-  vocalScore,
-}: {
-  intelligenceProfile: NonNullable<ReturnType<typeof resolveIntelligenceProfile>>;
-  vocalScore: number | undefined;
-}) {
-  return (
-    <>
-      <SegmentBreakdown
-        title="Instinct composition"
-        segments={intelligenceProfile.instinctSegments}
-        totalScore={intelligenceProfile.scores.inst}
-        dimension="inst"
-      />
-      <SegmentBreakdown
-        title="Stress pattern composition"
-        segments={intelligenceProfile.neuroSegments}
-        totalScore={intelligenceProfile.scores.neuro}
+      <SegmentCardContent
+        segments={segments}
+        totalScore={totalScore}
         dimension="neuro"
+        showOverall={neuroScore === undefined}
       />
-      {vocalScore !== undefined && (
-        <p className="intelligence-breed-detail-vocal">
-          Vocal tendency: <strong>{vocalScore.toFixed(1)}/10</strong>
-          <span
-            className="intelligence-breed-detail-segment-dot"
-            style={{
-              background: getTraitIntensityStyle(VOCAL_HUE, vocalScore, scoreBoundsFor('vocal'))
-                .barFill,
-              marginLeft: '0.35rem',
-            }}
-          />
-        </p>
-      )}
-    </>
+    </DetailCard>
   );
 }
 
-export default function BreedDetailContent({
+function VocalCard({ vocalScore }: { vocalScore: number }) {
+  const bounds = scoreBoundsFor('vocal');
+  const barFill = getTraitIntensityStyle(VOCAL_HUE, vocalScore, bounds).barFill;
+
+  return (
+    <DetailCard title="🗣 Vocal tendency">
+      <p className="intelligence-breed-detail-card-score">
+        Typical output: <strong>{vocalScore.toFixed(1)}/10</strong>
+      </p>
+      <span className="intelligence-breed-detail-vocal-bar-wrap">
+        <span
+          className="intelligence-breed-detail-segment-bar intelligence-breed-detail-vocal-bar"
+          style={{ width: `${vocalScore * 10}%`, background: barFill }}
+        />
+        <span
+          className="intelligence-breed-detail-segment-dot"
+          style={{ background: barFill }}
+        />
+      </span>
+      <p className="intelligence-breed-detail-vocal-hint">
+        Alert barking, baying, yapping, or habitual noise for this type.
+      </p>
+    </DetailCard>
+  );
+}
+
+function BreedDetailCardGrid({
   breedName,
-  breedKeys = [],
-  layout = 'stack',
-}: BreedDetailContentProps) {
+  breedKeys,
+}: {
+  breedName: string;
+  breedKeys: string[];
+}) {
   const breed = resolveBreedForDetail(breedName, breedKeys);
   const intelligenceProfile = resolveIntelligenceProfile(breedName, breedKeys);
   const neuroDetail = breed ? getBreedNeuroticismPropensityDetail(breed.name) : undefined;
@@ -176,74 +191,70 @@ export default function BreedDetailContent({
 
   if (!breed) {
     return (
-      <>
+      <div className="intelligence-breed-detail-card-grid">
         {neuroScore !== undefined && (
-          <section className="intelligence-breed-detail-neuro">
-            <h4 className="intelligence-breed-detail-neuro-title">Stress sensitivity (breed analysis)</h4>
-            <p className="intelligence-breed-detail-neuro-note">
-              Estimated score {neuroScore.toFixed(1)}/10 on the breed analysis table — type-level
-              temperament notes are not available for this name.
+          <DetailCard title="😵‍💫 Stress pattern composition and propensity">
+            <p>
+              Estimated score <strong>{neuroScore.toFixed(1)}/10</strong> on the breed analysis
+              table — type-level temperament notes are not available for this name.
             </p>
-          </section>
+          </DetailCard>
         )}
         {!neuroScore && (
           <p className="intelligence-breed-detail-note">No temperament profile available for this breed.</p>
         )}
-      </>
+      </div>
     );
   }
 
   const category = breedCategories[breed.category];
 
-  if (layout === 'overlay') {
-    return (
-      <div className="intelligence-breed-detail-overlay-columns">
-        <section className="intelligence-breed-detail-overlay-panel">
-          <p className="intelligence-breed-detail-type">{getBreedClientMixTraitLabel(breed.name)}</p>
-          <p className="intelligence-breed-detail-category">
-            <strong>{category.label}</strong> — {category.note}
-          </p>
-          <dl className="intelligence-breed-detail-table">
-            {AXES.map((axis) => (
-              <div className="intelligence-breed-detail-row" key={axis.key}>
-                <dt>{axis.label}</dt>
-                <dd>{getBreedAxisProfile(breed, axis.key)}</dd>
-              </div>
-            ))}
-          </dl>
-        </section>
-        <section className="intelligence-breed-detail-overlay-panel">
-          {intelligenceProfile && (
-            <ScoreExtras intelligenceProfile={intelligenceProfile} vocalScore={vocalScore} />
-          )}
-          <NeuroSection
-            neuroDetail={neuroDetail}
-            neuroScore={neuroScore}
-            isEstimated={isEstimated}
-          />
-        </section>
-      </div>
-    );
-  }
-
   return (
-    <>
-      <p className="intelligence-breed-detail-type">{getBreedClientMixTraitLabel(breed.name)}</p>
-      <p className="intelligence-breed-detail-category">
-        <strong>{category.label}</strong> — {category.note}
+    <div className="intelligence-breed-detail-card-grid">
+      <p className="intelligence-breed-detail-grid-meta">
+        {getBreedClientMixTraitLabel(breed.name)} · <strong>{category.label}</strong> — {category.note}
       </p>
-      <dl className="intelligence-breed-detail-table">
-        {AXES.map((axis) => (
-          <div className="intelligence-breed-detail-row" key={axis.key}>
-            <dt>{axis.label}</dt>
-            <dd>{getBreedAxisProfile(breed, axis.key)}</dd>
-          </div>
-        ))}
-      </dl>
-      <NeuroSection neuroDetail={neuroDetail} neuroScore={neuroScore} isEstimated={isEstimated} />
-      {intelligenceProfile && (
-        <ScoreExtras intelligenceProfile={intelligenceProfile} vocalScore={vocalScore} />
+
+      <AxisCard breed={breed} axis="personality" title="🧠 Personality & drive" />
+      <AxisCard breed={breed} axis="working" title="⚡ Working style & energy" />
+      <AxisCard breed={breed} axis="physical" title="💪 Physical build & size" />
+
+      {intelligenceProfile ? (
+        <DetailCard title="🎯 Instinct composition">
+          <SegmentCardContent
+            segments={intelligenceProfile.instinctSegments}
+            totalScore={intelligenceProfile.scores.inst}
+            dimension="inst"
+          />
+        </DetailCard>
+      ) : (
+        <DetailCard title="🎯 Instinct composition">
+          <p className="intelligence-breed-detail-card-empty">No instinct breakdown available.</p>
+        </DetailCard>
       )}
-    </>
+
+      <StressCard
+        segments={intelligenceProfile?.neuroSegments ?? []}
+        totalScore={neuroScore ?? 0}
+        neuroDetail={neuroDetail}
+        neuroScore={neuroScore}
+        isEstimated={isEstimated}
+      />
+
+      {vocalScore !== undefined ? (
+        <VocalCard vocalScore={vocalScore} />
+      ) : (
+        <DetailCard title="🗣 Vocal tendency">
+          <p className="intelligence-breed-detail-card-empty">No vocal estimate available.</p>
+        </DetailCard>
+      )}
+    </div>
   );
+}
+
+export default function BreedDetailContent({
+  breedName,
+  breedKeys = [],
+}: BreedDetailContentProps) {
+  return <BreedDetailCardGrid breedName={breedName} breedKeys={breedKeys} />;
 }
