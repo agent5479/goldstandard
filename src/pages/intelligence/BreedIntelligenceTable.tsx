@@ -10,7 +10,7 @@ import IntelligenceColumnHeader from './IntelligenceColumnHeader';
 import IntelligenceTableLegend from './IntelligenceTableLegend';
 import BreedIntelligenceTableNarrow from './BreedIntelligenceTableNarrow';
 import IntelligenceScoreCell from './IntelligenceScoreCell';
-import { BreedDetailOverlay, BreedDetailTipProvider, useBreedDetailTip } from './BreedDetailTipRail';
+import { BreedDetailPanel, BreedDetailTipProvider, useBreedDetailTip } from './BreedDetailTipRail';
 import {
   IntelligenceColumnTipProvider,
   IntelligenceColumnTipOverlay,
@@ -43,11 +43,10 @@ function IntelligenceTableWithTips({
   renderRow,
 }: IntelligenceTableWithTipsProps) {
   const tipContext = useIntelligenceColumnTip();
-  const breedTip = useBreedDetailTip();
 
   return (
     <div className="intelligence-table-anchor">
-      <BreedDetailOverlay />
+      <BreedDetailPanel />
       <IntelligenceColumnTipOverlay />
       <div
         className="intelligence-table-scroll"
@@ -55,11 +54,14 @@ function IntelligenceTableWithTips({
         aria-label="Breed rankings table — scroll to browse all breeds"
       >
         <table className="intelligence-table">
-          <thead
-            onMouseEnter={() => breedTip?.hideBreed()}
-            onMouseLeave={() => tipContext?.hideTip()}
-          >
+          <thead onMouseLeave={() => tipContext?.hideTip()}>
             <tr>
+              <th
+                className="intelligence-detail-col"
+                scope="col"
+                aria-label="Show breed details"
+                style={{ width: 36 }}
+              />
               <IntelligenceColumnHeader
                 label="IQ #"
                 tipLabel="Overall IQ rank"
@@ -138,35 +140,55 @@ function DesktopBreedTable({
     profile: DogIntelligenceProfile,
     isPinned: boolean,
     showDivider: boolean
-  ) => (
-    <tr
-      key={profile.breed}
-      className={`${isPinned ? 'is-pinned' : ''}${showDivider ? ' pin-divider' : ''}`}
-      onClick={() => togglePin(profile.breed)}
-      onMouseEnter={() =>
-        breedTip?.showBreed({ breedName: profile.breed, breedKeys: profile.breedKeys })
-      }
-      onMouseLeave={() => breedTip?.hideBreed()}
-      onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          togglePin(profile.breed);
-        }
-      }}
-      tabIndex={0}
-      role="button"
-      aria-pressed={isPinned}
-    >
-      <td className="intelligence-rank">{profile.rank}</td>
-      <td className="intelligence-breed intelligence-breed--tip">
-        {isPinned && <span className="intelligence-pin-dot" aria-hidden="true" />}
-        <span className="intelligence-breed-label">{profile.breed}</span>
-      </td>
-      {INTELLIGENCE_DIMENSIONS.map((dim) => (
-        <IntelligenceScoreCell key={dim.key} profile={profile} dimension={dim.key} />
-      ))}
-    </tr>
-  );
+  ) => {
+    const detailOpen = breedTip?.isDetailOpen(profile.breed) ?? false;
+
+    return (
+      <tr
+        key={profile.breed}
+        className={`${isPinned ? 'is-pinned' : ''}${showDivider ? ' pin-divider' : ''}${detailOpen ? ' is-detail-open' : ''}`}
+        onClick={() => togglePin(profile.breed)}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            togglePin(profile.breed);
+          }
+        }}
+        tabIndex={0}
+        role="button"
+        aria-pressed={isPinned}
+      >
+        <td className="intelligence-detail-col">
+          <label
+            className="intelligence-detail-toggle"
+            onClick={(e) => e.stopPropagation()}
+            onKeyDown={(e) => e.stopPropagation()}
+          >
+            <input
+              type="checkbox"
+              className="intelligence-detail-checkbox"
+              checked={detailOpen}
+              onChange={() =>
+                breedTip?.toggleDetailBreed({
+                  breedName: profile.breed,
+                  breedKeys: profile.breedKeys,
+                })
+              }
+              aria-label={`Show details for ${profile.breed}`}
+            />
+          </label>
+        </td>
+        <td className="intelligence-rank">{profile.rank}</td>
+        <td className="intelligence-breed intelligence-breed--tip">
+          {isPinned && <span className="intelligence-pin-dot" aria-hidden="true" />}
+          <span className="intelligence-breed-label">{profile.breed}</span>
+        </td>
+        {INTELLIGENCE_DIMENSIONS.map((dim) => (
+          <IntelligenceScoreCell key={dim.key} profile={profile} dimension={dim.key} />
+        ))}
+      </tr>
+    );
+  };
 
   return (
     <IntelligenceTableWithTips
@@ -275,7 +297,7 @@ export default function BreedIntelligenceTable() {
         <h2 className="visually-hidden">
           {isNarrow
             ? 'Dog breeds ranked by dimension. Select a dimension, tap a breed for details, and use the pin button to compare breeds.'
-            : 'Dog breeds ranked across ten dimensions. Hover a row for temperament details above the table; click a row to pin it for comparison.'}
+            : 'Dog breeds ranked across ten dimensions. Tick a row checkbox to read temperament details above the table; click a row to pin it for comparison.'}
         </h2>
 
         {!isNarrow && <IntelligenceTableLegend />}
@@ -324,7 +346,8 @@ export default function BreedIntelligenceTable() {
               colour for type and vividness for strength.
             </p>
             <p className="intelligence-tip">
-              Hover a row to read full temperament details in the panel above the table. Click a row to pin it for comparison.
+              Tick the checkbox on a row to open full temperament details in the panel above the table
+              (one breed at a time). Click a row to pin it for comparison.
             </p>
           </>
         )}
