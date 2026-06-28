@@ -12,6 +12,8 @@ export default function GuideContentsNav() {
             <p className="guide-contents-group-label">👤 Leadership</p>
             <ul className="guide-contents-list">
               <li><a href="#owner-mindset">👤 Owner mindset</a></li>
+              <li><a href="#new-baseline">🧠 New baseline</a></li>
+              <li><a href="#implementing-baseline-shift">🛠 Implementing the shift</a></li>
               <li><a href="#expectations">🎯 Expectations</a></li>
               <li><a href="#im-over-it">🛑 I'm over it</a></li>
               <li><a href="#i-dont-care">🎓 I don't care (7+ months)</a></li>

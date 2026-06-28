@@ -28,7 +28,9 @@ const ALIASES: { terms: string[]; href: string }[] = [
   { terms: ['pillars', 'three pillars', 'preparation', 'consistency', 'real world wins', 'gold standard rule', 'authority', 'drain the tank', 'sit', 'wait', 'nothing for free', 'consent', 'release'], href: '#pillars' },
 
   /* Owner mindset & expectations */
-  { terms: ['owner mindset', 'anxiety', 'calm leadership', 'owner energy', 'nervous handler', 'reassurance', 'shush', "it's okay"], href: '#owner-mindset' },
+  { terms: ['owner mindset', 'anxiety', 'calm leadership', 'owner energy', 'nervous handler', 'reassurance', 'shush', "it's okay", 'subconscious baseline', 'internal thermostat', 'new baseline', 'gamified loop', 'cultural reset', 'dramatic praise', 'internal expectations'], href: '#owner-mindset' },
+  { terms: ['subconscious shift', 'transforming standards', 'old baseline new baseline', 'self regulation walk', 'neutral accountability'], href: '#new-baseline' },
+  { terms: ['implementing baseline', 'command follow through', 'drop dramatic praise', 'upgrade what you tolerate'], href: '#implementing-baseline-shift' },
   { terms: ['expectations', 'triggers', 'opportunities', 'difficult situations', 'market', 'beach', 'real world', 'generalize', 'generalisation', 'spontaneous', 'living room training'], href: '#expectations' },
   { terms: ['recall', 'come back', 'come when called', 'bolting', 'run away', 'bolt', 'pursuit', 'joyless', 'chase recall'], href: '#expectations' },
   { terms: ['go-get', 'go get recall', 'go get method', 'treat at feet', 'reserved treat recall'], href: '#go-get-recall' },

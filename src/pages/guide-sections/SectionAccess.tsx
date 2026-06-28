@@ -20,7 +20,8 @@ export default function SectionAccess() {
       </p>
 
       <p>
-        The goal is a dog that acts right <em>without being told to act right</em> — regulating position beside you while you walk, look at the sky, and think your own thoughts. That is learned accountability, not a trick repeated for cookies. When the baseline slips — pulling, fixation, leaving your sphere without permission — access pauses or ends until the standard returns. See <a href="#leash-accountability">Correcting the choice to leave</a>, <a href="#cue-once">Say it once</a>, and <a href="#rewards">Rewards</a>.</p>
+        The goal is a dog that acts right <em>without being told to act right</em> — regulating position beside you while you walk, look at the sky, and think your own thoughts. That is learned accountability, not a trick repeated for cookies. The psychological frame for this shift lives in <a href="#new-baseline">Owner mindset: the new baseline</a>. When the baseline slips — pulling, fixation, leaving your sphere without permission — access pauses or ends until the standard returns. See <a href="#leash-accountability">Correcting the choice to leave</a>, <a href="#cue-once">Say it once</a>, and <a href="#rewards">Rewards</a>.
+      </p>
 
       <h3>📋 How access training works</h3>
       <ol className="steps">

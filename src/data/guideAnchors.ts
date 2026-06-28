@@ -2,6 +2,10 @@
 export const GUIDE_EXAM_ANCHORS = new Set([
   'pillars',
   'owner-mindset',
+  'new-baseline',
+  'transforming-standards',
+  'old-new-baseline',
+  'implementing-baseline-shift',
   'expectations',
   'go-get-recall',
   'im-over-it',
