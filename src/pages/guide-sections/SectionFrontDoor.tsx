@@ -2,7 +2,7 @@ export default function SectionFrontDoor() {
   return (
     <section className="guide-section" id="front-door">
       <div className="guide-section-inner">
-      <p className="section-num">17 — The relationship frame</p>
+      <p className="section-num">06 — The relationship frame</p>
       <h2>🚪 It starts at the front door.</h2>
 
       <p>Every outing begins at a threshold — front door, boot door, gate. That moment is not logistics. It is where the dog learns what the relationship is: they are not running the show, and freedom does not begin the second the door opens.</p>

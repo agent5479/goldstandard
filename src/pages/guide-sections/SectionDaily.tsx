@@ -2,7 +2,7 @@ export default function SectionDaily() {
   return (
     <section className="guide-section" id="daily">
       <div className="guide-section-inner">
-      <p className="section-num">19 — Keeping it going</p>
+      <p className="section-num">23 — Keeping it going</p>
       <h2>📅 Daily practice for the first three weeks.</h2>
 
       <p>The training consolidates through repetition. A sustained daily rhythm at home — often talked about as the first three weeks — is where the dog learns that the new structure is permanent, not situational. That window is a useful rule of thumb, not a deadline. Some dogs move faster; others need longer, especially with trauma, high reactivity, or inconsistent handling between family members.</p>

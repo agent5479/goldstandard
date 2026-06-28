@@ -25,6 +25,7 @@ export const GUIDE_EXAM_ANCHORS = new Set([
   'symptom-glossary',
   'trauma-signals',
   'pack-guarding',
+  'social-needs',
   'dog-meetings',
   'dog-meetings-leash',
   'dominance-navigation',

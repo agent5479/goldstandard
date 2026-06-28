@@ -2,7 +2,7 @@ export default function SectionTiming() {
   return (
     <section className="guide-section" id="timing">
       <div className="guide-section-inner">
-      <p className="section-num">15 — The one-second rule</p>
+      <p className="section-num">10 — The one-second rule</p>
       <h2>⏱️ Catch it in the act. You have about a second.</h2>
 
       <p>This is where most home training breaks down. The association between behaviour and correction — or behaviour and reward — requires the response to land within roughly one second of the behaviour. Beyond that, the dog cannot reliably connect the two. It doesn't understand that the correction two minutes later was for the thing it did two minutes ago.</p>

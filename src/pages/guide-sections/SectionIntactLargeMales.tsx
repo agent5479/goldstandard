@@ -2,7 +2,7 @@ export default function SectionIntactLargeMales() {
   return (
     <section className="guide-section" id="intact-large-males">
       <div className="guide-section-inner">
-        <p className="section-num">Social needs — Intact large males</p>
+        <p className="section-num">09 — Intact large males</p>
         <h2>🐕‍🦺 Intact large males: the playbook.</h2>
 
         <p>

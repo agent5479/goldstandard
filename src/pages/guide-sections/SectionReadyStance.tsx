@@ -2,7 +2,7 @@ export default function SectionReadyStance() {
   return (
     <section className="guide-section" id="ready-stance">
       <div className="guide-section-inner">
-      <p className="section-num">04 — Physical readiness</p>
+      <p className="section-num">05 — Physical readiness</p>
       <h2>🥋 The ready stance.</h2>
 
       <p>In martial arts, the ready stance is not tension — it is a pre-engaged body that can act the instant it needs to. The same principle applies here. A soft, slumped handler cannot reach the <a href="#timing">one-second window</a>. A handler with core engaged, knees soft, weight balanced, and attention forward can.</p>

@@ -2,7 +2,7 @@ export default function SectionRewards() {
   return (
     <section className="guide-section" id="rewards">
       <div className="guide-section-inner">
-      <p className="section-num">16 — Rewards</p>
+      <p className="section-num">11 — Rewards</p>
       <h2>🦴 Choose the right currency for your dog.</h2>
 
       <p>Before using treat-based training, understand whether your dog is actually food-motivated. Many are, but many aren't — particularly dogs that have been oversaturated with treats, or dogs whose primary drive is social, environmental, or prey-related. Breed tendencies matter: some lines lean heavily treat-focused; others respond far more to affection, access, or calm approval. Read <a href="#breed-temperament">breed temperament</a> alongside the individual dog in front of you.</p>
@@ -22,6 +22,12 @@ export default function SectionRewards() {
         <strong>⚠️ Don't abuse the treat exploit</strong>
         <p>The ultimate treat must never be overused, or it loses its value — <strong>the rarity supports the process</strong>. Reserve one rare, high-value reward exclusively for training sessions: dried liver, fish biscuits, or a single favourite kept scarce on purpose. If it is given freely through the day, it stops working inside the <a href="#timing">association window</a> exactly when you need it most.</p>
       </div>
+
+      <h3 id="go-get-recall">🦴 The go-get method for recall training</h3>
+
+      <p>For building recall in training — not the joyless pursuit after a bolt — use the <strong>go-get</strong> method with treats, not affection alone. Throw or place a high-value treat a short distance away, let the dog move toward it, then call them back before they reach it or as they turn. When they come, reward with the treat at your feet — not with excited cuddling that re-elevates the energy.</p>
+
+      <p>Treats give a clear, repeatable currency for the association window — see <a href="#timing">Timing</a> above. The go-get treat must be the <a href="#treat-diagnostic">reserved training currency</a> — a favourite the dog gets in sessions and nowhere else — not an everyday snack whose value has been drained by overuse. Affection can follow once the dog is calm at your side; during training, the go-get pattern needs something the dog will reliably work for. Keep sessions short, reset the distance if they blow past you, and build until the recall lands inside the one-second rule without the treat visible every time.</p>
 
       <h3 id="treat-handler-reinforcement">🎯 Treats as handler reinforcement — not distance marking</h3>
 

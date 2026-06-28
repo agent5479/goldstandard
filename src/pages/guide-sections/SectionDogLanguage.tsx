@@ -2,7 +2,7 @@ export default function SectionDogLanguage() {
   return (
     <section className="guide-section" id="dog-language">
       <div className="guide-section-inner">
-      <p className="section-num">07 — Corrections</p>
+      <p className="section-num">13 — Corrections</p>
       <h2>🗣️ Dog language: gruff correction without trauma.</h2>
 
       <p>Dogs do not negotiate with essays. They correct each other with a mouth — brief, shocking, then done. Your hand is that mouth when words and lighter resets have not landed. That is not permission to hurt a dog in frustration; it is the obligation to speak a language they understand when the line must be real — calibrated to the dog in front of you, not a rule printed for every breed.</p>

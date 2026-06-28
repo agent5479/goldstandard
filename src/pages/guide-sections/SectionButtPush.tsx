@@ -2,7 +2,7 @@ export default function SectionButtPush() {
   return (
     <section className="guide-section" id="butt-push">
       <div className="guide-section-inner">
-      <p className="section-num">08 — Corrections</p>
+      <p className="section-num">16 — Corrections</p>
       <h2>👋 The butt push: yap, fixation, and escalation.</h2>
 
       <p>When your dog is barking, yap-yapping, fixating, or escalating, the goal is not to punish — it's to interrupt. A firm push to the dog's hindquarters (the butt push) breaks the nervous system cycle and re-anchors the dog to the pack. It works because it bypasses the dog's excited mental state and communicates physically: <em>I'm here, I'm in charge, this isn't necessary.</em></p>

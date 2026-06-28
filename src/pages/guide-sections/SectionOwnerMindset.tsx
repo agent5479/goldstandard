@@ -2,7 +2,7 @@ export default function SectionOwnerMindset() {
   return (
     <section className="guide-section" id="owner-mindset">
       <div className="guide-section-inner">
-        <p className="section-num">01 — The foundation</p>
+        <p className="section-num">02 — The foundation</p>
         <h2>👤 It starts with you, not the dog.</h2>
 
         <p>

@@ -2,7 +2,7 @@ export default function SectionCollarSnatch() {
   return (
     <section className="guide-section" id="collar-snatch">
       <div className="guide-section-inner">
-      <p className="section-num">11 — Corrections</p>
+      <p className="section-num">19 — Corrections</p>
       <h2>✋ Collar grab &amp; forced sit: jumping, lunging, and mouthing.</h2>
 
       <p>For behaviours that come <em>at you</em> — jumping up, lunging toward a trigger, licking, mouthing — catch the dog in the act, within that <a href="#timing">one-second window</a>. That speed depends on the <a href="#ready-stance">ready stance</a>: a pre-engaged core and a body already set to move before the dog does. On the <a href="#escalation-ladder">escalation ladder</a>, collar grab is often the hand speaking before any rise in intensity — see <a href="#dog-language">Dog language</a>.</p>

@@ -2,7 +2,7 @@ export default function SectionCheckInSeven() {
   return (
     <section className="guide-section" id="check-in-seven">
       <div className="guide-section-inner">
-      <p className="section-num">18 — Pack awareness</p>
+      <p className="section-num">22 — Pack awareness</p>
       <h2>👁️ The seven-second check-in.</h2>
 
       <p>When you tell the dog they can go — after earning access — watch them and count precisely to seven seconds. A pack-minded dog will look back your way within that window. That glance is the check-in: <em>I'm still with you; I'm still reading you.</em> The same instinct is trained on-lead when you <a href="#leash-accountability">correct the choice to leave</a> — the dog learns that glancing back or holding position restores the walk without you firing cues every step.</p>

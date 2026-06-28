@@ -2,7 +2,7 @@ export default function SectionAccess() {
   return (
     <section className="guide-section" id="access">
       <div className="guide-section-inner">
-      <p className="section-num">14 — Motivation</p>
+      <p className="section-num">21 — Motivation</p>
       <h2>🔓 Access is the reward.</h2>
 
       <p>Not every dog is food-motivated. Not every dog is attention-motivated. For dogs that are highly environmentally oriented — particularly terrier types, working breeds, and dogs with strong prey or social drives — the reward isn't a treat or a pat. It's <em>access</em>: off the leash, nose to the ground, free to run and sniff. Getting to be a dog, on your terms.</p>

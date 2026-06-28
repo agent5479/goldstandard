@@ -5,7 +5,7 @@ export const GuideThemeLeadership = () => (
     id="guide-theme-leadership"
     part="Part 2"
     title="👤 Leadership"
-    description="Who leads, and how you show up — mindset and physical readiness before you read or correct."
+    description="Who leads, and how you show up — mindset, vocal and physical readiness, and the door ritual before tools."
   />
 );
 
@@ -14,7 +14,16 @@ export const GuideThemeUnderstanding = () => (
     id="guide-theme-understanding"
     part="Part 3"
     title="🧠 Understanding"
-    description="Read your dog's psychology before reaching for corrections."
+    description="Read your dog's psychology — stress, breed, signals, and living vs training mode."
+  />
+);
+
+export const GuideThemeSocialNeeds = () => (
+  <GuideThemeDivider
+    id="guide-theme-social-needs"
+    part="Part 4"
+    title="🐕‍🦺 Social needs"
+    description="Dog-to-dog dynamics, meetings, friction signals — applying what you read above."
   />
 );
 
@@ -23,7 +32,7 @@ export const GuideThemeTraining = () => (
     id="guide-theme-training"
     part="Part 5"
     title="⚡ Training"
-    description="Tools when structure is required — corrections, leash, timing, and access."
+    description="Timing and motivation first — then corrections, equipment, techniques, and earned access."
   />
 );
 
@@ -32,6 +41,6 @@ export const GuideThemeDailyLife = () => (
     id="guide-theme-daily-life"
     part="Part 6"
     title="🏠 Daily life"
-    description="Live the standard at home — doors, outings, practice rhythm, graduation."
+    description="Sustain the standard — check-in, practice rhythm, graduation."
   />
 );

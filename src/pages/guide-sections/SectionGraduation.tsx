@@ -2,7 +2,7 @@ export default function SectionGraduation() {
   return (
     <section className="guide-section" id="graduation">
       <div className="guide-section-inner">
-      <p className="section-num">20 — The turning point</p>
+      <p className="section-num">24 — The turning point</p>
       <h2>🎓 Graduation to adulthood.</h2>
 
       <p>Training works best when you treat it as a turning point in the dog's life — a clear graduation, not a part-time experiment. The leash stays down when earned. Expectations are real and they do not get relaxed because someone misses the old puppy dynamic. Mixed messages do not just slow progress — they make the transition exponentially slower.</p>

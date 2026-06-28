@@ -2,7 +2,7 @@ export default function SectionCollarSelection() {
   return (
     <section className="guide-section" id="collar-selection">
       <div className="guide-section-inner">
-      <p className="section-num">12 — Equipment</p>
+      <p className="section-num">14 — Equipment</p>
       <h2>🛡️ Collar selection: what we use and why.</h2>
 
       <p>This methodology is built around learned accountability, clear pressure-and-release communication, and achieving a calm state of mind. The collar is part of that conversation — not a restraint device, but a line that must deliver instant, clean feedback. What you put on the neck determines whether the dog can hear that conversation at all.</p>

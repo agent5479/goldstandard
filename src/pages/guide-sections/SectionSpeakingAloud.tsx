@@ -2,7 +2,7 @@ export default function SectionSpeakingAloud() {
   return (
     <section className="guide-section" id="speaking-aloud">
       <div className="guide-section-inner">
-      <p className="section-num">03 — Owner regulation</p>
+      <p className="section-num">04 — Owner regulation</p>
       <h2>🗣️ Speak the principle aloud.</h2>
 
       <p>The dog does not need to hear your reasoning. They read your body — tension, certainty, hesitation, hope. For humans, saying the principle out loud is often what locks it into the body in the first place.</p>

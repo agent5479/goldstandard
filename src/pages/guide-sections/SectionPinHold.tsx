@@ -2,7 +2,7 @@ export default function SectionPinHold() {
   return (
     <section className="guide-section" id="pin-hold">
       <div className="guide-section-inner">
-      <p className="section-num">12 — Corrections (advanced)</p>
+      <p className="section-num">20 — Corrections (advanced)</p>
       <h2>⚠️ Pin &amp; hold: full surrender.</h2>
 
       <p>This sits at the top of the <a href="#escalation-ladder">escalation ladder</a> in <a href="#dog-language">Dog language</a> — not a method to practise from a page. Warwick demonstrates it in sessions when a dog needs a definitive pack-level reset — pinning at the neck until the body fully surrenders, then releasing only when the struggle is genuinely over.</p>

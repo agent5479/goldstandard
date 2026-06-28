@@ -2,7 +2,7 @@ export default function SectionExpectations() {
   return (
     <section className="guide-section" id="expectations">
       <div className="guide-section-inner">
-      <p className="section-num">02 — Mindset in practice</p>
+      <p className="section-num">03 — Mindset in practice</p>
       <h2>🎯 Expect the right things.</h2>
 
       <p>One of the subtler skills in dog ownership is managing what you expect — because your dog is reading that expectation constantly. This cuts both ways:</p>
@@ -21,13 +21,7 @@ export default function SectionExpectations() {
 
       <p><strong>Relative condition:</strong> a failed <a href="#check-in-seven">seven-second check-in</a> while still in range calls for immediate leash-on — no chase. A full recall after a bolt is a longer pursuit, then a calm reset before trying again. Different distances, different responses; both demand relentlessness without panic.</p>
 
-      <p>If recall fails after that pursuit, reset calmly and try again. The patience is part of the message — a handler who panics or gets frustrated is one the dog has already stopped listening to.</p>
-
-      <h3 id="go-get-recall">🦴 The go-get method for recall training</h3>
-
-      <p>For building recall in training — not the joyless pursuit after a bolt — use the <strong>go-get</strong> method with treats, not affection alone. Throw or place a high-value treat a short distance away, let the dog move toward it, then call them back before they reach it or as they turn. When they come, reward with the treat at your feet — not with excited cuddling that re-elevates the energy.</p>
-
-      <p>Treats give a clear, repeatable currency for the association window — see <a href="#timing">Timing</a> and <a href="#rewards">Rewards</a>. The go-get treat must be the <a href="#treat-diagnostic">reserved training currency</a> — a favourite the dog gets in sessions and nowhere else — not an everyday snack whose value has been drained by overuse. Affection can follow once the dog is calm at your side; during training, the go-get pattern needs something the dog will reliably work for. Keep sessions short, reset the distance if they blow past you, and build until the recall lands inside the one-second rule without the treat visible every time.</p>
+      <p>If recall fails after that pursuit, reset calmly and try again. The patience is part of the message — a handler who panics or gets frustrated is one the dog has already stopped listening to. For structured recall building in training sessions — not the joyless pursuit after a bolt — see the <a href="#go-get-recall">go-get method</a> in <a href="#rewards">Rewards</a>.</p>
 
       <h3 id="im-over-it">🛑 Misbehaviour: the "I'm over it" rule</h3>
 

@@ -2,7 +2,7 @@ export default function SectionVerbalCorrection() {
   return (
     <section className="guide-section" id="verbal-correction">
       <div className="guide-section-inner">
-      <p className="section-num">10 — Corrections</p>
+      <p className="section-num">18 — Corrections</p>
       <h2>📢 Verbal correction: the bark that replaces the hands.</h2>
 
       <p>Dogs correct each other with sound and body — a sharp snap, a charge, a stillness that says <em>enough</em>. Your verbal correction is the human version: a short, authoritative bark or command delivered at the exact moment of the behaviour, with the same energy as the <a href="#butt-push">butt push</a> or <a href="#leash-jerk">downward jerk</a> — not shouting, not pleading, not repeated nagging.</p>

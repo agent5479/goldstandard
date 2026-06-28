@@ -2,7 +2,7 @@ export default function SectionLeash() {
   return (
     <section className="guide-section" id="leash">
       <div className="guide-section-inner">
-      <p className="section-num">13 — Leash &amp; line</p>
+      <p className="section-num">15 — Leash &amp; line</p>
       <h2>🦮 The leash is a communication line.</h2>
 
       <p>In this methodology, the leash is never a tool to physically restrain or tie the dog to your body. It is a high-fidelity communication line. Every micro-tension you create tells the dog something; every micro-tension the dog creates tells you something. That requires the right equipment and the right hands — selection first, technique second.</p>

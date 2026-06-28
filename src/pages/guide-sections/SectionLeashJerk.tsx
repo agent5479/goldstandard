@@ -2,7 +2,7 @@ export default function SectionLeashJerk() {
   return (
     <section className="guide-section" id="leash-jerk">
       <div className="guide-section-inner">
-      <p className="section-num">09 — Corrections</p>
+      <p className="section-num">17 — Corrections</p>
       <h2>⬇️ Downward leash jerk: heavy the body, turn.</h2>
 
       <p>When the dog is on lead and needs a physical reset — pulling toward a trigger, stiffening on a fixated stare, or refusing to yield position — a single firm downward jerk on the leash makes the body heavier and turns it. It is not sustained tension; it is one sharp pull down, then back to slack.</p>

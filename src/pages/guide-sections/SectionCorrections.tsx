@@ -2,7 +2,7 @@ export default function SectionCorrections() {
   return (
     <section className="guide-section" id="corrections">
       <div className="guide-section-inner">
-      <p className="section-num">06 — Corrections</p>
+      <p className="section-num">12 — Corrections</p>
       <h2>🛠️ The correction toolkit.</h2>
 
       <p>Corrections are not punishment in anger — they are fast, calm interruptions that redirect attention and reset the dog's body. Used inside the <a href="#timing">one-second window</a>, they teach the same lesson dogs teach each other: the line is real, and you are holding it.</p>
