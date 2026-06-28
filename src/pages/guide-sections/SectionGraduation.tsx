@@ -9,6 +9,8 @@ export default function SectionGraduation() {
 
       <p>From roughly seven months onward, the <a href="#i-dont-care">I don't care</a> rule is in full effect: the dog is an adult in the pack structure now. You are expected to understand. Nervousness and excitement do not excuse bolting at doors, jumping on visitors, acting without permission, or walking ahead of you. That is not harshness — it is the clarity that lets an adult dog relax into knowing the line is real.</p>
 
+      <p>At roughly two years, many large dogs are still filling out physically — 40–50+ kg and gaining mass. Puppy mindset in <em>you</em> must end even when the dog still feels young: especially for <a href="#intact-large-males">intact large males</a> still building structure, ready stance and engaged core are safety requirements, not optional polish.</p>
+
       <p>It is understandably difficult. Many owners still want the mouthing, lap-dog affection and the feeling that their dog is "still a puppy." That habit in <em>you</em> will significantly inhibit how fast the dog learns — see <a href="#common-pitfalls">common pitfalls</a>. Under full-time consistency with trainer-level relentlessness, the core shift can sometimes consolidate in a matter of days — that is the intensive window Warwick can bring in focused sessions. Your job at home is to <a href="#daily">carry that structure forward</a> for as long as your dog needs for it to become permanent — often talked about as three weeks, but longer where history, reactivity, or part-time consistency slow the work.</p>
 
       <div className="callout">

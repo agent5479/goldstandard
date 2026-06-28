@@ -2,6 +2,7 @@ import { examQuestions, isTraitQuestion } from '../../data/examQuestions';
 import type { Question } from '../../data/examQuestions';
 import { breedCategories } from '../../data/breeds';
 import type { BreedCategory } from '../../data/breeds';
+import type { ExamDogProfile } from '../../data/examDemographics';
 import {
   findBreedByName,
   getBreedNeuroticismInclination,
@@ -9,7 +10,7 @@ import {
   getBreedSuggestedProfileTags,
   resolveBreedName,
 } from '../../data/breedTraits';
-import type { NeuroticismInclination } from '../../data/breedTraits';
+import type { NeuroticismInclination, SizeClass } from '../../data/breedTraits';
 
 export const PASS_MARK = 0.8;
 export const OWNER_UNIVERSAL = 15;
@@ -32,11 +33,11 @@ const NEURO_RANK: Record<NeuroticismInclination, number> = {
   high: 3,
 };
 
+const LARGE_SIZE_CLASSES: SizeClass[] = ['large', 'giant'];
+
 export interface PreparedQuestion {
   source: Question;
-  /** Options in shuffled display order. */
   options: string[];
-  /** Index of the correct answer within the shuffled options. */
   correctIndex: number;
 }
 
@@ -79,7 +80,6 @@ function markUsed(q: Question, state: SamplingState): void {
   if (q.dedupGroup) state.usedGroups.add(q.dedupGroup);
 }
 
-/** Sample without reusing prompt text or dedupGroup. */
 function sampleUnique(pool: Question[], n: number, state: SamplingState): Question[] {
   const available = pool.filter((q) => isAvailable(q, state));
   const picked = sample(available, Math.min(n, available.length));
@@ -87,7 +87,6 @@ function sampleUnique(pool: Question[], n: number, state: SamplingState): Questi
   return picked;
 }
 
-/** True when question names a specific breed that does not match the selected breed. */
 export function isWrongBreedQuestion(q: Question, breedName: string | null | undefined): boolean {
   if (!q.breedNames?.length) return false;
   if (!breedName) return true;
@@ -95,11 +94,28 @@ export function isWrongBreedQuestion(q: Question, breedName: string | null | und
   return !resolved || !q.breedNames.includes(resolved);
 }
 
-function filterBreedEligible(pool: Question[], breedName: string | null | undefined): Question[] {
-  return pool.filter((q) => !isWrongBreedQuestion(q, breedName));
+/** True when owner profile gates exclude this question. */
+export function isWrongProfileQuestion(q: Question, profile: ExamDogProfile | undefined): boolean {
+  if (q.requiresIntact || q.requiresNeutered || q.requiresMale || q.requiresStructureBuilding) {
+    if (!profile) return true;
+    if (q.requiresIntact && profile.reproductiveStatus !== 'intact') return true;
+    if (q.requiresNeutered && profile.reproductiveStatus !== 'neutered') return true;
+    if (q.requiresMale && profile.sex !== 'male') return true;
+    if (q.requiresStructureBuilding && profile.structureLevel !== 'building') return true;
+  }
+  return false;
 }
 
-/** Source options always list the correct answer first; shuffle for play. */
+function filterEligible(
+  pool: Question[],
+  breedName: string | null | undefined,
+  profile: ExamDogProfile | undefined
+): Question[] {
+  return pool.filter(
+    (q) => !isWrongBreedQuestion(q, breedName) && !isWrongProfileQuestion(q, profile)
+  );
+}
+
 function prepareQuestion(q: Question): PreparedQuestion {
   const order = shuffle(q.options.map((_, i) => i));
   return {
@@ -117,16 +133,31 @@ export function meetsNeuroticismMin(
   return NEURO_RANK[breedLevel] >= NEURO_RANK[min];
 }
 
+function matchesLargeSize(sizeClass: SizeClass | undefined): boolean {
+  return sizeClass !== undefined && LARGE_SIZE_CLASSES.includes(sizeClass);
+}
+
+function isPlaybookQuestion(q: Question): boolean {
+  return Boolean(
+    q.requiresIntact &&
+      q.requiresMale &&
+      q.requiresStructureBuilding &&
+      q.sizeClasses?.some((size) => LARGE_SIZE_CLASSES.includes(size))
+  );
+}
+
 /** Breed-aware trait quiz sampling for the owner exam. */
 export function selectTraitQuestions(
   breedName: string | null | undefined,
   categories: BreedCategory[],
   state: SamplingState,
+  profile: ExamDogProfile | undefined,
   count = OWNER_TRAIT
 ): Question[] {
-  const pool = filterBreedEligible(
+  const pool = filterEligible(
     examQuestions.filter((q) => isTraitQuestion(q) && q.track === 'both'),
-    breedName
+    breedName,
+    profile
   );
   const picked: Question[] = [];
 
@@ -137,6 +168,38 @@ export function selectTraitQuestions(
 
   const resolvedName = breedName ? resolveBreedName(breedName) : undefined;
   const breed = resolvedName ? findBreedByName(resolvedName) : undefined;
+  const sizeClass = breed ? getBreedSizeClass(breed) : undefined;
+  const isLarge = matchesLargeSize(sizeClass);
+
+  if (profile?.reproductiveStatus === 'intact') {
+    take(pool.filter((q) => q.requiresIntact && !isPlaybookQuestion(q)), 1);
+  }
+  if (profile?.reproductiveStatus === 'neutered') {
+    take(pool.filter((q) => q.requiresNeutered), 1);
+  }
+
+  if (
+    profile?.reproductiveStatus === 'intact' &&
+    profile.sex === 'male' &&
+    profile.structureLevel === 'building' &&
+    isLarge
+  ) {
+    take(pool.filter(isPlaybookQuestion), 2);
+  }
+
+  if (isLarge) {
+    take(
+      pool.filter(
+        (q) =>
+          q.sizeClasses?.some((size) => LARGE_SIZE_CLASSES.includes(size)) &&
+          !q.requiresIntact &&
+          !q.requiresNeutered &&
+          !q.requiresMale &&
+          !q.requiresStructureBuilding
+      ),
+      1
+    );
+  }
 
   if (breed) {
     take(
@@ -152,9 +215,8 @@ export function selectTraitQuestions(
       );
     }
 
-    const sizeClass = getBreedSizeClass(breed);
     take(
-      pool.filter((q) => q.sizeClasses?.includes(sizeClass)),
+      pool.filter((q) => sizeClass && q.sizeClasses?.includes(sizeClass)),
       1
     );
 
@@ -174,9 +236,10 @@ export function selectTraitQuestions(
   if (picked.length < count) {
     for (const cat of categories) {
       if (picked.length >= count) break;
-      const catPool = filterBreedEligible(
-        examQuestions.filter((q) => q.breedCategory === cat),
-        breedName
+      const catPool = filterEligible(
+        examQuestions.filter((q) => q.breedCategory === cat && isTraitQuestion(q)),
+        breedName,
+        profile
       );
       take(catPool, count - picked.length);
     }
@@ -185,15 +248,10 @@ export function selectTraitQuestions(
   return picked.slice(0, count);
 }
 
-/**
- * Build the owner exam from one or more temperament categories.
- * A single category (pure breed / temperament card) gets all OWNER_BREED
- * questions. A mix passes [personality, working style, physical build];
- * weights favour personality (3/1/1), with duplicates collapsing together.
- */
 export function buildOwnerExam(
   categories: BreedCategory[],
-  breedName?: string | null
+  breedName?: string | null,
+  profile?: ExamDogProfile
 ): PreparedQuestion[] {
   const state = createSamplingState();
   const weights = categories.length === 1 ? [OWNER_BREED] : [3, 1, 1];
@@ -205,14 +263,26 @@ export function buildOwnerExam(
   let breedSpecific: Question[] = [];
   counts.forEach((n, cat) => {
     breedSpecific = breedSpecific.concat(
-      sampleUnique(examQuestions.filter((q) => q.breedCategory === cat), n, state)
+      sampleUnique(
+        filterEligible(
+          examQuestions.filter((q) => q.breedCategory === cat && !isTraitQuestion(q)),
+          breedName,
+          profile
+        ),
+        n,
+        state
+      )
     );
   });
 
-  const traitSpecific = selectTraitQuestions(breedName, categories, state, OWNER_TRAIT);
+  const traitSpecific = selectTraitQuestions(breedName, categories, state, profile, OWNER_TRAIT);
 
-  const universal = examQuestions.filter(
-    (q) => q.breedCategory === 'all' && q.track === 'both' && !isTraitQuestion(q)
+  const universal = filterEligible(
+    examQuestions.filter(
+      (q) => q.breedCategory === 'all' && q.track === 'both' && !isTraitQuestion(q)
+    ),
+    breedName,
+    profile
   );
   const bodyLanguage = sampleUnique(
     universal.filter((q) => q.topic === 'Body language'),

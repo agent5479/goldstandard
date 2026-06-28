@@ -6,49 +6,63 @@ import TrackChooser from './exam/TrackChooser';
 import BreedPicker from './exam/BreedPicker';
 import MixPicker from './exam/MixPicker';
 import type { MixSelection } from './exam/MixPicker';
+import DogProfileStep from './exam/DogProfileStep';
 import Quiz from './exam/Quiz';
 import Results from './exam/Results';
 import { buildOwnerExam, buildTrainerExam } from './exam/engine';
 import type { Answer, PreparedQuestion } from './exam/engine';
 import { breedCategories } from '../data/breeds';
 import type { BreedCategory } from '../data/breeds';
+import type { ExamDogProfile } from '../data/examDemographics';
+import { formatExamProfileLabel } from '../data/examDemographics';
 import { normalizeMixSelection, formatMixTitle, resolveCrossParentNamesFromBreed } from '../utils/dogBreedLabel';
 import SectionIcon from '../components/SectionIcon';
+
+interface OwnerExamPending {
+  categories: BreedCategory[];
+  breedName: string | null;
+  breedLabel: string;
+  personalityBreedName?: string | null;
+}
 
 type ExamState =
   | { step: 'start' }
   | { step: 'breed' }
   | { step: 'mix'; initialParentNames?: { parentA: string; parentB: string } }
+  | { step: 'profile'; pending: OwnerExamPending }
   | { step: 'quiz'; track: 'owner' | 'trainer'; breedName: string | null; contextLabel: string; questions: PreparedQuestion[] }
   | { step: 'results'; track: 'owner' | 'trainer'; breedName: string | null; answers: Answer[] };
 
 export default function ExamPage() {
   const [state, setState] = useState<ExamState>({ step: 'start' });
+  const [mixInitialParents, setMixInitialParents] = useState<
+    { parentA: string; parentB: string } | undefined
+  >();
 
   const toStep = (next: ExamState) => {
     setState(next);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const goToProfile = (pending: OwnerExamPending) => {
+    toStep({ step: 'profile', pending });
+  };
+
   const startOwnerExam = (category: BreedCategory, breedName: string | null) => {
     if (breedName) {
       const crossParents = resolveCrossParentNamesFromBreed(breedName);
       if (crossParents) {
-        toStep({
-          step: 'mix',
-          initialParentNames: { parentA: crossParents[0], parentB: crossParents[1] },
-        });
+        setMixInitialParents({ parentA: crossParents[0], parentB: crossParents[1] });
+        toStep({ step: 'mix' });
         return;
       }
     }
 
     const catLabel = breedCategories[category].label;
-    toStep({
-      step: 'quiz',
-      track: 'owner',
+    goToProfile({
+      categories: [category],
       breedName,
-      contextLabel: `Owner Exam — ${breedName ? `${breedName} (${catLabel})` : catLabel}`,
-      questions: buildOwnerExam([category], breedName)
+      breedLabel: breedName ? `${breedName} (${catLabel})` : catLabel,
     });
   };
 
@@ -71,12 +85,26 @@ export default function ExamPage() {
           : mix.personalitySource === 'c' && mix.parentC
             ? mix.parentC.name
             : null;
+    goToProfile({
+      categories: [mix.personality, mix.working, mix.physical],
+      breedName: mixName,
+      breedLabel: `${mixName} (personality: ${personalitySide})`,
+      personalityBreedName,
+    });
+  };
+
+  const launchOwnerQuiz = (pending: OwnerExamPending, profile: ExamDogProfile) => {
+    const traitBreedName =
+      pending.categories.length > 1 && pending.personalityBreedName
+        ? pending.personalityBreedName
+        : pending.breedName;
+
     toStep({
       step: 'quiz',
       track: 'owner',
-      breedName: mixName,
-      contextLabel: `Owner Exam — ${mixName} (personality: ${personalitySide})`,
-      questions: buildOwnerExam([mix.personality, mix.working, mix.physical], personalityBreedName)
+      breedName: pending.breedName,
+      contextLabel: `Owner Exam — ${pending.breedLabel} · ${formatExamProfileLabel(profile)}`,
+      questions: buildOwnerExam(pending.categories, traitBreedName, profile),
     });
   };
 
@@ -86,7 +114,7 @@ export default function ExamPage() {
       track: 'trainer',
       breedName: null,
       contextLabel: 'Trainer Exam — full question bank',
-      questions: buildTrainerExam()
+      questions: buildTrainerExam(),
     });
   };
 
@@ -111,7 +139,11 @@ export default function ExamPage() {
             <SectionIcon set="exam" size="lg" className="page-title-icon" />
             <h1>Do you know your dog?</h1>
           </div>
-          <p>Test yourself on the principles behind the Gold Standard method — reading signals, corrections, timing, and access training. Owners get a 24-question exam tuned to their breed, including a trait quiz for their selection; trainers face the full bank. Your results stay on this page — nothing is stored or sent.</p>
+          <p>
+            Test yourself on the principles behind the Gold Standard method — reading signals, corrections, timing,
+            and access training. Owners get a 24-question exam tuned to breed, intact status, sex, and structure
+            level; trainers face the full bank. Your results stay on this page — nothing is stored or sent.
+          </p>
         </div>
       </section>
 
@@ -126,16 +158,29 @@ export default function ExamPage() {
         {state.step === 'breed' && (
           <BreedPicker
             onSelect={startOwnerExam}
-            onMixed={() => toStep({ step: 'mix' })}
+            onMixed={() => {
+              setMixInitialParents(undefined);
+              toStep({ step: 'mix' });
+            }}
             onBack={() => toStep({ step: 'start' })}
           />
         )}
 
         {state.step === 'mix' && (
           <MixPicker
-            initialParentNames={state.initialParentNames}
+            initialParentNames={mixInitialParents}
             onSelect={startMixExam}
             onBack={() => toStep({ step: 'breed' })}
+          />
+        )}
+
+        {state.step === 'profile' && (
+          <DogProfileStep
+            breedLabel={state.pending.breedLabel}
+            onContinue={(profile) => launchOwnerQuiz(state.pending, profile)}
+            onBack={() =>
+              toStep(state.pending.breedName?.includes(' mix') ? { step: 'mix' } : { step: 'breed' })
+            }
           />
         )}
 

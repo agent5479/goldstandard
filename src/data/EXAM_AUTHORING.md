@@ -26,7 +26,19 @@ Questions live in `examQuestions.ts` and `examTraitQuestions.ts`. The **first op
 | `profileTags` | Fires when breed suggested tags overlap |
 | `sizeClasses` | `toy`, `small`, `giant` |
 | `neuroticismMin` | `elevated` or `high` |
+| `requiresIntact` | Fires only when owner selected Intact |
+| `requiresNeutered` | Fires only when owner selected Neutered / spayed |
+| `requiresMale` | Fires only when owner selected Male |
+| `requiresStructureBuilding` | Fires only when structure is still building |
 | `dedupGroup` | Prevents two questions on the same theme in one exam |
+
+### Guide coverage
+
+Every question's `guideLink` must resolve to a known anchor in `guideAnchors.ts` with substantive prose in the guide. Playbook questions for intact large males use `#intact-large-males-*` or `#intact-three-paths`.
+
+### Voice
+
+Explanations should reflect Gold Standard values from the client playbook — handler decides, permission before action, earned freedom, honest lifestyle tradeoffs — not neutral textbook tone.
 
 ### dedupGroup values
 
@@ -41,6 +53,11 @@ Questions live in `examQuestions.ts` and `examTraitQuestions.ts`. The **first op
 - `demanding-paw` — attention demand pawing
 - `sigh-context` — sigh with body state
 - `pack-guarding` — bathroom follow / pack guard
+- `intact-three-paths` — lifestyle path selection (Socialite / Sentinel / Containment)
+- `intact-first-meeting` — off-lead during first dog meetings
+- `large-mechanics` — ready stance at large mass
+- `adulthood-pivot` — two-year handler mindset shift
+- `large-intact-male-playbook` — intact large male building structure
 
 ## Before / after examples
 

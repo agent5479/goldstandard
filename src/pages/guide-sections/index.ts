@@ -4,6 +4,7 @@ import SectionExpectations from './SectionExpectations';
 import SectionSpeakingAloud from './SectionSpeakingAloud';
 import SectionReadyStance from './SectionReadyStance';
 import SectionReadingDog from './SectionReadingDog';
+import SectionIntactLargeMales from './SectionIntactLargeMales';
 import SectionCorrections from './SectionCorrections';
 import SectionDogLanguage from './SectionDogLanguage';
 import SectionButtPush from './SectionButtPush';
@@ -37,6 +38,7 @@ export const guideSections = [
   SectionReadyStance,
   GuideThemeUnderstanding,
   SectionReadingDog,
+  SectionIntactLargeMales,
   GuideThemeTraining,
   SectionCorrections,
   SectionDogLanguage,

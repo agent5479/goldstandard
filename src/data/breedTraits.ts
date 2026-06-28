@@ -95,6 +95,8 @@ export interface BreedTraitProfile {
 /** Maps legacy stored breed labels to current breed names for trait lookup. */
 export const LEGACY_BREED_LABELS: Record<string, string> = {
   'Toy / Miniature Poodle': 'Miniature Poodle',
+  GWHP: 'German Wirehaired Pointer',
+  'Wirehaired Pointer': 'German Wirehaired Pointer',
   ...COLLOQUIAL_MIX_LEGACY_LABELS,
 };
 
@@ -291,6 +293,14 @@ const breedOverrideMap: Record<string, BreedTraitProfile> = {
   'Weimaraner': { sizeClass: 'large' },
   'Dalmatian': { sizeClass: 'large' },
   'Pointer (English / GSP)': { sizeClass: 'large' },
+  'German Wirehaired Pointer': {
+    sizeClass: 'large',
+    neuroticismInclination: 'moderate',
+    trainerSummary:
+      'Large rugged gundog — exceptionally strong in physical prime; tests boundaries relentlessly; needs handler-led outlets and firm clarity at thresholds.',
+    clientSummary:
+      'Large athletic gundog — powerful and driven; needs clear structure, earned access, and consistent leadership.',
+  },
   'Golden Retriever': {
     neuroticismInclination: 'low',
     suggestedProfileTags: ['clingy', 'play_motivated'],

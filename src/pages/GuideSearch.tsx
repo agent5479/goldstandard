@@ -57,6 +57,9 @@ const ALIASES: { terms: string[]; href: string }[] = [
   { terms: ['dominance navigation', 'dominance culture', 'antisocial dominance', 'rank learning', 'navigate dominance'], href: '#dominance-navigation' },
   { terms: ['other dog braced', 'vulnerable rear', 'redirect vulnerable', 'other dog ready stance', 'exposed hindquarters'], href: '#other-dog-ready-stance' },
   { terms: ['intact dog', 'muzzle', 'muzzled', 'terrier meeting', 'unleashed intact', 'off leash intact'], href: '#intact-muzzle-protocol' },
+  { terms: ['intact large male', 'large intact', 'untrained male', 'intact male playbook', '47kg', '47 kg', 'powerful intact', 'testosterone rank'], href: '#intact-large-males' },
+  { terms: ['sentinel path', 'containment path', 'socialite path', 'three paths', 'intact mastery', 'desexing path', 'neuter path', 'lifestyle crossroads'], href: '#intact-three-paths' },
+  { terms: ['german wirehaired pointer', 'wirehaired pointer', 'gwhp'], href: '#intact-large-males' },
   { terms: ['t-bone', 'over the neck', 'social friction', 'body block', 'invasive sniffing', 'micro signals', 'locked stare dogs'], href: '#social-friction' },
   { terms: ['master dog', 'balancer', 'facilitated socialisation', 'silent authority', 'dog teacher'], href: '#master-dog' },
 

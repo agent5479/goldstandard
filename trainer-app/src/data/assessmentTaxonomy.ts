@@ -88,6 +88,8 @@ export const GUIDE_ANCHORS: GuideAnchor[] = [
   { id: 'trauma-signals', label: 'Trauma signals', icon: 'bi-heart-pulse', groupId: 'understanding' },
   { id: 'pack-guarding', label: 'Pack guarding', icon: 'bi-shield', groupId: 'understanding' },
   { id: 'dog-meetings', label: 'Dog meetings', icon: 'bi-people', groupId: 'social' },
+  { id: 'intact-large-males', label: 'Intact large males', icon: 'bi-shield-exclamation', groupId: 'social' },
+  { id: 'intact-three-paths', label: 'Three lifestyle paths', icon: 'bi-signpost-split', groupId: 'social' },
   { id: 'social-friction', label: 'Social friction signals', icon: 'bi-lightning', groupId: 'social' },
   { id: 'master-dog', label: 'Master dog', icon: 'bi-star', groupId: 'social' },
   { id: 'corrections', label: 'Corrections overview', icon: 'bi-tools', groupId: 'training' },

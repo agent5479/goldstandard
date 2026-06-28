@@ -1,8 +1,9 @@
 /**
- * Lint exam question bank for banned distractor patterns.
+ * Lint exam question bank for banned distractor patterns and guide anchors.
  * Run: npm run lint:exam
  */
 import { examQuestions } from './examQuestions';
+import { isKnownGuideAnchor } from './guideAnchors';
 
 const BANNED_PATTERNS = [
   /not the guide/i,
@@ -45,6 +46,15 @@ interface LintIssue {
 const issues: LintIssue[] = [];
 
 for (const q of examQuestions) {
+  if (!isKnownGuideAnchor(q.guideLink)) {
+    issues.push({
+      question: q.text.slice(0, 80),
+      optionIndex: -1,
+      option: q.guideLink,
+      reason: 'Unknown guideLink anchor',
+    });
+  }
+
   q.options.forEach((opt, i) => {
     if (i === 0) return;
 

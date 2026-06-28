@@ -45,6 +45,8 @@ export default function GuideContentsNav() {
               <li><a href="#social-friction">⚡ Social friction signals</a></li>
               <li><a href="#other-dog-ready-stance">⚠️ Other dog braced</a></li>
               <li><a href="#intact-muzzle-protocol">🛡️ Intact &amp; muzzles</a></li>
+              <li><a href="#intact-large-males">🐕‍🦺 Intact large males</a></li>
+              <li><a href="#intact-three-paths">🛤️ Three lifestyle paths</a></li>
               <li><a href="#master-dog">🐕‍🦺 Master dog</a></li>
             </ul>
           </div>

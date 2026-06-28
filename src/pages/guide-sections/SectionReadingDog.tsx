@@ -357,6 +357,8 @@ export default function SectionReadingDog() {
 
       <p>If you lack the mechanical advantage to control your dog's mass in a high-trigger environment, a <a href="#head-halter">Halti</a> is a legitimate temporary safety brake while you build impulse control through the methods in this guide — not a permanent crutch. Your leash and corrections handle your dog; structure handles the environment you choose to enter.</p>
 
+      <p>For intact large males still building structure — rank pressure, mass, and testosterone compound every threshold — see <a href="#intact-large-males">Intact large males: the playbook</a> and <a href="#intact-three-paths">three lifestyle paths</a>.</p>
+
       <h3 id="master-dog">🐕‍🦺 The master dog: silent authority</h3>
 
       <p>Humans are limited by mass and reaction time — we must move our whole body across a space, often arriving after escalation has already occurred. A stable, neutral <strong>master dog</strong> — a socially competent adult with a deep off-switch and strong spatial presence — can act as a biological balancer within the flow of canine communication. Facilitated socialisation with suitable dogs in sessions provides this: a regulated dog is one that reads other animals and responds calmly rather than reactively.</p>

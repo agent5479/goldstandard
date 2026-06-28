@@ -42,6 +42,11 @@ export interface Question {
   neuroticismMin?: NeuroticismInclination;
   /** Prevent multiple questions on the same scenario in one exam. */
   dedupGroup?: string;
+  /** Owner profile gates — see EXAM_AUTHORING.md */
+  requiresIntact?: boolean;
+  requiresNeutered?: boolean;
+  requiresMale?: boolean;
+  requiresStructureBuilding?: boolean;
 }
 
 /** True when question is part of the breed-aware trait quiz pool. */
@@ -50,7 +55,11 @@ export function isTraitQuestion(q: Question): boolean {
     q.breedNames?.length ||
       q.profileTags?.length ||
       q.sizeClasses?.length ||
-      q.neuroticismMin
+      q.neuroticismMin ||
+      q.requiresIntact ||
+      q.requiresNeutered ||
+      q.requiresMale ||
+      q.requiresStructureBuilding
   );
 }
 
