@@ -13,6 +13,15 @@ export default function SectionAccess() {
         <p>The reward isn't "good boy." The reward is getting to be a dog.</p>
       </div>
 
+      <h3 id="baseline-expectation">📏 The baseline expectation</h3>
+
+      <p>
+        Calm, cooperative walking on a slack leash should be the <strong>natural baseline</strong> — not an active performance you must constantly bribe with treats or frantic praise. You do not operate your own life — or raise children — with a reward for every tiny correct action. With a dog, the ultimate payoff for compliance is <strong>access</strong>: permission to move forward, to sniff, to continue the walk, to hold a place in the world on your terms.
+      </p>
+
+      <p>
+        The goal is a dog that acts right <em>without being told to act right</em> — regulating position beside you while you walk, look at the sky, and think your own thoughts. That is learned accountability, not a trick repeated for cookies. When the baseline slips — pulling, fixation, leaving your sphere without permission — access pauses or ends until the standard returns. See <a href="#leash-accountability">Correcting the choice to leave</a>, <a href="#cue-once">Say it once</a>, and <a href="#rewards">Rewards</a>.</p>
+
       <h3>📋 How access training works</h3>
       <ol className="steps">
         <li>Good behaviour — calm walking, not fixating, responding to you — earns leash removal and free time</li>

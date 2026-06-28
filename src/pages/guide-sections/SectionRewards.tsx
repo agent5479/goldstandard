@@ -23,6 +23,20 @@ export default function SectionRewards() {
         <p>The ultimate treat must never be overused, or it loses its value — <strong>the rarity supports the process</strong>. Reserve one rare, high-value reward exclusively for training sessions: dried liver, fish biscuits, or a single favourite kept scarce on purpose. If it is given freely through the day, it stops working inside the <a href="#timing">association window</a> exactly when you need it most.</p>
       </div>
 
+      <h3 id="treat-handler-reinforcement">🎯 Treats as handler reinforcement — not distance marking</h3>
+
+      <p>
+        When food is part of training, it is not used to <em>mark</em> or bridge behaviours at a distance — tossing treats ahead to keep the dog moving, or feeding every few steps of heel as a running bribe. That teaches the dog to gamify the walk: perform only when the cue or treat machine is actively firing, or position themselves to beg rather than relax into the baseline.
+      </p>
+
+      <p>
+        Instead, treats — when used at all — make <strong>you</strong> a generalized place of reinforcement: the dog orients to the handler, compliance lands at your feet or at your side, and the real life reward is often <a href="#access">access</a> continuing. See the <a href="#go-get-recall">go-get recall</a> pattern for a structured exception in recall building.
+      </p>
+
+      <p>
+        <strong>The window closes fast.</strong> If the dog glances at you and immediately looks away before you can deliver, you do not chase them with a treat — the moment has passed. Reward orientation and compliance while it is still offered, or withhold and reset. A dog that checks in and checks back out is negotiating, not learning.
+      </p>
+
       <div className="two-col">
         <div className="col-card">
           <h4>🦴 If using treats</h4>
@@ -77,7 +91,7 @@ export default function SectionRewards() {
       <div className="dont">
         <strong>🗣️ Note on verbal praise</strong>
         <p>"Good boy" during or just after a reactive episode rewards the episode. Save verbal praise for calm, correct behaviour — and use it calmly, not in an excited tone that re-elevates the dog's energy. The same applies to shushing or reassuring during a reaction (<a href="#corrections">Corrections overview</a>, <a href="#owner-mindset">Owner mindset</a>).</p>
-        <p>Correct compliance is the expected baseline — not an event that earns a celebration every time. If you deliver active praise each time the dog returns to heel or holds position, puzzle-driven and access-oriented dogs may learn to <em>delay</em> compliance to trigger a predictable praise cycle. Let calm heel, steady position, and routine obedience pass in silence; the earned access — the walk continuing, the <a href="#sniff-breaks">sniff break</a>, the release — is the payoff. See <a href="#access">Access training</a> and <a href="#breed-temperament">breed temperament</a>.</p>
+        <p>Correct compliance is the expected baseline — not an event that earns a celebration every time. If you deliver active praise each time the dog returns to heel or holds position, puzzle-driven and access-oriented dogs may learn to <em>delay</em> compliance to trigger a predictable praise cycle. Constantly repeating the dog's name, saying "heel," or handing out treats on every correct step teaches the same game: the dog only pays attention when a cue is actively being fired at them, or worse, they learn to beg for the next prompt instead of relaxing into position. Let calm heel, steady position, and routine obedience pass in silence; the earned access — the walk continuing, the <a href="#sniff-breaks">sniff break</a>, the release — is the payoff. See <a href="#access">Access training</a>, <a href="#baseline-expectation">The baseline expectation</a>, and <a href="#breed-temperament">breed temperament</a>.</p>
         <p>Do not reward <strong>demanding paw</strong> — forceful repeated pawing for attention. Become a rock: look away, fold arms, withhold engagement until the body settles. See <a href="#symptom-glossary">Symptom glossary</a>.</p>
       </div>
 

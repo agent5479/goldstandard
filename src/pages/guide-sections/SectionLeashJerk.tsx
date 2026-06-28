@@ -23,6 +23,10 @@ export default function SectionLeashJerk() {
       </div>
 
       <p>Over time, as <a href="#verbal-correction">verbal association</a> builds, the sharp command can replace the jerk for the same moment — but the physical pattern must be consistent first so the dog knows what the word means.</p>
+
+      <p>
+        On-lead, the jerk paired with a <strong>stop</strong> conditions voluntary check-ins: the dog learns that leaving your sphere costs forward motion, and a glance back or yield restores it. That is the on-lead cousin of the <a href="#check-in-seven">seven-second check-in</a> — accountability through access, not through a treat for every look. See <a href="#leash-accountability">Correcting the choice to leave</a> and <a href="#baseline-expectation">The baseline expectation</a>.
+      </p>
       </div>
     </section>
   );

@@ -108,6 +108,24 @@ export default function SectionLeash() {
 
       <p>For dogs over seven months, cutting in front or surging ahead is not excused by excitement — the <a href="#i-dont-care">I don't care</a> standard applies on every walk. Reset with <a href="#leash-jerk">downward leash jerk</a> or position correction; the line does not move because the dog is "just happy to be out."</p>
 
+      <h3 id="leash-accountability">🧲 Correcting the choice to leave</h3>
+
+      <p>
+        Accountability is built by correcting the dog's <strong>conscious decision</strong> to leave your sphere of influence — not by narrating every step. When the dog hits the end of the leash and tenses its body to go on its own walk, that is unacceptable. The walk is yours; they do not get to freelance at the end of the line.
+      </p>
+
+      <p>
+        The pattern is simple and relentless: <strong>stop</strong> the instant the line goes tight or the body commits forward, deliver a well-timed low <a href="#leash-jerk">downward pop</a>, return to slack, and wait for the dog to yield position or glance back. On a first structured walk this may mean fifteen or more stops — that is not failure; it is how the baseline gets installed. Over time the dog learns to check in on its own accord rather than waiting for the next "heel."
+      </p>
+
+      <ul className="checklist">
+        <li>Slack line is the goal — tension means the dog chose to leave; correct that choice, don't pull through it</li>
+        <li>Stop your feet when the dog forges or fixes on its own agenda</li>
+        <li>One downward pop, then slack — not sustained fighting on the collar</li>
+        <li>Voluntary glance back or softening into position earns the walk continuing — see <a href="#check-in-seven">The seven-second check-in</a> for the off-lead version</li>
+        <li>Do not gamify with treats or excited praise at every stop — calm consistency is the teacher</li>
+      </ul>
+
       <div className="callout pro-tip">
         <strong>🪵 Stick assist for downward correction</strong>
         <p>If downward leash pressure is hard to apply — common with small dogs or for handlers with less grip strength — bolt or attach the leash to a short stick. When the stick is held against the ground, the dog is pulled down through the leash without you fighting upward tension on the collar. A simple trick that makes the <a href="#leash-jerk">downward leash jerk</a> achievable and consistent.</p>

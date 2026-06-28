@@ -90,7 +90,11 @@ const ALIASES: { terms: string[]; href: string }[] = [
   { terms: ['distraction processing', 'look at distraction', 'self regulate distraction', 'fixation window', 'process distraction'], href: '#distraction-processing' },
 
   /* Access, off-lead & road safety */
-  { terms: ['off lead', 'off-lead', 'freedom', 'access training', 'earned access', 'leash on disappointed', 'misbehaviour costs access', 'continued perfection', 'failure leash time'], href: '#access' },
+  { terms: ['off lead', 'off-lead', 'freedom', 'access training', 'earned access', 'leash on disappointed', 'misbehaviour costs access', 'continued perfection', 'failure leash time', 'baseline expectation', 'learned accountability'], href: '#access' },
+  { terms: ['baseline', 'act right without being told', 'not constant bribery', 'natural baseline heel', 'micromanage heel'], href: '#baseline-expectation' },
+  { terms: ['gamify', 'constant heel', 'repeating heel', 'running commentary', 'beg for cues', 'treat every step'], href: '#cue-once' },
+  { terms: ['sphere of influence', 'choice to leave', 'stop the walk', 'fifteen stops', 'own walk', 'leash accountability', 'voluntary check in'], href: '#leash-accountability' },
+  { terms: ['place of reinforcement', 'treat marking', 'distance treat', 'look away treat', 'window closed treat', 'handler reinforcement'], href: '#treat-handler-reinforcement' },
   { terms: ['controlled crucible', 'fail safely', 'crucible', 'off-lead development', 'safe failure', 'social development'], href: '#controlled-crucible' },
   { terms: ['off-lead intervention', 'off lead antisocial', 'antisocial off lead', 'sound then leash', 'leash back on off lead'], href: '#off-lead-intervention' },
   { terms: ['road safety', 'traffic', 'rural nz', 'new zealand road', 'zero tolerance traffic', 'absolute boundary', 'sealed road', 'stock truck', 'fatal mistake'], href: '#road-safety' },

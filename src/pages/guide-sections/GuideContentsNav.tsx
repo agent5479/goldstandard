@@ -62,11 +62,13 @@ export default function GuideContentsNav() {
               <li><a href="#collar-snatch">✋ Collar grab &amp; forced sit</a></li>
               <li><a href="#pin-hold">⚠️ Pin &amp; hold (advanced)</a></li>
               <li><a href="#leash">🦮 Leash &amp; line</a></li>
+              <li><a href="#leash-accountability">🧲 Choice to leave</a></li>
               <li><a href="#collar-selection">🛡️ Collar selection</a></li>
               <li><a href="#leash-selection">🧭 Leash selection</a></li>
               <li><a href="#leash-weight">⚓ Line weight &amp; dangle</a></li>
               <li><a href="#sniff-breaks">👃 Sniff breaks</a></li>
               <li><a href="#access">🔓 Access training</a></li>
+              <li><a href="#baseline-expectation">📏 Baseline expectation</a></li>
               <li><a href="#controlled-crucible">🔥 Controlled crucible</a></li>
               <li><a href="#off-lead-intervention">🛑 Off-lead intervention</a></li>
               <li><a href="#road-safety">🛣️ Road safety (rural NZ)</a></li>
@@ -75,6 +77,7 @@ export default function GuideContentsNav() {
               <li><a href="#road-seven-months">⏳ Seven-month road crucible</a></li>
               <li><a href="#timing">⏱️ Timing</a></li>
               <li><a href="#rewards">🦴 Rewards</a></li>
+              <li><a href="#treat-handler-reinforcement">🎯 Treat reinforcement</a></li>
             </ul>
           </div>
           <div className="guide-contents-group">

@@ -5,7 +5,7 @@ export default function SectionCheckInSeven() {
       <p className="section-num">18 — Pack awareness</p>
       <h2>👁️ The seven-second check-in.</h2>
 
-      <p>When you tell the dog they can go — after earning access — watch them and count precisely to seven seconds. A pack-minded dog will look back your way within that window. That glance is the check-in: <em>I'm still with you; I'm still reading you.</em></p>
+      <p>When you tell the dog they can go — after earning access — watch them and count precisely to seven seconds. A pack-minded dog will look back your way within that window. That glance is the check-in: <em>I'm still with you; I'm still reading you.</em> The same instinct is trained on-lead when you <a href="#leash-accountability">correct the choice to leave</a> — the dog learns that glancing back or holding position restores the walk without you firing cues every step.</p>
 
       <p><strong>This is a tighter contract than a full recall.</strong> The seven-second rule applies in the moment of earned freedom — a glance or immediate return while still nearby. A dog that has already bolted far away is a recall problem (<a href="#expectations">see Expectations</a>), not a failed check-in count.</p>
 

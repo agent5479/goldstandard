@@ -24,11 +24,15 @@ export default function SectionSpeakingAloud() {
 
       <h3 id="cue-once">1️⃣ Say it once — hear it, then enforce it</h3>
 
-      <p>Repeating commands over and over — "Sit, sit, come on, sit…" — teaches your dog that the first prompt is optional and that boundary negotiation is a game they can win. The standard is one clear cue first. What happens next depends on whether they actually heard you.</p>
+      <p>Repeating commands over and over — "Sit, sit, come on, sit…" — teaches your dog that the first prompt is optional and that boundary negotiation is a game they can win. The same applies to a running commentary on the walk: "heel, heel, good, heel, stay with me" every few metres. The standard is one clear cue first — then enforcement or silence, not a live soundtrack. What happens next depends on whether they actually heard you.</p>
+
+      <p>
+        The end state is a dog that holds the <a href="#baseline-expectation">baseline</a> without micromanagement: you should be able to walk, look at the sky, and think your own thoughts while the dog regulates its own position beside you. Cues are for boundaries and resets — not a metronome that keeps the dog performing.
+      </p>
 
       <p>Sometimes a dog that looks like it ignored you simply did not hear — fixated on a scent, locked on a trigger, or tuned out. There is usually an indicator they registered the sound: ears flick, a small head turn, a huff. That varies across individuals; learn your dog's tells. When fixation explains the blank response, <strong>one</strong> second cue is fair — delivered with an escalation in tone intensity that carries your disinterest in renegotiating the compliance hierarchy this time. Not pleading. Not nagging. The energy of <a href="#im-over-it">I'm over it</a>.</p>
 
-      <p>When they showed they heard — or when there is no fixation excuse — treat silence as boundary renegotiation, not deafness. Do not drill the word a third time. A third repeat validates the negotiation and teaches the dog they are leading you. Step in with spatial pressure, your body, or a light leash correction, then reward the completed behaviour — see <a href="#collar-snatch">collar grab</a> and <a href="#leash">Leash work</a>.</p>
+      <p>When they showed they heard — or when there is no fixation excuse — treat silence as boundary renegotiation, not deafness. Do not drill the word a third time. A third repeat validates the negotiation and teaches the dog they are leading you. Step in with spatial pressure, your body, or a light leash correction — then let the <em>continuation of access</em> be the reward: the walk resumes, the sniff break still happens on your schedule. See <a href="#collar-snatch">collar grab</a>, <a href="#leash">Leash work</a>, and <a href="#rewards">Rewards</a>.</p>
 
       <ul className="checklist">
         <li>First cue: clear, once, declarative — not repeated hoping they'll catch up</li>
