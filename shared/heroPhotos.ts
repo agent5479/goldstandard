@@ -79,6 +79,12 @@ export const HERO_PHOTOS: HeroPhoto[] = [
     alt: 'Sasso',
     label: 'Sasso',
   },
+  {
+    thumb: 'images/thumbs/tussockGWHP.jpg',
+    full: 'images/tussockGWHP.jpg',
+    alt: 'Tussock',
+    label: 'Tussock',
+  },
 ];
 
 export function findHeroPhoto(fullPath: string | undefined): HeroPhoto | undefined {
