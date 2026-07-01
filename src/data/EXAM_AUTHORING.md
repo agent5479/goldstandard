@@ -58,6 +58,16 @@ Explanations should reflect Gold Standard values from the client playbook — ha
 - `large-mechanics` — ready stance at large mass
 - `adulthood-pivot` — two-year handler mindset shift
 - `large-intact-male-playbook` — intact large male building structure
+- `trauma-vs-hardship` — trauma damages nervous system vs hardship builds character
+- `true-canine-trauma` — acoustic overload, cargo shock, context shock
+- `eight-week-separation` — puppy first nights / littermate security
+- `pampered-hardship` — privileged dog needs intentional hardship
+- `correction-diagnosis` — diagnose trauma vs hardship before collar grab
+- `intact-health-baseline` — intact health framing in this model
+- `intact-social-penalty` — intact social friction costs
+- `intact-environment-restrictions` — daycare, boarding, parks
+- `biological-drive-fairness` — intact without outlets
+- `surgical-alternatives` — vasectomy / hormone-sparing options
 
 ## Before / after examples
 

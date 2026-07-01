@@ -37,6 +37,10 @@ export default function GuideContentsNav() {
               <li><a href="#common-pitfalls">⚠️ Common pitfalls</a></li>
               <li><a href="#symptom-glossary">📋 Symptom glossary</a></li>
               <li><a href="#trauma-signals">💙 Trauma signals</a></li>
+              <li><a href="#trauma-vs-hardship">⚖️ Trauma vs hardship</a></li>
+              <li><a href="#true-canine-trauma">🔊 True canine trauma</a></li>
+              <li><a href="#eight-week-separation">🐶 8-week separation</a></li>
+              <li><a href="#trauma-hardship-calibration">📏 Correction scale</a></li>
               <li><a href="#pack-guarding">🚪 Pack guarding</a></li>
             </ul>
           </div>
@@ -52,7 +56,12 @@ export default function GuideContentsNav() {
               <li><a href="#intact-muzzle-protocol">🛡️ Intact &amp; muzzles</a></li>
               <li><a href="#master-dog">🐕‍🦺 Master dog</a></li>
               <li><a href="#intact-large-males">🐕‍🦺 Intact large males</a></li>
+              <li><a href="#intact-health-baseline">🩺 Intact health baseline</a></li>
               <li><a href="#intact-three-paths">🛤️ Three lifestyle paths</a></li>
+              <li><a href="#intact-social-penalty">⚡ Social penalty</a></li>
+              <li><a href="#intact-environment-restrictions">🌍 Shrunk world</a></li>
+              <li><a href="#biological-drive-fairness">⚖️ Drive fairness</a></li>
+              <li><a href="#surgical-alternatives">🩺 Surgical alternatives</a></li>
             </ul>
           </div>
           <div className="guide-contents-group">

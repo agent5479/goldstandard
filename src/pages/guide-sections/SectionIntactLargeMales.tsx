@@ -21,6 +21,26 @@ export default function SectionIntactLargeMales() {
           <a href="#im-over-it">I'm over it</a>.
         </p>
 
+        <h3 id="intact-health-baseline">🩺 The physical baseline: health vs. hormones</h3>
+
+        <p>
+          From a pure physical-health standpoint within this training model, the biological debate is closed for large
+          males: keeping him intact is profoundly healthier for musculoskeletal development, joint longevity, weight
+          management, and endocrine balance. Testosterone is not only a rank driver — it is a crucial stabilizer for
+          anxious or fearful dogs. Removing it via neutering can worsen baseline fear-reactivity or shyness rather than
+          fixing it.
+        </p>
+
+        <div className="callout">
+          <strong>Our framework, not universal consensus</strong>
+          <p>
+            This is the Warwick and Beckman conviction we work from — controversial in some veterinary circles. If you
+            need a second opinion on hormones and surgery, investigate with your vet. The lifestyle trade-offs below
+            assume you are making an informed choice inside this paradigm, not repeating textbook neuter-by-default
+            advice.
+          </p>
+        </div>
+
         <h3 id="intact-large-males-mindset">🎯 Leadership through clarity</h3>
 
         <p>
@@ -142,6 +162,42 @@ export default function SectionIntactLargeMales() {
           path is effortless.
         </p>
 
+        <h4 id="intact-social-penalty">The social penalty</h4>
+
+        <p>
+          Intact males inherently face higher social friction. Neutered males may show unprovoked hostility toward
+          them. Intact dogs instinctually posture — <em>bow up</em> — around other intact males. Biological drives
+          (marking, licking, humping) are highly resistant to standard operant training and will not disappear because
+          you wish they would. See <a href="#intact-muzzle-protocol">Intact dogs and unstructured meetings</a>.
+        </p>
+
+        <h4 id="intact-environment-restrictions">How intact status shrinks your world</h4>
+
+        <p>
+          Keeping a dog intact drastically limits where he can go. Many public daycares, commercial boarding facilities,
+          and standard off-lead dog parks disqualify intact males outright. Plan for a smaller social map — or choose a
+          path that accepts that map honestly.
+        </p>
+
+        <h4 id="biological-drive-fairness">The fairness question</h4>
+
+        <p>
+          Keeping an animal biologically intact while permanently denying his primary evolutionary drive — without any
+          natural outlet or release — can create significant internal frustration. That is not an argument for chaos; it
+          is an argument for honesty. Each path below must account for drive, outlets, and what you are willing to
+          manage daily — see <a href="#intact-large-males-outlets">Biological needs — on your terms</a>.
+        </p>
+
+        <h4 id="surgical-alternatives">Surgical alternatives within this framework</h4>
+
+        <p>
+          Modern veterinary pathways are emerging that preserve health-protecting hormones while preventing unwanted
+          reproduction — for example, <strong>canine vasectomy</strong> for males, or ovary-sparing procedures for
+          females. These are not the default in every clinic, but they sit inside this model as serious options when
+          you want endocrine balance without breeding. Discuss feasibility with a vet who understands hormone-sparing
+          surgery — not every practice offers them yet.
+        </p>
+
         <div className="two-col">
           <div className="col-card">
             <h4>1. The Socialite path (desexing)</h4>
@@ -152,7 +208,8 @@ export default function SectionIntactLargeMales() {
               <strong>The outcome:</strong> the easiest, fastest, and most predictable path. It eliminates
               chemical dominance escalation, helps him learn to submit naturally, and softens his relationship with
               other dogs. Under this path you primarily need a rock-solid recall. A balanced lifestyle is
-              achievable in a matter of months with consistency.
+              achievable in a matter of months with consistency — and the social penalty and facility restrictions
+              of intact life largely lift.
             </p>
           </div>
           <div className="col-card">
@@ -165,7 +222,8 @@ export default function SectionIntactLargeMales() {
               <strong>The outcome:</strong> massive hard work, absolute self-control, constant vigilance, and a
               heavy training regimen. You must safely guide him through controlled socialisation — learning to
               navigate male dominance and antisocial behaviours (mounting, barging) without triggering catastrophic
-              fights. He can become a flawless, majestic master dog — but it requires trainer-level dedication.
+              fights. He can become a flawless, majestic master dog — but it requires trainer-level dedication and
+              accepts the intact social penalty as daily work, not a phase you outgrow.
             </p>
           </div>
         </div>
@@ -179,7 +237,8 @@ export default function SectionIntactLargeMales() {
           <p>
             <strong>The outcome:</strong> a heavily managed lifestyle. He remains securely tied up, restricted to
             a fully enclosed range, or socialised only in highly secure, controlled environments with specific,
-            compatible dogs. Freedom is contained — not assumed.
+            compatible dogs. Freedom is contained — not assumed — and you accept a shrunk world rather than fighting
+            daycare, parks, and intact friction you cannot control.
           </p>
         </div>
 

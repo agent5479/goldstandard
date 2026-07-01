@@ -72,7 +72,7 @@ export default function SectionSocialNeeds() {
 
         <p>If you lack the mechanical advantage to control your dog's mass in a high-trigger environment, a <a href="#head-halter">Halti</a> is a legitimate temporary safety brake while you build impulse control through the methods in this guide — not a permanent crutch. Your leash and corrections handle your dog; structure handles the environment you choose to enter.</p>
 
-        <p>For intact large males still building structure — rank pressure, mass, and testosterone compound every threshold — see <a href="#intact-large-males">Intact large males: the playbook</a> and <a href="#intact-three-paths">three lifestyle paths</a>.</p>
+        <p>For intact large males still building structure — rank pressure, mass, and testosterone compound every threshold — see <a href="#intact-large-males">Intact large males: the playbook</a>, <a href="#intact-social-penalty">the social penalty</a>, and <a href="#intact-three-paths">three lifestyle paths</a>.</p>
 
         <h3 id="master-dog">🐕‍🦺 The master dog: silent authority</h3>
 

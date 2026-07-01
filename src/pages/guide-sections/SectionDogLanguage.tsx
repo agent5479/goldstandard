@@ -35,7 +35,7 @@ export default function SectionDogLanguage() {
       <h3 id="when-not-firmer">🚫 When it is not appropriate</h3>
 
       <ul className="checklist">
-        <li>Dogs showing <a href="#trauma-signals">trauma signals</a> — flinching, shutdown, cowering, bolting from contact. Structure still matters; shocking physical escalation can confirm the world is unsafe</li>
+        <li>Dogs showing <a href="#trauma-signals">trauma signals</a> — flinching, shutdown, cowering, bolting from contact. Diagnose with <a href="#trauma-vs-hardship">Trauma vs hardship</a> first; structure still matters; shocking physical escalation can confirm the world is unsafe</li>
         <li>Puppies with elastic but short capacity — firmness yes; shocking squeeze rarely</li>
         <li>When you are angry, exhausted, or venting — pause, reset yourself, or shorten the outing. Correction from frustration is not pack language; it is personal</li>
         <li>When lighter tools have not been tried consistently — escalation is not a shortcut past the daily toolkit</li>

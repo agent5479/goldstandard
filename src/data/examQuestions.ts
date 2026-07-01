@@ -391,7 +391,7 @@ export const examQuestions: Question[] = [
       'Manipulation to end the session early',
       'Normal calm behaviour — continue as planned',
     ],
-    explanation: 'Watch for shutdown (still, unresponsive, refusing food or movement) as overload, not stubbornness.',
+    explanation: 'Watch for shutdown (still, unresponsive, refusing food or movement) as overload, not stubbornness. Diagnose trauma vs hardship before choosing intensity — see Trauma vs hardship.',
     guideLink: '#trauma-signals'
   },
   {
@@ -405,8 +405,83 @@ export const examQuestions: Question[] = [
       'Traumatised dogs need stricter, harder corrections to feel safe',
       'Structure only matters once trauma signals have fully disappeared',
     ],
-    explanation: 'Structure still matters — inconsistency frightens a traumatised dog more, not less. But exposure must be controlled, with exits and wins built in.',
-    guideLink: '#trauma-signals'
+    explanation: 'Structure still matters — inconsistency frightens a traumatised dog more, not less. But exposure must be controlled, with exits and wins built in. Trauma damages the nervous system; hardship builds character — diagnose which bucket you are in.',
+    guideLink: '#trauma-vs-hardship'
+  },
+  {
+    topic: 'Trauma & meetings',
+    breedCategory: 'all',
+    track: 'both',
+    dedupGroup: 'true-canine-trauma',
+    text: 'A nervous rescue freezes and flinches at a ceiling fan in a modern home. What history best fits the guide\'s trauma frame?',
+    options: [
+      'Context shock — standard home features triggering existential panic in a dog from a very different environment',
+      'Proof the dog was beaten by a previous owner — assume physical abuse first',
+      'Stubbornness that needs a firmer correction to snap out of it',
+      'Normal puppy curiosity that will fade without any structure change',
+    ],
+    explanation: 'True trauma includes context shock — hardwood, fans, glass — not only stories of being hit. Security-first structure; intensity drops.',
+    guideLink: '#true-canine-trauma'
+  },
+  {
+    topic: 'Trauma & meetings',
+    breedCategory: 'all',
+    track: 'both',
+    dedupGroup: 'eight-week-separation',
+    text: 'Your 8-week-old puppy arrives home. What does the guide recommend for the first nights?',
+    options: [
+      'Let them sleep close, warm, or in bed initially — mimic littermate security before building standalone independence',
+      'Isolate in a crate in another room immediately so independence is learned from night one',
+      'Leave them alone to cry it out — separation builds character overnight',
+      'Only crate if they vocalise — opening the door when they yap teaches patience',
+    ],
+    explanation: 'Eight-week separation is real hardship. Reject immediate isolated night-time crate isolation; establish fundamental safety first.',
+    guideLink: '#eight-week-separation'
+  },
+  {
+    topic: 'Calibration & escalation',
+    breedCategory: 'all',
+    track: 'both',
+    dedupGroup: 'pampered-hardship',
+    text: 'A privileged large breed counter-surfs daily with no consequences. What path does the guide prescribe?',
+    options: [
+      'Intentional hardship — firm knock-it-off boundaries; the handler comfortably acts as the boundary',
+      'Trauma-sensitive softness — assume fear and lower the standard until trust rebuilds',
+      'Ignore counter-surfing until he matures out of it naturally',
+      'Bribe him off the counter with treats each time so he learns to wait for food',
+    ],
+    explanation: 'Pampered, entitled dogs need intentional hardship — collar grab or verbal correction for frustration tolerance, not trauma-soft handling.',
+    guideLink: '#trauma-hardship-calibration'
+  },
+  {
+    topic: 'Calibration & escalation',
+    breedCategory: 'all',
+    track: 'both',
+    dedupGroup: 'correction-diagnosis',
+    text: 'Before a collar grab on a dog that demand-paws and jumps for attention, what must you diagnose?',
+    options: [
+      'Trauma vs hardship — entitled boundary-pushing gets instant correction; panic flash gets security and lighter entry',
+      'Whether the dog is food-motivated enough for a treat redirect',
+      'Whether visitors are present — corrections only happen in private',
+      'Whether the dog has had a full veterinary workup this month',
+    ],
+    explanation: 'Diagnose history first. Entitled dog reacting to an unprivileged boundary? Correct instantly. Traumatized nervous system? Guide calmly.',
+    guideLink: '#trauma-hardship-calibration'
+  },
+  {
+    topic: 'Trauma & meetings',
+    breedCategory: 'all',
+    track: 'both',
+    dedupGroup: 'trauma-vs-hardship',
+    text: 'What is the core distinction between trauma and hardship in this guide?',
+    options: [
+      'Trauma damages the nervous system; hardship builds character — diagnose before choosing intensity',
+      'Trauma means the dog was abused; hardship means the dog is lazy',
+      'Hardship requires maximum flooding; trauma means skipping structure for months',
+      'There is no difference — every difficult dog should get maximum firmness',
+    ],
+    explanation: 'Trauma damages the nervous system. Hardship builds character. Misreading either bucket keeps bad behaviour alive or confirms the world is unsafe.',
+    guideLink: '#trauma-vs-hardship'
   },
   {
     topic: 'Trauma & meetings',

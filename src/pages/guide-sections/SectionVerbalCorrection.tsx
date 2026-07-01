@@ -7,6 +7,17 @@ export default function SectionVerbalCorrection() {
 
       <p>Dogs correct each other with sound and body — a sharp snap, a charge, a stillness that says <em>enough</em>. Your verbal correction is the human version: a short, authoritative bark or command delivered at the exact moment of the behaviour, with the same energy as the <a href="#butt-push">butt push</a> or <a href="#leash-jerk">downward jerk</a> — not shouting, not pleading, not repeated nagging.</p>
 
+      <div className="callout">
+        <strong>Diagnose before you bark</strong>
+        <p>
+          Before a gruff verbal pop, diagnose history using <a href="#trauma-vs-hardship">Trauma vs hardship</a>.{' '}
+          <strong>Entitled dog pushing an unprivileged boundary?</strong> Correct instantly — one sharp pop, then move on.{' '}
+          <strong>Traumatized nervous system in a panic flash?</strong> Guide calmly; security and lighter entry — see{' '}
+          <a href="#trauma-hardship-calibration">Calibrating the correction scale</a> and{' '}
+          <a href="#when-not-firmer">When it is not appropriate</a>.
+        </p>
+      </div>
+
       <p>The sound must be <strong>unique</strong> — not your everyday voice. Dogs habituate to their owner's standard tone, repetitive words, and predictable touch; a frustrated "No, no, no" or yelling the dog's name registers as background noise. A sharp "Hey!", a clap, or a bark-like "Tsht!" at the exact millisecond the behaviour starts creates a brief psychological interruption that snaps attention back to you. That is the first half of the <a href="#unique-sound-touch">unique sound, then unique touch</a> pattern — always paired with the hands until the association is solid.</p>
 
       <p>The command needs a <strong>pop</strong> — a single sharp release of sound that resembles a bark more than speech. Think of it as expelled from the chest in one instant, not drawn out or repeated. That pop is what reads as pack language; a long "Nooooo" or a pleading tone teaches the dog they can wait you out.</p>

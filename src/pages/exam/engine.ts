@@ -81,9 +81,14 @@ function markUsed(q: Question, state: SamplingState): void {
 }
 
 function sampleUnique(pool: Question[], n: number, state: SamplingState): Question[] {
-  const available = pool.filter((q) => isAvailable(q, state));
-  const picked = sample(available, Math.min(n, available.length));
-  picked.forEach((q) => markUsed(q, state));
+  const picked: Question[] = [];
+  for (let i = 0; i < n; i++) {
+    const available = pool.filter((q) => isAvailable(q, state));
+    if (available.length === 0) break;
+    const [next] = sample(available, 1);
+    markUsed(next, state);
+    picked.push(next);
+  }
   return picked;
 }
 

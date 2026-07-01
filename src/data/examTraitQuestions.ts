@@ -794,4 +794,126 @@ export const traitExamQuestions: Question[] = [
       'Read the ready stance early — at this mass a late correction is a handler emergency. Intervene before he commits.',
     guideLink: '#intact-large-males-mechanics',
   },
+
+  /* ── Intact calculus (guide: health baseline, social penalty, surgical alternatives) ── */
+  {
+    topic: 'Off-leash social',
+    breedCategory: 'all',
+    track: 'both',
+    requiresIntact: true,
+    requiresMale: true,
+    sizeClasses: ['large', 'giant'],
+    dedupGroup: 'intact-health-baseline',
+    text: 'Within this training model, why keep a large male intact for physical health?',
+    options: [
+      'Musculoskeletal development, joint longevity, weight management, and endocrine balance — intact is the healthier default here',
+      'Intact males settle dog-park friction on their own once fully grown',
+      'Neutering has no effect on fear, joints, or weight — the choice is purely social',
+      'Intact status removes the need for leash work because testosterone teaches recall',
+    ],
+    explanation:
+      'In this framework, keeping a large male intact is profoundly healthier for development and endocrine balance — a paradigm conviction, not universal vet consensus.',
+    guideLink: '#intact-health-baseline',
+  },
+  {
+    topic: 'Breed trait',
+    breedCategory: 'all',
+    track: 'both',
+    dedupGroup: 'intact-health-baseline',
+    text: 'An anxious, fearful dog is being considered for neutering. What does the guide warn?',
+    options: [
+      'Removing testosterone can worsen baseline fear-reactivity or shyness rather than fixing it',
+      'Neutering usually removes fear because hormones were the main driver',
+      'Anxious dogs need softer structure only after desexing is complete',
+      'Fearful dogs must be neutered immediately before any training begins',
+    ],
+    explanation:
+      'Testosterone is described as a crucial stabilizer for some anxious dogs in this model — neutering can worsen baseline fear-reactivity.',
+    guideLink: '#intact-health-baseline',
+  },
+  {
+    topic: 'Off-leash social',
+    breedCategory: 'all',
+    track: 'both',
+    requiresIntact: true,
+    dedupGroup: 'intact-social-penalty',
+    text: 'At the park, a neutered male shows unprovoked hostility toward your intact dog. What does the guide frame this as?',
+    options: [
+      'Part of the intact social penalty — higher friction and posturing are expected costs of staying intact',
+      'Proof your dog is aggressive and must be neutered immediately',
+      'A reason to let them fight it out so both dogs learn rank',
+      'Evidence that only off-lead greetings fix intact-dog reactivity',
+    ],
+    explanation:
+      'Intact males face higher social friction — including hostility from neutered males and bow-up posturing around other intact dogs.',
+    guideLink: '#intact-social-penalty',
+  },
+  {
+    topic: 'Off-leash social',
+    breedCategory: 'all',
+    track: 'both',
+    requiresIntact: true,
+    dedupGroup: 'intact-environment-restrictions',
+    text: 'You want daycare and commercial boarding for your intact male. What does the guide expect?',
+    options: [
+      'Many facilities disqualify intact males — plan for a smaller social map or choose a path honestly',
+      'Daycares must accept intact dogs by law — insist on enrollment',
+      'Boarding is only an issue until six months of age',
+      'Intact status only affects dog parks, not professional care facilities',
+    ],
+    explanation:
+      'Keeping a dog intact drastically shrinks your world — daycare, boarding, and standard off-lead parks often disqualify intact males.',
+    guideLink: '#intact-environment-restrictions',
+  },
+  {
+    topic: 'Off-leash social',
+    breedCategory: 'all',
+    track: 'both',
+    requiresIntact: true,
+    dedupGroup: 'biological-drive-fairness',
+    text: 'You keep your dog intact but deny all outlets for biological drive permanently. What does the guide flag?',
+    options: [
+      'Significant internal frustration — fairness requires honest outlets or an honest path choice',
+      'No issue — drive outlets can wait until after neutering at maturity',
+      'Drive frustration only matters for small breeds, not large males',
+      'Outlets are optional if you use enough treats on walks',
+    ],
+    explanation:
+      'Keeping a dog intact while permanently denying primary evolutionary drive without natural outlet can create significant frustration — each path must account for drive honestly.',
+    guideLink: '#biological-drive-fairness',
+  },
+  {
+    topic: 'Off-leash social',
+    breedCategory: 'all',
+    track: 'both',
+    requiresIntact: true,
+    dedupGroup: 'surgical-alternatives',
+    text: 'You want to prevent breeding but preserve health-protecting hormones. What does the guide mention?',
+    options: [
+      'Emerging options like canine vasectomy — discuss hormone-sparing surgery with a knowledgeable vet',
+      'There is no surgical option except full neutering in every clinic',
+      'Vasectomy removes all testosterone so behaviour matches a neutered dog',
+      'Surgical alternatives are banned for working breeds in this guide',
+    ],
+    explanation:
+      'Vasectomy and ovary-sparing pathways preserve health-protecting hormones while preventing reproduction — emerging options within this framework.',
+    guideLink: '#surgical-alternatives',
+  },
+  {
+    topic: 'Off-leash social',
+    breedCategory: 'all',
+    track: 'both',
+    requiresIntact: true,
+    dedupGroup: 'intact-three-paths',
+    text: 'You want off-lead park freedom without desexing and without Sentinel-level training. What does the guide say?',
+    options: [
+      'That combination is not honest — intact life carries social penalty and a shrunk world unless you commit to a real path',
+      'Patience alone unlocks off-lead parks for any intact male by age two',
+      'Containment path includes unlimited dog-park access on weekends',
+      'Socialite path means staying intact while skipping recall work',
+    ],
+    explanation:
+      'Intact status shrinks the world and carries social friction — choose Sentinel rigor, Containment management, or Socialite desexing with eyes open.',
+    guideLink: '#intact-three-paths',
+  },
 ];

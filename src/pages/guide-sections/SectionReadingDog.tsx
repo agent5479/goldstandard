@@ -60,7 +60,7 @@ export default function SectionReadingDog() {
         </div>
         <div className="col-card">
           <h4>💪 Confident, pushy adults</h4>
-          <p>Entrenched habits may need more firmness from the same technique — especially when boundary negotiation has become a game. Clingy breeds vs hard terriers: same tools, different firmness and recovery time.</p>
+          <p>Entrenched habits may need more firmness from the same technique — especially when boundary negotiation has become a game. Clingy breeds vs hard terriers: same tools, different firmness and recovery time. Privileged large breeds, counter-surfers, and entitled attention-demanders are usually on the <a href="#trauma-hardship-calibration">hardship</a> path — not the trauma path — and need intentional boundaries, not softer handling.</p>
         </div>
       </div>
 
@@ -102,7 +102,7 @@ export default function SectionReadingDog() {
         <p><strong>Sighthounds and chase types:</strong> calm — even lazy — at rest, then an explosive chase trigger when movement flashes. No correction outruns a launched chase; the work happens in the precursor window (<a href="#timing">Timing</a>), and their soft temperament means harsh delivery shuts them down rather than teaching them.</p>
         <p><strong>Spitz and sled types:</strong> independent, endurance-driven, and famously vocal, with weak default recall and strong escape instincts. Repetition drills bore them into defiance — <a href="#access">earned access</a> and structured outlets are the currency, and thresholds and fences are part of the training picture, not an afterthought.</p>
         <p><strong>Scenthounds and nose-led types:</strong> when the nose engages, the ears switch off — failed recall on scent is biology, not defiance. Train recall <em>before</em> the nose locks on, use a <a href="#treat-diagnostic">reserved high-value treat</a> (most are strongly food-motivated), and read baying as communication rather than naughtiness.</p>
-        <p><strong>Giant and livestock guardian breeds:</strong> bred to make decisions without instruction and slow to mature — independence is the design, not stubbornness. Their size makes <a href="#leash">leash manners</a>, <a href="#front-door">door thresholds</a>, and calm greetings non-negotiable from puppyhood: habits that are cute at eight kilograms are dangerous at sixty.</p>
+        <p><strong>Giant and livestock guardian breeds:</strong> bred to make decisions without instruction and slow to mature — independence is the design, not stubbornness. Their size makes <a href="#leash">leash manners</a>, <a href="#front-door">door thresholds</a>, and calm greetings non-negotiable from puppyhood: habits that are cute at eight kilograms are dangerous at sixty. A highly privileged life without boundaries often produces an entitled adult who needs <a href="#trauma-hardship-calibration">intentional hardship</a>, not trauma-sensitive softness.</p>
         <p><strong>Small breeds:</strong> carrying, hand-feeding, and excusing pushy behaviour because they are "cute" often produces a dog that cannot tolerate boundaries from anyone — including you.</p>
       </div>
 
@@ -277,11 +277,85 @@ export default function SectionReadingDog() {
 
       <p>Dogs with difficult history may show amplified versions of the same signals — flinching, cowering, bolting, shutdown, or sudden guarding. These are not manipulations. They are a nervous system that learned the world was unsafe.</p>
 
+      <h4 id="trauma-vs-hardship">Trauma vs. hardship</h4>
+
+      <p>
+        Before you choose how hard to correct, diagnose which bucket you are in. <strong>Trauma damages the nervous system.</strong>{' '}
+        <strong>Hardship builds character.</strong> They are not the same problem and they do not get the same response.
+        Misreading a pampered, entitled dog as traumatised keeps bad behaviour alive; misreading a genuinely overloaded
+        nervous system as defiance can confirm the world is unsafe.
+      </p>
+
+      <h4 id="true-canine-trauma">Redefining canine trauma</h4>
+
+      <p>
+        Stop defaulting to stories like <em>he must have been hit by a man</em> — that history is over-diagnosed and often
+        wrong. True trauma is sustained sensory overload or intense threat to a <em>developing</em> nervous system. Common
+        real sources include:
+      </p>
+
+      <ul className="checklist">
+        <li>
+          <strong>Acoustic overload:</strong> puppies whelped in outdoor kennels with constant, echoing barking from weeks
+          1–8 — the auditory system never got quiet
+        </li>
+        <li>
+          <strong>Cargo transit shock:</strong> the sensory terror of multi-day international or inter-island air freight —
+          isolation, noise, vibration, and helplessness at a critical developmental window
+        </li>
+        <li>
+          <strong>Context shock:</strong> re-homing a street or rural field dog into a modern home where standard features
+          — hardwood floors, ceiling fans, glass doors — trigger acute existential panic
+        </li>
+      </ul>
+
+      <p>
+        A dog showing trauma signals after one of these histories needs security-first structure — see the calibration
+        below and <a href="#when-not-firmer">when firmer treatment is not appropriate</a>.
+      </p>
+
+      <h4 id="eight-week-separation">The 8-week separation adjustment</h4>
+
+      <p>
+        Separating an 8-week-old puppy from the litter is a massive psychological hardship in its own right — not trauma
+        in the damage sense, but a real loss of littermate security. Reject immediate, isolated night-time crate
+        isolation as the default first move. Let the young puppy sleep close, warm, or in bed with the handler initially
+        to mimic littermate security and establish fundamental safety before you build standalone independence.
+      </p>
+
+      <p>
+        That early warmth is appropriate <a href="#context-of-contact">living mode</a> contact — not permission for
+        lifelong dependency. Structure still arrives; it arrives after the nervous system knows it landed somewhere safe.
+      </p>
+
+      <h4 id="trauma-hardship-calibration">Calibrating the correction scale</h4>
+
+      <div className="two-col">
+        <div className="col-card">
+          <h4>Traumatised nervous system</h4>
+          <p>
+            Softer approach centred on security and clear, non-confrontational boundaries. Avoid overbearing or
+            high-intensity discipline that causes the nervous system to spike and stay spiked. Structure still matters —
+            inconsistency frightens more than firmness — but delivery must read as calm certainty, not assault.
+          </p>
+        </div>
+        <div className="col-card">
+          <h4>Pampered / privileged dog</h4>
+          <p>
+            Dogs that have had <em>too damn easy of a life</em> — highly privileged large breeds, counter-surfers, entitled
+            attention-demanders — need intentional hardship. You must comfortably act as that hardship: a firm,
+            zero-nonsense knock-it-off via <a href="#collar-snatch">collar grab</a> or{' '}
+            <a href="#verbal-correction">verbal correction</a> to teach frustration tolerance and respect for boundaries.
+            See also <a href="#breed-temperament">breed variance</a> for delivery notes.
+          </p>
+        </div>
+      </div>
+
       <ul className="checklist">
         <li>Structure still matters — inconsistency frightens a traumatised dog more, not less</li>
         <li>Do not flood: exposure must be controlled, with exits and wins built in — same principle as <a href="#expectations">controlled trigger exposure</a></li>
         <li>Watch for shutdown (still, unresponsive, refusing food or movement) as overload, not stubbornness — see <a href="#symptom-glossary">Symptom glossary</a></li>
-        <li>Escalating to shocking physical correction on a trauma-signalling dog can confirm the world is unsafe — structure still matters; intensity must drop. See <a href="#dog-language">Dog language</a> for when firmer treatment is and is not appropriate</li>
+        <li>Escalating to shocking physical correction on a trauma-signalling dog can confirm the world is unsafe — structure still matters; intensity must drop. See <a href="#trauma-vs-hardship">Trauma vs hardship</a> and <a href="#dog-language">Dog language</a> for when firmer treatment is and is not appropriate</li>
         <li>Progress may be non-linear; a bad day after a good week is common</li>
       </ul>
 

@@ -7,6 +7,17 @@ export default function SectionLeashJerk() {
 
       <p>When the dog is on lead and needs a physical reset — pulling toward a trigger, stiffening on a fixated stare, or refusing to yield position — a single firm downward jerk on the leash makes the body heavier and turns it. It is not sustained tension; it is one sharp pull down, then back to slack.</p>
 
+      <div className="callout">
+        <strong>Diagnose before you jerk</strong>
+        <p>
+          Before a downward jerk, diagnose history using <a href="#trauma-vs-hardship">Trauma vs hardship</a>.{' '}
+          <strong>Entitled dog leaving your sphere or pulling for access?</strong> Correct instantly inside the{' '}
+          <a href="#timing">one-second window</a>. <strong>Traumatized nervous system in a panic flash?</strong> Guide
+          calmly; security and lighter entry — see <a href="#trauma-hardship-calibration">Calibrating the correction scale</a>{' '}
+          and <a href="#when-not-firmer">When it is not appropriate</a>.
+        </p>
+      </div>
+
       <p>This works well in conjunction with the <a href="#butt-push">butt push</a>: the jerk breaks forward momentum and drops the head; the butt push redirects the hindquarters and recenters attention on you. On a slack line you can read the dog first — see <a href="#leash">Leash work</a> — then apply the jerk inside the <a href="#timing">one-second window</a> when the precursor appears.</p>
 
       <ol className="steps">
