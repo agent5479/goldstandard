@@ -63,6 +63,10 @@ Explanations should reflect Gold Standard values from the client playbook — ha
 - `eight-week-separation` — puppy first nights / littermate security
 - `pampered-hardship` — privileged dog needs intentional hardship
 - `correction-diagnosis` — diagnose trauma vs hardship before collar grab
+- `conservation-of-force` — prerequisite exposure before street corrections
+- `correction-redirection` — follow-up mandate after interrupt
+- `correction-praise-trap` — disobedience loop after correction-then-praise
+- `expectation-of-excellence` — time buffer before praise after correction
 - `intact-health-baseline` — intact health framing in this model
 - `intact-social-penalty` — intact social friction costs
 - `intact-environment-restrictions` — daycare, boarding, parks

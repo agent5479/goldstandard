@@ -469,6 +469,66 @@ export const examQuestions: Question[] = [
     guideLink: '#trauma-hardship-calibration'
   },
   {
+    topic: 'Calibration & escalation',
+    breedCategory: 'all',
+    track: 'both',
+    dedupGroup: 'conservation-of-force',
+    text: 'Your dog breaks heel on a busy street but has never held heel reliably at home. What does the guide say about correcting there?',
+    options: [
+      'Do not correct for a failure of understanding — build the mechanic in low distraction first',
+      'Correct harder on the street so the dog learns the standard matters everywhere',
+      'Skip heel entirely until the dog is over two years old',
+      'Use treats only on busy streets because pressure adds too much stress',
+    ],
+    explanation: 'Force on an overstimulated dog who lacks baseline understanding is wasted energy. If the mechanic is not bulletproof in the living room, it cannot be enforced on the street.',
+    guideLink: '#contextual-receptivity'
+  },
+  {
+    topic: 'Calibration & escalation',
+    breedCategory: 'all',
+    track: 'both',
+    dedupGroup: 'correction-redirection',
+    text: 'You pop the leash when the dog breaks heel but do not guide them back into position. What happens next?',
+    options: [
+      'Inefficient force — you will likely correct again because the vacuum was not filled with direction',
+      'One pop is enough — the dog will find heel on their own without guidance',
+      'You should praise immediately so the dog knows they are forgiven',
+      'The correction only works if repeated louder each time',
+    ],
+    explanation: 'A correction without immediate re-direction leaves a vacuum. True minimal force pairs a sharp interrupt with clear direction back to the boundary.',
+    guideLink: '#correction-redirection'
+  },
+  {
+    topic: 'Calibration & escalation',
+    breedCategory: 'all',
+    track: 'both',
+    dedupGroup: 'correction-praise-trap',
+    text: 'After a correction, the dog returns to heel. What feedback does the guide prescribe?',
+    options: [
+      'Return to a calm neutral baseline — release of pressure, not high praise for fixing the mistake',
+      'High praise and treats so the dog knows the correction is forgiven',
+      'Repeat the correction until the dog wags their tail',
+      'Ignore the dog completely for the rest of the walk as punishment',
+    ],
+    explanation: 'Compliance after a correction earns neutrality, not a party. Correction-then-praise trains a yo-yo loop in high-drive dogs.',
+    guideLink: '#correction-praise-trap'
+  },
+  {
+    topic: 'Calibration & escalation',
+    breedCategory: 'all',
+    track: 'both',
+    dedupGroup: 'expectation-of-excellence',
+    text: 'When should praise follow a correction, according to the expectation-of-excellence baseline?',
+    options: [
+      'After a time buffer — reward sustained autonomous compliance, not the quick fix after the mistake',
+      'Immediately when the dog complies so they associate correction with forgiveness',
+      'Only when using food — verbal praise has no role after any correction',
+      'Praise belongs only in formal training sessions at home, not on walks',
+    ],
+    explanation: 'Praise autonomous choices and sustained calm. Introduce praise only after a distinct buffer since the correction so the dog does not learn to break position for the praise cycle.',
+    guideLink: '#expectation-of-excellence'
+  },
+  {
     topic: 'Trauma & meetings',
     breedCategory: 'all',
     track: 'both',

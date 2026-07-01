@@ -72,6 +72,10 @@ export default function GuideContentsNav() {
               <li><a href="#go-get-recall">🦴 Go-get recall</a></li>
               <li><a href="#treat-handler-reinforcement">🎯 Treat reinforcement</a></li>
               <li><a href="#corrections">🛠️ Corrections overview</a></li>
+              <li><a href="#architecture-of-clarity">⚖️ Architecture of clarity</a></li>
+              <li><a href="#conservation-of-force">⚖️ Conservation of force</a></li>
+              <li><a href="#correction-praise-trap">🔄 Correction-praise trap</a></li>
+              <li><a href="#expectation-of-excellence">⭐ Expectation of excellence</a></li>
               <li><a href="#unique-sound-touch">⚡ Unique sound &amp; touch</a></li>
               <li><a href="#dog-language">🗣️ Dog language &amp; gruff correction</a></li>
               <li><a href="#collar-selection">🛡️ Collar selection</a></li>

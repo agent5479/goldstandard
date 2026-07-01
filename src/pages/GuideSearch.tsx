@@ -77,6 +77,10 @@ const ALIASES: { terms: string[]; href: string }[] = [
 
   /* Corrections toolkit */
   { terms: ['correction', 'correction toolkit', 'interruption', 'reset body'], href: '#corrections' },
+  { terms: ['architecture of clarity', 'conservation of force', 'minimal force', 'yank and crank', 'force minimization', 'contextual receptivity', 'pushing through overstimulation'], href: '#architecture-of-clarity' },
+  { terms: ['correction redirection', 'follow up mandate', 'correction vacuum', 'inefficient force'], href: '#correction-redirection' },
+  { terms: ['correction praise trap', 'disobedience loop', 'correction then praise', 'yo-yo behavior', 'balanced training praise'], href: '#correction-praise-trap' },
+  { terms: ['expectation of excellence', 'neutral baseline after correction', 'time buffer praise', 'release of pressure'], href: '#expectation-of-excellence' },
   { terms: ['unique sound', 'unique touch', 'correction mechanic', 'hey', 'clap', 'flank', 'jawbone', 'habituation', 'table paw'], href: '#unique-sound-touch' },
   { terms: ['gruff', 'squeeze', 'dog language', 'firmness', 'shocking', 'boss', 'pack boss', 'calibration', 'gruff correction', 'mouth hand', 'hand as mouth'], href: '#dog-language' },
   { terms: ['not a game', 'someone boss', 'boundary negotiation game', 'pack boss'], href: '#not-a-game' },
