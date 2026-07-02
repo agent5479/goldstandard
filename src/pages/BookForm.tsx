@@ -49,7 +49,7 @@ import {
   BOOKING_SERVICE_TYPES,
   type BookingServiceType,
 } from '@shared/bookingServiceTypes';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { FORM_ENDPOINT } from '../data/formConfig';
 import {
   buildExtendedDetailsPayload,
@@ -58,6 +58,7 @@ import {
   emptyExtendedDetailsState,
   toggleProfileTag,
 } from '../data/bookingSelfAssessment';
+import { isTrainingPriorityTag } from '@shared/clientBookingTags';
 import { DogAgeFields, emptyDogAgeFields, type DogAgeFieldsValue } from '../components/DogAgeFields';
 import {
   applyLifeStageProfileTag,
@@ -135,6 +136,7 @@ async function postToEndpoint<T>(payload: Record<string, string>): Promise<T> {
 
 /** Booking form: pick region, date/time, location, then confirm details. */
 export default function BookForm() {
+  const [searchParams] = useSearchParams();
   const serviceRef = useRef<HTMLDivElement>(null);
   const regionRef = useRef<HTMLDivElement>(null);
   const timeRef = useRef<HTMLDivElement>(null);
@@ -158,6 +160,24 @@ export default function BookForm() {
   const [clientAddress, setClientAddress] = useState('');
   const [isHomeAddress, setIsHomeAddress] = useState<boolean | null>(null);
   const [returningClient, setReturningClient] = useState(false);
+
+  useEffect(() => {
+    const raw = searchParams.get('priorities');
+    if (!raw) return;
+
+    const priorityTags = raw
+      .split(',')
+      .map((tag) => tag.trim())
+      .filter((tag) => isTrainingPriorityTag(tag));
+
+    if (priorityTags.length === 0) return;
+
+    setExtendedDetails((prev) => {
+      const merged = new Set(prev.profileTags);
+      for (const tag of priorityTags) merged.add(tag);
+      return { ...prev, profileTags: [...merged] };
+    });
+  }, [searchParams]);
 
   useEffect(() => {
     if (status.kind !== 'success') return;

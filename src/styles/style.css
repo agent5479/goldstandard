@@ -672,6 +672,9 @@ h2 {
   padding: 1.75rem 1.5rem 1.6rem;
   text-decoration: none;
   color: inherit;
+  font: inherit;
+  cursor: pointer;
+  width: 100%;
   transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
 }
 
@@ -5144,5 +5147,295 @@ body.page-intelligence {
   .intelligence-fraction-select,
   .intelligence-mix-remove {
     width: 100%;
+  }
+}
+
+/* ── Problem finder modal ── */
+body.problem-finder-open {
+  overflow: hidden;
+}
+
+.problem-finder-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 1.25rem;
+  padding-top: max(1.25rem, 4vh);
+  background: rgba(31, 43, 31, 0.55);
+  backdrop-filter: blur(3px);
+  animation: fadeUp 0.25s ease both;
+  overflow-y: auto;
+}
+
+.problem-finder-dialog {
+  max-width: 680px;
+  width: 100%;
+  max-height: calc(100vh - 2.5rem);
+  overflow-y: auto;
+  background: var(--surface);
+  border: 1px solid rgba(45, 74, 45, 0.2);
+  border-top: 4px solid var(--gold);
+  border-radius: 8px;
+  padding: 1.6rem 1.8rem 1.8rem;
+  box-shadow: 0 24px 60px rgba(24, 38, 24, 0.35);
+}
+
+.problem-finder-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.2rem;
+}
+
+.problem-finder-kicker {
+  font-size: 0.76rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.35rem;
+}
+
+.problem-finder-header h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.45rem;
+  color: var(--forest);
+  line-height: 1.25;
+}
+
+.problem-finder-close {
+  flex-shrink: 0;
+  width: 2.2rem;
+  height: 2.2rem;
+  border: 1px solid rgba(45, 74, 45, 0.2);
+  border-radius: 4px;
+  background: var(--surface-soft);
+  color: var(--forest);
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.problem-finder-close:hover {
+  border-color: var(--gold);
+  background: rgba(201, 162, 39, 0.08);
+}
+
+.problem-finder-progress-wrap {
+  margin-bottom: 1.4rem;
+}
+
+.problem-finder-step-label {
+  font-size: 0.85rem;
+  color: var(--light-text);
+  margin-bottom: 0.45rem;
+}
+
+.problem-finder-progress {
+  margin-bottom: 0;
+}
+
+.problem-finder-lead {
+  font-size: 1.08rem;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+}
+
+.problem-finder-context-note {
+  font-size: 0.92rem;
+  color: var(--light-text);
+  margin-bottom: 1rem;
+}
+
+.problem-finder-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.problem-finder-cards--compact {
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.problem-finder-card {
+  width: 100%;
+  font-family: 'Crimson Pro', Georgia, serif;
+}
+
+.problem-finder-card-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem;
+  color: var(--forest);
+}
+
+.problem-finder-card-desc {
+  font-size: 0.92rem;
+  color: var(--light-text);
+  line-height: 1.45;
+}
+
+.problem-finder-impact {
+  margin: 1.2rem 0 1.4rem;
+}
+
+.problem-finder-slider {
+  width: 100%;
+  accent-color: var(--gold);
+  margin-bottom: 0.5rem;
+}
+
+.problem-finder-impact-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: var(--light-text);
+  margin-bottom: 0.6rem;
+}
+
+.problem-finder-impact-value {
+  font-weight: 600;
+  color: var(--forest);
+  margin-bottom: 0.9rem;
+  min-height: 1.4em;
+}
+
+.problem-finder-impact-buttons {
+  display: flex;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+}
+
+.problem-finder-impact-btn {
+  min-width: 2.4rem;
+  height: 2.4rem;
+  border: 1px solid rgba(45, 74, 45, 0.22);
+  border-radius: 4px;
+  background: var(--surface);
+  color: var(--text);
+  font-family: 'Crimson Pro', Georgia, serif;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.problem-finder-impact-btn:hover,
+.problem-finder-impact-btn.is-selected {
+  border-color: var(--gold);
+  background: rgba(201, 162, 39, 0.1);
+}
+
+.problem-finder-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
+.problem-finder-nav--results {
+  margin-top: 1.2rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(45, 74, 45, 0.12);
+}
+
+.problem-finder-results h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  color: var(--forest);
+  margin-bottom: 0.8rem;
+}
+
+.problem-finder-summary {
+  color: var(--text);
+  line-height: 1.55;
+  margin-bottom: 0.75rem;
+}
+
+.problem-finder-urgency {
+  padding: 0.85rem 1rem;
+  background: var(--surface-soft);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 4px 4px 0;
+  color: var(--light-text);
+  font-style: italic;
+  margin-bottom: 1.2rem;
+}
+
+.problem-finder-reading-label {
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+}
+
+.problem-finder-guide-links {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.4rem;
+}
+
+.problem-finder-guide-links li + li {
+  margin-top: 0.35rem;
+}
+
+.problem-finder-guide-links a {
+  color: var(--moss);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.problem-finder-guide-links a:hover {
+  text-decoration: underline;
+}
+
+.problem-finder-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.problem-finder-tertiary {
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: 'Crimson Pro', Georgia, serif;
+  font-size: 0.98rem;
+  color: var(--moss);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.problem-finder-tertiary:hover {
+  color: var(--forest);
+}
+
+a.problem-finder-tertiary {
+  text-decoration: underline;
+}
+
+@media (max-width: 560px) {
+  .problem-finder-overlay {
+    padding: 0.75rem;
+    padding-top: max(0.75rem, 2vh);
+    align-items: flex-start;
+  }
+
+  .problem-finder-dialog {
+    padding: 1.2rem 1.1rem 1.4rem;
+  }
+
+  .problem-finder-header h2 {
+    font-size: 1.25rem;
+  }
+
+  .problem-finder-cards {
+    grid-template-columns: 1fr;
   }
 }

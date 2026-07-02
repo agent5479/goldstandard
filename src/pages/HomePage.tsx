@@ -1,7 +1,9 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Seo from '../components/Seo';
 import SiteHeader from '../components/SiteHeader';
 import SiteFooter from '../components/SiteFooter';
+import ProblemFinderModal from '../components/ProblemFinderModal';
 import HeroGallery from './HeroGallery';
 import { SESSION_MINUTES, STANDARD_PRICING_NOTE } from '../data/bookingConfig';
 import { NELSON_ELITE_CONTACT_NOTE, NELSON_STANDARD_COMING_SOON_NOTE } from '@shared/bookingRegions';
@@ -10,6 +12,8 @@ import { asset } from '../asset';
 import SectionIcon from '../components/SectionIcon';
 
 export default function HomePage() {
+  const [problemFinderOpen, setProblemFinderOpen] = useState(false);
+
   return (
     <>
       <Seo
@@ -31,6 +35,13 @@ export default function HomePage() {
           <p className="hero-payoff">😌 From puppies to seniors, big or small — every breed and temperament — dogs are happier when they know their place, and so will you be.</p>
           <div className="hero-cta">
             <Link to="/book" className="btn btn-primary">Book a session</Link>
+            <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={() => setProblemFinderOpen(true)}
+            >
+              What&apos;s going on with your dog?
+            </button>
             <a href="tel:+64278142222" className="btn btn-secondary">Call 027 814 2222</a>
           </div>
         </div>
@@ -147,6 +158,18 @@ export default function HomePage() {
               </span>
               <span className="resource-card-cta">Explore breeds →</span>
             </Link>
+            <button
+              type="button"
+              className="resource-card"
+              onClick={() => setProblemFinderOpen(true)}
+            >
+              <SectionIcon set="site" size="card" className="resource-card-icon" />
+              <strong className="resource-card-title">Problem Finder</strong>
+              <span className="resource-card-desc">
+                A few quick questions to clarify your main training goal — then links to the right guide sections and next steps.
+              </span>
+              <span className="resource-card-cta">Find your focus →</span>
+            </button>
           </div>
         </div>
       </section>
@@ -185,6 +208,8 @@ export default function HomePage() {
       </section>
 
       <SiteFooter />
+
+      <ProblemFinderModal open={problemFinderOpen} onClose={() => setProblemFinderOpen(false)} />
     </>
   );
 }
