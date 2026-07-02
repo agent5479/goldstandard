@@ -25,7 +25,7 @@ const firstSnippet = (root: Element) => {
 
 const ALIASES: { terms: string[]; href: string }[] = [
   /* Foundation */
-  { terms: ['pillars', 'three pillars', 'preparation', 'consistency', 'real world wins', 'gold standard rule', 'authority', 'drain the tank', 'sit', 'wait', 'nothing for free', 'consent', 'release'], href: '#pillars' },
+  { terms: ['pillars', 'three pillars', 'four pillars', 'preparation', 'consistency', 'real world wins', 'gold standard rule', 'authority', 'drain the tank', 'sit', 'wait', 'nothing for free', 'consent', 'release', 'pack leader', 'pack leader energy', 'anchor energy', 'energy', 'caesar', 'cesar', 'millan', 'dogs dont lie', "dogs don't lie", 'biofeedback'], href: '#pillars' },
 
   /* Owner mindset & expectations */
   { terms: ['owner mindset', 'anxiety', 'calm leadership', 'owner energy', 'nervous handler', 'reassurance', 'shush', "it's okay", 'subconscious baseline', 'internal thermostat', 'new baseline', 'gamified loop', 'cultural reset', 'dramatic praise', 'internal expectations'], href: '#owner-mindset' },

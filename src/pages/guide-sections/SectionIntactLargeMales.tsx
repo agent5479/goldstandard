@@ -34,10 +34,10 @@ export default function SectionIntactLargeMales() {
         <div className="callout">
           <strong>Our framework, not universal consensus</strong>
           <p>
-            This is the Warwick and Beckman conviction we work from — controversial in some veterinary circles. If you
-            need a second opinion on hormones and surgery, investigate with your vet. The lifestyle trade-offs below
-            assume you are making an informed choice inside this paradigm, not repeating textbook neuter-by-default
-            advice.
+            This is Warwick&apos;s framework — influenced by Beckman-style principles — and it&apos;s controversial in
+            some veterinary circles. If you need a second opinion on hormones and surgery, investigate with your vet.
+            The lifestyle trade-offs below assume you are making an informed choice inside this paradigm, not
+            repeating textbook neuter-by-default advice.
           </p>
         </div>
 

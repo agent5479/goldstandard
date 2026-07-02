@@ -122,6 +122,21 @@ export const examQuestions: Question[] = [
     explanation: 'Transition from treats to Life Rewards (walks, doors, play) — the environment becomes the motivator.',
     guideLink: '#pillars'
   },
+  {
+    topic: 'Foundations',
+    breedCategory: 'all',
+    track: 'both',
+    dedupGroup: 'pack-leader-energy',
+    text: 'Your dog is tense, fixated, and pushy on walks. In this model, what is that behaviour often reporting?',
+    options: [
+      'Real-time feedback on the leadership they feel — your posture, breath, tension, and follow-through',
+      'A fixed personality trait that cannot change without medication',
+      'A need for constant reassurance and praise so they feel safe',
+      'Proof the dog is lying and manipulating you intentionally',
+    ],
+    explanation: 'Dogs don’t lie — behaviour is feedback. The handler’s calm, steadfast posture and follow-through set the weather of the walk.',
+    guideLink: '#pack-leader-energy'
+  },
 
   /* ── Owner mindset ── */
   {

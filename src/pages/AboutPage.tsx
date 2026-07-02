@@ -11,7 +11,7 @@ export default function AboutPage() {
     <>
       <Seo
         title="About Warwick | Gold Standard Dog Training"
-        description="Meet Warwick Marshall — Beckman-method dog training based in Golden Bay, serving the Tasman region. Philosophy, approach, and what to expect from coaching sessions."
+        description="Meet Warwick Marshall — structured dog training in Golden Bay and the wider Tasman region. Philosophy, approach, and what to expect from coaching sessions."
         path="/about"
       />
       <SiteHeader />
@@ -33,10 +33,16 @@ export default function AboutPage() {
               and results that last after the session ends.
             </p>
             <p>
-              Training is built on the core techniques and philosophy of Beckman&apos;s dog training school —
-              structured methods that work with how dogs actually think, not against it. Warwick coaches you
-              through each step so you can maintain the results at home with confidence instead of
-              second-guessing. Your energy, attention, and consistency are the most powerful tools your dog has.
+              Gold Standard Dog Training is an independent practice. Warwick is not affiliated with, endorsed by,
+              or certified by Beckman. When this site references Beckman-style training, it means the broader
+              structure-and-owner-coaching philosophy that influenced Warwick&apos;s approach — not an official
+              credential or approval.
+            </p>
+            <p>
+              Training is informed by Beckman-style principles — structured methods that work with how dogs
+              actually think, not against it. Warwick coaches you through each step so you can maintain the
+              results at home with confidence instead of second-guessing. Your energy, attention, and consistency
+              are the most powerful tools your dog has.
             </p>
             <p>
               Every dog is welcome — puppies, seniors, purebreds, mixes, easy learners, and difficult cases.
@@ -51,7 +57,7 @@ export default function AboutPage() {
             </article>
             <article className="trust-card">
               <strong>🏆 Method focus</strong>
-              <span>Structured owner coaching based on proven Beckman principles.</span>
+              <span>Structured owner coaching informed by Beckman-style principles.</span>
             </article>
             <article className="trust-card">
               <strong>🐕 Dog types</strong>
@@ -72,12 +78,19 @@ export default function AboutPage() {
           <div className="philosophy-text">
             <p>
               Dogs find peace and freedom when they know their place and learn trust and obedience. Gold
-              Standard uses the core techniques and philosophy of Beckman&apos;s dog training school — clear,
-              structured methods that work with how dogs actually think.
+              Standard uses clear, structured methods that work with how dogs actually think. The framework is
+              informed by Beckman-style principles and hands-on owner coaching.
             </p>
             <p>
               Training the owner is key. Warwick coaches you through each step so you can maintain the results
               at home with confidence instead of second-guessing.
+            </p>
+            <p>
+              This model also borrows from the state-and-energy lens popularised by Caesar-style pack leadership:
+              dogs don&apos;t lie. Their behaviour is a reflection of the leadership they feel in the moment — breath,
+              posture, tension, and follow-through. Warwick can deliver fast, precise corrections in-session when
+              required; your job at home is the safer core: calm composure, clear boundaries, and the steady
+              expectation that the standard will be enforced.
             </p>
           </div>
         </div>

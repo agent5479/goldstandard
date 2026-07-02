@@ -5,7 +5,7 @@ export default function GuideContentsNav() {
           <div className="guide-contents-group">
             <p className="guide-contents-group-label">🏛️ Foundation</p>
             <ul className="guide-contents-list">
-              <li><a href="#pillars">🏆 Three pillars</a></li>
+              <li><a href="#pillars">🏆 Four pillars</a></li>
             </ul>
           </div>
           <div className="guide-contents-group">

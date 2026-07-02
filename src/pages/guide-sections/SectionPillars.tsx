@@ -2,10 +2,10 @@ export default function SectionPillars() {
   return (
     <section className="guide-section guide-section--compact" id="pillars">
       <div className="guide-section-inner">
-      <h2>🏆 Three pillars of success</h2>
+      <h2>🏆 Four pillars of success</h2>
       <p className="section-desc">Keep these in mind before and during every session.</p>
       <div className="pillars">
-        <table className="pillars-table" aria-label="Three pillars of success">
+        <table className="pillars-table" aria-label="Four pillars of success">
           <thead>
             <tr>
               <th scope="col">Pillar</th>
@@ -24,6 +24,13 @@ export default function SectionPillars() {
             <tr>
               <td><strong>🌍 Real-World Wins</strong></td>
               <td>Transition from treats to <a href="#rewards">Life Rewards</a> (walks, doors, play) — see also <a href="#access">Access training</a>.</td>
+            </tr>
+            <tr>
+              <td><strong>🧭 Anchor energy</strong></td>
+              <td>
+                <span id="pack-leader-energy" />
+                Dogs don&apos;t lie. Their behaviour is real-time feedback on the leadership they feel — your posture, breath, tension, and follow-through. Your job is to be the calm anchor: steadfast, impassive, patient ownership that makes the boundary feel inevitable — see <a href="#owner-mindset">Owner mindset</a>, <a href="#new-baseline">new baseline</a>, <a href="#ready-stance">ready stance</a>, and <a href="#speaking-aloud">speak it aloud</a>.
+              </td>
             </tr>
           </tbody>
         </table>

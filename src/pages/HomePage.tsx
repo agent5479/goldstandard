@@ -52,8 +52,8 @@ export default function HomePage() {
             Based in Golden Bay &amp; Takaka
           </div>
           <div className="hero-stat">
-            <strong>🏆 Beckman Method</strong>
-            Proven, structured technique
+            <strong>🏆 Beckman-inspired</strong>
+            Structured coaching &amp; clear standards
           </div>
           <div className="hero-stat">
             <strong>🐕 All dogs</strong>
@@ -68,7 +68,7 @@ export default function HomePage() {
           <h2>🐾 Warwick Marshall</h2>
           <p>
             Based in Takaka, Golden Bay — working with dogs and owners across the Tasman region. Clear
-            structure, Beckman-method coaching, and real-world session work tailored to your goals.
+            structure, Beckman-inspired coaching, and real-world session work tailored to your goals.
           </p>
           <Link to="/about" className="resource-card-cta">
             Read about Warwick and the approach →

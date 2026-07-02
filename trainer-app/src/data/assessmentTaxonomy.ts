@@ -67,7 +67,7 @@ export const GUIDE_GROUPS: GuideGroup[] = [
 ];
 
 export const GUIDE_ANCHORS: GuideAnchor[] = [
-  { id: 'pillars', label: 'Three pillars', icon: 'bi-trophy', groupId: 'foundation' },
+  { id: 'pillars', label: 'Four pillars', icon: 'bi-trophy', groupId: 'foundation' },
   { id: 'owner-mindset', label: 'Owner mindset', icon: 'bi-person', groupId: 'leadership' },
   { id: 'new-baseline', label: 'New baseline', icon: 'bi-brain', groupId: 'leadership' },
   { id: 'implementing-baseline-shift', label: 'Implementing the shift', icon: 'bi-tools', groupId: 'leadership' },
