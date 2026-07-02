@@ -4,9 +4,9 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "predev": "node scripts/sync-hero-images.js && node scripts/generate-trainer-favicons.js",
+    "predev": "node ../scripts/sync-hero-photos.mjs && node scripts/sync-hero-images.js && node scripts/generate-trainer-favicons.js",
     "dev": "vite",
-    "prebuild": "node scripts/sync-hero-images.js && node scripts/generate-trainer-favicons.js",
+    "prebuild": "node ../scripts/sync-hero-photos.mjs && node scripts/sync-hero-images.js && node scripts/generate-trainer-favicons.js",
     "build": "node scripts/clean-dist.js && tsc -b && vite build",
     "postbuild": "node scripts/inject-runtime-config.js",
     "lint": "eslint .",

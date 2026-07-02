@@ -1,0 +1,38 @@
+{
+  "exclude": [
+    "archieglory",
+    "archiesit",
+    "montytoyschnoodlepuppy"
+  ],
+  "order": [
+    "dogs2",
+    "mortyschnauzerpuppy",
+    "montyschnoodlepuppy",
+    "montyspoodle",
+    "neocollieold",
+    "archiegolden",
+    "tillycollie",
+    "nuggetbigschnoodle",
+    "cosmochihuahuapuppy",
+    "stormstaffypuppy",
+    "sassocollierottweiler",
+    "tussockGWHP"
+  ],
+  "overrides": {
+    "dogs2": {
+      "label": "dog in training",
+      "alt": "Dog in training",
+      "eager": true,
+      "highPriority": true
+    },
+    "mortyschnauzerpuppy": {
+      "eager": true
+    },
+    "montyschnoodlepuppy": {
+      "eager": true
+    },
+    "neocollieold": {
+      "eager": true
+    }
+  }
+}
