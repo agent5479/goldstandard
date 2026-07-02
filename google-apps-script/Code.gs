@@ -14,10 +14,10 @@
  *
  * POST actions (JSON body, Content-Type: text/plain;charset=utf-8):
  *   { action: "enquiry", ... }        — contact form (default if action omitted)
- *   { action: "availability", date, region, location? }  — available booking slots for a date
+ *   { action: "availability", date, region, location }  — available booking slots for a date + location
  *   { action: "book", region, slot_start, location, ... }
  *
- * Script version: 2026-06-24-v20 (standard session $60)
+ * Script version: 2026-07-02-v21 (location-required availability; calendar commute)
  *   - Multi-region: golden-bay | nelson-bays (region required on availability/book)
  *   - 15-min slot grid; 55 min sessions; 5 min handover; commute buffer between locations
  *   - Nelson Bays: bookable only on days with an all-day NELSON calendar event;
@@ -64,6 +64,8 @@ const BOOKING_TYPES = {
 };
 const TRANSITION_MINUTES = 5;
 const HOME_VISIT_COMMUTE_MINUTES = 30;
+/** Sentinel when a calendar booking has no parseable location — use home-visit commute buffer. */
+const UNKNOWN_LOCATION = "__unknown_location__";
 const SLOT_INTERVAL_MINUTES = 15;
 const COMMUTE_SPEED_KMH = 48;
 const NELSON_TITLE_PATTERN = /^NELSON/i;
@@ -247,11 +249,15 @@ function handleAvailability(data) {
     return jsonResponse({ success: false, message: "Invalid or missing region." });
   }
 
-  if (locationName && !isValidLocationForRegion(locationName, region)) {
+  if (!locationName) {
+    return jsonResponse({ success: false, message: "Training location is required." });
+  }
+
+  if (!isValidLocationForRegion(locationName, region)) {
     return jsonResponse({ success: false, message: "Invalid training location for this region." });
   }
 
-  if (locationName && !isLocationAllowedForBookingType(locationName, bookingType)) {
+  if (!isLocationAllowedForBookingType(locationName, bookingType)) {
     return jsonResponse({ success: false, message: "Invalid location for this service type." });
   }
 
@@ -276,7 +282,7 @@ function handleAvailability(data) {
   }
 
   const bookingWindow = getBookingWindowForDate(date);
-  const rawSlots = getAvailableSlots(date, region, locationName || null, bookingType);
+  const rawSlots = getAvailableSlots(date, region, locationName, bookingType);
   const durations = getBookingDurations(bookingType);
 
   const slots = rawSlots.map(function (slot) {
@@ -747,6 +753,8 @@ function getAvailableSlots(date, regionId, locationName, bookingType) {
   }
 
   const events = getBusyEventsForDate(date, regionId);
+  const daySessions = getDaySessionsWithLocations(date, regionId);
+  const excludeEventIds = getBookingEventIdsFromSessions(daySessions);
   const bufferMs = BUFFER_MINUTES * 60 * 1000;
   const calendarMs = durations.calendarBlockMinutes * 60 * 1000;
   const intervalMs = SLOT_INTERVAL_MINUTES * 60 * 1000;
@@ -766,9 +774,9 @@ function getAvailableSlots(date, regionId, locationName, bookingType) {
       if (
         slotStart.getTime() >= earliest.getTime() &&
         slotFitsCalendarBlockEnd(slotStart, calendarEnd, regionId) &&
-        !overlapsBusy(slotStart, calendarEnd, events, bufferMs) &&
-        !slotOverlapsConfirmedBooking(slotStart, calendarEnd) &&
-        (!locationName || fitsCommuteForLocation(slotStart, calendarEnd, locationName))
+        !overlapsBusy(slotStart, calendarEnd, events, bufferMs, excludeEventIds) &&
+        !slotOverlapsDaySession(slotStart, calendarEnd, daySessions) &&
+        fitsCommuteForLocation(slotStart, calendarEnd, locationName, daySessions)
       ) {
         slots.push({ start: slotStart, end: calendarEnd });
       }
@@ -804,17 +812,19 @@ function isSlotBookable(slotStart, calendarEnd, regionId, locationName, bookingT
   }
 
   const events = getBusyEventsForDate(slotStart, regionId);
+  const daySessions = getDaySessionsWithLocations(slotStart, regionId);
+  const excludeEventIds = getBookingEventIdsFromSessions(daySessions);
   const bufferMs = BUFFER_MINUTES * 60 * 1000;
 
-  if (overlapsBusy(slotStart, calendarEnd, events, bufferMs)) {
+  if (overlapsBusy(slotStart, calendarEnd, events, bufferMs, excludeEventIds)) {
     return false;
   }
 
-  if (slotOverlapsConfirmedBooking(slotStart, calendarEnd)) {
+  if (slotOverlapsDaySession(slotStart, calendarEnd, daySessions)) {
     return false;
   }
 
-  return fitsCommuteForLocation(slotStart, calendarEnd, locationName);
+  return fitsCommuteForLocation(slotStart, calendarEnd, locationName, daySessions);
 }
 
 function getLastStartHourForBookingType(window, bookingType) {
@@ -1010,9 +1020,16 @@ function isNelsonServiceDay(date) {
 }
 
 function getConfirmedBookingsForDate(date) {
+  return getDaySessionsWithLocations(date, null).filter(function (session) {
+    return session.fromSheet;
+  });
+}
+
+function getDaySessionsWithLocations(date, regionId) {
   const sheet = getSubmissionsSheet();
   const rows = sheet.getDataRange().getValues();
-  const bookings = [];
+  const sessions = [];
+  const seenEventIds = {};
   const dayKey = stripToDate(date).getTime();
 
   for (var i = 1; i < rows.length; i++) {
@@ -1030,22 +1047,146 @@ function getConfirmedBookingsForDate(date) {
       continue;
     }
 
-    bookings.push({
+    const location = String(rows[i][13] || "").trim();
+    const calendarEventId = String(rows[i][11] || "").trim();
+    if (calendarEventId) {
+      seenEventIds[calendarEventId] = true;
+    }
+
+    sessions.push({
       start: start,
       end: end,
-      location: String(rows[i][13] || "")
+      location: location || UNKNOWN_LOCATION,
+      calendarEventId: calendarEventId,
+      fromSheet: true
     });
   }
 
-  bookings.sort(function (a, b) {
+  const events = getBusyEventsForDate(date, regionId || inferRegionFromSessions(sessions));
+  for (var j = 0; j < events.length; j++) {
+    const event = events[j];
+    if (event.isAllDayEvent()) {
+      continue;
+    }
+
+    const eventId = event.getId();
+    if (seenEventIds[eventId]) {
+      continue;
+    }
+
+    const location = resolveLocationNameFromCalendarEvent(event);
+    if (!location) {
+      continue;
+    }
+
+    sessions.push({
+      start: event.getStartTime(),
+      end: event.getEndTime(),
+      location: location,
+      calendarEventId: eventId,
+      fromSheet: false
+    });
+  }
+
+  sessions.sort(function (a, b) {
     return a.start.getTime() - b.start.getTime();
   });
 
-  return bookings;
+  return sessions;
 }
 
-function fitsCommuteForLocation(slotStart, slotEnd, locationName) {
-  const bookings = getConfirmedBookingsForDate(slotStart);
+function inferRegionFromSessions(sessions) {
+  for (var i = 0; i < sessions.length; i++) {
+    const region = inferRegionFromLocationName(sessions[i].location);
+    if (region) {
+      return region;
+    }
+  }
+  return "golden-bay";
+}
+
+function getBookingEventIdsFromSessions(sessions) {
+  const ids = {};
+  sessions.forEach(function (session) {
+    if (session.calendarEventId) {
+      ids[session.calendarEventId] = true;
+    }
+  });
+  return ids;
+}
+
+function slotOverlapsDaySession(slotStart, slotEnd, daySessions) {
+  for (var i = 0; i < daySessions.length; i++) {
+    const session = daySessions[i];
+    if (slotStart.getTime() < session.end.getTime() && slotEnd.getTime() > session.start.getTime()) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function resolveLocationNameFromCalendarEvent(event) {
+  const title = String(event.getTitle() || "").trim();
+  const description = String(event.getDescription() || "");
+  const locationField = String(event.getLocation() || "").trim();
+  const isBookingEvent =
+    description.indexOf("Booking via") !== -1 || /^ELITE\s*[—\-]/i.test(title);
+
+  if (/^ELITE\s*[—\-]/i.test(title)) {
+    const haystack = (description + " " + locationField).toLowerCase();
+    if (haystack.indexOf("nelson") !== -1) {
+      return "Elite coaching — Nelson Bays";
+    }
+    return "Elite coaching — Golden Bay";
+  }
+
+  if (!isBookingEvent && !locationField) {
+    return null;
+  }
+
+  const candidates = [];
+  if (locationField) {
+    candidates.push(locationField);
+  }
+
+  const descriptionMatch = description.match(/^Location:\s*(.+)$/m);
+  if (descriptionMatch) {
+    candidates.push(descriptionMatch[1].trim());
+  }
+
+  for (var i = 0; i < candidates.length; i++) {
+    const resolved = normalizeLocationLabel(candidates[i]);
+    if (resolved) {
+      return resolved;
+    }
+  }
+
+  return isBookingEvent ? UNKNOWN_LOCATION : null;
+}
+
+function normalizeLocationLabel(label) {
+  const trimmed = String(label || "").trim();
+  if (!trimmed) {
+    return "";
+  }
+
+  const withoutMaps = trimmed.replace(/\s*\(https?:\/\/[^)]+\)\s*$/, "").trim();
+  if (Object.prototype.hasOwnProperty.call(LOCATIONS, withoutMaps)) {
+    return withoutMaps;
+  }
+
+  const lower = withoutMaps.toLowerCase();
+  for (var key in LOCATIONS) {
+    if (Object.prototype.hasOwnProperty.call(LOCATIONS, key) && key.toLowerCase() === lower) {
+      return key;
+    }
+  }
+
+  return "";
+}
+
+function fitsCommuteForLocation(slotStart, slotEnd, locationName, daySessions) {
+  const bookings = daySessions || getDaySessionsWithLocations(slotStart, inferRegionFromLocationName(locationName));
   if (!bookings.length) {
     return true;
   }
@@ -1087,7 +1228,12 @@ function gapBetweenLocations(fromName, toName) {
   if (!fromName || !toName || fromName === toName) {
     return TRANSITION_MINUTES;
   }
-  if (isHomeVisitLocation(fromName) || isHomeVisitLocation(toName)) {
+  if (
+    fromName === UNKNOWN_LOCATION ||
+    toName === UNKNOWN_LOCATION ||
+    isHomeVisitLocation(fromName) ||
+    isHomeVisitLocation(toName)
+  ) {
     return Math.max(TRANSITION_MINUTES, HOME_VISIT_COMMUTE_MINUTES);
   }
   return Math.max(TRANSITION_MINUTES, commuteMinutes(fromName, toName));
@@ -1141,9 +1287,13 @@ function isValidLocationForRegion(locationName, regionId) {
   return Boolean(location && location.region === regionId);
 }
 
-function overlapsBusy(slotStart, slotEnd, events, bufferMs) {
+function overlapsBusy(slotStart, slotEnd, events, bufferMs, excludeEventIds) {
+  excludeEventIds = excludeEventIds || {};
   for (var i = 0; i < events.length; i++) {
     const event = events[i];
+    if (excludeEventIds[event.getId()]) {
+      continue;
+    }
     const busyStart = new Date(event.getStartTime().getTime() - bufferMs);
     const busyEnd = new Date(event.getEndTime().getTime() + bufferMs);
 

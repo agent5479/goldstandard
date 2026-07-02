@@ -92,7 +92,7 @@ type BookingStepFlags = {
 };
 
 function getBookingStepVisualState(step: BookingStepId, flags: BookingStepFlags): BookingStepVisualState {
-  const { stepServiceDone, stepRegionDone, stepTimeDone, stepLocationDone } = flags;
+  const { stepServiceDone, stepRegionDone, stepLocationDone, stepTimeDone } = flags;
   switch (step) {
     case 1:
       return stepServiceDone ? 'done' : 'active';
@@ -101,12 +101,12 @@ function getBookingStepVisualState(step: BookingStepId, flags: BookingStepFlags)
       return stepRegionDone ? 'done' : 'active';
     case 3:
       if (!stepRegionDone) return 'upcoming';
-      return stepTimeDone ? 'done' : 'active';
-    case 4:
-      if (!stepTimeDone) return 'upcoming';
       return stepLocationDone ? 'done' : 'active';
+    case 4:
+      if (!stepLocationDone) return 'upcoming';
+      return stepTimeDone ? 'done' : 'active';
     case 5:
-      return stepLocationDone ? 'active' : 'upcoming';
+      return stepTimeDone ? 'active' : 'upcoming';
   }
 }
 
@@ -134,7 +134,7 @@ async function postToEndpoint<T>(payload: Record<string, string>): Promise<T> {
   return result as T;
 }
 
-/** Booking form: pick region, date/time, location, then confirm details. */
+/** Booking form: pick region, date/location, time, then confirm details. */
 export default function BookForm() {
   const [searchParams] = useSearchParams();
   const serviceRef = useRef<HTMLDivElement>(null);
@@ -151,8 +151,7 @@ export default function BookForm() {
   const [selectedLocationId, setSelectedLocationId] = useState('');
   const [dogBreed, setDogBreed] = useState('');
   const [dogAgeFields, setDogAgeFields] = useState<DogAgeFieldsValue>(() => emptyDogAgeFields());
-  const [loadingSlots, setLoadingSlots] = useState(true);
-  const [refetchingSlots, setRefetchingSlots] = useState(false);
+  const [loadingSlots, setLoadingSlots] = useState(false);
   const [slotsError, setSlotsError] = useState('');
   const [nelsonServiceDay, setNelsonServiceDay] = useState<boolean | undefined>(undefined);
   const [status, setStatus] = useState<FormStatus>({ kind: 'idle' });
@@ -187,40 +186,33 @@ export default function BookForm() {
   }, [status]);
 
   useEffect(() => {
+    const locationForFilter = getLocationById(selectedLocationId);
     if (
       !FORM_ENDPOINT ||
       !selectedRegionId ||
       !selectedServiceType ||
+      !locationForFilter ||
       !isRegionServiceBookableOnline(selectedRegionId, selectedServiceType)
     ) {
       setSlots([]);
       setLoadingSlots(false);
-      setRefetchingSlots(false);
       return;
     }
 
     let cancelled = false;
 
     const loadSlots = async () => {
-      const isRefetch = Boolean(selectedSlot);
       try {
-        if (isRefetch) {
-          setRefetchingSlots(true);
-        } else {
-          setLoadingSlots(true);
-        }
+        setLoadingSlots(true);
         setSlotsError('');
         const payload: Record<string, string> = {
           action: 'availability',
           booking_type: selectedServiceType,
           date,
           region: selectedRegionId,
+          location: locationForFilter.name,
           website: '',
         };
-        const locationForFilter = getLocationById(selectedLocationId);
-        if (locationForFilter && selectedServiceType === 'standard_beach') {
-          payload.location = locationForFilter.name;
-        }
 
         const result = await postToEndpoint<AvailabilityResult>(payload);
 
@@ -228,13 +220,9 @@ export default function BookForm() {
 
         setSlots(result.slots);
         setNelsonServiceDay(result.nelson_service_day);
-        if (selectedLocationId && selectedSlot && !result.slots.some((slot) => slot.start === selectedSlot)) {
-          setSelectedSlot('');
-          setStatus({
-            kind: 'error',
-            message: 'That time is no longer available for your chosen location. Please pick another slot.',
-          });
-        }
+        setSelectedSlot((current) =>
+          current && !result.slots.some((slot) => slot.start === current) ? '' : current
+        );
       } catch {
         if (cancelled) return;
         setSlots([]);
@@ -243,11 +231,7 @@ export default function BookForm() {
         setSlotsError('Unable to load times right now. Try another date or call Warwick on 027 814 2222.');
       } finally {
         if (!cancelled) {
-          if (isRefetch) {
-            setRefetchingSlots(false);
-          } else {
-            setLoadingSlots(false);
-          }
+          setLoadingSlots(false);
         }
       }
     };
@@ -310,25 +294,25 @@ export default function BookForm() {
     setSelectedLocationId('');
     setStatus({ kind: 'idle' });
     if (selectedServiceType && isRegionServiceBookableOnline(regionId, selectedServiceType)) {
-      scrollTo(timeRef);
+      scrollTo(locationRef);
     }
   };
 
   const handleSlotSelect = (slotStart: string) => {
     setSelectedSlot(slotStart);
-    setSelectedLocationId('');
     setStatus({ kind: 'idle' });
-    scrollTo(locationRef);
+    scrollTo(detailsRef);
   };
 
   const handleLocationSelect = (locationId: string) => {
     setSelectedLocationId(locationId);
+    setSelectedSlot('');
     if (!isAddressBasedLocation(locationId)) {
       setClientAddress('');
       setIsHomeAddress(null);
     }
     setStatus({ kind: 'idle' });
-    scrollTo(detailsRef);
+    scrollTo(timeRef);
   };
 
   const handleEliteMeetingConfirm = () => {
@@ -375,13 +359,13 @@ export default function BookForm() {
       return;
     }
 
-    if (!selectedSlot) {
-      setStatus({ kind: 'error', message: 'Please choose a time before confirming.' });
+    if (!location) {
+      setStatus({ kind: 'error', message: 'Please choose a training location.' });
       return;
     }
 
-    if (!location) {
-      setStatus({ kind: 'error', message: 'Please choose a training location.' });
+    if (!selectedSlot) {
+      setStatus({ kind: 'error', message: 'Please choose a time before confirming.' });
       return;
     }
 
@@ -512,17 +496,17 @@ export default function BookForm() {
   const isEliteService = selectedServiceType === 'elite_coaching';
   const stepServiceDone = Boolean(selectedServiceType);
   const stepRegionDone = stepServiceDone && Boolean(selectedRegionId);
-  const stepTimeDone = stepRegionDone && Boolean(selectedSlot);
   const eliteLocationReady =
     isEliteService &&
     Boolean(selectedRegionId) &&
     clientAddress.trim().length > 0 &&
     isHomeAddress !== null;
   const stepLocationDone =
-    stepTimeDone &&
+    stepRegionDone &&
     Boolean(selectedLocationId) &&
     (!isEliteService || eliteLocationReady);
-  const stepDetailsReady = stepLocationDone;
+  const stepTimeDone = stepLocationDone && Boolean(selectedSlot);
+  const stepDetailsReady = stepTimeDone;
   const isNelsonRegion = selectedRegionId === 'nelson-bays';
   const nelsonContactOnly =
     isNelsonRegion &&
@@ -609,11 +593,11 @@ export default function BookForm() {
         </li>
         <li className={bookingStepNavClass(3, stepFlags)}>
           <span className="booking-step-number">3</span>
-          <span>Choose a time</span>
+          <span>{isEliteService ? 'Date & meeting place' : 'Date & location'}</span>
         </li>
         <li className={bookingStepNavClass(4, stepFlags)}>
           <span className="booking-step-number">4</span>
-          <span>{isEliteService ? 'Meeting place' : 'Choose location'}</span>
+          <span>Choose a time</span>
         </li>
         <li className={bookingStepNavClass(5, stepFlags)}>
           <span className="booking-step-number">5</span>
@@ -732,26 +716,29 @@ export default function BookForm() {
       </section>
 
       <section
-        ref={timeRef}
+        ref={locationRef}
         className={bookingStepPanelClass(3, stepFlags)}
-        aria-labelledby="booking-step-1"
+        aria-labelledby="booking-step-location"
         aria-current={getBookingStepVisualState(3, stepFlags) === 'active' ? 'step' : undefined}
       >
         <header className="booking-step-header">
           <p className="booking-step-eyebrow">
             {getBookingStepVisualState(3, stepFlags) === 'active' ? 'Current step' : 'Step 3'}
           </p>
-          <h3 id="booking-step-1" className="booking-step-title">Choose a time</h3>
-          {stepTimeDone && selectedSlotData ? (
+          <h3 id="booking-step-location" className="booking-step-title">
+            {isEliteService ? 'Choose a date & meeting place' : 'Choose a date & location'}
+          </h3>
+          {stepLocationDone && selectedLocation ? (
             <p className="booking-step-done-note">
-              Selected: <strong>{formatDisplayDate(date)}</strong> at{' '}
-              <strong>{shortSlotLabel(selectedSlotData.label)}</strong>
+              Selected: <strong>{formatDisplayDate(date)}</strong>
+              {' · '}
+              <strong>{locationSummaryLabel || selectedLocation.name}</strong>
             </p>
           ) : null}
         </header>
         <div className="booking-step-body">
         {!stepRegionDone ? (
-          <p className="form-hint">Choose a region above to see available times.</p>
+          <p className="form-hint">Choose a region above to continue.</p>
         ) : nelsonContactOnly ? (
           <p className="form-hint">
             Nelson Bays elite coaching is arranged by enquiry — use the contact link in step 2 above.
@@ -772,7 +759,6 @@ export default function BookForm() {
             onChange={(event) => {
               setDate(event.target.value);
               setSelectedSlot('');
-              setSelectedLocationId('');
             }}
           />
         </div>
@@ -783,7 +769,7 @@ export default function BookForm() {
               key={option.value}
               type="button"
               className={`booking-quick-date${date === option.value ? ' is-selected' : ''}`}
-              disabled={endpointMissing || submitting || loadingSlots}
+              disabled={endpointMissing || submitting}
               onClick={() => setDate(option.value)}
             >
               {option.label}
@@ -791,108 +777,7 @@ export default function BookForm() {
           ))}
         </div>
 
-        <p className="form-hint">
-          Showing times for <strong>{formatDisplayDate(date)}</strong> in{' '}
-          <strong>{BOOKING_REGIONS.find((r) => r.id === selectedRegionId)?.label}</strong>.{' '}
-          {slotHoursCopy} Sessions are {sessionMinutes} minutes
-          {isEliteService ? '.' : ` with ${TRANSITION_MINUTES}-minute handover.`}
-          {!isEliteService && selectedRegionId === 'golden-bay' ? (
-            <> Travel time between beaches may reduce availability once you pick a location.</>
-          ) : null}
-        </p>
-
-        <fieldset className="booking-slots-fieldset">
-          <legend>Available times</legend>
-          <div aria-live="polite">
-            {endpointMissing ? (
-              <p className="form-hint">Online booking is not available yet.</p>
-            ) : loadingSlots ? (
-              <p className="booking-loading">Loading available times…</p>
-            ) : slotsError ? (
-              <p className="form-feedback error">{slotsError}</p>
-            ) : isNelsonRegion && nelsonServiceDay === false ? (
-              <p className="form-hint">
-                No Nelson Bays sessions on this date. Warwick must mark the day with an all-day{' '}
-                <strong>NELSON</strong> calendar event first — or{' '}
-                <Link to="/contact">send an enquiry</Link> to arrange a time.
-              </p>
-            ) : slots.length === 0 ? (
-              <p className="form-hint">No open times on this date. Try another day or <a href="tel:+64278142222">call Warwick</a>.</p>
-            ) : (
-              <>
-                {refetchingSlots ? (
-                  <p className="form-hint booking-slots-refetch">Updating availability for your location…</p>
-                ) : null}
-                <div className="booking-slot-list">
-                  {slots.map((slot) => (
-                    <button
-                      key={slot.start}
-                      type="button"
-                      className={`booking-slot-btn${selectedSlot === slot.start ? ' is-selected' : ''}`}
-                      disabled={submitting || refetchingSlots}
-                      aria-pressed={selectedSlot === slot.start}
-                      onClick={() => handleSlotSelect(slot.start)}
-                    >
-                      {shortSlotLabel(slot.label)}
-                    </button>
-                  ))}
-                </div>
-              </>
-            )}
-          </div>
-        </fieldset>
-          </>
-        )}
-        </div>
-      </section>
-
-      {selectedSlotData ? (
-        <p className="booking-summary">
-          {selectedServiceType ? (
-            <>
-              Service: <strong>{BOOKING_SERVICE_TYPES[selectedServiceType].label}</strong>
-              {' · '}
-            </>
-          ) : null}
-          {selectedRegionId ? (
-            <>
-              Region: <strong>{BOOKING_REGIONS.find((r) => r.id === selectedRegionId)?.label}</strong>
-              {' · '}
-            </>
-          ) : null}
-          Time: <strong>{formatDisplayDate(date)}</strong> at <strong>{shortSlotLabel(selectedSlotData.label)}</strong>
-          {selectedLocation ? (
-            <>
-              {' '}
-              · Location: <strong>{locationSummaryLabel}</strong>
-            </>
-          ) : null}
-        </p>
-      ) : null}
-
-      <section
-        ref={locationRef}
-        className={bookingStepPanelClass(4, stepFlags)}
-        aria-labelledby="booking-step-2"
-        aria-current={getBookingStepVisualState(4, stepFlags) === 'active' ? 'step' : undefined}
-      >
-        <header className="booking-step-header">
-          <p className="booking-step-eyebrow">
-            {getBookingStepVisualState(4, stepFlags) === 'active' ? 'Current step' : 'Step 4'}
-          </p>
-          <h3 id="booking-step-2" className="booking-step-title">
-            {isEliteService ? 'Where should we meet?' : 'Choose a location'}
-          </h3>
-          {stepLocationDone && selectedLocation ? (
-            <p className="booking-step-done-note">
-              Selected: <strong>{locationSummaryLabel || selectedLocation.name}</strong>
-            </p>
-          ) : null}
-        </header>
-        <div className="booking-step-body">
-        {!stepTimeDone ? (
-          <p className="form-hint">Choose a time above to continue.</p>
-        ) : isEliteService ? (
+        {isEliteService ? (
           <>
             <p className="form-hint booking-home-visit-pricing">{ELITE_PRICING_NOTE}</p>
             <fieldset className="form-field">
@@ -907,6 +792,7 @@ export default function BookForm() {
                     onChange={() => {
                       setIsHomeAddress(true);
                       setSelectedLocationId('');
+                      setSelectedSlot('');
                     }}
                   />
                   <strong>At my home</strong>
@@ -920,6 +806,7 @@ export default function BookForm() {
                     onChange={() => {
                       setIsHomeAddress(false);
                       setSelectedLocationId('');
+                      setSelectedSlot('');
                     }}
                   />
                   <strong>Custom location</strong>
@@ -939,6 +826,7 @@ export default function BookForm() {
                 onChange={(event) => {
                   setClientAddress(event.target.value);
                   setSelectedLocationId('');
+                  setSelectedSlot('');
                 }}
               />
               <p className="form-hint">
@@ -993,6 +881,110 @@ export default function BookForm() {
             />
           </>
         )}
+          </>
+        )}
+        </div>
+      </section>
+
+      {stepLocationDone && selectedLocation ? (
+        <p className="booking-summary">
+          {selectedServiceType ? (
+            <>
+              Service: <strong>{BOOKING_SERVICE_TYPES[selectedServiceType].label}</strong>
+              {' · '}
+            </>
+          ) : null}
+          {selectedRegionId ? (
+            <>
+              Region: <strong>{BOOKING_REGIONS.find((r) => r.id === selectedRegionId)?.label}</strong>
+              {' · '}
+            </>
+          ) : null}
+          Date: <strong>{formatDisplayDate(date)}</strong>
+          {' · '}
+          Location: <strong>{locationSummaryLabel}</strong>
+          {selectedSlotData ? (
+            <>
+              {' '}
+              · Time: <strong>{shortSlotLabel(selectedSlotData.label)}</strong>
+            </>
+          ) : null}
+        </p>
+      ) : null}
+
+      <section
+        ref={timeRef}
+        className={bookingStepPanelClass(4, stepFlags)}
+        aria-labelledby="booking-step-time"
+        aria-current={getBookingStepVisualState(4, stepFlags) === 'active' ? 'step' : undefined}
+      >
+        <header className="booking-step-header">
+          <p className="booking-step-eyebrow">
+            {getBookingStepVisualState(4, stepFlags) === 'active' ? 'Current step' : 'Step 4'}
+          </p>
+          <h3 id="booking-step-time" className="booking-step-title">Choose a time</h3>
+          {stepTimeDone && selectedSlotData ? (
+            <p className="booking-step-done-note">
+              Selected: <strong>{formatDisplayDate(date)}</strong> at{' '}
+              <strong>{shortSlotLabel(selectedSlotData.label)}</strong>
+            </p>
+          ) : null}
+        </header>
+        <div className="booking-step-body">
+        {!stepLocationDone ? (
+          <p className="form-hint">
+            {isEliteService ? 'Confirm your meeting place above to see available times.' : 'Choose a date and location above to see available times.'}
+          </p>
+        ) : (
+          <>
+        <p className="form-hint">
+          Showing times for <strong>{formatDisplayDate(date)}</strong> at{' '}
+          <strong>{locationSummaryLabel}</strong> in{' '}
+          <strong>{BOOKING_REGIONS.find((r) => r.id === selectedRegionId)?.label}</strong>.{' '}
+          {slotHoursCopy} Sessions are {sessionMinutes} minutes
+          {isEliteService ? '.' : ` with ${TRANSITION_MINUTES}-minute handover between sessions at the same location.`}
+          {!isEliteService ? (
+            <> Travel time between different locations is included automatically.</>
+          ) : null}
+        </p>
+
+        <fieldset className="booking-slots-fieldset">
+          <legend>Available times</legend>
+          <div aria-live="polite">
+            {endpointMissing ? (
+              <p className="form-hint">Online booking is not available yet.</p>
+            ) : loadingSlots ? (
+              <p className="booking-loading">Loading available times…</p>
+            ) : slotsError ? (
+              <p className="form-feedback error">{slotsError}</p>
+            ) : isNelsonRegion && nelsonServiceDay === false ? (
+              <p className="form-hint">
+                No Nelson Bays sessions on this date. Warwick must mark the day with an all-day{' '}
+                <strong>NELSON</strong> calendar event first — or{' '}
+                <Link to="/contact">send an enquiry</Link> to arrange a time.
+              </p>
+            ) : slots.length === 0 ? (
+              <p className="form-hint">No open times on this date for your location. Try another day or <a href="tel:+64278142222">call Warwick</a>.</p>
+            ) : (
+              <div className="booking-slot-list">
+                {slots.map((slot) => (
+                  <button
+                    key={slot.start}
+                    type="button"
+                    className={`booking-slot-btn${selectedSlot === slot.start ? ' is-selected' : ''}`}
+                    disabled={submitting || loadingSlots}
+                    aria-pressed={selectedSlot === slot.start}
+                    onClick={() => handleSlotSelect(slot.start)}
+                  >
+                    {shortSlotLabel(slot.label)}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        </fieldset>
+          </>
+        )}
         </div>
       </section>
 
@@ -1009,10 +1001,8 @@ export default function BookForm() {
           <h3 id="booking-step-3" className="booking-step-title">Your details</h3>
         </header>
         <div className="booking-step-body">
-        {!stepDetailsReady ? (
-          <p className="form-hint">
-            {isEliteService ? 'Confirm your meeting place above to continue.' : 'Choose a location above to continue.'}
-          </p>
+        {!stepTimeDone ? (
+          <p className="form-hint">Choose a time above to continue.</p>
         ) : (
           <>
             <div className="form-field">
