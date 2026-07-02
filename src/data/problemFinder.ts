@@ -348,3 +348,95 @@ export function buildBookingPrioritiesUrl(bookingTags: string[]): string {
   if (priorities.length === 0) return '/book';
   return `/book?priorities=${priorities.join(',')}`;
 }
+
+export const PROBLEM_FINDER_HANDOFF_KEY = 'gsdt_problem_finder_handoff';
+export const PROBLEM_FINDER_HANDOFF_TTL_MS = 60 * 60 * 1000;
+
+export interface ProblemFinderHandoff {
+  message: string;
+  outcomeIds: ProblemOutcomeId[];
+  contextId: ProblemContextId;
+  impact: ImpactLevel;
+  createdAt: number;
+}
+
+export function toggleProblemOutcome(
+  ids: ProblemOutcomeId[],
+  id: ProblemOutcomeId,
+): ProblemOutcomeId[] {
+  return ids.includes(id) ? ids.filter((entry) => entry !== id) : [...ids, id];
+}
+
+export function mergeOutcomes(ids: ProblemOutcomeId[]): ProblemOutcome[] {
+  return ids.map((id) => getOutcomeById(id));
+}
+
+export function mergeGuideLinks(outcomes: ProblemOutcome[]): ProblemGuideLink[] {
+  const seen = new Set<string>();
+  const links: ProblemGuideLink[] = [];
+  for (const outcome of outcomes) {
+    for (const link of outcome.guideLinks) {
+      if (seen.has(link.anchor)) continue;
+      seen.add(link.anchor);
+      links.push(link);
+    }
+  }
+  return links;
+}
+
+export function mergeBookingTags(outcomes: ProblemOutcome[]): string[] {
+  const tags = new Set<string>();
+  for (const outcome of outcomes) {
+    for (const tag of outcome.bookingTags) tags.add(tag);
+  }
+  return [...tags];
+}
+
+export function buildEnquiryMessage(
+  context: ProblemContext,
+  outcomes: ProblemOutcome[],
+  impact: ImpactLevel,
+): string {
+  const issueLines = outcomes.map((outcome) => `- ${outcome.label}`).join('\n');
+  return [
+    'Problem Finder summary',
+    '',
+    `Where: ${context.label}`,
+    'Issues:',
+    issueLines,
+    `How much it's affecting us: ${IMPACT_LABELS[impact]}`,
+    '',
+    "I'd like help with these areas. Please let me know the best next step.",
+  ].join('\n');
+}
+
+export function saveProblemFinderHandoff(handoff: ProblemFinderHandoff): void {
+  sessionStorage.setItem(PROBLEM_FINDER_HANDOFF_KEY, JSON.stringify(handoff));
+}
+
+export function loadProblemFinderHandoff(): ProblemFinderHandoff | null {
+  const raw = sessionStorage.getItem(PROBLEM_FINDER_HANDOFF_KEY);
+  if (!raw) return null;
+
+  try {
+    const handoff = JSON.parse(raw) as ProblemFinderHandoff;
+    if (!handoff.message || !handoff.contextId || !Array.isArray(handoff.outcomeIds)) return null;
+    if (Date.now() - handoff.createdAt > PROBLEM_FINDER_HANDOFF_TTL_MS) {
+      sessionStorage.removeItem(PROBLEM_FINDER_HANDOFF_KEY);
+      return null;
+    }
+    return handoff;
+  } catch {
+    sessionStorage.removeItem(PROBLEM_FINDER_HANDOFF_KEY);
+    return null;
+  }
+}
+
+export function clearProblemFinderHandoff(): void {
+  sessionStorage.removeItem(PROBLEM_FINDER_HANDOFF_KEY);
+}
+
+export function getImpactNote(outcomes: ProblemOutcome[], impact: ImpactLevel): string {
+  if (outcomes.length === 0) return IMPACT_LABELS[impact];
+  return outcomes[0].urgencyNotes[impact];
+}

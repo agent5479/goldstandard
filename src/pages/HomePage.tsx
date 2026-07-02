@@ -127,11 +127,11 @@ export default function HomePage() {
 
       <section className="resources" id="resources">
         <div className="section-inner">
-          <p className="section-label">Explore &amp; test</p>
-          <h2>Learn the method</h2>
+          <p className="section-label">Tools &amp; resources</p>
+          <h2>Explore at your own pace</h2>
           <p className="resources-lead">
-            Between sessions, use the guide to stay consistent, compare breeds when choosing or training a mix,
-            and test your knowledge when you are ready.
+            Free self-service tools for before, between, and after sessions — clarify your goals, read the guide,
+            compare breeds, test your knowledge, and more as new tools are added.
           </p>
           <div className="resource-cards">
             <Link to="/guide" className="resource-card">

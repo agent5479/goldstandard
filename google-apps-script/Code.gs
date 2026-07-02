@@ -193,7 +193,7 @@ function handleEnquiry(data) {
   const dogAge = String(data.dog_age || "").trim();
   const message = String(data.message || "").trim();
 
-  if (!name || !phone || !email || !message) {
+  if (!name || !email || !message) {
     return jsonResponse({ success: false, message: "Missing required fields." });
   }
 
@@ -226,7 +226,7 @@ function handleEnquiry(data) {
     body:
       "Type: Enquiry\n" +
       "Name: " + name + "\n" +
-      "Phone: " + phone + "\n" +
+      "Phone: " + (phone || "(not provided)") + "\n" +
       "Email: " + email + "\n" +
       "Dog: " + (dogName || "(not provided)") + "\n" +
       "Breed: " + (dogBreed || "(not provided)") + "\n" +

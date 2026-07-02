@@ -1,12 +1,18 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   buildBookingPrioritiesUrl,
+  buildEnquiryMessage,
   getContextById,
-  getOutcomeById,
+  getImpactNote,
   getOutcomesForContext,
   IMPACT_LABELS,
+  mergeBookingTags,
+  mergeGuideLinks,
+  mergeOutcomes,
   PROBLEM_CONTEXTS,
+  saveProblemFinderHandoff,
+  toggleProblemOutcome,
   type ImpactLevel,
   type ProblemContextId,
   type ProblemOutcomeId,
@@ -27,9 +33,10 @@ function stepIndex(step: FinderStep): number {
 }
 
 export default function ProblemFinderModal({ open, onClose }: ProblemFinderModalProps) {
+  const navigate = useNavigate();
   const [step, setStep] = useState<FinderStep>('context');
   const [contextId, setContextId] = useState<ProblemContextId | null>(null);
-  const [outcomeId, setOutcomeId] = useState<ProblemOutcomeId | null>(null);
+  const [outcomeIds, setOutcomeIds] = useState<ProblemOutcomeId[]>([]);
   const [impact, setImpact] = useState<ImpactLevel>(3);
   const dialogRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
@@ -38,7 +45,7 @@ export default function ProblemFinderModal({ open, onClose }: ProblemFinderModal
   const reset = useCallback(() => {
     setStep('context');
     setContextId(null);
-    setOutcomeId(null);
+    setOutcomeIds([]);
     setImpact(3);
   }, []);
 
@@ -71,13 +78,14 @@ export default function ProblemFinderModal({ open, onClose }: ProblemFinderModal
 
   const currentStep = stepIndex(step);
   const progress = step === 'results' ? 100 : Math.round((currentStep / 3) * 100);
-  const outcome = outcomeId ? getOutcomeById(outcomeId) : null;
   const context = contextId ? getContextById(contextId) : null;
+  const outcomes = mergeOutcomes(outcomeIds);
   const issueOptions = contextId ? getOutcomesForContext(contextId) : [];
+  const guideLinks = mergeGuideLinks(outcomes);
+  const bookingTags = mergeBookingTags(outcomes);
 
   const goBack = () => {
     if (step === 'issue') {
-      setOutcomeId(null);
       setStep('context');
     } else if (step === 'impact') {
       setStep('issue');
@@ -88,17 +96,35 @@ export default function ProblemFinderModal({ open, onClose }: ProblemFinderModal
 
   const selectContext = (id: ProblemContextId) => {
     setContextId(id);
-    setOutcomeId(null);
+    setOutcomeIds([]);
     setStep('issue');
   };
 
-  const selectOutcome = (id: ProblemOutcomeId) => {
-    setOutcomeId(id);
-    setStep('impact');
+  const toggleOutcome = (id: ProblemOutcomeId) => {
+    setOutcomeIds((prev) => toggleProblemOutcome(prev, id));
+  };
+
+  const continueToImpact = () => {
+    if (outcomeIds.length > 0) setStep('impact');
   };
 
   const showResults = () => {
     setStep('results');
+  };
+
+  const sendEnquiry = () => {
+    if (!context || outcomes.length === 0) return;
+
+    saveProblemFinderHandoff({
+      message: buildEnquiryMessage(context, outcomes, impact),
+      outcomeIds,
+      contextId: context.id,
+      impact,
+      createdAt: Date.now(),
+    });
+
+    handleClose();
+    navigate('/contact?from=problem-finder');
   };
 
   return (
@@ -169,17 +195,18 @@ export default function ProblemFinderModal({ open, onClose }: ProblemFinderModal
         {step === 'issue' && context && (
           <section className="problem-finder-step" aria-labelledby="pf-issue-heading">
             <p id="pf-issue-heading" className="problem-finder-lead">
-              What is the main issue?
+              Select all that apply
             </p>
+            <p className="problem-finder-select-hint">Choose every issue you want help with.</p>
             <p className="problem-finder-context-note">You chose: {context.label}</p>
             <div className="problem-finder-cards problem-finder-cards--compact">
               {issueOptions.map((entry) => (
                 <button
                   key={entry.id}
                   type="button"
-                  className={`exam-category-card problem-finder-card${outcomeId === entry.id ? ' is-selected' : ''}`}
-                  aria-pressed={outcomeId === entry.id}
-                  onClick={() => selectOutcome(entry.id)}
+                  className={`exam-category-card problem-finder-card${outcomeIds.includes(entry.id) ? ' is-selected' : ''}`}
+                  aria-pressed={outcomeIds.includes(entry.id)}
+                  onClick={() => toggleOutcome(entry.id)}
                 >
                   <span className="problem-finder-card-title">{entry.label}</span>
                 </button>
@@ -189,16 +216,26 @@ export default function ProblemFinderModal({ open, onClose }: ProblemFinderModal
               <button type="button" className="btn btn-secondary" onClick={goBack}>
                 Back
               </button>
+              <button
+                type="button"
+                className="btn btn-primary"
+                disabled={outcomeIds.length === 0}
+                onClick={continueToImpact}
+              >
+                Continue
+              </button>
             </div>
           </section>
         )}
 
-        {step === 'impact' && outcome && (
+        {step === 'impact' && context && outcomes.length > 0 && (
           <section className="problem-finder-step" aria-labelledby="pf-impact-heading">
             <p id="pf-impact-heading" className="problem-finder-lead">
               How much is this affecting daily life?
             </p>
-            <p className="problem-finder-context-note">Main issue: {outcome.label}</p>
+            <p className="problem-finder-context-note">
+              Focus areas: {outcomes.map((entry) => entry.label).join(', ')}
+            </p>
 
             <div className="problem-finder-impact">
               <input
@@ -247,17 +284,21 @@ export default function ProblemFinderModal({ open, onClose }: ProblemFinderModal
           </section>
         )}
 
-        {step === 'results' && outcome && (
+        {step === 'results' && context && outcomes.length > 0 && (
           <section className="problem-finder-step problem-finder-results" aria-labelledby="pf-results-heading">
-            <p className="problem-finder-kicker">Your main focus</p>
-            <h3 id="pf-results-heading">{outcome.label}</h3>
-            <p className="problem-finder-summary">{outcome.summary}</p>
-            <p className="problem-finder-urgency">{outcome.urgencyNotes[impact]}</p>
+            <p className="problem-finder-kicker">Your focus areas</p>
+            <h3 id="pf-results-heading" className="visually-hidden">Your focus areas</h3>
+            <ul className="problem-finder-focus-list">
+              {outcomes.map((entry) => (
+                <li key={entry.id}>{entry.label}</li>
+              ))}
+            </ul>
+            <p className="problem-finder-urgency">{getImpactNote(outcomes, impact)}</p>
 
             <div className="problem-finder-reading">
               <p className="problem-finder-reading-label">Recommended reading</p>
               <ul className="problem-finder-guide-links">
-                {outcome.guideLinks.map((link) => (
+                {guideLinks.map((link) => (
                   <li key={link.anchor}>
                     <Link to={`/guide#${link.anchor}`} onClick={handleClose}>
                       {link.label} →
@@ -268,15 +309,15 @@ export default function ProblemFinderModal({ open, onClose }: ProblemFinderModal
             </div>
 
             <div className="problem-finder-actions">
+              <button type="button" className="btn btn-primary" onClick={sendEnquiry}>
+                Send enquiry to Warwick
+              </button>
               <Link
-                to={buildBookingPrioritiesUrl(outcome.bookingTags)}
-                className="btn btn-primary"
+                to={buildBookingPrioritiesUrl(bookingTags)}
+                className="btn btn-secondary"
                 onClick={handleClose}
               >
                 Book a session
-              </Link>
-              <Link to="/contact" className="btn btn-secondary" onClick={handleClose}>
-                Send an enquiry
               </Link>
               <Link to="/guide" className="problem-finder-tertiary" onClick={handleClose}>
                 Read the full guide

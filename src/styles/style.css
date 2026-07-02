@@ -5251,6 +5251,28 @@ body.problem-finder-open {
   margin-bottom: 1rem;
 }
 
+.problem-finder-select-hint {
+  font-size: 0.92rem;
+  color: var(--light-text);
+  margin-bottom: 0.35rem;
+}
+
+.problem-finder-cards--compact .problem-finder-card.is-selected {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 2px rgba(201, 162, 39, 0.35);
+  background: rgba(201, 162, 39, 0.06);
+}
+
+.problem-finder-focus-list {
+  margin: 0 0 1rem;
+  padding-left: 1.2rem;
+  color: var(--forest);
+}
+
+.problem-finder-focus-list li + li {
+  margin-top: 0.25rem;
+}
+
 .problem-finder-cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -5418,6 +5440,14 @@ body.problem-finder-open {
 
 a.problem-finder-tertiary {
   text-decoration: underline;
+}
+
+.contact-form--problem-finder .problem-finder-contact-hint {
+  margin-bottom: 1rem;
+  padding: 0.85rem 1rem;
+  background: var(--surface-soft);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 4px 4px 0;
 }
 
 @media (max-width: 560px) {
