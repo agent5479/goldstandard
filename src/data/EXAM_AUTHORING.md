@@ -2,6 +2,16 @@
 
 Questions live in `examQuestions.ts` and `examTraitQuestions.ts`. The **first option** is always correct; the engine shuffles at play time.
 
+## Plain language
+
+Write for mixed reading levels. Prefer short, concrete sentences. Use active voice and clear subjects (`Your dog…`, `You…`).
+
+- **Stems** — one scenario, one question (~12–25 words for owner track). Prefer positive framing over “What should you NOT do?” when possible.
+- **Options** — plain words first. Keep model terms only when they are the teaching point (e.g. *one-second window*, *life rewards*, *whale eye*, *go-get*, *ready stance*). Prefer “long staring” over abstract stacks like “attachment distortion.”
+- **Explanations** — one or two short sentences: what to do and why. Same plain-language bar as options. Gold Standard voice (handler decides, permission before action, earned freedom) — not neutral textbook tone.
+
+Technical terms stay where the guide requires them; introduce them in context, not as jargon stacks.
+
 ## Distractor rules
 
 1. **No meta-distractors** — wrong options must sound like beliefs a real owner or trainer might hold. Never tag an option with exam metadata (`— not the guide`, `— as entitlement rather than earned access`, etc.).
@@ -12,11 +22,17 @@ Questions live in `examQuestions.ts` and `examTraitQuestions.ts`. The **first op
    - Wrong timing (act after lunge, wait for maturity, correct too late)
    - Wrong tool (treats only, ignore, wrong equipment)
 
-3. **Calibrated language** — avoid absurd absolutes in wrong options (`forever`, `always`, `never`, `every time`, `without exception`, `all dogs`). Plausible over-corrections are fine (`Keep them on-lead until you feel fully confident`).
+3. **Rich distractors** — each wrong option needs:
+   1. A specific action or belief, and
+   2. A brief rationale that makes the belief sound reasonable to someone who has not read the guide.
 
-4. **Match length** — four options should be similar clause length and grammar. Do not make one option obviously shorter.
+   Do not pad with empty words; pad with **belief-level detail**. Short, vague wrong options are easy to rule out.
 
-5. **Short stems** — one scenario, one question (~15–25 words for owner track).
+4. **Calibrated language** — avoid absurd absolutes in wrong options (`forever`, `always`, `never`, `every time`, `without exception`, `all dogs`). Plausible over-corrections are fine (`Keep them on-lead until you feel fully confident`).
+
+5. **Match length** — four options should be similar clause length and grammar. Wrong options should stay within about 60–150% of the correct option’s word count (enforced by `npm run lint:exam`).
+
+6. **Short stems** — one scenario, one question (~12–25 words for owner track).
 
 ## Breed and dedup metadata
 
@@ -38,7 +54,7 @@ Every question's `guideLink` must resolve to a known anchor in `guideAnchors.ts`
 
 ### Voice
 
-Explanations should reflect Gold Standard values from the client playbook — handler decides, permission before action, earned freedom, honest lifestyle tradeoffs — not neutral textbook tone.
+Explanations should reflect Gold Standard values from the client playbook — handler decides, permission before action, earned freedom, honest lifestyle tradeoffs — not neutral textbook tone. Use the same plain-language bar as stems and options.
 
 ### dedupGroup values
 
@@ -90,11 +106,25 @@ options: [
 
 ```ts
 options: [
-  'Allow the brief processing window — step in only if fixation locks in',
-  'Pop the leash each time the head turns, even when the body stays loose',
-  'Stop and wait until the dog looks away on its own before moving again',
-  'Drop the lead so the dog can self-regulate without handler structure',
+  'Allow a brief look when the body stays loose — step in only if the dog stiffens, stares hard, or starts to vocalise',
+  'Pop the leash each time the head turns, even when the body stays loose, so the dog never practises looking away',
+  'Stop and wait until the dog looks away on its own before you move again, so it learns to choose focus',
+  'Drop the lead so the dog can settle itself without handler structure in a busy setting',
 ],
+```
+
+### Thin distractor (bad — easy to rule out)
+
+```ts
+'Allow it — toy dogs cannot cause real harm at this size',
+'Only when the feet leave the ground — wait for the full lunge',
+```
+
+### Rich distractor (good — action + rationale)
+
+```ts
+'Allow it for now — at this size the jump is more cute than dangerous, and guests usually enjoy the greeting',
+'Wait until the feet leave the ground — early leash pops can make a herding dog more intense about the trigger',
 ```
 
 ### Absolute tell (bad)
@@ -118,9 +148,9 @@ text: 'You hold prolonged eye contact with your herding-type dog during calm tim
 Prefer breed-named versions in trait pool; category universals use:
 
 ```ts
-text: 'Why is extended face-to-face gazing risky with a visual, herding-type dog?',
+text: 'Why is long face-to-face staring risky with a visual, herding-type dog?',
 ```
 
 ## Validation
 
-Run `npm run lint:exam` to catch banned patterns in wrong options before committing.
+Run `npm run lint:exam` to catch banned patterns, absurd absolutes, option length imbalance, and negative-framed stems before committing.

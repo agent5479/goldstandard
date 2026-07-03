@@ -10,12 +10,13 @@ export const traitExamQuestions: Question[] = [
     dedupGroup: 'distraction-glance',
     text: 'On-lead, your dog glances at a distraction then returns to heel with a loose body. What should you do?',
     options: [
-      'Allow the brief processing window — step in only if fixation locks in (stiffening, sustained stare, vocalising)',
-      'Pop the leash each time the head turns, even when the body stays loose',
-      'Stop and wait until the dog looks away on its own before moving again',
-      'Drop the lead so the dog can self-regulate without handler structure',
+      'Allow a brief look when the body stays loose — step in only if the dog stiffens, stares hard, or starts to vocalise',
+      'Pop the leash each time the head turns, even when the body stays loose, so the dog stops practising looking away',
+      'Stop and wait until the dog looks away on its own before you move again, so it learns to choose focus',
+      'Drop the lead so the dog can settle itself without handler structure in a busy setting',
     ],
-    explanation: 'A brief look-at-trigger with a loose body is not the same as fixation. Allow the self-regulation beat; intervene within the one-second window when arousal builds.',
+    explanation:
+      'A brief look with a loose body is not fixation. You allow that beat; you step in within the one-second window when arousal builds.',
     guideLink: '#distraction-processing',
   },
   {
@@ -25,11 +26,12 @@ export const traitExamQuestions: Question[] = [
     text: 'When should structured dog meetings typically stay on-lead?',
     options: [
       'Until social maturity — often around three years — even when recall is good in quiet settings',
-      'Only for the first month after adoption, then trust off-lead greetings',
-      'Leash meetings create reactivity, so skip them and go straight to off-lead',
-      'Only when the other owner asks — otherwise let dogs sort it out',
+      'Only for the first month after adoption, then trust off-lead greetings because the dog knows you',
+      'Skip leash meetings and go straight to off-lead so the dog does not learn to pull toward other dogs',
+      'Only when the other owner asks — otherwise let the dogs sort the greeting out themselves',
     ],
-    explanation: 'Leash on for meetings until the dog can navigate social rank and arousal reliably — social maturity often lands around three years.',
+    explanation:
+      'Meetings stay on-lead until the dog can handle social rank and arousal reliably. Social maturity often lands around three years — you decide when freedom is earned.',
     guideLink: '#dog-meetings-leash',
   },
   {
@@ -38,12 +40,13 @@ export const traitExamQuestions: Question[] = [
     track: 'both',
     text: 'An intact dog approaches for an unstructured greeting. What should you do?',
     options: [
-      'Keep structure — do not assume the other owner will manage; leash, space, and earned calm before close contact',
-      'Trust the other owner because their dog is friendly and well socialised',
-      'Let dogs sort rank off-lead to build confidence and social skill',
-      'Avoid all dog contact until the dog is neutered',
+      'Keep structure — leash, space, and earned calm before close contact; do not assume the other owner will manage',
+      'Trust the other owner because their dog is friendly and well socialised, so a free greeting should be fine',
+      'Let the dogs sort rank off-lead so yours builds confidence and social skill without handler interference',
+      'Avoid all dog contact until yours is neutered, because intact meetings are too risky to manage at all',
     ],
-    explanation: 'Unstructured meetings with intact dogs require protocol, not hope. Control space and contact until calm is earned.',
+    explanation:
+      'Unstructured meetings with intact dogs need protocol, not hope. You control space and contact until calm is earned.',
     guideLink: '#intact-muzzle-protocol',
   },
   {
@@ -53,11 +56,12 @@ export const traitExamQuestions: Question[] = [
     text: 'Two familiar dogs meet regularly. What is rank navigation in this frame?',
     options: [
       'Dogs learn who leads whom through structured contact — the handler sets the frame so negotiation stays calm',
-      'Rank does not exist between pet dogs, so unstructured play is fine',
-      'The smaller dog should yield without handler input whenever tension appears',
-      'Separate them permanently after any growl — no further structured contact',
+      'Rank does not exist between pet dogs, so unstructured play is fine and teaches them to get along',
+      'The smaller dog should yield without handler input whenever tension appears, because size decides rank',
+      'Separate them for good after any growl — growling means they cannot share structured contact again',
     ],
-    explanation: 'Dogs navigate rank; your job is to structure meetings so learning stays safe and does not rehearse chaos.',
+    explanation:
+      'Dogs navigate rank; your job is to structure meetings so learning stays safe and does not rehearse chaos.',
     guideLink: '#dominance-navigation',
   },
   {
@@ -67,11 +71,12 @@ export const traitExamQuestions: Question[] = [
     text: 'The other dog in a meeting is braced, weight forward, and staring hard. What should you do first?',
     options: [
       'Increase distance and hold structure — do not close space while the other dog is in ready stance',
-      'Encourage a nose-to-nose greeting to break tension and show goodwill',
-      'Reassure your dog with treats to build confidence in the moment',
-      'Turn your back so the dogs can sort it out without handler interference',
+      'Encourage a nose-to-nose greeting to break tension and show goodwill between the dogs',
+      'Reassure your dog with treats in the moment so it builds confidence near the other dog',
+      'Turn your back so the dogs can sort it out without handler interference making things worse',
     ],
-    explanation: 'A braced, staring dog is not ready for close contact. Read the other dog\'s ready stance and manage space before escalation.',
+    explanation:
+      'A braced, staring dog is not ready for close contact. Read the other dog\'s ready stance and manage space before escalation.',
     guideLink: '#other-dog-ready-stance',
   },
   {
@@ -81,11 +86,12 @@ export const traitExamQuestions: Question[] = [
     text: 'Your dog jumps on you repeatedly when you arrive home. Which correction fits here?',
     options: [
       'Collar grab and forced sit — interrupt the jump cycle, then settle before warmth returns',
-      'Ignore until the dog calms on its own — jumping is just excitement',
-      'Step back and offer a treat for four paws down only',
-      'Push the dog away gently each time without a full reset',
+      'Ignore until the dog calms on its own — jumping is just excitement and will fade with time',
+      'Step back and offer a treat for four paws down only, so the dog learns jumping loses rewards',
+      'Push the dog away gently each time without a full reset, so it learns you do not want contact',
     ],
-    explanation: 'Jumping up is addressed with collar snatch and forced sit — interrupt, reposition, settle, then rebuild calm contact.',
+    explanation:
+      'Jumping up gets a collar grab and forced sit. You interrupt, reposition, settle, then rebuild calm contact on your terms.',
     guideLink: '#jumping-up',
   },
   {
@@ -95,11 +101,12 @@ export const traitExamQuestions: Question[] = [
     text: 'Your dog mouths your hand during play and you feel it escalating. How should you respond?',
     options: [
       'It is not a game — interrupt with gruff correction or collar grab; play with rules, not endless tolerance',
-      'Let mouthing continue until the dog tires — puppies need to learn bite inhibition naturally',
-      'Redirect to a toy only and avoid correcting mouth contact on the handler',
-      'Yelp like a puppy to teach bite inhibition through social feedback',
+      'Let mouthing continue until the dog tires — puppies need to learn bite inhibition through natural play',
+      'Redirect to a toy only and avoid correcting mouth contact on the handler, so play stays positive',
+      'Yelp like a puppy to teach bite inhibition through social feedback, the way littermates would',
     ],
-    explanation: 'Mouthing that escalates is not play to indulge. Dog language corrections are matter-of-fact, not negotiable.',
+    explanation:
+      'Mouthing that escalates is not play to indulge. Dog-language corrections are matter-of-fact — you set the rules.',
     guideLink: '#not-a-game',
   },
   {
@@ -109,11 +116,12 @@ export const traitExamQuestions: Question[] = [
     text: 'You speak to your dog in baby talk when it whines at the door. What is the risk?',
     options: [
       'You may be reinforcing distress — calm structure and earned access beat soothing the emotion in the moment',
-      'Baby talk builds trust and should be used whenever the dog is anxious',
-      'Tone does not matter if treats follow the whining',
-      'Only harsh tones damage dogs — soft talk is harmless',
+      'Baby talk builds trust and should be used whenever the dog is anxious, so it feels safe with you',
+      'Tone does not matter if treats follow the whining, because food overrides how you sound',
+      'Only harsh tones damage dogs — soft talk is harmless and helps the dog settle faster',
     ],
-    explanation: 'Baby talk and soothing during reactions can reinforce the loop. Hold structure; reward earned calm, not the episode.',
+    explanation:
+      'Baby talk and soothing during reactions can reinforce the loop. Hold structure; reward earned calm, not the episode.',
     guideLink: '#common-pitfalls',
   },
   {
@@ -124,11 +132,12 @@ export const traitExamQuestions: Question[] = [
     text: 'Your dog has constant lap access and sleeps on the bed every night. What does this mean for boundaries?',
     options: [
       'What you permit at home shapes what you get everywhere — blurred access can affect rank and threshold behaviour',
-      'Bed access does not affect training if the dog is loved and bonded',
-      'Only large breeds need boundary rules at home',
-      'Home boundaries are optional if walks are structured',
+      'Bed access does not affect training if the dog is loved and bonded, because affection builds cooperation',
+      'Only large breeds need boundary rules at home — small dogs cannot challenge rank through lap access',
+      'Home boundaries are optional if walks are structured, because outdoor work covers the relationship frame',
     ],
-    explanation: 'Household boundaries are structure, not moral judgment. Lap and bed access can blur the relationship frame the method depends on.',
+    explanation:
+      'Household boundaries are structure, not moral judgment. Lap and bed access can blur the relationship frame this method depends on.',
     guideLink: '#common-pitfalls',
   },
   {
@@ -138,11 +147,12 @@ export const traitExamQuestions: Question[] = [
     text: 'A confident adolescent dog tests boundaries daily with mounting and barging. How firm should correction be?',
     options: [
       'Firmer line than with a soft puppy — still not personal, still instant release after the correction',
-      'Softer than with a puppy because adolescents are emotionally fragile',
-      'No physical correction until three years old — wait for full maturity',
-      'Maximum firmness first to establish leadership before any warmth returns',
+      'Softer than with a puppy because adolescents are emotionally fragile and need extra reassurance',
+      'No physical correction until three years old — wait for full maturity before holding a firm line',
+      'Maximum firmness first to establish leadership before any warmth returns for the rest of the day',
     ],
-    explanation: 'Adolescents test hard; the volume of the hand rises while the standard holds. Correct in the act; rebuild with calm neutrality.',
+    explanation:
+      'Adolescents test hard; the volume of the hand rises while the standard holds. Correct in the act; rebuild with calm neutrality.',
     guideLink: '#breed-age-intensity',
   },
   {
@@ -152,11 +162,12 @@ export const traitExamQuestions: Question[] = [
     text: 'An adult dog with shutdown history flinches at sudden movement. What approach fits?',
     options: [
       'Lighter entry and slower arc — structure without flooding; avoid shocking physical escalation early',
-      'The same firmness as a confident pushy adult from day one',
-      'Avoid all correction until trust is perfect',
-      'Only verbal praise until six months of bonding',
+      'The same firmness as a confident pushy adult from day one, so the dog learns the standard fast',
+      'Avoid all correction until trust is perfect, because any firm line will undo the bond you are building',
+      'Only verbal praise until six months of bonding, so the dog feels safe before any physical tools',
     ],
-    explanation: 'Trauma and shutdown history need lighter entry and patience — the standard remains, but flooding confirms the world is unsafe.',
+    explanation:
+      'Shutdown history needs lighter entry and patience. The standard remains, but flooding confirms the world is unsafe.',
     guideLink: '#breed-age-intensity',
   },
   {
@@ -166,11 +177,12 @@ export const traitExamQuestions: Question[] = [
     text: 'Before a lunge, your dog freezes with weight forward and a hard stare at a trigger. What is this?',
     options: [
       'The dog\'s ready stance — read it early and intervene before the body commits',
-      'A sign the dog only needs more distance — no correction yet',
-      'Play bow confusion — the dog is inviting interaction',
-      'Dominance that requires you to stare back harder to reclaim leadership',
+      'A sign the dog only needs more distance — no correction yet, because stillness means it is thinking',
+      'Play bow confusion — the dog is inviting interaction and will settle once contact starts',
+      'Dominance that requires you to stare back harder to reclaim leadership in the moment',
     ],
-    explanation: 'Braced weight forward and hard stare is the dog\'s ready stance — the precursor window before movement.',
+    explanation:
+      'Braced weight forward and a hard stare is the dog\'s ready stance — the window before movement. You act before the body commits.',
     guideLink: '#dog-ready-stance',
   },
 
@@ -183,11 +195,12 @@ export const traitExamQuestions: Question[] = [
     text: 'You have a Miniature Poodle. Your frustrated shouting during a reaction seems to make the dog more animated. What is happening?',
     options: [
       'Puzzle-driven types may read handler frustration as an interactive game — stay calm and matter-of-fact',
-      'The dog is dominant and needs harsher shouting to match the energy',
-      'Ignore all reactions until the dog gives up — attention feeds the behaviour',
-      'Only food rewards work for intelligent breeds — shouting has no role',
+      'The dog is dominant and needs harsher shouting to match the energy and win the argument',
+      'Ignore all reactions until the dog gives up — attention feeds the behaviour, so silence is the fix',
+      'Only food rewards work for intelligent breeds — shouting has no role and should be dropped entirely',
     ],
-    explanation: 'Poodle-family puzzle drive can gamify owner frustration. Calm delivery and structured access beat escalating drama.',
+    explanation:
+      'Poodle-family puzzle drive can turn owner frustration into a game. Calm delivery and structured access beat escalating drama.',
     guideLink: '#distraction-processing',
   },
   {
@@ -198,11 +211,12 @@ export const traitExamQuestions: Question[] = [
     text: 'You have a Toy Poodle. Guests laugh when it snaps because it is tiny. What should you do?',
     options: [
       'Hold the same boundary standard as for a large dog — size excuses teach rank-testing that will not stay cute',
-      'Allow it — toy dogs cannot cause real harm at this size',
-      'Carry the dog away without correction to avoid stress',
-      'Only correct when someone complains — otherwise let guests enjoy the moment',
+      'Allow it for now — at this size the snap is more cute than dangerous, and guests usually enjoy the moment',
+      'Carry the dog away without correction to avoid stress, because tiny dogs cannot handle firm boundaries',
+      'Only correct when someone complains — otherwise let guests enjoy the greeting and keep the mood light',
     ],
-    explanation: 'Toy scale intensifies indulgence pitfalls. The standard is universal; delivery is calibrated to size.',
+    explanation:
+      'Toy scale intensifies indulgence pitfalls. The standard is universal; you calibrate delivery to size, not the rule.',
     guideLink: '#common-pitfalls',
   },
   {
@@ -213,11 +227,12 @@ export const traitExamQuestions: Question[] = [
     text: 'You have a Cavoodle. The dog whines when left and you soothe with baby talk. What is the risk?',
     options: [
       'Stress-sensitive crosses can spiral when distress is rewarded in the moment — structure and earned calm instead',
-      'Soothing builds security for companion crosses — keep reassuring until calm',
-      'Separation whining means the dog needs more lap time and closeness',
-      'Only crate training can fix this — structure at the door is irrelevant',
+      'Soothing builds security for companion crosses — keep reassuring until the dog calms and feels safe',
+      'Separation whining means the dog needs more lap time and closeness so it trusts you will return',
+      'Only crate training can fix this — structure at the door is irrelevant if the dog sleeps alone at night',
     ],
-    explanation: 'Cavoodle-type crosses inherit miniature-poodle stress sensitivity. Reward earned calm, not the episode.',
+    explanation:
+      'Cavoodle-type crosses inherit miniature-poodle stress sensitivity. Reward earned calm, not the episode.',
     guideLink: '#common-pitfalls',
   },
   {
@@ -228,11 +243,12 @@ export const traitExamQuestions: Question[] = [
     text: 'You have a Golden Retriever. After a correction, how should recovery look?',
     options: [
       'Calm matter-of-fact reset, then rebuild warmth quickly — they tolerate recovery well when delivery is fair',
-      'Cold withdrawal for ten minutes so the lesson lands',
-      'Skip correction and use treats only for this people-focused type',
-      'Extra firmness because retrievers ignore soft tools',
+      'Cold withdrawal for ten minutes so the lesson lands and the dog has time to think about what it did',
+      'Skip correction and use treats only for this people-focused type, because firm tools damage the bond',
+      'Extra firmness because retrievers ignore soft tools and need a stronger message to respect you',
     ],
-    explanation: 'Golden Retriever–stable types bond intensely but recover well from fair, calm correction — rebuild warmth after the reset.',
+    explanation:
+      'Golden Retriever–stable types bond intensely but recover well from fair, calm correction. Rebuild warmth after the reset.',
     guideLink: '#breed-temperament',
   },
   {
@@ -243,11 +259,12 @@ export const traitExamQuestions: Question[] = [
     text: 'You have a Standard Poodle. Mental work keeps slipping because walks are only physical. What is missing?',
     options: [
       'Channel puzzle drive into structured tasks and access training — mental work is not optional for this type',
-      'More fetch until tired — physical exhaustion replaces mental structure',
-      'Puzzle drive fades after eighteen months — wait it out',
-      'Only agility classes can satisfy this breed — home structure is not enough',
+      'More fetch until tired — physical exhaustion replaces mental structure and keeps the dog settled at home',
+      'Puzzle drive fades after eighteen months — wait it out and the need for mental work will drop on its own',
+      'Only agility classes can satisfy this breed — home structure is not enough for a working mind',
     ],
-    explanation: 'Standard Poodles carry puzzle and problem-solving drive — access, earned tasks, and structure land better than endless reps.',
+    explanation:
+      'Standard Poodles carry puzzle and problem-solving drive. Access, earned tasks, and structure land better than endless reps.',
     guideLink: '#access',
   },
   {
@@ -259,11 +276,12 @@ export const traitExamQuestions: Question[] = [
     text: 'You have a Border Collie. It locks eye contact on a moving cyclist before the lunge. When should you act?',
     options: [
       'At the eye-lock precursor — before the body commits; access and environmental rewards often beat treat-chasing',
-      'Only when the feet leave the ground — wait for the full lunge',
-      'After three seconds of staring to let the dog think through the trigger',
-      'Do not correct stare — it is natural herding and should be allowed',
+      'Only when the feet leave the ground — wait for the full lunge so the correction is clear and fair',
+      'After three seconds of staring to let the dog think through the trigger and choose to look away',
+      'Do not correct stare — it is natural herding and should be allowed as healthy breed expression',
     ],
-    explanation: 'Visual herding types fixate before they move. The precursor window is the eye-lock — intervene early with calm tools.',
+    explanation:
+      'Visual herding types fixate before they move. The precursor window is the eye-lock — intervene early with calm tools.',
     guideLink: '#breed-temperament',
   },
   {
@@ -274,12 +292,13 @@ export const traitExamQuestions: Question[] = [
     dedupGroup: 'herding-face-gazing',
     text: 'You have a Border Collie. You enjoy long mutual staring sessions on the couch. What pitfall applies?',
     options: [
-      'Extended gazing can intensify fixation and attachment distortion — soften eye rituals at home',
-      'Longer eye contact deepens bond for herding breeds — lean into gazing sessions',
-      'Only strangers should avoid eye contact — owner gaze is different',
-      'Staring is dominance and requires you to look away first to submit',
+      'Long staring can intensify fixation and clingy focus on you — soften eye rituals at home',
+      'Longer eye contact deepens bond for herding breeds — lean into gazing sessions as daily connection',
+      'Only strangers should avoid eye contact — owner gaze is different and builds trust without risk',
+      'Staring is dominance and requires you to look away first to submit and keep the dog calm',
     ],
-    explanation: 'Collies and similar types can lock onto visual input — including prolonged owner gazing — see common pitfalls.',
+    explanation:
+      'Collies and similar types can lock onto visual input — including long owner staring. Soften those rituals at home.',
     guideLink: '#common-pitfalls',
   },
   {
@@ -291,11 +310,12 @@ export const traitExamQuestions: Question[] = [
     text: 'You have a Staffy. You correct jumping, then stay cold for an hour. What went wrong?',
     options: [
       'Structure without warmth can read as abandonment — rebuild calmly after the reset',
-      'Staffies need longer cold periods than other breeds to respect the correction',
-      'Clingy breeds should not be corrected — corrections damage the bond',
-      'Only verbal tools work for staffy-types — physical reset is too harsh',
+      'Staffies need longer cold periods than other breeds to respect the correction and remember it',
+      'Clingy breeds should not be corrected — corrections damage the bond these dogs need most',
+      'Only verbal tools work for staffy-types — physical reset is too harsh for a people-focused dog',
     ],
-    explanation: 'People-focused breeds need calm matter-of-fact correction, then quick rebuild — cold withdrawal damages these dogs.',
+    explanation:
+      'People-focused breeds need calm matter-of-fact correction, then a quick rebuild. Cold withdrawal damages these dogs.',
     guideLink: '#breed-temperament',
   },
   {
@@ -306,11 +326,12 @@ export const traitExamQuestions: Question[] = [
     text: 'You have a Staffy. It becomes the household emotional centre and you avoid any firm line. What fits?',
     options: [
       'Hold the standard with calm delivery — affection is currency, not a substitute for structure',
-      'Avoid corrections entirely because the bond is special for this breed',
-      'Use only excited praise so the dog feels loved after every mistake',
-      'Rehome if firmness is needed — this breed cannot handle structure',
+      'Avoid corrections entirely because the bond is special for this breed and firmness would break it',
+      'Use only excited praise so the dog feels loved after every mistake and stays emotionally secure',
+      'Rehome if firmness is needed — this breed cannot handle structure and will shut down under rules',
     ],
-    explanation: 'Staffy-types bond intensely but still need clarity and consistent boundaries — delivery stays calm, never personal.',
+    explanation:
+      'Staffy-types bond intensely but still need clarity and consistent boundaries. Delivery stays calm, never personal.',
     guideLink: '#common-pitfalls',
   },
   {
@@ -321,11 +342,12 @@ export const traitExamQuestions: Question[] = [
     text: 'You have a Newfoundland. Visitors excuse jumping because it is a "gentle giant." What should you do?',
     options: [
       'Gentle temperament does not excuse thresholds — jumping cute at thirty kilograms is dangerous at sixty',
-      'Giant breeds should be allowed to lean for affection — that is their nature',
-      'Wait until full size before teaching door manners',
-      'Only leash corrections work on giants — verbal cues are not enough',
+      'Giant breeds should be allowed to lean for affection — that is their nature and guests expect it',
+      'Wait until full size before teaching door manners, so the dog is mature enough to understand waits',
+      'Only leash corrections work on giants — verbal cues are not enough when mass is this large',
     ],
-    explanation: 'Newfoundland-type gentleness is not permission to skip structure — build waits and calm greetings while size is still manageable.',
+    explanation:
+      'Newfoundland-type gentleness is not permission to skip structure. Build waits and calm greetings while size is still manageable.',
     guideLink: '#breed-temperament',
   },
   {
@@ -336,11 +358,12 @@ export const traitExamQuestions: Question[] = [
     text: 'You have a Belgian Malinois. You feel anxious on walks and the dog spins up with you. What must change first?',
     options: [
       'Handler calm certainty — hyper-alert working types mirror anxious energy and need job-like structure daily',
-      'A firmer leash and prong only — tools before handler calm',
-      'More off-lead time to burn energy and reduce anxiety',
-      'Avoid triggers until the dog matures at four years',
+      'A firmer leash and prong only — tools before handler calm, because equipment fixes drive on its own',
+      'More off-lead time to burn energy and reduce anxiety, so the dog can self-settle without pressure',
+      'Avoid triggers until the dog matures at four years, when working drive naturally levels out',
     ],
-    explanation: 'Malinois-types shut down or spin up with anxious handlers — calm leadership and structured outlets are mandatory.',
+    explanation:
+      'Malinois-types shut down or spin up with anxious handlers. Calm leadership and structured outlets are mandatory.',
     guideLink: '#breed-temperament',
   },
   {
@@ -351,11 +374,12 @@ export const traitExamQuestions: Question[] = [
     text: 'You have a Belgian Malinois with no daily structured work. What is the likely outcome?',
     options: [
       'Idle high-drive guardians become anxious and vocal — build job-like outlets or reactivity follows',
-      'They settle naturally in suburban homes without structured work',
-      'Only agility competitors need daily structure — pet homes are fine',
-      'Mental toys alone replace training sessions',
+      'They settle naturally in suburban homes without structured work once the honeymoon phase ends',
+      'Only agility competitors need daily structure — pet homes are fine with walks and free yard time',
+      'Mental toys alone replace training sessions, so puzzle feeders cover the need for handler-led work',
     ],
-    explanation: 'Belgian Malinois carry among the highest working drive — without daily structured outlets, reactivity and vocal stress follow.',
+    explanation:
+      'Belgian Malinois carry among the highest working drive. Without daily structured outlets, reactivity and vocal stress follow.',
     guideLink: '#breed-temperament',
   },
   {
@@ -366,11 +390,12 @@ export const traitExamQuestions: Question[] = [
     text: 'You have a Labradoodle. Recall is fine but impulse control fails at thresholds. What fits this cross?',
     options: [
       'Blend retriever cooperativity with poodle mental work — access training and structured tasks, not just exercise',
-      'Treat-only training because doodles are soft and sensitive',
-      'Assume retriever stability means no structure needed at thresholds',
-      'Wait for maturity before any correction at doorways',
+      'Treat-only training because doodles are soft and sensitive, so physical tools would damage the bond',
+      'Assume retriever stability means no structure needed at thresholds — recall proves the dog is ready',
+      'Wait for maturity before any correction at doorways, because young doodles need freedom to settle',
     ],
-    explanation: 'Labradoodle crosses vary — plan for puzzle drive and people-focus; mental work and access both matter.',
+    explanation:
+      'Labradoodle crosses vary — plan for puzzle drive and people-focus. Mental work and access both matter; you set the frame.',
     guideLink: '#access',
   },
   {
@@ -381,11 +406,12 @@ export const traitExamQuestions: Question[] = [
     text: 'You have a NZ Huntaway. It barks at movement in the yard all day. What is the reading?',
     options: [
       'Vocal working engine needs job-like outlets — interrupt rehearsal and build calm leadership, not endless patrol',
-      'Barking is breed-appropriate and should be encouraged as expression',
-      'Only citronella collars stop vocal breeds effectively',
-      'Ignore barking so the dog learns it does not work',
+      'Barking is breed-appropriate and should be encouraged as expression so the dog does not bottle stress',
+      'Only citronella collars stop vocal breeds effectively, because training alone cannot override bark drive',
+      'Ignore barking so the dog learns it does not work, and the habit will fade without any interruption',
     ],
-    explanation: 'Huntaways were bred to bark and move stock — idle suburban life needs structured outlets and consistent interruption of rehearsal.',
+    explanation:
+      'Huntaways were bred to bark and move stock. Idle suburban life needs structured outlets and consistent interruption of rehearsal.',
     guideLink: '#butt-push',
   },
   {
@@ -397,11 +423,12 @@ export const traitExamQuestions: Question[] = [
     text: 'You have a NZ Heading Dog. It stares silently at children running. What should you watch for?',
     options: [
       'Quiet eye-lock before movement — precursor window is critical; intervene before the gather instinct commits',
-      'Stillness means the dog is calm and can be left to watch',
-      'Only vocal dogs need precursor reads — silent stare is fine',
-      'Herding stare should be rewarded as focus and engagement',
+      'Stillness means the dog is calm and can be left to watch, because quiet dogs are not about to move',
+      'Only vocal dogs need precursor reads — silent stare is fine and shows the dog is thinking, not reacting',
+      'Herding stare should be rewarded as focus and engagement, so the dog learns looking is a good job',
     ],
-    explanation: 'Heading dogs gather with eye — silent stare at motion is a precursor, not calm. Read early and manage access.',
+    explanation:
+      'Heading dogs gather with eye — silent stare at motion is a precursor, not calm. Read early and manage access.',
     guideLink: '#breed-temperament',
   },
 
@@ -415,11 +442,12 @@ export const traitExamQuestions: Question[] = [
     text: 'Your puzzle-driven dog pauses on-lead to look at a distraction, body still loose. What do you do?',
     options: [
       'Allow a brief self-regulation beat — tighten the line only if fixation locks in',
-      'Correct every glance immediately to keep focus on the handler',
-      'Drop treats to refocus before the dog can look back at you',
-      'Shorten the walk whenever distraction appears — avoid the trigger entirely',
+      'Correct every glance immediately to keep focus on the handler and stop looking away from you',
+      'Drop treats to refocus before the dog can look back at you, so food wins over the distraction',
+      'Shorten the walk whenever distraction appears — avoid the trigger entirely until the dog is older',
     ],
-    explanation: 'Puzzle-driven types often benefit from a slightly longer processing window when the body stays loose.',
+    explanation:
+      'Puzzle-driven types often benefit from a slightly longer processing window when the body stays loose. You step in when fixation locks.',
     guideLink: '#distraction-processing',
   },
   {
@@ -430,11 +458,12 @@ export const traitExamQuestions: Question[] = [
     text: 'Your intelligent, puzzle-driven dog seems to escalate when you shout during reactions. Why?',
     options: [
       'Owner frustration can read as an interactive challenge — calm matter-of-fact delivery is mandatory',
-      'The dog is testing dominance and needs a louder correction',
-      'Intelligent dogs only respond to food — voice has no training value',
-      'Shouting works if you are loud enough to startle the dog',
+      'The dog is testing dominance and needs a louder correction to match the energy and win the moment',
+      'Intelligent dogs only respond to food — voice has no training value and should be dropped entirely',
+      'Shouting works if you are loud enough to startle the dog and interrupt the reaction in one go',
     ],
-    explanation: 'Handler-attuned puzzle types may gamify emotional drama — stay calm and use structured tools.',
+    explanation:
+      'Handler-attuned puzzle types may gamify emotional drama. Stay calm and use structured tools — you set the tone.',
     guideLink: '#distraction-processing',
   },
   {
@@ -445,11 +474,12 @@ export const traitExamQuestions: Question[] = [
     text: 'Your stress-sensitive dog reacts at the door and you soothe with baby talk. What should you do instead?',
     options: [
       'Hold structure — reward earned calm after reset, not soothing during the reaction',
-      'Increase soothing until the dog relaxes — comfort is the priority',
-      'Remove all visitors until the dog is older and more settled',
-      'Only medication can change door reactions at this level',
+      'Increase soothing until the dog relaxes — comfort is the priority and builds long-term security',
+      'Remove all visitors until the dog is older and more settled, so stress has no chance to build',
+      'Only medication can change door reactions at this level, so training structure will not help yet',
     ],
-    explanation: 'Soothing during reactions can reinforce stress loops — structure, timing, and earned calm beat emotional rescue.',
+    explanation:
+      'Soothing during reactions can reinforce stress loops. Structure, timing, and earned calm beat emotional rescue.',
     guideLink: '#common-pitfalls',
   },
   {
@@ -460,11 +490,12 @@ export const traitExamQuestions: Question[] = [
     text: 'Your dog panics when left alone. What else matters alongside gradual absence work?',
     options: [
       'Consistent household structure and boundaries — not unlimited comfort that blurs rank and thresholds',
-      'Stay home until the dog is fully cured before any absence training',
-      'Get a second dog immediately for companionship',
-      'Ignore all distress until it stops — no comfort during panic',
+      'Stay home until the dog is fully cured before any absence training, so panic does not have to happen',
+      'Get a second dog immediately for companionship, because loneliness is the only driver of the panic',
+      'Ignore all distress until it stops — no comfort during panic, and no structure changes at home either',
     ],
-    explanation: 'Separation stress improves with structure at home and earned access — not indulgence that deepens dependency.',
+    explanation:
+      'Separation stress improves with structure at home and earned access — not indulgence that deepens dependency.',
     guideLink: '#common-pitfalls',
   },
   {
@@ -475,11 +506,12 @@ export const traitExamQuestions: Question[] = [
     text: 'Your very small dog needs a downward leash correction but your hand position is awkward. What helps?',
     options: [
       'Stick assist — leash to a short stick on the ground for a consistent downward jerk without upward tension',
-      'Lift by the harness instead — upward tension replaces the downward jerk',
-      'Skip leash corrections under eight kilograms — too small for physical tools',
-      'Use a heavier leash for leverage on a light dog',
+      'Lift by the harness instead — upward tension replaces the downward jerk and is gentler on a small frame',
+      'Skip leash corrections under eight kilograms — too small for physical tools, so use voice and treats only',
+      'Use a heavier leash for leverage on a light dog, so the correction lands harder with less hand effort',
     ],
-    explanation: 'Small dogs still need calibrated correction — the stick assist makes downward jerk achievable and consistent.',
+    explanation:
+      'Small dogs still need calibrated correction. The stick assist makes a downward jerk achievable and consistent.',
     guideLink: '#leash',
   },
   {
@@ -490,11 +522,12 @@ export const traitExamQuestions: Question[] = [
     text: 'You have a giant-breed adolescent who leans through doorways first. Why is this urgent?',
     options: [
       'The same rank test is physically unmanageable at full size — thresholds are safety equipment now',
-      'Giants lean from affection and should be welcomed at doorways',
-      'Wait until eighteen months to teach door waits — puppies need freedom',
-      'Only prong collars work on giants — verbal waits are not realistic',
+      'Giants lean from affection and should be welcomed at doorways, because that is how they greet people',
+      'Wait until eighteen months to teach door waits — puppies need freedom before rules feel fair',
+      'Only prong collars work on giants — verbal waits are not realistic when mass is this large',
     ],
-    explanation: 'Giant breeds make doorway and body-space rules critical early — cute leaning becomes dangerous mass.',
+    explanation:
+      'Giant breeds make doorway and body-space rules critical early. Cute leaning becomes dangerous mass — you set thresholds now.',
     guideLink: '#front-door',
   },
   {
@@ -505,11 +538,12 @@ export const traitExamQuestions: Question[] = [
     text: 'Your dog shows stress-looping when you comfort it during reactive episodes. What should you change?',
     options: [
       'Reward earned calm after structured reset — comforting during the episode often feeds the loop',
-      'Comfort more intensely until the dog feels safe — reassurance is the fix',
-      'Avoid all training until the dog is calm for a full week',
-      'Only use crates for stress-looping dogs — no other structure needed',
+      'Comfort more intensely until the dog feels safe — reassurance is the fix and builds long-term trust',
+      'Avoid all training until the dog is calm for a full week, so stress has time to settle on its own',
+      'Only use crates for stress-looping dogs — no other structure needed once the dog is contained',
     ],
-    explanation: 'Elevated stress sensitivity plus in-moment soothing can spiral — structure and timing matter more than emotional rescue.',
+    explanation:
+      'Elevated stress sensitivity plus in-moment soothing can spiral. Structure and timing matter more than emotional rescue.',
     guideLink: '#common-pitfalls',
   },
   {
@@ -520,11 +554,12 @@ export const traitExamQuestions: Question[] = [
     text: 'Your toy-scale dog is treated as fragile and excused from every boundary. What fits?',
     options: [
       'Same standard, calibrated delivery — indulgence spirals are especially common at toy scale',
-      'Fragile dogs need no correction — structure would break trust',
-      'Only positive reinforcement for toy breeds — no physical tools',
-      'Keep the dog indoors to avoid stress triggers entirely',
+      'Fragile dogs need no correction — structure would break trust and make stress worse over time',
+      'Only positive reinforcement for toy breeds — no physical tools, because small dogs cannot handle them',
+      'Keep the dog indoors to avoid stress triggers entirely, so boundaries do not have to be tested',
     ],
-    explanation: 'High stress sensitivity is not permission to skip structure — small indulgence pitfalls intensify at toy scale.',
+    explanation:
+      'High stress sensitivity is not permission to skip structure. Small indulgence pitfalls intensify at toy scale.',
     guideLink: '#common-pitfalls',
   },
   {
@@ -535,11 +570,12 @@ export const traitExamQuestions: Question[] = [
     text: 'Your high-drive dog self-assigns work in the yard (digging, patrolling, fixating). What is missing?',
     options: [
       'Structured outlets and handler-led work — idle drive becomes rehearsal without a job frame',
-      'More free time in the yard to burn energy naturally',
-      'Only longer walks fix drive — yard time is enough',
-      'Drive fades after neutering — wait for hormonal change',
+      'More free time in the yard to burn energy naturally, so the dog settles without handler pressure',
+      'Only longer walks fix drive — yard time is enough if you add an extra loop around the block',
+      'Drive fades after neutering — wait for hormonal change and the self-assigned work will stop',
     ],
-    explanation: 'High-drive types need job-like structure — without it they self-assign work that rehearses unwanted patterns.',
+    explanation:
+      'High-drive types need job-like structure. Without it they self-assign work that rehearses unwanted patterns — you lead the job.',
     guideLink: '#access',
   },
   {
@@ -551,11 +587,12 @@ export const traitExamQuestions: Question[] = [
     text: 'Your people-focused dog melts down when you correct and you avoid firmness to protect the bond. What should you do?',
     options: [
       'Deliver calm matter-of-fact correction, then rebuild warmth — structure without affection reads as abandonment',
-      'Skip correction for bonded dogs — the relationship is too important',
-      'Use only excited praise after mistakes to restore the bond',
-      'Send the dog away for an hour after every correction to let it think',
+      'Skip correction for bonded dogs — the relationship is too important to risk with any firm line',
+      'Use only excited praise after mistakes to restore the bond, so the dog does not feel rejected',
+      'Send the dog away for an hour after every correction to let it think and respect the lesson',
     ],
-    explanation: 'Clingy breeds need fair correction with quick rebuild — cold withdrawal or avoiding standards damages these dogs.',
+    explanation:
+      'Clingy breeds need fair correction with a quick rebuild. Cold withdrawal or avoiding standards damages these dogs.',
     guideLink: '#breed-temperament',
   },
   {
@@ -567,11 +604,12 @@ export const traitExamQuestions: Question[] = [
     text: 'Your clingy breed paws forcefully at you during quiet time at home. What is this?',
     options: [
       'Attention demand — withhold engagement until calm; do not reward the paw cycle',
-      'Affection seeking that should be indulged on the couch',
-      'A medical paw injury — vet before training continues',
-      'Play invitation — engage to build the bond',
+      'Affection seeking that should be indulged on the couch, because clingy breeds need constant contact',
+      'A medical paw injury — stop training and see a vet before any boundary work continues',
+      'Play invitation — engage right away to build the bond and meet the dog\'s need for interaction',
     ],
-    explanation: 'Forceful pawing is demand for a dopamine hit, not affection. Become a rock — look away until the body settles.',
+    explanation:
+      'Forceful pawing is demand for a dopamine hit, not affection. Become a rock — look away until the body settles.',
     guideLink: '#symptom-glossary',
   },
   {
@@ -583,11 +621,12 @@ export const traitExamQuestions: Question[] = [
     text: 'Your guardian-type dog follows you to the bathroom and sits facing away. How should you read this?',
     options: [
       'Pack guarding instinct — protecting a vulnerable pack member, not pure annoyance',
-      'Separation anxiety that needs soothing and extra reassurance',
-      'Dominance — the dog is claiming bathroom territory',
-      'A habit to interrupt with spatial corrections whenever it happens',
+      'Separation anxiety that needs soothing and extra reassurance whenever the dog follows you',
+      'Dominance — the dog is claiming bathroom territory and must be blocked from entering',
+      'A habit to interrupt with spatial corrections whenever it happens, so the dog stops following you',
     ],
-    explanation: 'Elimination leaves an animal vulnerable; pack guard behaviour reframes resentment. Thresholds still apply in training mode.',
+    explanation:
+      'Elimination leaves an animal vulnerable; pack-guard behaviour reframes resentment. Thresholds still apply in training mode.',
     guideLink: '#pack-guarding',
   },
 
@@ -601,9 +640,9 @@ export const traitExamQuestions: Question[] = [
     text: 'You are choosing a lifestyle path for your intact dog. Which path demands the muzzle-dominance battle curriculum?',
     options: [
       'The Off-Leash Sentinel path — intact mastery with trainer-level vigilance and controlled socialisation',
-      'The Socialite path — neutering for the fastest predictable route',
-      'The Secure Containment path — tied or enclosed range without intensive training',
-      'Any intact dog can reach off-lead freedom through patience alone',
+      'The Socialite path — neutering for the fastest predictable route to easier social access',
+      'The Secure Containment path — tied or enclosed range without intensive training or social work',
+      'Any intact dog can reach off-lead freedom through patience alone, without a formal path choice',
     ],
     explanation:
       'The Sentinel path keeps him intact but commits you to intensive muzzle and dominance-navigation work — not a casual choice.',
@@ -618,9 +657,9 @@ export const traitExamQuestions: Question[] = [
     text: 'Which intact lifestyle path means heavy management without Sentinel-level training rigor?',
     options: [
       'Secure Containment — tied, fully enclosed range, or only compatible dogs in secure settings',
-      'Off-Leash Sentinel — flawless neutrality through intensive curriculum',
-      'Socialite — desexing and rock-solid recall',
-      'Free-range socialisation until the dog matures naturally',
+      'Off-Leash Sentinel — flawless neutrality through intensive curriculum and trainer-level vigilance',
+      'Socialite — desexing and rock-solid recall for the fastest predictable social route',
+      'Free-range socialisation until the dog matures naturally, without a managed lifestyle plan',
     ],
     explanation:
       'Containment keeps him intact but accepts a managed lifestyle — not the extreme Sentinel curriculum and not desexing.',
@@ -635,9 +674,9 @@ export const traitExamQuestions: Question[] = [
     text: 'When should off-leash freedom typically be withheld during dog introductions?',
     options: [
       'During first meetings — mechanical control until maturity and neutrality are locked in',
-      'Only for the first week after adoption, then trust off-lead greetings',
-      'Only during the first week — then off-lead greetings build confidence',
-      'Only when the other owner seems nervous',
+      'Only for the first week after adoption, then trust off-lead greetings because the dog knows you',
+      'Only during the first week — then off-lead greetings build confidence and social skill faster',
+      'Only when the other owner seems nervous — otherwise free greetings are fine for intact dogs',
     ],
     explanation:
       'Off-leash freedom is privilege earned through perfection — not an option during first introductions.',
@@ -652,9 +691,9 @@ export const traitExamQuestions: Question[] = [
     text: 'After neutering, what is the realistic training focus under the Socialite path?',
     options: [
       'Rock-solid recall and a balanced lifestyle — structure still holds, but rank pressure softens',
-      'No further training needed — hormones were the only issue',
-      'Avoid all dog contact for six months while hormones clear',
-      'Immediate off-lead freedom at every park to rebuild confidence',
+      'No further training needed — hormones were the only issue, so behaviour should settle on its own',
+      'Avoid all dog contact for six months while hormones clear, then resume social life from scratch',
+      'Immediate off-lead freedom at every park to rebuild confidence and prove the surgery worked',
     ],
     explanation:
       'Desexing is the easier path — not a free pass. Recall and lifestyle structure still matter; testosterone escalation is what eases.',
@@ -669,9 +708,9 @@ export const traitExamQuestions: Question[] = [
     text: 'Your 45 kg dog is entering physical prime. Why is the ready stance non-negotiable?',
     options: [
       'At this mass you cannot out-muscle a committed lunge — engaged core and stance are safety, not polish',
-      'Large dogs only need verbal cues because they are calmer than small breeds',
-      'Ready stance is optional once recall is reliable in the backyard',
-      'Harnesses provide enough control that handler stance does not matter',
+      'Large dogs only need verbal cues because they are calmer than small breeds and less likely to lunge',
+      'Ready stance is optional once recall is reliable in the backyard, because obedience covers street risk',
+      'Harnesses provide enough control that handler stance does not matter once the dog is on a short lead',
     ],
     explanation:
       'Raw mass at 40–50+ kg makes your body mechanics a safety requirement — you cannot negotiate after he commits.',
@@ -686,12 +725,12 @@ export const traitExamQuestions: Question[] = [
     text: 'Your two-year-old large dog is still excused at thresholds because he feels young. What should shift?',
     options: [
       'Puppy mindset in you must end — project certainty; the standard starts at the door, not on the walk',
-      'Wait until four years when all large breeds are fully mature before holding boundaries',
-      'Lower standards until he stops testing — he is still a puppy emotionally',
-      'Use only treats at thresholds because physical corrections are unfair at two years',
+      'Wait until four years when all large breeds are fully mature before holding boundaries at home',
+      'Lower standards until he stops testing — he is still a puppy emotionally and needs more freedom',
+      'Use only treats at thresholds because physical corrections are unfair at two years of age',
     ],
     explanation:
-      'At two years many large dogs are in physical prime — handler clarity and door standards are how he learns adulthood.',
+      'At two years many large dogs are in physical prime. Handler clarity and door standards are how he learns adulthood.',
     guideLink: '#intact-large-males-mindset',
   },
   {
@@ -707,8 +746,8 @@ export const traitExamQuestions: Question[] = [
     options: [
       'At the threshold before permission — eye contact and calm body verified before the door opens',
       'On the walk once he has burned energy — doors do not matter if recall is good later',
-      'Only after he has had a long run so he is tired enough to listen',
-      'At the park — home thresholds are separate from outdoor training',
+      'Only after he has had a long run so he is tired enough to listen at the door',
+      'At the park — home thresholds are separate from outdoor training and can stay casual',
     ],
     explanation:
       'The standard starts at the front door. Permission before action — not correction only after he is already out.',
@@ -726,9 +765,9 @@ export const traitExamQuestions: Question[] = [
     text: 'Your large intact male ignores recall on a walk and you chase with excitement. What does the guide expect?',
     options: [
       'Recall failure is not a game — pursue joylessly and relentlessly without drama he can feed on',
-      'Stop chasing — any pursuit teaches him running is fun',
-      'Call louder and use a higher pitch until he feels how worried you are',
-      'Stop and recall from a distance — chasing any bolting dog rewards the game',
+      'Stop chasing — any pursuit teaches him running is fun, so wait until he chooses to return',
+      'Call louder and use a higher pitch until he feels how worried you are and comes back to help',
+      'Stop and recall from a distance — chasing any bolting dog rewards the game and makes it worse',
     ],
     explanation:
       'Ignoring recall cannot be treated as minor. Pursue without tension — the message is that running away cannot win.',
@@ -746,9 +785,9 @@ export const traitExamQuestions: Question[] = [
     text: 'Your large intact male demands a run by pulling and vocalising. When should the long run happen?',
     options: [
       'After calm coordination and focus are shown — access to runs and sniffs is your reward, not his demand',
-      'Immediately — tire him out first so pulling on the way is less of a problem',
-      'Only on weekends when you have more patience for pulling',
-      'After neutering — drive for runs fades once hormones are removed',
+      'Immediately — tire him out first so pulling on the way is less of a problem and he settles faster',
+      'Only on weekends when you have more patience for pulling and can wait out the demand behaviour',
+      'After neutering — drive for runs fades once hormones are removed, so wait for that change',
     ],
     explanation:
       'Biological outlets happen on your terms. He earns runs and sniffs through calm structure first — not by escalating pressure.',
@@ -766,12 +805,12 @@ export const traitExamQuestions: Question[] = [
     text: 'An unfamiliar intact dog approaches for an unstructured off-lead greeting. What should you do?',
     options: [
       'Keep structure — leash, space, and earned calm before close contact; do not assume the other handler will manage',
-      'Let them sort rank off-lead — intact males need to learn from other dogs without interference',
-      'Avoid all dog contact permanently until he is neutered',
-      'Trust the greeting because the other dog looks friendly and wagging',
+      'Let them sort rank off-lead — intact males need to learn from other dogs without handler interference',
+      'Avoid all dog contact until he is neutered, because intact meetings are too risky to manage at all',
+      'Trust the greeting because the other dog looks friendly and wagging, so a free meet should be fine',
     ],
     explanation:
-      'Unstructured meetings with unfamiliar intact dogs are not worth the gamble — control space and contact until calm is earned.',
+      'Unstructured meetings with unfamiliar intact dogs are not worth the gamble. Control space and contact until calm is earned.',
     guideLink: '#intact-large-males-meetings',
   },
   {
@@ -786,9 +825,9 @@ export const traitExamQuestions: Question[] = [
     text: 'On lead, your large intact male locks eyes on another dog and his body braces forward. When should you act?',
     options: [
       'At the precursor — before the body fully commits; break visual lock and redirect while you still have leverage',
-      'Wait until he lunges so the correction is unmistakable',
-      'Drop slack and let him approach to build social confidence',
-      'Only act if the other dog reacts first',
+      'Wait until he lunges so the correction is unmistakable and he clearly knows what he did wrong',
+      'Drop slack and let him approach to build social confidence, because tension on the lead creates reactivity',
+      'Only act if the other dog reacts first — your dog may settle if the other dog stays calm',
     ],
     explanation:
       'Read the ready stance early — at this mass a late correction is a handler emergency. Intervene before he commits.',
@@ -807,9 +846,9 @@ export const traitExamQuestions: Question[] = [
     text: 'Within this training model, why keep a large male intact for physical health?',
     options: [
       'Musculoskeletal development, joint longevity, weight management, and endocrine balance — intact is the healthier default here',
-      'Intact males settle dog-park friction on their own once fully grown',
-      'Neutering has no effect on fear, joints, or weight — the choice is purely social',
-      'Intact status removes the need for leash work because testosterone teaches recall',
+      'Intact males settle dog-park friction on their own once fully grown, so social life gets easier with age',
+      'Neutering has no effect on fear, joints, or weight — the choice is purely social and lifestyle-based',
+      'Intact status removes the need for leash work because testosterone teaches recall and self-control',
     ],
     explanation:
       'In this framework, keeping a large male intact is profoundly healthier for development and endocrine balance — a paradigm conviction, not universal vet consensus.',
@@ -823,12 +862,12 @@ export const traitExamQuestions: Question[] = [
     text: 'An anxious, fearful dog is being considered for neutering. What does the guide warn?',
     options: [
       'Removing testosterone can worsen baseline fear-reactivity or shyness rather than fixing it',
-      'Neutering usually removes fear because hormones were the main driver',
-      'Anxious dogs need softer structure only after desexing is complete',
-      'Fearful dogs must be neutered immediately before any training begins',
+      'Neutering usually removes fear because hormones were the main driver of the anxious behaviour',
+      'Anxious dogs need softer structure only after desexing is complete, so wait before any firm line',
+      'Fearful dogs must be neutered immediately before any training begins, or progress will not hold',
     ],
     explanation:
-      'Testosterone is described as a crucial stabilizer for some anxious dogs in this model — neutering can worsen baseline fear-reactivity.',
+      'Testosterone is described as a crucial stabilizer for some anxious dogs in this model. Neutering can worsen baseline fear-reactivity.',
     guideLink: '#intact-health-baseline',
   },
   {
@@ -840,12 +879,12 @@ export const traitExamQuestions: Question[] = [
     text: 'At the park, a neutered male shows unprovoked hostility toward your intact dog. What does the guide frame this as?',
     options: [
       'Part of the intact social penalty — higher friction and posturing are expected costs of staying intact',
-      'Proof your dog is aggressive and must be neutered immediately',
-      'A reason to let them fight it out so both dogs learn rank',
-      'Evidence that only off-lead greetings fix intact-dog reactivity',
+      'Proof your dog is aggressive and must be neutered immediately to stop other dogs reacting to him',
+      'A reason to let them fight it out so both dogs learn rank and settle the social question',
+      'Evidence that only off-lead greetings fix intact-dog reactivity, so leash meetings are the problem',
     ],
     explanation:
-      'Intact males face higher social friction — including hostility from neutered males and bow-up posturing around other intact dogs.',
+      'Intact males face higher social friction — including hostility from neutered males. You plan for that cost with eyes open.',
     guideLink: '#intact-social-penalty',
   },
   {
@@ -857,12 +896,12 @@ export const traitExamQuestions: Question[] = [
     text: 'You want daycare and commercial boarding for your intact male. What does the guide expect?',
     options: [
       'Many facilities disqualify intact males — plan for a smaller social map or choose a path honestly',
-      'Daycares must accept intact dogs by law — insist on enrollment',
-      'Boarding is only an issue until six months of age',
-      'Intact status only affects dog parks, not professional care facilities',
+      'Daycares must accept intact dogs by law — insist on enrollment and push back on facility policy',
+      'Boarding is only an issue until six months of age, then most facilities accept intact males',
+      'Intact status only affects dog parks, not professional care facilities, so daycare should be fine',
     ],
     explanation:
-      'Keeping a dog intact drastically shrinks your world — daycare, boarding, and standard off-lead parks often disqualify intact males.',
+      'Keeping a dog intact drastically shrinks your world. Daycare, boarding, and standard off-lead parks often disqualify intact males.',
     guideLink: '#intact-environment-restrictions',
   },
   {
@@ -874,12 +913,12 @@ export const traitExamQuestions: Question[] = [
     text: 'You keep your dog intact but deny all outlets for biological drive permanently. What does the guide flag?',
     options: [
       'Significant internal frustration — fairness requires honest outlets or an honest path choice',
-      'No issue — drive outlets can wait until after neutering at maturity',
-      'Drive frustration only matters for small breeds, not large males',
-      'Outlets are optional if you use enough treats on walks',
+      'No issue — drive outlets can wait until after neutering at maturity, when the pressure drops',
+      'Drive frustration only matters for small breeds, not large males, who handle idle life better',
+      'Outlets are optional if you use enough treats on walks to keep the dog focused on you',
     ],
     explanation:
-      'Keeping a dog intact while permanently denying primary evolutionary drive without natural outlet can create significant frustration — each path must account for drive honestly.',
+      'Keeping a dog intact while permanently denying primary drive without outlet creates frustration. Each path must account for drive honestly.',
     guideLink: '#biological-drive-fairness',
   },
   {
@@ -891,9 +930,9 @@ export const traitExamQuestions: Question[] = [
     text: 'You want to prevent breeding but preserve health-protecting hormones. What does the guide mention?',
     options: [
       'Emerging options like canine vasectomy — discuss hormone-sparing surgery with a knowledgeable vet',
-      'There is no surgical option except full neutering in every clinic',
-      'Vasectomy removes all testosterone so behaviour matches a neutered dog',
-      'Surgical alternatives are banned for working breeds in this guide',
+      'There is no surgical option except full neutering in every clinic, so hormones cannot be preserved',
+      'Vasectomy removes all testosterone so behaviour matches a neutered dog and social access opens up',
+      'Surgical alternatives are banned for working breeds in this guide and should not be considered',
     ],
     explanation:
       'Vasectomy and ovary-sparing pathways preserve health-protecting hormones while preventing reproduction — emerging options within this framework.',
@@ -908,12 +947,12 @@ export const traitExamQuestions: Question[] = [
     text: 'You want off-lead park freedom without desexing and without Sentinel-level training. What does the guide say?',
     options: [
       'That combination is not honest — intact life carries social penalty and a shrunk world unless you commit to a real path',
-      'Patience alone unlocks off-lead parks for any intact male by age two',
-      'Containment path includes unlimited dog-park access on weekends',
-      'Socialite path means staying intact while skipping recall work',
+      'Patience alone unlocks off-lead parks for any intact male by age two, without intensive training',
+      'Containment path includes unlimited dog-park access on weekends, so you can skip Sentinel work',
+      'Socialite path means staying intact while skipping recall work, because desexing is optional there',
     ],
     explanation:
-      'Intact status shrinks the world and carries social friction — choose Sentinel rigor, Containment management, or Socialite desexing with eyes open.',
+      'Intact status shrinks the world and carries social friction. Choose Sentinel rigor, Containment management, or Socialite desexing with eyes open.',
     guideLink: '#intact-three-paths',
   },
 ];

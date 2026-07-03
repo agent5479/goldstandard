@@ -1,5 +1,5 @@
 /**
- * Lint exam question bank for banned distractor patterns and guide anchors.
+ * Lint exam question bank for banned distractor patterns, length balance, and guide anchors.
  * Run: npm run lint:exam
  */
 import { examQuestions } from './examQuestions';
@@ -32,8 +32,18 @@ const ABSOLUTE_ALLOWLIST = [
   /never appropriate/i,
 ];
 
+/** Stems that force negation are harder for mixed reading levels. */
+const NEGATIVE_STEM_PATTERN = /\b(what should you not|what should you NOT|should you not)\b/i;
+
+const MIN_LENGTH_RATIO = 0.6;
+const MAX_LENGTH_RATIO = 1.5;
+
 function isAllowedAbsolute(text: string): boolean {
   return ABSOLUTE_ALLOWLIST.some((p) => p.test(text));
+}
+
+function wordCount(text: string): number {
+  return text.trim().split(/\s+/).filter(Boolean).length;
 }
 
 interface LintIssue {
@@ -54,6 +64,17 @@ for (const q of examQuestions) {
       reason: 'Unknown guideLink anchor',
     });
   }
+
+  if (NEGATIVE_STEM_PATTERN.test(q.text)) {
+    issues.push({
+      question: q.text.slice(0, 80),
+      optionIndex: -1,
+      option: q.text,
+      reason: 'Negative-framed stem — prefer positive framing (what to do, not what not to do)',
+    });
+  }
+
+  const correctWords = wordCount(q.options[0] ?? '');
 
   q.options.forEach((opt, i) => {
     if (i === 0) return;
@@ -76,6 +97,26 @@ for (const q of examQuestions) {
         option: opt,
         reason: 'Absurd absolute in wrong option',
       });
+    }
+
+    if (correctWords > 0) {
+      const words = wordCount(opt);
+      const ratio = words / correctWords;
+      if (ratio < MIN_LENGTH_RATIO) {
+        issues.push({
+          question: q.text.slice(0, 80),
+          optionIndex: i,
+          option: opt,
+          reason: `Wrong option too short (${words} words vs ${correctWords} correct; min ${Math.ceil(correctWords * MIN_LENGTH_RATIO)})`,
+        });
+      } else if (ratio > MAX_LENGTH_RATIO) {
+        issues.push({
+          question: q.text.slice(0, 80),
+          optionIndex: i,
+          option: opt,
+          reason: `Wrong option too long (${words} words vs ${correctWords} correct; max ${Math.floor(correctWords * MAX_LENGTH_RATIO)})`,
+        });
+      }
     }
   });
 }
