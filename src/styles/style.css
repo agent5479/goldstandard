@@ -556,6 +556,51 @@ h2 {
 
 .philosophy-text p { color: var(--text); margin-bottom: 1rem; }
 .philosophy-text p:last-child { margin-bottom: 0; }
+.philosophy a {
+  color: var(--forest);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(184, 131, 42, 0.45);
+}
+.philosophy a:hover { color: var(--gold); border-bottom-color: var(--gold); }
+
+.philosophy-pillars {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-top: 2.25rem;
+}
+
+.philosophy-pillar {
+  background: var(--surface);
+  border: 1px solid rgba(45, 74, 45, 0.12);
+  border-top: 3px solid var(--gold);
+  border-radius: 4px;
+  padding: 1.25rem 1.35rem;
+}
+
+.philosophy-pillar h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem;
+  color: var(--forest);
+  margin: 0 0 0.65rem;
+}
+
+.philosophy-pillar p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--light-text);
+  line-height: 1.5;
+}
+
+.philosophy-pillar a {
+  color: var(--forest);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(184, 131, 42, 0.35);
+}
+
+.philosophy-pillar a:hover { color: var(--gold); border-bottom-color: var(--gold); }
 
 .outcomes {
   background: var(--surface);

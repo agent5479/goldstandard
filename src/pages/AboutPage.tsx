@@ -12,7 +12,7 @@ export default function AboutPage() {
     <>
       <Seo
         title="About Warwick | Gold Standard Dog Training"
-        description="Meet Warwick Marshall — structured dog training in Golden Bay and the wider Tasman region. Philosophy, approach, and what to expect from coaching sessions."
+        description="Meet Warwick Marshall — embodied, purist dog training in Golden Bay and the Tasman region. Philosophy, measured leash work, and what to expect from coaching sessions."
         path="/about"
       />
       <SiteHeader />
@@ -23,27 +23,28 @@ export default function AboutPage() {
           <h1>🐾 Warwick Marshall</h1>
           <p className="page-hero-lead">
             Gold Standard Dog Training helps owners build calm, reliable behaviour through clear structure,
-            practical coaching, and real-world session work. Based in Takaka and Golden Bay, Warwick works
+            embodied leadership, and real-world session work. Based in Takaka and Golden Bay, Warwick works
             with dogs and owners across the Tasman region.
           </p>
           <div className="philosophy-text page-hero-bio">
             <p>
-              Warwick founded Gold Standard to give owners more than a quick fix — a way to understand how
+              Warwick founded Gold Standard to give owners more than a quick fix — a path to understand how
               dogs think, how pack structure works, and how to hold calm leadership in everyday life. The name
               reflects the standard he holds for both dog and handler: clear expectations, measured correction,
               and results that last after the session ends.
             </p>
             <p>
-              Gold Standard Dog Training is an independent practice. Warwick is not affiliated with, endorsed by,
-              or certified by Beckman. When this site references Beckman-style training, it means the broader
+              Gold Standard is an independent practice. Warwick is not affiliated with, endorsed by, or
+              certified by Beckman. When this site references Beckman-style training, it means the broader
               structure-and-owner-coaching philosophy that influenced Warwick&apos;s approach — not an official
-              credential or approval.
+              credential or approval. Warwick&apos;s model is deliberately purist: no prongs, choke chains used
+              harshly, vibration collars, or remote &ldquo;ethereal&rdquo; correction. The signal source is you —
+              presence, timing, leash, voice, and touch.
             </p>
             <p>
-              Training is informed by Beckman-style principles — structured methods that work with how dogs
-              actually think, not against it. Warwick coaches you through each step so you can maintain the
-              results at home with confidence instead of second-guessing. Your energy, attention, and consistency
-              are the most powerful tools your dog has.
+              Training is hands-on owner coaching informed by how dogs actually negotiate rank, space, and
+              access. Your energy, attention, and consistency are the most powerful tools your dog has — not
+              gadgets that outsource authority.
             </p>
             <p>
               Every dog is welcome — puppies, seniors, purebreds, mixes, easy learners, and difficult cases.
@@ -58,7 +59,7 @@ export default function AboutPage() {
             </article>
             <article className="trust-card">
               <strong>🏆 Method focus</strong>
-              <span>Structured owner coaching informed by Beckman-style principles.</span>
+              <span>Embodied, purist coaching — leash, body, and voice; no shock or prong reliance.</span>
             </article>
             <article className="trust-card">
               <strong>🐕 Dog types</strong>
@@ -75,24 +76,82 @@ export default function AboutPage() {
       <section className="philosophy">
         <div className="section-inner">
           <p className="section-label">💡 The philosophy</p>
-          <h2>🌱 Healthy habits for dogs<br />and their humans.</h2>
+          <h2>🌱 Embodied pack fluency —<br />for dogs and their humans.</h2>
           <div className="philosophy-text">
             <p>
-              Dogs find peace and freedom when they know their place and learn trust and obedience. Gold
-              Standard uses clear, structured methods that work with how dogs actually think. The framework is
-              informed by Beckman-style principles and hands-on owner coaching.
+              Dogs find peace and freedom when they know their place and learn trust within clear structure.
+              Gold Standard is not a gadget system and not permissive drift. It is a <strong>purist, embodied
+              model</strong>: you learn to speak the physical grammar dogs already use — posture, spatial pressure,
+              timing, and a measured leash conversation — without outsourcing authority to prongs, harsh chokes,
+              vibration collars, or remote signals.
             </p>
             <p>
-              Training the owner is key. Warwick coaches you through each step so you can maintain the results
-              at home with confidence instead of second-guessing.
+              The word that captures it is <strong>embodiment</strong>. Not knowing about dogs in theory, but
+              inhabiting the role of the calm anchor until your baseline, your ready stance, and your follow-through
+              all say the same thing. Dogs don&apos;t lie — they read breath, tension, and whether the line is real.
+              That integration of the handler&apos;s inner journey with the dog&apos;s ethological world is what
+              Warwick calls becoming the <strong>healthy master</strong>: measured control, clear communication,
+              attuned reading of body language, and connection that earns trust rather than demanding performance.
             </p>
             <p>
-              This model also borrows from the state-and-energy lens popularised by Caesar-style pack leadership:
-              dogs don&apos;t lie. Their behaviour is a reflection of the leadership they feel in the moment — breath,
-              posture, tension, and follow-through. Warwick can deliver fast, precise corrections in-session when
-              required; your job at home is the safer core: calm composure, clear boundaries, and the steady
-              expectation that the standard will be enforced.
+              Physical correction in this model is not pain for its own sake. It is a crisp interruption —
+              pressure, then immediate release — inside the{' '}
+              <Link to={guideHref('timing')}>one-second window</Link>. The core on-lead tool is the{' '}
+              <Link to={guideHref('leash-jerk')}>downward leash jerk</Link>: one firm pull down to heavy the body
+              and break fixation, then back to slack. Downward, never upward — clarity without choking. Warwick uses
+              this as a structural signal that life is organised differently now, not merely a tactic for hard
+              moments. That is a stricter centre of gravity than some Beckman-influenced approaches, which may lift
+              to remove ground purchase in a fast fight; here, grounding the new baseline comes first.
             </p>
+            <p>
+              Training the owner is the product. Warwick coaches you through each step so you can maintain results
+              at home with confidence — reading precursors, holding{' '}
+              <Link to={guideHref('owner-mindset')}>calm composure</Link>, and enforcing the standard without
+              second-guessing or theatrical dominance.
+            </p>
+          </div>
+
+          <div className="philosophy-pillars" aria-label="Philosophy at a glance">
+            <article className="philosophy-pillar">
+              <h3>🧭 Embodiment</h3>
+              <p>
+                You are the signal source. Posture, breath, tension, and follow-through must congrue — see{' '}
+                <Link to={guideHref('pack-leader-energy')}>anchor energy</Link> and{' '}
+                <Link to={guideHref('ready-stance')}>ready stance</Link>.
+              </p>
+            </article>
+            <article className="philosophy-pillar">
+              <h3>🛡️ Presence over devices</h3>
+              <p>
+                No prongs, harsh chokes, vibration collars, or remote correction. Authority stays in the
+                relationship, where it can be timed, calibrated, and released — see{' '}
+                <Link to={guideHref('collars-excluded')}>collars we exclude</Link>.
+              </p>
+            </article>
+            <article className="philosophy-pillar">
+              <h3>⬇️ Measured physical grammar</h3>
+              <p>
+                Leash, voice, touch — downward pressure and instant slack. One sharp syllable in a language dogs
+                already run on, governed by{' '}
+                <Link to={guideHref('conservation-of-force')}>conservation of force</Link>.
+              </p>
+            </article>
+            <article className="philosophy-pillar">
+              <h3>🧠 The internal journey</h3>
+              <p>
+                Becoming the healthy master is individual evolution: baseline shift, pack presence, and the
+                confidence to hold structure without shushing or negotiating — see{' '}
+                <Link to={guideHref('new-baseline')}>new baseline</Link>.
+              </p>
+            </article>
+            <article className="philosophy-pillar">
+              <h3>🐕 Ethological integration</h3>
+              <p>
+                Reading body language, posturing, and social friction; shaping access and rank within the pack
+                grammar — not fighting the dog kingdom, but fluently joining it — see{' '}
+                <Link to={guideHref('reading-dog')}>reading your dog</Link>.
+              </p>
+            </article>
           </div>
         </div>
       </section>
@@ -104,15 +163,18 @@ export default function AboutPage() {
           <div className="approach-body approach-body--linear">
             <p>
               When a dog understands its place in the relationship, it is a safer, happier, and more relaxed
-              dog. Gold Standard training is built around harnessing the power of a dog&apos;s pack instinct —
-              using strong expectations and clear, consistent boundaries. Understanding dog psychology is one
-              aspect, but shaping their place with you requires fast and firm{' '}
-              <Link to={guideHref('corrections')}>correction</Link> from a calm place — just like dogs do with each
-              other, which Warwick is able to provide to start the process of changing your pack. That
-              firmness is <Link to={guideHref('dog-language')}>measured to the dog</Link> — breed, age, and history
-              — not one intensity for every temperament. Learning and using Warwick&apos;s techniques supports
-              your dog to know the line is real in a way they can understand and find security within, without
-              the risk of injury.
+              dog. Gold Standard training harnesses pack instinct through strong expectations and consistent
+              boundaries — but the handler must evolve first. Understanding psychology matters; holding structure
+              through embodied presence matters more. That means fast, firm{' '}
+              <Link to={guideHref('corrections')}>correction</Link> from a calm place when the line is crossed —
+              the same grammar dogs use with each other — with intensity{' '}
+              <Link to={guideHref('dog-language')}>measured to the dog</Link> by breed, age, and history.
+            </p>
+            <p>
+              Warwick demonstrates the full toolkit in session — including when a downward jerk, butt push, or
+              spatial block lands — so you learn timing and calibration, not dependency on Warwick forever.
+              Your home work is the sustainable core: slack leash, anchor energy, cue once, and the steady message
+              that the old contract is over and the new baseline is real.
             </p>
             <p>
               Based in Golden Bay, with sessions across the Tasman region — Golden Bay locally, Nelson Bays
@@ -156,8 +218,9 @@ export default function AboutPage() {
               <ul>
                 <li>✅ How to correct effectively — and when not to</li>
                 <li>🎯 How to reward the right behaviour at the right moment</li>
-                <li>⚡ How to hold your energy and attention as a training tool</li>
+                <li>⚡ How to embody calm authority — energy, stance, and follow-through</li>
                 <li>👀 How to read your dog before it reacts</li>
+                <li>🦮 How to use the leash as conversation, not constant tension</li>
                 <li>🔄 How to maintain the results yourself, every day</li>
                 <li>💪 Confidence handling difficult moments in real environments</li>
               </ul>
