@@ -11,7 +11,8 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:booking": "vitest run src/data/bookingPipeline.test.ts",
-    "lint:exam": "npx tsx src/data/examLint.ts"
+    "lint:exam": "npx tsx src/data/examLint.ts",
+    "lint:guide": "npx tsx scripts/auditGuideLinks.ts"
   },
   "dependencies": {
     "leaflet": "^1.9.4",

@@ -1,4 +1,6 @@
 import type { ReactNode } from 'react';
+import { Link } from 'react-router-dom';
+import { guideHref } from '@shared/guideHref';
 import { breedCategories } from '../../data/breeds';
 import {
   findIntelligenceByBreedName,
@@ -221,7 +223,7 @@ function StressCard({
         <div className="intelligence-breed-detail-expressions">
           <p className="intelligence-breed-detail-expressions-title">Rehabilitation approach</p>
           <p className="intelligence-breed-detail-neuro-baseline-hint">
-            Confirm <a href="/guide#behavior-driver-calibration">drivers</a> first — breed propensity
+            Confirm <Link to={guideHref('behavior-driver-calibration')}>drivers</Link> first — breed propensity
             is not the same as a confirmed stress loop.
           </p>
           <ul className="intelligence-breed-detail-expressions-list">
@@ -236,12 +238,12 @@ function StressCard({
                   </span>
                   — {playbook.substitution.slice(0, 120)}
                   {playbook.substitution.length > 120 ? '…' : ''}{' '}
-                  <a href={`/guide#${playbook.primaryGuideAnchor}`}>Playbook →</a>
+                  <Link to={guideHref(playbook.primaryGuideAnchor)}>Playbook →</Link>
                   {symptoms.length > 0 && (
                     <ul className="intelligence-breed-detail-symptom-hints">
                       {symptoms.map((s) => (
                         <li key={s.id}>
-                          <a href={`/guide#${s.guideAnchor}`}>{s.label}</a>
+                          <Link to={guideHref(s.guideAnchor)}>{s.label}</Link>
                         </li>
                       ))}
                     </ul>
@@ -255,7 +257,7 @@ function StressCard({
       {showLivingModeCallout && (
         <p className="intelligence-breed-detail-living-mode-hint">
           Velcro types: distinguish{' '}
-          <a href="/guide#context-of-contact">training mode vs living mode</a> contact — structure
+          <Link to={guideHref('context-of-contact')}>training mode vs living mode</Link> contact — structure
           on outings, trust lean at rest.
         </p>
       )}

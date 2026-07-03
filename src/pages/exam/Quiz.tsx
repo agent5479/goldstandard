@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { guideHref } from '@shared/guideHref';
 import SectionIcon from '../../components/SectionIcon';
 import type { Answer, PreparedQuestion } from './engine';
 
@@ -163,7 +164,7 @@ export default function Quiz({ contextLabel, questions, onFinish, onQuit }: Quiz
             <div className="exam-feedback-actions">
               <a
                 className="exam-feedback-link"
-                href={`${import.meta.env.BASE_URL}guide${question.source.guideLink}`}
+                href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}${guideHref(question.source.guideLink)}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >

@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { guideHref } from '@shared/guideHref';
 import {
   buildBookingPrioritiesUrl,
   buildEnquiryMessage,
@@ -306,7 +307,7 @@ export default function ProblemFinderModal({ open, onClose }: ProblemFinderModal
               <ul className="problem-finder-guide-links">
                 {guideLinks.map((link) => (
                   <li key={link.anchor}>
-                    <Link to={`/guide#${link.anchor}`} onClick={handleClose}>
+                    <Link to={guideHref(link.anchor)} onClick={handleClose}>
                       {link.label} →
                     </Link>
                   </li>
@@ -320,7 +321,7 @@ export default function ProblemFinderModal({ open, onClose }: ProblemFinderModal
                 <ul className="problem-finder-guide-links">
                   {driverConsiderations.map((driverId) => (
                     <li key={driverId}>
-                      <Link to={`/guide#behavior-driver-calibration`} onClick={handleClose}>
+                      <Link to={guideHref('behavior-driver-calibration')} onClick={handleClose}>
                         {getBehaviorDriver(driverId).label} →
                       </Link>
                     </li>
@@ -338,7 +339,7 @@ export default function ProblemFinderModal({ open, onClose }: ProblemFinderModal
                     if (!symptom) return null;
                     return (
                       <li key={hintId}>
-                        <Link to={`/guide#${symptom.guideAnchor}`} onClick={handleClose}>
+                        <Link to={guideHref(symptom.guideAnchor)} onClick={handleClose}>
                           {symptom.label} →
                         </Link>
                       </li>

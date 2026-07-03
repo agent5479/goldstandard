@@ -15,7 +15,21 @@ const outDir = join(root, 'docs');
 const siteBase = '/goldstandard';
 
 /** Keep in sync with src/data/prerenderRoutes.ts and App.tsx */
-const routes = ['/', '/about', '/contact', '/book', '/guide', '/exam', '/intelligence'];
+const routes = [
+  '/',
+  '/about',
+  '/contact',
+  '/book',
+  '/guide',
+  '/guide/foundation',
+  '/guide/leadership',
+  '/guide/understanding',
+  '/guide/social',
+  '/guide/training',
+  '/guide/daily-life',
+  '/exam',
+  '/intelligence',
+];
 
 function routeToOutputFile(route) {
   if (route === '/') return join(outDir, 'index.html');

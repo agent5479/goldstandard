@@ -5,6 +5,7 @@ import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
 import BookPage from './pages/BookPage';
 import GuidePage from './pages/GuidePage';
+import GuideModulePage from './pages/GuideModulePage';
 import ExamPage from './pages/ExamPage';
 import IntelligencePage from './pages/IntelligencePage';
 
@@ -24,6 +25,7 @@ export default function App() {
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/book" element={<BookPage />} />
         <Route path="/guide" element={<GuidePage />} />
+        <Route path="/guide/:moduleId" element={<GuideModulePage />} />
         <Route path="/exam" element={<ExamPage />} />
         <Route path="/intelligence" element={<IntelligencePage />} />
 

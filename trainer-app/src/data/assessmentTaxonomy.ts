@@ -1,7 +1,8 @@
 import { DEFAULT_TRAINING_FOCUS } from '@/data/trainingFocus';
+import { PUBLIC_GUIDE_BASE_URL, guidePublicUrl } from '@shared/guideHref';
 
 /** Public client guide base URL — anchor links open the matching section. */
-export const PUBLIC_GUIDE_URL = 'https://agent5479.github.io/goldstandard/guide';
+export const PUBLIC_GUIDE_URL = PUBLIC_GUIDE_BASE_URL;
 
 export type SkillGrade = 0 | 1 | 2 | 3 | 4;
 
@@ -231,7 +232,7 @@ export function getGuideGroup(id: string): GuideGroup | undefined {
 }
 
 export function guideAnchorUrl(anchorId: string): string {
-  return `${PUBLIC_GUIDE_URL}#${anchorId}`;
+  return guidePublicUrl(anchorId);
 }
 
 export function getFocusById(id: string) {

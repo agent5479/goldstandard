@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { guideHref } from '@shared/guideHref';
 import Seo from '../components/Seo';
 import SiteHeader from '../components/SiteHeader';
 import SiteFooter from '../components/SiteFooter';
@@ -70,7 +71,7 @@ export default function IntelligencePage() {
             <p>
               Intelligence rankings describe learning aptitude — not trainability in your home, and not
               temperament. For how breed type shapes correction delivery and reward currency, see the{' '}
-              <Link to="/guide#breed-temperament">Client Reference Guide</Link> or take the{' '}
+              <Link to={guideHref('breed-temperament')}>Client Reference Guide</Link> or take the{' '}
               <Link to="/exam">owner exam</Link>.
             </p>
           </div>

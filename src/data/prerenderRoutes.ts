@@ -5,6 +5,12 @@ export const PRERENDER_ROUTES = [
   '/contact',
   '/book',
   '/guide',
+  '/guide/foundation',
+  '/guide/leadership',
+  '/guide/understanding',
+  '/guide/social',
+  '/guide/training',
+  '/guide/daily-life',
   '/exam',
   '/intelligence',
 ] as const;

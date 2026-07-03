@@ -953,6 +953,250 @@ h2 {
   font-size: 0.86rem;
 }
 
+/* Guide hub & module layout */
+.guide-hub {
+  padding: 2rem 1.5rem 4rem;
+  background: var(--cream, #f8f6f0);
+}
+
+.guide-hub-inner {
+  max-width: 920px;
+  margin: 0 auto;
+}
+
+.guide-continue-card {
+  margin: 1.5rem 0;
+  padding: 1.25rem 1.5rem;
+  border-radius: 12px;
+  background: #fff;
+  border: 1px solid rgba(201, 168, 76, 0.35);
+  box-shadow: 0 4px 18px rgba(24, 38, 24, 0.06);
+}
+
+.guide-continue-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 700;
+  margin: 0 0 0.35rem;
+}
+
+.guide-continue-card h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.25rem;
+  color: var(--forest);
+  margin: 0 0 0.85rem;
+}
+
+.guide-hub-progress {
+  margin: 1.5rem 0 2rem;
+}
+
+.guide-hub-progress-label {
+  display: block;
+  font-size: 0.86rem;
+  color: var(--light-text);
+  margin-bottom: 0.45rem;
+}
+
+.guide-hub-progress-bar {
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(24, 38, 24, 0.1);
+  overflow: hidden;
+}
+
+.guide-hub-progress-fill {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--gold), #d4b85a);
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+.guide-hub-modules-heading {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.35rem;
+  color: var(--forest);
+  margin: 0 0 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.guide-hub-intro {
+  font-size: 0.95rem;
+  color: var(--text-muted, #5a6a5a);
+  margin: 0 0 1.5rem;
+  max-width: 42rem;
+  line-height: 1.5;
+}
+
+.guide-module-cards {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .guide-module-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.guide-module-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 1.25rem 1.35rem;
+  border-radius: 12px;
+  background: #fff;
+  border: 1px solid rgba(24, 38, 24, 0.08);
+  box-shadow: 0 2px 12px rgba(24, 38, 24, 0.05);
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+
+.guide-module-card:hover {
+  border-color: rgba(201, 168, 76, 0.45);
+  box-shadow: 0 6px 22px rgba(24, 38, 24, 0.1);
+  transform: translateY(-2px);
+}
+
+.guide-module-card-part {
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 700;
+}
+
+.guide-module-card-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--forest);
+}
+
+.guide-module-card-desc {
+  font-size: 0.9rem;
+  color: var(--text-muted, #5a6a5a);
+  line-height: 1.45;
+  flex: 1;
+}
+
+.guide-module-card-meta {
+  font-size: 0.8rem;
+  color: var(--light-text);
+  margin-top: 0.25rem;
+}
+
+.guide-module-card-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: rgba(24, 38, 24, 0.06);
+}
+
+.guide-module-card-progress span {
+  display: block;
+  height: 100%;
+  background: var(--gold);
+}
+
+.guide-module-nav-bar {
+  padding: 0.85rem 1.5rem;
+  background: rgba(248, 246, 240, 0.95);
+  border-bottom: 1px solid rgba(24, 38, 24, 0.08);
+}
+
+.guide-module-nav-bar-inner {
+  max-width: 920px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.25rem;
+}
+
+.guide-module-nav-hub {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--forest);
+  text-decoration: none;
+}
+
+.guide-module-nav-part {
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 700;
+}
+
+.guide-module-nav-adjacent {
+  margin-left: auto;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.guide-module-nav-prev,
+.guide-module-nav-next {
+  font-size: 0.86rem;
+  color: var(--forest);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.guide-module-nav-prev:hover,
+.guide-module-nav-next:hover {
+  color: var(--gold);
+}
+
+.guide-contents-module {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
+.guide-module-footer-nav {
+  padding: 2rem 1.5rem 3rem;
+  background: var(--cream, #f8f6f0);
+  border-top: 1px solid rgba(24, 38, 24, 0.08);
+}
+
+.guide-module-footer-nav-inner {
+  max-width: 920px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.guide-module-footer-link {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--forest);
+  text-decoration: none;
+}
+
+.guide-module-footer-link:hover {
+  color: var(--gold);
+}
+
+.guide-module-footer-hub {
+  text-align: center;
+}
+
 /* Guide page: sticky bar (matches site header) */
 .guide-sticky-nav {
   position: sticky;

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { guideHref } from '@shared/guideHref';
 import SectionIcon from '../../components/SectionIcon';
 import { PASS_MARK } from './engine';
 import type { Answer } from './engine';
@@ -100,7 +101,7 @@ export default function Results({ track, breedName, answers, onRetake }: Results
                     <p className="exam-review-yours"><strong>Your answer:</strong> {q.options[a.selected]}</p>
                     <p className="exam-review-correct"><strong>Correct answer:</strong> {q.options[q.correctIndex]}</p>
                     <p className="exam-review-why">{q.source.explanation}</p>
-                    <Link className="exam-review-link" to={`/guide${q.source.guideLink}`}>
+                    <Link className="exam-review-link" to={guideHref(q.source.guideLink)}>
                       Read this section of the guide →
                     </Link>
                   </div>

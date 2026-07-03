@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { guideHref } from '@shared/guideHref';
 import Seo from '../components/Seo';
 import SectionIcon from '../components/SectionIcon';
 import SiteHeader from '../components/SiteHeader';
@@ -106,9 +107,9 @@ export default function AboutPage() {
               dog. Gold Standard training is built around harnessing the power of a dog&apos;s pack instinct —
               using strong expectations and clear, consistent boundaries. Understanding dog psychology is one
               aspect, but shaping their place with you requires fast and firm{' '}
-              <Link to="/guide#corrections">correction</Link> from a calm place — just like dogs do with each
+              <Link to={guideHref('corrections')}>correction</Link> from a calm place — just like dogs do with each
               other, which Warwick is able to provide to start the process of changing your pack. That
-              firmness is <Link to="/guide#dog-language">measured to the dog</Link> — breed, age, and history
+              firmness is <Link to={guideHref('dog-language')}>measured to the dog</Link> — breed, age, and history
               — not one intensity for every temperament. Learning and using Warwick&apos;s techniques supports
               your dog to know the line is real in a way they can understand and find security within, without
               the risk of injury.
@@ -146,7 +147,7 @@ export default function AboutPage() {
               <p>
                 If your dog has reactivity, poor leash behaviour, or anxiety patterns, the process begins with
                 safety and trust before building harder skills. Correction intensity is calibrated to the
-                individual dog — see the <Link to="/guide#dog-language">Client Reference Guide</Link> for how
+                individual dog — see the <Link to={guideHref('dog-language')}>Client Reference Guide</Link> for how
                 firmness is measured by breed, age, and history.
               </p>
             </div>
