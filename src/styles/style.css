@@ -1374,6 +1374,26 @@ body.page-guide {
   color: rgba(255, 255, 255, 0.75);
 }
 
+.guide-driver-grid { margin: 1.25rem 0; }
+.guide-playbook-table-wrap { margin: 1.25rem 0; }
+.guide-playbook-table { font-size: 0.9rem; }
+.guide-playbook-table td { vertical-align: top; }
+.guide-playbook-table td:first-child { width: 12%; min-width: 7rem; }
+.guide-path-badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.15rem 0.45rem;
+  border-radius: 3px;
+  white-space: nowrap;
+}
+.guide-path-badge--substitution { background: #e8f4e6; color: #2d6a3e; }
+.guide-path-badge--security_first { background: #e6eef8; color: #2a4a7a; }
+.guide-path-badge--hardship { background: #f8ebe6; color: #8a3a2a; }
+.guide-path-badge--mixed { background: #f3ead8; color: #6a5520; }
+
 /* guide: three pillars & reminders */
 .guide-section--compact .guide-section-inner { padding-bottom: 1.75rem; }
 .guide-section--compact .section-desc { color: var(--light-text); font-size: 1rem; margin: -0.5rem 0 1.25rem; }

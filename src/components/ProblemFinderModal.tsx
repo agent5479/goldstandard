@@ -8,8 +8,10 @@ import {
   getOutcomesForContext,
   IMPACT_LABELS,
   mergeBookingTags,
+  mergeDriverConsiderations,
   mergeGuideLinks,
   mergeOutcomes,
+  mergeSymptomExpressionHints,
   PROBLEM_CONTEXTS,
   saveProblemFinderHandoff,
   toggleProblemOutcome,
@@ -17,6 +19,8 @@ import {
   type ProblemContextId,
   type ProblemOutcomeId,
 } from '../data/problemFinder';
+import { getBehaviorDriver } from '../data/behaviorDrivers';
+import { getSymptomExpression } from '../data/symptomExpressions';
 
 type FinderStep = 'context' | 'issue' | 'impact' | 'results';
 
@@ -83,6 +87,8 @@ export default function ProblemFinderModal({ open, onClose }: ProblemFinderModal
   const issueOptions = contextId ? getOutcomesForContext(contextId) : [];
   const guideLinks = mergeGuideLinks(outcomes);
   const bookingTags = mergeBookingTags(outcomes);
+  const driverConsiderations = mergeDriverConsiderations(outcomes);
+  const symptomHints = mergeSymptomExpressionHints(outcomes);
 
   const goBack = () => {
     if (step === 'issue') {
@@ -307,6 +313,40 @@ export default function ProblemFinderModal({ open, onClose }: ProblemFinderModal
                 ))}
               </ul>
             </div>
+
+            {driverConsiderations.length > 0 && (
+              <div className="problem-finder-reading">
+                <p className="problem-finder-reading-label">Before the playbook — consider drivers</p>
+                <ul className="problem-finder-guide-links">
+                  {driverConsiderations.map((driverId) => (
+                    <li key={driverId}>
+                      <Link to={`/guide#behavior-driver-calibration`} onClick={handleClose}>
+                        {getBehaviorDriver(driverId).label} →
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {symptomHints.length > 0 && (
+              <div className="problem-finder-reading">
+                <p className="problem-finder-reading-label">Identify symptom variant</p>
+                <ul className="problem-finder-guide-links">
+                  {symptomHints.map((hintId) => {
+                    const symptom = getSymptomExpression(hintId);
+                    if (!symptom) return null;
+                    return (
+                      <li key={hintId}>
+                        <Link to={`/guide#${symptom.guideAnchor}`} onClick={handleClose}>
+                          {symptom.label} →
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            )}
 
             <div className="problem-finder-actions">
               <button type="button" className="btn btn-primary" onClick={sendEnquiry}>

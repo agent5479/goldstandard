@@ -5,6 +5,7 @@ import SectionSpeakingAloud from './SectionSpeakingAloud';
 import SectionReadyStance from './SectionReadyStance';
 import SectionFrontDoor from './SectionFrontDoor';
 import SectionReadingDog from './SectionReadingDog';
+import SectionRehabilitationPatterns from './SectionRehabilitationPatterns';
 import SectionSocialNeeds from './SectionSocialNeeds';
 import SectionIntactLargeMales from './SectionIntactLargeMales';
 import SectionTiming from './SectionTiming';
@@ -41,6 +42,7 @@ export const guideSections = [
   SectionFrontDoor,
   GuideThemeUnderstanding,
   SectionReadingDog,
+  SectionRehabilitationPatterns,
   GuideThemeSocialNeeds,
   SectionSocialNeeds,
   SectionIntactLargeMales,

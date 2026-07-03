@@ -5,7 +5,7 @@ export default function SectionRewards() {
       <p className="section-num">11 — Rewards</p>
       <h2>🦴 Choose the right currency for your dog.</h2>
 
-      <p>Before using treat-based training, understand whether your dog is actually food-motivated. Many are, but many aren't — particularly dogs that have been oversaturated with treats, or dogs whose primary drive is social, environmental, or prey-related. Breed tendencies matter: some lines lean heavily treat-focused; others respond far more to affection, access, or calm approval. Read <a href="#breed-temperament">breed temperament</a> alongside the individual dog in front of you.</p>
+      <p>Before using treat-based training, understand whether your dog is actually food-motivated. Many are, but many aren't — particularly dogs that have been oversaturated with treats, or dogs whose primary drive is social, environmental, or prey-related. Breed tendencies matter: some lines lean heavily treat-focused; others respond far more to affection, access, or calm approval. Read <a href="#breed-temperament">breed temperament</a> alongside the individual dog in front of you. For rehabilitation timing — never reward the wrong trigger — see <a href="#behavioral-decoupling">Behavioral decoupling</a> and <a href="#symptom-expression-index">Symptom index</a>.</p>
 
       <h3 id="treat-diagnostic">🔍 Before you conclude the dog isn't food-motivated</h3>
 

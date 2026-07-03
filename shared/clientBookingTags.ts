@@ -167,6 +167,7 @@ export const BOOKING_CONCERN_OPTIONS = [
   { id: 'puppy', label: 'Puppy or adolescent basics' },
   { id: 'dog_issues', label: 'Issues with other dogs' },
   { id: 'obedience', label: 'General obedience / manners' },
+  { id: 'repetitive_soothing', label: 'Repetitive licking / self-soothing' },
 ];
 
 export const BOOKING_CONCERN_IDS: Set<string> = new Set(BOOKING_CONCERN_OPTIONS.map((option) => option.id));
@@ -185,6 +186,7 @@ export const BOOKING_CONCERN_TO_TAGS: Record<string, readonly string[]> = {
   puppy: [],
   dog_issues: ['reactivity_priority', 'dog_reactive'],
   obedience: ['attention_priority'],
+  repetitive_soothing: ['anxious', 'rehabituation'],
 };
 
 const CLIENT_TAG_SET = new Set<string>(CLIENT_BOOKING_PROFILE_TAG_IDS);

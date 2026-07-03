@@ -231,11 +231,14 @@ export const NEURO_PATTERN_SIGNALS: Record<NeuroPattern, NeuroPatternSignal[]> =
   handler_sensitive: [
     { label: 'Sigh tracks handler mood — safe vs disappointed', guideAnchor: '#three-second-pause' },
     { label: 'Whale eye when handler looms or reaches', guideAnchor: '#symptom-glossary' },
+    { label: 'Compulsive handler licking when insecure', guideAnchor: '#symptom-compulsive-lick-handler' },
   ],
   anxious_attachment: [
     { label: 'Demanding paw for attention', guideAnchor: '#symptom-glossary' },
     { label: 'Demand lean at thresholds vs trust lean at rest', guideAnchor: '#context-of-contact' },
     { label: 'Whale eye misread as sass or guilt', guideAnchor: '#common-pitfalls' },
+    { label: 'Persistent licking of handler skin or clothing', guideAnchor: '#symptom-compulsive-lick-handler' },
+    { label: 'Compulsive self-licking (paws, flank)', guideAnchor: '#symptom-compulsive-lick-self' },
   ],
   fixation_loop: [
     { label: 'Stiffening / freeze before lunge', guideAnchor: '#symptom-glossary' },

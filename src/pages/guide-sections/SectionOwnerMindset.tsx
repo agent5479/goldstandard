@@ -17,7 +17,9 @@ export default function SectionOwnerMindset() {
           energy broadcasts that anxiety down the leash. The dog feels the tension and acts on it — see{' '}
           <a href="#butt-push">the butt push</a> and <a href="#reading-dog">reading your dog</a>. It is
           not malice. It is a dog filling a leadership gap. To change the dog, you must first reset your
-          internal thermostat. You must establish a <strong>new baseline</strong>.
+          internal thermostat. You must establish a <strong>new baseline</strong>. Handler contribution is a
+          behaviour driver — see <a href="#behavior-driver-calibration">Driver calibration</a> before opening
+          any rehabilitation playbook.
         </p>
 
         <div className="mantra">

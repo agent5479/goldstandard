@@ -83,7 +83,10 @@ export default function SectionCorrections() {
         The dog's brain connects the chain. They quickly realize the trigger for high-value praise is the initial
         disobedience — break position, receive pressure, fix it, collect the jackpot. You inadvertently train a
         yo-yo pattern where the dog tests boundaries just to trigger the resolution sequence. High-drive and highly
-        intelligent dogs learn this fastest.
+        intelligent dogs learn this fastest. Insecurity-driven behaviour misread as disobedience may need the{' '}
+        <a href="#behavior-driver-calibration">driver calibration</a> and{' '}
+        <a href="#rehabilitation-patterns">substitution path</a> instead — see{' '}
+        <a href="#symptom-expression-index">Symptom index</a>.
       </p>
 
       <div className="callout">

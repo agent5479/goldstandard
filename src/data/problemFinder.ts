@@ -1,4 +1,6 @@
 import { BOOKING_CONCERN_TO_TAGS } from '@shared/clientBookingTags';
+import type { NeuroPattern } from './breedTraits';
+import type { BehaviorDriver } from './behaviorDrivers';
 
 export type ProblemContextId = 'walks' | 'home' | 'social' | 'basics';
 export type ProblemOutcomeId =
@@ -14,7 +16,8 @@ export type ProblemOutcomeId =
   | 'yard_boundaries'
   | 'puppy'
   | 'dog_issues'
-  | 'obedience';
+  | 'obedience'
+  | 'repetitive_soothing';
 
 export type ImpactLevel = 1 | 2 | 3 | 4 | 5;
 
@@ -30,6 +33,9 @@ export interface ProblemOutcome {
   urgencyNotes: Record<ImpactLevel, string>;
   guideLinks: ProblemGuideLink[];
   bookingTags: string[];
+  neuroPatternHints?: NeuroPattern[];
+  symptomExpressionHints?: string[];
+  driverConsiderations?: BehaviorDriver[];
 }
 
 export interface ProblemContext {
@@ -107,6 +113,9 @@ export const PROBLEM_OUTCOMES: Record<ProblemOutcomeId, ProblemOutcome> = {
       { anchor: 'dog-meetings-leash', label: 'Dog meetings on leash' },
     ],
     bookingTags: tagsFor('leash_reactive'),
+    neuroPatternHints: ['barrier_frustration', 'fixation_loop'],
+    symptomExpressionHints: ['barrier_lunge', 'stare_lock_trigger'],
+    driverConsiderations: ['entitlement_hardship', 'breed_expression', 'trauma_security'],
   },
   barking: {
     id: 'barking',
@@ -145,6 +154,9 @@ export const PROBLEM_OUTCOMES: Record<ProblemOutcomeId, ProblemOutcome> = {
       { anchor: 'access', label: 'Earned access' },
     ],
     bookingTags: tagsFor('jumping'),
+    neuroPatternHints: ['frenetic_arousal'],
+    symptomExpressionHints: ['helicopter_greeting', 'nudge_mouth_bump'],
+    driverConsiderations: ['owner_dynamics', 'entitlement_hardship', 'age_development'],
   },
   anxious: {
     id: 'anxious',
@@ -161,9 +173,14 @@ export const PROBLEM_OUTCOMES: Record<ProblemOutcomeId, ProblemOutcome> = {
     guideLinks: [
       { anchor: 'symptom-glossary', label: 'Reading stress signals' },
       { anchor: 'trauma-signals', label: 'Trauma vs everyday fear' },
+      { anchor: 'behavior-driver-calibration', label: 'Driver calibration' },
+      { anchor: 'rehabilitation-patterns', label: 'Rehabilitation patterns' },
       { anchor: 'owner-mindset', label: 'Calm handler mindset' },
     ],
     bookingTags: tagsFor('anxious'),
+    neuroPatternHints: ['handler_sensitive', 'fear_reactive', 'hyper_vigilant'],
+    symptomExpressionHints: ['whale_eye_handler', 'lip_lick_displacement', 'submissive_urination_greeting'],
+    driverConsiderations: ['trauma_security', 'owner_dynamics', 'skill_gap'],
   },
   separation: {
     id: 'separation',
@@ -183,6 +200,9 @@ export const PROBLEM_OUTCOMES: Record<ProblemOutcomeId, ProblemOutcome> = {
       { anchor: 'daily', label: 'Daily structure' },
     ],
     bookingTags: tagsFor('separation'),
+    neuroPatternHints: ['separation'],
+    symptomExpressionHints: ['vocal_demand_alone', 'destructive_outburst'],
+    driverConsiderations: ['skill_gap', 'owner_dynamics'],
   },
   doors_guests: {
     id: 'doors_guests',
@@ -221,6 +241,8 @@ export const PROBLEM_OUTCOMES: Record<ProblemOutcomeId, ProblemOutcome> = {
       { anchor: 'road-safety', label: 'Road and threshold safety' },
     ],
     bookingTags: tagsFor('impulse'),
+    symptomExpressionHints: ['destructive_outburst'],
+    driverConsiderations: ['entitlement_hardship', 'skill_gap'],
   },
   yard_boundaries: {
     id: 'yard_boundaries',
@@ -278,6 +300,7 @@ export const PROBLEM_OUTCOMES: Record<ProblemOutcomeId, ProblemOutcome> = {
       { anchor: 'butt-push', label: 'Reactivity interruption' },
     ],
     bookingTags: tagsFor('dog_issues'),
+    driverConsiderations: ['social_dominance', 'age_development'],
   },
   obedience: {
     id: 'obedience',
@@ -297,6 +320,35 @@ export const PROBLEM_OUTCOMES: Record<ProblemOutcomeId, ProblemOutcome> = {
       { anchor: 'daily', label: 'Daily structure' },
     ],
     bookingTags: tagsFor('obedience'),
+    driverConsiderations: ['skill_gap'],
+  },
+  repetitive_soothing: {
+    id: 'repetitive_soothing',
+    label: 'Repetitive licking, chewing, or self-soothing',
+    summary:
+      'Compulsive licking of handler or self, paw chewing, and similar repetitive soothing — often insecurity endorphin release, not defiance. Route through driver calibration, then the symptom index for handler vs self variants.',
+    urgencyNotes: {
+      1: 'Occasional licking is normal; persistent loops worth addressing with substitution, not repeated Stop.',
+      2: 'Handler-licking and self-licking need different decoupling rules — identify the target first.',
+      3: 'When soothing behaviours disrupt daily contact or sleep, substitution playbook applies after driver check.',
+      4: 'Embarrassing or constant licking in public — workable once drivers and pattern are identified.',
+      5: 'Self-lick with bald patches or hot spots — vet rule-out before behavioural plan alone.',
+    },
+    guideLinks: [
+      { anchor: 'behavior-driver-calibration', label: 'Driver calibration' },
+      { anchor: 'symptom-expression-index', label: 'Symptom expression index' },
+      { anchor: 'case-compulsive-licking', label: 'Worked example: handler licking' },
+      { anchor: 'rehabilitation-patterns', label: 'Rehabilitation patterns' },
+    ],
+    bookingTags: ['anxious', 'rehabituation'],
+    neuroPatternHints: ['anxious_attachment', 'handler_sensitive', 'frustration_reactive'],
+    symptomExpressionHints: [
+      'compulsive_lick_handler',
+      'compulsive_lick_self',
+      'repetitive_paw_chew',
+      'compulsive_lick_environment',
+    ],
+    driverConsiderations: ['entitlement_hardship', 'breed_expression', 'owner_dynamics', 'trauma_security'],
   },
 };
 
@@ -311,13 +363,13 @@ export const PROBLEM_CONTEXTS: ProblemContext[] = [
     id: 'home',
     label: 'At home',
     description: 'Barking, doors, visitors, separation, yard boundaries, or impulse indoors.',
-    outcomeIds: ['barking', 'doors_guests', 'separation', 'yard_boundaries', 'impulse'],
+    outcomeIds: ['barking', 'doors_guests', 'separation', 'yard_boundaries', 'impulse', 'repetitive_soothing'],
   },
   {
     id: 'social',
     label: 'Around people or other dogs',
-    description: 'Jumping on guests, anxiety, or trouble with other dogs in social situations.',
-    outcomeIds: ['jumping', 'anxious', 'dog_issues', 'leash_reactive'],
+    description: 'Jumping on guests, anxiety, repetitive soothing, or trouble with other dogs in social situations.',
+    outcomeIds: ['jumping', 'anxious', 'dog_issues', 'leash_reactive', 'repetitive_soothing'],
   },
   {
     id: 'basics',
@@ -390,6 +442,32 @@ export function mergeBookingTags(outcomes: ProblemOutcome[]): string[] {
     for (const tag of outcome.bookingTags) tags.add(tag);
   }
   return [...tags];
+}
+
+export function mergeDriverConsiderations(outcomes: ProblemOutcome[]): BehaviorDriver[] {
+  const seen = new Set<BehaviorDriver>();
+  const drivers: BehaviorDriver[] = [];
+  for (const outcome of outcomes) {
+    for (const driver of outcome.driverConsiderations ?? []) {
+      if (seen.has(driver)) continue;
+      seen.add(driver);
+      drivers.push(driver);
+    }
+  }
+  return drivers;
+}
+
+export function mergeSymptomExpressionHints(outcomes: ProblemOutcome[]): string[] {
+  const seen = new Set<string>();
+  const hints: string[] = [];
+  for (const outcome of outcomes) {
+    for (const hint of outcome.symptomExpressionHints ?? []) {
+      if (seen.has(hint)) continue;
+      seen.add(hint);
+      hints.push(hint);
+    }
+  }
+  return hints;
 }
 
 export function buildEnquiryMessage(

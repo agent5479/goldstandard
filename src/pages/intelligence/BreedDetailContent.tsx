@@ -9,6 +9,11 @@ import {
   VOCAL_HUE,
 } from '../../data/dogIntelligence';
 import {
+  getRehabilitationPlaybook,
+  REHABILITATION_PATH_LABELS,
+} from '../../data/rehabilitationPlaybooks';
+import { getSymptomsForPattern } from '../../data/symptomExpressions';
+import {
   findBreedByName,
   getBreedAxisProfile,
   getBreedClientMixTraitLabel,
@@ -209,6 +214,41 @@ function StressCard({
                 <a href={`/guide${signal.guideAnchor}`}>{signal.label}</a>
               </li>
             ))}
+          </ul>
+        </div>
+      )}
+      {dominantPatterns.length > 0 && (
+        <div className="intelligence-breed-detail-expressions">
+          <p className="intelligence-breed-detail-expressions-title">Rehabilitation approach</p>
+          <p className="intelligence-breed-detail-neuro-baseline-hint">
+            Confirm <a href="/guide#behavior-driver-calibration">drivers</a> first — breed propensity
+            is not the same as a confirmed stress loop.
+          </p>
+          <ul className="intelligence-breed-detail-expressions-list">
+            {dominantPatterns.map((pattern) => {
+              const playbook = getRehabilitationPlaybook(pattern);
+              const symptoms = getSymptomsForPattern(pattern).slice(0, 3);
+              return (
+                <li key={pattern}>
+                  <strong>{playbook.label}</strong>{' '}
+                  <span className="intelligence-breed-detail-rehab-path">
+                    ({REHABILITATION_PATH_LABELS[playbook.path]})
+                  </span>
+                  — {playbook.substitution.slice(0, 120)}
+                  {playbook.substitution.length > 120 ? '…' : ''}{' '}
+                  <a href={`/guide#${playbook.primaryGuideAnchor}`}>Playbook →</a>
+                  {symptoms.length > 0 && (
+                    <ul className="intelligence-breed-detail-symptom-hints">
+                      {symptoms.map((s) => (
+                        <li key={s.id}>
+                          <a href={`/guide#${s.guideAnchor}`}>{s.label}</a>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </li>
+              );
+            })}
           </ul>
         </div>
       )}

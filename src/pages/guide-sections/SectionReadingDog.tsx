@@ -56,7 +56,7 @@ export default function SectionReadingDog() {
       <div className="two-col">
         <div className="col-card">
           <h4>🐕 Adults with trauma or shutdown history</h4>
-          <p>Lighter entry, slower arc, structure without flooding. Escalating to shocking physical correction can confirm the world is unsafe — see <a href="#trauma-signals">Trauma signals</a>.</p>
+          <p>Lighter entry, slower arc, structure without flooding. Escalating to shocking physical correction can confirm the world is unsafe — see <a href="#trauma-signals">Trauma signals</a> and <a href="#rehabilitation-patterns">Rehabilitation patterns</a>.</p>
         </div>
         <div className="col-card">
           <h4>💪 Confident, pushy adults</h4>
@@ -171,7 +171,7 @@ export default function SectionReadingDog() {
           <tbody>
             <tr>
               <td><strong>Lip licking</strong></td>
-              <td>Displacement or appeasement — nervous system processing stress, uncertainty, or a recent correction</td>
+              <td>Displacement or appeasement — nervous system processing stress, uncertainty, or a recent correction. Compulsive handler or self-licking that worsens under No/Stop — see <a href="#symptom-expression-index">Symptom index</a></td>
               <td>Very common in puppies and in dogs rebuilding trust; watch what happened in the second before</td>
             </tr>
             <tr>
@@ -182,7 +182,7 @@ export default function SectionReadingDog() {
             <tr>
               <td><strong>Mouthing</strong></td>
               <td>Exploration and play in young dogs; in older dogs often demand for attention, overstimulation, or anxiety</td>
-              <td>Puppy mouthing fades with structure; persistent mouthing in an adult usually means the standard has slipped — see <a href="#collar-snatch">collar grab</a></td>
+              <td>Exploration and play in young dogs; in older dogs often demand for attention, overstimulation, or anxiety. Pushy mouthing — <a href="#collar-snatch">collar grab</a>; insecure contact-seeking — <a href="#symptom-expression-index">Symptom index</a></td>
             </tr>
             <tr>
               <td><strong>Forgetting commands</strong></td>
@@ -247,7 +247,7 @@ export default function SectionReadingDog() {
             <tr>
               <td><strong>Demanding paw</strong></td>
               <td>Forceful, repeated pawing for attention or a dopamine hit — demand behaviour, not affection</td>
-              <td>Rewarding it builds a loop with no off-switch. Become a rock: look away, fold arms, withhold attention until calm — see <a href="#rewards">Rewards</a> and <a href="#ready-stance">ready stance</a></td>
+              <td>Rewarding it builds a loop with no off-switch. Become a rock: look away, fold arms, withhold attention until calm — see <a href="#rewards">Rewards</a>. Distinguish from anxious contact — <a href="#behavior-driver-calibration">Driver calibration</a></td>
             </tr>
             <tr>
               <td><strong>Sigh</strong></td>
@@ -337,6 +337,7 @@ export default function SectionReadingDog() {
             Softer approach centred on security and clear, non-confrontational boundaries. Avoid overbearing or
             high-intensity discipline that causes the nervous system to spike and stay spiked. Structure still matters —
             inconsistency frightens more than firmness — but delivery must read as calm certainty, not assault.
+            See <a href="#rehabilitation-patterns">Rehabilitation patterns</a> when a chronic stress loop is confirmed.
           </p>
         </div>
         <div className="col-card">

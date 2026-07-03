@@ -42,6 +42,10 @@ export default function GuideContentsNav() {
               <li><a href="#eight-week-separation">🐶 8-week separation</a></li>
               <li><a href="#trauma-hardship-calibration">📏 Correction scale</a></li>
               <li><a href="#pack-guarding">🚪 Pack guarding</a></li>
+              <li><a href="#rehabilitation-patterns">🔄 Rehabilitation patterns</a></li>
+              <li><a href="#behavior-driver-calibration">🔍 Driver calibration</a></li>
+              <li><a href="#pattern-playbook-table">📋 Pattern playbook</a></li>
+              <li><a href="#symptom-expression-index">📋 Symptom index</a></li>
             </ul>
           </div>
           <div className="guide-contents-group">
