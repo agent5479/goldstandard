@@ -83,16 +83,16 @@ export default function SectionLeash() {
 
       <h3>⬇️ Downward correction. Slack line. No tension.</h3>
 
-      <p>How you hold the leash is doing constant communication. A tight, upward-pulled leash tells the dog you're nervous and reactive. It creates a feedback loop — you tighten, the dog feels it and escalates, you tighten more.</p>
+      <p>How you hold the leash is doing constant communication. A tight, upward-pulled leash tells the dog you're nervous and reactive. It creates a feedback loop — you tighten, the dog feels it and escalates, you tighten more. Many dogs also learn to <strong>lean into the line</strong> to make themselves lighter and pull forward; sustained tension feeds that habit rather than breaking it.</p>
 
       <div className="two-col">
         <div className="col-card">
           <h4>✅ What to do</h4>
-          <p>Keep the leash slack. When a correction is needed, pull <strong>downward</strong>, firmly and briefly, then release back to slack — see <a href="#leash-jerk">Downward leash jerk</a> for the full pattern. The slack line is also information — it lets you read the dog's personality and natural impulses, rather than suppressing them with constant tension.</p>
+          <p>Keep the leash slack. When a correction is needed, pull <strong>downward</strong>, firmly and briefly, then release back to slack — see <a href="#leash-jerk">Downward leash jerk</a> for the full pattern. The down pull makes the dog heavy and removes the lean-on-the-line incentive in one sharp moment. The slack line is also information — it lets you read the dog's personality and natural impulses, rather than suppressing them with constant tension.</p>
         </div>
         <div className="col-card">
           <h4>🚫 What to avoid</h4>
-          <p>Never pull <strong>upward</strong> — this puts pressure on the larynx and can cause injury. Avoid holding sustained tension as a method of control. Sustained tension is not leadership; it's anxiety transmitted through a leash.</p>
+          <p>Never pull <strong>upward</strong> — this puts pressure on the larynx and can cause injury. Avoid holding sustained tension as a method of control; it teaches the dog to lean into the line and stay light. Sustained tension is not leadership; it's anxiety transmitted through a leash.</p>
         </div>
       </div>
 

@@ -8,6 +8,17 @@ export default function SectionLeashJerk() {
       <p>When the dog is on lead and needs a physical reset — pulling toward a trigger, stiffening on a fixated stare, or refusing to yield position — a single firm downward jerk on the leash makes the body heavier and turns it. It is not sustained tension; it is one sharp pull down, then back to slack.</p>
 
       <div className="callout">
+        <strong>Why downward only</strong>
+        <p>
+          Dogs often <strong>lean into a tight leash</strong> to make themselves lighter and freelance forward — the
+          line becomes part of their locomotion. A downward jerk removes that incentive in one instant: the body goes
+          heavy instead of light. That shift is dramatic, and it is the message. Pulling <strong>upward</strong> risks
+          larynx damage and invites the dog to brace against you; pulling <strong>down</strong> grounds them without
+          choking. See <a href="#leash">Leash work</a> for the same rule on sustained tension.
+        </p>
+      </div>
+
+      <div className="callout">
         <strong>Diagnose before you jerk</strong>
         <p>
           Before a downward jerk, diagnose history using <a href="#trauma-vs-hardship">Trauma vs hardship</a>.{' '}
@@ -30,7 +41,7 @@ export default function SectionLeashJerk() {
 
       <div className="dont">
         <strong>⛔ Never pull upward</strong>
-        <p>Upward pressure on the collar risks the larynx. Downward only — the same rule as in <a href="#leash">Leash work</a>. If grip strength is an issue, use the stick assist described there.</p>
+        <p>Upward pressure on the collar compresses the throat and can injure the larynx. It also rewards the dog&apos;s habit of leaning into the line to stay light. Downward only — the same rule as in <a href="#leash">Leash work</a>. If grip strength is an issue, use the stick assist described there.</p>
       </div>
 
       <p>Over time, as <a href="#verbal-correction">verbal association</a> builds, the sharp command can replace the jerk for the same moment — but the physical pattern must be consistent first so the dog knows what the word means.</p>

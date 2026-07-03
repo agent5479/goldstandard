@@ -97,11 +97,12 @@ export default function AboutPage() {
               Physical correction in this model is not pain for its own sake. It is a crisp interruption —
               pressure, then immediate release — inside the{' '}
               <Link to={guideHref('timing')}>one-second window</Link>. The core on-lead tool is the{' '}
-              <Link to={guideHref('leash-jerk')}>downward leash jerk</Link>: one firm pull down to heavy the body
-              and break fixation, then back to slack. Downward, never upward — clarity without choking. Warwick uses
-              this as a structural signal that life is organised differently now, not merely a tactic for hard
-              moments. That is a stricter centre of gravity than some Beckman-influenced approaches, which may lift
-              to remove ground purchase in a fast fight; here, grounding the new baseline comes first.
+              <Link to={guideHref('leash-jerk')}>downward leash jerk</Link>: one firm pull <strong>down</strong>,
+              never up. Many dogs lean into a tight line to make themselves lighter and pull you forward — the down
+              pull removes that incentive and replaces it with a dramatic shift: the body goes <em>heavy</em>. That
+              change is the message. Downward also keeps pressure off the larynx; upward collar tension risks injury.
+              One sharp pull, then back to slack. Warwick uses this as a structural signal that life is organised
+              differently now — not merely a tactic for hard moments.
             </p>
             <p>
               Training the owner is the product. Warwick coaches you through each step so you can maintain results
@@ -131,8 +132,8 @@ export default function AboutPage() {
             <article className="philosophy-pillar">
               <h3>⬇️ Measured physical grammar</h3>
               <p>
-                Leash, voice, touch — downward pressure and instant slack. One sharp syllable in a language dogs
-                already run on, governed by{' '}
+                Leash, voice, touch — downward pressure and instant slack. The down pull makes the dog heavy,
+                ends the lean-on-the-line trick, and protects the throat — governed by{' '}
                 <Link to={guideHref('conservation-of-force')}>conservation of force</Link>.
               </p>
             </article>
