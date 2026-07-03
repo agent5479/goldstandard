@@ -99,10 +99,11 @@ export default function AboutPage() {
               <Link to={guideHref('timing')}>one-second window</Link>. The core on-lead tool is the{' '}
               <Link to={guideHref('leash-jerk')}>downward leash jerk</Link>: one firm pull <strong>down</strong>,
               never up. Many dogs lean into a tight line to make themselves lighter and pull you forward — the down
-              pull removes that incentive and replaces it with a dramatic shift: the body goes <em>heavy</em>. That
-              change is the message. Downward also keeps pressure off the larynx; upward collar tension risks injury.
-              One sharp pull, then back to slack. Warwick uses this as a structural signal that life is organised
-              differently now — not merely a tactic for hard moments.
+              pull removes that incentive and replaces it with a dramatic shift: the body goes <em>heavy</em>, and the
+              dog naturally chooses not to push harder. An upward pull tends to invite the opposite — brace and keep
+              pulling. Downward also keeps pressure off the larynx. The down pull sets up the{' '}
+              <Link to={guideHref('butt-push')}>butt push</Link> by shifting weight forward so the hips can turn,
+              instead of fighting the dog&apos;s full weight braced into the collar.
             </p>
             <p>
               Training the owner is the product. Warwick coaches you through each step so you can maintain results

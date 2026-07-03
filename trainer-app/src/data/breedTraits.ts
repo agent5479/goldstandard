@@ -8,6 +8,7 @@ import type { Breed, BreedCategory } from './breeds';
 import type { DogProfileTagId } from './dogProfileTags';
 import { COLLOQUIAL_MIX_LEGACY_LABELS, resolveColloquialMixCanonicalBreed } from './colloquialMixNames';
 import { breedPhysicalAppearance, composePhysicalFallback } from './breedPhysicalAppearance';
+import type { BreedLifePhaseNotes, BreedSensitivityProfile } from './breedSensitivities';
 
 export type TraitAxis = 'personality' | 'working' | 'physical';
 export type SizeClass = 'toy' | 'small' | 'medium' | 'large' | 'giant';
@@ -81,6 +82,8 @@ export interface BreedTraitProfile {
   /** Client-safe one-liner for mix picker / booking — no neuroticism language. */
   clientSummary?: string;
   overrides?: Partial<AxisProfile>;
+  sensitivities?: BreedSensitivityProfile;
+  lifePhase?: BreedLifePhaseNotes;
 }
 
 /** Maps legacy stored breed labels to current breed names for trait lookup. */

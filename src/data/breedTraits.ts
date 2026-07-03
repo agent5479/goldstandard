@@ -3,6 +3,7 @@
    Canonical source: ../src/data/breedTraits.ts (public site)
    ============================================================ */
 
+import type { BreedLifePhaseNotes, BreedSensitivityProfile } from './breedSensitivities';
 import { breeds } from './breeds';
 import type { Breed, BreedCategory } from './breeds';
 import type { DogProfileTagId } from './dogProfileTags';
@@ -90,6 +91,8 @@ export interface BreedTraitProfile {
   /** Client-safe one-liner for mix picker / booking — no neuroticism language. */
   clientSummary?: string;
   overrides?: Partial<AxisProfile>;
+  sensitivities?: BreedSensitivityProfile;
+  lifePhase?: BreedLifePhaseNotes;
 }
 
 /** Maps legacy stored breed labels to current breed names for trait lookup. */

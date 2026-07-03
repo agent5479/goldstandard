@@ -22,9 +22,15 @@ import {
   getBreedNeuroticismPropensityDetail,
   getBreedSizeClass,
   getBreedSuggestedProfileTags,
+  NEUROTICISM_LABELS,
   NEUROTICISM_VARIANT,
   type TraitAxis,
 } from '../../data/breedTraits';
+import {
+  getBreedLifePhaseNotes,
+  getBreedSensitivityDetail,
+  getBreedSensitivitySummary,
+} from '../../data/breedSensitivityResolvers';
 import { SIZE_CLASS_META } from '../../data/breedSizeGrades';
 import { getTraitIntensityStyle } from '../../utils/scoreSpectrum';
 
@@ -213,7 +219,7 @@ function StressCard({
           <ul className="intelligence-breed-detail-expressions-list">
             {expressionSignals.map((signal) => (
               <li key={`${signal.guideAnchor}-${signal.label}`}>
-                <a href={`/guide${signal.guideAnchor}`}>{signal.label}</a>
+                <Link to={guideHref(signal.guideAnchor.replace(/^#/, ''))}>{signal.label}</Link>
               </li>
             ))}
           </ul>
@@ -261,6 +267,77 @@ function StressCard({
           on outings, trust lean at rest.
         </p>
       )}
+    </DetailCard>
+  );
+}
+
+function SensitivitiesCard({ breedName }: { breedName: string }) {
+  const summary = getBreedSensitivitySummary(breedName);
+  const details = getBreedSensitivityDetail(breedName);
+
+  return (
+    <DetailCard title="🎚 Common sensitivities & triggers">
+      <p className="intelligence-breed-detail-sensitivity-intro">{summary}</p>
+      <p className="intelligence-breed-detail-neuro-baseline-hint">
+        Adjunct to stress patterns above — what inputs commonly trigger or worsen loops. Individual upbringing
+        varies.
+      </p>
+      <ul className="intelligence-breed-detail-sensitivity-list">
+        {details.map((item) => (
+          <li key={item.id} className="intelligence-breed-detail-sensitivity-item">
+            <div className="intelligence-breed-detail-sensitivity-row">
+              <span className="intelligence-breed-detail-sensitivity-label">{item.label}</span>
+              <span
+                className={`intelligence-breed-detail-neuro-badge intelligence-breed-detail-neuro-badge--${NEUROTICISM_VARIANT[item.level]}`}
+              >
+                {item.levelLabel ?? NEUROTICISM_LABELS[item.level]}
+              </span>
+            </div>
+            {item.note && <p className="intelligence-breed-detail-sensitivity-note">{item.note}</p>}
+            <p className="intelligence-breed-detail-sensitivity-links">
+              {item.guideAnchors.map((anchor, index) => (
+                <span key={anchor}>
+                  {index > 0 ? ' · ' : ''}
+                  <Link to={guideHref(anchor)}>Guide</Link>
+                </span>
+              ))}
+            </p>
+          </li>
+        ))}
+      </ul>
+    </DetailCard>
+  );
+}
+
+function LifePhaseCard({ breedName }: { breedName: string }) {
+  const notes = getBreedLifePhaseNotes(breedName);
+
+  return (
+    <DetailCard title="🐶 Puppy & adolescent expectations">
+      {notes.puppy && (
+        <div className="intelligence-breed-detail-life-phase-block">
+          <p className="intelligence-breed-detail-life-phase-label">Puppy (~8 weeks – 7 months)</p>
+          <p>{notes.puppy}</p>
+        </div>
+      )}
+      {notes.adolescent && (
+        <div className="intelligence-breed-detail-life-phase-block">
+          <p className="intelligence-breed-detail-life-phase-label">Adolescent (7 months – adult)</p>
+          <p>{notes.adolescent}</p>
+        </div>
+      )}
+      {notes.maturationNote && (
+        <div className="intelligence-breed-detail-life-phase-block">
+          <p className="intelligence-breed-detail-life-phase-label">Maturation</p>
+          <p>{notes.maturationNote}</p>
+        </div>
+      )}
+      <p className="intelligence-breed-detail-life-phase-guide">
+        See also{' '}
+        <Link to={guideHref('breed-age-intensity')}>age × temperament calibration</Link>,{' '}
+        <Link to={guideHref('eight-week-separation')}>8-week separation</Link>, and{' '}
+        <Link to={guideHref('i-dont-care')}>the adult standard from seven months</Link>.
+      </p>
     </DetailCard>
   );
 }
@@ -359,6 +436,9 @@ function BreedDetailCardGrid({
         isEstimated={isEstimated}
         breedName={breed.name}
       />
+
+      <SensitivitiesCard breedName={breed.name} />
+      <LifePhaseCard breedName={breed.name} />
 
       {vocalScore !== undefined ? (
         <VocalCard vocalScore={vocalScore} />

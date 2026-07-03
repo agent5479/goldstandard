@@ -12,9 +12,14 @@ export default function SectionLeashJerk() {
         <p>
           Dogs often <strong>lean into a tight leash</strong> to make themselves lighter and freelance forward — the
           line becomes part of their locomotion. A downward jerk removes that incentive in one instant: the body goes
-          heavy instead of light. That shift is dramatic, and it is the message. Pulling <strong>upward</strong> risks
-          larynx damage and invites the dog to brace against you; pulling <strong>down</strong> grounds them without
-          choking. See <a href="#leash">Leash work</a> for the same rule on sustained tension.
+          heavy instead of light. That shift is dramatic, and it is the message. When the dog feels heavier, they
+          naturally <strong>self-correct</strong> — they choose not to apply more pressure into the line. An upward
+          pull tends to produce the opposite decision: brace, lean, and keep pulling through you.
+        </p>
+        <p>
+          Pulling <strong>upward</strong> risks larynx damage and feeds the fight on the collar. Pulling{' '}
+          <strong>down</strong> grounds them without choking. See <a href="#leash">Leash work</a> for the same rule on
+          sustained tension.
         </p>
       </div>
 
@@ -29,7 +34,15 @@ export default function SectionLeashJerk() {
         </p>
       </div>
 
-      <p>This works well in conjunction with the <a href="#butt-push">butt push</a>: the jerk breaks forward momentum and drops the head; the butt push redirects the hindquarters and recenters attention on you. On a slack line you can read the dog first — see <a href="#leash">Leash work</a> — then apply the jerk inside the <a href="#timing">one-second window</a> when the precursor appears.</p>
+      <p>
+        This works well in conjunction with the <a href="#butt-push">butt push</a>: the jerk breaks forward momentum
+        and drops the head; the butt push redirects the hindquarters and recenters attention on you. That pairing is
+        biomechanical, not arbitrary — a <strong>downward or down-side</strong> pull shifts weight forward onto the
+        front end, so the hips are lighter and a flank push can turn the dog cleanly. Pull <strong>upward</strong> and
+        you are fighting the dog&apos;s full bodyweight braced into the line; a butt push from behind becomes a shove
+        against a wall. Down first, then push — on a slack line you can read the dog first (see <a href="#leash">Leash work</a>),
+        then apply the jerk inside the <a href="#timing">one-second window</a> when the precursor appears.
+      </p>
 
       <ol className="steps">
         <li>Keep the leash slack until the moment correction is needed — never fight upward tension</li>
@@ -41,7 +54,11 @@ export default function SectionLeashJerk() {
 
       <div className="dont">
         <strong>⛔ Never pull upward</strong>
-        <p>Upward pressure on the collar compresses the throat and can injure the larynx. It also rewards the dog&apos;s habit of leaning into the line to stay light. Downward only — the same rule as in <a href="#leash">Leash work</a>. If grip strength is an issue, use the stick assist described there.</p>
+        <p>
+          Upward pressure on the collar compresses the throat and can injure the larynx. It also rewards leaning into
+          the line and invites the dog to keep pulling. Downward only — the same rule as in <a href="#leash">Leash work</a>.
+          If grip strength is an issue, use the stick assist described there.
+        </p>
       </div>
 
       <p>Over time, as <a href="#verbal-correction">verbal association</a> builds, the sharp command can replace the jerk for the same moment — but the physical pattern must be consistent first so the dog knows what the word means.</p>

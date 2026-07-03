@@ -121,7 +121,7 @@ export default function SectionLeash() {
       <ul className="checklist">
         <li>Slack line is the goal — tension means the dog chose to leave; correct that choice, don't pull through it</li>
         <li>Stop your feet when the dog forges or fixes on its own agenda</li>
-        <li>One downward pop, then slack — not sustained fighting on the collar</li>
+        <li>One downward pop, then slack — not sustained fighting on the collar. The dog goes heavy and self-corrects; upward tension invites more pull</li>
         <li>Voluntary glance back or softening into position earns the walk continuing — see <a href="#check-in-seven">The seven-second check-in</a> for the off-lead version</li>
         <li>Do not gamify with treats or excited praise at every stop — calm consistency is the teacher</li>
       </ul>
