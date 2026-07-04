@@ -7,3 +7,11 @@
 export const FORM_ENDPOINT =
   import.meta.env.VITE_FORM_ENDPOINT ||
   'https://script.google.com/macros/s/AKfycbxypBi_QTYFYigtQSJro5sQJ_5XCv-4epz2aOQCwh_YUsLKsypv7mNGk1kvvzCN_xNopA/exec';
+
+/**
+ * Cloudflare Turnstile site key (public). Pair with Apps Script property TURNSTILE_SECRET_KEY.
+ * Leave empty to skip the widget (rate limits + honeypot still apply).
+ */
+export const TURNSTILE_SITE_KEY = String(import.meta.env.VITE_TURNSTILE_SITE_KEY || '').trim();
+
+export const TURNSTILE_ENABLED = Boolean(TURNSTILE_SITE_KEY);

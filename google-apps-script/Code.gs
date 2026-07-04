@@ -6,24 +6,30 @@
  * 2. Tab: "Submissions" with 17 column headers (A–Q; see README.md)
  * 3. Extensions → Apps Script → paste this file → Save
  * 4. Set NOTIFY_EMAIL and CALENDAR_ID below
- * 5. Project Settings → Script properties → TRAINER_IMPORT_KEY (must match trainer app env)
+ * 5. Project Settings → Script properties:
+ *      TRAINER_IMPORT_KEY (must match trainer app env)
+ *      TURNSTILE_SECRET_KEY (Cloudflare Turnstile secret; optional — when set, book/lookup/enquiry require a token)
  * 6. Deploy → New deployment → Web app:
  *      Execute as: Me
  *      Who has access: Anyone
  * 7. Copy the Web app URL into src/data/formConfig.ts on the site
+ * 8. Site: set VITE_TURNSTILE_SITE_KEY to the Turnstile site key (pair with TURNSTILE_SECRET_KEY)
  *
  * POST actions (JSON body, Content-Type: text/plain;charset=utf-8):
  *   { action: "enquiry", ... }        — contact form (default if action omitted)
  *   { action: "availability", date, region, location }  — available booking slots for a date + location
+ *   { action: "lookup_returning", email|phone }  — prior booking profile for quick rebook
  *   { action: "book", region, slot_start, location, ... }
  *
- * Script version: 2026-07-02-v21 (location-required availability; calendar commute)
+ * Script version: 2026-07-04-v23 (rate limits + optional Turnstile)
  *   - Multi-region: golden-bay | nelson-bays (region required on availability/book)
  *   - 15-min slot grid; 55 min sessions; 5 min handover; commute buffer between locations
  *   - Nelson Bays: bookable only on days with an all-day NELSON calendar event;
  *     only NELSON-titled calendar events block Nelson slots
  *   - Sheet column Q: Region
  *   - Add an all-day event titled NELSON on days you are in Nelson Bays
+ *   - Returning clients: lookup by email or phone; book fills contact/dog from prior row
+ *   - Abuse protection: honeypot, per-contact + global rate limits, optional Cloudflare Turnstile
  */
 
 const NOTIFY_EMAIL = "warwick.marshall@gmail.com";
@@ -130,6 +136,81 @@ function getTrainerImportKey() {
   return PropertiesService.getScriptProperties().getProperty("TRAINER_IMPORT_KEY") || "";
 }
 
+function getTurnstileSecretKey() {
+  return PropertiesService.getScriptProperties().getProperty("TURNSTILE_SECRET_KEY") || "";
+}
+
+/** Per-bucket caps (CacheService). Apps Script web apps do not expose client IP. */
+var RATE_LIMIT_BOOK_PER_CONTACT = 5;
+var RATE_LIMIT_BOOK_GLOBAL = 30;
+var RATE_LIMIT_BOOK_WINDOW_SEC = 3600;
+var RATE_LIMIT_LOOKUP_PER_CONTACT = 10;
+var RATE_LIMIT_LOOKUP_GLOBAL = 60;
+var RATE_LIMIT_LOOKUP_WINDOW_SEC = 900;
+var RATE_LIMIT_AVAILABILITY_GLOBAL = 120;
+var RATE_LIMIT_AVAILABILITY_WINDOW_SEC = 600;
+var RATE_LIMIT_ENQUIRY_PER_CONTACT = 5;
+var RATE_LIMIT_ENQUIRY_GLOBAL = 20;
+var RATE_LIMIT_ENQUIRY_WINDOW_SEC = 3600;
+
+function assertRateLimit(bucket, max, windowSeconds) {
+  const cache = CacheService.getScriptCache();
+  const key = "rl:" + String(bucket || "unknown").slice(0, 200);
+  const raw = cache.get(key);
+  var count = raw ? Number(raw) : 0;
+  if (isNaN(count) || count < 0) {
+    count = 0;
+  }
+  if (count >= max) {
+    throw new Error("Too many requests. Please wait a few minutes and try again, or call/text 027 814 2222.");
+  }
+  cache.put(key, String(count + 1), Math.min(windowSeconds, 21600));
+}
+
+function rateLimitContactKey(email, phone) {
+  const emailNorm = normalizeBookingEmail(email);
+  if (emailNorm) {
+    return "e:" + emailNorm;
+  }
+  const phoneNorm = normalizeBookingPhone(phone);
+  if (phoneNorm) {
+    return "p:" + phoneNorm;
+  }
+  return "anon";
+}
+
+function assertTurnstileToken(data) {
+  const secret = getTurnstileSecretKey();
+  if (!secret) {
+    return;
+  }
+
+  const token = String((data && data.turnstile_token) || "").trim();
+  if (!token) {
+    throw new Error("Please complete the security check and try again.");
+  }
+
+  const response = UrlFetchApp.fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+    method: "post",
+    payload: {
+      secret: secret,
+      response: token
+    },
+    muteHttpExceptions: true
+  });
+
+  var result = {};
+  try {
+    result = JSON.parse(response.getContentText() || "{}");
+  } catch (e) {
+    throw new Error("Security check failed. Please try again.");
+  }
+
+  if (!result.success) {
+    throw new Error("Security check failed. Please try again.");
+  }
+}
+
 const LOCATIONS = {
   "Pohara Beach": { lat: -40.833616999861626, lng: 172.87812116840615, region: "golden-bay" },
   "Rototai Reserve": { lat: -40.83335723736718, lng: 172.83987286746938, region: "golden-bay" },
@@ -161,6 +242,10 @@ function doPost(e) {
       return handleBooking(data);
     }
 
+    if (action === "lookup_returning") {
+      return handleLookupReturning(data);
+    }
+
     if (action === "list_bookings") {
       return handleListBookings(data);
     }
@@ -187,6 +272,8 @@ function doGet() {
 }
 
 function handleEnquiry(data) {
+  assertTurnstileToken(data);
+
   const name = String(data.name || "").trim();
   const phone = String(data.phone || "").trim();
   const email = String(data.email || "").trim();
@@ -202,6 +289,13 @@ function handleEnquiry(data) {
   if (!isValidEmail(email)) {
     return jsonResponse({ success: false, message: "Invalid email address." });
   }
+
+  assertRateLimit("enquiry:global", RATE_LIMIT_ENQUIRY_GLOBAL, RATE_LIMIT_ENQUIRY_WINDOW_SEC);
+  assertRateLimit(
+    "enquiry:" + rateLimitContactKey(email, phone),
+    RATE_LIMIT_ENQUIRY_PER_CONTACT,
+    RATE_LIMIT_ENQUIRY_WINDOW_SEC
+  );
 
   appendSubmissionRow([
     new Date(),
@@ -240,6 +334,8 @@ function handleEnquiry(data) {
 }
 
 function handleAvailability(data) {
+  assertRateLimit("availability:global", RATE_LIMIT_AVAILABILITY_GLOBAL, RATE_LIMIT_AVAILABILITY_WINDOW_SEC);
+
   const dateStr = String(data.date || "").trim();
   const region = String(data.region || "").trim();
   const locationName = String(data.location || "").trim();
@@ -311,26 +407,291 @@ function handleAvailability(data) {
   });
 }
 
-function handleBooking(data) {
-  const name = String(data.name || "").trim();
-  const phone = String(data.phone || "").trim();
+function isReturningClientRequest(data) {
+  const raw = String((data && data.returning_client) || "")
+    .trim()
+    .toLowerCase();
+  return raw === "yes" || raw === "true" || raw === "1";
+}
+
+function normalizeBookingEmail(email) {
+  return String(email || "")
+    .trim()
+    .toLowerCase();
+}
+
+function normalizeBookingPhone(phone) {
+  return String(phone || "").replace(/\D/g, "");
+}
+
+function phonesMatch(a, b) {
+  const left = normalizeBookingPhone(a);
+  const right = normalizeBookingPhone(b);
+  if (!left || !right) {
+    return false;
+  }
+  if (left === right) {
+    return true;
+  }
+  if (left.length >= 7 && right.length >= 7 && left.slice(-7) === right.slice(-7)) {
+    return true;
+  }
+  return false;
+}
+
+function contactMatchesRow(row, email, phone) {
+  const emailNorm = normalizeBookingEmail(email);
+  const phoneNorm = normalizeBookingPhone(phone);
+  if (emailNorm) {
+    return normalizeBookingEmail(row[4]) === emailNorm;
+  }
+  if (phoneNorm) {
+    return phonesMatch(row[3], phone);
+  }
+  return false;
+}
+
+/** Confirmed booking rows newest-first that match email or phone. */
+function findPriorBookingRowsByContact(email, phone) {
+  const emailNorm = normalizeBookingEmail(email);
+  const phoneNorm = normalizeBookingPhone(phone);
+  if (!emailNorm && !phoneNorm) {
+    return [];
+  }
+  if (emailNorm && phoneNorm) {
+    return [];
+  }
+
+  const sheet = getSubmissionsSheet();
+  const rows = sheet.getDataRange().getValues();
+  const matches = [];
+
+  for (var i = 1; i < rows.length; i++) {
+    const row = rows[i];
+    if (String(row[1]) !== "Booking" || String(row[12]) !== "Confirmed") {
+      continue;
+    }
+    if (!contactMatchesRow(row, email, phone)) {
+      continue;
+    }
+    matches.push(row);
+  }
+
+  matches.reverse();
+  return matches;
+}
+
+function priorRowToProfileFields(row) {
+  return {
+    name: String(row[2] || "").trim(),
+    phone: String(row[3] || "").trim(),
+    email: String(row[4] || "").trim(),
+    dogName: String(row[5] || "").trim(),
+    dogBreed: String(row[6] || "").trim(),
+    dogAge: String(row[7] || "").trim()
+  };
+}
+
+function handleLookupReturning(data) {
+  assertTurnstileToken(data);
+
   const email = String(data.email || "").trim();
-  const dogName = String(data.dog_name || "").trim();
-  const dogBreed = String(data.dog_breed || "").trim();
-  const dogAge = String(data.dog_age || "").trim();
+  const phone = String(data.phone || "").trim();
+  const hasEmail = Boolean(email);
+  const hasPhone = Boolean(phone);
+
+  if (hasEmail === hasPhone) {
+    return jsonResponse({
+      success: false,
+      message: "Enter either your email or your phone number from a previous booking — not both."
+    });
+  }
+
+  if (hasEmail && !isValidEmail(email)) {
+    return jsonResponse({ success: false, message: "Invalid email address." });
+  }
+
+  assertRateLimit("lookup:global", RATE_LIMIT_LOOKUP_GLOBAL, RATE_LIMIT_LOOKUP_WINDOW_SEC);
+  assertRateLimit(
+    "lookup:" + rateLimitContactKey(email, phone),
+    RATE_LIMIT_LOOKUP_PER_CONTACT,
+    RATE_LIMIT_LOOKUP_WINDOW_SEC
+  );
+
+  const matches = findPriorBookingRowsByContact(email, phone);
+  if (!matches.length) {
+    return jsonResponse({ success: true, found: false });
+  }
+
+  var name = "";
+  const dogs = [];
+  const seenDogs = {};
+
+  for (var i = 0; i < matches.length; i++) {
+    const fields = priorRowToProfileFields(matches[i]);
+    if (!name && fields.name) {
+      name = fields.name;
+    }
+    const dogKey = fields.dogName.toLowerCase();
+    if (!fields.dogName || seenDogs[dogKey]) {
+      continue;
+    }
+    seenDogs[dogKey] = true;
+    dogs.push({
+      dog_name: fields.dogName,
+      dog_breed: fields.dogBreed,
+      dog_age: fields.dogAge
+    });
+  }
+
+  if (!dogs.length) {
+    return jsonResponse({ success: true, found: false });
+  }
+
+  return jsonResponse({
+    success: true,
+    found: true,
+    name: name,
+    dogs: dogs
+  });
+}
+
+function findPriorBookingRowsForDog(email, phone, dogName) {
+  const dogKey = String(dogName || "")
+    .trim()
+    .toLowerCase();
+  if (!dogKey) {
+    return null;
+  }
+
+  const emailNorm = normalizeBookingEmail(email);
+  const phoneNorm = normalizeBookingPhone(phone);
+
+  // Prefer email match when both are present (details-changed path may send both).
+  if (emailNorm) {
+    const byEmail = findPriorBookingRowsByContact(email, "");
+    for (var i = 0; i < byEmail.length; i++) {
+      const fields = priorRowToProfileFields(byEmail[i]);
+      if (fields.dogName.toLowerCase() === dogKey) {
+        return fields;
+      }
+    }
+  }
+
+  if (phoneNorm) {
+    const byPhone = findPriorBookingRowsByContact("", phone);
+    for (var j = 0; j < byPhone.length; j++) {
+      const fieldsPhone = priorRowToProfileFields(byPhone[j]);
+      if (fieldsPhone.dogName.toLowerCase() === dogKey) {
+        return fieldsPhone;
+      }
+    }
+  }
+
+  return null;
+}
+
+function applyReturningClientProfile(data) {
+  var name = String(data.name || "").trim();
+  var phone = String(data.phone || "").trim();
+  var email = String(data.email || "").trim();
+  var dogName = String(data.dog_name || "").trim();
+  var dogBreed = String(data.dog_breed || "").trim();
+  var dogAge = String(data.dog_age || "").trim();
+
+  if (!email && !phone) {
+    return {
+      error: "Enter the email or phone number from your previous booking."
+    };
+  }
+  if (!dogName) {
+    return { error: "Please choose which dog this booking is for." };
+  }
+
+  const prior = findPriorBookingRowsForDog(email, phone, dogName);
+  if (!prior) {
+    return {
+      error:
+        "We couldn't find a previous booking with that contact and dog. Try the other contact method, or book as a first-time client."
+    };
+  }
+
+  return {
+    name: name || prior.name,
+    phone: phone || prior.phone,
+    email: email || prior.email,
+    dogName: dogName,
+    dogBreed: dogBreed || prior.dogBreed,
+    dogAge: dogAge || prior.dogAge
+  };
+}
+
+function mergeExtendedJsonWithReturningClient(extendedJson, isReturning) {
+  if (!isReturning) {
+    return extendedJson;
+  }
+  var obj = {};
+  if (extendedJson) {
+    try {
+      obj = JSON.parse(extendedJson);
+    } catch (e) {
+      obj = {};
+    }
+  }
+  if (!obj.v) {
+    obj.v = 1;
+  }
+  obj.returningClient = true;
+  var merged = JSON.stringify(obj);
+  if (merged.length > EXTENDED_JSON_MAX) {
+    return extendedJson || JSON.stringify({ v: 1, returningClient: true });
+  }
+  return merged;
+}
+
+function handleBooking(data) {
+  assertTurnstileToken(data);
+
+  const isReturning = isReturningClientRequest(data);
+  var name = String(data.name || "").trim();
+  var phone = String(data.phone || "").trim();
+  var email = String(data.email || "").trim();
+  var dogName = String(data.dog_name || "").trim();
+  var dogBreed = String(data.dog_breed || "").trim();
+  var dogAge = String(data.dog_age || "").trim();
   const message = String(data.message || "").trim();
   const slotStartStr = String(data.slot_start || "").trim();
   const location = String(data.location || "").trim();
   const region = String(data.region || "").trim();
   const clientAddress = String(data.client_address || "").trim();
   const isHomeAddressRaw = String(data.is_home_address || "").trim().toLowerCase();
-  const extendedJsonRaw = normalizeExtendedJson(data.extended_json);
+  var extendedJsonRaw = normalizeExtendedJson(data.extended_json);
   const bookingType = resolveBookingType(data, location);
   const durations = getBookingDurations(bookingType);
+
+  if (isReturning) {
+    const filled = applyReturningClientProfile(data);
+    if (filled.error) {
+      return jsonResponse({ success: false, message: filled.error });
+    }
+    name = filled.name;
+    phone = filled.phone;
+    email = filled.email;
+    dogName = filled.dogName;
+    dogBreed = filled.dogBreed;
+    dogAge = filled.dogAge;
+  }
 
   if (!phone || !dogName || !slotStartStr || !location || !region) {
     return jsonResponse({ success: false, message: "Missing required fields." });
   }
+
+  assertRateLimit("book:global", RATE_LIMIT_BOOK_GLOBAL, RATE_LIMIT_BOOK_WINDOW_SEC);
+  assertRateLimit(
+    "book:" + rateLimitContactKey(email, phone),
+    RATE_LIMIT_BOOK_PER_CONTACT,
+    RATE_LIMIT_BOOK_WINDOW_SEC
+  );
 
   if (!BOOKING_TYPES[bookingType]) {
     return jsonResponse({ success: false, message: "Invalid service type." });
@@ -377,13 +738,14 @@ function handleBooking(data) {
     return jsonResponse({ success: false, message: "Invalid home address response." });
   }
 
-  const extendedJson = mergeExtendedJsonWithAddressBooking(
+  var extendedJson = mergeExtendedJsonWithAddressBooking(
     extendedJsonRaw,
     clientAddress,
     isHomeAddressRaw,
     location,
     bookingType
   );
+  extendedJson = mergeExtendedJsonWithReturningClient(extendedJson, isReturning);
 
   const slotStart = parseLocalDateTime(slotStartStr);
   if (!slotStart) {

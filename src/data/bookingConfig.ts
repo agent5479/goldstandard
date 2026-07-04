@@ -67,6 +67,18 @@ export type BookingSlot = {
   label: string;
 };
 
+export type ReturningDogProfile = {
+  dog_name: string;
+  dog_breed?: string;
+  dog_age?: string;
+};
+
+export type ReturningLookupResult = {
+  found: boolean;
+  name?: string;
+  dogs?: ReturningDogProfile[];
+};
+
 /** YYYY-MM-DD in the visitor's local timezone. */
 export function toLocalDateInput(date: Date): string {
   const year = date.getFullYear();

@@ -11,6 +11,7 @@ export interface EnquiryPayload {
   dog_breed?: string;
   dog_age?: string;
   website?: string;
+  turnstile_token?: string;
 }
 
 export function validateEnquiryFields(
@@ -50,6 +51,7 @@ export async function submitEnquiry(payload: EnquiryPayload): Promise<void> {
       dog_age: payload.dog_age?.trim() ?? '',
       message: payload.message.trim(),
       website: payload.website?.trim() ?? '',
+      turnstile_token: payload.turnstile_token?.trim() ?? '',
     }),
   });
 

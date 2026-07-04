@@ -2,8 +2,10 @@ import { useEffect, useState } from 'react';
 import type { FormEvent } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import DogBreedSelector from '../components/DogBreedSelector';
+import TurnstileField from '../components/TurnstileField';
 import { DogAgeFields, emptyDogAgeFields, type DogAgeFieldsValue } from '../components/DogAgeFields';
 import { STANDARD_SERVICE, STANDARD_SERVICE_SUMMARY } from '../data/bookingConfig';
+import { TURNSTILE_ENABLED } from '../data/formConfig';
 import { clearProblemFinderHandoff, loadProblemFinderHandoff } from '../data/problemFinder';
 import { buildAgeLabel } from '../utils/dogLifeStage';
 import { submitEnquiry, validateEnquiryFields } from '../utils/submitEnquiry';
@@ -22,6 +24,8 @@ export default function ContactForm() {
   const [dogAgeFields, setDogAgeFields] = useState<DogAgeFieldsValue>(() => emptyDogAgeFields());
   const [message, setMessage] = useState('');
   const [problemFinderMode, setProblemFinderMode] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState('');
+  const [turnstileResetSignal, setTurnstileResetSignal] = useState(0);
 
   useEffect(() => {
     if (searchParams.get('from') !== 'problem-finder') return;
@@ -61,6 +65,11 @@ export default function ContactForm() {
       return;
     }
 
+    if (TURNSTILE_ENABLED && !turnstileToken) {
+      setStatus({ kind: 'error', message: 'Please complete the security check below, then try again.' });
+      return;
+    }
+
     try {
       setStatus({ kind: 'submitting' });
       await submitEnquiry({
@@ -72,6 +81,7 @@ export default function ContactForm() {
         dog_age: buildAgeLabel(dogAgeFields.ageYearsAtRecord, dogAgeFields.ageMonthsAtRecord) ?? '',
         message: enquiryMessage,
         website: honeypot,
+        turnstile_token: turnstileToken,
       });
 
       form.reset();
@@ -79,8 +89,12 @@ export default function ContactForm() {
       setDogAgeFields(emptyDogAgeFields());
       setMessage('');
       setProblemFinderMode(false);
+      setTurnstileToken('');
+      setTurnstileResetSignal((n) => n + 1);
       setStatus({ kind: 'success' });
     } catch (error) {
+      setTurnstileToken('');
+      setTurnstileResetSignal((n) => n + 1);
       setStatus({
         kind: 'error',
         message:
@@ -171,7 +185,18 @@ export default function ContactForm() {
         <label htmlFor="website">Website</label>
         <input id="website" type="text" name="website" tabIndex={-1} autoComplete="off" />
       </div>
-      <button className="btn btn-primary" id="submit-button" type="submit" disabled={submitting}>
+      <TurnstileField
+        onToken={setTurnstileToken}
+        onExpire={() => setTurnstileToken('')}
+        onError={() => setTurnstileToken('')}
+        resetSignal={turnstileResetSignal}
+      />
+      <button
+        className="btn btn-primary"
+        id="submit-button"
+        type="submit"
+        disabled={submitting || (TURNSTILE_ENABLED && !turnstileToken)}
+      >
         {submitting ? 'Sending...' : 'Send enquiry'}
       </button>
       <p className="form-hint">By submitting, you agree to be contacted about your enquiry.</p>

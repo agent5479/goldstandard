@@ -1935,6 +1935,11 @@ body.page-guide {
 .is-hidden { display: none; }
 .honeypot-field { position: absolute; left: -9999px; }
 
+.turnstile-field {
+  margin: 0.75rem 0 1rem;
+  min-height: 65px;
+}
+
 .booking-slots-fieldset {
   border: 1px solid rgba(45, 74, 45, 0.18);
   border-radius: 4px;

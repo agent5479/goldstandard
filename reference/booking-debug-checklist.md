@@ -8,12 +8,20 @@ Automated round-trip tests: run `npm run test:booking` (public site) and `npm ru
 
 ## Pre-flight
 
-- [ ] Apps Script **v21** deployed; `VITE_FORM_ENDPOINT` / `VITE_BOOKING_API_URL` point to the live `/exec` URL
+- [ ] Apps Script **v23** deployed; `VITE_FORM_ENDPOINT` / `VITE_BOOKING_API_URL` point to the live `/exec` URL
 - [ ] Google Sheet **Submissions** tab has headers A–Q (see [`README.md`](../README.md))
 - [ ] Column **P** header: `Extended Details`
 - [ ] Column **Q** header: `Region`
 - [ ] Column **O** header: `Trainer Imported` (empty = pending import)
 - [ ] `TRAINER_IMPORT_KEY` script property matches trainer app secret
+- [ ] Optional Turnstile: Apps Script property `TURNSTILE_SECRET_KEY` + site env `VITE_TURNSTILE_SITE_KEY` (both or neither)
+
+## Abuse protection
+
+- [ ] Honeypot field present on book + contact forms
+- [ ] Rate limits active in Apps Script (book / lookup / enquiry / availability)
+- [ ] Without Turnstile keys, forms still work (rate limits + honeypot only)
+- [ ] With Turnstile keys set, book / lookup / enquiry require the security check
 
 ---
 
@@ -96,6 +104,25 @@ Test on a day with at least one existing confirmed booking or calendar session.
 - [ ] Times are **not shown** until date and location are chosen
 
 ---
+
+
+## 4b. Returning-client quick rebook
+
+1. Complete steps 1-4 (service, region, date/location, time)
+2. Step 5: choose **I have trained with Warwick before**
+3. Enter the **email or phone** from a prior confirmed booking; click **Find my details**
+4. Confirm welcome message and dog selection (auto-selected if one dog)
+5. Submit without filling name/phone/dog fields
+6. Sheet row should have full contact + dog fields filled from the prior booking; column P includes returningClient: true
+
+### Cases
+
+- [ ] Email match finds prior booking
+- [ ] Phone match finds prior booking (digit-normalized)
+- [ ] Unknown contact shows clear error and offers first-time path
+- [ ] Multiple dogs: radio list; selected dog used on book
+- [ ] **Details changed?** expands full form prefilled; submit still sets returning client
+- [ ] First-time path still requires phone + dog name
 
 ## 5. Regression checks
 

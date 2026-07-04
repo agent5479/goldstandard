@@ -24,7 +24,8 @@ import {
   shortSlotLabel,
   BOOKING_CLIENT_SLOT_HOURS,
   type AvailabilityResult,
-  type BookingSlot
+  type BookingSlot,
+  type ReturningLookupResult,
 } from '../data/bookingConfig';
 import {
   getLocationById,
@@ -50,7 +51,8 @@ import {
   type BookingServiceType,
 } from '@shared/bookingServiceTypes';
 import { Link, useSearchParams } from 'react-router-dom';
-import { FORM_ENDPOINT } from '../data/formConfig';
+import TurnstileField from '../components/TurnstileField';
+import { FORM_ENDPOINT, TURNSTILE_ENABLED } from '../data/formConfig';
 import {
   buildExtendedDetailsPayload,
   CLIENT_DOG_DESEXED_OPTIONS,
@@ -80,6 +82,12 @@ type FormStatus =
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const QUICK_DATES = getQuickDateOptions();
+
+type ClientPath = 'unset' | 'first_time' | 'returning';
+
+function contactLooksLikeEmail(value: string): boolean {
+  return value.includes('@');
+}
 
 type BookingStepId = 1 | 2 | 3 | 4 | 5;
 type BookingStepVisualState = 'active' | 'done' | 'upcoming';
@@ -158,7 +166,40 @@ export default function BookForm() {
   const [extendedDetails, setExtendedDetails] = useState(emptyExtendedDetailsState);
   const [clientAddress, setClientAddress] = useState('');
   const [isHomeAddress, setIsHomeAddress] = useState<boolean | null>(null);
-  const [returningClient, setReturningClient] = useState(false);
+  const [clientPath, setClientPath] = useState<ClientPath>('unset');
+  const [returningContact, setReturningContact] = useState('');
+  const [returningLookup, setReturningLookup] = useState<ReturningLookupResult | null>(null);
+  const [lookingUpReturning, setLookingUpReturning] = useState(false);
+  const [lookupError, setLookupError] = useState('');
+  const [selectedReturningDog, setSelectedReturningDog] = useState('');
+  const [detailsChanged, setDetailsChanged] = useState(false);
+  const [clientName, setClientName] = useState('');
+  const [clientPhone, setClientPhone] = useState('');
+  const [clientEmail, setClientEmail] = useState('');
+  const [dogName, setDogName] = useState('');
+  const [turnstileToken, setTurnstileToken] = useState('');
+  const [turnstileResetSignal, setTurnstileResetSignal] = useState(0);
+
+  const resetReturningState = () => {
+    setReturningContact('');
+    setReturningLookup(null);
+    setLookingUpReturning(false);
+    setLookupError('');
+    setSelectedReturningDog('');
+    setDetailsChanged(false);
+  };
+
+  const resetClientDetailsState = () => {
+    resetReturningState();
+    setClientPath('unset');
+    setClientName('');
+    setClientPhone('');
+    setClientEmail('');
+    setDogName('');
+    setDogBreed('');
+    setDogAgeFields(emptyDogAgeFields());
+    setExtendedDetails(emptyExtendedDetailsState());
+  };
 
   useEffect(() => {
     const raw = searchParams.get('priorities');
@@ -251,6 +292,7 @@ export default function BookForm() {
     setIsHomeAddress(null);
     setSlotsError('');
     setStatus({ kind: 'idle' });
+    resetClientDetailsState();
   }, [selectedServiceType]);
 
   useEffect(() => {
@@ -261,6 +303,7 @@ export default function BookForm() {
     setIsHomeAddress(null);
     setSlotsError('');
     setStatus({ kind: 'idle' });
+    resetClientDetailsState();
   }, [selectedRegionId]);
 
   useEffect(() => {
@@ -324,16 +367,114 @@ export default function BookForm() {
     handleLocationSelect(NELSON_BAYS_PLACEHOLDER_ID);
   };
 
+  const handleClientPathSelect = (path: ClientPath) => {
+    setClientPath(path);
+    resetReturningState();
+    setClientName('');
+    setClientPhone('');
+    setClientEmail('');
+    setDogName('');
+    setDogBreed('');
+    setDogAgeFields(emptyDogAgeFields());
+    setExtendedDetails(emptyExtendedDetailsState());
+    setStatus({ kind: 'idle' });
+  };
+
+  const handleLookupReturning = async () => {
+    const contact = returningContact.trim();
+    if (!contact) {
+      setLookupError('Enter the email or phone number from your previous booking.');
+      return;
+    }
+    if (!FORM_ENDPOINT) {
+      setLookupError('Online booking is not available yet.');
+      return;
+    }
+    if (TURNSTILE_ENABLED && !turnstileToken) {
+      setLookupError('Please complete the security check below, then try again.');
+      return;
+    }
+    const payload: Record<string, string> = {
+      action: 'lookup_returning',
+      website: '',
+    };
+    if (turnstileToken) {
+      payload.turnstile_token = turnstileToken;
+    }
+    if (contactLooksLikeEmail(contact)) {
+      if (!EMAIL_PATTERN.test(contact)) {
+        setLookupError('Please enter a valid email address.');
+        return;
+      }
+      payload.email = contact;
+    } else {
+      payload.phone = contact;
+    }
+    try {
+      setLookingUpReturning(true);
+      setLookupError('');
+      setReturningLookup(null);
+      setSelectedReturningDog('');
+      setDetailsChanged(false);
+      const result = await postToEndpoint<ReturningLookupResult>(payload);
+      if (!result.found || !result.dogs?.length) {
+        setReturningLookup({ found: false });
+        setLookupError('We could not find a previous booking with that contact. Try the other contact method, or book as a first-time client.');
+        setTurnstileToken('');
+        setTurnstileResetSignal((n) => n + 1);
+        return;
+      }
+      setReturningLookup(result);
+      if (result.dogs.length === 1) {
+        setSelectedReturningDog(result.dogs[0].dog_name);
+      }
+      setTurnstileToken('');
+      setTurnstileResetSignal((n) => n + 1);
+    } catch (error) {
+      setLookupError(error instanceof Error ? error.message : 'Unable to look up your details right now.');
+      setTurnstileToken('');
+      setTurnstileResetSignal((n) => n + 1);
+    } finally {
+      setLookingUpReturning(false);
+    }
+  };
+
+  const handleDetailsChanged = () => {
+    if (!returningLookup?.found || !returningLookup.dogs?.length) return;
+    const dog = returningLookup.dogs.find((entry) => entry.dog_name === selectedReturningDog) || returningLookup.dogs[0];
+    setClientName(returningLookup.name || '');
+    setDogName(dog.dog_name);
+    setDogBreed(dog.dog_breed || '');
+    const contact = returningContact.trim();
+    if (contactLooksLikeEmail(contact)) {
+      setClientEmail(contact);
+      setClientPhone('');
+    } else {
+      setClientPhone(contact);
+      setClientEmail('');
+    }
+    setDetailsChanged(true);
+    setStatus({ kind: 'idle' });
+  };
+
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = event.currentTarget;
     const data = new FormData(form);
 
-    const name = String(data.get('name') ?? '').trim();
-    const phone = String(data.get('phone') ?? '').trim();
-    const email = String(data.get('email') ?? '').trim();
-    const dogName = String(data.get('dog_name') ?? '').trim();
     const honeypot = String(data.get('website') ?? '').trim();
+    const isReturningPath = clientPath === 'returning';
+    const useSlimReturning = isReturningPath && !detailsChanged;
+    let name = clientName.trim();
+    let phone = clientPhone.trim();
+    let email = clientEmail.trim();
+    let dogNameValue = dogName.trim();
+    if (!useSlimReturning) {
+      name = String(data.get('name') ?? name).trim();
+      phone = String(data.get('phone') ?? phone).trim();
+      email = String(data.get('email') ?? email).trim();
+      dogNameValue = String(data.get('dog_name') ?? dogNameValue).trim();
+    }
     const location = getLocationById(selectedLocationId);
 
     if (honeypot) return;
@@ -383,14 +524,31 @@ export default function BookForm() {
       }
     }
 
-    if (!phone) {
-      setStatus({ kind: 'error', message: 'Please enter your phone number.' });
-      return;
-    }
+    if (useSlimReturning) {
+      const contact = returningContact.trim();
+      if (!returningLookup?.found || !selectedReturningDog) {
+        setStatus({ kind: 'error', message: 'Find your details with your email or phone, then choose your dog.' });
+        return;
+      }
+      dogNameValue = selectedReturningDog;
+      name = '';
+      phone = '';
+      email = '';
+      if (contactLooksLikeEmail(contact)) {
+        email = contact;
+      } else {
+        phone = contact;
+      }
+    } else {
+      if (!phone) {
+        setStatus({ kind: 'error', message: 'Please enter your phone number.' });
+        return;
+      }
 
-    if (!dogName) {
-      setStatus({ kind: 'error', message: 'Please enter your dog\'s name.' });
-      return;
+      if (!dogNameValue) {
+        setStatus({ kind: 'error', message: 'Please enter your dog\'s name.' });
+        return;
+      }
     }
 
     if (email && !EMAIL_PATTERN.test(email)) {
@@ -406,10 +564,18 @@ export default function BookForm() {
       return;
     }
 
+    if (TURNSTILE_ENABLED && !turnstileToken) {
+      setStatus({
+        kind: 'error',
+        message: 'Please complete the security check below, then try again.',
+      });
+      return;
+    }
+
     const slot = slots.find((entry) => entry.start === selectedSlot);
     const dogAgeValue = buildAgeLabel(dogAgeFields.ageYearsAtRecord, dogAgeFields.ageMonthsAtRecord) ?? '';
     let extendedJson: string | undefined;
-    try {
+    if (!useSlimReturning) try {
       extendedJson = buildExtendedDetailsPayload(
         extendedDetails.skillGrades,
         extendedDetails.profileTags,
@@ -423,7 +589,7 @@ export default function BookForm() {
               bookingType: selectedServiceType,
             }
           : undefined,
-        returningClient
+        clientPath === 'returning'
       );
     } catch (extError) {
       setStatus({
@@ -442,12 +608,18 @@ export default function BookForm() {
       name,
       phone,
       email,
-      dog_name: dogName,
-      dog_breed: dogBreed,
-      dog_age: dogAgeValue,
+      dog_name: dogNameValue,
+      dog_breed: useSlimReturning ? '' : dogBreed,
+      dog_age: useSlimReturning ? '' : dogAgeValue,
       message: String(data.get('message') ?? '').trim(),
       website: honeypot,
     };
+    if (turnstileToken) {
+      payload.turnstile_token = turnstileToken;
+    }
+    if (isReturningPath) {
+      payload.returning_client = 'yes';
+    }
     if (extendedJson) payload.extended_json = extendedJson;
     if (addressBased) {
       payload.client_address = trimmedAddress;
@@ -466,7 +638,9 @@ export default function BookForm() {
       setClientAddress('');
       setIsHomeAddress(null);
       setExtendedDetails(emptyExtendedDetailsState());
-      setReturningClient(false);
+      resetClientDetailsState();
+      setTurnstileToken('');
+      setTurnstileResetSignal((n) => n + 1);
       setStatus({
         kind: 'success',
         slotLabel: slot?.label ?? 'your selected time',
@@ -475,6 +649,8 @@ export default function BookForm() {
         serviceType: selectedServiceType,
       });
     } catch (error) {
+      setTurnstileToken('');
+      setTurnstileResetSignal((n) => n + 1);
       setStatus({
         kind: 'error',
         message:
@@ -506,7 +682,17 @@ export default function BookForm() {
     Boolean(selectedLocationId) &&
     (!isEliteService || eliteLocationReady);
   const stepTimeDone = stepLocationDone && Boolean(selectedSlot);
-  const stepDetailsReady = stepTimeDone;
+  const returningReady =
+    clientPath === 'returning' &&
+    Boolean(returningLookup?.found) &&
+    Boolean(selectedReturningDog) &&
+    (detailsChanged ? Boolean(dogName.trim()) : true);
+  const firstTimeReady = clientPath === 'first_time';
+  const stepDetailsReady = stepTimeDone && (returningReady || firstTimeReady);
+  const showFullDetailsForm =
+    clientPath === 'first_time' || (clientPath === 'returning' && detailsChanged);
+  const showReturningSlim =
+    clientPath === 'returning' && Boolean(returningLookup?.found) && !detailsChanged;
   const isNelsonRegion = selectedRegionId === 'nelson-bays';
   const nelsonContactOnly =
     isNelsonRegion &&
@@ -1005,39 +1191,150 @@ export default function BookForm() {
           <p className="form-hint">Choose a time above to continue.</p>
         ) : (
           <>
-            <div className="form-field">
-              <label className="form-checkbox-label">
-                <input
-                  type="checkbox"
-                  checked={returningClient}
-                  disabled={submitting}
-                  onChange={(e) => setReturningClient(e.target.checked)}
-                />
-                {' '}I&apos;ve booked with Warwick before
-              </label>
-              <p className="form-hint">
-                Use the same phone number (and email if you have one) as your previous booking so we can link your sessions.
-              </p>
-            </div>
+            <fieldset className="form-field">
+              <legend>Have you trained with Warwick before?</legend>
+              <div className="booking-meeting-picker" role="radiogroup" aria-label="Returning or first-time client">
+                <label className={"booking-meeting-btn" + (clientPath === 'returning' ? " is-selected" : "")}>
+                  <input
+                    type="radio"
+                    name="client_path"
+                    checked={clientPath === 'returning'}
+                    disabled={submitting}
+                    onChange={() => handleClientPathSelect('returning')}
+                  />
+                  <strong>I&apos;ve trained with Warwick before</strong>
+                </label>
+                <label className={"booking-meeting-btn" + (clientPath === 'first_time' ? " is-selected" : "")}>
+                  <input
+                    type="radio"
+                    name="client_path"
+                    checked={clientPath === 'first_time'}
+                    disabled={submitting}
+                    onChange={() => handleClientPathSelect('first_time')}
+                  />
+                  <strong>First time booking</strong>
+                </label>
+              </div>
+            </fieldset>
+
+            {clientPath === 'unset' ? (
+              <p className="form-hint">Choose an option above to continue.</p>
+            ) : null}
+
+            {clientPath === 'returning' ? (
+              <>
+                <div className="form-field">
+                  <label htmlFor="returningContact">Email or phone from your last booking</label>
+                  <input
+                    id="returningContact"
+                    type="text"
+                    autoComplete="username"
+                    disabled={submitting || lookingUpReturning}
+                    value={returningContact}
+                    onChange={(event) => {
+                      setReturningContact(event.target.value);
+                      setReturningLookup(null);
+                      setSelectedReturningDog('');
+                      setDetailsChanged(false);
+                      setLookupError('');
+                    }}
+                  />
+                  <p className="form-hint">
+                    Use the same email or phone number you used before. We&apos;ll fill in your household and dog details.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  disabled={
+                    submitting ||
+                    lookingUpReturning ||
+                    !returningContact.trim() ||
+                    (TURNSTILE_ENABLED && !turnstileToken)
+                  }
+                  onClick={() => void handleLookupReturning()}
+                >
+                  {lookingUpReturning ? 'Looking up…' : 'Find my details'}
+                </button>
+                {lookupError ? <p className="form-feedback error">{lookupError}</p> : null}
+                {showReturningSlim ? (
+                  <>
+                    <p className="form-hint booking-step-done-note" role="status">
+                      {returningLookup?.name
+                        ? <>Welcome back, <strong>{returningLookup.name}</strong>.</>
+                        : <>Welcome back.</>}
+                    </p>
+                    {returningLookup && returningLookup.dogs && returningLookup.dogs.length > 1 ? (
+                      <fieldset className="form-field">
+                        <legend>Which dog is this booking for?</legend>
+                        <div className="booking-meeting-picker" role="radiogroup" aria-label="Dog">
+                          {returningLookup.dogs.map((dog) => (
+                            <label
+                              key={dog.dog_name}
+                              className={"booking-meeting-btn" + (selectedReturningDog === dog.dog_name ? " is-selected" : "")}
+                            >
+                              <input
+                                type="radio"
+                                name="returning_dog"
+                                checked={selectedReturningDog === dog.dog_name}
+                                disabled={submitting}
+                                onChange={() => setSelectedReturningDog(dog.dog_name)}
+                              />
+                              <strong>{dog.dog_name}</strong>
+                            </label>
+                          ))}
+                        </div>
+                      </fieldset>
+                    ) : selectedReturningDog ? (
+                      <p className="form-hint">
+                        Booking for <strong>{selectedReturningDog}</strong>.
+                      </p>
+                    ) : null}
+                    <div className="form-field">
+                      <label htmlFor="bookMessageReturning">Anything else? <span className="label-optional">(optional)</span></label>
+                      <textarea id="bookMessageReturning" name="message" placeholder="Optional note for this session" disabled={submitting}></textarea>
+                    </div>
+                    <p className="form-hint">
+                      <button type="button" className="btn btn-secondary" disabled={submitting} onClick={handleDetailsChanged}>Details changed?</button>
+                      Update your phone, dog, or other details.
+                    </p>
+                    <p className="form-hint session-summary">
+                      <strong>{isEliteService ? ELITE_SERVICE : STANDARD_SERVICE}</strong>
+                      {" - "}
+                      {isEliteService ? ELITE_SERVICE_SUMMARY : STANDARD_SERVICE_SUMMARY}
+                    </p>
+                    {!isEliteService ? (
+                      <p className="form-hint booking-home-visit-pricing">{STANDARD_PRICING_NOTE}</p>
+                    ) : null}
+                  </>
+                ) : null}
+              </>
+            ) : null}
+
+            {showFullDetailsForm ? (
+              <>
+                {clientPath === 'returning' && detailsChanged ? (
+                  <p className="form-hint">Update anything that has changed, then confirm your booking.</p>
+                ) : null}
             <div className="form-row">
               <div className="form-field">
                 <label htmlFor="bookName">Your name <span className="label-optional">(optional)</span></label>
-                <input id="bookName" name="name" type="text" autoComplete="name" disabled={submitting} />
+                <input id="bookName" name="name" type="text" autoComplete="name" disabled={submitting} value={clientName} onChange={(event) => setClientName(event.target.value)} />
               </div>
               <div className="form-field">
                 <label htmlFor="bookPhone">Phone</label>
-                <input id="bookPhone" name="phone" type="tel" autoComplete="tel" required disabled={submitting} />
+                <input id="bookPhone" name="phone" type="tel" autoComplete="tel" required disabled={submitting} value={clientPhone} onChange={(event) => setClientPhone(event.target.value)} />
               </div>
             </div>
             <div className="form-field">
               <label htmlFor="bookEmail">Email <span className="label-optional">(optional)</span></label>
-              <input id="bookEmail" name="email" type="email" autoComplete="email" disabled={submitting} />
+              <input id="bookEmail" name="email" type="email" autoComplete="email" disabled={submitting} value={clientEmail} onChange={(event) => setClientEmail(event.target.value)} />
               <p className="form-hint">If you add an email, we&apos;ll send a calendar invite there.</p>
             </div>
             <div className="form-row">
               <div className="form-field">
                 <label htmlFor="bookDogName">Dog&apos;s name</label>
-                <input id="bookDogName" name="dog_name" type="text" autoComplete="off" required disabled={submitting} />
+                <input id="bookDogName" name="dog_name" type="text" autoComplete="off" required disabled={submitting} value={dogName} onChange={(event) => setDogName(event.target.value)} />
               </div>
               <div className="form-field">
                 <label htmlFor="bookDogAge">Dog&apos;s age <span className="label-optional">(optional)</span></label>
@@ -1161,6 +1458,8 @@ export default function BookForm() {
                 });
               }}
             />
+              </>
+            ) : null}
           </>
         )}
         </div>
@@ -1171,10 +1470,23 @@ export default function BookForm() {
         <input id="bookWebsite" type="text" name="website" tabIndex={-1} autoComplete="off" />
       </div>
 
+      <TurnstileField
+        onToken={setTurnstileToken}
+        onExpire={() => setTurnstileToken('')}
+        onError={() => setTurnstileToken('')}
+        resetSignal={turnstileResetSignal}
+      />
+
       <button
         className="btn btn-primary booking-submit"
         type="submit"
-        disabled={submitting || loadingSlots || endpointMissing || !stepDetailsReady}
+        disabled={
+          submitting ||
+          loadingSlots ||
+          endpointMissing ||
+          !stepDetailsReady ||
+          (TURNSTILE_ENABLED && !turnstileToken)
+        }
       >
         {submitting ? 'Confirming…' : 'Confirm booking'}
       </button>
