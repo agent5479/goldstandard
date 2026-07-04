@@ -21,7 +21,7 @@
  *   { action: "lookup_returning", email|phone }  — prior booking profile for quick rebook
  *   { action: "book", region, slot_start, location, ... }
  *
- * Script version: 2026-07-04-v23 (rate limits + optional Turnstile)
+ * Script version: 2026-07-05-v24 (returning-client lookup deploy + clearer unknown-action errors)
  *   - Multi-region: golden-bay | nelson-bays (region required on availability/book)
  *   - 15-min slot grid; 55 min sessions; 5 min handover; commute buffer between locations
  *   - Nelson Bays: bookable only on days with an all-day NELSON calendar event;
@@ -256,6 +256,14 @@ function doPost(e) {
 
     if (action === "mark_dismissed") {
       return handleMarkDismissed(data);
+    }
+
+    if (action !== "enquiry") {
+      return jsonResponse({
+        success: false,
+        message:
+          "This booking feature is not available on the server yet. Please try again shortly, or book as a first-time client."
+      });
     }
 
     return handleEnquiry(data);

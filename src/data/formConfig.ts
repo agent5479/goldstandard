@@ -6,7 +6,7 @@
  */
 export const FORM_ENDPOINT =
   import.meta.env.VITE_FORM_ENDPOINT ||
-  'https://script.google.com/macros/s/AKfycbxypBi_QTYFYigtQSJro5sQJ_5XCv-4epz2aOQCwh_YUsLKsypv7mNGk1kvvzCN_xNopA/exec';
+  'https://script.google.com/macros/s/AKfycby5qj5WwTgzGTkDHy_-pWLDmowSabhsbCff5wggkgdMM7zo6dp0-C6zmoBvAO92VtHSUg/exec';
 
 /**
  * Cloudflare Turnstile site key (public). Pair with Apps Script property TURNSTILE_SECRET_KEY.

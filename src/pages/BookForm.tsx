@@ -1238,6 +1238,19 @@ export default function BookForm() {
                       setDetailsChanged(false);
                       setLookupError('');
                     }}
+                    onKeyDown={(event) => {
+                      if (event.key !== 'Enter') return;
+                      event.preventDefault();
+                      if (
+                        submitting ||
+                        lookingUpReturning ||
+                        !returningContact.trim() ||
+                        (TURNSTILE_ENABLED && !turnstileToken)
+                      ) {
+                        return;
+                      }
+                      void handleLookupReturning();
+                    }}
                   />
                   <p className="form-hint">
                     Use the same email or phone number you used before. We&apos;ll fill in your household and dog details.
