@@ -24,13 +24,13 @@ Technical terms stay where the guide requires them; introduce them in context, n
 
 3. **Rich distractors** — each wrong option needs:
    1. A specific action or belief, and
-   2. A brief rationale that makes the belief sound reasonable to someone who has not read the guide.
+   2. A compelling rationale that makes the belief sound reasonable to someone who has not read the guide.
 
-   Do not pad with empty words; pad with **belief-level detail**. Short, vague wrong options are easy to rule out.
+   Wrong options should feel as considered as the correct answer — not a short label that is easy to discard. Do not pad with empty words; pad with **belief-level detail** (why an owner would choose this).
 
 4. **Calibrated language** — avoid absurd absolutes in wrong options (`forever`, `always`, `never`, `every time`, `without exception`, `all dogs`). Plausible over-corrections are fine (`Keep them on-lead until you feel fully confident`).
 
-5. **Match length** — four options should be similar clause length and grammar. Wrong options should stay within about 60–150% of the correct option’s word count (enforced by `npm run lint:exam`).
+5. **Match length and depth** — four options should be similar clause length and grammar. Wrong options should stay within about **80–150%** of the correct option’s word count (enforced by `npm run lint:exam`). If the correct answer has two clauses (action + why), wrong answers should too.
 
 6. **Short stems** — one scenario, one question (~12–25 words for owner track).
 

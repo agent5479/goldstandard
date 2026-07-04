@@ -35,7 +35,8 @@ const ABSOLUTE_ALLOWLIST = [
 /** Stems that force negation are harder for mixed reading levels. */
 const NEGATIVE_STEM_PATTERN = /\b(what should you not|what should you NOT|should you not)\b/i;
 
-const MIN_LENGTH_RATIO = 0.6;
+/** Wrong options should approach correct-answer depth (action + rationale). */
+const MIN_LENGTH_RATIO = 0.8;
 const MAX_LENGTH_RATIO = 1.5;
 
 function isAllowedAbsolute(text: string): boolean {

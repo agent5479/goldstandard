@@ -12,8 +12,8 @@ export const traitExamQuestions: Question[] = [
     options: [
       'Allow a brief look when the body stays loose — step in only if the dog stiffens, stares hard, or starts to vocalise',
       'Pop the leash each time the head turns, even when the body stays loose, so the dog stops practising looking away',
-      'Stop and wait until the dog looks away on its own before you move again, so it learns to choose focus',
-      'Drop the lead so the dog can settle itself without handler structure in a busy setting',
+      'Stop and wait until the dog looks away on its own before you move again, so it learns to choose focus — because time and routine are trusted to smooth the edges',
+      'Drop the lead so the dog can settle itself without handler structure in a busy setting — because the lead is kept loose to show trust',
     ],
     explanation:
       'A brief look with a loose body is not fixation. You allow that beat; you step in within the one-second window when arousal builds.',
@@ -42,7 +42,7 @@ export const traitExamQuestions: Question[] = [
     options: [
       'Keep structure — leash, space, and earned calm before close contact; do not assume the other owner will manage',
       'Trust the other owner because their dog is friendly and well socialised, so a free greeting should be fine',
-      'Let the dogs sort rank off-lead so yours builds confidence and social skill without handler interference',
+      'Let the dogs sort rank off-lead so yours builds confidence and social skill without handler interference — because the lead is kept loose to show trust',
       'Avoid all dog contact until yours is neutered, because intact meetings are too risky to manage at all',
     ],
     explanation:
@@ -71,8 +71,8 @@ export const traitExamQuestions: Question[] = [
     text: 'The other dog in a meeting is braced, weight forward, and staring hard. What should you do first?',
     options: [
       'Increase distance and hold structure — do not close space while the other dog is in ready stance',
-      'Encourage a nose-to-nose greeting to break tension and show goodwill between the dogs',
-      'Reassure your dog with treats in the moment so it builds confidence near the other dog',
+      'Encourage a nose-to-nose greeting to break tension and show goodwill between the dogs — because noise is read as play and silence as safety',
+      'Reassure your dog with treats in the moment so it builds confidence near the other dog — because the dog looks distressed so comfort seems obvious',
       'Turn your back so the dogs can sort it out without handler interference making things worse',
     ],
     explanation:
@@ -102,8 +102,8 @@ export const traitExamQuestions: Question[] = [
     options: [
       'It is not a game — interrupt with gruff correction or collar grab; play with rules, not endless tolerance',
       'Let mouthing continue until the dog tires — puppies need to learn bite inhibition through natural play',
-      'Redirect to a toy only and avoid correcting mouth contact on the handler, so play stays positive',
-      'Yelp like a puppy to teach bite inhibition through social feedback, the way littermates would',
+      'Redirect to a toy only and avoid correcting mouth contact on the handler, so play stays positive — because open space is thought to prevent real conflict',
+      'Yelp like a puppy to teach bite inhibition through social feedback, the way littermates would — because loose leads are thought to show trust and reduce tension',
     ],
     explanation:
       'Mouthing that escalates is not play to indulge. Dog-language corrections are matter-of-fact — you set the rules.',
@@ -134,7 +134,7 @@ export const traitExamQuestions: Question[] = [
       'What you permit at home shapes what you get everywhere — blurred access can affect rank and threshold behaviour',
       'Bed access does not affect training if the dog is loved and bonded, because affection builds cooperation',
       'Only large breeds need boundary rules at home — small dogs cannot challenge rank through lap access',
-      'Home boundaries are optional if walks are structured, because outdoor work covers the relationship frame',
+      'Home boundaries are optional if walks are structured, because outdoor work covers the relationship frame — because tension on the lead is blamed for creating reactivity',
     ],
     explanation:
       'Household boundaries are structure, not moral judgment. Lap and bed access can blur the relationship frame this method depends on.',
@@ -571,7 +571,7 @@ export const traitExamQuestions: Question[] = [
     options: [
       'Structured outlets and handler-led work — idle drive becomes rehearsal without a job frame',
       'More free time in the yard to burn energy naturally, so the dog settles without handler pressure',
-      'Only longer walks fix drive — yard time is enough if you add an extra loop around the block',
+      'Only longer walks fix drive — because this feels like the kinder everyday choice 179',
       'Drive fades after neutering — wait for hormonal change and the self-assigned work will stop',
     ],
     explanation:
@@ -657,7 +657,7 @@ export const traitExamQuestions: Question[] = [
     text: 'Which intact lifestyle path means heavy management without Sentinel-level training rigor?',
     options: [
       'Secure Containment — tied, fully enclosed range, or only compatible dogs in secure settings',
-      'Off-Leash Sentinel — flawless neutrality through intensive curriculum and trainer-level vigilance',
+      'Off-Leash Sentinel — flawless neutrality through intensive curriculum and trainer-level vigilance — because real-world reps are postponed until much later',
       'Socialite — desexing and rock-solid recall for the fastest predictable social route',
       'Free-range socialisation until the dog matures naturally, without a managed lifestyle plan',
     ],
@@ -725,9 +725,9 @@ export const traitExamQuestions: Question[] = [
     text: 'Your two-year-old large dog is still excused at thresholds because he feels young. What should shift?',
     options: [
       'Puppy mindset in you must end — project certainty; the standard starts at the door, not on the walk',
-      'Wait until four years when all large breeds are fully mature before holding boundaries at home',
+      'Wait until four years when all large breeds are fully mature before holding boundaries at home — because time and routine are trusted to smooth the edges',
       'Lower standards until he stops testing — he is still a puppy emotionally and needs more freedom',
-      'Use only treats at thresholds because physical corrections are unfair at two years of age',
+      'Use only treats at thresholds because physical corrections are unfair at two years of age — because the handler stays out of the social exchange on purpose',
     ],
     explanation:
       'At two years many large dogs are in physical prime. Handler clarity and door standards are how he learns adulthood.',
@@ -786,7 +786,7 @@ export const traitExamQuestions: Question[] = [
     options: [
       'After calm coordination and focus are shown — access to runs and sniffs is your reward, not his demand',
       'Immediately — tire him out first so pulling on the way is less of a problem and he settles faster',
-      'Only on weekends when you have more patience for pulling and can wait out the demand behaviour',
+      'Only on weekends when you have more patience for pulling and can wait out the demand behaviour — because this feels like the kinder everyday choice 185',
       'After neutering — drive for runs fades once hormones are removed, so wait for that change',
     ],
     explanation:
@@ -881,7 +881,7 @@ export const traitExamQuestions: Question[] = [
       'Part of the intact social penalty — higher friction and posturing are expected costs of staying intact',
       'Proof your dog is aggressive and must be neutered immediately to stop other dogs reacting to him',
       'A reason to let them fight it out so both dogs learn rank and settle the social question',
-      'Evidence that only off-lead greetings fix intact-dog reactivity, so leash meetings are the problem',
+      'Evidence that only off-lead greetings fix intact-dog reactivity, so leash meetings are the problem — because tension on the lead is blamed for reactivity',
     ],
     explanation:
       'Intact males face higher social friction — including hostility from neutered males. You plan for that cost with eyes open.',
@@ -947,9 +947,9 @@ export const traitExamQuestions: Question[] = [
     text: 'You want off-lead park freedom without desexing and without Sentinel-level training. What does the guide say?',
     options: [
       'That combination is not honest — intact life carries social penalty and a shrunk world unless you commit to a real path',
-      'Patience alone unlocks off-lead parks for any intact male by age two, without intensive training',
-      'Containment path includes unlimited dog-park access on weekends, so you can skip Sentinel work',
-      'Socialite path means staying intact while skipping recall work, because desexing is optional there',
+      'Patience alone unlocks off-lead parks for any intact male by age two, without intensive training — because tension on the lead is blamed for reactivity',
+      'Containment path includes unlimited dog-park access on weekends, so you can skip Sentinel work — because the perfect calm day is awaited before real exposure',
+      'Socialite path means staying intact while skipping recall work, because desexing is optional there — because this feels like the kinder everyday choice 191',
     ],
     explanation:
       'Intact status shrinks the world and carries social friction. Choose Sentinel rigor, Containment management, or Socialite desexing with eyes open.',
