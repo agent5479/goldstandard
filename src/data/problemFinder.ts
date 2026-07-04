@@ -1,6 +1,9 @@
 import { BOOKING_CONCERN_TO_TAGS } from '@shared/clientBookingTags';
+import { PUPPY_PHASE_NAV_LINKS } from '../pages/guide-sections/GuideContentsNav';
 import type { NeuroPattern } from './breedTraits';
 import type { BehaviorDriver } from './behaviorDrivers';
+
+export const PUPPY_PHASE_ANCHORS = new Set(PUPPY_PHASE_NAV_LINKS.map((link) => link.anchor));
 
 export type ProblemContextId = 'walks' | 'home' | 'social' | 'basics';
 export type ProblemOutcomeId =
@@ -267,7 +270,7 @@ export const PROBLEM_OUTCOMES: Record<ProblemOutcomeId, ProblemOutcome> = {
     id: 'puppy',
     label: 'Puppy or adolescent basics',
     summary:
-      'Young dogs are learning what the world expects — and what they can get away with. Starting with clear pillars, calm leadership, and age-appropriate standards prevents problems before they become entrenched habits.',
+      'Young dogs need establishment before adult standards — toilet training, daily rhythm, hunger-driven behavioral design, and check-in conditioning. Structure the environment so the right choice is easy before problems become entrenched habits.',
     urgencyNotes: {
       1: 'Early weeks are the easiest time to set standards that last a lifetime.',
       2: 'Adolescent testing is normal; consistent structure gets you through it cleanly.',
@@ -276,9 +279,9 @@ export const PROBLEM_OUTCOMES: Record<ProblemOutcomeId, ProblemOutcome> = {
       5: 'Biting, bolting, or dangerous puppy behaviour needs firm calibration from the start.',
     },
     guideLinks: [
-      { anchor: 'pillars', label: 'Foundation pillars' },
-      { anchor: 'expectations', label: 'Setting expectations' },
-      { anchor: 'breed-age-intensity', label: 'Age-appropriate correction' },
+      { anchor: 'eight-week-separation', label: '8-week separation' },
+      { anchor: 'rewards', label: 'Rewards and hunger setup' },
+      { anchor: 'breed-age-intensity', label: 'Age × temperament' },
     ],
     bookingTags: tagsFor('puppy'),
   },
@@ -434,6 +437,16 @@ export function mergeGuideLinks(outcomes: ProblemOutcome[]): ProblemGuideLink[] 
     }
   }
   return links;
+}
+
+export function shouldShowPuppyNav(outcomeIds: ProblemOutcomeId[]): boolean {
+  return outcomeIds.includes('puppy');
+}
+
+export function mergeGuideLinksForResults(outcomeIds: ProblemOutcomeId[]): ProblemGuideLink[] {
+  const links = mergeGuideLinks(mergeOutcomes(outcomeIds));
+  if (!shouldShowPuppyNav(outcomeIds)) return links;
+  return links.filter((link) => !PUPPY_PHASE_ANCHORS.has(link.anchor));
 }
 
 export function mergeBookingTags(outcomes: ProblemOutcome[]): string[] {

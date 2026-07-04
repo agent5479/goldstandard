@@ -146,4 +146,6 @@ export default function GuideContentsNav({ moduleId }: GuideContentsNavProps) {
   );
 }
 
+export const PUPPY_PHASE_NAV_LINKS = CONTENTS_LINKS.filter((link) => link.moduleId === 'puppy-phase');
+
 export { CONTENTS_LINKS };

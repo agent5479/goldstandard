@@ -10,16 +10,18 @@ import {
   IMPACT_LABELS,
   mergeBookingTags,
   mergeDriverConsiderations,
-  mergeGuideLinks,
+  mergeGuideLinksForResults,
   mergeOutcomes,
   mergeSymptomExpressionHints,
   PROBLEM_CONTEXTS,
   saveProblemFinderHandoff,
+  shouldShowPuppyNav,
   toggleProblemOutcome,
   type ImpactLevel,
   type ProblemContextId,
   type ProblemOutcomeId,
 } from '../data/problemFinder';
+import ProblemFinderPuppyNav from './ProblemFinderPuppyNav';
 import { getBehaviorDriver } from '../data/behaviorDrivers';
 import { getSymptomExpression } from '../data/symptomExpressions';
 
@@ -86,7 +88,8 @@ export default function ProblemFinderModal({ open, onClose }: ProblemFinderModal
   const context = contextId ? getContextById(contextId) : null;
   const outcomes = mergeOutcomes(outcomeIds);
   const issueOptions = contextId ? getOutcomesForContext(contextId) : [];
-  const guideLinks = mergeGuideLinks(outcomes);
+  const guideLinks = mergeGuideLinksForResults(outcomeIds);
+  const showPuppyNav = shouldShowPuppyNav(outcomeIds);
   const bookingTags = mergeBookingTags(outcomes);
   const driverConsiderations = mergeDriverConsiderations(outcomes);
   const symptomHints = mergeSymptomExpressionHints(outcomes);
@@ -302,6 +305,9 @@ export default function ProblemFinderModal({ open, onClose }: ProblemFinderModal
             </ul>
             <p className="problem-finder-urgency">{getImpactNote(outcomes, impact)}</p>
 
+            {showPuppyNav && <ProblemFinderPuppyNav onNavigate={handleClose} />}
+
+            {guideLinks.length > 0 && (
             <div className="problem-finder-reading">
               <p className="problem-finder-reading-label">Recommended reading</p>
               <ul className="problem-finder-guide-links">
@@ -314,6 +320,7 @@ export default function ProblemFinderModal({ open, onClose }: ProblemFinderModal
                 ))}
               </ul>
             </div>
+            )}
 
             {driverConsiderations.length > 0 && (
               <div className="problem-finder-reading">

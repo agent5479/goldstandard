@@ -53,6 +53,10 @@ const ALIASES: { terms: string[]; anchor: string }[] = [
   { terms: ['door', 'doorway', 'threshold', 'front door', 'gateway'], anchor: 'front-door' },
   { terms: ['check in', 'check-in', 'seven seconds', '7 second'], anchor: 'check-in-seven' },
   { terms: ['intact large male', 'large intact', 'intact male playbook'], anchor: 'intact-large-males' },
+  { terms: ['puppy phase', 'puppy toilet', 'house training puppy', 'walk-back', 'puppy jumping', 'puppy mouthing', 'puppy schedule'], anchor: 'puppy-phase' },
+  { terms: ['toilet training puppy', 'golden windows', 'puppy potty'], anchor: 'puppy-toilet-training' },
+  { terms: ['puppy daily structure', 'puppy sleep schedule', '1 hour awake'], anchor: 'puppy-daily-structure' },
+  { terms: ['puppy behavior design', 'ditch food bowl', 'floor treats puppy'], anchor: 'puppy-behavior-design' },
 ];
 
 function buildStaticIndex(): GuideSearchEntry[] {
