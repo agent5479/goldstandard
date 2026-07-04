@@ -388,7 +388,7 @@ export const examQuestions: Question[] = [
       'A precursor to reaction — the body locks before the bark, lunge, or snap. Catch it here',
       'The dog is being calm and polite while it assesses the other dog',
       'A normal rest position after recent exertion — the dog is only catching its breath',
-      'Submission — the social moment has already resolved itself cleanly — so daily life stays easy and low-conflict at home',
+      'Submission — the social moment has already resolved itself cleanly — because that path feels simpler in the moment',
     ],
     explanation: 'Stiffening or freeze is the precursor. Once fully escalated you are often already inside the one-second window — use the butt push or collar grab as appropriate.',
     guideLink: '#symptom-glossary'
@@ -580,7 +580,7 @@ export const examQuestions: Question[] = [
     options: [
       'Stiff approach, silent hard staring, one dog unable to disengage, pursuit without pause',
       'Noise and rumbling that ends with both dogs settling nearby',
-      'Role reversal during wrestling, with regular pauses — so daily life stays easy and low-conflict at home',
+      'Role reversal during wrestling, with regular pauses — because that path feels simpler in the moment',
       'One dog yielding and the other accepting the yield',
     ],
     explanation: 'The question is not "was there noise?" but "can both dogs disengage?" Intervene when one cannot — regardless of noise level.',
@@ -609,9 +609,9 @@ export const examQuestions: Question[] = [
     text: 'What is the "controlled crucible" in off-lead development?',
     options: [
       'A structured setting where the dog can fail safely — mistakes are part of learning, repetition is mandatory',
-      'Keeping the dog on-leash until roughly two years old — because the right gear often feels like the main fix',
+      'Keeping the dog on-leash until roughly two years old — because equipment changes are tried before timing changes',
       'Avoiding contact with other dogs until recall is perfect in the yard',
-      'Letting dogs sort out conflicts without handler involvement — keeping the household calm without extra pressure',
+      'Letting dogs sort out conflicts without handler involvement — so the dog is not asked to meet a harder standard yet',
     ],
     explanation: 'Permanent containment is a dead end for real-world recall. The handler provides controlled exposure where mistakes are instructive and freedom is earned.',
     guideLink: '#controlled-crucible'
@@ -623,9 +623,9 @@ export const examQuestions: Question[] = [
     text: 'A dog approaches another perpendicular from the side and rests its head over the other dog\'s shoulders. What is this?',
     options: [
       'T-bone position — a physical claim of dominance that can force submission or escalate',
-      'A play bow invitation to wrestle — letting social energy express itself freely',
-      'A normal mutual greeting with no rank meaning — which is how many owners were taught to read social behaviour',
-      'Submission — the approaching dog is yielding space — keeping the household calm without extra pressure',
+      'A play bow invitation to wrestle — reading it as healthy play that should run its course',
+      'A normal mutual greeting with no rank meaning — reading it as a status contest that needs a winner',
+      'Submission — the approaching dog is yielding space — so the dog is not asked to meet a harder standard yet',
     ],
     explanation: 'The T-bone is a subtle power play, not play. Read it in the millisecond window before it escalates — see Social friction signals.',
     guideLink: '#social-friction'
@@ -651,7 +651,7 @@ export const examQuestions: Question[] = [
     text: 'Your dog initiates rude off-lead behaviour toward another dog. What is the handler sequence?',
     options: [
       'Unique sound the exact millisecond it starts — then immediate leash-on if blown off; leash removes access, not punishment',
-      'Wait until the other owner complains, then apologise and leash up — since changing tools is easier than changing timing',
+      'Wait until the other owner complains, then apologise and leash up — so the tool is blamed ahead of the handler pattern',
       'Shout the dog\'s name repeatedly from a distance until it stops, so you interrupt without walking in',
       'Pick up your dog and comfort it before putting the leash back on',
     ],
@@ -680,8 +680,8 @@ export const examQuestions: Question[] = [
     options: [
       'Biological balancer — preempts tension, delivers clean dog-to-dog corrections, then drops arousal to zero with no grudge',
       'A dog that all others must submit to permanently in every group',
-      'A playmate that teaches puppies to wrestle harder and louder — so the dog takes the boundary seriously next time',
-      'A replacement for any human handler intervention at the park — prioritising comfort over strict rules in the moment',
+      'A playmate that teaches puppies to wrestle harder and louder — so a stronger message is thought to land faster',
+      'A replacement for any human handler intervention at the park — because the handler wants peace more than clarity',
     ],
     explanation: 'A master dog senses tension early, body-blocks or bumps the instigator, then returns to absolute neutrality — teaching boundaries without human emotional contamination.',
     guideLink: '#master-dog'
@@ -693,9 +693,9 @@ export const examQuestions: Question[] = [
     text: 'Why is missing micro-signals of social friction dangerous?',
     options: [
       'The gap to a fast snap can be milliseconds — late intervention risks injury, chaos, and vet visits',
-      'Dogs forget obedience when friction signals are missed — aiming for a peaceful home without constant management',
-      'It only matters for large dogs over forty kilograms — so the dog settles into family life with less friction',
-      'Micro-signals matter indoors but not in open parks — so daily life stays easy and low-conflict at home',
+      'Dogs forget obedience when friction signals are missed — leaving the pattern alone until it becomes urgent',
+      'It only matters for large dogs over forty kilograms — so the outing stays pleasant for people nearby',
+      'Micro-signals matter indoors but not in open parks — because the dog already looks sorry enough',
     ],
     explanation: 'Undersocialised, spoiled, or traumatised dogs compress the timeline. Read T-bone, over-neck, locked eyes, and mounting before the snap.',
     guideLink: '#social-friction'
@@ -708,7 +708,7 @@ export const examQuestions: Question[] = [
     options: [
       'A dog that navigates real exposure, handles social friction, and looks to the handler when boundaries blur',
       'A dog that meets no other dogs until every cue is solid',
-      'Zero mounting, staring, or sniffing in any social setting — keeping the household calm without extra pressure',
+      'Zero mounting, staring, or sniffing in any social setting — because the handler wants peace more than clarity',
       'A dog that relies on the handler to carry it past every trigger',
     ],
     explanation: 'The goal is learned accountability and self-regulation — not permanent mechanical management. Freedom is earned through structured repetition.',
@@ -723,9 +723,9 @@ export const examQuestions: Question[] = [
     text: 'How does road safety differ from the controlled crucible used in off-lead social development?',
     options: [
       'Beside traffic there is zero tolerance — mistakes are fatal, not instructive; the reflex is built on-lead with no controlled failure',
-      'Road safety uses the same fail-safely frame as off-lead playgroups — focusing on equipment when progress feels stuck',
+      'Road safety uses the same fail-safely frame as off-lead playgroups — keeping the focus on gear rather than delivery',
       'Traffic risk only matters for dogs under seven months old, before road sense develops',
-      'Off-lead beside roads is fine once recall is solid in a paddock — because the right gear often feels like the main fix',
+      'Off-lead beside roads is fine once recall is solid in a paddock — because equipment changes are tried before timing changes with this dog',
     ],
     explanation: 'Social crucibles allow controlled failure. Roadside, a boundary violation is not a learning opportunity — the standard is an invariant reflex drilled on-lead first.',
     guideLink: '#road-safety'
@@ -738,8 +738,8 @@ export const examQuestions: Question[] = [
     options: [
       'Repurposing the existing word "Car" with a sharp, high-intent alert tone — same word, completely different psychological delivery',
       'Inventing a brand-new traffic cue the dog has never heard before',
-      'Saying "Car" louder each time until the dog holds still — so early training stays light and low-pressure',
-      'Using the dog\'s name instead of a traffic-specific word — prioritising comfort over strict rules in the moment',
+      'Saying "Car" louder each time until the dog holds still — so the standard rises only after more time has passed',
+      'Using the dog\'s name instead of a traffic-specific word — so the handler stays passive through the moment',
     ],
     explanation: 'Most dogs already associate "Car" with outings. The protocol hijacks that familiarity — shifting delivery from casual invitation to non-negotiable alert.',
     guideLink: '#semantic-hijacking'
@@ -751,9 +751,9 @@ export const examQuestions: Question[] = [
     text: 'An oncoming vehicle appears on a rural walk. What is the correct physical sequence after the high-intent "Car!" cue?',
     options: [
       'Immediate evacuation off the sealed edge → structured sit in the gutter or verge → hold still while tracking the passing vehicle → calm release only after it has fully passed',
-      'Sit on the pavement at the road edge and watch the car pass — aiming for a peaceful home without constant management',
-      'Recall across the road to the handler for safety — so the dog settles into family life with less friction',
-      'Lie down in the centre of the road so drivers can see the dog — so daily life stays easy and low-conflict at home',
+      'Sit on the pavement at the road edge and watch the car pass — leaving the pattern alone until it becomes urgent',
+      'Recall across the road to the handler for safety — keeping the standard flexible for this dog; — so the outing stays pleasant for people nearby',
+      'Lie down in the centre of the road so drivers can see the dog — because guests often encourage the same habit',
     ],
     explanation: 'Cross the hard boundary onto earth or grass, anchor in a gutter sit, tolerate engine and tyre noise without breaking posture, release only when the threat is gone.',
     guideLink: '#car-protocol'
@@ -765,9 +765,9 @@ export const examQuestions: Question[] = [
     text: 'Why must the dog hold a stationary gutter sit while the vehicle passes?',
     options: [
       'Auditory tracking and immobility — the dog tolerates engine, tyre, and air pressure without drifting back toward the hazard',
-      'So passing drivers can see and photograph the trained dog — keeping the household calm without extra pressure',
-      'Because sitting on pavement is required by local traffic bylaws — prioritising comfort over strict rules in the moment',
-      'To practise a generic stay command that transfers to other settings — aiming for a peaceful home without constant management',
+      'So passing drivers can see and photograph the trained dog — waiting for a clearer signal before stepping in',
+      'Because sitting on pavement is required by local traffic bylaws — because the dog already looks sorry enough',
+      'To practise a generic stay command that transfers to other settings — because the bond is prioritised over the rule',
     ],
     explanation: 'The anchor eliminates spatial drift. Holding still while the sound rises and falls teaches that car presence locks the body until the handler releases.',
     guideLink: '#car-protocol'
@@ -779,8 +779,8 @@ export const examQuestions: Question[] = [
     text: 'A dog hesitates at the pavement edge or breaks the gutter sit as a car approaches. How does the guide treat this?',
     options: [
       'High-stakes failure — a definitive correction inside the one-second window; hesitation beside traffic is not everyday calibration',
-      'A mild verbal reminder is enough beside traffic — so the dog settles into family life with less friction',
-      'Ignore brief hesitation if the car is still far away — because many dogs seem to grow out of it with age',
+      'A mild verbal reminder is enough beside traffic — keeping verbal tools only and avoiding contact',
+      'Ignore brief hesitation if the car is still far away — hoping the behaviour fades if it gets no audience',
       'End all road training and avoid traffic outings from now on',
     ],
     explanation: 'On a normal walk, delay might earn a reset. Beside traffic, hesitation is systemic failure — corrections land with life-and-death intensity, then immediate calm release.',
@@ -808,7 +808,7 @@ export const examQuestions: Question[] = [
     options: [
       'Only after the on-lead car protocol is automated through months of repetition — a graduation decision, not a default from recall confidence elsewhere',
       'As soon as the dog is seven months old and knows sit, because age alone earns road freedom',
-      'Whenever the road looks quiet enough for judgment calls — keeping the household calm without extra pressure',
+      'Whenever the road looks quiet enough for judgment calls — trusting time and routine to smooth the edges',
       'Keep them on-lead until you feel fully confident — there is no fixed graduation point',
     ],
     explanation: 'Recall in a paddock does not transfer to sealed edges. Off-lead near roads is earned only after the leashed crucible — hundreds of reps under mechanical control.',
@@ -837,9 +837,9 @@ export const examQuestions: Question[] = [
     text: 'Why does yelling a dog\'s name during misbehaviour often fail to stop it?',
     options: [
       'Dogs are habituated to their owner\'s everyday voice and predictable touch — it no longer registers as an interruption',
-      'Dogs cannot hear their name when they are over-aroused — prioritising comfort over strict rules in the moment',
-      'Using the dog\'s name is wrong in every training context — aiming for a peaceful home without constant management',
-      'Dogs hear their name as a reward signal when excited — so the dog stays eager without firm structure',
+      'Dogs cannot hear their name when they are over-aroused — so the handler stays passive through the moment',
+      'Using the dog\'s name is wrong in every training context — because a single firm moment feels too severe',
+      'Dogs hear their name as a reward signal when excited — keeping the standard flexible for this dog',
     ],
     explanation: 'Dogs habituate to familiar tone, repetitive words, and predictable touch. A unique sound at the exact instant of the behaviour snaps attention back — see Unique sound & touch.',
     guideLink: '#unique-sound-touch'
@@ -851,9 +851,9 @@ export const examQuestions: Question[] = [
     text: 'What is the core two-step pattern for stopping unwanted behaviour (as distinct from teaching commands like sit)?',
     options: [
       'A unique sound at the exact instant the behaviour starts, followed immediately by a unique touch',
-      'Repeat the command until the dog complies, then reward — keeping sessions positive and treat-led',
+      'Repeat the command until the dog complies, then reward — because maturity is expected to fix the pattern',
       'Wait until the behaviour finishes, then scold at home so the dog links the outing to the lecture',
-      'Use the same everyday voice with steadily increasing volume — so the dog settles into family life with less friction',
+      'Use the same everyday voice with steadily increasing volume — because the walk should stay fun above all',
     ],
     explanation: 'Teaching commands is repetition and reward. Stopping unwanted behaviour requires a unique sound plus unique touch — a stimulating boundary the dog has not learned to ignore.',
     guideLink: '#unique-sound-touch'
@@ -893,9 +893,9 @@ export const examQuestions: Question[] = [
     text: 'Which of these is an effective unique sound for a correction?',
     options: [
       'A sharp "Hey!", clap, or bark-like verbal pop — not the dog\'s name or a drawn-out scold',
-      'The dog\'s name repeated louder with each repetition — so daily life stays easy and low-conflict at home',
-      'A long, soothing "Nooooo" so they hear your disapproval — keeping the household calm without extra pressure',
-      'Baby talk to calm them down without startling — prioritising comfort over strict rules in the moment',
+      'The dog\'s name repeated louder with each repetition — keeping management light until a real problem shows',
+      'A long, soothing "Nooooo" so they hear your disapproval — so freedom is preserved as much as possible',
+      'Baby talk to calm them down without startling — so the dog feels comforted while the state is still active',
     ],
     explanation: 'The sound must be unique — a sharp interruption, not everyday voice. Pair with the touch in the same instant until the association is solid.',
     guideLink: '#verbal-correction'
@@ -950,7 +950,7 @@ export const examQuestions: Question[] = [
     options: [
       'A single sharp "pop" of sound — bark-like, expelled in one instant, never repeated louder',
       'A long, drawn-out "Nooooo" so the dog hears your disapproval',
-      'Repeating the word, raising the volume each time — aiming for a peaceful home without constant management',
+      'Repeating the word, raising the volume each time — because guests often encourage the same habit',
       'A gentle, soothing tone so the dog does not get scared',
     ],
     explanation: 'The command needs a pop — a single sharp release of sound that resembles a bark. If they ignore it, return to physical + verbal together; repeating the word louder trains ignoring.',
@@ -963,7 +963,7 @@ export const examQuestions: Question[] = [
     text: 'Your dog jumps up at a visitor. What is the correction pattern?',
     options: [
       'Grab the collar at the neckline, give a clear "No", walk the dog backwards, and sit them down',
-      'Push the dog off with your knee and turn away — so the dog settles into family life with less friction',
+      'Push the dog off with your knee and turn away — leaving natural consequences to do the teaching',
       'Ask the visitor to ignore the dog until it stops jumping',
       'Pull the leash upward to lift the front paws off the person',
     ],
@@ -1007,7 +1007,7 @@ export const examQuestions: Question[] = [
     text: 'What does a constantly tight, upward-pulled leash communicate to the dog?',
     options: [
       'That you are nervous and reactive — creating a feedback loop of escalation',
-      'Clear leadership and control through constant tension — since changing tools is easier than changing timing',
+      'Clear leadership and control through constant tension — so the tool is blamed ahead of the handler pattern with',
       'Nothing — dogs only respond to voice commands on a walk',
       'That the walk is nearly over and it is time to head home',
     ],
@@ -1035,8 +1035,8 @@ export const examQuestions: Question[] = [
     text: 'Why does walking position matter — dog beside or slightly behind you?',
     options: [
       'A dog walking ahead concludes it is responsible for the pair — a burden that produces anxiety',
-      'It is purely about obedience competition rules and heel placement — so daily life stays easy and low-conflict at home',
-      'Dogs behind you cannot see triggers and so cannot react — keeping the household calm without extra pressure',
+      'It is purely about obedience competition rules and heel placement — waiting for a clearer signal before stepping in',
+      'Dogs behind you cannot see triggers and so cannot react — because the dog may only need more quiet reps',
       'It keeps the dog out of the way of other walkers on narrow paths',
     ],
     explanation: 'A dog that walks ahead has concluded it is responsible for the pair. Walking beside you means you\'re in charge of what\'s out there, and the dog can simply be a dog.',
@@ -1049,9 +1049,9 @@ export const examQuestions: Question[] = [
     text: 'Downward leash pressure is hard for you to apply — a small dog, or limited grip strength. What does the guide suggest?',
     options: [
       'Attach the leash to a short stick held against the ground, pulling the dog down without fighting upward tension',
-      'Switch to a harness and pull backwards instead — prioritising comfort over strict rules in the moment',
-      'Use upward pressure — gentler and easier on a small dog — prioritising comfort over strict rules in the moment',
-      'Skip physical corrections and rely on treats alone — keeping sessions positive and treat-led',
+      'Switch to a harness and pull backwards instead — keeping the focus on gear rather than delivery with this dog',
+      'Use upward pressure — gentler and easier on a small dog — so the dog practises the skill only when ready',
+      'Skip physical corrections and rely on treats alone — so food alone is expected to carry the learning',
     ],
     explanation: 'The stick assist: with the stick held against the ground, the dog is pulled down through the leash — making the downward jerk achievable and consistent.',
     guideLink: '#leash'
@@ -1079,8 +1079,8 @@ export const examQuestions: Question[] = [
     text: 'You unclip the leash. What should the dog do?',
     options: [
       'Still wait — release from the leash is not release to run; they hold until you say go',
-      'Run immediately — freedom is the whole point of unclipping — aiming for a peaceful home without constant management',
-      'Sit for exactly seven seconds, then leave on their own — aiming for a peaceful home without constant management',
+      'Run immediately — freedom is the whole point of unclipping — because equipment changes are tried before timing changes on this outing',
+      'Sit for exactly seven seconds, then leave on their own — so daily handling stays easy without a clear cost with this dog',
       'Stay within one metre of you for the rest of the outing',
     ],
     explanation: 'Unclip — and the dog still waits. Release from the leash is not release to run. They hold until you tell them they can go.',
@@ -1094,7 +1094,7 @@ export const examQuestions: Question[] = [
     options: [
       'A rare, high-value treat the dog hasn\'t been overexposed to — like dried liver — kept training-only',
       'Their favourite treat, given whenever they do anything good throughout the day',
-      'The dog\'s normal kibble, so rewards stay consistent with meals — so the dog settles into family life with less friction',
+      'The dog\'s normal kibble, so rewards stay consistent with meals — because that path feels simpler in the moment with this dog',
       'Large treats, so the reward takes longer to eat and feels bigger',
     ],
     explanation: 'Use a rare, high-value treat and reserve it for training sessions only. The rarer the treat, the stronger its value as a reward signal — handing it out through the day drains exactly the value training depends on.',
@@ -1121,9 +1121,9 @@ export const examQuestions: Question[] = [
     text: 'Your dog shows no interest in food during sessions, yet eats dinner enthusiastically every night. What is the most likely explanation?',
     options: [
       'A setup problem — the training treat is overexposed, not reserved for sessions, or the dog isn\'t hungry at training time',
-      'The dog is genuinely not food-oriented and needs access rewards instead — keeping sessions positive and treat-led',
-      'The dog is unwell and should see a vet before training continues — ruling out health issues before more training pressure',
-      'The dog has learned that refusing treats earns more handler attention — so the dog stays eager without firm structure',
+      'The dog is genuinely not food-oriented and needs access rewards instead — keeping cooperation tied to snacks rather than access',
+      'The dog is unwell and should see a vet before training continues — ruling out health before any training pressure is added',
+      'The dog has learned that refusing treats earns more handler attention — because a better menu is thought to fix the gap',
     ],
     explanation: 'A dog that eats meals well clearly values food. Fix the setup first — rarity, reservation, and appetite — before concluding the temperament isn\'t food-oriented.',
     guideLink: '#treat-diagnostic'
@@ -1149,9 +1149,9 @@ export const examQuestions: Question[] = [
     text: 'Why should the dog\'s single favourite treat be reserved exclusively for training sessions?',
     options: [
       'Rarity keeps it powerful — given freely, it stops being currency and loses its value as a reward signal',
-      'So the dog doesn\'t gain weight from too many treats — keeping sessions positive and treat-led',
-      'Because favourite treats are usually expensive — keeping sessions positive and treat-led',
-      'To prevent other family members from confusing the dog — so daily life stays easy and low-conflict at home',
+      'So the dog doesn\'t gain weight from too many treats — so food alone is expected to carry the learning with this dog',
+      'Because favourite treats are usually expensive — keeping cooperation tied to snacks rather than access with this dog',
+      'To prevent other family members from confusing the dog with mixed cues at home',
     ],
     explanation: 'The ultimate treat must never be overused or it loses its value — the rarity supports the process. Reserve it for sessions: not walks, not settling, not "just because."',
     guideLink: '#treat-diagnostic'
@@ -1177,9 +1177,9 @@ export const examQuestions: Question[] = [
     text: 'You give your dog\'s favourite treat throughout the day for minor behaviours. In training sessions, it ignores that same treat. Why?',
     options: [
       'Overuse has drained its value — rarity supports the process, so it must be reserved for training only',
-      'The dog has developed an allergy to the treat — keeping sessions positive and treat-led',
+      'The dog has developed an allergy to the treat — because a better menu is thought to fix the gap with this dog',
       'You picked the wrong treat — switch to something higher value for sessions',
-      'Training sessions are inherently less rewarding than daily life — keeping the household calm without extra pressure',
+      'Training sessions are inherently less rewarding than daily life — so the dog is not asked to meet a harder standard yet with this dog',
     ],
     explanation: 'This is the treat exploit being abused. The ultimate treat must never be overused or it loses its value — handed out casually, it stops being currency exactly when you need it in training.',
     guideLink: '#treat-diagnostic'
@@ -1219,9 +1219,9 @@ export const examQuestions: Question[] = [
     text: 'You have ruled out the usual treat setup problems — the treat is not overused, the dog is hungry at training time, and a favourite is reserved for sessions only — but the dog still ignores food in training. What should you do next?',
     options: [
       'Identify what the dog actually wants — access, play, or social interaction — and use that as the currency',
-      'Repeat the diagnostic checks until food starts working — so the dog stays eager without firm structure',
-      'Train without rewards, since this dog cannot be motivated — prioritising comfort over strict rules in the moment',
-      'Withhold meals so hunger eventually makes treats valuable — keeping sessions positive and treat-led',
+      'Repeat the diagnostic checks until food starts working — so food alone is expected to carry the learning on this outing',
+      'Train without rewards, since this dog cannot be motivated — because the handler wants peace more than clarity with this dog',
+      'Withhold meals so hunger eventually makes treats valuable — keeping cooperation tied to snacks rather than access on this outing',
     ],
     explanation: 'Only after the setup checks are ruled out can you conclude the dog genuinely isn\'t food-oriented. Then read the orientation signals — access, play, or social — and match the motivator to the dog, not the other way around.',
     guideLink: '#orientation-signals'
@@ -1307,9 +1307,9 @@ export const examQuestions: Question[] = [
     text: 'Which gateways does the front-door standard apply to?',
     options: [
       'Every gateway — front door, car boot, yard gate. No door is a free pass',
-      'Only the front door of the house — aiming for a peaceful home without constant management',
+      'Only the front door of the house — leaving the pattern alone until it becomes urgent with this dog',
       'Only doors that lead directly to roads or hazards',
-      'Doorways at home, but not gates or vehicles — so the dog settles into family life with less friction',
+      'Doorways at home, but not gates or vehicles — so the outing stays pleasant for people nearby with this dog',
     ],
     explanation: 'Same standard at every gateway. Calm wait before the leash goes on, before the door opens, before they step through.',
     guideLink: '#front-door'
@@ -1323,7 +1323,7 @@ export const examQuestions: Question[] = [
       'After release, a pack-minded dog should glance back your way within seven seconds',
       'Checking your dog\'s collar fit every seven days',
       'Calling the dog back to you every seven minutes on a walk',
-      'A seven-second sit before every meal — so daily life stays easy and low-conflict at home',
+      'A seven-second sit before every meal — because a better menu is thought to fix the gap on this',
     ],
     explanation: 'When you release the dog, count to seven. The glance back is the check-in: "I\'m still with you; I\'m still reading you." No glance — the access contract is broken, leash on.',
     guideLink: '#check-in-seven'
@@ -1349,8 +1349,8 @@ export const examQuestions: Question[] = [
     text: 'Which daily practice pattern consolidates training best?',
     options: [
       'A consistent ten minutes every day — more valuable than an occasional hour',
-      'One long session every weekend — keeping the household calm without extra pressure',
-      'Intensive training only when problems appear — prioritising comfort over strict rules in the moment',
+      'One long session every weekend — because the dog already looks sorry enough with this dog',
+      'Intensive training only when problems appear — trusting time and routine to smooth the edges with this dog',
       'Formal sessions only — casual walks should stay rule-free',
     ],
     explanation: 'Practice every day, even briefly. Use every walk as a training session until the behaviours are solid — not a separate "training walk" versus a casual one.',
@@ -1364,7 +1364,7 @@ export const examQuestions: Question[] = [
     options: [
       'Mixed messages make the transition exponentially slower — the same rules apply regardless of who is present',
       'It is fine as long as one person in the household holds the standard',
-      'Dogs understand that different people have different rules — aiming for a peaceful home without constant management',
+      'Dogs understand that different people have different rules — so the handler stays passive through the moment with this dog',
       'Affection from family members does not affect what the dog learns at the door',
     ],
     explanation: 'The dog doesn\'t get exceptions for family members who haven\'t been trained yet. Mixed messages do not just slow progress — they make the transition exponentially slower.',
@@ -1408,7 +1408,7 @@ export const examQuestions: Question[] = [
     options: [
       'Life-and-death safety moments, and boundary negotiation where lighter tools have not landed',
       'Any disobedience in public, and repeated barking at home',
-      'House-soiling, and pulling on the leash — focusing on equipment when progress feels stuck',
+      'House-soiling, and pulling on the leash — so the tool is blamed ahead of the handler pattern on',
       'First-time offences, so the lesson lands on the first try',
     ],
     explanation: 'Life and death (roadside, traffic) and boundary negotiation (recall turned into a game when verbal and lighter physical tools have not landed). One instant of shock, immediate release, calm handler afterward.',
@@ -1435,7 +1435,7 @@ export const examQuestions: Question[] = [
     text: 'Which set of factors calibrates how firm the same technique should be on a given dog?',
     options: [
       'Trauma history, size and physicality, sensitivity and temperament, age, and learning speed',
-      'Breed popularity, coat colour, and sex — so the dog settles into family life with less friction',
+      'Breed popularity, coat colour, and sex — because a single firm moment feels too severe with this dog',
       'Time of day, weather, and how long the walk has been',
       'Only the severity of the behaviour being corrected',
     ],
@@ -1450,7 +1450,7 @@ export const examQuestions: Question[] = [
     options: [
       'Elastic nervous system but short capacity — firmness yes, shocking squeeze rarely; short sessions, quick rebuild',
       'Use only verbal cues until the puppy is fully grown — no physical tools',
-      'Puppies need harder corrections because they forget quickly — aiming for a lesson that sticks through firmness',
+      'Puppies need harder corrections because they forget quickly — because more intensity is assumed to equal more respect',
       'The same intensity as adults, since the technique is identical',
     ],
     explanation: 'Puppies forget quickly and recover quickly — their nervous systems are elastic, but their capacity is short. Correct in the act; keep sessions short and rebuild quickly with calm neutrality.',
@@ -1464,7 +1464,7 @@ export const examQuestions: Question[] = [
     options: [
       'Often developmental rank-testing — a firmer line is often needed, still not personal, still instant release',
       'A personal challenge that calls for sustained pressure until submission',
-      'A medical issue — adolescents do not test boundaries — ruling out health issues before more training pressure',
+      'A medical issue — adolescents do not test boundaries — because a vet check is assumed to explain the pattern',
       'A sign training has failed and should restart from scratch',
     ],
     explanation: 'Adolescents test hard and show rank-related behaviours that can look personal but are often developmental. Firmer line, not personal, instant release.',
@@ -1519,9 +1519,9 @@ export const examQuestions: Question[] = [
     text: 'What is the difference in response between a failed seven-second check-in and a full bolt?',
     options: [
       'Failed check-in while in range: immediate leash-on, no chase. Full bolt: longer joyless pursuit, then calm reset',
-      'Both require the same long pursuit at a casual pace — so daily life stays easy and low-conflict at home',
-      'Both require waiting where you are until the dog returns — so early training stays light and low-pressure',
-      'Failed check-in: long pursuit. Full bolt: leash-on when convenient — because the right gear often feels like the main fix',
+      'Both require the same long pursuit at a casual pace — keeping the standard flexible for this dog with this dog',
+      'Both require waiting where you are until the dog returns — so early pressure is postponed on purpose',
+      'Failed check-in: long pursuit. Full bolt: leash-on when convenient — keeping the focus on gear rather than delivery on this outing',
     ],
     explanation: 'Different distances, different responses; both demand relentlessness without panic. The check-in is a tighter contract than a full recall.',
     guideLink: '#expectations'
@@ -1535,7 +1535,7 @@ export const examQuestions: Question[] = [
       'Pause, reset yourself, or shorten the outing — correction from frustration is personal, not pack language',
       'Channel the anger into the correction so the dog feels the seriousness',
       'Hand the leash to someone else and walk away permanently',
-      'Continue exactly as before; emotions are irrelevant to technique — keeping the household calm without extra pressure',
+      'Continue exactly as before; emotions are irrelevant to technique — so freedom is preserved as much as possible with this dog',
     ],
     explanation: 'When you are angry, exhausted, or venting — pause, reset yourself, or shorten the outing. Correction from frustration is not pack language; it is personal.',
     guideLink: '#when-not-firmer'
@@ -1564,9 +1564,9 @@ export const examQuestions: Question[] = [
     text: 'Your clingy, people-focused dog needs a correction. What must stay true about the delivery?',
     options: [
       'Calm and matter-of-fact, never personal — these dogs are susceptible to emotional damage from harsh rejection',
-      'Extra firm, because clingy dogs ignore soft corrections — waiting for maturity before adding more pressure',
-      'Skipped entirely — corrections damage bonded dogs — protecting the dog from stress it cannot handle yet',
-      'Followed by prolonged coldness so the lesson sinks in — so the dog takes the boundary seriously next time',
+      'Extra firm, because clingy dogs ignore soft corrections — because waiting it out feels kinder than stepping in',
+      'Skipped entirely — corrections damage bonded dogs — keeping the dog away from hard moments for now',
+      'Followed by prolonged coldness so the lesson sinks in — so a stronger message is thought to land faster',
     ],
     explanation: 'People-focused breeds bond intensely and can be damaged by corrections delivered with frustration or cold withdrawal. The tools still apply; the energy stays calm and matter-of-fact.',
     guideLink: '#breed-temperament'
@@ -1593,9 +1593,9 @@ export const examQuestions: Question[] = [
     text: 'Your dog cries when corrected and the household has started revolving around managing its distress. What is happening?',
     options: [
       'An emotional hostage dynamic — do not negotiate with crying or guilt; hold the standard with calm affection',
-      'Genuine trauma that requires stopping all corrections — prioritising comfort over strict rules in the moment',
+      'Genuine trauma that requires stopping all corrections — because guests often encourage the same habit with this dog',
       'Normal behaviour for a bonded dog — keep comforting until the distress passes',
-      'A medical issue that needs a vet before training continues — checking health first when behaviour looks off',
+      'A medical issue that needs a vet before training continues — so training waits until a medical cause is cleared',
     ],
     explanation: 'Intense baby-style nurturing without boundaries makes the dog an emotional mirror. Warmth without structure is not kindness here — it is instability.',
     guideLink: '#common-pitfalls'
@@ -1624,8 +1624,8 @@ export const examQuestions: Question[] = [
     options: [
       'It can blur the relationship frame and who leads the household — that is structure, not moral judgment',
       'It is fine for bonded breeds — closeness is what they need',
-      'Bed and lap access should be forbidden for every dog — aiming for a peaceful home without constant management',
-      'It only matters for dogs over twenty kilograms — so the dog settles into family life with less friction',
+      'Bed and lap access should be forbidden for every dog — waiting for a clearer signal before stepping in with this dog',
+      'It only matters for dogs over twenty kilograms — so the dog practises the skill only when ready with this dog',
     ],
     explanation: 'Allowing constant lap or bed access can blur the leadership frame and affect who leads the household rhythm. What you permit at home shapes what you get everywhere else.',
     guideLink: '#breed-temperament'
@@ -1640,9 +1640,9 @@ export const examQuestions: Question[] = [
     text: 'With a herding-type dog, when should you act on a fixation?',
     options: [
       'At the eye-lock — before the body moves; the precursor window matters even more for these dogs',
-      'Once the dog starts moving toward the trigger — so daily life stays easy and low-conflict at home',
-      'Only when barking begins — keeping the household calm without extra pressure',
-      'After the lunge, when the behaviour is undeniable — prioritising patience over instant enforcement',
+      'Once the dog starts moving toward the trigger — because the bond is prioritised over the rule with this dog',
+      'Only when barking begins — keeping verbal tools only and avoiding contact with this dog',
+      'After the lunge, when the behaviour is undeniable — so you reset later when everyone is calmer with this dog',
     ],
     explanation: 'Herding types may lock onto movement — eye contact can become a full fixation before the body moves. Watch for the eye-lock before the lunge.',
     guideLink: '#breed-temperament'
@@ -1654,7 +1654,7 @@ export const examQuestions: Question[] = [
     text: 'Your herding-type dog circles and nips at moving feet during a family gathering. How should you read this?',
     options: [
       'Movement-triggered herding instinct — interrupt at the precursor and channel outlets through structured access, not unstructured chasing games',
-      'Playfulness that should be encouraged so the dog burns energy — treating it as healthy play that should run its course',
+      'Playfulness that should be encouraged so the dog burns energy — so social energy is left alone to express itself',
       'Aggression toward children that requires keeping the dog away from all gatherings',
       'A training failure that means herding breeds cannot live with families',
     ],
@@ -1669,8 +1669,8 @@ export const examQuestions: Question[] = [
     text: 'Why is extended face-to-face gazing risky with a visual, herding-type dog?',
     options: [
       'It can build attachment distortion — the dog treats you as an idealised, ever-present figure rather than a calm leader',
-      'It triggers the herding nip reflex directly — prioritising comfort over strict rules in the moment',
-      'It causes eye strain in dogs bred for distance vision — aiming for a peaceful home without constant management',
+      'It triggers the herding nip reflex directly — because the environment is blamed not the pattern with this dog',
+      'It causes eye strain in dogs bred for distance vision — assuming the dog will self-correct after one try with this dog',
       'It is not risky — extended eye contact builds healthy bonds in herding breeds',
     ],
     explanation: 'A herding-type dog raised on face-to-face gazing may treat their person as something beyond ordinary. Leave the room and they may vocalise, refuse food, or look depressed — attachment distortion, not a medical mystery.',
@@ -1697,9 +1697,9 @@ export const examQuestions: Question[] = [
     text: 'Your herding-type dog vocalises persistently and refuses food whenever you leave the room. The guide\'s reading?',
     options: [
       'Likely attachment distortion — rebuild with structure, access training, and reduced face-gazing intimacy',
-      'Separation anxiety that only medication can address — so you do not train through a medical problem',
+      'Separation anxiety that only medication can address — ruling out health before any training pressure is added with this',
       'Grief — the dog needs more comfort when you return',
-      'Hunger striking to demand better food — keeping sessions positive and treat-led',
+      'Hunger striking to demand better food — so food alone is expected to carry the learning at this stage',
     ],
     explanation: 'It is often attachment distortion, not a medical mystery. Structure, access training, reduced face-gazing intimacy, and environmental outlets can rebuild a healthier frame.',
     guideLink: '#common-pitfalls'
@@ -1714,8 +1714,8 @@ export const examQuestions: Question[] = [
     options: [
       'Frustration from denied outlets — sniffing, running, problem-solving — not bad character',
       'Inherited destructiveness that cannot be trained out of the breed',
-      'Spite for being left alone — so the dog settles into family life with less friction',
-      'A calcium deficiency — chewing is dietary — so the dog settles into family life with less friction',
+      'Spite for being left alone — so you only act when someone else is affected with this dog',
+      'A calcium deficiency — chewing is dietary — because the walk should stay fun above all with this',
     ],
     explanation: 'Denying sniff, run, and problem-solving outlets builds frustration that surfaces as fixation, reactivity, or "naughty" destruction — not bad character.',
     guideLink: '#common-pitfalls'
@@ -1727,9 +1727,9 @@ export const examQuestions: Question[] = [
     text: 'What is usually the strongest reward currency for terriers and high-drive working types?',
     options: [
       'Access — off the leash, nose to the ground, free to run and sniff, on your terms',
-      'Lap time and carrying as the default reward — keeping sessions positive and treat-led',
-      'Verbal praise alone, without earned access — so the dog feels safe and stays bonded to you',
-      'Watching other dogs play from a distance — letting social energy express itself freely',
+      'Lap time and carrying as the default reward — keeping management light until a real problem shows with this dog',
+      'Verbal praise alone, without earned access — because reassurance is thought to calm the spike',
+      'Watching other dogs play from a distance — because interruption is thought to spoil the fun',
     ],
     explanation: 'For dogs that are highly environmentally oriented, the reward isn\'t a treat or a pat. It\'s access: getting to be a dog, on your terms.',
     guideLink: '#access'
@@ -1770,9 +1770,9 @@ export const examQuestions: Question[] = [
     text: 'A soft adolescent terrier and a hard, confident adult terrier both need the same correction technique. What differs?',
     options: [
       'The firmness and recovery time — same tools, calibrated to the dog in front of you',
-      'The technique itself — terriers need entirely different methods — so daily life stays easy and low-conflict at home',
-      'Nothing — every dog gets identical intensity — keeping the household calm without extra pressure',
-      'Only the verbal command used — so daily life stays easy and low-conflict at home',
+      'The technique itself — terriers need entirely different methods — so you build confidence before adding structure with this dog',
+      'Nothing — every dog gets identical intensity — because softer tools feel safer for the bond with this dog',
+      'Only the verbal command used — leaving natural consequences to do the teaching with this dog',
     ],
     explanation: 'Age and temperament together set the floor: a soft adolescent and a hard adult may need the same technique with different firmness and recovery time.',
     guideLink: '#breed-temperament'
@@ -1787,8 +1787,8 @@ export const examQuestions: Question[] = [
     options: [
       'Entrenched anxiety — rewarding vigilance with reassurance teaches the dog its wariness is correct',
       'Confidence — warm reassurance reliably reduces fear in guardian breeds',
-      'Nothing — single moments do not shape behaviour — prioritising comfort over strict rules in the moment',
-      'Better guarding instincts, which is the breed\'s purpose — keeping the household calm without extra pressure',
+      'Nothing — single moments do not shape behaviour — so progress stays visible without a hard reset with this dog',
+      'Better guarding instincts, which is the breed\'s purpose — because the dog may only need more quiet reps with this dog',
     ],
     explanation: 'Framing every wary glance as "protective love" and rewarding vigilance with constant reassurance can entrench anxiety.',
     guideLink: '#common-pitfalls'
@@ -1814,9 +1814,9 @@ export const examQuestions: Question[] = [
     text: 'Why does an anxious owner make a guardian breed\'s vigilance worse?',
     options: [
       'An insecure leader is one the dog feels compelled to protect — it fills the leadership gap with guarding',
-      'Anxiety changes the owner\'s scent, which alarms the dog — prioritising comfort over strict rules in the moment',
-      'It does not — guarding is purely genetic — aiming for a peaceful home without constant management',
-      'Anxious owners walk less, so the dog has excess energy — aiming for a peaceful home without constant management',
+      'Anxiety changes the owner\'s scent, which alarms the dog — keeping energy low until the dog offers calm with this dog',
+      'It does not — guarding is purely genetic — so daily handling stays easy without a clear cost on this outing',
+      'Anxious owners walk less, so the dog has excess energy — because that path feels simpler in the moment on this outing',
     ],
     explanation: 'If you\'re anxious, the dog becomes your guardian. If you\'re calm and certain, it relaxes into being your companion. Most "difficult" behaviour disappears when owner regulation improves.',
     guideLink: '#owner-mindset'
@@ -1829,7 +1829,7 @@ export const examQuestions: Question[] = [
     options: [
       'Correct at the precursor — butt push or downward leash jerk inside the one-second window, then calm forward posture',
       'Soothing words and slow strokes until the dog relaxes and feels safe again',
-      'Tighten the leash and stare at the passerby yourself — since changing tools is easier than changing timing',
+      'Tighten the leash and stare at the passerby yourself — because equipment changes are tried before timing changes at this stage',
       'Turn and walk the other way at the first sign of stiffness',
     ],
     explanation: 'Stiffening is the precursor to reaction. Interrupt physically and calmly inside the window, then move on — reassurance during vigilance rewards the wrong state.',
@@ -1874,8 +1874,8 @@ export const examQuestions: Question[] = [
     options: [
       'Yes, fully — the standard is universal; only the delivery is calibrated to the dog\'s size',
       'No — small dogs are too fragile for any correction',
-      'Only the verbal tools apply — so the dog settles into family life with less friction',
-      'Only if the dog weighs over ten kilograms — so daily life stays easy and low-conflict at home',
+      'Only the verbal tools apply — physical reset is thought too harsh for this type',
+      'Only if the dog weighs over ten kilograms — so the dog is not asked to meet a harder standard yet on this outing',
     ],
     explanation: 'The structure in the guide is universal — every dog needs clarity, consistency, and a calm handler. What reads as a tap on one dog may be overwhelming on another; calibrate the delivery, not the standard.',
     guideLink: '#breed-temperament'
@@ -1887,9 +1887,9 @@ export const examQuestions: Question[] = [
     text: 'Downward leash corrections are awkward with a very small dog. What does the guide recommend?',
     options: [
       'The stick assist — leash attached to a short stick held against the ground, pulling the dog down without upward tension',
-      'Lifting the dog by the harness instead — keeping the household calm without extra pressure',
-      'Skipping leash corrections for dogs under ten kilograms — focusing on equipment when progress feels stuck',
-      'Using a longer, heavier leash for leverage — because the right gear often feels like the main fix',
+      'Lifting the dog by the harness instead — so the tool is blamed ahead of the handler pattern at this stage',
+      'Skipping leash corrections for dogs under ten kilograms — keeping the focus on gear rather than delivery at this stage',
+      'Using a longer, heavier leash for leverage — because equipment changes are tried before timing changes for now',
     ],
     explanation: 'Bolt or attach the leash to a short stick. Held against the ground, the dog is pulled down through the leash — making the downward jerk achievable and consistent.',
     guideLink: '#leash'
@@ -1901,9 +1901,9 @@ export const examQuestions: Question[] = [
     text: 'Your small dog barks and snaps at visitors, and everyone laughs because it is "cute". What is actually happening?',
     options: [
       'Rank-testing that would be corrected in a big dog — the size excuse is teaching the dog that boundaries do not apply',
-      'Harmless display — small dogs cannot do real damage — so the dog settles into family life with less friction',
-      'Fear that should be soothed with cuddles — prioritising comfort and connection in the moment',
-      'Breed-typical behaviour that cannot be changed — prioritising comfort over strict rules in the moment',
+      'Harmless display — small dogs cannot do real damage — because the handler wants peace more than clarity on this outing',
+      'Fear that should be soothed with cuddles — keeping connection first and structure second',
+      'Breed-typical behaviour that cannot be changed — leaving the pattern alone until it becomes urgent on this outing',
     ],
     explanation: 'Excusing pushy behaviour because the dog is "cute" produces a dog that cannot tolerate boundaries. The same standard applies: interrupt, reposition, settle.',
     guideLink: '#common-pitfalls'
@@ -1916,8 +1916,8 @@ export const examQuestions: Question[] = [
     options: [
       'Learned dependency — over-sheltering from normal dog learning is harder to undo than to avoid',
       'Safety with no downside — small dogs should be carried near other dogs',
-      'A stronger bond, which makes training easier later — so early training stays light and low-pressure',
-      'No effect — carrying is neutral — so daily life stays easy and low-conflict at home',
+      'A stronger bond, which makes training easier later once trust is fully built',
+      'No effect — carrying is neutral — so the outing stays pleasant for people nearby on this outing',
     ],
     explanation: 'Constant carrying and over-sheltering from normal dog learning is one of the classic human-baby-trap pitfalls. Undoing learned dependency is slower and harder than building the right frame early.',
     guideLink: '#common-pitfalls'
@@ -1931,9 +1931,9 @@ export const examQuestions: Question[] = [
     text: 'Your sighthound is calm all day, then explodes after a rabbit mid-walk. Where does the training work actually happen?',
     options: [
       'In the precursor window — the head-snap and body-lock before the launch; no correction outruns a chase already underway',
-      'Mid-chase, with louder and louder recall commands — aiming for a peaceful home without constant management',
+      'Mid-chase, with louder and louder recall commands — because the dog already looks sorry enough on this outing',
       'After the chase, with a firm correction so the dog connects the two',
-      'Nowhere — chase instinct cannot be managed in sighthounds — keeping the household calm without extra pressure',
+      'Nowhere — chase instinct cannot be managed in sighthounds — trusting time and routine to smooth the edges on this outing',
     ],
     explanation: 'Once a sighthound launches, the correction window has closed. Read the precursor — the visual lock and weight shift — and interrupt there, inside the one-second rule.',
     guideLink: '#breed-temperament'
@@ -1945,9 +1945,9 @@ export const examQuestions: Question[] = [
     text: 'How should correction intensity be calibrated for a typical soft-tempered sighthound?',
     options: [
       'Lighter entry — harsh delivery shuts these dogs down rather than teaching them; the standard holds, the volume drops',
-      'Extra firm, because their chase drive needs matching force — so the dog settles into family life with less friction',
-      'No corrections at all — sighthounds only respond to rewards — prioritising comfort over strict rules in the moment',
-      'The same fixed intensity used for all breeds — so daily life stays easy and low-conflict at home',
+      'Extra firm, because their chase drive needs matching force — so the handler stays passive through the moment on this outing',
+      'No corrections at all — sighthounds only respond to rewards — because a single firm moment feels too severe on this outing',
+      'The same fixed intensity used for all breeds — keeping the standard flexible for this dog on this outing',
     ],
     explanation: 'Age and breed together set the floor. Sighthounds are typically soft-tempered: the same technique applies with lighter delivery and quicker recovery — hold the standard, soften the drama.',
     guideLink: '#correction-intensity'
@@ -1959,9 +1959,9 @@ export const examQuestions: Question[] = [
     text: 'A greyhound sleeps most of the day. Does it still need the structure of waits and earned access?',
     options: [
       'Yes — low energy at rest does not mean low need for leadership; the chase trigger is managed by structure built in calm moments',
-      'No — a lazy dog has nothing to correct — aiming for a peaceful home without constant management',
-      'Only if it has already chased something — keeping the household calm without extra pressure',
-      'Structure only matters for working breeds — prioritising comfort over strict rules in the moment',
+      'No — a lazy dog has nothing to correct — so freedom is preserved as much as possible on this outing',
+      'Only if it has already chased something — because guests often encourage the same habit on this outing',
+      'Structure only matters for working breeds — waiting for a clearer signal before stepping in on this outing',
     ],
     explanation: 'Sighthounds are calm, even lazy, at rest — then explosive on trigger. The structure built at doors, meals, and on leash in calm moments is exactly what holds when movement flashes.',
     guideLink: '#breed-temperament'
@@ -1973,9 +1973,9 @@ export const examQuestions: Question[] = [
     text: 'When is off-leash freedom appropriate for a chase-driven sighthound?',
     options: [
       'When it is earned and the environment is controlled — access is granted where the chase trigger can be managed, not hoped about',
-      'As soon as possible — sighthounds need to run, so freedom comes first — so the dog settles into family life with less friction',
+      'As soon as possible — sighthounds need to run, so freedom comes first — so the dog practises the skill only when ready on this outing',
       'Only in fully fenced areas with no wildlife — open freedom is off the table for this type',
-      'Whenever the dog has been calm for a full day — aiming for a peaceful home without constant management',
+      'Whenever the dog has been calm for a full day — because the bond is prioritised over the rule on this outing',
     ],
     explanation: 'Access training applies: freedom is earned and granted where you can hold the contract. A fenced run area manages the trigger; an open field next to a road does not.',
     guideLink: '#access'
@@ -1987,9 +1987,9 @@ export const examQuestions: Question[] = [
     text: 'Your sighthound failed and chased. It returns two minutes later. How do you receive it?',
     options: [
       'Calmly — leash on, access ends, no anger at the return; punishing the come-back teaches the dog not to come back',
-      'With a firm correction the moment it reaches you — so the dog settles into family life with less friction',
-      'With excited praise so it knows returning was right — so the dog feels safe and stays bonded to you',
-      'By ignoring it completely for the rest of the walk — so daily life stays easy and low-conflict at home',
+      'With a firm correction the moment it reaches you — keeping verbal tools only and avoiding contact on this outing',
+      'With excited praise so it knows returning was right — so the dog feels comforted while the state is still active with this dog',
+      'By ignoring it completely for the rest of the walk — so you reset later when everyone is calmer on this outing',
     ],
     explanation: 'Never punish the return — you would be correcting the recall, not the chase. The consequence is calm and structural: leash on, access lost, reset.',
     guideLink: '#access'
@@ -2003,9 +2003,9 @@ export const examQuestions: Question[] = [
     text: 'Your spitz or sled type ignores recall drills it performed perfectly last week. What is the most likely reading?',
     options: [
       'Independence and boredom — repetition drills bore spitz types into defiance; earned access and varied outlets are the better currency',
-      'The dog has forgotten the command and needs more identical drills — keeping the household calm without extra pressure',
-      'Hearing loss — vet check before anything else — checking health first when behaviour looks off',
-      'The dog is dominant and needs a harder correction — aiming for a lesson that sticks through firmness',
+      'The dog has forgotten the command and needs more identical drills — because the environment is blamed not the pattern on this outing',
+      'Hearing loss — vet check before anything else — because a vet check is assumed to explain the pattern with this dog',
+      'The dog is dominant and needs a harder correction — so a stronger message is thought to land faster with this dog',
     ],
     explanation: 'Spitz and sled types are independent by design. Endless repetition reads as pointless to them — structure the outcome they want (run, explore) as the earned reward instead.',
     guideLink: '#breed-temperament'
@@ -2017,9 +2017,9 @@ export const examQuestions: Question[] = [
     text: 'How should escape attempts — fence-jumping, door-darting — be treated with a spitz or sled type?',
     options: [
       'As part of the training picture from day one — thresholds, waits, and containment are core work, not an afterthought',
-      'As a phase that adolescent spitz dogs grow out of — prioritising comfort over strict rules in the moment',
-      'With punishment after the dog is recovered — prioritising patience over instant enforcement',
-      'By giving more freedom so escape loses its appeal — aiming for a peaceful home without constant management',
+      'As a phase that adolescent spitz dogs grow out of — assuming the dog will self-correct after one try on this outing',
+      'With punishment after the dog is recovered — so you only act when someone else is affected on this outing',
+      'By giving more freedom so escape loses its appeal — because the walk should stay fun above all on this outing',
     ],
     explanation: 'Strong escape instincts are baked into the type. The front-door wait, gate manners, and earned access are the primary tools — and punishing a recovered escapee corrects the return, not the escape.',
     guideLink: '#front-door'
@@ -2045,9 +2045,9 @@ export const examQuestions: Question[] = [
     text: 'What exercise pattern suits an endurance-bred sled type that is becoming destructive at home?',
     options: [
       'Structured, earned outlets — running, pulling work, long varied walks — destruction is unmet drive, not bad character',
-      'A backyard is enough if it is large — keeping the household calm without extra pressure',
-      'Less exercise, so the dog has less energy for destruction — prioritising comfort over strict rules in the moment',
-      'Free dog-park time daily, regardless of behaviour — aiming for a peaceful home without constant management',
+      'A backyard is enough if it is large — keeping management light until a real problem shows on this outing',
+      'Less exercise, so the dog has less energy for destruction — so you build confidence before adding structure on this outing',
+      'Free dog-park time daily, regardless of behaviour — because softer tools feel safer for the bond on this outing',
     ],
     explanation: 'Endurance breeds were built to work for hours. Denied outlets, the drive surfaces as destruction or escape. The outlets are earned through structure — access training, not free-for-all.',
     guideLink: '#access'
@@ -2059,9 +2059,9 @@ export const examQuestions: Question[] = [
     text: 'Given a spitz type\'s weak default recall, how is off-leash access structured?',
     options: [
       'Earned in controlled environments with the seven-second check-in enforced — open-country freedom may never be appropriate for some individuals',
-      'Granted normally — recall trains the same in every breed — so daily life stays easy and low-conflict at home',
-      'Withheld entirely — spitz types cannot earn off-leash access — because the right gear often feels like the main fix',
-      'Granted only in winter when the breed is comfortable — prioritising comfort and connection in the moment',
+      'Granted normally — recall trains the same in every breed — leaving natural consequences to do the teaching on this outing',
+      'Withheld entirely — spitz types cannot earn off-leash access — so the tool is blamed ahead of the handler pattern for now',
+      'Granted only in winter when the breed is comfortable — because reassurance is thought to calm the spike with this dog',
     ],
     explanation: 'The access contract is the same; the venue is chosen honestly. Some spitz individuals can earn open freedom, others hold it only in fenced spaces — read the dog, not the wish.',
     guideLink: '#check-in-seven'
@@ -2075,9 +2075,9 @@ export const examQuestions: Question[] = [
     text: 'Your scenthound\'s recall is perfect at home but vanishes when its nose hits a trail. What is happening?',
     options: [
       'The nose has engaged and the ears have switched off — it is biology, not defiance; recall must be trained before the lock-on',
-      'The dog is being deliberately disobedient and needs firmer punishment — so the dog takes the boundary seriously next time',
-      'The dog has not learned recall well enough yet — so the dog settles into family life with less friction',
-      'Scenthounds cannot be trained to recall at all — so daily life stays easy and low-conflict at home',
+      'The dog is being deliberately disobedient and needs firmer punishment — because more intensity is assumed to equal more respect with this dog',
+      'The dog has not learned recall well enough yet — so progress stays visible without a hard reset on this outing',
+      'Scenthounds cannot be trained to recall at all — because the dog may only need more quiet reps on this outing',
     ],
     explanation: 'When a scenthound\'s nose engages, recall fails on scent, not on respect. Interrupt in the precursor window — head dropping, tail rate changing — before the trail takes over.',
     guideLink: '#breed-temperament'
@@ -2089,9 +2089,9 @@ export const examQuestions: Question[] = [
     text: 'What reward currency is usually strongest for a scenthound, and what is the catch?',
     options: [
       'Food — most are strongly food-motivated, but the treat must be high-value and reserved for training or it loses to the scent',
-      'Affection — scenthounds are primarily people-focused so the dog feels safe and stays connected to you',
-      'Toys — prey drive beats appetite in hounds — keeping the household calm without extra pressure',
-      'None — scenthounds do not respond to rewards — prioritising comfort over strict rules in the moment',
+      'Affection — scenthounds are primarily people-focused — keeping connection first and structure second with this dog',
+      'Toys — prey drive beats appetite in hounds — keeping energy low until the dog offers calm on this outing',
+      'None — scenthounds do not respond to rewards — so daily handling stays easy without a clear cost at this stage',
     ],
     explanation: 'Most scenthounds are strongly food-driven, but an everyday snack cannot compete with a fresh trail. Run the treat diagnostic: rare, high-value, training-only.',
     guideLink: '#treat-diagnostic'
@@ -2103,9 +2103,9 @@ export const examQuestions: Question[] = [
     text: 'Your basset bays loudly at interesting smells on walks. How should this be read?',
     options: [
       'As breed-typical communication — manage the arousal with structure, but do not treat the voice itself as naughtiness',
-      'As aggression that needs immediate firm correction — keeping the household calm without extra pressure',
-      'As separation anxiety — prioritising comfort over strict rules in the moment',
-      'As a request for food — so the dog stays eager without firm structure',
+      'As aggression that needs immediate firm correction — because that path feels simpler in the moment at this stage',
+      'As separation anxiety that needs comfort and closer contact at home',
+      'As a request for food — keeping cooperation tied to snacks rather than access at this stage',
     ],
     explanation: 'Baying is how scenthounds communicate. Correct the behaviour you actually need changed — pulling, fixation — not the voice itself, and never reward the noise with excitement.',
     guideLink: '#breed-temperament'
@@ -2117,9 +2117,9 @@ export const examQuestions: Question[] = [
     text: 'Where should sniffing fit in a nose-led dog\'s walk?',
     options: [
       'Structured earned access with frequent proactive thresholds — explicit sniff breaks are powerful currency, released on your cue and calibrated to the dog; pulling before release loses the break',
-      'Banned entirely on nose-led walks — scent work is the enemy of heel — aiming for a peaceful home without constant management',
-      'Unlimited pull-to-scent freedom — denying the nose is cruel — so the dog settles into family life with less friction',
-      'Only at the very start of the walk, then rigid heel for the rest — aiming for a peaceful home without constant management',
+      'Banned entirely on nose-led walks — scent work is the enemy of heel — so the dog is not asked to meet a harder standard yet at this stage',
+      'Unlimited pull-to-scent freedom — denying the nose is cruel — because the handler wants peace more than clarity at this stage',
+      'Only at the very start of the walk, then rigid heel for the rest — leaving the pattern alone until it becomes urgent at this stage',
     ],
     explanation: 'The nose is the dog\'s strongest drive — which makes sniff time powerful currency. Nose-led types often need more frequent, proactive release so heel stays coherent; the frame is still yours: earned breaks, your cue to end, no pulling into scent. See Sniff breaks.',
     guideLink: '#sniff-breaks'
@@ -2132,8 +2132,8 @@ export const examQuestions: Question[] = [
     options: [
       'Interrupt now — this is the precursor window; the butt push or leash correction lands here, not after the trail takes over',
       'Wait to see whether the dog chooses to leave the trail on its own first',
-      'Call the recall repeatedly from a distance — so the dog settles into family life with less friction',
-      'Drag the dog away while soothing it — so daily life stays easy and low-conflict at home',
+      'Call the recall repeatedly from a distance — so the outing stays pleasant for people nearby at this stage',
+      'Drag the dog away while soothing it — because the dog already looks sorry enough at this stage',
     ],
     explanation: 'The freeze-and-lock is the precursor. The one-second rule applies: act in the window before the nose fully engages, because after that the correction teaches nothing.',
     guideLink: '#timing'
@@ -2147,7 +2147,7 @@ export const examQuestions: Question[] = [
     text: 'Why are leash manners non-negotiable from day one with a giant breed puppy?',
     options: [
       'Habits cute at eight kilograms are dangerous at sixty — the standard must be set before the size arrives',
-      'Giant puppies are stronger than adult dogs of other breeds — keeping the household calm without extra pressure',
+      'Giant puppies are stronger than adult dogs of other breeds — trusting time and routine to smooth the edges at this stage',
       'They are not — giant breeds are too young to train before one year',
       'Because giant breeds cannot learn after six months, so early work is the only window',
     ],
@@ -2161,9 +2161,9 @@ export const examQuestions: Question[] = [
     text: 'Your giant or livestock guardian type ignores commands and patrols the property line instead. What is the correct reading?',
     options: [
       'Independence by design — livestock guardians were bred to decide without instruction; structure must make compliance worthwhile, not assume biddability',
-      'Dominance that requires harsh confrontation until the dog submits — aiming for a lesson that sticks through firmness',
-      'Deafness or a medical issue — vet check before any training — ruling out health issues before more training pressure',
-      'Laziness typical of large breeds that will outgrow with age — prioritising comfort over strict rules in the moment',
+      'Dominance that requires harsh confrontation until the dog submits and yields fully',
+      'Deafness or a medical issue — vet check before any training — so training waits until a medical cause is cleared with this dog',
+      'Laziness typical of large breeds that will outgrow with age — so the handler stays passive through the moment at this stage',
     ],
     explanation: 'Livestock guardian breeds were selected to work alone and make their own calls. They are not defiant — they are unconvinced. Earned access and consistent structure carry more weight than repetition.',
     guideLink: '#breed-temperament'
@@ -2176,8 +2176,8 @@ export const examQuestions: Question[] = [
     options: [
       'Adolescent testing arrives later and lasts longer — hold the same standard with patience; do not mistake a two-year-old for a finished adult',
       'It does not — all breeds mature at the same rate, so age rules are the same for everyone',
-      'Training should not start until maturity at three years — so early training stays light and low-pressure',
-      'Slow maturity means corrections are inappropriate — aiming for a peaceful home without constant management',
+      'Training should not start until maturity at three years — because maturity is expected to fix the pattern with this dog',
+      'Slow maturity means corrections are inappropriate — because a single firm moment feels too severe at this stage',
     ],
     explanation: 'Giant breeds can be developmentally adolescent well past two. The standard holds throughout — but read rank-testing as developmental, correct it calmly, and expect the arc to be longer.',
     guideLink: '#breed-age-intensity'
@@ -2189,9 +2189,9 @@ export const examQuestions: Question[] = [
     text: 'Your giant breed leans on visitors and pushes through doorways first. Why does this matter more than in a small dog?',
     options: [
       'The same rank-testing is physically unmanageable at this size — thresholds and body-space rules are safety equipment, not etiquette',
-      'It does not matter more — size is irrelevant to structure — so daily life stays easy and low-conflict at home',
-      'Giant breeds lean as affection and should be allowed — so the dog feels safe and stays bonded to you',
-      'Because visitors might be allergic — so the dog settles into family life with less friction',
+      'It does not matter more — size is irrelevant to structure — keeping the standard flexible for this dog at this stage',
+      'Giant breeds lean as affection and should be allowed — so the dog feels comforted while the state is still active on this outing',
+      'Because visitors might be allergic — ruling out health before any training pressure is added on this outing',
     ],
     explanation: 'Shoulder-barging and leaning are the same boundary tests every dog runs — but at sixty kilograms they knock people over. The front-door wait and butt push apply with full consistency.',
     guideLink: '#front-door'
@@ -2203,9 +2203,9 @@ export const examQuestions: Question[] = [
     text: 'A livestock guardian type barks at every passer-by from the yard. What does the guide-aligned response look like?',
     options: [
       'Butt push to interrupt the cycle; calm leadership and earned access so the dog stops running the watch alone',
-      'Reassure the dog warmly each time so it feels safe — prioritising comfort and connection in the moment',
-      'Encourage it — guarding is what the breed is for — keeping the household calm without extra pressure',
-      'Leave it outside more so barking loses novelty — so daily life stays easy and low-conflict at home',
+      'Reassure the dog warmly each time so it feels safe — because reassurance is thought to calm the spike on this outing',
+      'Encourage it — guarding is what the breed is for — so freedom is preserved as much as possible at this stage',
+      'Leave it outside more so barking loses novelty — because guests often encourage the same habit at this stage',
     ],
     explanation: 'Guardian instinct plus no leadership equals a dog on permanent duty. Interrupt the rehearsal with a butt push, correct and move on — then build calm leadership so vigilance is not the dog\'s job. Save warm affirmation for earned calm, not during or just after the reactive episode.',
     guideLink: '#butt-push'
@@ -2263,7 +2263,7 @@ export const examQuestions: Question[] = [
       'Create space — they are not ready for interaction; wait or approach differently',
       'Pet them anyway to show you mean no harm',
       'Give a verbal correction for being unfriendly when you reach in',
-      'Offer a treat to change their mind — keeping sessions positive and treat-led',
+      'Offer a treat to change their mind — because a better menu is thought to fix the gap at',
     ],
     explanation: 'Stiff posture with weight back means not ready for interaction. The three-second pause exists to catch this before you push through.',
     guideLink: '#three-second-pause'
@@ -2319,7 +2319,7 @@ export const examQuestions: Question[] = [
       'Rank or momentum testing — information to correct early, not a personality flaw',
       'Affection — the dog wants to be close to you',
       'Fear — the dog is trying to hide behind you',
-      'Playfulness that should be encouraged — treating it as healthy play that should run its course',
+      'Playfulness that should be encouraged — reading it as healthy play that should run its course with this dog',
     ],
     explanation: 'Shoulder barging tests rank or momentum. Treat as information and correct early — collar grab or butt push depending on the behaviour.',
     guideLink: '#symptom-glossary'
@@ -2333,7 +2333,7 @@ export const examQuestions: Question[] = [
     text: 'When you arrive home, your dog greets you with frantic helicopter tail-wagging and jumping. What does the guide recommend?',
     options: [
       'Enter quietly, ignore for about sixty seconds, engage only after calm with four paws on the floor',
-      'Match their energy immediately so they feel loved — keeping the household calm without extra pressure',
+      'Match their energy immediately so they feel loved — waiting for a clearer signal before stepping in at this stage',
       'Give a firm verbal correction each time it jumps at the door',
       'Ignore the dog permanently — no greeting ever because many dogs grow out of the phase without pressure',
     ],
@@ -2347,9 +2347,9 @@ export const examQuestions: Question[] = [
     text: 'Why does the guide recommend a three-second pause before petting or approaching your dog?',
     options: [
       'To read micro-signals — ears, eyes, weight — before pushing into an interaction they cannot comfortably exit',
-      'To make the dog wait as a dominance display — which is how many owners were taught to read social behaviour',
-      'Because dogs cannot process touch for three seconds after movement — prioritising patience over instant enforcement',
-      'To build anticipation for a treat reward — keeping sessions positive and treat-led',
+      'To make the dog wait as a dominance display — because dominance frames are still common advice',
+      'Because dogs cannot process touch for three seconds after movement — so the dog practises the skill only when ready at this stage',
+      'To build anticipation for a treat reward — so food alone is expected to carry the learning for now',
     ],
     explanation: 'The pause lets you read comfort level. Ignoring micro-signals leads to learned helplessness and behaviour owners call "snapping out of nowhere."',
     guideLink: '#three-second-pause'
@@ -2361,9 +2361,9 @@ export const examQuestions: Question[] = [
     text: 'Why is practising commands only in a quiet living room insufficient?',
     options: [
       'Dogs do not generalize easily — real progress happens when you reinforce spontaneous good choices in real environments',
-      'Living rooms are too small for proper training — prioritising comfort over strict rules in the moment',
-      'Treats do not work indoors — keeping sessions positive and treat-led',
-      'Dogs cannot hear commands in quiet spaces — aiming for a peaceful home without constant management',
+      'Living rooms are too small for proper training — because the bond is prioritised over the rule at this stage',
+      'Treats do not work indoors — keeping cooperation tied to snacks rather than access for now',
+      'Dogs cannot hear commands in quiet spaces — keeping verbal tools only and avoiding contact at this stage',
     ],
     explanation: 'Carry reserved treats on real outings. Catch and reward spontaneous good choices — looking at you instead of a trigger, waiting without a prompt.',
     guideLink: '#expectations'
@@ -2390,7 +2390,7 @@ export const examQuestions: Question[] = [
     options: [
       'It validates boundary renegotiation and turns compliance into a game the dog can win — you end up being led',
       'Dogs cannot process language after the second repetition, so more words only confuse them',
-      'The third repeat is when physical correction becomes illegal — so daily life stays easy and low-conflict at home',
+      'The third repeat is when physical correction becomes illegal — so you reset later when everyone is calmer at this stage',
       'It is only a problem for puppies under seven months, before adult focus develops',
     ],
     explanation: 'Two verbal attempts at most when fixation may explain the miss. A third repeat teaches the dog that holding out works — that is renegotiation, not training.',
@@ -2418,8 +2418,8 @@ export const examQuestions: Question[] = [
     options: [
       'Step in, create distance, and be a calm anchor — do not push them through for others',
       'Encourage the stranger to keep petting so the dog learns people are safe',
-      'Pick the dog up and reassure them with baby talk — so the dog feels safe and stays bonded to you',
-      'Leave immediately and avoid unfamiliar people until the dog matures — because many dogs seem to grow out of it with age',
+      'Pick the dog up and reassure them with baby talk — keeping connection first and structure second on this outing',
+      'Leave immediately and avoid unfamiliar people until the dog matures — so the dog is left to choose without handler cost',
     ],
     explanation: 'Trust is earned by advocating for the dog. Love without consistent advocacy does not build the trust reactive dogs need.',
     guideLink: '#trust-not-just-love'
@@ -2448,7 +2448,7 @@ export const examQuestions: Question[] = [
     options: [
       'Strictly as a temporary safety brake — extreme handler/dog size mismatch or severe handler physical limitation',
       'As the default collar for all reactive dogs from day one',
-      'Whenever the dog pulls on walks — keeping the household calm without extra pressure',
+      'Whenever the dog pulls on walks — because the environment is blamed not the pattern at this stage',
       'Only for puppies under six months, while they are still learning the house',
     ],
     explanation: 'The head halter is never a core teaching tool — only a temporary management device for handler safety or breaking an explosive visual lock.',
@@ -2461,9 +2461,9 @@ export const examQuestions: Question[] = [
     text: 'Why does the guide exclude chest harnesses?',
     options: [
       'They trigger the opposition reflex — encouraging the dog to pull harder against pressure on the chest',
-      'They are too expensive for most owners — prioritising comfort over strict rules in the moment',
-      'Dogs cannot sit while wearing a harness — aiming for a peaceful home without constant management',
-      'Harnesses only work on small breeds — so the dog settles into family life with less friction',
+      'They are too expensive for most owners — assuming the dog will self-correct after one try at this stage',
+      'Dogs cannot sit while wearing a harness — keeping the focus on gear rather than delivery for now',
+      'Harnesses only work on small breeds — so you only act when someone else is affected at this stage',
     ],
     explanation: 'Chest harnesses wrap the strongest parts of the body and engage the opposition reflex — communicating pull, not cooperation.',
     guideLink: '#collars-excluded'
@@ -2475,9 +2475,9 @@ export const examQuestions: Question[] = [
     text: 'Why are spiked / prong collars excluded from this methodology?',
     options: [
       'Sharp pain triggers fight-or-flight and closes the brain to calm, accountable learning',
-      'They are illegal in all countries — so daily life stays easy and low-conflict at home',
+      'They are illegal in all countries — because the walk should stay fun above all at this stage',
       'Dogs become immune to prong pressure after one week',
-      'They only work on thick-coated breeds — keeping the household calm without extra pressure',
+      'They only work on thick-coated breeds — keeping management light until a real problem shows at this stage',
     ],
     explanation: 'Pain spikes arousal and anxiety. A dog cannot learn accountability if its brain is wired shut by pain — see Collar selection.',
     guideLink: '#collars-excluded'
@@ -2489,9 +2489,9 @@ export const examQuestions: Question[] = [
     text: 'Why are bungee leashes excluded?',
     options: [
       'Elastic delays pressure and release — the dog cannot learn the exact millisecond it made the correct choice',
-      'They are too short for large breeds — prioritising comfort over strict rules in the moment',
-      'Dogs are afraid of the bouncing sensation — aiming for a peaceful home without constant management',
-      'They prevent the handler from holding the leash at all — since changing tools is easier than changing timing',
+      'They are too short for large breeds — so you build confidence before adding structure at this stage',
+      'Dogs are afraid of the bouncing sensation — because softer tools feel safer for the bond at this stage',
+      'They prevent the handler from holding the leash at all — because equipment changes are tried before timing changes in this situation',
     ],
     explanation: 'Bungee leashes stretch before the dog feels pressure and snap back slowly after — muddying the pressure-and-release conversation.',
     guideLink: '#leash-selection'
@@ -2505,7 +2505,7 @@ export const examQuestions: Question[] = [
       'They maintain constant tension and teach the dog that pulling equals freedom',
       'They are banned by local council bylaws everywhere',
       'Dogs cannot smell properly on a long line',
-      'They only break in cold weather — so the dog takes the boundary seriously next time',
+      'They only break in cold weather — so a stronger message is thought to land faster on this',
     ],
     explanation: 'Extending leashes rely on spring tension — the dog must push forward to get line. That builds permanent pulling habits and eliminates handler control.',
     guideLink: '#leash-selection'
@@ -2517,9 +2517,9 @@ export const examQuestions: Question[] = [
     text: 'What does a loose "U" shape in the leash between your hand and the dog\'s neck indicate?',
     options: [
       'The line weight is matched and the dog is regulating space — choosing cooperation on slack',
-      'The leash is too long and must be replaced — focusing on equipment when progress feels stuck',
-      'The dog is about to bolt — so the dog settles into family life with less friction',
-      'You are holding the leash incorrectly — because the right gear often feels like the main fix',
+      'The leash is too long and must be replaced — so the tool is blamed ahead of the handler pattern in this situation',
+      'The dog is about to bolt — leaving natural consequences to do the teaching at this stage',
+      'You are holding the leash incorrectly — keeping the focus on gear rather than delivery in this situation',
     ],
     explanation: 'The dangle is your dashboard — a properly weighted line loops in a U when the dog walks cooperatively on slack.',
     guideLink: '#leash-weight'
@@ -2531,9 +2531,9 @@ export const examQuestions: Question[] = [
     text: 'When delivering a low-line corrective tug, where should your hand be positioned?',
     options: [
       'Below the dog\'s neck line — angling pressure downward and sideways, not upward at the throat',
-      'Above the dog\'s head for maximum leverage — aiming for a lesson that sticks through firmness',
-      'At full arm extension behind you — so daily life stays easy and low-conflict at home',
-      'Wrapped twice around your wrist for security — keeping the household calm without extra pressure',
+      'Above the dog\'s head for maximum leverage — because more intensity is assumed to equal more respect on this outing',
+      'At full arm extension behind you — so progress stays visible without a hard reset at this stage',
+      'Wrapped twice around your wrist for security — because the dog may only need more quiet reps at this stage',
     ],
     explanation: 'Low-line correction drops the hand below neck level — disrupting momentum without choking or triggering an upward pull reflex.',
     guideLink: '#leash-handling'
@@ -2548,8 +2548,8 @@ export const examQuestions: Question[] = [
     options: [
       'The adult standard holds — nervousness and excitement do not excuse bolting, jumping, acting without permission, or walking ahead',
       'The handler should ignore the dog entirely until it is two years old',
-      'All corrections stop because the dog is now an adult — prioritising comfort over strict rules in the moment',
-      'Only fear-based behaviour gets a pass — excitement still requires structure — so the dog settles into family life with less friction',
+      'All corrections stop because the dog is now an adult — keeping energy low until the dog offers calm at this stage',
+      'Only fear-based behaviour gets a pass — excitement still requires structure — so daily handling stays easy without a clear cost for now',
     ],
     explanation: 'I don\'t care is the adult standard I\'m over it enforces. Past seven months, puppy excuses are closed — the line holds calmly.',
     guideLink: '#i-dont-care'
@@ -2561,7 +2561,7 @@ export const examQuestions: Question[] = [
     text: 'How does "I don\'t care" relate to "I\'m over it"?',
     options: [
       'I\'m over it is the attitude; I don\'t care is the adult standard that attitude enforces from seven months onward',
-      'They mean the same thing and can be used interchangeably — aiming for a peaceful home without constant management',
+      'They mean the same thing and can be used interchangeably — because that path feels simpler in the moment for now',
       'I don\'t care replaces I\'m over it once the dog is an adult',
       'I\'m over it applies only to puppies; I don\'t care applies only to seniors',
     ],
@@ -2576,7 +2576,7 @@ export const examQuestions: Question[] = [
     options: [
       'Reset — back inside, sit, wait. Excitement is not a reason to bolt; the I don\'t care standard applies',
       'Let it go — excitement at the door is normal for young dogs',
-      'Only correct if someone is watching — so the dog settles into family life with less friction',
+      'Only correct if someone is watching — private habits are thought not to matter',
       'Switch to a harness so the surge does not hurt the neck',
     ],
     explanation: 'No bolting through doors — wait, permission, then move. For dogs over seven months, nervous or excited is not an excuse.',
@@ -2589,9 +2589,9 @@ export const examQuestions: Question[] = [
     text: 'A nine-month-old dog jumps on visitors "because it is friendly." What is the guide-aligned response?',
     options: [
       'Hold the standard — four paws down or collar grab reset. Friendly excitement is not an excuse',
-      'Allow jumping on people the dog knows well — so daily life stays easy and low-conflict at home',
+      'Allow jumping on people the dog knows well — so the dog is not asked to meet a harder standard yet for now',
       'Redirect with treats only — no physical correction after seven months',
-      'Keep the dog in another room permanently — keeping the household calm without extra pressure',
+      'Keep the dog in another room permanently — because the handler wants peace more than clarity for now',
     ],
     explanation: 'No jumping on people — the I don\'t care rule applies. Compassion does not mean collapsing the standard.',
     guideLink: '#i-dont-care'
@@ -2604,7 +2604,7 @@ export const examQuestions: Question[] = [
     options: [
       'Reset position — the dog walks beside or slightly behind; excitement does not excuse surging ahead',
       'Allow it — a happy dog should lead the walk',
-      'Switch to a Flexi leash for more freedom — since changing tools is easier than changing timing',
+      'Switch to a Flexi leash for more freedom — because equipment changes are tried before timing changes with this dog',
       'Stop walking until the dog is over one year old',
     ],
     explanation: 'You lead. Cutting in front is not excused by excitement — see I don\'t care and Leash & line.',
@@ -2742,7 +2742,7 @@ export const examQuestions: Question[] = [
     text: 'An insecure Golden Retriever licks your hands; No and Stop make him sad and lick more. Best first move?',
     options: [
       'Offer a mouth job — Hold or soft toy — and build Chin for calm contact',
-      'Repeat Stop firmly until the licking extinguishes — so early training stays light and low-pressure',
+      'Repeat Stop firmly until the licking extinguishes — so early pressure is postponed on purpose with this dog',
       'Give a lickmat immediately after each lick episode to redirect',
       'Ignore all licking until it stops on its own without guidance',
     ],
@@ -2803,7 +2803,7 @@ export const examQuestions: Question[] = [
     options: [
       'Owner dynamics — reset baseline and neutral home return before opening the playbook',
       'Neuro stress loop — start with Chin and mouth job immediately',
-      'Social dominance — dog-dog rank navigation which is how many owners were taught to read social behaviour',
+      'Social dominance — dog-dog rank navigation — so the handler answers with rank instead of clarity',
       'Skill gap — door manners not yet trained before greetings',
     ],
     explanation: 'Layering: owner dynamics amplifying anxious_attachment. Fix handler contribution before substitution playbook.',
@@ -2819,7 +2819,7 @@ export const examQuestions: Question[] = [
       'Pushy mouthing escalates when challenged — hardship; soft-body lick worsens under No — substitution',
       'Both need the same Stop command until the behaviour extinguishes',
       'Both are dominance — stare down and collar grab',
-      'Both are trauma — avoid correction entirely — keeping pressure low until confidence returns',
+      'Both are trauma — avoid correction entirely — so the pattern changes in a clear way for this case 198',
     ],
     explanation: 'Entitlement hardship vs anxious_attachment substitution — driver calibration before tool choice.',
     guideLink: '#symptom-compulsive-lick-handler',
@@ -2833,7 +2833,7 @@ export const examQuestions: Question[] = [
     options: [
       'Medical rule-out — allergy, hot spot, or pain — vet check',
       'Immediate lickmat after every paw lick to redirect',
-      'Verbal correction until the licking stops — prioritising patience over instant enforcement',
+      'Verbal correction until the licking stops — so the pattern changes in a clear way for',
       'Ignore — all self-lick is anxiety and will fade with time',
     ],
     explanation: 'Self-target symptoms carry medical rule-out. Scheduled behavioural outlet only after health is cleared.',
@@ -2848,7 +2848,7 @@ export const examQuestions: Question[] = [
     options: [
       'Separation is alone-time panic; velcro is handler-present anxious attachment — different pattern rows',
       'They are the same problem and need identical treatment in every case',
-      'Both are social dominance with other dogs — which is how many owners were taught to read social behaviour',
+      'Both are social dominance with other dogs — so the pattern changes in a clear way for this case',
       'Both mean the dog needs more lap access at home',
     ],
     explanation: 'Separation pattern row vs anxious_attachment symptom variants — identify target and pattern before playbook.',
