@@ -1,3 +1,5 @@
+import PuppyPlanner from '../../components/PuppyPlanner';
+
 export default function SectionPuppy() {
   return (
     <section className="guide-section" id="puppy-phase">
@@ -30,6 +32,28 @@ export default function SectionPuppy() {
             battle.
           </p>
         </div>
+
+        <h3 id="puppy-early-security">🛡️ Early security: closeness before structure</h3>
+
+        <p>
+          Between roughly <strong>8 and 10 weeks</strong>, your puppy is still calibrating to a world without littermates.
+          Separating from the litter at eight weeks is a real psychological hardship — loss of co-regulation, thermal
+          comfort, and bite-inhibition practice with siblings. That is not trauma in the damage sense, but it is a
+          genuine transition. See <a href="#eight-week-separation">8-week separation</a> for the full framing.
+        </p>
+
+        <p>
+          During this window, <strong>sleep close, warm, or in bed with you</strong> is appropriate living-mode contact
+          — not lifelong dependency. Keep the puppy physically near you between naps: playpen, tether, or lap — not free
+          roaming the house. Structure still arrives; it arrives after the nervous system knows it landed somewhere safe.
+          Bridge to <a href="#context-of-contact">context of contact</a> for when closeness is tactical versus habitual.
+        </p>
+
+        <ul className="checklist">
+          <li>8–10 weeks: proximity sleep and supervised tethering between naps</li>
+          <li>What may be missed from the litter: thermal pile, sibling co-regulation, bite inhibition rehearsal</li>
+          <li>After security is felt: transition toward crate independence — not before</li>
+        </ul>
 
         <h3 id="puppy-toilet-training">🚽 Toilet training: the golden routine</h3>
 
@@ -99,7 +123,8 @@ export default function SectionPuppy() {
         <p>
           Use a <strong>1-hour awake, 2-hours asleep</strong> structural rhythm to manage the day. Times shift with age
           and household — the pattern matters more than the clock. Every wake-up gets an immediate toilet trip; every
-          play block ends with one.
+          play block ends with one. For personalised times by age and breed, use the{' '}
+          <a href="#puppy-planner">Puppy Planner</a> below — the static table is the fallback pattern.
         </p>
 
         <table className="pillars-table" aria-label="Sample puppy daily rhythm">
@@ -148,6 +173,29 @@ export default function SectionPuppy() {
           See <a href="#puppy-toilet-training">toilet training</a> for the full routine at each trigger point, and{' '}
           <a href="#daily">daily practice</a> for how this rhythm carries forward as the dog matures.
         </p>
+
+        <h3 id="puppy-nutrition-access">🍽️ Nutrition & access: enough food, controlled delivery</h3>
+
+        <p>
+          Your puppy must receive <strong>enough total food</strong> — follow the feeding guide on your bag label for age
+          and expected adult weight, and confirm with your vet if appetite, weight, or stool is off. This guide does not
+          prescribe grams or calories; packaging and your vet are the source of truth.
+        </p>
+
+        <p>
+          <strong>Water is always available.</strong> Restriction is about <em>access pattern</em>, not rationing below
+          bag guidance: when you are intentionally using hunger for floor-proximity treats, walk-back jumping work, and
+          backward recall, ditch the free bowl. Measure the full daily ration and deliver it only through roughly three
+          training blocks across the day — see <a href="#puppy-behavior-design">behavioral design</a>.
+        </p>
+
+        <ul className="checklist">
+          <li>Young pups: typically 3–4 smaller meals aligned with waking blocks, not left in a bowl</li>
+          <li>By ~5–6 months: most puppies transition toward 2 meals per day — per bag guidance</li>
+          <li>Under 6 weeks: breeder or vet guides milk replacer if not nursing — no cow milk</li>
+          <li>From 8 weeks home: solid puppy food; weaning should be complete — vet check if underweight or poor appetite</li>
+          <li>Not using food as training currency? Structured mealtimes still help toilet predictability — bowl OK if you are not running hunger-dependent proximity work</li>
+        </ul>
 
         <h3 id="puppy-behavior-design">🧠 Behavioral design: set up the win</h3>
 
@@ -329,6 +377,42 @@ export default function SectionPuppy() {
           distance and rebuild check-in at closer range with the proactive games above instead.
         </p>
 
+        <h3 id="puppy-tracking">📋 What to track — daily and weekly</h3>
+
+        <p>
+          Structure improves when you can see patterns. Log enough to spot drift before it becomes a habit problem — not
+          so much that you obsess over every wee.
+        </p>
+
+        <ul className="checklist">
+          <li>
+            <strong>Sleep total</strong> — target ~18–20 hours per day at this age; overtired yap and mouthing spikes
+            often trace back here
+          </li>
+          <li>
+            <strong>Toilet successes and accidents</strong> — note post-play misses; they are the most common &quot;random&quot;
+            accidents
+          </li>
+          <li>
+            <strong>Appetite and stool quality</strong> — sudden drop, persistent diarrhoea, or lethargy → vet same day
+          </li>
+          <li>
+            <strong>Weekly weigh-in</strong> — compare trend to your food bag growth chart, not a single reading
+          </li>
+          <li>
+            <strong>Check-in frequency during play</strong> — aim for a glance every ~7 seconds when training; see{' '}
+            <a href="#puppy-check-in">puppy check-in</a>
+          </li>
+        </ul>
+
+        <div className="dont">
+          <strong>⚠️ When to call the vet</strong>
+          <p>
+            Repeated vomiting, blood in stool, refusal to eat for more than one meal in a young puppy, extreme lethargy,
+            or failure to gain weight over two weekly weigh-ins — do not wait for the behaviour to sort itself.
+          </p>
+        </div>
+
         <h3 id="puppy-household-dynamics">🏠 Household dynamics</h3>
 
         <p>
@@ -353,6 +437,15 @@ export default function SectionPuppy() {
           chase sessions prevent destructive behaviour that gets mislabelled as &quot;bad temperament.&quot; Read{' '}
           <a href="#breed-temperament">breed variance</a> and calibrate intensity to the individual.
         </p>
+
+        <h3 id="puppy-planner">📅 Puppy Planner — your rhythm by age & breed</h3>
+
+        <p>
+          Enter your puppy&apos;s age and breed for a personalised day schedule, toilet windows, food-access guidance, and
+          a weekly tracking checklist. Confirm all amounts with your bag label and vet.
+        </p>
+
+        <PuppyPlanner />
 
         <div className="callout">
           <strong>🎓 What comes next</strong>

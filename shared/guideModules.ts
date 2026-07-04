@@ -175,12 +175,16 @@ const TRAINING_ANCHORS = [
 const PUPPY_PHASE_ANCHORS = [
   'guide-theme-puppy-phase',
   'puppy-phase',
+  'puppy-early-security',
   'puppy-toilet-training',
   'puppy-daily-structure',
+  'puppy-nutrition-access',
   'puppy-behavior-design',
   'puppy-mouthing-play',
   'puppy-check-in',
+  'puppy-tracking',
   'puppy-household-dynamics',
+  'puppy-planner',
 ] as const;
 
 const DAILY_LIFE_ANCHORS = [

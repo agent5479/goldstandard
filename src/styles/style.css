@@ -5859,3 +5859,63 @@ a.problem-finder-tertiary {
     grid-template-columns: 1fr;
   }
 }
+
+.puppy-planner {
+  margin: 1.5rem 0 2rem;
+  padding: 1.25rem 1.35rem;
+  background: var(--surface-soft);
+  border: 1px solid rgba(45, 74, 45, 0.12);
+  border-radius: 8px;
+}
+
+.puppy-planner-inputs {
+  display: grid;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.puppy-planner-summary {
+  margin: 0 0 1rem;
+  line-height: 1.55;
+}
+
+.puppy-planner-cards {
+  display: grid;
+  gap: 1rem;
+  margin: 1.25rem 0;
+}
+
+.puppy-planner-note {
+  color: var(--light-text);
+  font-size: 0.92rem;
+}
+
+.puppy-planner-toggle {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  cursor: pointer;
+  line-height: 1.45;
+}
+
+.puppy-planner-toggle input {
+  margin-top: 0.2rem;
+}
+
+.puppy-planner-links {
+  margin: 1rem 0;
+}
+
+.puppy-planner-copy {
+  margin-top: 0.5rem;
+}
+
+@media (min-width: 640px) {
+  .puppy-planner-inputs {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .puppy-planner-inputs .form-field:last-child {
+    grid-column: 1 / -1;
+  }
+}

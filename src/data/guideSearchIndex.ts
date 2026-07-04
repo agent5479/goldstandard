@@ -57,6 +57,10 @@ const ALIASES: { terms: string[]; anchor: string }[] = [
   { terms: ['toilet training puppy', 'golden windows', 'puppy potty'], anchor: 'puppy-toilet-training' },
   { terms: ['puppy daily structure', 'puppy sleep schedule', '1 hour awake'], anchor: 'puppy-daily-structure' },
   { terms: ['puppy behavior design', 'ditch food bowl', 'floor treats puppy'], anchor: 'puppy-behavior-design' },
+  { terms: ['puppy early security', 'sleep with puppy', 'littermate separation', 'puppy closeness'], anchor: 'puppy-early-security' },
+  { terms: ['puppy feeding', 'puppy nutrition', 'puppy food bowl', 'puppy meals'], anchor: 'puppy-nutrition-access' },
+  { terms: ['puppy tracking', 'puppy weight', 'puppy log', 'puppy checklist'], anchor: 'puppy-tracking' },
+  { terms: ['puppy planner', 'puppy schedule generator', 'puppy day plan', 'personalised puppy schedule'], anchor: 'puppy-planner' },
 ];
 
 function buildStaticIndex(): GuideSearchEntry[] {
