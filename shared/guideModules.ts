@@ -6,6 +6,7 @@ export type GuideModuleId =
   | 'understanding'
   | 'social'
   | 'training'
+  | 'puppy-phase'
   | 'daily-life';
 
 export interface GuideModuleMeta {
@@ -171,6 +172,17 @@ const TRAINING_ANCHORS = [
   'treat-handler-reinforcement',
 ] as const;
 
+const PUPPY_PHASE_ANCHORS = [
+  'guide-theme-puppy-phase',
+  'puppy-phase',
+  'puppy-toilet-training',
+  'puppy-daily-structure',
+  'puppy-behavior-design',
+  'puppy-mouthing-play',
+  'puppy-check-in',
+  'puppy-household-dynamics',
+] as const;
+
 const DAILY_LIFE_ANCHORS = [
   'guide-theme-daily-life',
   'check-in-seven',
@@ -230,9 +242,19 @@ export const GUIDE_MODULES: GuideModuleMeta[] = [
     anchors: [...TRAINING_ANCHORS],
   },
   {
+    id: 'puppy-phase',
+    route: '/guide/puppy-phase',
+    part: 'Part 6',
+    title: 'Puppy phase',
+    description: 'Establish structure — toilet training, daily rhythm, behavioral design, and check-in conditioning.',
+    readMinutes: 20,
+    primaryAnchors: ['puppy-phase', 'puppy-toilet-training', 'puppy-behavior-design'],
+    anchors: [...PUPPY_PHASE_ANCHORS],
+  },
+  {
     id: 'daily-life',
     route: '/guide/daily-life',
-    part: 'Part 6',
+    part: 'Part 7',
     title: 'Daily life',
     description: 'Sustain the standard — check-in, practice rhythm, graduation.',
     readMinutes: 12,

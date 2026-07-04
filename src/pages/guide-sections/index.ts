@@ -23,9 +23,11 @@ import SectionAccess from './SectionAccess';
 import SectionCheckInSeven from './SectionCheckInSeven';
 import SectionDaily from './SectionDaily';
 import SectionGraduation from './SectionGraduation';
+import SectionPuppy from './SectionPuppy';
 import {
   GuideThemeDailyLife,
   GuideThemeLeadership,
+  GuideThemePuppyPhase,
   GuideThemeSocialNeeds,
   GuideThemeTraining,
   GuideThemeUnderstanding,
@@ -59,6 +61,8 @@ export const guideSections = [
   SectionCollarSnatch,
   SectionPinHold,
   SectionAccess,
+  GuideThemePuppyPhase,
+  SectionPuppy,
   GuideThemeDailyLife,
   SectionCheckInSeven,
   SectionDaily,

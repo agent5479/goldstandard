@@ -36,10 +36,19 @@ export const GuideThemeTraining = () => (
   />
 );
 
+export const GuideThemePuppyPhase = () => (
+  <GuideThemeDivider
+    id="guide-theme-puppy-phase"
+    part="Part 6"
+    title="🐶 Puppy phase"
+    description="Establish structure — toilet training, daily rhythm, behavioral design, and check-in conditioning."
+  />
+);
+
 export const GuideThemeDailyLife = () => (
   <GuideThemeDivider
     id="guide-theme-daily-life"
-    part="Part 6"
+    part="Part 7"
     title="🏠 Daily life"
     description="Sustain the standard — check-in, practice rhythm, graduation."
   />

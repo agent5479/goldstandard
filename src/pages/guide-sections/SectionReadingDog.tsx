@@ -326,6 +326,8 @@ export default function SectionReadingDog() {
       <p>
         That early warmth is appropriate <a href="#context-of-contact">living mode</a> contact — not permission for
         lifelong dependency. Structure still arrives; it arrives after the nervous system knows it landed somewhere safe.
+        For the full daily rhythm — sleep, toilet triggers, and behavioral design — see{' '}
+        <a href="#puppy-phase">Puppy phase</a>.
       </p>
 
       <h4 id="trauma-hardship-calibration">Calibrating the correction scale</h4>

@@ -37,7 +37,7 @@ export default function GuideHubPage() {
               your dog&apos;s training.
             </>
           }
-          description="A reference for clients to revisit between sessions. Work through six modules in order, or jump back to any topic with search."
+          description="A reference for clients to revisit between sessions. Work through seven modules in order, or jump back to any topic with search."
         />
 
         <section className="guide-hub" aria-labelledby="guide-hub-heading">
@@ -70,12 +70,12 @@ export default function GuideHubPage() {
             </div>
 
             <h2 id="guide-hub-heading" className="guide-hub-modules-heading">
-              <SectionIcon set="guide" size="sm" /> Six modules
+              <SectionIcon set="guide" size="sm" /> Seven modules
             </h2>
             <p className="guide-hub-intro">
-              First read: Foundation → Leadership → Understanding → Social needs → Training → Daily life.
-              Intact large males still building structure: see{' '}
-              <Link to={guideHref('intact-large-males')}>the playbook</Link>.
+              First read: Foundation → Leadership → Understanding → Social needs → Training → Puppy phase → Daily
+              life. New puppy at home: see <Link to={guideHref('puppy-phase')}>Puppy phase</Link>. Intact large males
+              still building structure: see <Link to={guideHref('intact-large-males')}>the playbook</Link>.
             </p>
 
             <ul className="guide-module-cards">

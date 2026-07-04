@@ -25,9 +25,11 @@ import SectionAccess from '../pages/guide-sections/SectionAccess';
 import SectionCheckInSeven from '../pages/guide-sections/SectionCheckInSeven';
 import SectionDaily from '../pages/guide-sections/SectionDaily';
 import SectionGraduation from '../pages/guide-sections/SectionGraduation';
+import SectionPuppy from '../pages/guide-sections/SectionPuppy';
 import {
   GuideThemeDailyLife,
   GuideThemeLeadership,
+  GuideThemePuppyPhase,
   GuideThemeSocialNeeds,
   GuideThemeTraining,
   GuideThemeUnderstanding,
@@ -60,5 +62,6 @@ export const guideModuleSections: Record<GuideModuleId, ComponentType[]> = {
     SectionPinHold,
     SectionAccess,
   ],
+  'puppy-phase': [GuideThemePuppyPhase, SectionPuppy],
   'daily-life': [GuideThemeDailyLife, SectionCheckInSeven, SectionDaily, SectionGraduation],
 };

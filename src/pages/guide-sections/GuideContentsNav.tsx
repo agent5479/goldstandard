@@ -91,6 +91,14 @@ const CONTENTS_LINKS: ContentsLink[] = [
   { moduleId: 'training', group: '⚡ Training', anchor: 'car-protocol', label: '📐 Car protocol' },
   { moduleId: 'training', group: '⚡ Training', anchor: 'road-seven-months', label: '⏳ Seven-month road crucible' },
 
+  { moduleId: 'puppy-phase', group: '🐶 Puppy phase', anchor: 'puppy-phase', label: '🐶 Puppy phase overview' },
+  { moduleId: 'puppy-phase', group: '🐶 Puppy phase', anchor: 'puppy-toilet-training', label: '🚽 Toilet training' },
+  { moduleId: 'puppy-phase', group: '🐶 Puppy phase', anchor: 'puppy-daily-structure', label: '📅 Daily structure' },
+  { moduleId: 'puppy-phase', group: '🐶 Puppy phase', anchor: 'puppy-behavior-design', label: '🧠 Behavioral design' },
+  { moduleId: 'puppy-phase', group: '🐶 Puppy phase', anchor: 'puppy-mouthing-play', label: '🦷 Mouthing & play' },
+  { moduleId: 'puppy-phase', group: '🐶 Puppy phase', anchor: 'puppy-check-in', label: '👁️ Puppy check-in' },
+  { moduleId: 'puppy-phase', group: '🐶 Puppy phase', anchor: 'puppy-household-dynamics', label: '🏠 Household dynamics' },
+
   { moduleId: 'daily-life', group: '🏠 Daily life', anchor: 'check-in-seven', label: '👁️ 7-second check-in' },
   { moduleId: 'daily-life', group: '🏠 Daily life', anchor: 'daily', label: '📅 Daily practice' },
   { moduleId: 'daily-life', group: '🏠 Daily life', anchor: 'graduation', label: '🎓 Graduation' },

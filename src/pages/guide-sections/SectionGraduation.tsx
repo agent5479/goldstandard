@@ -5,7 +5,7 @@ export default function SectionGraduation() {
       <p className="section-num">24 — The turning point</p>
       <h2>🎓 Graduation to adulthood.</h2>
 
-      <p>Training works best when you treat it as a turning point in the dog's life — a clear graduation, not a part-time experiment. The leash stays down when earned. Expectations are real and they do not get relaxed because someone misses the old puppy dynamic. Mixed messages do not just slow progress — they make the transition exponentially slower.</p>
+      <p>Training works best when you treat it as a turning point in the dog's life — a clear graduation, not a part-time experiment. The leash stays down when earned. Expectations are real and they do not get relaxed because someone misses the old puppy dynamic. Mixed messages do not just slow progress — they make the transition exponentially slower. If your dog is still under roughly seven months, the establishment work in <a href="#puppy-phase">Puppy phase</a> comes first — graduation is the destination, not the starting line.</p>
 
       <p>From roughly seven months onward, the <a href="#i-dont-care">I don't care</a> rule is in full effect: the dog is an adult in the pack structure now. You are expected to understand. Nervousness and excitement do not excuse bolting at doors, jumping on visitors, acting without permission, or walking ahead of you. That is not harshness — it is the clarity that lets an adult dog relax into knowing the line is real.</p>
 

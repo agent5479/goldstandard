@@ -1,0 +1,370 @@
+export default function SectionPuppy() {
+  return (
+    <section className="guide-section" id="puppy-phase">
+      <div className="guide-section-inner">
+        <p className="section-num">Puppy phase — Establishment</p>
+        <h2>🐶 The puppy phase: structure before standards.</h2>
+
+        <p>
+          Puppies are not small adult dogs. Their attention spans are shorter, impulse control is still forming, and
+          their bladders cannot hold what yours can. Overtired puppies bite harder, yap more, and house-train worse —
+          not because they are defiant, but because their nervous system is saturated. The work at this stage is{' '}
+          <strong>antecedent arrangement</strong>: structuring the environment and your actions so the puppy chooses
+          the correct behaviour before you need to correct the wrong one.
+        </p>
+
+        <p>
+          That does not mean softness. It means proactive design — routine, confinement, and currency you control — so
+          reactive corrections stay rare. <strong>Expectations shape behaviour:</strong> what you consistently require
+          and reward becomes the dog&apos;s default; what you accidentally reinforce in a behaviour cycle becomes the
+          pattern you will fight for months. See <a href="#eight-week-separation">8-week separation</a> for early
+          security, <a href="#breed-age-intensity">age × temperament</a> for how breed changes the pace, and{' '}
+          <a href="#i-dont-care">I don&apos;t care (7+ months)</a> for when the adult standard fully applies.
+        </p>
+
+        <div className="callout">
+          <strong>🛏️ Sleep is not optional</strong>
+          <p>
+            A young puppy needs roughly <strong>18 to 20 hours of sleep per day</strong>. Enforced rest in a crate or
+            pen is not punishment — it is how impulse control and house training succeed. An overtired puppy loses every
+            battle.
+          </p>
+        </div>
+
+        <h3 id="puppy-toilet-training">🚽 Toilet training: the golden routine</h3>
+
+        <p>
+          Puppies thrive on routine, and their physical limitations dictate the schedule. A good rule of thumb for
+          bladder control is <strong>one hour for every month of age, plus one</strong>. When they are active, they
+          need to go much more frequently than that formula suggests.
+        </p>
+
+        <h4>The golden windows</h4>
+
+        <p>Take your puppy to their designated toilet spot during these high-probability moments:</p>
+
+        <ul className="checklist">
+          <li>
+            <strong>Immediately when they wake up</strong> — morning or after a nap. Carry them out if needed; do not
+            let their paws hit the floor inside first
+          </li>
+          <li>
+            <strong>10 to 20 minutes after eating or drinking</strong>
+          </li>
+          <li>
+            <strong>Right after a vigorous play session</strong> — high adrenaline completely relaxes a puppy&apos;s
+            bladder; the transition when play stops is the most vulnerable moment
+          </li>
+          <li>
+            <strong>Every 30 to 45 minutes</strong> generally when they are awake and roaming
+          </li>
+        </ul>
+
+        <h4>The step-by-step routine</h4>
+
+        <ol className="checklist">
+          <li>
+            <strong>Go out on a lead — every time.</strong> Even if you have a secure garden, walk them out on a lead
+            to the exact same spot. This keeps them focused on the task instead of exploring or playing. Stay outside at
+            that spot until they pee or poop — do not bring them back in early just because they are quiet or cute.
+          </li>
+          <li>
+            <strong>Use a cue word — be boring until they go.</strong> Stand relatively still and choose a cue like
+            &quot;go toilet&quot; or &quot;busy busy&quot;. Say it calmly. Do not play or give attention until they
+            perform.
+          </li>
+          <li>
+            <strong>Throw a mini-party — within 3 seconds.</strong> The instant they finish, reward them immediately
+            with high-value treats and enthusiastic praise. The reward must happen outside where they did the deed, not
+            when you get back in the kitchen.
+          </li>
+          <li>
+            <strong>The reset if they don&apos;t go.</strong> If they don&apos;t go within 5 minutes, bring them
+            straight back inside, but keep them confined — in a crate, playpen, or on a lap. Try again in 10 to 15
+            minutes. Do not give them free run of the house until they have emptied their bladder.
+          </li>
+        </ol>
+
+        <div className="dont">
+          <strong>⚠️ The post-play trap</strong>
+          <p>
+            The absolute second high-energy play stops, bladder muscles relax. Make it a rule to transition directly
+            from a game onto the lead and out to the spot — bypassing indoor floor mats entirely. Missing this window
+            is the most common cause of &quot;random&quot; accidents after a good session.
+          </p>
+        </div>
+
+        <h3 id="puppy-daily-structure">📅 Daily structure: awake, asleep, repeat</h3>
+
+        <p>
+          Use a <strong>1-hour awake, 2-hours asleep</strong> structural rhythm to manage the day. Times shift with age
+          and household — the pattern matters more than the clock. Every wake-up gets an immediate toilet trip; every
+          play block ends with one.
+        </p>
+
+        <table className="pillars-table" aria-label="Sample puppy daily rhythm">
+          <thead>
+            <tr>
+              <th scope="col">Time block</th>
+              <th scope="col">Activity</th>
+              <th scope="col">Toilet trigger</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Wake up</td>
+              <td>Carry out immediately; hand-feeding and short training with first third of daily food</td>
+              <td>Immediate — paws do not touch floor inside</td>
+            </tr>
+            <tr>
+              <td>~20 min play</td>
+              <td>Vigorous play — hallway running, hide-and-seek, or tug</td>
+              <td>Directly when play stops</td>
+            </tr>
+            <tr>
+              <td>2-hour nap</td>
+              <td>Crate or pen — brain development and settling</td>
+              <td>Pre-nap check if awake long enough</td>
+            </tr>
+            <tr>
+              <td>Midday cycle</td>
+              <td>Sit on the ground for low-arousal engagement; second third of food for training</td>
+              <td>On wake; after outdoor play</td>
+            </tr>
+            <tr>
+              <td>Afternoon nap</td>
+              <td>Essential to prevent evening &quot;witching hour&quot; frantic behaviour</td>
+              <td>On wake; pre-nap check</td>
+            </tr>
+            <tr>
+              <td>Evening</td>
+              <td>Final third of food; calm engagement, chew toys, low lighting</td>
+              <td>Last call before bedtime crate</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p>
+          See <a href="#puppy-toilet-training">toilet training</a> for the full routine at each trigger point, and{' '}
+          <a href="#daily">daily practice</a> for how this rhythm carries forward as the dog matures.
+        </p>
+
+        <h3 id="puppy-behavior-design">🧠 Behavioral design: set up the win</h3>
+
+        <p>
+          Instead of reactive corrections after the wrong choice, structure the environment so the right choice is the
+          easy one. These mechanics apply from the first week home.
+        </p>
+
+        <h4>Ditch the food bowl</h4>
+
+        <p>
+          Remove the standard food bowl. Measure daily portions strictly based on age and weight, and use kibble
+          exclusively as currency for training throughout the day. This transforms a passive resource into high-value
+          engagement — see <a href="#rewards">Rewards</a> and{' '}
+          <a href="#treat-handler-reinforcement">treat reinforcement</a> for how currency should land at your feet, not
+          as a distance bribe.
+        </p>
+
+        <p>
+          <strong>Hunger is the engine.</strong> Two of the most effective puppy techniques — walk-back to sit for
+          jumping, and running backward with floor treats for attention and recall — only work when the puppy is still
+          hungry. No free grazing, no training straight after a meal, and no kibble left in a bowl to drain appetite.
+          If the dog is full, floor treats and hand-fed currency stop landing — see{' '}
+          <a href="#treat-diagnostic">before you conclude the dog isn&apos;t food-motivated</a>.
+        </p>
+
+        <h4>Proximity vs. hands — and floor treats for recall</h4>
+
+        <p>
+          Drop treats directly around your feet to associate positive experiences with being close to you, rather than
+          focusing attention on your hands — which can prompt nipping. The dog learns that your space is the reward
+          zone. For calm engagement, <strong>sit on the ground</strong> at their level rather than standing over them —
+          proximity treats land around your feet, not in your fingers.
+        </p>
+
+        <p>
+          Pair floor treats with <strong>running backward</strong> down a hallway or open space: the movement activates
+          prey drive and pulls the puppy toward you; the treat lands at your feet when they arrive. That combination
+          shapes attention and early recall — but only while the puppy is still hungry enough for the kibble to matter.
+        </p>
+
+        <h4>Managing the jumping loop: walk-back to sit</h4>
+
+        <p>
+          When the puppy jumps, do not physically shove them into a sit — that trains learned helplessness and can
+          accidentally reward them with touch. Execute a neutral, entirely impassive <strong>walk-back</strong> barrier:
+          guide them backward in a boring, repetitive experience until they choose to sit on their own. You are not
+          forcing the sit — you are removing the reward of forward pressure until they decide to stop jumping.
+        </p>
+
+        <p>
+          That unprompted sit is what you mark and reward — with a floor treat at your feet, not a hand-fed bribe that
+          invites nipping. This is one of the core puppy jumping tools; it depends on the same hunger setup as the
+          backward recall games above.
+        </p>
+
+        <div className="dont">
+          <strong>⚠️ Never reward a behaviour cycle — control the association</strong>
+          <p>
+            If they jump, get walked back, sit, and get a treat, they learn that jumping is the required first step.
+            Only reward the behaviour <em>without</em> the cycle: a clean, unprompted sit that was not preceded by a
+            jump in that moment. You control what gets paired with what — see the{' '}
+            <a href="#correction-praise-trap">correction-praise trap</a>. As the dog matures past roughly seven months,
+            the adult tools at <a href="#jumping-up">collar grab &amp; forced sit</a> apply; until then, walk-back and
+            impassive withdrawal are the baseline.
+          </p>
+        </div>
+
+        <h4>Vocabulary consistency</h4>
+
+        <p>
+          Choose roughly <strong>five distinct words</strong> for everyone in the household to use uniformly — for
+          example: GOOD, NO, SIT, OUTSIDE, WAIT, COME (pick five that cover praise, reset, position, toilet, and
+          release/recall). Mixed messages from family who each invent their own cues slow progress exponentially. See{' '}
+          <a href="#speaking-aloud">Speak it aloud</a> and <a href="#cue-once">Say it once</a>.
+        </p>
+
+        <h4>Lighter leash tension</h4>
+
+        <p>
+          Apply downward tension on the leash only. Allow the puppy to self-correct at the boundary of the leash rather
+          than pulling them back yourself — see <a href="#leash-weight">line weight &amp; dangle</a>.
+        </p>
+
+        <div className="callout pro-tip">
+          <strong>💡 Worked example: prey-drive terrier</strong>
+          <p>
+            A young working terrier often responds better to floor-proximity treats and running backward down the
+            hallway to activate prey drive than to hand-fed bribes — provided the daily ration is still working as
+            currency and the puppy is genuinely hungry. Drop kibble around your feet for calm proximity; use backward
+            chase games twice daily for recall and check-in building. If either technique stops working, check appetite
+            before blaming temperament — see <a href="#breed-temperament">breed variance</a>.
+          </p>
+        </div>
+
+        <h3 id="puppy-mouthing-play">🦷 Mouthing, teething, and appropriate play</h3>
+
+        <p>
+          Mouthing is a normal combination of <strong>teething, arousal, and anxiety</strong> — not defiance. Redirect
+          this energy onto appropriate textures via structured games rather than stiff corrections that escalate arousal
+          further.
+        </p>
+
+        <ul className="checklist">
+          <li>
+            <strong>Hide-and-seek ground scruffles</strong> — low, playful engagement on the floor with an approved chew
+            toy or texture
+          </li>
+          <li>
+            <strong>Hemp rope tug</strong> — teach them to bring the rope to you for engagement rather than jumping up
+          </li>
+        </ul>
+
+        <p>
+          <strong>The goal:</strong> the puppy learns to bring the rope to you for engagement instead of jumping. If
+          they jump, do not go fetch their toy — that rewards the jump. Instead, sit them (or wait for a choose-to-sit
+          after walk-back), use their toy association cue (&quot;Where&apos;s your ROPE?&quot;), and enthusiastically
+          reward when they go to retrieve it. Over time they will learn to bring the rope without the jump first.
+        </p>
+
+        <h4>The 90-degree yap reset</h4>
+
+        <p>
+          If the puppy begins yapping or fixating, gently push their hindquarters sideways 90 degrees to turn their body
+          away from the trigger. This physically breaks the barking loop and prompts them to look up at you — laying
+          groundwork for checking in for permission. The adult version on-lead is the{' '}
+          <a href="#butt-push">butt push</a>; at puppy scale, the hindquarter turn is enough.
+        </p>
+
+        <h4>Reverse timeout</h4>
+
+        <p>
+          When mouthing crosses from play into hard biting, withdraw human presence calmly for roughly 20 seconds — no
+          drama, no negotiation. Return when they have settled. This teaches appropriate boundaries without a stiff
+          correction that spikes arousal further.
+        </p>
+
+        <h3 id="puppy-check-in">👁️ The seven-second check-in — puppy establishment</h3>
+
+        <p>
+          Young dogs are easier to train on pack awareness. The full adult contract lives at{' '}
+          <a href="#check-in-seven">The seven-second check-in</a>; here is how to establish it in the puppy phase. The
+          rule: during engagement, the puppy should check in with you at least once every <strong>seven seconds</strong>.
+          Reward with a warm &quot;Good girl!&quot; or &quot;Good!&quot; every single time they glance your way inside
+          that window.
+        </p>
+
+        <p>
+          <strong>Default baseline: proactive conditioning, not panic.</strong> Mark spontaneous eye contact immediately.
+          Twice daily, run structured sessions: <strong>indoor calling and backward running</strong> down the hallway,
+          and the same pattern <strong>outside</strong> — hide-and-seek with sounds, floor treats at your feet when they
+          find you, playful growls when they do. These games build connection through reward rather than anxiety. They
+          use the same hunger-dependent tools as in <a href="#puppy-behavior-design">behavioral design</a>: if the puppy
+          is not hungry, backward recall and floor rewards will not pull attention.
+        </p>
+
+        <ul className="checklist">
+          <li>
+            Twice daily: hallway backward runs plus outdoor calling games — reward every check-in under seven seconds
+            with floor treats while appetite is still sharp
+          </li>
+          <li>
+            Hide-and-seek with sounds and floor treats when they find you; a playful growl when they locate you keeps
+            arousal productive
+          </li>
+          <li>
+            For prey-drive breeds, backward running activates engagement better than static hand lures — pair with{' '}
+            <a href="#go-get-recall">go-get recall</a>; schedule sessions before meals, not after
+          </li>
+        </ul>
+
+        <p>
+          <strong>Relative condition — the strategic hide (not a game):</strong> with confident, resilient puppies only,
+          you can step behind a tree or bend out of sight so they register briefly that they are alone — not to
+          frighten them, but to make the pack link tangible. Use a single sharp verbal — one bark of &quot;Hey!&quot; or
+          your reset word — if needed before you hide; do <em>not</em> treat or praise when they find you after this
+          tactic. The reunion is not a reward moment — finding you ends the consequence. Do <em>not</em> use this with
+          fearful, shutdown, or <a href="#trauma-signals">trauma-signalling</a> dogs; for those puppies, shorten
+          distance and rebuild check-in at closer range with the proactive games above instead.
+        </p>
+
+        <h3 id="puppy-household-dynamics">🏠 Household dynamics</h3>
+
+        <p>
+          The same structure must hold across every handler — children included. Mixed messages from a busy household
+          slow progress exponentially.
+        </p>
+
+        <h4>Busy households</h4>
+
+        <p>
+          In a home with multiple adults and children, high-arousal greetings are the first failure point. Enforce
+          boundaries for both the children and the puppy: calm entry, no floor-level wrestling that teaches jumping,
+          and supervised interaction only when the puppy is rested — not overtired. An overtired puppy in a noisy house
+          becomes reactive, mouthy, and impossible to toilet-train.
+        </p>
+
+        <h4>High-drive working breeds</h4>
+
+        <p>
+          Intelligent working breeds — terriers, gundogs, herding types — need dedicated mental stimulation and structured
+          outlets for teething and prey drive. Puzzle feeding, scatter work from the daily ration, and scheduled tug or
+          chase sessions prevent destructive behaviour that gets mislabelled as &quot;bad temperament.&quot; Read{' '}
+          <a href="#breed-temperament">breed variance</a> and calibrate intensity to the individual.
+        </p>
+
+        <div className="callout">
+          <strong>🎓 What comes next</strong>
+          <p>
+            The puppy phase is establishment, not graduation. As structure consolidates, carry the rhythm into{' '}
+            <a href="#check-in-seven">seven-second check-in</a>, <a href="#daily">daily practice</a>, and eventually{' '}
+            <a href="#graduation">graduation to adulthood</a>. Past roughly seven months, the{' '}
+            <a href="#i-dont-care">I don&apos;t care</a> adult standard applies in full — the puppy-excuse window is
+            closed.
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}

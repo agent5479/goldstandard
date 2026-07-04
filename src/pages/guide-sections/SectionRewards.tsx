@@ -13,7 +13,7 @@ export default function SectionRewards() {
 
       <ul className="checklist">
         <li><strong>Has the treat been overused?</strong> A treat handed out casually — as bribery, for every small behaviour, or "just because" — stops being currency. Familiarity drains its value</li>
-        <li><strong>Is the dog actually hungry?</strong> Training straight after a meal, or with kibble available all day, removes the appetite the reward depends on</li>
+        <li><strong>Is the dog actually hungry?</strong> Training straight after a meal, or with kibble available all day, removes the appetite the reward depends on. For puppies, ditch the bowl and measure the daily ration into training sessions — see <a href="#puppy-behavior-design">Puppy behavioral design</a></li>
         <li><strong>Is a favourite reserved for training only?</strong> The dog's single most-loved treat should appear in training sessions and nowhere else — not on walks, not at settling time</li>
         <li><strong>Only then, read temperament.</strong> If the setup is right and food still doesn't land, the dog may genuinely lean access-, play-, or socially-oriented — see <a href="#breed-temperament">breed temperament</a> and the orientation signals below</li>
       </ul>

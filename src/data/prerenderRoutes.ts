@@ -10,6 +10,7 @@ export const PRERENDER_ROUTES = [
   '/guide/understanding',
   '/guide/social',
   '/guide/training',
+  '/guide/puppy-phase',
   '/guide/daily-life',
   '/exam',
   '/intelligence',

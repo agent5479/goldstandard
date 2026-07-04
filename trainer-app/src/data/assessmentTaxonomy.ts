@@ -64,6 +64,7 @@ export const GUIDE_GROUPS: GuideGroup[] = [
   { id: 'understanding', label: 'Understanding', icon: 'bi-brain' },
   { id: 'social', label: 'Social needs', icon: 'bi-people' },
   { id: 'training', label: 'Training', icon: 'bi-tools' },
+  { id: 'puppy-phase', label: 'Puppy phase', icon: 'bi-heart' },
   { id: 'daily-life', label: 'Daily life', icon: 'bi-house' },
 ];
 
@@ -142,6 +143,13 @@ export const GUIDE_ANCHORS: GuideAnchor[] = [
   { id: 'semantic-hijacking', label: 'Car cue hijacking', icon: 'bi-car-front', groupId: 'training' },
   { id: 'car-protocol', label: 'Car protocol', icon: 'bi-car-front-fill', groupId: 'training' },
   { id: 'road-seven-months', label: 'Seven-month road crucible', icon: 'bi-hourglass', groupId: 'training' },
+  { id: 'puppy-phase', label: 'Puppy phase overview', icon: 'bi-heart', groupId: 'puppy-phase' },
+  { id: 'puppy-toilet-training', label: 'Toilet training', icon: 'bi-droplet', groupId: 'puppy-phase' },
+  { id: 'puppy-daily-structure', label: 'Daily structure', icon: 'bi-calendar-check', groupId: 'puppy-phase' },
+  { id: 'puppy-behavior-design', label: 'Behavioral design', icon: 'bi-lightbulb', groupId: 'puppy-phase' },
+  { id: 'puppy-mouthing-play', label: 'Mouthing & play', icon: 'bi-emoji-smile', groupId: 'puppy-phase' },
+  { id: 'puppy-check-in', label: 'Puppy check-in', icon: 'bi-eye', groupId: 'puppy-phase' },
+  { id: 'puppy-household-dynamics', label: 'Household dynamics', icon: 'bi-people', groupId: 'puppy-phase' },
   { id: 'check-in-seven', label: '7-second check-in', icon: 'bi-eye', groupId: 'daily-life' },
   { id: 'daily', label: 'Daily practice', icon: 'bi-calendar-check', groupId: 'daily-life' },
   { id: 'graduation', label: 'Graduation', icon: 'bi-mortarboard', groupId: 'daily-life' },
