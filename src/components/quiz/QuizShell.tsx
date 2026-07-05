@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import { useEffect, useRef, type ReactNode } from 'react';
 import QuizOptionCard from './QuizOptionCard';
 
 export interface QuizShellOption {
@@ -36,10 +36,15 @@ export default function QuizShell({
   continueLabel = 'Next',
   children,
 }: QuizShellProps) {
+  const shellRef = useRef<HTMLDivElement>(null);
   const progress = Math.min(100, Math.round((stepIndex / estimatedTotal) * 100));
 
+  useEffect(() => {
+    shellRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, [prompt, stepIndex]);
+
   return (
-    <div className="quiz-shell">
+    <div className="quiz-shell" ref={shellRef} tabIndex={-1}>
       <header className="exam-quiz-header">
         <p className="exam-quiz-context">{contextLabel}</p>
         <p className="exam-quiz-counter">

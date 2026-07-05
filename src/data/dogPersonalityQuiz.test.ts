@@ -3,6 +3,7 @@ import {
   PERSONALITY_QUESTIONS,
   PERSONALITY_QUESTION_IDS,
   PERSONALITY_START_ID,
+  PERSONALITY_REFINE_SENTINEL,
   emptyCategoryWeights,
   mergeWeights,
   resolvePersonalityResult,
@@ -11,13 +12,12 @@ import type { BreedCategory } from './breeds';
 
 type VisitState = 'unvisited' | 'visiting' | 'done';
 
-function collectReachableResults(startId: string): Set<string> {
-  const visited = new Set<string>();
+function collectReachableRefine(startId: string): Set<string> {
   const results = new Set<string>();
 
   function walk(id: string, state: Map<string, VisitState>) {
-    if (id === 'RESULT') {
-      results.add('RESULT');
+    if (id === PERSONALITY_REFINE_SENTINEL) {
+      results.add(PERSONALITY_REFINE_SENTINEL);
       return;
     }
     const nodeState = state.get(id);
@@ -32,7 +32,6 @@ function collectReachableResults(startId: string): Set<string> {
       walk(option.next, state);
     }
     state.set(id, 'done');
-    visited.add(id);
   }
 
   const state = new Map<string, VisitState>();
@@ -44,7 +43,7 @@ function findOrphanNodes(): string[] {
   const referenced = new Set<string>([PERSONALITY_START_ID]);
   for (const question of Object.values(PERSONALITY_QUESTIONS)) {
     for (const option of question.options) {
-      if (option.next !== 'RESULT') referenced.add(option.next);
+      if (option.next !== PERSONALITY_REFINE_SENTINEL) referenced.add(option.next);
     }
   }
   return PERSONALITY_QUESTION_IDS.filter((id) => !referenced.has(id));
@@ -55,7 +54,7 @@ function findDeadEnds(): string[] {
   for (const [id, question] of Object.entries(PERSONALITY_QUESTIONS)) {
     if (question.options.length === 0) dead.push(id);
     for (const option of question.options) {
-      if (option.next !== 'RESULT' && !PERSONALITY_QUESTIONS[option.next]) {
+      if (option.next !== PERSONALITY_REFINE_SENTINEL && !PERSONALITY_QUESTIONS[option.next]) {
         dead.push(`${id} → ${option.next}`);
       }
     }
@@ -76,9 +75,9 @@ describe('dogPersonalityQuiz tree', () => {
     expect(findDeadEnds()).toEqual([]);
   });
 
-  it('reaches RESULT from start on every branch', () => {
-    const results = collectReachableResults(PERSONALITY_START_ID);
-    expect(results.has('RESULT')).toBe(true);
+  it('reaches breed refinement from start on every branch', () => {
+    const results = collectReachableRefine(PERSONALITY_START_ID);
+    expect(results.has(PERSONALITY_REFINE_SENTINEL)).toBe(true);
   });
 
   it('every question has at least two options', () => {
@@ -104,6 +103,8 @@ describe('resolvePersonalityResult', () => {
     expect(result.archetype.headline).toMatch(/Velcro/i);
     expect(result.breeds.length).toBeGreaterThan(0);
     expect(result.breeds.every((b) => b.category === 'clingy')).toBe(true);
+    expect(result.spiritBreed.breed.category).toBe('clingy');
+    expect(result.spiritBreed.matchPercent).toBeGreaterThan(0);
   });
 
   it('returns a valid category when all weights are zero', () => {

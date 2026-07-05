@@ -179,9 +179,10 @@ export default function HomePage() {
             </Link>
             <Link to="/breed-finder" className="resource-card">
               <SectionIcon set="breedanalysis" size="card" className="resource-card-icon" />
-              <strong className="resource-card-title">Breed Finder</strong>
+              <strong className="resource-card-title">What Dog Should You Get?</strong>
               <span className="resource-card-desc">
-                Match breeds to your household, lifestyle, and expectations — ranked results with honest caveats.
+                Help choosing the right breed — match your household, lifestyle, and expectations for maximum
+                compatibility, with ranked results and honest caveats.
               </span>
               <span className="resource-card-cta">Find your match →</span>
             </Link>

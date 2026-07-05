@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Seo from '../../components/Seo';
 import SiteHeader from '../../components/SiteHeader';
@@ -24,14 +24,22 @@ type Step =
 export default function BreedFinderPage() {
   const [step, setStep] = useState<Step>({ kind: 'intro' });
   const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null);
-
-  const scrollTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+  const introRef = useRef<HTMLDivElement>(null);
+  const skipIntroScroll = useRef(true);
 
   const goTo = (next: Step) => {
     setStep(next);
     setSelectedOptionId(null);
-    scrollTop();
   };
+
+  useEffect(() => {
+    if (step.kind !== 'intro') {
+      skipIntroScroll.current = false;
+      return;
+    }
+    if (skipIntroScroll.current) return;
+    introRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, [step]);
 
   const startFinder = () => {
     goTo({ kind: 'question', index: 0, answers: {} });
@@ -65,7 +73,7 @@ export default function BreedFinderPage() {
     <>
       <Seo
         title="What Dog Should You Get? | Gold Standard Dog Training"
-        description="Match breeds to your household, lifestyle, and expectations — ranked recommendations with honest caveats. Free tool from Gold Standard Dog Training, Golden Bay & Nelson Bays, NZ."
+        description="Help choosing the right breed — match your household, lifestyle, and expectations for maximum compatibility, with ranked results and honest caveats. Gold Standard Dog Training, Golden Bay & Nelson Bays, NZ."
         path="/breed-finder"
         bodyClass="page-breed-finder"
         iconSet="breedanalysis"
@@ -76,22 +84,23 @@ export default function BreedFinderPage() {
         <div className="page-hero-inner">
           <p className="section-label label-with-icon">
             <SectionIcon set="breedanalysis" size="sm" />
-            Breed finder
+            Choose your breed
           </p>
           <div className="page-title-row">
             <SectionIcon set="breedanalysis" size="lg" className="page-title-icon" />
             <h1>What kind of dog should you get?</h1>
           </div>
           <p>
-            Twelve questions about your home, household, and lifestyle — then ranked breed matches with
-            reasons and honest caveats. A research starting point, not a guarantee. Nothing is stored or sent.
+            Twelve questions about your home, household, and lifestyle — then ranked breed matches to help you
+            choose the most compatible dog, with reasons and honest caveats. A research starting point, not a
+            guarantee. Nothing is stored or sent.
           </p>
         </div>
       </section>
 
       <main className="quiz-tool-main breed-finder-main">
         {step.kind === 'intro' && (
-          <div className="quiz-intro-card">
+          <div className="quiz-intro-card" ref={introRef} tabIndex={-1}>
             <p>
               We score every breed in the reference against your answers — size, noise, activity, kids,
               other pets, experience, and what you want from the relationship.
@@ -116,7 +125,7 @@ export default function BreedFinderPage() {
 
           return (
             <QuizShell
-              contextLabel={`Breed finder — ${sectionLabel}`}
+              contextLabel={`Choose your breed — ${sectionLabel}`}
               prompt={question.prompt}
               options={question.options.map((o) => ({
                 id: o.value,

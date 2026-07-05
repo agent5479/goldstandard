@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import BreedDetailContent from '../intelligence/BreedDetailContent';
 import {
@@ -13,9 +13,14 @@ interface BreedFinderResultProps {
 
 export default function BreedFinderResultView({ results, onRestart }: BreedFinderResultProps) {
   const [expandedBreed, setExpandedBreed] = useState<string | null>(null);
+  const resultRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    resultRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, []);
 
   return (
-    <div className="breed-finder-result">
+    <div className="breed-finder-result" ref={resultRef} tabIndex={-1}>
       <div className="quiz-result-hero">
         <h2 className="quiz-result-archetype">Your top matches</h2>
         <p className="quiz-result-blurb">

@@ -1,13 +1,23 @@
 import { breeds, breedCategories, type Breed, type BreedCategory } from './breeds';
 import { getBreedClientMixTraitLabel } from './breedTraits';
+import {
+  buildRefinementProfile,
+  PERSONALITY_REFINEMENT_START_ID,
+  PERSONALITY_REFINEMENT_TOTAL,
+  rankBreedsInCategory,
+  type PersonalityBreedMatch,
+} from './dogPersonalityRefinement';
+
+export type { PersonalityBreedMatch };
 
 export const PERSONALITY_START_ID = 'q_start';
+export const PERSONALITY_REFINE_SENTINEL = 'REFINE' as const;
 
 export interface PersonalityOption {
   id: string;
   label: string;
   sublabel?: string;
-  next: string | 'RESULT';
+  next: string | typeof PERSONALITY_REFINE_SENTINEL;
   weights: Partial<Record<BreedCategory, number>>;
 }
 
@@ -28,6 +38,8 @@ export interface PersonalityResult {
   archetype: PersonalityArchetype;
   breeds: Breed[];
   weights: Record<BreedCategory, number>;
+  spiritBreed: PersonalityBreedMatch;
+  closeMatches: PersonalityBreedMatch[];
 }
 
 const W = (weights: Partial<Record<BreedCategory, number>>): Partial<Record<BreedCategory, number>> =>
@@ -455,25 +467,25 @@ export const PERSONALITY_QUESTIONS: Record<string, PersonalityQuestion> = {
       {
         id: 'final_loyalty',
         label: 'Unwavering loyalty and warmth',
-        next: 'RESULT',
+        next: PERSONALITY_REFINE_SENTINEL,
         weights: W({ clingy: 3 }),
       },
       {
         id: 'final_calm',
         label: 'Calm under pressure and good judgment',
-        next: 'RESULT',
+        next: PERSONALITY_REFINE_SENTINEL,
         weights: W({ guardian: 2, giant: 2, sighthound: 1 }),
       },
       {
         id: 'final_drive',
         label: 'Getting things done when everyone else quit',
-        next: 'RESULT',
+        next: PERSONALITY_REFINE_SENTINEL,
         weights: W({ terrier: 2, herding: 2, spitz: 1 }),
       },
       {
         id: 'final_fun',
         label: 'Making ordinary days feel less ordinary',
-        next: 'RESULT',
+        next: PERSONALITY_REFINE_SENTINEL,
         weights: W({ small: 2, scenthound: 1, clingy: 1 }),
       },
     ],
@@ -519,28 +531,45 @@ export function getOptionById(
   return question.options.find((o) => o.id === optionId);
 }
 
-export function resolvePersonalityResult(weights: Record<BreedCategory, number>): PersonalityResult {
+export function resolvePersonalityCategory(weights: Record<BreedCategory, number>): BreedCategory {
   const ranked = ALL_CATEGORIES
     .map((category) => ({ category, score: weights[category] ?? 0 }))
     .sort((a, b) => b.score - a.score);
 
   const top = ranked[0]?.score ?? 0;
   const tied = ranked.filter((r) => r.score === top && top > 0);
-  const category =
-    tied.length > 1
-      ? tied.sort(
-          (a, b) => ALL_CATEGORIES.indexOf(a.category) - ALL_CATEGORIES.indexOf(b.category)
-        )[0].category
-      : (ranked[0]?.category ?? 'clingy');
+  return tied.length > 1
+    ? tied.sort(
+        (a, b) => ALL_CATEGORIES.indexOf(a.category) - ALL_CATEGORIES.indexOf(b.category)
+      )[0].category
+    : (ranked[0]?.category ?? 'clingy');
+}
 
+export function resolvePersonalityResult(
+  weights: Record<BreedCategory, number>,
+  refinementAnswers: Partial<Record<string, string>> = {}
+): PersonalityResult {
+  const category = resolvePersonalityCategory(weights);
   const archetype = PERSONALITY_ARCHETYPES[category];
   const categoryBreeds = breeds.filter((b) => b.category === category);
+  const profile = buildRefinementProfile(refinementAnswers);
+  const ranked = rankBreedsInCategory(category, profile, 5);
+
+  const fallback: PersonalityBreedMatch = {
+    breed: categoryBreeds[0]!,
+    matchPercent: 50,
+    reason: getBreedClientMixTraitLabel(categoryBreeds[0]!.name),
+  };
+
+  const spiritBreed = ranked[0] ?? fallback;
 
   return {
     category,
     archetype,
     breeds: categoryBreeds,
     weights,
+    spiritBreed,
+    closeMatches: ranked.slice(1, 4),
   };
 }
 
@@ -549,8 +578,10 @@ export function getBreedShowcaseNote(breedName: string): string {
 }
 
 export function getPersonalityEstimatedSteps(): number {
-  return 10;
+  return 10 + PERSONALITY_REFINEMENT_TOTAL;
 }
+
+export { PERSONALITY_REFINEMENT_START_ID, PERSONALITY_REFINEMENT_TOTAL };
 
 export const PERSONALITY_QUESTION_IDS = Object.keys(PERSONALITY_QUESTIONS);
 
