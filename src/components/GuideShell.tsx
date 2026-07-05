@@ -12,7 +12,7 @@ export default function GuideShell({ children, stickyLabel = 'Client Reference G
     <>
       <header className="guide-sticky-nav" aria-label="Guide navigation">
         <div className="guide-sticky-nav-inner">
-          <Link to="/guide" className="guide-sticky-nav-brand">
+          <Link to="/" className="guide-sticky-nav-brand">
             Gold Standard Dog Training
           </Link>
           <div className="guide-sticky-nav-actions">

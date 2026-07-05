@@ -5,11 +5,51 @@ import SiteHeader from '../components/SiteHeader';
 import SiteFooter from '../components/SiteFooter';
 import ProblemFinderModal from '../components/ProblemFinderModal';
 import HeroGallery from './HeroGallery';
+import CompactInfoPopout from '../components/CompactInfoPopout';
 import { STANDARD_PRICING_NOTE, HOME_VISIT_PRICING_NOTE } from '../data/bookingConfig';
 import { NELSON_STANDARD_COMING_SOON_NOTE, NELSON_PRICING_ENQUIRY_NOTE } from '@shared/bookingRegions';
 import { SITE_DEFAULT_TITLE, SITE_META_DESCRIPTION, SITE_OG_DESCRIPTION } from '../data/siteConfig';
 import { asset } from '../asset';
 import SectionIcon from '../components/SectionIcon';
+
+const SERVICES = [
+  {
+    icon: '🐕',
+    title: 'General Obedience & Shaping',
+    description:
+      'Sit, lie, fetch, wait, heel — and more. Built around your goals, with you coached through each step. With the right understanding of correction, reward, and your own energy, a dog can be shaped into almost anything you want it to be.',
+  },
+  {
+    icon: '🛡️',
+    title: 'Safety & Control',
+    description:
+      'Lunge control, fixation interruption, safe walking without crossing in front, road awareness. The skills that matter when something unexpected happens — so your dog is one you can trust in any situation.',
+  },
+  {
+    icon: '🤝',
+    title: 'Facilitated Socialisation',
+    description:
+      'Structured sessions with suitable dogs to build healthy social habits and allow natural correction. A social dog is a regulated dog — one that reads other animals and responds calmly rather than reactively.',
+  },
+  {
+    icon: '🔗',
+    title: 'Rehabilitation',
+    description:
+      'For dogs with difficult histories, high anxiety, or entrenched behaviours. Starts by meeting the dog where it is — safely and without force — and building the trust required for training to take hold.',
+  },
+  {
+    icon: '🧭',
+    title: 'Owner Coaching',
+    description:
+      "Your energy, attention, and consistency are the most powerful training tools your dog has. Sessions include coaching you in how to hold your own — so the results don't evaporate the moment Warwick leaves.",
+  },
+  {
+    icon: '📍',
+    title: 'In-Environment Training',
+    description:
+      'Markets, beaches, roads, other dogs — real-world environments where the training has to hold. Practising where the triggers actually exist is what turns learned behaviour into reliable behaviour.',
+  },
+] as const;
 
 export default function HomePage() {
   const [problemFinderOpen, setProblemFinderOpen] = useState(false);
@@ -84,43 +124,42 @@ export default function HomePage() {
           <p className="section-label">🛠️ What's on offer</p>
           <h2>🐾 Services</h2>
           <div className="services-grid">
-            <div className="service-card">
-              <span className="service-icon">🐕</span>
-              <h3>General Obedience &amp; Shaping</h3>
-              <p>Sit, lie, fetch, wait, heel — and more. Built around your goals, with you coached through each step. With the right understanding of correction, reward, and your own energy, a dog can be shaped into almost anything you want it to be.</p>
-            </div>
-            <div className="service-card">
-              <span className="service-icon">🛡️</span>
-              <h3>Safety &amp; Control</h3>
-              <p>Lunge control, fixation interruption, safe walking without crossing in front, road awareness. The skills that matter when something unexpected happens — so your dog is one you can trust in any situation.</p>
-            </div>
-            <div className="service-card">
-              <span className="service-icon">🤝</span>
-              <h3>Facilitated Socialisation</h3>
-              <p>Structured sessions with suitable dogs to build healthy social habits and allow natural correction. A social dog is a regulated dog — one that reads other animals and responds calmly rather than reactively.</p>
-            </div>
-            <div className="service-card">
-              <span className="service-icon">🔗</span>
-              <h3>Rehabilitation</h3>
-              <p>For dogs with difficult histories, high anxiety, or entrenched behaviours. Starts by meeting the dog where it is — safely and without force — and building the trust required for training to take hold.</p>
-            </div>
-            <div className="service-card">
-              <span className="service-icon">🧭</span>
-              <h3>Owner Coaching</h3>
-              <p>Your energy, attention, and consistency are the most powerful training tools your dog has. Sessions include coaching you in how to hold your own — so the results don't evaporate the moment Warwick leaves.</p>
-            </div>
-            <div className="service-card">
-              <span className="service-icon">📍</span>
-              <h3>In-Environment Training</h3>
-              <p>Markets, beaches, roads, other dogs — real-world environments where the training has to hold. Practising where the triggers actually exist is what turns learned behaviour into reliable behaviour.</p>
-            </div>
+            {SERVICES.map((service) => (
+              <CompactInfoPopout
+                key={service.title}
+                className="service-card"
+                variant="card"
+                icon={service.icon}
+                label={service.title}
+                panelLabel={service.title}
+              >
+                <p>{service.description}</p>
+              </CompactInfoPopout>
+            ))}
           </div>
-          <p className="service-note">
-            Golden Bay: {STANDARD_PRICING_NOTE} Home visits: {HOME_VISIT_PRICING_NOTE}{' '}
-            {NELSON_STANDARD_COMING_SOON_NOTE}{' '}
-            {NELSON_PRICING_ENQUIRY_NOTE}{' '}
-            <Link to="/book">Book online</Link> or <Link to="/contact">send an enquiry</Link> to get started.
-          </p>
+          <div className="service-note-compact">
+            <div className="service-note-chips">
+              <CompactInfoPopout variant="chip" label="Golden Bay pricing" panelLabel="Golden Bay pricing">
+                <div className="service-note-pricing">
+                  <p>
+                    <strong>Beach / reserve</strong> — {STANDARD_PRICING_NOTE}
+                  </p>
+                  <p>
+                    <strong>Home visits</strong> — {HOME_VISIT_PRICING_NOTE}
+                  </p>
+                </div>
+              </CompactInfoPopout>
+              <CompactInfoPopout variant="chip" label="Locations & Nelson" panelLabel="Locations and Nelson Bays">
+                <div className="service-note-locations">
+                  <p>{NELSON_STANDARD_COMING_SOON_NOTE}</p>
+                  <p>{NELSON_PRICING_ENQUIRY_NOTE}</p>
+                </div>
+              </CompactInfoPopout>
+            </div>
+            <p className="service-note-cta">
+              <Link to="/book">Book online</Link> or <Link to="/contact">send an enquiry</Link> to get started.
+            </p>
+          </div>
         </div>
       </section>
 
