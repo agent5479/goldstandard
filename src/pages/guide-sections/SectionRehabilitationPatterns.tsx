@@ -170,9 +170,10 @@ export default function SectionRehabilitationPatterns() {
         <p>
           Look at the toolset nature gave this dog. Retrievers find neurological grounding in carrying
           objects in their mouths — a mouth job as security blanket works with DNA, not against it. See{' '}
-          <a href="#breed-temperament">Breed variance</a> and the{' '}
-          <Link to="/intelligence">Breed Analysis reference</Link> for instinct segments — then match
-          the substitution to retrieve, scent, guard, or companion drive.
+          <a href="#breed-temperament">Breed variance</a>, the{' '}
+          <Link to="/intelligence#instinct-training-leverage">instinct training leverage reference</Link>, and the{' '}
+          <Link to="/intelligence">Breed Analysis table</Link> for instinct segments — then match the substitution
+          to retrieve, scent, guard, or companion drive.
         </p>
 
         <h3 id="behavioral-decoupling">3. Clear differentiation of stimulus and reward</h3>

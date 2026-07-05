@@ -186,6 +186,9 @@ export default function IntelligenceTableFilters({
             );
           })}
         </div>
+        <p className="intelligence-filter-group-link">
+          <a href="#instinct-training-leverage">Instinct training leverage reference</a> — methods by drive type
+        </p>
       </div>
 
       <div className="intelligence-filter-group">

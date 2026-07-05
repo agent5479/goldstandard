@@ -4513,6 +4513,113 @@ body.page-intelligence {
   color: var(--light-text) !important;
 }
 
+.intelligence-leverage-mix-caveat {
+  margin: 0 0 0.85rem;
+  padding: 0.65rem 0.75rem;
+  background: var(--surface-soft);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 4px 4px 0;
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.intelligence-leverage-block + .intelligence-leverage-block {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(45, 74, 45, 0.1);
+}
+
+.intelligence-leverage-block-header {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0 0 0.35rem;
+  font-size: 0.82rem;
+}
+
+.intelligence-leverage-headline {
+  margin: 0 0 0.25rem;
+  font-weight: 600;
+}
+
+.intelligence-leverage-fixation,
+.intelligence-leverage-breed-note {
+  margin: 0 0 0.5rem;
+  font-size: 0.78rem;
+  color: var(--light-text);
+  line-height: 1.45;
+}
+
+.intelligence-leverage-methods {
+  margin: 0;
+  padding-left: 1.1rem;
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+.intelligence-leverage-methods li + li {
+  margin-top: 0.35rem;
+}
+
+.intelligence-leverage-method-links {
+  display: inline;
+  font-size: 0.72rem;
+}
+
+.intelligence-leverage-footer {
+  margin: 0.85rem 0 0;
+  font-size: 0.75rem;
+}
+
+.intelligence-leverage-reference {
+  margin-top: 1rem;
+}
+
+.intelligence-leverage-table {
+  min-width: 720px;
+}
+
+.intelligence-leverage-table-note {
+  font-size: 0.85rem;
+  color: var(--light-text);
+}
+
+.intelligence-leverage-type-cell {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  white-space: nowrap;
+}
+
+.intelligence-leverage-table-methods,
+.intelligence-leverage-table-interrupts {
+  margin: 0;
+  padding-left: 1rem;
+  font-size: 0.85rem;
+}
+
+.intelligence-leverage-table-methods li + li,
+.intelligence-leverage-table-interrupts li + li {
+  margin-top: 0.35rem;
+}
+
+.intelligence-filter-group-link {
+  margin: 0.35rem 0 0;
+  font-size: 0.78rem;
+}
+
+.intelligence-filter-group-link a {
+  text-decoration: underline;
+}
+
+.intelligence-mix-leverage {
+  margin-top: 1.25rem;
+}
+
+.intelligence-mix-leverage .intelligence-breed-detail-card {
+  margin: 0;
+}
+
 .intelligence-breed-detail-panel .intelligence-breed-detail-overlay-columns {
   margin: 0;
 }

@@ -16,6 +16,7 @@ import IntelligenceBar, {
   getScoreRangeCellStyle,
   getSegmentCellStyleForDimension,
 } from './IntelligenceBar';
+import TrainingLeverageCard from './TrainingLeverageCard';
 
 const FRACTION_OPTIONS = [
   { value: 0.5, label: '½ (50%)' },
@@ -332,6 +333,14 @@ export default function MixIntelligenceExplorer() {
                 })}
               </tbody>
             </table>
+          </div>
+
+          <div className="intelligence-mix-leverage">
+            <TrainingLeverageCard
+              variant="mix"
+              segments={intelligenceResult.instinctSegments}
+              title="Training leverage (probabilistic)"
+            />
           </div>
         </div>
       )}

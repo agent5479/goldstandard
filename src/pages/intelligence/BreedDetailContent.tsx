@@ -33,6 +33,7 @@ import {
 } from '../../data/breedSensitivityResolvers';
 import { SIZE_CLASS_META } from '../../data/breedSizeGrades';
 import { getTraitIntensityStyle } from '../../utils/scoreSpectrum';
+import TrainingLeverageCard from './TrainingLeverageCard';
 
 export function resolveBreedForDetail(breedName: string, breedKeys: string[] = []) {
   return (
@@ -426,6 +427,14 @@ function BreedDetailCardGrid({
         <DetailCard title="🎯 Instinct composition">
           <p className="intelligence-breed-detail-card-empty">No instinct breakdown available.</p>
         </DetailCard>
+      )}
+
+      {intelligenceProfile && (
+        <TrainingLeverageCard
+          variant="purebred"
+          segments={intelligenceProfile.instinctSegments}
+          breedName={breed.name}
+        />
       )}
 
       <StressCard
