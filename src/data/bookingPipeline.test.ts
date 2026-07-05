@@ -21,6 +21,10 @@ import {
   isDateUsedByOtherPackageSessions,
   formatSlotTimeFromIso,
 } from './bookingConfig';
+import {
+  BOOKING_PACKAGES,
+  getPackageSessionProgressNote,
+} from '@shared/bookingPackages';
 
 describe('booking pipeline — form extended JSON', () => {
   it('builds extended JSON with sex, desexed, tags, notes, and skill grades', () => {
@@ -232,5 +236,22 @@ describe('booking pipeline — package session dates', () => {
 
   it('formats slot time from ISO', () => {
     expect(formatSlotTimeFromIso('2026-07-06T10:00:00')).toMatch(/10:00/);
+  });
+});
+
+describe('booking pipeline — 3-day programme copy', () => {
+  it('avoids week-biased scheduling language', () => {
+    const pkg = BOOKING_PACKAGES.three_day;
+    expect(pkg.headline.toLowerCase()).not.toContain('week');
+    expect(pkg.schedulingNote).toBe('Consecutive days where possible.');
+    expect(BOOKING_PACKAGES.town_ready_five.schedulingNote).toBe('Consecutive days where possible.');
+  });
+
+  it('explains why three sessions and session-by-session progress', () => {
+    expect(BOOKING_PACKAGES.three_day.whyNote).toMatch(/reinforcement/i);
+    expect(BOOKING_PACKAGES.three_day.sessionProgress).toHaveLength(3);
+    expect(getPackageSessionProgressNote('three_day', 0)).toMatch(/Assess/i);
+    expect(getPackageSessionProgressNote('three_day', 2)).toMatch(/Consolidate/i);
+    expect(getPackageSessionProgressNote('three_day', 99)).toBeUndefined();
   });
 });

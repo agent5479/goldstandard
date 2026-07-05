@@ -93,6 +93,8 @@ Post payload must include `booking_type: standard_beach` and `location`.
 ### Cases
 
 - [ ] Session 1 Mon, session 2 Wed, session 3 Fri (non-consecutive days allowed)
+- [ ] Sessions spread across multiple weeks (e.g. week 1, week 2, week 4) — all valid
+- [ ] Step 1 shows why three sessions and how sessions build; step 3 shows current session focus
 - [ ] Same day twice → blocked in UI with clear message
 - [ ] **Change** on session 1 after session 2 scheduled → session 2 cleared; can re-pick
 - [ ] Mixed beach ($60) + home ($90) sessions in one package

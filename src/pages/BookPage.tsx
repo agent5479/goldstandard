@@ -34,6 +34,12 @@ export default function BookPage() {
                 </li>
                 <li>
                   <strong>{BOOKING_PACKAGES.three_day.label}</strong> — {BOOKING_PACKAGES.three_day.headline}
+                  {BOOKING_PACKAGES.three_day.whyNote ? (
+                    <>
+                      <br />
+                      <span className="booking-hero-fact-detail">{BOOKING_PACKAGES.three_day.whyNote}</span>
+                    </>
+                  ) : null}
                 </li>
                 <li>
                   <strong>{BOOKING_PACKAGES.town_ready_five.label}</strong> — {BOOKING_PACKAGES.town_ready_five.headline}

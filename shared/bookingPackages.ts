@@ -10,6 +10,10 @@ export type BookingPackageConfig = {
   label: string;
   sessionCount: number;
   headline: string;
+  /** Why this package exists — commitment, reinforcement, faster progress. */
+  whyNote?: string;
+  /** One line per session describing how the programme builds (length matches sessionCount). */
+  sessionProgress?: string[];
   schedulingNote: string;
   patternHints?: string[];
 };
@@ -26,21 +30,22 @@ export const BOOKING_PACKAGES: Record<BookingPackageId, BookingPackageConfig> = 
     id: 'three_day',
     label: '3-day programme',
     sessionCount: 3,
-    headline: 'Three sessions with Warwick — build momentum across the week.',
-    schedulingNote:
-      'Each session must be on a different day — pick any three dates that suit you. Consecutive days work well when your schedule allows; split days are fine too.',
+    headline: 'Three sessions with Warwick — a commitment to secure the transformation.',
+    whyNote:
+      'One session can shift things; three give consistent practice and reinforcement between visits so you progress much faster. You are committing to the work, not cramming everything into one week.',
+    sessionProgress: [
+      'Assess your dog, set priorities, and leave with a clear plan to practice at home.',
+      'Review what is working, tighten skills, and add real-world exposure.',
+      'Consolidate gains and lock in routines that stick after Warwick leaves.',
+    ],
+    schedulingNote: 'Consecutive days where possible.',
   },
   town_ready_five: {
     id: 'town_ready_five',
     label: 'Get ready for town',
     sessionCount: 5,
     headline: 'Five sessions focused on town readiness — markets, pavement, traffic, and real distractions.',
-    schedulingNote:
-      'Each session must be on a different day — pick any five dates that suit you. Consecutive days are ideal when you can; many clients use a 2 + 1 + 2 rhythm across the week.',
-    patternHints: [
-      'Ideal: 3 consecutive days, then 2 consecutive days',
-      'Common: 2 consecutive + 1 + 2 consecutive',
-    ],
+    schedulingNote: 'Consecutive days where possible.',
   },
 };
 
@@ -62,6 +67,14 @@ export function getPackageConfig(packageId: BookingPackageId): BookingPackageCon
 
 export function getPackageSessionCount(packageId: BookingPackageId): number {
   return BOOKING_PACKAGES[packageId].sessionCount;
+}
+
+export function getPackageSessionProgressNote(
+  packageId: BookingPackageId,
+  sessionIndex: number
+): string | undefined {
+  const config = BOOKING_PACKAGES[packageId];
+  return config.sessionProgress?.[sessionIndex];
 }
 
 export function isBookingPackageId(value: string): value is BookingPackageId {

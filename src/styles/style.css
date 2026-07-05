@@ -1995,6 +1995,14 @@ body.page-guide {
   color: var(--forest);
 }
 
+.booking-hero-fact-detail {
+  display: inline-block;
+  margin-top: 0.2rem;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: var(--light-text);
+}
+
 .book-page-main {
   max-width: var(--content-width);
   margin: 0 auto;
@@ -2560,6 +2568,46 @@ body.page-guide {
 .booking-package-sessions {
   list-style: none;
   padding-left: 0;
+}
+
+.booking-package-why {
+  font-style: italic;
+}
+
+.booking-service-help {
+  margin: 0.85rem 0 0;
+}
+
+.booking-package-progress {
+  margin: 1rem 0 0;
+  padding: 0.85rem 1rem;
+  border-left: 3px solid #2d6a45;
+  background: rgba(45, 106, 69, 0.06);
+  border-radius: 0 6px 6px 0;
+}
+
+.booking-package-progress-title {
+  margin: 0 0 0.5rem;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--forest);
+}
+
+.booking-package-progress-list {
+  margin: 0;
+  padding-left: 1.15rem;
+  font-size: 0.9rem;
+  color: var(--light-text);
+}
+
+.booking-package-progress-list li + li {
+  margin-top: 0.35rem;
+}
+
+.booking-package-progress-current {
+  padding: 0.65rem 0.85rem;
+  background: rgba(45, 106, 69, 0.08);
+  border-radius: 6px;
 }
 
 .booking-inline-link {

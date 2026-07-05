@@ -61,6 +61,7 @@ import {
   STANDARD_BOOKING_PACKAGE_LIST,
   getPackageConfig,
   getPackageSessionCount,
+  getPackageSessionProgressNote,
   type BookingPackageId,
   type PackageSessionDraft,
 } from '@shared/bookingPackages';
@@ -211,6 +212,9 @@ export default function BookForm() {
   const isPackageBooking = selectedPackageId !== 'single' && selectedServiceType === 'standard_beach';
   const packageSessionCount = isPackageBooking ? getPackageSessionCount(selectedPackageId) : 1;
   const activePackageConfig = isPackageBooking ? getPackageConfig(selectedPackageId) : null;
+  const activeSessionProgressNote = isPackageBooking
+    ? getPackageSessionProgressNote(selectedPackageId, activePackageSessionIndex)
+    : undefined;
 
   const resetReturningState = () => {
     setReturningContact('');
@@ -1091,17 +1095,24 @@ export default function BookForm() {
         </header>
         <div className="booking-step-body">
           <div className="booking-service-picker" role="radiogroup" aria-label="Booking type">
-            {STANDARD_BOOKING_PACKAGE_LIST.map((pkg) => (
+            {STANDARD_BOOKING_PACKAGE_LIST.map((pkg) => {
+              const isSelected = selectedPackageId === pkg.id && selectedServiceType === 'standard_beach';
+              const showWhyNote = pkg.whyNote && (pkg.id === 'three_day' || isSelected);
+
+              return (
               <button
                 key={pkg.id}
                 type="button"
-                className={`booking-service-btn${selectedPackageId === pkg.id && selectedServiceType === 'standard_beach' ? ' is-selected' : ''}`}
+                className={`booking-service-btn${isSelected ? ' is-selected' : ''}`}
                 disabled={endpointMissing || submitting}
-                aria-pressed={selectedPackageId === pkg.id && selectedServiceType === 'standard_beach'}
+                aria-pressed={isSelected}
                 onClick={() => handlePackageSelect(pkg.id)}
               >
                 <strong>{pkg.label}</strong>
                 <span className="booking-region-note">{pkg.headline}</span>
+                {showWhyNote ? (
+                  <span className="booking-region-note booking-package-why">{pkg.whyNote}</span>
+                ) : null}
                 {pkg.schedulingNote ? (
                   <span className="booking-region-note">{pkg.schedulingNote}</span>
                 ) : null}
@@ -1109,7 +1120,8 @@ export default function BookForm() {
                   <span key={hint} className="booking-region-note">{hint}</span>
                 ))}
               </button>
-            ))}
+              );
+            })}
             <button
               type="button"
               className={`booking-service-btn${selectedServiceType === 'elite_coaching' ? ' is-selected' : ''}`}
@@ -1121,6 +1133,23 @@ export default function BookForm() {
               <span className="booking-region-note">{BOOKING_SERVICE_TYPES.elite_coaching.headline}</span>
             </button>
           </div>
+          <p className="form-hint booking-service-help">
+            Not sure what would be best for your needs right now? Call or text Warwick on{' '}
+            <a href="tel:+64278142222">027 814 2222</a>
+            {' '}— or <Link to="/contact">send an enquiry</Link>.
+          </p>
+          {isPackageBooking && activePackageConfig?.sessionProgress?.length ? (
+            <div className="booking-package-progress">
+              <p className="booking-package-progress-title">How the {activePackageConfig.sessionCount} sessions build</p>
+              <ol className="booking-package-progress-list">
+                {activePackageConfig.sessionProgress.map((note, index) => (
+                  <li key={index}>
+                    <strong>Session {index + 1}</strong> — {note}
+                  </li>
+                ))}
+              </ol>
+            </div>
+          ) : null}
           <p className="form-hint">{PAYMENT_AT_MEETING_NOTE}</p>
         </div>
       </section>
@@ -1239,6 +1268,14 @@ export default function BookForm() {
               Scheduling session <strong>{activePackageSessionIndex + 1}</strong> of{' '}
               <strong>{packageSessionCount}</strong> — {activePackageConfig.label}
             </p>
+            {activePackageSessionIndex === 0 && activePackageConfig.whyNote ? (
+              <p className="form-hint booking-package-why">{activePackageConfig.whyNote}</p>
+            ) : null}
+            {activeSessionProgressNote ? (
+              <p className="form-hint booking-package-progress-current">
+                <strong>Session {activePackageSessionIndex + 1} focus:</strong> {activeSessionProgressNote}
+              </p>
+            ) : null}
             <p className="form-hint">{activePackageConfig.schedulingNote}</p>
             {activePackageSessionIndex > 0 ? (
               <p className="form-hint">
