@@ -4,6 +4,7 @@ import Seo from '../components/Seo';
 import SiteHeader from '../components/SiteHeader';
 import SiteFooter from '../components/SiteFooter';
 import BreedIntelligenceTable from './intelligence/BreedIntelligenceTable';
+import { BreedDetailTipProvider } from './intelligence/BreedDetailTipRail';
 import InstinctTrainingLeverageTable from './intelligence/InstinctTrainingLeverageTable';
 import MixIntelligenceExplorer from './intelligence/MixIntelligenceExplorer';
 import SectionIcon from '../components/SectionIcon';
@@ -37,6 +38,7 @@ export default function IntelligencePage() {
         </div>
       </section>
 
+      <BreedDetailTipProvider>
       <section className="intelligence-section" id="breed-rankings">
         <div className="section-inner">
           <p className="section-label">Purebred rankings</p>
@@ -58,13 +60,14 @@ export default function IntelligencePage() {
           <p className="section-label">Training tools</p>
           <h2>Instinct training leverage</h2>
           <p>
-            General methods indexed by instinct type — match to the Inst column bar, then open a breed row for
-            weighted recommendations. Functional substitution: offer a legitimate job through the drive the dog
-            already carries before denying access or correcting fixation.
+            Open a breed in the table above to see methods matched to its Inst column bar — weighted by drive
+            share. Functional substitution: offer a legitimate job through the drive the dog already carries
+            before denying access or correcting fixation.
           </p>
           <InstinctTrainingLeverageTable />
         </div>
       </section>
+      </BreedDetailTipProvider>
 
       <section className="intelligence-section" id="mix-explorer">
         <div className="section-inner">

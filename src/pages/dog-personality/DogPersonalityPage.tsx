@@ -191,18 +191,18 @@ export default function DogPersonalityPage() {
         description="A playful branching quiz — discover your dog personality archetype, then narrow to your spirit breed. Free fun tool from Gold Standard Dog Training, Golden Bay & Nelson Bays, NZ."
         path="/dog-personality"
         bodyClass="page-dog-personality"
-        iconSet="site"
+        iconSet="personality"
       />
       <SiteHeader />
 
       <section className="page-hero">
         <div className="page-hero-inner">
           <p className="section-label label-with-icon">
-            <SectionIcon set="site" size="sm" />
+            <SectionIcon set="personality" size="sm" />
             Personality quiz
           </p>
           <div className="page-title-row">
-            <SectionIcon set="site" size="lg" className="page-title-icon" />
+            <SectionIcon set="personality" size="lg" className="page-title-icon" />
             <h1>What kind of dog are you?</h1>
           </div>
           <p>

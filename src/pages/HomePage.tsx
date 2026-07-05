@@ -162,7 +162,7 @@ export default function HomePage() {
               className="resource-card"
               onClick={() => setProblemFinderOpen(true)}
             >
-              <SectionIcon set="site" size="card" className="resource-card-icon" />
+              <SectionIcon set="problemfinder" size="card" className="resource-card-icon" alt="" />
               <strong className="resource-card-title">Problem Finder</strong>
               <span className="resource-card-desc">
                 A few quick questions to clarify your main training goal — then links to the right guide sections and next steps.
@@ -170,7 +170,7 @@ export default function HomePage() {
               <span className="resource-card-cta">Find your focus →</span>
             </button>
             <Link to="/dog-personality" className="resource-card">
-              <SectionIcon set="site" size="card" className="resource-card-icon" />
+              <SectionIcon set="personality" size="card" className="resource-card-icon" alt="" />
               <strong className="resource-card-title">What Kind of Dog Are You?</strong>
               <span className="resource-card-desc">
                 A playful branching quiz — discover your temperament archetype and which breeds share your vibe.
@@ -178,7 +178,7 @@ export default function HomePage() {
               <span className="resource-card-cta">Take the quiz →</span>
             </Link>
             <Link to="/breed-finder" className="resource-card">
-              <SectionIcon set="breedanalysis" size="card" className="resource-card-icon" />
+              <SectionIcon set="breedfinder" size="card" className="resource-card-icon" alt="" />
               <strong className="resource-card-title">What Dog Should You Get?</strong>
               <span className="resource-card-desc">
                 Help choosing the right breed — match your household, lifestyle, and expectations for maximum

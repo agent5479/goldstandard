@@ -4600,32 +4600,98 @@ body.page-intelligence {
   margin-top: 1rem;
 }
 
-.intelligence-leverage-table {
-  min-width: 720px;
+.intelligence-leverage-reference-intro {
+  margin: 0 0 1.25rem;
+  max-width: 52rem;
+  line-height: 1.55;
 }
 
-.intelligence-leverage-table-note {
-  font-size: 0.85rem;
+.intelligence-leverage-reference-empty {
+  margin: 0;
+  max-width: 52rem;
+  padding: 1rem 1.15rem;
+  background: var(--surface-soft);
+  border: 1px dashed var(--border);
+  border-radius: 8px;
+  font-size: 0.88rem;
+  line-height: 1.55;
   color: var(--light-text);
 }
 
-.intelligence-leverage-type-cell {
-  display: inline-flex;
+.intelligence-leverage-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+  .intelligence-leverage-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.intelligence-leverage-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+}
+
+.intelligence-section--alt .intelligence-leverage-card {
+  background: var(--surface);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.intelligence-leverage-card-header {
+  display: flex;
   align-items: center;
-  gap: 0.35rem;
-  white-space: nowrap;
-}
-
-.intelligence-leverage-table-methods,
-.intelligence-leverage-table-interrupts {
+  gap: 0.45rem;
   margin: 0;
-  padding-left: 1rem;
-  font-size: 0.85rem;
 }
 
-.intelligence-leverage-table-methods li + li,
-.intelligence-leverage-table-interrupts li + li {
+.intelligence-leverage-card-title {
+  margin: 0;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--forest);
+  line-height: 1.25;
+}
+
+.intelligence-leverage-card-section {
   margin-top: 0.35rem;
+}
+
+.intelligence-leverage-card-section-title {
+  margin: 0 0 0.35rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--light-text);
+}
+
+.intelligence-leverage-interrupts {
+  margin: 0;
+  padding-left: 1.1rem;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--text);
+}
+
+.intelligence-leverage-interrupts li + li {
+  margin-top: 0.25rem;
+}
+
+.intelligence-leverage-card-links {
+  margin-top: auto;
+  padding-top: 0.65rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.75rem;
+  line-height: 1.5;
 }
 
 .intelligence-filter-group-link {

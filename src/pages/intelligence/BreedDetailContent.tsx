@@ -42,7 +42,7 @@ export function resolveBreedForDetail(breedName: string, breedKeys: string[] = [
   );
 }
 
-function resolveIntelligenceProfile(breedName: string, breedKeys: string[] = []) {
+export function resolveIntelligenceProfile(breedName: string, breedKeys: string[] = []) {
   return (
     findIntelligenceByBreedName(breedName) ??
     breedKeys.map((key) => findIntelligenceByBreedName(key)).find(Boolean)

@@ -14,7 +14,7 @@ import IntelligenceTableFilters, {
 } from './IntelligenceTableFilters';
 import BreedIntelligenceTableNarrow from './BreedIntelligenceTableNarrow';
 import IntelligenceScoreCell from './IntelligenceScoreCell';
-import { BreedDetailPanel, BreedDetailTipProvider, useBreedDetailTip } from './BreedDetailTipRail';
+import { BreedDetailPanel, useBreedDetailTip } from './BreedDetailTipRail';
 import {
   IntelligenceColumnTipProvider,
   IntelligenceColumnTipOverlay,
@@ -221,7 +221,7 @@ export default function BreedIntelligenceTable() {
   const [pinned, setPinned] = useState<Set<string>>(() => new Set());
   const [activeFilters, setActiveFilters] = useState<Set<TableFilterKey>>(() => new Set());
   const [activeDimension, setActiveDimension] = useState<IntelligenceDimension>('iq');
-  const [detailBreed, setDetailBreed] = useState<{ name: string; breedKeys: string[] } | null>(null);
+  const breedTip = useBreedDetailTip();
 
   const toggleSort = (key: IntelligenceDimension) => {
     if (sortKey === key && sortDir === -1) {
@@ -281,9 +281,15 @@ export default function BreedIntelligenceTable() {
       togglePin={togglePin}
       pinnedList={pinnedList}
       unpinnedList={unpinnedList}
-      detailBreed={detailBreed}
-      onOpenDetail={(name, breedKeys) => setDetailBreed({ name, breedKeys })}
-      onCloseDetail={() => setDetailBreed(null)}
+      detailBreed={
+        breedTip?.detailBreed
+          ? { name: breedTip.detailBreed.breedName, breedKeys: breedTip.detailBreed.breedKeys }
+          : null
+      }
+      onOpenDetail={(name, breedKeys) =>
+        breedTip?.toggleDetailBreed({ breedName: name, breedKeys })
+      }
+      onCloseDetail={() => breedTip?.clearDetailBreed()}
     />
   ) : (
     <DesktopBreedTable
@@ -299,7 +305,6 @@ export default function BreedIntelligenceTable() {
 
   return (
     <IntelligenceColumnTipProvider>
-      <BreedDetailTipProvider>
       <div className="intelligence-table-wrap">
         <h2 className="visually-hidden">
           {isNarrow
@@ -370,7 +375,6 @@ export default function BreedIntelligenceTable() {
           are estimated from category tendencies and kinship to ranked breeds.
         </p>
       </div>
-      </BreedDetailTipProvider>
     </IntelligenceColumnTipProvider>
   );
 }

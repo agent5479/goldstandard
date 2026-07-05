@@ -76,18 +76,18 @@ export default function BreedFinderPage() {
         description="Help choosing the right breed — match your household, lifestyle, and expectations for maximum compatibility, with ranked results and honest caveats. Gold Standard Dog Training, Golden Bay & Nelson Bays, NZ."
         path="/breed-finder"
         bodyClass="page-breed-finder"
-        iconSet="breedanalysis"
+        iconSet="breedfinder"
       />
       <SiteHeader />
 
       <section className="page-hero">
         <div className="page-hero-inner">
           <p className="section-label label-with-icon">
-            <SectionIcon set="breedanalysis" size="sm" />
+            <SectionIcon set="breedfinder" size="sm" />
             Choose your breed
           </p>
           <div className="page-title-row">
-            <SectionIcon set="breedanalysis" size="lg" className="page-title-icon" />
+            <SectionIcon set="breedfinder" size="lg" className="page-title-icon" />
             <h1>What kind of dog should you get?</h1>
           </div>
           <p>

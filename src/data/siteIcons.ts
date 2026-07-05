@@ -1,6 +1,13 @@
 import { SITE_URL } from './siteConfig';
 
-export type IconSetId = 'site' | 'exam' | 'guide' | 'breedanalysis';
+export type IconSetId =
+  | 'site'
+  | 'exam'
+  | 'guide'
+  | 'breedanalysis'
+  | 'problemfinder'
+  | 'breedfinder'
+  | 'personality';
 
 export const ICONS_DIR = 'images/icons';
 
@@ -41,6 +48,27 @@ export const ICON_SETS: Record<IconSetId, IconSet> = {
     ogImageAlt: 'Gold Standard Dog Training breed analysis reference',
     ogImageWidth: 937,
     ogImageHeight: 937,
+  },
+  problemfinder: {
+    prefix: 'wrong',
+    ogImage: `${SITE_URL}/${ICONS_DIR}/wrong512.jpg`,
+    ogImageAlt: 'Gold Standard Dog Training Problem Finder tool',
+    ogImageWidth: 512,
+    ogImageHeight: 512,
+  },
+  breedfinder: {
+    prefix: 'right',
+    ogImage: `${SITE_URL}/${ICONS_DIR}/right512.jpg`,
+    ogImageAlt: 'Gold Standard Dog Training — what dog should you get?',
+    ogImageWidth: 512,
+    ogImageHeight: 512,
+  },
+  personality: {
+    prefix: 'human',
+    ogImage: `${SITE_URL}/${ICONS_DIR}/human512.jpg`,
+    ogImageAlt: 'Gold Standard Dog Training — what kind of dog are you?',
+    ogImageWidth: 512,
+    ogImageHeight: 512,
   },
 };
 

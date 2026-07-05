@@ -88,7 +88,7 @@ export default function TrainingLeverageCard({
         ))}
 
         <p className="intelligence-leverage-footer">
-          <Link to="/intelligence#instinct-training-leverage">Full instinct leverage reference</Link>
+          <Link to="/intelligence#instinct-training-leverage">Instinct training leverage (below)</Link>
           {' · '}
           <Link to={guideHref('genetic-leverage')}>Genetic leverage (guide)</Link>
         </p>
