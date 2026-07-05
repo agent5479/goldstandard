@@ -27,8 +27,10 @@ const CONTENTS_LINKS: ContentsLink[] = [
   { moduleId: 'leadership', group: '👤 Leadership', anchor: 'dog-ready-stance', label: "🐕 Dog's ready stance" },
   { moduleId: 'leadership', group: '👤 Leadership', anchor: 'front-door', label: '🚪 Front door' },
   { moduleId: 'leadership', group: '👤 Leadership', anchor: 'home-return', label: '🏠 Coming home' },
+  { moduleId: 'leadership', group: '👤 Leadership', anchor: 'dog-tantra', label: '🌀 Dog-Tantra (shared flow)' },
 
   { moduleId: 'understanding', group: '🧠 Understanding', anchor: 'reading-dog', label: '📖 Reading your dog' },
+  { moduleId: 'understanding', group: '🧠 Understanding', anchor: 'dog-tantra-reading', label: '🌀 Somatic reading' },
   { moduleId: 'understanding', group: '🧠 Understanding', anchor: 'three-second-pause', label: '⏸️ Three-second pause' },
   { moduleId: 'understanding', group: '🧠 Understanding', anchor: 'context-of-contact', label: '🛋️ Context of contact' },
   { moduleId: 'understanding', group: '🧠 Understanding', anchor: 'breed-temperament', label: '🐾 Breed variance' },

@@ -41,11 +41,15 @@ const LEADERSHIP_ANCHORS = [
   'dog-ready-stance',
   'front-door',
   'home-return',
+  'dog-tantra',
+  'dog-tantra-lower-core',
+  'dog-tantra-occiput',
 ] as const;
 
 const UNDERSTANDING_ANCHORS = [
   'guide-theme-understanding',
   'reading-dog',
+  'dog-tantra-reading',
   'three-second-pause',
   'context-of-contact',
   'breed-temperament',

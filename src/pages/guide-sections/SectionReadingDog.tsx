@@ -11,6 +11,23 @@ export default function SectionReadingDog() {
 
       <p>Your job is to read where the dog's psychology actually is — not where you wish it were. Attention span, prior trauma, age, <a href="#breed-temperament">breed temperament</a>, and how much structure they have had all change what they can absorb in a given moment. Push through when they are still capable. Reset or shorten the session when they are saturated. Confusing overload with defiance is one of the most common owner mistakes — see <a href="#symptom-glossary">Symptom glossary</a> (forgetting commands, panting, mouthing).</p>
 
+      <h3 id="dog-tantra-reading">🌀 Somatic reading — feel before you analyse</h3>
+
+      <p>
+        Reading your dog is not only visual textbook analysis. When your{' '}
+        <a href="#dog-tantra">Dog-Tantra</a> axis is locked — heavy gut, open occiput, calm baseline — you
+        <strong> feel</strong> the dog&apos;s tension shift before the bark or lunge lands. That is somatic field
+        matching: your nervous system registers their arousal change because you are not stuck in your analytical
+        mind nagging from the throat.
+      </p>
+
+      <p>
+        Practice this on walks: peripheral awareness for the dog&apos;s{' '}
+        <a href="#dog-ready-stance">ready stance</a> loading, gut-heavy handler baseline, and the{' '}
+        <a href="#three-second-pause">three-second pause</a> when you sense the field spike — before you need the
+        butt push or jerk.
+      </p>
+
       <div className="callout">
         <strong>📅 Age changes the picture</strong>
         <p>Puppies forget quickly and recover quickly — their nervous systems are elastic, but their capacity is short. Adolescents test hard and show rank-related behaviours (mounting, barging, selective deafness) that can look personal but are often developmental — see <a href="#symptom-glossary">Symptom glossary</a>. Adults can learn fast with clarity, but may carry entrenched habits or trauma that slow trust. Read the individual, not the calendar — but never ignore the calendar entirely.</p>

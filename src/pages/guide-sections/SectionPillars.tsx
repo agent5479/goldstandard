@@ -29,7 +29,7 @@ export default function SectionPillars() {
               <td><strong>🧭 Anchor energy</strong></td>
               <td>
                 <span id="pack-leader-energy" />
-                Dogs don&apos;t lie. Their behaviour is real-time feedback on the leadership they feel — your posture, breath, tension, and follow-through. Your job is to be the calm anchor: steadfast, impassive, patient ownership that makes the boundary feel inevitable — see <a href="#owner-mindset">Owner mindset</a>, <a href="#new-baseline">new baseline</a>, <a href="#ready-stance">ready stance</a>, and <a href="#speaking-aloud">speak it aloud</a>.
+                Dogs don&apos;t lie. Their behaviour is real-time feedback on the leadership they feel — your posture, breath, tension, and follow-through. Your job is to be the calm anchor: steadfast, impassive, patient ownership that makes the boundary feel inevitable — see <a href="#dog-tantra">Dog-Tantra</a>, <a href="#owner-mindset">Owner mindset</a>, <a href="#new-baseline">new baseline</a>, <a href="#ready-stance">ready stance</a>, and <a href="#speaking-aloud">speak it aloud</a>.
               </td>
             </tr>
           </tbody>

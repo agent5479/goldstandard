@@ -12,7 +12,7 @@ export default function AboutPage() {
     <>
       <Seo
         title="About Warwick | Gold Standard Dog Training"
-        description="Meet Warwick Marshall — embodied, purist dog training in Golden Bay and the Tasman region. Philosophy, measured leash work, and what to expect from coaching sessions."
+        description="Meet Warwick Marshall — embodied Dog-Tantra coaching in Golden Bay and the Tasman region. Philosophy, measured leash work, and what to expect from sessions."
         path="/about"
       />
       <SiteHeader />
@@ -93,6 +93,59 @@ export default function AboutPage() {
               Warwick calls becoming the <strong>healthy master</strong>: measured control, clear communication,
               attuned reading of body language, and connection that earns trust rather than demanding performance.
             </p>
+
+            <h3>Dog-Tantra — the shared flow state</h3>
+
+            <p>
+              To achieve true embodiment, we work with what Warwick calls <strong>Dog-Tantra</strong>. Think of it
+              the way an elite rugby player or athlete experiences <strong>the Zone</strong> — not mystical, but a
+              shift in awareness away from the analytical, worrying human mind (throat and forehead, where nagging
+              lives) and into the gut and primitive brainstem. When you inhabit that deep, non-verbal pack-feeling at
+              your core, you become a somatic anchor. Dogs live on that instinctual frequency — they do not just obey
+              you; they <strong>sync</strong> with you.
+            </p>
+
+            <p>
+              Dog-Tantra is coached in person. Warwick guides you into what those subtle states feel like and
+              reflects them back so you trust your own perception — what to seek, what to reward, and when the
+              connection is real. That confirmation is what video alone cannot give.{' '}
+              <Link to={guideHref('dog-tantra')}>Read the full guide section</Link> or{' '}
+              <Link to="/book">book a session</Link>.
+            </p>
+
+            <table className="pillars-table" aria-label="Training paradigm comparison">
+              <thead>
+                <tr>
+                  <th scope="col">Paradigm</th>
+                  <th scope="col">In everyday language</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Mechanical / behavioural</strong> (Beckman-style)</td>
+                  <td>
+                    Rules, mechanics, and external structure — what to do with your hands, tools, and timing. Creates
+                    an obedient dog through clean repetition; the human remains a separate handler managing an asset.
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Energy dominance</strong> (Millan-style)</td>
+                  <td>
+                    Projecting calm-assertive authority outward to demand submission. Relies on personal willpower and
+                    top-down rank assertion to push the dog into a calmer state.
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Gold Standard / Dog-Tantra</strong></td>
+                  <td>
+                    Drop the separate handler entirely. Unlock deep, instinctual coordination — the same unthinking,
+                    collective flow elite players feel on the pitch. You do not manage the dog; you activate an
+                    internal pack-feeling so clear the dog syncs into your rhythm.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
             <p>
               Physical correction in this model is not pain for its own sake. It is a crisp interruption —
               pressure, then immediate release — inside the{' '}
@@ -118,7 +171,8 @@ export default function AboutPage() {
               <h3>🧭 Embodiment</h3>
               <p>
                 You are the signal source. Posture, breath, tension, and follow-through must congrue — see{' '}
-                <Link to={guideHref('pack-leader-energy')}>anchor energy</Link> and{' '}
+                <Link to={guideHref('dog-tantra')}>Dog-Tantra</Link>,{' '}
+                <Link to={guideHref('pack-leader-energy')}>anchor energy</Link>, and{' '}
                 <Link to={guideHref('ready-stance')}>ready stance</Link>.
               </p>
             </article>

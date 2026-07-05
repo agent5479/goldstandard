@@ -9,7 +9,14 @@ export default function SectionOwnerMindset() {
           True dog training is not about teaching a series of tricks. It is a profound shift in what you
           quietly tolerate, what you anxiously anticipate, and what you assume is normal. Dogs are master
           readers of human energy and micro-signals. They do not only respond to explicit commands — they
-          tune directly into your <strong>subconscious standards</strong>.
+          tune directly into your <strong>subconscious standards</strong>, broadcast somatically through breath,
+          tension, and where your awareness lives in your body.
+        </p>
+
+        <p>
+          <a href="#dog-tantra">Dog-Tantra</a> is the practised state where your gut-to-brainstem baseline is
+          the message — not words alone. When that axis is heavy and calm, the dog syncs; when anxiety floats
+          to your chest and throat, the dog fills the leadership gap before you finish a sentence.
         </p>
 
         <p>

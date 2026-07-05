@@ -6,6 +6,7 @@ import SectionExpectations from '../pages/guide-sections/SectionExpectations';
 import SectionSpeakingAloud from '../pages/guide-sections/SectionSpeakingAloud';
 import SectionReadyStance from '../pages/guide-sections/SectionReadyStance';
 import SectionFrontDoor from '../pages/guide-sections/SectionFrontDoor';
+import SectionDogTantra from '../pages/guide-sections/SectionDogTantra';
 import SectionReadingDog from '../pages/guide-sections/SectionReadingDog';
 import SectionRehabilitationPatterns from '../pages/guide-sections/SectionRehabilitationPatterns';
 import SectionSocialNeeds from '../pages/guide-sections/SectionSocialNeeds';
@@ -44,6 +45,7 @@ export const guideModuleSections: Record<GuideModuleId, ComponentType[]> = {
     SectionSpeakingAloud,
     SectionReadyStance,
     SectionFrontDoor,
+    SectionDogTantra,
   ],
   understanding: [GuideThemeUnderstanding, SectionReadingDog, SectionRehabilitationPatterns],
   social: [GuideThemeSocialNeeds, SectionSocialNeeds, SectionIntactLargeMales],

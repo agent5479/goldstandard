@@ -7,6 +7,17 @@ export default function SectionReadyStance() {
 
       <p>In martial arts, the ready stance is not tension — it is a pre-engaged body that can act the instant it needs to. The same principle applies here. A soft, slumped handler cannot reach the <a href="#timing">one-second window</a>. A handler with core engaged, knees soft, weight balanced, and attention forward can.</p>
 
+      <div className="callout pro-tip">
+        <strong>🌀 Dog-Tantra activation</strong>
+        <p>
+          Ready stance is not only martial-athletic posture — it is physical activation of the{' '}
+          <a href="#dog-tantra">Dog-Tantra</a> axis. Before you adopt stance, drop awareness out of throat and
+          forehead into the <a href="#dog-tantra-lower-core">weighted anchor (lower core)</a> and the{' '}
+          <a href="#dog-tantra-occiput">aware lookout (occiput)</a>. Heavy gut, open back-of-skull awareness —
+          then engage core and move.
+        </p>
+      </div>
+
       <p>Pre-engaged core means your centre is alive <em>before</em> anything happens — not bracing in fear, not locked in rigidity, but ready. That readiness is what lets you apply the <a href="#butt-push">butt push</a>, execute the <a href="#collar-snatch">collar grab</a>, or snap the leash down without telegraphing panic. The dog reads your body long before your hand arrives. A handler who expects compliance moves differently from one who hopes for the best.</p>
 
       <div className="callout pro-tip">
@@ -17,6 +28,8 @@ export default function SectionReadyStance() {
 
       <ul className="checklist">
         <li>Core engaged, shoulders settled, knees slightly soft — athletic, not anxious</li>
+        <li>Lower core heavy — weight settled behind the navel, not floating in chest or throat</li>
+        <li>Occiput open — peripheral vision active; avoid predator-forward stare at triggers</li>
         <li>Hands free and close to the dog when passing triggers; leash managed so a correction does not require fumbling</li>
         <li>Adopt the stance at the <a href="#front-door">door</a>, at every threshold, and whenever you sense reactivity building</li>
         <li>Watch for the <em>precursor</em>, not the full behaviour — the head snap, the body freeze, the first intake of breath before a bark (<a href="#symptom-glossary">Symptom glossary</a>, <a href="#timing">Timing</a>)</li>
