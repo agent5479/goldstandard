@@ -44,7 +44,8 @@ export const BOOKING_PACKAGES: Record<BookingPackageId, BookingPackageConfig> = 
     id: 'town_ready_five',
     label: 'Get ready for town',
     sessionCount: 5,
-    headline: 'Five sessions focused on town readiness — markets, pavement, traffic, and real distractions.',
+    headline:
+      'Five sessions, progressing beyond the foundational three sessions into a focus on town readiness — markets, pavement, traffic, and real distractions.',
     schedulingNote: 'Consecutive days where possible.',
   },
 };
