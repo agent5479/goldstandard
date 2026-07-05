@@ -22,10 +22,12 @@ import {
   HOME_VISIT_PRICING_NOTE,
   HOME_VISIT_SESSION_MINUTES,
   PAYMENT_AT_MEETING_NOTE,
-  addDaysToDateInput,
   ELITE_CLIENT_SLOT_HOURS,
   shortSlotLabel,
   BOOKING_CLIENT_SLOT_HOURS,
+  isDateUsedByOtherPackageSessions,
+  slotStartDateKey,
+  formatSlotTimeFromIso,
   type AvailabilityResult,
   type BookingSlot,
   type ReturningLookupResult,
@@ -204,6 +206,7 @@ export default function BookForm() {
   const [dogName, setDogName] = useState('');
   const [turnstileToken, setTurnstileToken] = useState('');
   const [turnstileResetSignal, setTurnstileResetSignal] = useState(0);
+  const [packageDateError, setPackageDateError] = useState('');
 
   const isPackageBooking = selectedPackageId !== 'single' && selectedServiceType === 'standard_beach';
   const packageSessionCount = isPackageBooking ? getPackageSessionCount(selectedPackageId) : 1;
@@ -269,6 +272,15 @@ export default function BookForm() {
       return;
     }
 
+    if (
+      isPackageBooking &&
+      isDateUsedByOtherPackageSessions(packageSessions, date, activePackageSessionIndex)
+    ) {
+      setSlots([]);
+      setLoadingSlots(false);
+      return;
+    }
+
     let cancelled = false;
 
     const loadSlots = async () => {
@@ -310,7 +322,7 @@ export default function BookForm() {
     return () => {
       cancelled = true;
     };
-  }, [date, selectedRegionId, selectedLocationId, selectedServiceType]);
+  }, [date, selectedRegionId, selectedLocationId, selectedServiceType, isPackageBooking, packageSessions, activePackageSessionIndex]);
 
   useEffect(() => {
     if (!selectedServiceType) return;
@@ -363,6 +375,7 @@ export default function BookForm() {
     setSelectedLocationId('');
     setClientAddress('');
     setIsHomeAddress(null);
+    setPackageDateError('');
     setStatus({ kind: 'idle' });
     scrollTo(regionRef);
   };
@@ -378,7 +391,7 @@ export default function BookForm() {
     setSelectedLocationId('');
     setClientAddress('');
     setIsHomeAddress(null);
-    setStatus({ kind: 'idle' });
+    setPackageDateError('');
     scrollTo(regionRef);
   };
 
@@ -393,18 +406,63 @@ export default function BookForm() {
     setSelectedRegionId(regionId);
     setSelectedSlot('');
     setSelectedLocationId('');
+    setPackageDateError('');
     setStatus({ kind: 'idle' });
     if (selectedServiceType && isRegionServiceBookableOnline(regionId, selectedServiceType)) {
       scrollTo(locationRef);
     }
   };
 
+  const handlePackageDateChange = (newDate: string) => {
+    if (
+      isPackageBooking &&
+      isDateUsedByOtherPackageSessions(packageSessions, newDate, activePackageSessionIndex)
+    ) {
+      setPackageDateError(
+        'That day is already booked for another session in this package. Pick a different day.'
+      );
+      setDate(newDate);
+      setSelectedSlot('');
+      return;
+    }
+    setPackageDateError('');
+    setDate(newDate);
+    setSelectedSlot('');
+  };
+
+  const handleEditPackageSession = (index: number) => {
+    const session = packageSessions[index];
+    if (!session) return;
+
+    setPackageSessions(packageSessions.slice(0, index));
+    setActivePackageSessionIndex(index);
+    setDate(session.date);
+    setSelectedLocationId(session.locationId);
+    setSelectedSlot('');
+    setStandardVenue(isStandardHomeVisitLocation(session.locationId) ? 'home' : 'beach');
+    setClientAddress(session.clientAddress || '');
+    setIsHomeAddress(session.isHomeAddress ?? null);
+    setPackageDateError('');
+    setStatus({ kind: 'idle' });
+    scrollTo(locationRef);
+  };
+
   const handleSlotSelect = (slotStart: string) => {
     if (isPackageBooking) {
       const location = getLocationById(selectedLocationId);
       if (!location) return;
+
+      const slotDate = slotStartDateKey(slotStart);
+      if (isDateUsedByOtherPackageSessions(packageSessions, slotDate, activePackageSessionIndex)) {
+        setStatus({
+          kind: 'error',
+          message: 'That day is already booked for another session. Pick a different day.',
+        });
+        return;
+      }
+
       const draft: PackageSessionDraft = {
-        date,
+        date: slotDate,
         slotStart,
         locationId: selectedLocationId,
         clientAddress: isStandardHomeVisitLocation(selectedLocationId) ? clientAddress.trim() : undefined,
@@ -413,16 +471,16 @@ export default function BookForm() {
       const nextSessions = [...packageSessions];
       nextSessions[activePackageSessionIndex] = draft;
       setPackageSessions(nextSessions);
+      setPackageDateError('');
 
       if (activePackageSessionIndex + 1 < packageSessionCount) {
         const nextIndex = activePackageSessionIndex + 1;
         setActivePackageSessionIndex(nextIndex);
-        setDate(addDaysToDateInput(date, 1));
         setSelectedSlot('');
         setSelectedLocationId('');
         setStandardVenue(null);
-        setClientAddress(nextSessions[0]?.clientAddress || '');
-        setIsHomeAddress(nextSessions[0]?.isHomeAddress ?? null);
+        setClientAddress('');
+        setIsHomeAddress(null);
         setStatus({ kind: 'idle' });
         scrollTo(locationRef);
         return;
@@ -595,6 +653,14 @@ export default function BookForm() {
     if (isPackageBooking) {
       if (packageSessions.length !== packageSessionCount) {
         setStatus({ kind: 'error', message: `Please schedule all ${packageSessionCount} sessions before confirming.` });
+        return;
+      }
+      const packageDates = packageSessions.map((session) => session.date);
+      if (new Set(packageDates).size !== packageDates.length) {
+        setStatus({
+          kind: 'error',
+          message: 'Each session in a package must be on a different day.',
+        });
         return;
       }
     } else {
@@ -1174,13 +1240,29 @@ export default function BookForm() {
               <strong>{packageSessionCount}</strong> — {activePackageConfig.label}
             </p>
             <p className="form-hint">{activePackageConfig.schedulingNote}</p>
+            {activePackageSessionIndex > 0 ? (
+              <p className="form-hint">
+                Pick a <strong>different day</strong> for session {activePackageSessionIndex + 1} — each session in
+                this package must be on its own date.
+              </p>
+            ) : null}
             {packageSessions.length > 0 ? (
-              <ul className="form-hint">
+              <ul className="form-hint booking-package-sessions">
                 {packageSessions.map((session, index) => {
                   const loc = getLocationById(session.locationId);
                   return (
                     <li key={`${session.slotStart}-${index}`}>
-                      Session {index + 1}: {formatDisplayDate(session.date)} · {loc?.name ?? 'Location'} · scheduled
+                      Session {index + 1}: {formatDisplayDate(session.date)} · {loc?.name ?? 'Location'} ·{' '}
+                      {formatSlotTimeFromIso(session.slotStart)}
+                      {' · '}
+                      <button
+                        type="button"
+                        className="booking-inline-link"
+                        disabled={submitting}
+                        onClick={() => handleEditPackageSession(index)}
+                      >
+                        Change
+                      </button>
                     </li>
                   );
                 })}
@@ -1199,11 +1281,13 @@ export default function BookForm() {
             max={maxBookingDate()}
             value={date}
             disabled={endpointMissing || submitting}
-            onChange={(event) => {
-              setDate(event.target.value);
-              setSelectedSlot('');
-            }}
+            onChange={(event) => handlePackageDateChange(event.target.value)}
           />
+          {packageDateError ? (
+            <p className="form-feedback error" role="alert">
+              {packageDateError}
+            </p>
+          ) : null}
         </div>
 
         <div className="booking-quick-dates" role="group" aria-label="Quick date options">
@@ -1213,7 +1297,7 @@ export default function BookForm() {
               type="button"
               className={`booking-quick-date${date === option.value ? ' is-selected' : ''}`}
               disabled={endpointMissing || submitting}
-              onClick={() => setDate(option.value)}
+              onClick={() => handlePackageDateChange(option.value)}
             >
               {option.label}
             </button>

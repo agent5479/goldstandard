@@ -166,3 +166,27 @@ export function addDaysToDateInput(dateStr: string, days: number): string {
   date.setDate(date.getDate() + days);
   return toLocalDateInput(date);
 }
+
+/** YYYY-MM-DD from an API slot_start value (local ISO). */
+export function slotStartDateKey(slotStart: string): string {
+  return slotStart.slice(0, 10);
+}
+
+/** True when another session in the package already uses this date. */
+export function isDateUsedByOtherPackageSessions(
+  sessions: ReadonlyArray<{ date: string }>,
+  date: string,
+  excludeIndex: number
+): boolean {
+  return sessions.some((session, index) => index !== excludeIndex && session.date === date);
+}
+
+/** Time label from slot_start ISO (e.g. "10:00 am"). */
+export function formatSlotTimeFromIso(slotStart: string): string {
+  const match = slotStart.match(/T(\d{2}):(\d{2})/);
+  if (!match) return slotStart;
+  const hours = Number(match[1]);
+  const minutes = Number(match[2]);
+  const stamp = new Date(2000, 0, 1, hours, minutes);
+  return stamp.toLocaleTimeString('en-NZ', { hour: 'numeric', minute: '2-digit', hour12: true });
+}

@@ -2347,6 +2347,31 @@ body.page-guide {
   color: #2d6a45;
 }
 
+.booking-package-sessions {
+  list-style: none;
+  padding-left: 0;
+}
+
+.booking-inline-link {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: #1a5c34;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.booking-inline-link:hover:not(:disabled) {
+  color: #0d3d22;
+}
+
+.booking-inline-link:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .booking-step-body {
   padding: 1rem 1.15rem 1.15rem;
 }

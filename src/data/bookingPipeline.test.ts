@@ -16,6 +16,11 @@ import {
   NELSON_STANDARD_ONLINE_BOOKING,
   NELSON_ELITE_ONLINE_BOOKING,
 } from '@shared/bookingRegions';
+import {
+  slotStartDateKey,
+  isDateUsedByOtherPackageSessions,
+  formatSlotTimeFromIso,
+} from './bookingConfig';
 
 describe('booking pipeline — form extended JSON', () => {
   it('builds extended JSON with sex, desexed, tags, notes, and skill grades', () => {
@@ -202,5 +207,30 @@ describe('booking pipeline — form extended JSON', () => {
     expect(isRegionServiceBookableOnline('golden-bay', 'elite_coaching')).toBe(true);
     expect(isRegionServiceBookableOnline('nelson-bays', 'standard_beach')).toBe(false);
     expect(isRegionServiceBookableOnline('nelson-bays', 'elite_coaching')).toBe(false);
+  });
+});
+
+describe('booking pipeline — package session dates', () => {
+  const sessions = [
+    { date: '2026-07-06', slotStart: '2026-07-06T10:00:00', locationId: 'pohara-beach' },
+    { date: '2026-07-08', slotStart: '2026-07-08T14:00:00', locationId: 'rototai-reserve' },
+  ];
+
+  it('extracts YYYY-MM-DD from slot_start', () => {
+    expect(slotStartDateKey('2026-07-06T10:00:00')).toBe('2026-07-06');
+  });
+
+  it('rejects duplicate dates used by another session', () => {
+    expect(isDateUsedByOtherPackageSessions(sessions, '2026-07-06', 1)).toBe(true);
+    expect(isDateUsedByOtherPackageSessions(sessions, '2026-07-08', 0)).toBe(true);
+  });
+
+  it('allows the same date when editing the session at that index', () => {
+    expect(isDateUsedByOtherPackageSessions(sessions, '2026-07-06', 0)).toBe(false);
+    expect(isDateUsedByOtherPackageSessions(sessions, '2026-07-10', 1)).toBe(false);
+  });
+
+  it('formats slot time from ISO', () => {
+    expect(formatSlotTimeFromIso('2026-07-06T10:00:00')).toMatch(/10:00/);
   });
 });

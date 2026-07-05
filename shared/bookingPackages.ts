@@ -28,7 +28,7 @@ export const BOOKING_PACKAGES: Record<BookingPackageId, BookingPackageConfig> = 
     sessionCount: 3,
     headline: 'Three sessions with Warwick — build momentum across the week.',
     schedulingNote:
-      'Consecutive days work best when your schedule allows. If weather or full-time work makes that tricky, split days are fine — book the three dates that suit you.',
+      'Each session must be on a different day — pick any three dates that suit you. Consecutive days work well when your schedule allows; split days are fine too.',
   },
   town_ready_five: {
     id: 'town_ready_five',
@@ -36,7 +36,7 @@ export const BOOKING_PACKAGES: Record<BookingPackageId, BookingPackageConfig> = 
     sessionCount: 5,
     headline: 'Five sessions focused on town readiness — markets, pavement, traffic, and real distractions.',
     schedulingNote:
-      'Ideally three days in a row, then two more. Many clients book two consecutive days, a break, one session, then two consecutive — that rhythm works well too.',
+      'Each session must be on a different day — pick any five dates that suit you. Consecutive days are ideal when you can; many clients use a 2 + 1 + 2 rhythm across the week.',
     patternHints: [
       'Ideal: 3 consecutive days, then 2 consecutive days',
       'Common: 2 consecutive + 1 + 2 consecutive',

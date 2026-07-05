@@ -8,7 +8,7 @@ Automated round-trip tests: run `npm run test:booking` (public site) and `npm ru
 
 ## Pre-flight
 
-- [ ] Apps Script **v26** deployed; `VITE_FORM_ENDPOINT` / `VITE_BOOKING_API_URL` point to the live `/exec` URL
+- [ ] Apps Script **v27** deployed; `VITE_FORM_ENDPOINT` / `VITE_BOOKING_API_URL` point to the live `/exec` URL
 - [ ] Google Sheet **Submissions** tab has headers A–Q (see [`README.md`](../README.md))
 - [ ] Column **P** header: `Extended Details`
 - [ ] Column **Q** header: `Region`
@@ -92,6 +92,9 @@ Post payload must include `booking_type: standard_beach` and `location`.
 
 ### Cases
 
+- [ ] Session 1 Mon, session 2 Wed, session 3 Fri (non-consecutive days allowed)
+- [ ] Same day twice → blocked in UI with clear message
+- [ ] **Change** on session 1 after session 2 scheduled → session 2 cleared; can re-pick
 - [ ] Mixed beach ($60) + home ($90) sessions in one package
 - [ ] Partial failure rolls back all sessions (no orphan calendar events)
 - [ ] Nelson Bays: package options **not** shown online (enquiry only)

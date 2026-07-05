@@ -22,7 +22,7 @@
  *   { action: "book", region, slot_start, location, ... }
  *   { action: "book_package", package_id, sessions_json, region, ... }
  *
- * Script version: 2026-07-05-v26 (region pricing, home visits, multi-day packages)
+ * Script version: 2026-07-05-v27 (package scheduling — distinct days per session)
  *   - Multi-region: golden-bay | nelson-bays (region required on availability/book)
  *   - 15-min slot grid; 55 min sessions; 5 min handover; commute buffer between locations
  *   - Nelson Bays: bookable only on days with an all-day NELSON calendar event;
@@ -1192,6 +1192,18 @@ function handleBookPackage(data) {
     });
   }
 
+  var seenPackageDates = {};
+  for (var pd = 0; pd < planned.length; pd++) {
+    var packageDayKey = formatLocalDateKey(planned[pd].slotStart);
+    if (seenPackageDates[packageDayKey]) {
+      return jsonResponse({
+        success: false,
+        message: "Each session in a package must be on a different day."
+      });
+    }
+    seenPackageDates[packageDayKey] = true;
+  }
+
   const lock = LockService.getScriptLock();
   var lockHeld = false;
   var createdEvents = [];
@@ -2221,6 +2233,14 @@ function formatLocalIso(date) {
     pad(date.getMinutes()) + ":" +
     pad(date.getSeconds())
   );
+}
+
+function formatLocalDateKey(date) {
+  const pad = function (value) {
+    return String(value).padStart(2, "0");
+  };
+
+  return date.getFullYear() + "-" + pad(date.getMonth() + 1) + "-" + pad(date.getDate());
 }
 
 function formatSlotLabel(date) {
