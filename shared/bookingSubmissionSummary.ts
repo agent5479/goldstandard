@@ -5,7 +5,14 @@ import {
   clientBookingTagLabel,
   isTrainingPriorityTag,
 } from './clientBookingTags';
-import { formatStandardPriceLine } from './bookingPricing';
+import {
+  formatPriceLine,
+  formatSubmissionPriceLine,
+  inferVenueKindFromLocationName,
+  PAYMENT_AT_MEETING_NOTE,
+} from './bookingPricing';
+import type { BookingRegionId } from './bookingRegions';
+import { getPackageConfig, type BookingPackageId } from './bookingPackages';
 import {
   BOOKING_SERVICE_TYPES,
   type BookingServiceType,
@@ -37,13 +44,27 @@ const DOG_DESEXED_LABELS: Record<string, string> = {
   unknown: 'Not sure',
 };
 
-export interface BookingSubmissionSummaryInput {
+export type PackageSessionSummaryInput = {
+  slotLabel: string;
+  slotEndLabel?: string;
+  locationLabel: string;
+  locationName: string;
   bookingType?: BookingServiceType;
+  clientAddress?: string;
+  isHomeAddress?: string;
+};
+
+export interface BookingSubmissionSummaryInput {
+  regionId?: BookingRegionId;
+  bookingType?: BookingServiceType;
+  packageId?: BookingPackageId;
+  packageSessions?: PackageSessionSummaryInput[];
   regionLabel: string;
   slotLabel: string;
   slotEndLabel?: string;
   calendarEndLabel?: string;
   locationLabel: string;
+  locationName?: string;
   name?: string;
   phone: string;
   email?: string;
@@ -81,21 +102,39 @@ function parseExtendedJson(raw?: string): Record<string, unknown> | null {
   }
 }
 
+function formatWhenLine(input: BookingSubmissionSummaryInput, bookingType: BookingServiceType): string {
+  const venueKind = inferVenueKindFromLocationName(
+    input.locationName || input.locationLabel,
+    bookingType
+  );
+  if (bookingType === 'elite_coaching' && input.calendarEndLabel) {
+    return (
+      `${input.slotLabel} – ${input.slotEndLabel ?? input.slotLabel} (NZ time, 2.5-hour session); ` +
+      `calendar held until ${input.calendarEndLabel} for travel and preparation`
+    );
+  }
+  if (venueKind === 'home_visit' && input.slotEndLabel && input.slotEndLabel !== input.slotLabel) {
+    return `${input.slotLabel} – ${input.slotEndLabel} (NZ time, up to 1 hour)`;
+  }
+  if (input.slotEndLabel && input.slotEndLabel !== input.slotLabel) {
+    return `${input.slotLabel} – ${input.slotEndLabel} (NZ time)`;
+  }
+  return `${input.slotLabel} (NZ time)`;
+}
+
 export function formatBookingSubmissionSummary(input: BookingSubmissionSummaryInput): string {
+  const regionId = input.regionId ?? 'golden-bay';
   const bookingType = input.bookingType ?? 'standard_beach';
   const service = BOOKING_SERVICE_TYPES[bookingType];
   const addressBased = input.isAddressBased ?? input.isHomeVisit ?? false;
+  const packageId = input.packageId ?? 'single';
 
-  let when: string;
-  if (bookingType === 'elite_coaching' && input.calendarEndLabel) {
-    when =
-      `${input.slotLabel} – ${input.slotEndLabel ?? input.slotLabel} (NZ time, 2.5-hour session); ` +
-      `calendar held until ${input.calendarEndLabel} for travel and preparation`;
-  } else if (input.slotEndLabel && input.slotEndLabel !== input.slotLabel) {
-    when = `${input.slotLabel} – ${input.slotEndLabel} (NZ time)`;
-  } else {
-    when = `${input.slotLabel} (NZ time)`;
+  if (packageId !== 'single' && input.packageSessions?.length) {
+    return formatPackageSubmissionSummary(input, regionId, packageId);
   }
+
+  const when = formatWhenLine(input, bookingType);
+  const locationName = input.locationName || input.locationLabel;
 
   const extended = parseExtendedJson(input.extendedJson);
   const dogExtraLines: (string | null)[] = [];
@@ -113,15 +152,9 @@ export function formatBookingSubmissionSummary(input: BookingSubmissionSummaryIn
     line('Region', input.regionLabel),
     line('When', when),
     line('Location', input.locationLabel),
+    line('Price', formatSubmissionPriceLine(regionId, bookingType, locationName)),
+    line('Payment', PAYMENT_AT_MEETING_NOTE),
   ];
-  if (service.priceLabel) {
-    sessionLines.push(
-      line(
-        'Price',
-        bookingType === 'standard_beach' ? formatStandardPriceLine() : service.priceLabel
-      )
-    );
-  }
 
   const blocks: (string | null)[] = [
     section('Session', sessionLines),
@@ -154,6 +187,53 @@ export function formatBookingSubmissionSummary(input: BookingSubmissionSummaryIn
   if (extended) {
     blocks.push(...formatExtendedSections(extended));
   }
+
+  if (input.message?.trim()) {
+    blocks.push(`Notes\n${input.message.trim()}`);
+  }
+
+  return blocks.filter((block): block is string => Boolean(block)).join('\n\n');
+}
+
+function formatPackageSubmissionSummary(
+  input: BookingSubmissionSummaryInput,
+  regionId: BookingRegionId,
+  packageId: BookingPackageId
+): string {
+  const pkg = getPackageConfig(packageId);
+  const sessionLines: (string | null)[] = [
+    line('Package', pkg.label),
+    line('Region', input.regionLabel),
+    line('Sessions', String(pkg.sessionCount)),
+  ];
+
+  input.packageSessions?.forEach((session, index) => {
+    const bookingType = session.bookingType ?? 'standard_beach';
+    const when =
+      session.slotEndLabel && session.slotEndLabel !== session.slotLabel
+        ? `${session.slotLabel} – ${session.slotEndLabel}`
+        : session.slotLabel;
+    const price = formatSubmissionPriceLine(regionId, bookingType, session.locationName);
+    sessionLines.push(
+      `Session ${index + 1}: ${when} · ${session.locationLabel} · ${price}`
+    );
+  });
+
+  sessionLines.push(line('Payment', PAYMENT_AT_MEETING_NOTE));
+
+  const blocks: (string | null)[] = [
+    section('Package booking', sessionLines),
+    section('Your details', [
+      line('Name', input.name),
+      line('Phone', input.phone),
+      line('Email', input.email),
+    ]),
+    section('Your dog', [
+      line('Name', input.dogName),
+      line('Breed', input.dogBreed),
+      line('Age', input.dogAge),
+    ]),
+  ];
 
   if (input.message?.trim()) {
     blocks.push(`Notes\n${input.message.trim()}`);
@@ -209,3 +289,5 @@ function formatExtendedSections(extended: Record<string, unknown>): string[] {
 
   return sections;
 }
+
+export { formatPriceLine, formatSubmissionPriceLine };

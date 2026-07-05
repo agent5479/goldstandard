@@ -134,8 +134,9 @@ export function buildExtendedDetailsPayload(
   if (tags.length > 0) payload.profileTags = tags;
   if (Object.keys(notes).length > 0) payload.profileTagNotes = notes;
   if (addressBooking) {
-    payload.bookingType = addressBooking.bookingType ?? 'elite_coaching';
-    payload.locationKind = 'elite_coaching';
+    const bookingType = addressBooking.bookingType ?? 'standard_beach';
+    payload.bookingType = bookingType;
+    payload.locationKind = bookingType === 'elite_coaching' ? 'elite_coaching' : 'home_visit';
     payload.clientAddress = addressBooking.clientAddress;
     payload.isHomeAddress = addressBooking.isHomeAddress;
   }

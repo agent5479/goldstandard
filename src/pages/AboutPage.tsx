@@ -4,8 +4,8 @@ import Seo from '../components/Seo';
 import SectionIcon from '../components/SectionIcon';
 import SiteHeader from '../components/SiteHeader';
 import SiteFooter from '../components/SiteFooter';
-import { SESSION_MINUTES, STANDARD_PRICING_NOTE } from '../data/bookingConfig';
-import { NELSON_ELITE_CONTACT_NOTE, NELSON_STANDARD_COMING_SOON_NOTE } from '@shared/bookingRegions';
+import { STANDARD_PRICING_NOTE, HOME_VISIT_PRICING_NOTE } from '../data/bookingConfig';
+import { NELSON_STANDARD_COMING_SOON_NOTE, NELSON_PRICING_ENQUIRY_NOTE } from '@shared/bookingRegions';
 
 export default function AboutPage() {
   return (
@@ -254,11 +254,11 @@ export default function AboutPage() {
           <div className="philosophy-text">
             <p>
               Warwick is based at Rangihaeata, Takaka — Golden Bay. Most local sessions happen in and around
-              Golden Bay, with online booking for regular {SESSION_MINUTES}-minute sessions. Golden Bay:{' '}
-              {STANDARD_PRICING_NOTE}
+              Golden Bay, with online booking for beach sessions, home visits, and multi-day programmes. Golden Bay:{' '}
+              {STANDARD_PRICING_NOTE} Home visits: {HOME_VISIT_PRICING_NOTE}
             </p>
             <p>
-              {NELSON_STANDARD_COMING_SOON_NOTE} {NELSON_ELITE_CONTACT_NOTE} Wider Tasman region enquiries
+              {NELSON_STANDARD_COMING_SOON_NOTE} {NELSON_PRICING_ENQUIRY_NOTE} Wider Tasman region enquiries
               are welcome — get in touch to discuss location and timing.
             </p>
           </div>

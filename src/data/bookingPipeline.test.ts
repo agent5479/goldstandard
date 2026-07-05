@@ -38,6 +38,16 @@ describe('booking pipeline — form extended JSON', () => {
     expect(parsed.profileTagNotes).toEqual(SAMPLE_EXTENDED_JSON_PARSED.profileTagNotes);
   });
 
+  it('includes standard home visit address fields in extended JSON', () => {
+    const json = buildExtendedDetailsPayload({}, [], undefined, {}, undefined, {
+      ...SAMPLE_HOME_VISIT_DETAILS,
+      bookingType: 'standard_beach',
+    });
+    const parsed = JSON.parse(json!);
+    expect(parsed.locationKind).toBe('home_visit');
+    expect(parsed.bookingType).toBe('standard_beach');
+  });
+
   it('includes elite coaching address fields in extended JSON', () => {
     const json = buildExtendedDetailsPayload({}, [], undefined, {}, undefined, {
       ...SAMPLE_HOME_VISIT_DETAILS,
@@ -72,6 +82,7 @@ describe('booking pipeline — form extended JSON', () => {
     );
 
     const summary = formatBookingSubmissionSummary({
+      regionId: 'golden-bay',
       bookingType: 'elite_coaching',
       regionLabel: 'Golden Bay',
       slotLabel: 'Sat 20 Jun 2026, 10:00 am',
@@ -106,7 +117,9 @@ describe('booking pipeline — form extended JSON', () => {
 
   it('formats standard beach submission summary', () => {
     const summary = formatBookingSubmissionSummary({
+      regionId: 'golden-bay',
       bookingType: 'standard_beach',
+      locationName: 'Pohara Beach',
       regionLabel: 'Golden Bay',
       slotLabel: 'Sat 20 Jun 2026, 10:00 am',
       slotEndLabel: '10:55 am',
@@ -119,6 +132,67 @@ describe('booking pipeline — form extended JSON', () => {
     expect(summary).toContain('$60');
     expect(summary).toContain('per additional person attending');
     expect(summary).not.toContain('$400');
+  });
+
+  it('formats standard home visit submission summary with $90 flat rate', () => {
+    const summary = formatBookingSubmissionSummary({
+      regionId: 'golden-bay',
+      bookingType: 'standard_beach',
+      regionLabel: 'Golden Bay',
+      slotLabel: 'Sat 20 Jun 2026, 10:00 am',
+      slotEndLabel: '11:00 am',
+      locationLabel: '12 Example Rd, Takaka',
+      locationName: 'Home visit — Golden Bay',
+      phone: '027 111 2222',
+      dogName: 'Archie',
+      clientAddress: '12 Example Rd, Takaka',
+      isHomeAddress: 'yes',
+      isAddressBased: true,
+    });
+
+    expect(summary).toContain('$90');
+    expect(summary).toContain('up to 1 hour');
+    expect(summary).not.toContain('per additional person attending');
+  });
+
+  it('formats package submission summary', () => {
+    const summary = formatBookingSubmissionSummary({
+      regionId: 'golden-bay',
+      packageId: 'three_day',
+      regionLabel: 'Golden Bay',
+      slotLabel: '',
+      phone: '027 111 2222',
+      dogName: 'Archie',
+      packageSessions: [
+        {
+          slotLabel: 'Mon 1 Jun 2026, 10:00 am',
+          slotEndLabel: '10:55 am',
+          locationLabel: 'Pohara Beach',
+          locationName: 'Pohara Beach',
+          bookingType: 'standard_beach',
+        },
+        {
+          slotLabel: 'Tue 2 Jun 2026, 10:00 am',
+          slotEndLabel: '11:00 am',
+          locationLabel: '12 Example Rd',
+          locationName: 'Home visit — Golden Bay',
+          bookingType: 'standard_beach',
+        },
+        {
+          slotLabel: 'Wed 3 Jun 2026, 2:00 pm',
+          slotEndLabel: '2:55 pm',
+          locationLabel: 'Rototai Reserve',
+          locationName: 'Rototai Reserve',
+          bookingType: 'standard_beach',
+        },
+      ],
+    });
+
+    expect(summary).toContain('3-day programme');
+    expect(summary).toContain('Session 1');
+    expect(summary).toContain('Session 3');
+    expect(summary).toContain('$60');
+    expect(summary).toContain('$90');
   });
 
   it('documents Nelson online booking policy flags', () => {

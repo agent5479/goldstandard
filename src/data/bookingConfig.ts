@@ -1,6 +1,13 @@
 import {
-  STANDARD_ADDITIONAL_PERSON_NOTE,
-  STANDARD_PRICE_LABEL,
+  ELITE_CALENDAR_BLOCK_MINUTES,
+  ELITE_SESSION_MINUTES,
+  formatElitePriceLine,
+  formatHomeVisitPriceLine,
+  formatStandardPriceLine,
+  getGoldenBayPricingSummaryLines,
+  HOME_VISIT_SESSION_MINUTES,
+  PAYMENT_AT_MEETING_NOTE,
+  STANDARD_SESSION_MINUTES,
 } from '@shared/bookingPricing';
 
 /** Fixed offering — customised session with Warwick on the day. */
@@ -8,30 +15,31 @@ export const STANDARD_SERVICE = 'Training session' as const;
 
 export const ELITE_SERVICE = 'Private Household Transformations & Elite Coaching' as const;
 
-export const SESSION_MINUTES = 55;
-export const ELITE_SESSION_MINUTES = 150;
-export const ELITE_CALENDAR_BLOCK_MINUTES = 240;
+export const SESSION_MINUTES = STANDARD_SESSION_MINUTES;
+export { ELITE_SESSION_MINUTES, ELITE_CALENDAR_BLOCK_MINUTES, HOME_VISIT_SESSION_MINUTES };
+
 export const TRANSITION_MINUTES = 5;
 export const SLOT_INTERVAL_MINUTES = 15;
 export const MAX_BOOKING_DAYS_AHEAD = 60;
 export const MIN_NOTICE_HOURS = 16;
 export const GOLDEN_BAY_MIN_NOTICE_HOURS = 12;
 
-export const STANDARD_SERVICE_SUMMARY = `${SESSION_MINUTES}-minute session with Warwick — ${STANDARD_PRICE_LABEL}. ${STANDARD_ADDITIONAL_PERSON_NOTE}.`;
+export const STANDARD_SERVICE_SUMMARY = `${SESSION_MINUTES}-minute session with Warwick — ${formatStandardPriceLine('golden-bay')}`;
 
-export const STANDARD_PRICING_NOTE = `${STANDARD_PRICE_LABEL} · ${SESSION_MINUTES}-minute session. ${STANDARD_ADDITIONAL_PERSON_NOTE}.`;
+export const STANDARD_PRICING_NOTE = formatStandardPriceLine('golden-bay');
 
-export const ELITE_SERVICE_SUMMARY =
-  '2.5-hour session at your home or a custom location — $400. Warwick reserves 4 hours in his calendar for travel and preparation.';
+export const HOME_VISIT_PRICING_NOTE = formatHomeVisitPriceLine('golden-bay');
 
-export const ELITE_PRICING_NOTE =
-  '$400 · 2.5-hour session. Warwick reserves a 4-hour calendar block for travel and preparation. Last start around 12:00 pm.';
+export const HOME_VISIT_SERVICE_SUMMARY = HOME_VISIT_PRICING_NOTE;
+
+export const ELITE_SERVICE_SUMMARY = formatElitePriceLine('golden-bay');
+
+export const ELITE_PRICING_NOTE = formatElitePriceLine('golden-bay');
 
 export const ELITE_CLIENT_SLOT_HOURS =
   'Available from 9:00 am; last start around 12:00 pm so the 4-hour calendar block fits the working day (NZ time).';
 
-/** @deprecated Standard path is beaches only — elite uses ELITE_PRICING_NOTE */
-export const HOME_VISIT_PRICING_NOTE = ELITE_PRICING_NOTE;
+export { PAYMENT_AT_MEETING_NOTE, getGoldenBayPricingSummaryLines };
 
 /** Client-facing slot window — fixed copy; seasonal extensions are handled server-side only. */
 export const BOOKING_CLIENT_SLOT_HOURS =
@@ -127,10 +135,14 @@ export type QuickDateOption = {
 };
 
 /** Next few bookable days for quick-pick chips. */
-export function getQuickDateOptions(count = 4): QuickDateOption[] {
+export function getQuickDateOptions(count = 4, startFrom?: string): QuickDateOption[] {
   const options: QuickDateOption[] = [];
-  const cursor = new Date();
-  cursor.setDate(cursor.getDate() + 1);
+  const cursor = startFrom ? parseLocalDateInput(startFrom) : new Date();
+  if (!startFrom) {
+    cursor.setDate(cursor.getDate() + 1);
+  } else {
+    cursor.setDate(cursor.getDate() + 1);
+  }
 
   while (options.length < count) {
     options.push({
@@ -143,3 +155,14 @@ export function getQuickDateOptions(count = 4): QuickDateOption[] {
   return options;
 }
 
+function parseLocalDateInput(dateStr: string): Date {
+  const [year, month, day] = dateStr.split('-').map(Number);
+  return new Date(year, month - 1, day);
+}
+
+/** Add days to a YYYY-MM-DD string. */
+export function addDaysToDateInput(dateStr: string, days: number): string {
+  const date = parseLocalDateInput(dateStr);
+  date.setDate(date.getDate() + days);
+  return toLocalDateInput(date);
+}

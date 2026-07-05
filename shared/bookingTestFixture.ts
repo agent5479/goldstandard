@@ -59,6 +59,21 @@ export const SAMPLE_ELITE_COACHING_EXTENDED_JSON = {
   isHomeAddress: true,
 };
 
+export const SAMPLE_STANDARD_HOME_VISIT_API_PAYLOAD = {
+  ...SAMPLE_BOOKING_API_PAYLOAD,
+  location: 'Home visit — Golden Bay',
+  client_address: SAMPLE_HOME_VISIT_DETAILS.clientAddress,
+  is_home_address: 'yes',
+};
+
+export const SAMPLE_STANDARD_HOME_VISIT_EXTENDED_JSON = {
+  ...SAMPLE_EXTENDED_JSON_PARSED,
+  bookingType: 'standard_beach',
+  locationKind: 'home_visit',
+  clientAddress: SAMPLE_HOME_VISIT_DETAILS.clientAddress,
+  isHomeAddress: true,
+};
+
 /** @deprecated Use SAMPLE_ELITE_COACHING_EXTENDED_JSON */
 export const SAMPLE_HOME_VISIT_EXTENDED_JSON = SAMPLE_ELITE_COACHING_EXTENDED_JSON;
 
@@ -77,7 +92,15 @@ export const SAMPLE_PENDING_BOOKING = {
   calendarEventId: 'evt_test_123',
   location: 'Elite coaching — Golden Bay',
   region: 'golden-bay',
-  extendedJson: JSON.stringify(SAMPLE_HOME_VISIT_EXTENDED_JSON),
+  extendedJson: JSON.stringify(SAMPLE_ELITE_COACHING_EXTENDED_JSON),
+};
+
+export const SAMPLE_STANDARD_HOME_VISIT_PENDING_BOOKING = {
+  ...SAMPLE_PENDING_BOOKING,
+  calendarEventId: 'evt_test_home_456',
+  appointmentEnd: '2026-06-20T11:00:00+12:00',
+  location: 'Home visit — Golden Bay',
+  extendedJson: JSON.stringify(SAMPLE_STANDARD_HOME_VISIT_EXTENDED_JSON),
 };
 
 export function sampleBookingPayload(overrides: Record<string, string> = {}) {

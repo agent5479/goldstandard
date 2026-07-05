@@ -27,7 +27,16 @@ export const NELSON_STANDARD_COMING_SOON_NOTE =
   'Nelson beach sessions will open on advertised dates — likely a weekend when Warwick runs a Nelson push. Enquire to hear when dates are set.';
 
 export const NELSON_ELITE_CONTACT_NOTE =
-  '$400 elite coaching at your home or a custom location in Nelson Bays — travel included. Arrange by enquiry rather than instant online booking.';
+  'Elite coaching over the hill — travel included. Pricing on enquiry rather than instant online booking.';
+
+export const NELSON_PRICING_ENQUIRY_NOTE =
+  'Nelson Bays pricing is confirmed on enquiry — use the contact form or call Warwick.';
+
+export const HOME_VISIT_GOLDEN_BAY_ONLINE_NOTE =
+  'Home visits available for online booking in Golden Bay.';
+
+export const HOME_VISIT_NELSON_ENQUIRY_NOTE =
+  'Home visits over the hill — arrange by enquiry.';
 
 export function isRegionServiceBookableOnline(
   regionId: BookingRegionId,

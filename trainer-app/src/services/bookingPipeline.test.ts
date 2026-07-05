@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { SAMPLE_HOME_VISIT_EXTENDED_JSON, SAMPLE_PENDING_BOOKING } from '@shared/bookingTestFixture';
+import { SAMPLE_HOME_VISIT_EXTENDED_JSON, SAMPLE_STANDARD_HOME_VISIT_EXTENDED_JSON, SAMPLE_STANDARD_HOME_VISIT_PENDING_BOOKING, SAMPLE_PENDING_BOOKING } from '@shared/bookingTestFixture';
 import { parseBookingExtendedDetails } from './bookingExtendedDetails';
 import { planBookingImport, findBookingOwnerByContact } from './bookingImport';
 import { findBookingHouseholdSuggestions } from '@/utils/bookingHouseholdMatch';
@@ -35,19 +35,19 @@ describe('booking pipeline — trainer import', () => {
   });
 
   it('imports home visit booking with phone only (no email/name)', () => {
-    const plan = planBookingImport(SAMPLE_PENDING_BOOKING, emptyTenant);
+    const plan = planBookingImport(SAMPLE_STANDARD_HOME_VISIT_PENDING_BOOKING, emptyTenant);
     expect(plan).not.toBeNull();
-    expect(plan!.owner.phone).toBe(SAMPLE_PENDING_BOOKING.phone);
-    expect(plan!.owner.address).toBe(SAMPLE_HOME_VISIT_EXTENDED_JSON.clientAddress);
-    expect(plan!.owner.preferredLocation).toBe(SAMPLE_PENDING_BOOKING.location);
-    expect(plan!.dog.name).toBe(SAMPLE_PENDING_BOOKING.dogName);
+    expect(plan!.owner.phone).toBe(SAMPLE_STANDARD_HOME_VISIT_PENDING_BOOKING.phone);
+    expect(plan!.owner.address).toBe(SAMPLE_STANDARD_HOME_VISIT_EXTENDED_JSON.clientAddress);
+    expect(plan!.owner.preferredLocation).toBe(SAMPLE_STANDARD_HOME_VISIT_PENDING_BOOKING.location);
+    expect(plan!.dog.name).toBe(SAMPLE_STANDARD_HOME_VISIT_PENDING_BOOKING.dogName);
     expect(plan!.dog.sex).toBe('male');
     expect(plan!.dog.desexed).toBe('yes');
     expect(plan!.dog.profileTags).toEqual(
       expect.arrayContaining(['recall_priority', 'leash_heel_priority', 'reactive'])
     );
     expect(plan!.dog.skillGrades?.focus_050).toBe(1);
-    expect(plan!.session.trainingLocation).toBe(SAMPLE_PENDING_BOOKING.location);
+    expect(plan!.session.trainingLocation).toBe(SAMPLE_STANDARD_HOME_VISIT_PENDING_BOOKING.location);
     expect(plan!.session.latitude).toBeUndefined();
     expect(plan!.session.longitude).toBeUndefined();
     expect(plan!.ownerIsNew).toBe(true);

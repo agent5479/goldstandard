@@ -3,14 +3,16 @@ import Seo from '../components/Seo';
 import SiteHeader from '../components/SiteHeader';
 import SiteFooter from '../components/SiteFooter';
 import BookForm from './BookForm';
-import { STANDARD_PRICE_LABEL } from '@shared/bookingPricing';
+import { formatStandardPriceLine, getGoldenBayPricingSummaryLines, HOME_VISIT_PRICE_LABEL } from '@shared/bookingPricing';
+import { BOOKING_PACKAGES } from '@shared/bookingPackages';
+import { NELSON_PRICING_ENQUIRY_NOTE } from '@shared/bookingRegions';
 
 export default function BookPage() {
   return (
     <>
       <Seo
         title="Book a session | Gold Standard Dog Training"
-        description="Book dog training with Warwick Marshall in Golden Bay or Nelson Bays, NZ. Choose a standard beach session or elite home coaching, pick a time, and receive confirmation by email."
+        description="Book dog training with Warwick Marshall in Golden Bay or Nelson Bays, NZ. Single sessions, 3-day programmes, Get ready for town packages, or elite coaching."
         path="/book"
         bodyClass="page-book"
       />
@@ -21,18 +23,26 @@ export default function BookPage() {
           <div className="page-hero-book-grid">
             <div className="page-hero-book-copy">
               <p className="section-label">Book a session</p>
-              <h1>Choose your service, pick a time, and confirm online. Automatically receive a calendar confirmation by email.</h1>
+              <h1>Choose your service, pick your times, and confirm online. Calendar confirmation by email when you add one.</h1>
+              <p className="section-label">Golden Bay pricing</p>
               <ul className="booking-hero-facts">
                 <li>
-                  <strong>Standard session</strong> — 55&nbsp;min at a public beach or reserve ({STANDARD_PRICE_LABEL})
+                  <strong>Beach / reserve</strong> — 55&nbsp;min ({formatStandardPriceLine('golden-bay')})
                 </li>
                 <li>
-                  <strong>Elite coaching</strong> — 2.5&nbsp;hr at your home or a custom location ($400)
+                  <strong>Home visit</strong> — up to 1&nbsp;hr ({HOME_VISIT_PRICE_LABEL} flat, household included)
                 </li>
                 <li>
-                  <strong>Nelson Bays</strong> — beach sessions opening on advertised dates; elite coaching by enquiry ($400, travel included)
+                  <strong>{BOOKING_PACKAGES.three_day.label}</strong> — {BOOKING_PACKAGES.three_day.headline}
+                </li>
+                <li>
+                  <strong>{BOOKING_PACKAGES.town_ready_five.label}</strong> — {BOOKING_PACKAGES.town_ready_five.headline}
+                </li>
+                <li>
+                  <strong>Elite coaching</strong> — {getGoldenBayPricingSummaryLines()[2]}
                 </li>
               </ul>
+              <p className="form-hint">{NELSON_PRICING_ENQUIRY_NOTE}</p>
             </div>
 
             <Link to="/contact" className="contact-path-card page-hero-enquiry-card">

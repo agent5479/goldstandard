@@ -1,6 +1,6 @@
 /** Public booking service offerings — keep in sync with google-apps-script/Code.gs BOOKING_TYPES. */
 
-import { STANDARD_PRICE_LABEL } from './bookingPricing';
+import { formatElitePriceLine, HOME_VISIT_PRICE_LABEL, STANDARD_PRICE_LABEL } from './bookingPricing';
 
 export type BookingServiceType = 'standard_beach' | 'elite_coaching';
 
@@ -17,7 +17,7 @@ export const BOOKING_SERVICE_TYPES: Record<BookingServiceType, BookingServiceTyp
   standard_beach: {
     id: 'standard_beach',
     label: 'Standard training session',
-    headline: `55-minute session at a public beach or reserve — ${STANDARD_PRICE_LABEL}`,
+    headline: `Beach or reserve (${STANDARD_PRICE_LABEL}) or home visit (${HOME_VISIT_PRICE_LABEL} flat) — Golden Bay pricing; Nelson by enquiry`,
     sessionMinutes: 55,
     calendarBlockMinutes: 55,
     priceLabel: STANDARD_PRICE_LABEL,
@@ -25,7 +25,7 @@ export const BOOKING_SERVICE_TYPES: Record<BookingServiceType, BookingServiceTyp
   elite_coaching: {
     id: 'elite_coaching',
     label: 'Private Household Transformations & Elite Coaching',
-    headline: '2.5-hour session at your home or a custom location — $400',
+    headline: `2.5-hour session at your home or a custom location — ${formatElitePriceLine('golden-bay').split(' · ')[0]}`,
     sessionMinutes: 150,
     calendarBlockMinutes: 240,
     priceLabel: '$400',

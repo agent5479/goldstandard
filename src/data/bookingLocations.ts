@@ -21,13 +21,10 @@ export type BookingLocation = {
 };
 
 export const NELSON_BAYS_PLACEHOLDER_ID = 'nelson-bays-tbc';
+export const GOLDEN_BAY_HOME_VISIT_ID = 'golden-bay-home-visit';
 export const GOLDEN_BAY_ELITE_ID = 'golden-bay-elite-coaching';
 export const NELSON_BAYS_ELITE_ID = 'nelson-bays-elite-coaching';
-
-/** @deprecated Use GOLDEN_BAY_ELITE_ID */
-export const GOLDEN_BAY_HOME_VISIT_ID = GOLDEN_BAY_ELITE_ID;
-/** @deprecated Use NELSON_BAYS_ELITE_ID */
-export const NELSON_BAYS_HOME_VISIT_ID = NELSON_BAYS_ELITE_ID;
+export const NELSON_BAYS_HOME_VISIT_ID = 'nelson-bays-home-visit';
 
 export const BOOKING_LOCATIONS: BookingLocation[] = [
   {
@@ -59,6 +56,15 @@ export const BOOKING_LOCATIONS: BookingLocation[] = [
     lng: 172.76151432229932,
   },
   {
+    id: GOLDEN_BAY_HOME_VISIT_ID,
+    name: 'Home visit — Golden Bay',
+    regionId: 'golden-bay',
+    lat: GOLDEN_BAY_MAP_CENTER[0],
+    lng: GOLDEN_BAY_MAP_CENTER[1],
+    kind: 'home_visit',
+    mapHidden: true,
+  },
+  {
     id: GOLDEN_BAY_ELITE_ID,
     name: 'Elite coaching — Golden Bay',
     regionId: 'golden-bay',
@@ -73,6 +79,15 @@ export const BOOKING_LOCATIONS: BookingLocation[] = [
     regionId: 'nelson-bays',
     lat: NELSON_BAYS_MAP_CENTER[0],
     lng: NELSON_BAYS_MAP_CENTER[1],
+    mapHidden: true,
+  },
+  {
+    id: NELSON_BAYS_HOME_VISIT_ID,
+    name: 'Home visit — Nelson Bays',
+    regionId: 'nelson-bays',
+    lat: NELSON_BAYS_MAP_CENTER[0],
+    lng: NELSON_BAYS_MAP_CENTER[1],
+    kind: 'home_visit',
     mapHidden: true,
   },
   {
@@ -113,14 +128,22 @@ export function getEliteLocation(regionId: BookingRegionId): BookingLocation | u
   return getLocationById(getEliteLocationId(regionId));
 }
 
-/** @deprecated Use getEliteLocationId */
-export function getHomeVisitLocationId(regionId: BookingRegionId): string {
-  return getEliteLocationId(regionId);
+export function getHomeVisitLocationId(regionId: BookingRegionId): string | undefined {
+  if (regionId === 'golden-bay') return GOLDEN_BAY_HOME_VISIT_ID;
+  if (regionId === 'nelson-bays') return NELSON_BAYS_HOME_VISIT_ID;
+  return undefined;
 }
 
-/** @deprecated Use getEliteLocation */
 export function getHomeVisitLocation(regionId: BookingRegionId): BookingLocation | undefined {
-  return getEliteLocation(regionId);
+  const id = getHomeVisitLocationId(regionId);
+  return id ? getLocationById(id) : undefined;
+}
+
+export function isStandardHomeVisitLocation(idOrName: string): boolean {
+  const byId = getLocationById(idOrName);
+  if (byId?.kind === 'home_visit') return true;
+  const byName = getLocationByName(idOrName);
+  return byName?.kind === 'home_visit';
 }
 
 export function isEliteCoachingLocation(idOrName: string): boolean {
@@ -137,9 +160,9 @@ export function isAddressBasedLocation(idOrName: string): boolean {
   return byName?.kind === 'elite_coaching' || byName?.kind === 'home_visit';
 }
 
-/** @deprecated Use isAddressBasedLocation or isEliteCoachingLocation */
+/** @deprecated Use isStandardHomeVisitLocation or isAddressBasedLocation */
 export function isHomeVisitLocation(idOrName: string): boolean {
-  return isAddressBasedLocation(idOrName);
+  return isStandardHomeVisitLocation(idOrName);
 }
 
 export function getLocationById(id: string): BookingLocation | undefined {

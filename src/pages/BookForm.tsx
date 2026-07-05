@@ -19,7 +19,10 @@ import {
   ELITE_SERVICE,
   ELITE_SERVICE_SUMMARY,
   ELITE_PRICING_NOTE,
-  STANDARD_PRICING_NOTE,
+  HOME_VISIT_PRICING_NOTE,
+  HOME_VISIT_SESSION_MINUTES,
+  PAYMENT_AT_MEETING_NOTE,
+  addDaysToDateInput,
   ELITE_CLIENT_SLOT_HOURS,
   shortSlotLabel,
   BOOKING_CLIENT_SLOT_HOURS,
@@ -32,8 +35,10 @@ import {
   getLocationsByRegion,
   getMapCenterForRegion,
   getEliteLocationId,
+  getHomeVisitLocationId,
   isEliteCoachingLocation,
   isAddressBasedLocation,
+  isStandardHomeVisitLocation,
   NELSON_BAYS_PLACEHOLDER_ID,
   type BookingLocation,
 } from '../data/bookingLocations';
@@ -41,15 +46,27 @@ import {
   BOOKING_REGIONS,
   isRegionServiceBookableOnline,
   NELSON_ELITE_CONTACT_NOTE,
+  NELSON_PRICING_ENQUIRY_NOTE,
   NELSON_STANDARD_COMING_SOON_NOTE,
   NELSON_STANDARD_ONLINE_BOOKING,
   type BookingRegionId,
 } from '@shared/bookingRegions';
 import {
-  BOOKING_SERVICE_TYPE_LIST,
   BOOKING_SERVICE_TYPES,
   type BookingServiceType,
 } from '@shared/bookingServiceTypes';
+import {
+  STANDARD_BOOKING_PACKAGE_LIST,
+  getPackageConfig,
+  getPackageSessionCount,
+  type BookingPackageId,
+  type PackageSessionDraft,
+} from '@shared/bookingPackages';
+import {
+  formatPriceLine,
+  getGoldenBayPricingSummaryLines,
+  getRegionPricing,
+} from '@shared/bookingPricing';
 import { Link, useSearchParams } from 'react-router-dom';
 import TurnstileField from '../components/TurnstileField';
 import { FORM_ENDPOINT, TURNSTILE_ENABLED } from '../data/formConfig';
@@ -77,8 +94,12 @@ type FormStatus =
       locationName: string;
       addressPreview?: string;
       serviceType: BookingServiceType;
+      packageLabel?: string;
+      sessionCount?: number;
     }
   | { kind: 'error'; message: string };
+
+type StandardVenue = 'beach' | 'home' | null;
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const QUICK_DATES = getQuickDateOptions();
@@ -152,6 +173,10 @@ export default function BookForm() {
   const detailsRef = useRef<HTMLDivElement>(null);
   const successRef = useRef<HTMLDivElement>(null);
   const [selectedServiceType, setSelectedServiceType] = useState<BookingServiceType | ''>('');
+  const [selectedPackageId, setSelectedPackageId] = useState<BookingPackageId>('single');
+  const [packageSessions, setPackageSessions] = useState<PackageSessionDraft[]>([]);
+  const [activePackageSessionIndex, setActivePackageSessionIndex] = useState(0);
+  const [standardVenue, setStandardVenue] = useState<StandardVenue>(null);
   const [selectedRegionId, setSelectedRegionId] = useState<BookingRegionId | ''>('');
   const [date, setDate] = useState(defaultBookingDate());
   const [slots, setSlots] = useState<BookingSlot[]>([]);
@@ -179,6 +204,10 @@ export default function BookForm() {
   const [dogName, setDogName] = useState('');
   const [turnstileToken, setTurnstileToken] = useState('');
   const [turnstileResetSignal, setTurnstileResetSignal] = useState(0);
+
+  const isPackageBooking = selectedPackageId !== 'single' && selectedServiceType === 'standard_beach';
+  const packageSessionCount = isPackageBooking ? getPackageSessionCount(selectedPackageId) : 1;
+  const activePackageConfig = isPackageBooking ? getPackageConfig(selectedPackageId) : null;
 
   const resetReturningState = () => {
     setReturningContact('');
@@ -290,10 +319,13 @@ export default function BookForm() {
     setSelectedLocationId('');
     setClientAddress('');
     setIsHomeAddress(null);
+    setStandardVenue(null);
+    setPackageSessions([]);
+    setActivePackageSessionIndex(0);
     setSlotsError('');
     setStatus({ kind: 'idle' });
     resetClientDetailsState();
-  }, [selectedServiceType]);
+  }, [selectedServiceType, selectedPackageId]);
 
   useEffect(() => {
     if (!selectedRegionId) return;
@@ -322,6 +354,10 @@ export default function BookForm() {
 
   const handleServiceSelect = (serviceType: BookingServiceType) => {
     setSelectedServiceType(serviceType);
+    setSelectedPackageId('single');
+    setPackageSessions([]);
+    setActivePackageSessionIndex(0);
+    setStandardVenue(null);
     setSelectedRegionId('');
     setSelectedSlot('');
     setSelectedLocationId('');
@@ -329,6 +365,28 @@ export default function BookForm() {
     setIsHomeAddress(null);
     setStatus({ kind: 'idle' });
     scrollTo(regionRef);
+  };
+
+  const handlePackageSelect = (packageId: BookingPackageId) => {
+    setSelectedServiceType('standard_beach');
+    setSelectedPackageId(packageId);
+    setPackageSessions([]);
+    setActivePackageSessionIndex(0);
+    setStandardVenue(null);
+    setSelectedRegionId('');
+    setSelectedSlot('');
+    setSelectedLocationId('');
+    setClientAddress('');
+    setIsHomeAddress(null);
+    setStatus({ kind: 'idle' });
+    scrollTo(regionRef);
+  };
+
+  const handleStandardHomeConfirm = () => {
+    if (!selectedRegionId || isHomeAddress === null || !clientAddress.trim()) return;
+    const homeId = getHomeVisitLocationId(selectedRegionId);
+    if (!homeId) return;
+    handleLocationSelect(homeId);
   };
 
   const handleRegionSelect = (regionId: BookingRegionId) => {
@@ -342,6 +400,40 @@ export default function BookForm() {
   };
 
   const handleSlotSelect = (slotStart: string) => {
+    if (isPackageBooking) {
+      const location = getLocationById(selectedLocationId);
+      if (!location) return;
+      const draft: PackageSessionDraft = {
+        date,
+        slotStart,
+        locationId: selectedLocationId,
+        clientAddress: isStandardHomeVisitLocation(selectedLocationId) ? clientAddress.trim() : undefined,
+        isHomeAddress: isStandardHomeVisitLocation(selectedLocationId) ? isHomeAddress : undefined,
+      };
+      const nextSessions = [...packageSessions];
+      nextSessions[activePackageSessionIndex] = draft;
+      setPackageSessions(nextSessions);
+
+      if (activePackageSessionIndex + 1 < packageSessionCount) {
+        const nextIndex = activePackageSessionIndex + 1;
+        setActivePackageSessionIndex(nextIndex);
+        setDate(addDaysToDateInput(date, 1));
+        setSelectedSlot('');
+        setSelectedLocationId('');
+        setStandardVenue(null);
+        setClientAddress(nextSessions[0]?.clientAddress || '');
+        setIsHomeAddress(nextSessions[0]?.isHomeAddress ?? null);
+        setStatus({ kind: 'idle' });
+        scrollTo(locationRef);
+        return;
+      }
+
+      setSelectedSlot(slotStart);
+      setStatus({ kind: 'idle' });
+      scrollTo(detailsRef);
+      return;
+    }
+
     setSelectedSlot(slotStart);
     setStatus({ kind: 'idle' });
     scrollTo(detailsRef);
@@ -500,27 +592,36 @@ export default function BookForm() {
       return;
     }
 
-    if (!location) {
-      setStatus({ kind: 'error', message: 'Please choose a training location.' });
-      return;
-    }
-
-    if (!selectedSlot) {
-      setStatus({ kind: 'error', message: 'Please choose a time before confirming.' });
-      return;
-    }
-
-    const addressBased = isAddressBasedLocation(location.id);
-    const trimmedAddress = clientAddress.trim();
-
-    if (addressBased) {
-      if (!trimmedAddress) {
-        setStatus({ kind: 'error', message: 'Please enter the address for your session.' });
+    if (isPackageBooking) {
+      if (packageSessions.length !== packageSessionCount) {
+        setStatus({ kind: 'error', message: `Please schedule all ${packageSessionCount} sessions before confirming.` });
         return;
       }
-      if (isHomeAddress === null) {
-        setStatus({ kind: 'error', message: 'Please confirm whether this is your home address.' });
+    } else {
+      if (!location) {
+        setStatus({ kind: 'error', message: 'Please choose a training location.' });
         return;
+      }
+
+      if (!selectedSlot) {
+        setStatus({ kind: 'error', message: 'Please choose a time before confirming.' });
+        return;
+      }
+    }
+
+    if (!isPackageBooking) {
+      const addressBased = isAddressBasedLocation(location!.id);
+      const trimmedAddress = clientAddress.trim();
+
+      if (addressBased) {
+        if (!trimmedAddress) {
+          setStatus({ kind: 'error', message: 'Please enter the address for your session.' });
+          return;
+        }
+        if (isHomeAddress === null) {
+          setStatus({ kind: 'error', message: 'Please confirm whether this is your home address.' });
+          return;
+        }
       }
     }
 
@@ -575,6 +676,10 @@ export default function BookForm() {
     const slot = slots.find((entry) => entry.start === selectedSlot);
     const dogAgeValue = buildAgeLabel(dogAgeFields.ageYearsAtRecord, dogAgeFields.ageMonthsAtRecord) ?? '';
     let extendedJson: string | undefined;
+    const singleLocation = location;
+    const addressBased = singleLocation ? isAddressBasedLocation(singleLocation.id) : false;
+    const trimmedAddress = clientAddress.trim();
+
     if (!useSlimReturning) try {
       extendedJson = buildExtendedDetailsPayload(
         extendedDetails.skillGrades,
@@ -582,7 +687,7 @@ export default function BookForm() {
         extendedDetails.desexed,
         extendedDetails.profileTagNotes,
         extendedDetails.sex,
-        addressBased
+        !isPackageBooking && addressBased
           ? {
               clientAddress: trimmedAddress,
               isHomeAddress: isHomeAddress === true,
@@ -599,12 +704,87 @@ export default function BookForm() {
       return;
     }
 
+    if (isPackageBooking) {
+      const sessionsPayload = packageSessions.map((session) => {
+        const sessionLocation = getLocationById(session.locationId);
+        if (!sessionLocation) throw new Error('Invalid session location.');
+        const entry: Record<string, string> = {
+          slot_start: session.slotStart,
+          location: sessionLocation.name,
+          booking_type: 'standard_beach',
+        };
+        if (isStandardHomeVisitLocation(session.locationId)) {
+          entry.client_address = session.clientAddress || '';
+          entry.is_home_address = session.isHomeAddress ? 'yes' : 'no';
+        }
+        return entry;
+      });
+
+      const payload: Record<string, string> = {
+        action: 'book_package',
+        package_id: selectedPackageId,
+        region: selectedRegionId,
+        name,
+        phone,
+        email,
+        dog_name: dogNameValue,
+        dog_breed: useSlimReturning ? '' : dogBreed,
+        dog_age: useSlimReturning ? '' : dogAgeValue,
+        message: String(data.get('message') ?? '').trim(),
+        website: honeypot,
+        sessions_json: JSON.stringify(sessionsPayload),
+      };
+      if (turnstileToken) payload.turnstile_token = turnstileToken;
+      if (isReturningPath) payload.returning_client = 'yes';
+      if (extendedJson) payload.extended_json = extendedJson;
+
+      try {
+        setStatus({ kind: 'submitting' });
+        await postToEndpoint(payload);
+        form.reset();
+        setPackageSessions([]);
+        setActivePackageSessionIndex(0);
+        setSelectedPackageId('single');
+        setSelectedSlot('');
+        setSelectedLocationId('');
+        setSelectedRegionId('');
+        setSelectedServiceType('');
+        setDogBreed('');
+        setClientAddress('');
+        setIsHomeAddress(null);
+        setStandardVenue(null);
+        setExtendedDetails(emptyExtendedDetailsState());
+        resetClientDetailsState();
+        setTurnstileToken('');
+        setTurnstileResetSignal((n) => n + 1);
+        setStatus({
+          kind: 'success',
+          slotLabel: `${packageSessionCount} sessions scheduled`,
+          locationName: selectedRegionId === 'golden-bay' ? 'Golden Bay' : 'Nelson Bays',
+          serviceType: 'standard_beach',
+          packageLabel: activePackageConfig?.label,
+          sessionCount: packageSessionCount,
+        });
+      } catch (error) {
+        setTurnstileToken('');
+        setTurnstileResetSignal((n) => n + 1);
+        setStatus({
+          kind: 'error',
+          message:
+            error instanceof Error
+              ? error.message
+              : 'There was a problem confirming your booking. Please try again or call/text 027 814 2222.',
+        });
+      }
+      return;
+    }
+
     const payload: Record<string, string> = {
       action: 'book',
       booking_type: selectedServiceType,
       region: selectedRegionId,
       slot_start: selectedSlot,
-      location: location.name,
+      location: singleLocation!.name,
       name,
       phone,
       email,
@@ -644,7 +824,7 @@ export default function BookForm() {
       setStatus({
         kind: 'success',
         slotLabel: slot?.label ?? 'your selected time',
-        locationName: location.name,
+        locationName: singleLocation!.name,
         addressPreview: addressBased ? trimmedAddress : undefined,
         serviceType: selectedServiceType,
       });
@@ -677,11 +857,15 @@ export default function BookForm() {
     Boolean(selectedRegionId) &&
     clientAddress.trim().length > 0 &&
     isHomeAddress !== null;
-  const stepLocationDone =
-    stepRegionDone &&
-    Boolean(selectedLocationId) &&
-    (!isEliteService || eliteLocationReady);
-  const stepTimeDone = stepLocationDone && Boolean(selectedSlot);
+  const stepLocationDone = isPackageBooking
+    ? stepRegionDone &&
+      (packageSessions.length === packageSessionCount || Boolean(selectedLocationId))
+    : stepRegionDone &&
+      Boolean(selectedLocationId) &&
+      (!isEliteService || eliteLocationReady);
+  const stepTimeDone = isPackageBooking
+    ? packageSessions.length === packageSessionCount
+    : stepLocationDone && Boolean(selectedSlot);
   const returningReady =
     clientPath === 'returning' &&
     Boolean(returningLookup?.found) &&
@@ -703,6 +887,11 @@ export default function BookForm() {
 
   const locationSummaryLabel = (() => {
     if (!selectedLocation) return '';
+    if (isStandardHomeVisitLocation(selectedLocationId) && clientAddress.trim()) {
+      const preview = clientAddress.trim();
+      const shortPreview = preview.length > 40 ? `${preview.slice(0, 37)}…` : preview;
+      return `Home visit — ${shortPreview}`;
+    }
     if (eliteSelected && clientAddress.trim()) {
       const preview = clientAddress.trim();
       const shortPreview = preview.length > 40 ? `${preview.slice(0, 37)}…` : preview;
@@ -719,7 +908,18 @@ export default function BookForm() {
   };
 
   const slotHoursCopy = isEliteService ? ELITE_CLIENT_SLOT_HOURS : BOOKING_CLIENT_SLOT_HOURS;
-  const sessionMinutes = isEliteService ? ELITE_SESSION_MINUTES : SESSION_MINUTES;
+  const sessionMinutes = isEliteService
+    ? ELITE_SESSION_MINUTES
+    : isStandardHomeVisitLocation(selectedLocationId)
+      ? HOME_VISIT_SESSION_MINUTES
+      : SESSION_MINUTES;
+  const confirmPricingNote = selectedRegionId
+    ? isEliteService
+      ? formatPriceLine(selectedRegionId, 'elite_coaching')
+      : isStandardHomeVisitLocation(selectedLocationId)
+        ? formatPriceLine(selectedRegionId, 'home_visit')
+        : formatPriceLine(selectedRegionId, 'beach')
+    : '';
 
   if (status.kind === 'success') {
     return (
@@ -727,18 +927,28 @@ export default function BookForm() {
         <p className="booking-success-icon" aria-hidden="true">✅</p>
         <h3>Booking confirmed</h3>
         <p>
-          You are booked for <strong>{status.slotLabel}</strong>
-          {status.addressPreview ? (
+          {status.packageLabel ? (
             <>
-              {' '}at <strong>{status.addressPreview}</strong>
-              {status.serviceType === 'elite_coaching' ? ' (elite coaching).' : '.'}
+              Your <strong>{status.packageLabel}</strong> is confirmed —{' '}
+              <strong>{status.sessionCount ?? 1} sessions</strong> scheduled.
             </>
           ) : (
             <>
-              {' '}at <strong>{status.locationName}</strong>.
+              You are booked for <strong>{status.slotLabel}</strong>
+              {status.addressPreview ? (
+                <>
+                  {' '}at <strong>{status.addressPreview}</strong>
+                  {status.serviceType === 'elite_coaching' ? ' (elite coaching).' : '.'}
+                </>
+              ) : (
+                <>
+                  {' '}at <strong>{status.locationName}</strong>.
+                </>
+              )}
             </>
           )}
         </p>
+        <p className="form-hint">{PAYMENT_AT_MEETING_NOTE}</p>
         <BookingConfirmationDetails />
         <p className="form-hint">
           Outdoor training is weather dependent. Warwick will contact you if your session needs to move due to conditions.
@@ -804,26 +1014,48 @@ export default function BookForm() {
           <h3 id="booking-step-service" className="booking-step-title">What are you seeking?</h3>
           {stepServiceDone && selectedServiceType ? (
             <p className="booking-step-done-note">
-              Selected: <strong>{BOOKING_SERVICE_TYPES[selectedServiceType].label}</strong>
+              Selected:{' '}
+              <strong>
+                {isPackageBooking
+                  ? activePackageConfig?.label
+                  : BOOKING_SERVICE_TYPES[selectedServiceType].label}
+              </strong>
             </p>
           ) : null}
         </header>
         <div className="booking-step-body">
-          <div className="booking-service-picker" role="radiogroup" aria-label="Service type">
-            {BOOKING_SERVICE_TYPE_LIST.map((service) => (
+          <div className="booking-service-picker" role="radiogroup" aria-label="Booking type">
+            {STANDARD_BOOKING_PACKAGE_LIST.map((pkg) => (
               <button
-                key={service.id}
+                key={pkg.id}
                 type="button"
-                className={`booking-service-btn${selectedServiceType === service.id ? ' is-selected' : ''}`}
+                className={`booking-service-btn${selectedPackageId === pkg.id && selectedServiceType === 'standard_beach' ? ' is-selected' : ''}`}
                 disabled={endpointMissing || submitting}
-                aria-pressed={selectedServiceType === service.id}
-                onClick={() => handleServiceSelect(service.id)}
+                aria-pressed={selectedPackageId === pkg.id && selectedServiceType === 'standard_beach'}
+                onClick={() => handlePackageSelect(pkg.id)}
               >
-                <strong>{service.label}</strong>
-                <span className="booking-region-note">{service.headline}</span>
+                <strong>{pkg.label}</strong>
+                <span className="booking-region-note">{pkg.headline}</span>
+                {pkg.schedulingNote ? (
+                  <span className="booking-region-note">{pkg.schedulingNote}</span>
+                ) : null}
+                {pkg.patternHints?.map((hint) => (
+                  <span key={hint} className="booking-region-note">{hint}</span>
+                ))}
               </button>
             ))}
+            <button
+              type="button"
+              className={`booking-service-btn${selectedServiceType === 'elite_coaching' ? ' is-selected' : ''}`}
+              disabled={endpointMissing || submitting}
+              aria-pressed={selectedServiceType === 'elite_coaching'}
+              onClick={() => handleServiceSelect('elite_coaching')}
+            >
+              <strong>{BOOKING_SERVICE_TYPES.elite_coaching.label}</strong>
+              <span className="booking-region-note">{BOOKING_SERVICE_TYPES.elite_coaching.headline}</span>
+            </button>
           </div>
+          <p className="form-hint">{PAYMENT_AT_MEETING_NOTE}</p>
         </div>
       </section>
 
@@ -856,12 +1088,14 @@ export default function BookForm() {
               selectedServiceType === 'standard_beach' &&
               !NELSON_STANDARD_ONLINE_BOOKING;
 
+            const nelsonPackageClosed = region.id === 'nelson-bays' && isPackageBooking;
+
             return (
             <button
               key={region.id}
               type="button"
               className={`booking-region-btn${selectedRegionId === region.id ? ' is-selected' : ''}`}
-              disabled={endpointMissing || submitting || nelsonStandardClosed}
+              disabled={endpointMissing || submitting || nelsonStandardClosed || nelsonPackageClosed}
               aria-pressed={selectedRegionId === region.id}
               onClick={() => handleRegionSelect(region.id)}
             >
@@ -869,16 +1103,18 @@ export default function BookForm() {
               {region.id === 'nelson-bays' ? (
                 <span className="booking-region-note">
                   {isEliteService
-                    ? 'Elite coaching — $400, travel included (arrange by enquiry)'
+                    ? NELSON_ELITE_CONTACT_NOTE
                     : nelsonStandardClosed
                       ? 'Beach sessions — opening on advertised dates'
-                      : 'By appointment — NELSON calendar days only'}
+                      : NELSON_PRICING_ENQUIRY_NOTE}
                 </span>
               ) : (
                 <span className="booking-region-note">
                   {isEliteService
-                    ? 'Elite coaching at your home or a custom location'
-                    : 'Golden Bay beaches & reserves'}
+                    ? getRegionPricing(region.id).elite_coaching.pricingNote
+                    : isPackageBooking
+                      ? getGoldenBayPricingSummaryLines().join(' · ')
+                      : `${getRegionPricing(region.id).beach.pricingNote} · ${getRegionPricing(region.id).home_visit.pricingNote}`}
                 </span>
               )}
             </button>
@@ -931,6 +1167,27 @@ export default function BookForm() {
           </p>
         ) : (
           <>
+        {isPackageBooking && activePackageConfig ? (
+          <>
+            <p className="form-hint booking-step-done-note" role="status">
+              Scheduling session <strong>{activePackageSessionIndex + 1}</strong> of{' '}
+              <strong>{packageSessionCount}</strong> — {activePackageConfig.label}
+            </p>
+            <p className="form-hint">{activePackageConfig.schedulingNote}</p>
+            {packageSessions.length > 0 ? (
+              <ul className="form-hint">
+                {packageSessions.map((session, index) => {
+                  const loc = getLocationById(session.locationId);
+                  return (
+                    <li key={`${session.slotStart}-${index}`}>
+                      Session {index + 1}: {formatDisplayDate(session.date)} · {loc?.name ?? 'Location'} · scheduled
+                    </li>
+                  );
+                })}
+              </ul>
+            ) : null}
+          </>
+        ) : null}
         <div className="form-field">
           <label htmlFor="bookingDate">Date</label>
           <input
@@ -1057,14 +1314,121 @@ export default function BookForm() {
           </>
         ) : (
           <>
-            <p className="form-hint">Tap a pin on the map or choose a location below. Public beaches and reserves in Golden Bay.</p>
-            <BookingLocationMap
-              locations={regionLocations}
-              mapCenter={mapCenter}
-              selectedId={selectedLocationId}
-              onSelect={handleLocationSelect}
-              disabled={submitting}
-            />
+            {!standardVenue ? (
+              <>
+                <p className="form-hint">Choose where this session takes place.</p>
+                <fieldset className="form-field">
+                  <legend>Venue</legend>
+                  <div className="booking-meeting-picker" role="radiogroup" aria-label="Session venue">
+                    <label className={`booking-meeting-btn${standardVenue === 'beach' ? ' is-selected' : ''}`}>
+                      <input
+                        type="radio"
+                        name="standard_venue"
+                        checked={standardVenue === 'beach'}
+                        disabled={submitting}
+                        onChange={() => {
+                          setStandardVenue('beach');
+                          setSelectedLocationId('');
+                          setSelectedSlot('');
+                          setClientAddress('');
+                          setIsHomeAddress(null);
+                        }}
+                      />
+                      <strong>Beach or reserve</strong>
+                      <span className="booking-region-note">{getRegionPricing('golden-bay').beach.pricingNote}</span>
+                    </label>
+                    <label className={`booking-meeting-btn${standardVenue === 'home' ? ' is-selected' : ''}`}>
+                      <input
+                        type="radio"
+                        name="standard_venue"
+                        checked={standardVenue === 'home'}
+                        disabled={submitting || !getHomeVisitLocationId('golden-bay')}
+                        onChange={() => {
+                          setStandardVenue('home');
+                          setSelectedLocationId('');
+                          setSelectedSlot('');
+                        }}
+                      />
+                      <strong>Home visit</strong>
+                      <span className="booking-region-note">{HOME_VISIT_PRICING_NOTE}</span>
+                    </label>
+                  </div>
+                </fieldset>
+              </>
+            ) : standardVenue === 'home' ? (
+              <>
+                <p className="form-hint booking-home-visit-pricing">{HOME_VISIT_PRICING_NOTE}</p>
+                <div className="form-field">
+                  <label htmlFor="bookHomeAddress">Home address</label>
+                  <input
+                    id="bookHomeAddress"
+                    name="client_address"
+                    type="text"
+                    autoComplete="street-address"
+                    required
+                    disabled={submitting}
+                    value={clientAddress}
+                    onChange={(event) => {
+                      setClientAddress(event.target.value);
+                      setSelectedLocationId('');
+                      setSelectedSlot('');
+                    }}
+                  />
+                </div>
+                <fieldset className="form-field">
+                  <legend>Is this your home address?</legend>
+                  <div className="booking-meeting-picker" role="radiogroup" aria-label="Home address confirmation">
+                    <label className={`booking-meeting-btn${isHomeAddress === true ? ' is-selected' : ''}`}>
+                      <input
+                        type="radio"
+                        name="standard_home_address"
+                        checked={isHomeAddress === true}
+                        disabled={submitting}
+                        onChange={() => {
+                          setIsHomeAddress(true);
+                          setSelectedLocationId('');
+                          setSelectedSlot('');
+                        }}
+                      />
+                      <strong>Yes</strong>
+                    </label>
+                    <label className={`booking-meeting-btn${isHomeAddress === false ? ' is-selected' : ''}`}>
+                      <input
+                        type="radio"
+                        name="standard_home_address"
+                        checked={isHomeAddress === false}
+                        disabled={submitting}
+                        onChange={() => {
+                          setIsHomeAddress(false);
+                          setSelectedLocationId('');
+                          setSelectedSlot('');
+                        }}
+                      />
+                      <strong>No</strong>
+                    </label>
+                  </div>
+                </fieldset>
+                <button
+                  type="button"
+                  className="btn btn-secondary mt-2"
+                  disabled={submitting || isHomeAddress === null || !clientAddress.trim()}
+                  onClick={handleStandardHomeConfirm}
+                >
+                  Continue with this home visit
+                </button>
+              </>
+            ) : (
+              <>
+                <p className="form-hint">Tap a pin on the map or choose a location below. Public beaches and reserves in Golden Bay.</p>
+                <BookingLocationMap
+                  locations={regionLocations}
+                  mapCenter={mapCenter}
+                  selectedId={selectedLocationId}
+                  onSelect={handleLocationSelect}
+                  disabled={submitting}
+                />
+              </>
+            )}
           </>
         )}
           </>
@@ -1317,7 +1681,11 @@ export default function BookForm() {
                       {isEliteService ? ELITE_SERVICE_SUMMARY : STANDARD_SERVICE_SUMMARY}
                     </p>
                     {!isEliteService ? (
-                      <p className="form-hint booking-home-visit-pricing">{STANDARD_PRICING_NOTE}</p>
+                      <p className="form-hint booking-home-visit-pricing">
+                        {isPackageBooking
+                          ? `${activePackageConfig?.label} — per-session pricing applies. ${PAYMENT_AT_MEETING_NOTE}`
+                          : confirmPricingNote}
+                      </p>
                     ) : null}
                   </>
                 ) : null}
@@ -1407,7 +1775,11 @@ export default function BookForm() {
               {isEliteService ? ELITE_SERVICE_SUMMARY : STANDARD_SERVICE_SUMMARY}
             </p>
             {!isEliteService ? (
-              <p className="form-hint booking-home-visit-pricing">{STANDARD_PRICING_NOTE}</p>
+              <p className="form-hint booking-home-visit-pricing">
+                {isPackageBooking
+                  ? `${activePackageConfig?.label} — per-session pricing applies. ${PAYMENT_AT_MEETING_NOTE}`
+                  : confirmPricingNote}
+              </p>
             ) : null}
             <div className="form-field">
               <DogBreedSelector

@@ -20,8 +20,9 @@
  *   { action: "availability", date, region, location }  — available booking slots for a date + location
  *   { action: "lookup_returning", email|phone }  — prior booking profile for quick rebook
  *   { action: "book", region, slot_start, location, ... }
+ *   { action: "book_package", package_id, sessions_json, region, ... }
  *
- * Script version: 2026-07-05-v24 (returning-client lookup deploy + clearer unknown-action errors)
+ * Script version: 2026-07-05-v26 (region pricing, home visits, multi-day packages)
  *   - Multi-region: golden-bay | nelson-bays (region required on availability/book)
  *   - 15-min slot grid; 55 min sessions; 5 min handover; commute buffer between locations
  *   - Nelson Bays: bookable only on days with an all-day NELSON calendar event;
@@ -44,8 +45,20 @@ const ELITE_CALENDAR_BLOCK_MINUTES = 240;
 const ELITE_LAST_START_HOUR = 12;
 const STANDARD_SESSION_PRICE_DOLLARS = 60;
 const ADDITIONAL_PERSON_PRICE_DOLLARS = 10;
+const HOME_VISIT_SESSION_PRICE_DOLLARS = 90;
+const HOME_VISIT_SESSION_MINUTES = 60;
 const STANDARD_PRICE_LABEL = "$" + STANDARD_SESSION_PRICE_DOLLARS;
+const HOME_VISIT_PRICE_LABEL = "$" + HOME_VISIT_SESSION_PRICE_DOLLARS;
 const STANDARD_ADDITIONAL_PERSON_NOTE = "+$" + ADDITIONAL_PERSON_PRICE_DOLLARS + " per additional person attending";
+const PAYMENT_AT_MEETING_NOTE = "Payment is arranged at your session — no online payment on this site.";
+const NELSON_PRICING_ENQUIRY = "Pricing on enquiry — contact Warwick to confirm.";
+
+/** Keep in sync with shared/bookingPackages.ts */
+const PACKAGE_CONFIG = {
+  single: { label: "Single session", sessionCount: 1 },
+  three_day: { label: "3-day programme", sessionCount: 3 },
+  town_ready_five: { label: "Get ready for town", sessionCount: 5 }
+};
 
 /** Flip to true when Nelson beach sessions open on advertised dates. Keep in sync with shared/bookingRegions.ts */
 const NELSON_STANDARD_ONLINE_BOOKING = false;
@@ -217,10 +230,57 @@ const LOCATIONS = {
   "Rangihaeata Beach": { lat: -40.79828176324812, lng: 172.78051321002076, region: "golden-bay" },
   "Patons Rock": { lat: -40.78749415603961, lng: 172.76151432229932, region: "golden-bay" },
   "Elite coaching — Golden Bay": { lat: -40.8064, lng: 172.794, region: "golden-bay", homeVisit: true, eliteCoaching: true },
-  "Home visit — Golden Bay": { lat: -40.8064, lng: 172.794, region: "golden-bay", homeVisit: true, eliteCoaching: true },
+  "Home visit — Golden Bay": { lat: -40.8064, lng: 172.794, region: "golden-bay", homeVisit: true, eliteCoaching: false },
   "Nelson Bays — location to be confirmed": { lat: -41.27, lng: 173.28, region: "nelson-bays" },
   "Elite coaching — Nelson Bays": { lat: -41.27, lng: 173.28, region: "nelson-bays", homeVisit: true, eliteCoaching: true },
-  "Home visit — Nelson Bays": { lat: -41.27, lng: 173.28, region: "nelson-bays", homeVisit: true, eliteCoaching: true }
+  "Home visit — Nelson Bays": { lat: -41.27, lng: 173.28, region: "nelson-bays", homeVisit: true, eliteCoaching: false }
+};
+
+/** Keep in sync with shared/bookingPricing.ts REGION_PRICING */
+const REGION_PRICING = {
+  "golden-bay": {
+    beach: {
+      priceLabel: STANDARD_PRICE_LABEL,
+      pricingNote: STANDARD_PRICE_LABEL + " · " + SESSION_MINUTES + "-minute session. " + STANDARD_ADDITIONAL_PERSON_NOTE + ".",
+      sessionMinutes: SESSION_MINUTES,
+      calendarBlockMinutes: SESSION_MINUTES,
+      additionalPersonNote: STANDARD_ADDITIONAL_PERSON_NOTE
+    },
+    home_visit: {
+      priceLabel: HOME_VISIT_PRICE_LABEL,
+      pricingNote: HOME_VISIT_PRICE_LABEL + " flat · up to " + HOME_VISIT_SESSION_MINUTES + " minutes at your home · household included.",
+      sessionMinutes: HOME_VISIT_SESSION_MINUTES,
+      calendarBlockMinutes: HOME_VISIT_SESSION_MINUTES
+    },
+    elite_coaching: {
+      priceLabel: "$400",
+      pricingNote: "$400 · 2.5-hour session. 4-hour calendar block for travel and preparation.",
+      sessionMinutes: ELITE_SESSION_MINUTES,
+      calendarBlockMinutes: ELITE_CALENDAR_BLOCK_MINUTES
+    },
+    enquiryFallback: NELSON_PRICING_ENQUIRY
+  },
+  "nelson-bays": {
+    beach: {
+      priceLabel: null,
+      pricingNote: "Beach / reserve over the hill — " + NELSON_PRICING_ENQUIRY,
+      sessionMinutes: SESSION_MINUTES,
+      calendarBlockMinutes: SESSION_MINUTES
+    },
+    home_visit: {
+      priceLabel: null,
+      pricingNote: "Home visit over the hill — " + NELSON_PRICING_ENQUIRY,
+      sessionMinutes: HOME_VISIT_SESSION_MINUTES,
+      calendarBlockMinutes: HOME_VISIT_SESSION_MINUTES
+    },
+    elite_coaching: {
+      priceLabel: null,
+      pricingNote: "Elite coaching over the hill — travel included. " + NELSON_PRICING_ENQUIRY,
+      sessionMinutes: ELITE_SESSION_MINUTES,
+      calendarBlockMinutes: ELITE_CALENDAR_BLOCK_MINUTES
+    },
+    enquiryFallback: NELSON_PRICING_ENQUIRY
+  }
 };
 
 function doPost(e) {
@@ -240,6 +300,10 @@ function doPost(e) {
 
     if (action === "book") {
       return handleBooking(data);
+    }
+
+    if (action === "book_package") {
+      return handleBookPackage(data);
     }
 
     if (action === "lookup_returning") {
@@ -387,7 +451,7 @@ function handleAvailability(data) {
 
   const bookingWindow = getBookingWindowForDate(date);
   const rawSlots = getAvailableSlots(date, region, locationName, bookingType);
-  const durations = getBookingDurations(bookingType);
+  const durations = getBookingDurations(bookingType, locationName, region);
 
   const slots = rawSlots.map(function (slot) {
     const sessionEnd = new Date(slot.start.getTime() + durations.sessionMinutes * 60 * 1000);
@@ -675,7 +739,7 @@ function handleBooking(data) {
   const isHomeAddressRaw = String(data.is_home_address || "").trim().toLowerCase();
   var extendedJsonRaw = normalizeExtendedJson(data.extended_json);
   const bookingType = resolveBookingType(data, location);
-  const durations = getBookingDurations(bookingType);
+  const durations = getBookingDurations(bookingType, location, region);
 
   if (isReturning) {
     const filled = applyReturningClientProfile(data);
@@ -901,6 +965,363 @@ function handleBooking(data) {
   }
 }
 
+function parsePackageSessionsJson(raw) {
+  if (!raw) {
+    return [];
+  }
+  if (typeof raw === "string") {
+    try {
+      return JSON.parse(raw);
+    } catch (e) {
+      return [];
+    }
+  }
+  if (Array.isArray(raw)) {
+    return raw;
+  }
+  return [];
+}
+
+function mergeExtendedJsonWithPackage(extendedJson, packageId, packageRef, sessionIndex, sessionCount) {
+  var obj = {};
+  if (extendedJson) {
+    try {
+      obj = JSON.parse(extendedJson);
+    } catch (e) {
+      obj = {};
+    }
+  }
+  if (!obj.v) {
+    obj.v = 1;
+  }
+  obj.packageId = packageId;
+  obj.packageRef = packageRef;
+  obj.packageSessionIndex = sessionIndex;
+  obj.packageSessionCount = sessionCount;
+  var merged = JSON.stringify(obj);
+  if (merged.length > EXTENDED_JSON_MAX) {
+    return extendedJson || JSON.stringify({ v: 1, packageId: packageId, packageRef: packageRef });
+  }
+  return merged;
+}
+
+function buildPackageSubmissionSummary(options) {
+  var regionId = options.region || "golden-bay";
+  var regionLabel = REGIONS[regionId] ? REGIONS[regionId].label : regionId;
+  var pkg = PACKAGE_CONFIG[options.packageId] || PACKAGE_CONFIG.three_day;
+  var lines = [
+    submissionLine("Package", pkg.label),
+    submissionLine("Region", regionLabel),
+    submissionLine("Sessions", String(pkg.sessionCount))
+  ];
+  for (var i = 0; i < options.packageSessions.length; i++) {
+    var session = options.packageSessions[i];
+    var bookingType = session.bookingType || "standard_beach";
+    var when =
+      formatSlotLabel(session.slotStart) +
+      " – " +
+      formatSlotLabel(session.sessionEnd);
+    var price = formatSubmissionPriceLine(bookingType, session.location, regionId);
+    lines.push(
+      "Session " +
+        (i + 1) +
+        ": " +
+        when +
+        " · " +
+        session.locationLabel +
+        " · " +
+        price
+    );
+  }
+  lines.push(submissionLine("Payment", PAYMENT_AT_MEETING_NOTE));
+  var blocks = [
+    submissionSection("Package booking", lines),
+    submissionSection("Your details", [
+      submissionLine("Name", options.name),
+      submissionLine("Phone", options.phone),
+      submissionLine("Email", options.email)
+    ]),
+    submissionSection("Your dog", [
+      submissionLine("Name", options.dogName),
+      submissionLine("Breed", options.dogBreed),
+      submissionLine("Age", options.dogAge)
+    ])
+  ];
+  if (options.message) {
+    blocks.push("Notes\n" + String(options.message).trim());
+  }
+  return blocks.filter(Boolean).join("\n\n");
+}
+
+function handleBookPackage(data) {
+  assertTurnstileToken(data);
+
+  const isReturning = isReturningClientRequest(data);
+  var name = String(data.name || "").trim();
+  var phone = String(data.phone || "").trim();
+  var email = String(data.email || "").trim();
+  var dogName = String(data.dog_name || "").trim();
+  var dogBreed = String(data.dog_breed || "").trim();
+  var dogAge = String(data.dog_age || "").trim();
+  const message = String(data.message || "").trim();
+  const region = String(data.region || "").trim();
+  const packageId = String(data.package_id || "").trim();
+  var extendedJsonRaw = normalizeExtendedJson(data.extended_json);
+  const sessions = parsePackageSessionsJson(data.sessions_json);
+
+  if (isReturning) {
+    const filled = applyReturningClientProfile(data);
+    if (filled.error) {
+      return jsonResponse({ success: false, message: filled.error });
+    }
+    name = filled.name;
+    phone = filled.phone;
+    email = filled.email;
+    dogName = filled.dogName;
+    dogBreed = filled.dogBreed;
+    dogAge = filled.dogAge;
+  }
+
+  if (!phone || !dogName || !region || !packageId) {
+    return jsonResponse({ success: false, message: "Missing required fields." });
+  }
+
+  const pkg = PACKAGE_CONFIG[packageId];
+  if (!pkg) {
+    return jsonResponse({ success: false, message: "Invalid package type." });
+  }
+
+  if (sessions.length !== pkg.sessionCount) {
+    return jsonResponse({
+      success: false,
+      message: "Please choose a time for each session in the package (" + pkg.sessionCount + " required)."
+    });
+  }
+
+  if (!REGIONS[region]) {
+    return jsonResponse({ success: false, message: "Invalid region." });
+  }
+
+  if (region === "nelson-bays") {
+    return jsonResponse({
+      success: false,
+      message: "Nelson Bays packages are arranged by enquiry — please use the contact form."
+    });
+  }
+
+  if (email && !isValidEmail(email)) {
+    return jsonResponse({ success: false, message: "Invalid email address." });
+  }
+
+  assertRateLimit("book:global", RATE_LIMIT_BOOK_GLOBAL, RATE_LIMIT_BOOK_WINDOW_SEC);
+  assertRateLimit(
+    "book:" + rateLimitContactKey(email, phone),
+    RATE_LIMIT_BOOK_PER_CONTACT,
+    RATE_LIMIT_BOOK_WINDOW_SEC
+  );
+
+  const packageRef = Utilities.getUuid();
+  const planned = [];
+  for (var i = 0; i < sessions.length; i++) {
+    var session = sessions[i];
+    var slotStartStr = String(session.slot_start || "").trim();
+    var location = String(session.location || "").trim();
+    var clientAddress = String(session.client_address || "").trim();
+    var isHomeAddressRaw = String(session.is_home_address || "").trim().toLowerCase();
+    var bookingType = resolveBookingType(session, location);
+    var durations = getBookingDurations(bookingType, location, region);
+
+    if (!slotStartStr || !location) {
+      return jsonResponse({ success: false, message: "Each session needs a date, time, and location." });
+    }
+
+    if (!isValidLocationForRegion(location, region)) {
+      return jsonResponse({ success: false, message: "Invalid training location for this region." });
+    }
+
+    if (!isLocationAllowedForBookingType(location, bookingType)) {
+      return jsonResponse({ success: false, message: "Invalid location for session " + (i + 1) + "." });
+    }
+
+    if (isAddressBasedLocation(location)) {
+      if (!clientAddress) {
+        return jsonResponse({ success: false, message: "Please enter the address for session " + (i + 1) + "." });
+      }
+      if (isHomeAddressRaw !== "yes" && isHomeAddressRaw !== "no") {
+        return jsonResponse({
+          success: false,
+          message: "Please confirm whether the address for session " + (i + 1) + " is a home address."
+        });
+      }
+    }
+
+    var slotStart = parseLocalDateTime(slotStartStr);
+    if (!slotStart) {
+      return jsonResponse({ success: false, message: "Invalid appointment time for session " + (i + 1) + "." });
+    }
+
+    var sessionEnd = new Date(slotStart.getTime() + durations.sessionMinutes * 60 * 1000);
+    var calendarEnd = new Date(slotStart.getTime() + durations.calendarBlockMinutes * 60 * 1000);
+    var locationLabel = buildLocationLabel(location, clientAddress);
+    var extendedJson = mergeExtendedJsonWithAddressBooking(
+      extendedJsonRaw,
+      clientAddress,
+      isHomeAddressRaw,
+      location,
+      bookingType
+    );
+    extendedJson = mergeExtendedJsonWithReturningClient(extendedJson, isReturning);
+    extendedJson = mergeExtendedJsonWithPackage(
+      extendedJson,
+      packageId,
+      packageRef,
+      i + 1,
+      pkg.sessionCount
+    );
+
+    planned.push({
+      slotStart: slotStart,
+      sessionEnd: sessionEnd,
+      calendarEnd: calendarEnd,
+      location: location,
+      locationLabel: locationLabel,
+      clientAddress: clientAddress,
+      isHomeAddressRaw: isHomeAddressRaw,
+      bookingType: bookingType,
+      extendedJson: extendedJson
+    });
+  }
+
+  const lock = LockService.getScriptLock();
+  var lockHeld = false;
+  var createdEvents = [];
+
+  try {
+    lock.waitLock(15000);
+    lockHeld = true;
+
+    for (var j = 0; j < planned.length; j++) {
+      var plan = planned[j];
+      if (
+        !isSlotBookable(plan.slotStart, plan.calendarEnd, region, plan.location, plan.bookingType)
+      ) {
+        throw new Error(
+          "Session " +
+            (j + 1) +
+            " is no longer available. Please choose another time."
+        );
+      }
+    }
+
+    const calendar = getBookingCalendar();
+    var packageSessionsSummary = [];
+
+    for (var k = 0; k < planned.length; k++) {
+      var item = planned[k];
+      var titleSuffix = pkg.sessionCount > 1 ? " (" + pkg.label + " " + (k + 1) + "/" + pkg.sessionCount + ")" : "";
+      var title = buildEventTitle(name, dogName, item.bookingType) + titleSuffix;
+      var description = buildEventDescription(
+        name,
+        phone,
+        email,
+        dogName,
+        dogBreed,
+        dogAge,
+        message,
+        item.location,
+        item.extendedJson,
+        item.clientAddress,
+        item.isHomeAddressRaw,
+        region,
+        item.slotStart,
+        item.sessionEnd,
+        item.calendarEnd,
+        item.locationLabel,
+        item.bookingType
+      );
+      var event = calendar.createEvent(title, item.slotStart, item.calendarEnd, {
+        description: description,
+        location: item.locationLabel
+      });
+      createdEvents.push(event);
+
+      appendSubmissionRow([
+        new Date(),
+        "Booking",
+        name,
+        phone,
+        email,
+        dogName,
+        dogBreed,
+        dogAge,
+        message,
+        item.slotStart,
+        item.calendarEnd,
+        event.getId(),
+        "Confirmed",
+        item.location,
+        "",
+        item.extendedJson,
+        region
+      ]);
+
+      packageSessionsSummary.push({
+        slotStart: item.slotStart,
+        sessionEnd: item.sessionEnd,
+        location: item.location,
+        locationLabel: item.locationLabel,
+        bookingType: item.bookingType
+      });
+    }
+
+    if (email && createdEvents.length) {
+      createdEvents[0].addGuest(email);
+    }
+
+    var submissionSummary = buildPackageSubmissionSummary({
+      packageId: packageId,
+      region: region,
+      packageSessions: packageSessionsSummary,
+      name: name,
+      phone: phone,
+      email: email,
+      dogName: dogName,
+      dogBreed: dogBreed,
+      dogAge: dogAge,
+      message: message
+    });
+
+    if (email) {
+      sendClientConfirmationEmail({
+        to: email,
+        name: name || dogName,
+        submissionSummary: submissionSummary
+      });
+    }
+
+    sendNotificationEmail({
+      subject: "New Gold Standard package booking",
+      replyTo: email || NOTIFY_EMAIL,
+      body: "Type: Package booking\n\n" + submissionSummary + "\n\n" + BOOKING_POLICY_NOTE
+    });
+
+    return jsonResponse({ success: true, package_id: packageId, sessions_booked: planned.length });
+  } catch (error) {
+    for (var e = 0; e < createdEvents.length; e++) {
+      try {
+        createdEvents[e].deleteEvent();
+      } catch (deleteError) {
+        // best effort rollback
+      }
+    }
+    return jsonResponse({ success: false, message: error.message || "Server error." });
+  } finally {
+    if (lockHeld) {
+      lock.releaseLock();
+    }
+  }
+}
+
 function getSubmissionsSheet() {
   const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAME);
   if (!sheet) {
@@ -978,19 +1399,56 @@ function resolveBookingType(data, locationName) {
   return "standard_beach";
 }
 
-function getBookingDurations(bookingType) {
+function inferVenueKindFromLocation(locationName, bookingType) {
+  if (bookingType === "elite_coaching") {
+    return "elite_coaching";
+  }
+  if (isStandardHomeVisitLocation(locationName)) {
+    return "home_visit";
+  }
+  return "beach";
+}
+
+function getRegionPricingTier(regionId, venueKind) {
+  var regionPricing = REGION_PRICING[regionId] || REGION_PRICING["golden-bay"];
+  return regionPricing[venueKind] || regionPricing.beach;
+}
+
+function formatSubmissionPriceLine(bookingType, locationName, regionId) {
+  var venueKind = inferVenueKindFromLocation(locationName, bookingType);
+  var tier = getRegionPricingTier(regionId, venueKind);
+  if (!tier.priceLabel) {
+    return tier.pricingNote;
+  }
+  if (venueKind === "beach" && tier.additionalPersonNote) {
+    return tier.priceLabel + " (" + tier.additionalPersonNote + ")";
+  }
+  return tier.pricingNote;
+}
+
+function getBookingDurations(bookingType, locationName, regionId) {
+  regionId = regionId || "golden-bay";
+  var venueKind = inferVenueKindFromLocation(locationName || "", bookingType);
+  var tier = getRegionPricingTier(regionId, venueKind);
   var config = BOOKING_TYPES[bookingType] || BOOKING_TYPES.standard_beach;
   return {
-    sessionMinutes: config.sessionMinutes,
-    calendarBlockMinutes: config.calendarBlockMinutes,
+    sessionMinutes: tier.sessionMinutes,
+    calendarBlockMinutes: tier.calendarBlockMinutes,
     label: config.label,
-    priceLabel: config.priceLabel
+    priceLabel: tier.priceLabel,
+    pricingNote: tier.pricingNote,
+    venueKind: venueKind
   };
 }
 
 function isEliteCoachingLocation(locationName) {
   const location = LOCATIONS[locationName];
   return Boolean(location && location.eliteCoaching);
+}
+
+function isStandardHomeVisitLocation(locationName) {
+  const location = LOCATIONS[locationName];
+  return Boolean(location && location.homeVisit && !location.eliteCoaching);
 }
 
 function isAddressBasedLocation(locationName) {
@@ -1002,7 +1460,13 @@ function isLocationAllowedForBookingType(locationName, bookingType) {
   if (bookingType === "elite_coaching") {
     return isEliteCoachingLocation(locationName);
   }
-  return !isEliteCoachingLocation(locationName);
+  if (isStandardHomeVisitLocation(locationName)) {
+    return bookingType === "standard_beach";
+  }
+  if (isEliteCoachingLocation(locationName)) {
+    return false;
+  }
+  return true;
 }
 
 function isHomeVisitLocation(locationName) {
@@ -1116,7 +1580,7 @@ function getBookingCalendar() {
 
 function getAvailableSlots(date, regionId, locationName, bookingType) {
   bookingType = bookingType || "standard_beach";
-  const durations = getBookingDurations(bookingType);
+  const durations = getBookingDurations(bookingType, locationName, regionId);
   const windows = getBookingWindows(date, regionId);
   if (!windows.length) {
     return [];
@@ -1972,11 +2436,17 @@ function parseSubmissionExtendedJson(raw) {
 
 function buildBookingSubmissionSummary(options) {
   var bookingType = options.bookingType || "standard_beach";
-  var durations = getBookingDurations(bookingType);
+  var regionId = options.region || "golden-bay";
+  var locationName = options.location || options.locationLabel || "";
+  var durations = getBookingDurations(bookingType, locationName, regionId);
   var regionLabel = REGIONS[options.region] ? REGIONS[options.region].label : options.region;
   var sessionEnd = options.sessionEnd || options.slotEnd;
   var calendarEnd = options.calendarEnd || options.slotEnd;
   var whenLine;
+
+  if (options.packageId && options.packageId !== "single" && options.packageSessions && options.packageSessions.length) {
+    return buildPackageSubmissionSummary(options);
+  }
 
   if (bookingType === "elite_coaching") {
     whenLine =
@@ -1987,6 +2457,13 @@ function buildBookingSubmissionSummary(options) {
       " (NZ time, 2.5-hour session); calendar held until " +
       formatSlotLabel(calendarEnd) +
       " for travel and preparation";
+  } else if (durations.venueKind === "home_visit") {
+    whenLine =
+      "When: " +
+      formatSlotLabel(options.slotStart) +
+      " – " +
+      formatSlotLabel(sessionEnd) +
+      " (NZ time, up to 1 hour)";
   } else {
     whenLine =
       "When: " +
@@ -2017,12 +2494,9 @@ function buildBookingSubmissionSummary(options) {
     whenLine,
     submissionLine("Location", options.locationLabel)
   ];
-  if (durations.priceLabel) {
-    var priceLine =
-      bookingType === "standard_beach"
-        ? durations.priceLabel + " (" + STANDARD_ADDITIONAL_PERSON_NOTE + ")"
-        : durations.priceLabel;
-    sessionLines.push(submissionLine("Price", priceLine));
+  if (durations.priceLabel || durations.pricingNote) {
+    sessionLines.push(submissionLine("Price", formatSubmissionPriceLine(bookingType, locationName, regionId)));
+    sessionLines.push(submissionLine("Payment", PAYMENT_AT_MEETING_NOTE));
   }
 
   var blocks = [

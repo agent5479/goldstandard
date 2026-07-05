@@ -8,7 +8,7 @@ Automated round-trip tests: run `npm run test:booking` (public site) and `npm ru
 
 ## Pre-flight
 
-- [ ] Apps Script **v24** deployed; `VITE_FORM_ENDPOINT` / `VITE_BOOKING_API_URL` point to the live `/exec` URL
+- [ ] Apps Script **v26** deployed; `VITE_FORM_ENDPOINT` / `VITE_BOOKING_API_URL` point to the live `/exec` URL
 - [ ] Google Sheet **Submissions** tab has headers A–Q (see [`README.md`](../README.md))
 - [ ] Column **P** header: `Extended Details`
 - [ ] Column **Q** header: `Region`
@@ -44,6 +44,57 @@ Automated round-trip tests: run `npm run test:booking` (public site) and `npm ru
 | Q | `golden-bay` |
 
 Post payload must include `booking_type: standard_beach` and `location`.
+
+---
+
+## 1b. Standard home visit (Golden Bay)
+
+1. Choose **Standard training session** → **Golden Bay**
+2. Step 3: choose **Home visit** (not beach map pin)
+3. Enter address, confirm **At my home** or custom location
+4. Pick a time; complete details and submit
+
+### Sheet row
+
+| Column | Expected |
+|--------|----------|
+| N | `Home visit — Golden Bay` |
+| K | End time ~60 minutes after start (not 55) |
+| P | JSON with `locationKind: "home_visit"`, `clientAddress`, `bookingType: "standard_beach"` |
+
+### Confirmation email
+
+- [ ] Shows **$90** flat household rate (not per-person beach pricing)
+- [ ] Session duration **up to 1 hour**
+- [ ] Payment at meeting note (no online gateway)
+
+### Trainer import
+
+- [ ] Review modal shows **Address** from column P
+- [ ] `owner.address` populated; map pin not auto-set to region centre
+
+---
+
+## 1c. Multi-day packages (Golden Bay only)
+
+1. Step 1: choose **3-day programme** or **Get ready for town** (5 sessions)
+2. Schedule each session (beach or home visit per day)
+3. Submit once — all sessions book atomically
+
+### API / sheet
+
+| Field | Expected |
+|-------|----------|
+| `action` | `book_package` |
+| `package_id` | `three_day` or `town_ready_five` |
+| Column P | `packageRef` with package id and session count |
+| Calendar | One event per session; home visits use 60-minute blocks |
+
+### Cases
+
+- [ ] Mixed beach ($60) + home ($90) sessions in one package
+- [ ] Partial failure rolls back all sessions (no orphan calendar events)
+- [ ] Nelson Bays: package options **not** shown online (enquiry only)
 
 ---
 
@@ -98,6 +149,7 @@ Test on a day with at least one existing confirmed booking or calendar session.
 - [ ] **Same beach back-to-back**: slots at the same location allow ~5-minute gap (e.g. 9:00 then 10:00 on 15-min grid)
 - [ ] **Different beaches**: fewer slots when location is farther from the previous session (e.g. Pohara → Patons Rock needs more than 5 min)
 - [ ] **Elite / home visit adjacent**: 30-minute travel buffer applied
+- [ ] **Standard home visit** (`Home visit — Golden Bay`): 60-minute slot length, $90 pricing in confirmation
 - [ ] **Calendar-only booking** (no sheet row): still affects slot availability with location parsed from calendar event
 - [ ] **Unknown-location calendar event**: 30-minute buffer assumed
 - [ ] Changing **date** or **location** reloads times; changing time does not clear location
