@@ -2,6 +2,11 @@ import { breeds } from './breeds';
 import { getBreedLifePhaseNotes } from './breedSensitivityResolvers';
 import { getBreedSizeClass, resolveBreedName } from './breedTraits';
 import type { SizeClass } from './breedSizeGrades';
+import {
+  getPuppyDevelopmentStage,
+  type PuppyDevelopmentStage,
+  type PuppyDevelopmentStageId,
+} from './puppyDevelopmentStages';
 
 export interface PuppyPlanInput {
   ageWeeks: number;
@@ -35,6 +40,12 @@ export interface PuppyPlanResult {
   milkGuidance: string[];
   trackingItems: string[];
   hungerTrainingActive: boolean;
+  developmentStage: PuppyDevelopmentStageId;
+  developmentStageLabel: string;
+  developmentStageRange: string;
+  developmentStageGoal: string;
+  stagePriorities: string[];
+  stageDefer: string[];
 }
 
 const VET_DISCLAIMER =
@@ -272,6 +283,18 @@ export function buildPuppyPlan(input: PuppyPlanInput): PuppyPlanResult {
     trackingItems.push('Carry-out on wake still required? (paws off floor inside)');
   }
 
+  const stage: PuppyDevelopmentStage = getPuppyDevelopmentStage(ageWeeks);
+
+  if (stage.id === 'teething_satiation') {
+    trackingItems.push('Chew toy rotation — is mouthing satiated or spilling onto hands/furniture?');
+    trackingItems.push('Tolerant dog play sessions — frequency and recovery after');
+  }
+
+  if (stage.id === 'exercise_exposure') {
+    trackingItems.push('Novel exposure log — what was new this week (markets, water, surfaces)?');
+    trackingItems.push('Exercise volume vs blow-off at dog park — normal adolescent, not attitude');
+  }
+
   return {
     ageWeeks,
     ageMonthsApprox,
@@ -289,6 +312,12 @@ export function buildPuppyPlan(input: PuppyPlanInput): PuppyPlanResult {
     milkGuidance,
     trackingItems,
     hungerTrainingActive: input.useHungerTraining,
+    developmentStage: stage.id,
+    developmentStageLabel: stage.label,
+    developmentStageRange: stage.ageRangeLabel,
+    developmentStageGoal: stage.coreGoal,
+    stagePriorities: stage.priorities,
+    stageDefer: stage.defer,
   };
 }
 
@@ -297,6 +326,9 @@ export function formatPuppyPlanText(plan: PuppyPlanResult): string {
     `Puppy plan — ${plan.breedLabel}, ~${plan.ageWeeks} weeks`,
     '',
     VET_DISCLAIMER,
+    '',
+    `Development stage: ${plan.developmentStageLabel} (${plan.developmentStageRange})`,
+    plan.developmentStageGoal,
     '',
     `Bladder hold (approx): ${plan.bladderHoldHours} hour(s) — more frequent when active`,
     `Awake block: ~${plan.awakeMinutes} min | Nap: ~${plan.napMinutes} min`,

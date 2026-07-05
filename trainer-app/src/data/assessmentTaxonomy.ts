@@ -144,6 +144,7 @@ export const GUIDE_ANCHORS: GuideAnchor[] = [
   { id: 'car-protocol', label: 'Car protocol', icon: 'bi-car-front-fill', groupId: 'training' },
   { id: 'road-seven-months', label: 'Seven-month road crucible', icon: 'bi-hourglass', groupId: 'training' },
   { id: 'puppy-phase', label: 'Puppy phase overview', icon: 'bi-heart', groupId: 'puppy-phase' },
+  { id: 'puppy-age-stages', label: 'Age-appropriate stages', icon: 'bi-graph-up', groupId: 'puppy-phase' },
   { id: 'puppy-early-security', label: 'Early security', icon: 'bi-shield-check', groupId: 'puppy-phase' },
   { id: 'puppy-toilet-training', label: 'Toilet training', icon: 'bi-droplet', groupId: 'puppy-phase' },
   { id: 'puppy-daily-structure', label: 'Daily structure', icon: 'bi-calendar-check', groupId: 'puppy-phase' },

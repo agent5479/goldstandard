@@ -131,6 +131,16 @@ export default function PuppyPlanner() {
         {plan.awakeMinutes} min, nap ~{Math.round(plan.napMinutes / 60)} hr.
       </p>
 
+      <div className="callout pro-tip">
+        <strong>
+          {plan.developmentStageLabel} ({plan.developmentStageRange})
+        </strong>
+        <p>{plan.developmentStageGoal}</p>
+        <p>
+          <Link to={guideHref('puppy-age-stages')}>Age-appropriate expectations</Link> — match tools to this stage.
+        </p>
+      </div>
+
       <div className="callout">
         <strong>Not veterinary advice</strong>
         <p>{getPuppyPlanDisclaimer()}</p>

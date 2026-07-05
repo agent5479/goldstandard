@@ -92,6 +92,7 @@ const CONTENTS_LINKS: ContentsLink[] = [
   { moduleId: 'training', group: '⚡ Training', anchor: 'road-seven-months', label: '⏳ Seven-month road crucible' },
 
   { moduleId: 'puppy-phase', group: '🐶 Puppy phase', anchor: 'puppy-phase', label: '🐶 Puppy phase overview' },
+  { moduleId: 'puppy-phase', group: '🐶 Puppy phase', anchor: 'puppy-age-stages', label: '📈 Age-appropriate stages' },
   { moduleId: 'puppy-phase', group: '🐶 Puppy phase', anchor: 'puppy-early-security', label: '🛡️ Early security' },
   { moduleId: 'puppy-phase', group: '🐶 Puppy phase', anchor: 'puppy-toilet-training', label: '🚽 Toilet training' },
   { moduleId: 'puppy-phase', group: '🐶 Puppy phase', anchor: 'puppy-daily-structure', label: '📅 Daily structure' },

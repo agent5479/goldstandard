@@ -19,9 +19,16 @@ export default function SectionPuppy() {
           That does not mean softness. It means proactive design — routine, confinement, and currency you control — so
           reactive corrections stay rare. <strong>Expectations shape behaviour:</strong> what you consistently require
           and reward becomes the dog&apos;s default; what you accidentally reinforce in a behaviour cycle becomes the
-          pattern you will fight for months. See <a href="#eight-week-separation">8-week separation</a> for early
-          security, <a href="#breed-age-intensity">age × temperament</a> for how breed changes the pace, and{' '}
-          <a href="#i-dont-care">I don&apos;t care (7+ months)</a> for when the adult standard fully applies.
+          pattern you will fight for months.
+        </p>
+
+        <p>
+          <strong>Age appropriateness is the governing principle.</strong> You cannot treat a three-month-old the same
+          as a nine-month-old — the brain is literally changing. Patience is required early; accountability ramps later.
+          See <a href="#puppy-age-stages">developmental stages by age</a> for what to prioritise and what to defer at
+          each window. See also <a href="#eight-week-separation">8-week separation</a>,{' '}
+          <a href="#breed-age-intensity">age × temperament</a>, and{' '}
+          <a href="#i-dont-care">I don&apos;t care (7+ months)</a> for how the adult standard layers on top.
         </p>
 
         <div className="callout">
@@ -32,6 +39,133 @@ export default function SectionPuppy() {
             battle.
           </p>
         </div>
+
+        <h3 id="puppy-age-stages">📈 Age appropriateness: developmental stages</h3>
+
+        <p>
+          Beckman-style puppy raising treats <strong>age appropriateness</strong> as the single most critical factor: expectations
+          must shift dynamically as the brain matures. A two-year-old throwing a tantrum over food is normal; a
+          fourteen-year-old doing it is a severe problem. Dogs follow the same curve — what you enforce, what you let go,
+          and what you satiate must match the stage.
+        </p>
+
+        <p>
+          This guide&apos;s antecedent arrangement — structure, confinement, hunger as currency — still applies at every
+          age. What changes is <em>enforcement intensity</em>: how hard you clamp down on blow-off, leash pulling, and
+          formal obedience. Use the stage table below before choosing tools from the rest of this module.
+        </p>
+
+        <h4>Stage 1: 0 to 8 weeks — nesting phase</h4>
+
+        <p>
+          Foundational safety only. Puppies belong with mother, father, and littermates to establish an early baseline of
+          security, bite inhibition with siblings, and thermal co-regulation. Your home training has not started — the
+          breeder and vet guide this window.
+        </p>
+
+        <h4>Stage 2: 8 weeks to 4 months — safety &amp; routine</h4>
+
+        <p>
+          <strong>Core goal:</strong> an unshakable feeling of safety.{' '}
+          <a href="#puppy-toilet-training">Potty training</a> is the primary, overriding training goal — above everything
+          else. Keep training light: simple, low-pressure recalls (call them over for treats).{' '}
+          <strong>Do not implement enforcing methods yet.</strong> Letting the puppy sleep in bed with you at this age
+          builds security — it may make night toilet slightly harder; that trade is often worth it early. Chewing begins
+          to ramp at the tail end. See <a href="#puppy-early-security">early security</a>.
+        </p>
+
+        <h4>Stage 3: 4 to 7 months — teething &amp; satiation</h4>
+
+        <p>
+          <strong>Core goal:</strong> satiate the overwhelming developmental urge to chew and mouth — they are temporarily
+          out of their minds. Immense focus on proper{' '}
+          <a href="#puppy-mouthing-play">chew toys and approved textures</a>.{' '}
+          <strong>Do not be hardcore on leash or obedience</strong> — no standard leash corrections, no forcing strict
+          rules. The brain is elsewhere; be highly patient if they pull, bark, or blow you off.
+        </p>
+
+        <p>
+          <strong>Dog socialisation:</strong> get them outside for walks and mental stimulation. Crucially, find at least
+          one <strong>tolerant adult dog</strong> they can safely jump on, mouth, and wrestle with — this satisfies social
+          drives so the intense energy does not land on you or your children at home. See{' '}
+          <a href="#dog-meetings">dog meetings</a> for how you hold structure while allowing appropriate play.
+        </p>
+
+        <h4>Stage 4: 7 to 12 months — exercise, exposure &amp; fear period</h4>
+
+        <p>
+          <strong>Core goal:</strong> navigate a major fear period through purposeful exposure and high exercise. Often
+          the toughest phase: physically full-grown, mentally a teenager. Blowing you off at the dog park is{' '}
+          <strong>normal at this age</strong> — not permanent attitude.
+        </p>
+
+        <ul className="checklist">
+          <li>
+            <strong>Drastically increase</strong> physical exercise and mental stimulation — adult-sized energy on a
+            teenage brain
+          </li>
+          <li>
+            <strong>Active exposure during the fear period</strong> — hikes, farmers&apos; markets, malls, novel surfaces,
+            swimming (weightlessness). Do not over-shield; missing this window risks a permanently fearful adult
+          </li>
+          <li>
+            Toward <strong>9–12 months</strong>: slowly introduce the{' '}
+            <a href="#go-get-recall">Go Get Method</a> for recalls and very light, tiny leash corrections — the brain can
+            finally process that failure to listen has a consequence
+          </li>
+        </ul>
+
+        <p>
+          From roughly <strong>seven months</strong>, Warwick&apos;s{' '}
+          <a href="#i-dont-care">I don&apos;t care</a> standard applies to manners — doors, jumping, walk position — even
+          while Beckman-style formal obedience and correction intensity still ramp gradually through this stage.
+        </p>
+
+        <h4>Stage 5: 12 to 18 months — accountability &amp; serious training</h4>
+
+        <p>
+          <strong>Core goal:</strong> transition into structured adulthood. Puppy passes are officially over. Clamp down —
+          in a loving but firm way — on pulling, ignoring recalls, and jumping on people. Solidify recalls and leash
+          accountability. Prepare them for the realities of the world.
+        </p>
+
+        <p>
+          Around <strong>18 months</strong>, personality becomes fundamentally set. A dog who was cold or dismissive
+          toward other dogs at nine months may switch into overt aggression, growling, or biting by eighteen months
+          because adults take social friction more seriously than puppies. Address social patterns before this switch —
+          see <a href="#social-needs">dog-to-dog dynamics</a> and <a href="#graduation">graduation</a>.
+        </p>
+
+        <table className="pillars-table" aria-label="Puppy developmental stage summary">
+          <thead>
+            <tr>
+              <th scope="col">Age range</th>
+              <th scope="col">Focus</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>0–8 weeks</td>
+              <td>With litter — safety baseline (breeder)</td>
+            </tr>
+            <tr>
+              <td>8 weeks – 4 months</td>
+              <td>Keep safe, build bond, potty training only — light recalls, no enforcement</td>
+            </tr>
+            <tr>
+              <td>4–7 months</td>
+              <td>Chew toys, tolerant dog play, accept temporary lunacy — no strict corrections</td>
+            </tr>
+            <tr>
+              <td>7–12 months</td>
+              <td>Max exercise, heavy environmental exposure, light enforcement late in stage</td>
+            </tr>
+            <tr>
+              <td>12–18 months</td>
+              <td>Strict accountability, solid recalls, eliminate pulling and jumping</td>
+            </tr>
+          </tbody>
+        </table>
 
         <h3 id="puppy-early-security">🛡️ Early security: closeness before structure</h3>
 
@@ -201,7 +335,12 @@ export default function SectionPuppy() {
 
         <p>
           Instead of reactive corrections after the wrong choice, structure the environment so the right choice is the
-          easy one. These mechanics apply from the first week home.
+          easy one. <strong>Match intensity to stage:</strong> in{' '}
+          <a href="#puppy-age-stages">Stage 2 (8 weeks – 4 months)</a>, keep all of this light — potty first, simple
+          recalls for treats, no enforcing methods. In{' '}
+          <a href="#puppy-age-stages">Stage 3 (4–7 months)</a>, still no hardcore leash corrections — impassive
+          walk-back and environmental design yes; standard jerk-and-accountability no. Full application of jumping and
+          recall tools ramps from late Stage 4 onward.
         </p>
 
         <h4>Ditch the food bowl</h4>
@@ -277,7 +416,10 @@ export default function SectionPuppy() {
 
         <p>
           Apply downward tension on the leash only. Allow the puppy to self-correct at the boundary of the leash rather
-          than pulling them back yourself — see <a href="#leash-weight">line weight &amp; dangle</a>.
+          than pulling them back yourself — see <a href="#leash-weight">line weight &amp; dangle</a>. Through{' '}
+          <a href="#puppy-age-stages">Stage 3 (4–7 months)</a>, stay patient when they pull or blow you off — the brain
+          cannot process standard corrections constructively yet. Formal leash accountability arrives late in Stage 4 and
+          fully in Stage 5.
         </p>
 
         <div className="callout pro-tip">
@@ -294,10 +436,20 @@ export default function SectionPuppy() {
         <h3 id="puppy-mouthing-play">🦷 Mouthing, teething, and appropriate play</h3>
 
         <p>
-          Mouthing is a normal combination of <strong>teething, arousal, and anxiety</strong> — not defiance. Redirect
-          this energy onto appropriate textures via structured games rather than stiff corrections that escalate arousal
-          further.
+          Mouthing is a normal combination of <strong>teething, arousal, and anxiety</strong> — not defiance. During{' '}
+          <a href="#puppy-age-stages">Stage 3 (4–7 months)</a>, the teething urge is overwhelming — satiation through
+          chew toys is the core goal, not punishment. Redirect onto appropriate textures via structured games rather than
+          stiff corrections that escalate arousal further.
         </p>
+
+        <div className="callout">
+          <strong>🐕 Tolerant dog play (Stage 3)</strong>
+          <p>
+            Find at least one calm, tolerant adult dog who will let your puppy jump, mouth, and wrestle safely. That
+            outlet satisfies social and oral drives so the intensity does not discharge on children or furniture at home.
+            You still supervise and hold boundaries — see <a href="#dog-meetings">dog meetings</a>.
+          </p>
+        </div>
 
         <ul className="checklist">
           <li>
@@ -340,7 +492,8 @@ export default function SectionPuppy() {
           <a href="#check-in-seven">The seven-second check-in</a>; here is how to establish it in the puppy phase. The
           rule: during engagement, the puppy should check in with you at least once every <strong>seven seconds</strong>.
           Reward with a warm &quot;Good girl!&quot; or &quot;Good!&quot; every single time they glance your way inside
-          that window.
+          that window. In <a href="#puppy-age-stages">Stages 2–3</a>, keep sessions playful and low-pressure — build the
+          habit without enforcing consequences for missed check-ins.
         </p>
 
         <p>
@@ -363,7 +516,8 @@ export default function SectionPuppy() {
           </li>
           <li>
             For prey-drive breeds, backward running activates engagement better than static hand lures — pair with{' '}
-            <a href="#go-get-recall">go-get recall</a>; schedule sessions before meals, not after
+            <a href="#go-get-recall">go-get recall</a> from ~9 months onward; before that, playful recall games only;
+            schedule sessions before meals, not after
           </li>
         </ul>
 
@@ -450,11 +604,13 @@ export default function SectionPuppy() {
         <div className="callout">
           <strong>🎓 What comes next</strong>
           <p>
-            The puppy phase is establishment, not graduation. As structure consolidates, carry the rhythm into{' '}
-            <a href="#check-in-seven">seven-second check-in</a>, <a href="#daily">daily practice</a>, and eventually{' '}
-            <a href="#graduation">graduation to adulthood</a>. Past roughly seven months, the{' '}
-            <a href="#i-dont-care">I don&apos;t care</a> adult standard applies in full — the puppy-excuse window is
-            closed.
+            The puppy phase is establishment, not graduation. Carry rhythm into{' '}
+            <a href="#check-in-seven">seven-second check-in</a> and <a href="#daily">daily practice</a>. Expectations
+            shift by stage — see <a href="#puppy-age-stages">developmental stages</a>: manners tighten from{' '}
+            <a href="#i-dont-care">seven months</a>, formal obedience and corrections ramp late in the first year,
+            full accountability by <strong>12–18 months</strong>, then{' '}
+            <a href="#graduation">graduation to adulthood</a>. At ~18 months, personality is largely set — social
+            patterns ignored in adolescence often harden into adult aggression.
           </p>
         </div>
       </div>
