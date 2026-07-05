@@ -8,6 +8,8 @@ import GuidePage from './pages/GuidePage';
 import GuideModulePage from './pages/GuideModulePage';
 import ExamPage from './pages/ExamPage';
 import IntelligencePage from './pages/IntelligencePage';
+import DogPersonalityPage from './pages/dog-personality/DogPersonalityPage';
+import BreedFinderPage from './pages/breed-finder/BreedFinderPage';
 
 /** Redirect legacy .html URLs to their SPA routes, preserving the hash. */
 function LegacyRedirect({ to }: { to: string }) {
@@ -28,6 +30,8 @@ export default function App() {
         <Route path="/guide/:moduleId" element={<GuideModulePage />} />
         <Route path="/exam" element={<ExamPage />} />
         <Route path="/intelligence" element={<IntelligencePage />} />
+        <Route path="/dog-personality" element={<DogPersonalityPage />} />
+        <Route path="/breed-finder" element={<BreedFinderPage />} />
 
         <Route path="/index.html" element={<LegacyRedirect to="/" />} />
         <Route path="/about.html" element={<LegacyRedirect to="/about" />} />
@@ -36,6 +40,8 @@ export default function App() {
         <Route path="/guide.html" element={<LegacyRedirect to="/guide" />} />
         <Route path="/exam.html" element={<LegacyRedirect to="/exam" />} />
         <Route path="/intelligence.html" element={<LegacyRedirect to="/intelligence" />} />
+        <Route path="/dog-personality.html" element={<LegacyRedirect to="/dog-personality" />} />
+        <Route path="/breed-finder.html" element={<LegacyRedirect to="/breed-finder" />} />
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

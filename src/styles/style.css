@@ -6026,3 +6026,255 @@ a.problem-finder-tertiary {
     grid-column: 1 / -1;
   }
 }
+
+/* ── Quiz tools (personality + breed finder) ── */
+.quiz-shell {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.quiz-shell-footer-left {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.quiz-option-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.85rem;
+  margin-bottom: 0.5rem;
+}
+
+.quiz-option-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  text-align: left;
+  background: var(--surface);
+  border: 1px solid rgba(45, 74, 45, 0.16);
+  border-radius: 6px;
+  padding: 1rem 1.1rem;
+  font-family: 'Crimson Pro', Georgia, serif;
+  cursor: pointer;
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+
+.quiz-option-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--gold);
+  box-shadow: 0 8px 22px rgba(24, 38, 24, 0.1);
+}
+
+.quiz-option-card.is-selected {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 2px rgba(201, 162, 39, 0.35);
+  background: rgba(201, 162, 39, 0.06);
+}
+
+.quiz-option-card-label {
+  font-size: 1.02rem;
+  color: var(--forest);
+  line-height: 1.35;
+}
+
+.quiz-option-card-sublabel {
+  font-size: 0.9rem;
+  color: var(--light-text);
+  line-height: 1.4;
+}
+
+.quiz-tool-main {
+  padding: 2rem 1.5rem 4rem;
+}
+
+.quiz-intro-card {
+  max-width: 640px;
+  margin: 0 auto 2rem;
+  background: var(--surface);
+  border: 1px solid rgba(45, 74, 45, 0.14);
+  border-radius: 6px;
+  padding: 1.6rem 1.8rem;
+  box-shadow: 0 6px 24px rgba(24, 38, 24, 0.07);
+}
+
+.quiz-intro-card p {
+  margin: 0 0 1rem;
+  line-height: 1.55;
+}
+
+.quiz-intro-card p:last-child {
+  margin-bottom: 0;
+}
+
+.quiz-result-hero {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto 2rem;
+  padding: 2rem 1.5rem;
+  background: var(--surface);
+  border: 1px solid rgba(45, 74, 45, 0.14);
+  border-radius: 8px;
+  box-shadow: 0 8px 28px rgba(24, 38, 24, 0.08);
+}
+
+.quiz-result-archetype {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  font-weight: 700;
+  color: var(--forest);
+  margin: 0 0 0.6rem;
+  line-height: 1.25;
+}
+
+.quiz-result-category {
+  font-size: 0.82rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin: 0 0 1rem;
+}
+
+.quiz-result-blurb {
+  font-size: 1.08rem;
+  line-height: 1.55;
+  color: var(--text);
+  margin: 0;
+}
+
+.quiz-breed-showcase {
+  max-width: 900px;
+  margin: 0 auto 2rem;
+}
+
+.quiz-breed-showcase h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.35rem;
+  color: var(--forest);
+  margin: 0 0 1rem;
+  text-align: center;
+}
+
+.quiz-breed-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.75rem;
+}
+
+.quiz-breed-chip {
+  background: var(--page-bg);
+  border: 1px solid rgba(45, 74, 45, 0.14);
+  border-radius: 5px;
+  padding: 0.75rem 0.9rem;
+}
+
+.quiz-breed-chip-name {
+  display: block;
+  font-weight: 600;
+  color: var(--forest);
+  font-size: 0.95rem;
+  margin-bottom: 0.25rem;
+}
+
+.quiz-breed-chip-note {
+  display: block;
+  font-size: 0.82rem;
+  color: var(--light-text);
+  line-height: 1.35;
+}
+
+.quiz-result-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.breed-finder-section-label {
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--moss);
+  margin-bottom: 0.5rem;
+}
+
+.breed-finder-result-card {
+  background: var(--surface);
+  border: 1px solid rgba(45, 74, 45, 0.14);
+  border-radius: 6px;
+  padding: 1.4rem 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 18px rgba(24, 38, 24, 0.06);
+}
+
+.breed-finder-result-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.breed-finder-result-rank {
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.breed-finder-result-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--forest);
+  margin: 0;
+}
+
+.breed-finder-result-score {
+  font-size: 0.95rem;
+  color: var(--moss);
+  font-weight: 600;
+}
+
+.breed-finder-result-reasons,
+.breed-finder-result-cautions {
+  margin: 0.5rem 0 0;
+  padding-left: 1.2rem;
+  line-height: 1.5;
+}
+
+.breed-finder-result-cautions {
+  color: var(--amber);
+}
+
+.breed-finder-detail-toggle {
+  margin-top: 0.85rem;
+}
+
+.breed-finder-detail-panel {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(45, 74, 45, 0.12);
+}
+
+@media (max-width: 520px) {
+  .quiz-option-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .exam-quiz-footer {
+    flex-direction: column-reverse;
+  }
+
+  .exam-quiz-footer .btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .quiz-shell-footer-left {
+    width: 100%;
+    justify-content: center;
+  }
+}

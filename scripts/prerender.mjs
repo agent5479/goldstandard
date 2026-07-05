@@ -30,6 +30,8 @@ const routes = [
   '/guide/daily-life',
   '/exam',
   '/intelligence',
+  '/dog-personality',
+  '/breed-finder',
 ];
 
 function routeToOutputFile(route) {

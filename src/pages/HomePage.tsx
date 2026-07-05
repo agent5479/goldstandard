@@ -169,6 +169,22 @@ export default function HomePage() {
               </span>
               <span className="resource-card-cta">Find your focus →</span>
             </button>
+            <Link to="/dog-personality" className="resource-card">
+              <SectionIcon set="site" size="card" className="resource-card-icon" />
+              <strong className="resource-card-title">What Kind of Dog Are You?</strong>
+              <span className="resource-card-desc">
+                A playful branching quiz — discover your temperament archetype and which breeds share your vibe.
+              </span>
+              <span className="resource-card-cta">Take the quiz →</span>
+            </Link>
+            <Link to="/breed-finder" className="resource-card">
+              <SectionIcon set="breedanalysis" size="card" className="resource-card-icon" />
+              <strong className="resource-card-title">Breed Finder</strong>
+              <span className="resource-card-desc">
+                Match breeds to your household, lifestyle, and expectations — ranked results with honest caveats.
+              </span>
+              <span className="resource-card-cta">Find your match →</span>
+            </Link>
           </div>
         </div>
       </section>
