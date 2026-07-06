@@ -13,8 +13,13 @@ const app = (
   </StrictMode>
 );
 
-// Production builds prerender route HTML into docs/; hydrate instead of replacing it.
-if (import.meta.env.PROD && rootEl.innerHTML.trim().length > 0) {
+const hasPrerenderedMarkup = import.meta.env.PROD && rootEl.innerHTML.trim().length > 0;
+const pathname = window.location.pathname.replace(/\/$/, '') || '/';
+const isBookRoute = pathname.endsWith('/book');
+
+// The booking form depends on live dates and API capability checks that differ between
+// prerender time and the visitor's browser — hydrate everything else, client-render /book.
+if (hasPrerenderedMarkup && !isBookRoute) {
   hydrateRoot(rootEl, app);
 } else {
   createRoot(rootEl).render(app);

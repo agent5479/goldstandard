@@ -2876,6 +2876,14 @@ body.page-guide {
   font-style: italic;
 }
 
+.booking-package-approach {
+  margin-top: 0.85rem;
+  padding: 0.85rem 1rem;
+  border-left: 3px solid #2d6a45;
+  background: rgba(45, 106, 69, 0.06);
+  border-radius: 0 6px 6px 0;
+}
+
 .booking-server-warning {
   margin: 0 0 1rem;
 }

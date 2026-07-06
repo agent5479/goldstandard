@@ -12,8 +12,8 @@ export type BookingPackageConfig = {
   headline: string;
   /** Why this package exists — commitment, reinforcement, faster progress. */
   whyNote?: string;
-  /** One line per session describing how the programme builds (length matches sessionCount). */
-  sessionProgress?: string[];
+  /** How sessions run in practice — adaptive, not a fixed day-by-day script. */
+  approachNote?: string;
   schedulingNote: string;
   patternHints?: string[];
 };
@@ -33,11 +33,8 @@ export const BOOKING_PACKAGES: Record<BookingPackageId, BookingPackageConfig> = 
     headline: 'Three sessions with Warwick — a commitment to secure the transformation.',
     whyNote:
       'One session can shift things; three give consistent practice and reinforcement between visits so you progress much faster. You are committing to the work, not cramming everything into one week.',
-    sessionProgress: [
-      'Assess your dog, set priorities, and leave with a clear plan to practice at home.',
-      'Review what is working, tighten skills, and add real-world exposure.',
-      'Consolidate gains and lock in routines that stick after Warwick leaves.',
-    ],
+    approachNote:
+      'Warwick adapts each session to what you and your dog need that day — there is always more to work on, and sometimes it has to be less. The consistency across three visits is what builds permanence; by the end you know how to carry it on yourself.',
     schedulingNote: 'Consecutive days where possible.',
   },
   town_ready_five: {
@@ -68,14 +65,6 @@ export function getPackageConfig(packageId: BookingPackageId): BookingPackageCon
 
 export function getPackageSessionCount(packageId: BookingPackageId): number {
   return BOOKING_PACKAGES[packageId].sessionCount;
-}
-
-export function getPackageSessionProgressNote(
-  packageId: BookingPackageId,
-  sessionIndex: number
-): string | undefined {
-  const config = BOOKING_PACKAGES[packageId];
-  return config.sessionProgress?.[sessionIndex];
 }
 
 /** Sessions 4–5 of Get ready for town use the Takaka township meeting point. */

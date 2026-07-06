@@ -62,7 +62,6 @@ import {
   STANDARD_BOOKING_PACKAGE_LIST,
   getPackageConfig,
   getPackageSessionCount,
-  getPackageSessionProgressNote,
   packageSessionAllowsTownVenue,
   type BookingPackageId,
   type PackageSessionDraft,
@@ -202,7 +201,10 @@ export default function BookForm() {
   const [activePackageSessionIndex, setActivePackageSessionIndex] = useState(0);
   const [standardVenue, setStandardVenue] = useState<StandardVenue>(null);
   const [selectedRegionId, setSelectedRegionId] = useState<BookingRegionId | ''>('');
-  const [date, setDate] = useState(defaultBookingDate());
+  const [clientReady, setClientReady] = useState(false);
+  const [date, setDate] = useState('');
+  const [minDate, setMinDate] = useState('');
+  const [maxDate, setMaxDate] = useState('');
   const [slots, setSlots] = useState<BookingSlot[]>([]);
   const [selectedSlot, setSelectedSlot] = useState('');
   const [selectedLocationId, setSelectedLocationId] = useState('');
@@ -259,6 +261,13 @@ export default function BookForm() {
     setDogAgeFields(emptyDogAgeFields());
     setExtendedDetails(emptyExtendedDetailsState());
   };
+
+  useEffect(() => {
+    setClientReady(true);
+    setDate(defaultBookingDate());
+    setMinDate(minBookingDate());
+    setMaxDate(maxBookingDate());
+  }, []);
 
   useEffect(() => {
     if (!FORM_ENDPOINT) return;
@@ -1134,7 +1143,7 @@ export default function BookForm() {
 
   return (
     <form className="enquiry-form booking-form" id="booking-form" noValidate onSubmit={handleSubmit}>
-      {packageBookingLive === false ? (
+      {clientReady && packageBookingLive === false ? (
         <p className="form-feedback error booking-server-warning" role="alert">
           Online package booking is not live on the server yet — single sessions may still work. For 3-day
           or 5-session packages, call or text{' '}
@@ -1231,17 +1240,8 @@ export default function BookForm() {
             <a href="tel:+64278142222">027 814 2222</a>
             {' '}— or <Link to="/contact">send an enquiry</Link>.
           </p>
-          {isPackageBooking && activePackageConfig?.sessionProgress?.length ? (
-            <div className="booking-package-progress">
-              <p className="booking-package-progress-title">How the {activePackageConfig.sessionCount} sessions build</p>
-              <ol className="booking-package-progress-list">
-                {activePackageConfig.sessionProgress.map((note, index) => (
-                  <li key={index}>
-                    <strong>Session {index + 1}</strong> — {note}
-                  </li>
-                ))}
-              </ol>
-            </div>
+          {isPackageBooking && activePackageConfig?.approachNote ? (
+            <p className="form-hint booking-package-approach">{activePackageConfig.approachNote}</p>
           ) : null}
           <p className="form-hint">{PAYMENT_AT_MEETING_NOTE}</p>
         </div>
@@ -1369,7 +1369,6 @@ export default function BookForm() {
                 const isActive = showActivePackageForm && index === activePackageSessionIndex;
                 const isUpcoming = !isDone && index > activePackageSessionIndex;
                 if (isUpcoming) return null;
-                const sessionProgressNote = getPackageSessionProgressNote(selectedPackageId, index);
 
                 return (
                   <div
@@ -1402,11 +1401,6 @@ export default function BookForm() {
                     ) : null}
                     {isActive ? (
                       <>
-                        {sessionProgressNote ? (
-                          <p className="form-hint booking-package-progress-current">
-                            <strong>Session {index + 1} focus:</strong> {sessionProgressNote}
-                          </p>
-                        ) : null}
                         {index > 0 ? (
                           <p className="form-hint">
                             Pick a <strong>different day</strong> for session {index + 1} — each session in this
@@ -1420,10 +1414,10 @@ export default function BookForm() {
                             name="booking_date"
                             type="date"
                             required
-                            min={minBookingDate()}
-                            max={maxBookingDate()}
+                            min={minDate}
+                            max={maxDate}
                             value={date}
-                            disabled={endpointMissing || submitting}
+                            disabled={endpointMissing || submitting || !clientReady}
                             onChange={(event) => handlePackageDateChange(event.target.value)}
                           />
                           {packageDateError ? (
@@ -1448,10 +1442,10 @@ export default function BookForm() {
             name="booking_date"
             type="date"
             required
-            min={minBookingDate()}
-            max={maxBookingDate()}
+            min={minDate}
+            max={maxDate}
             value={date}
-            disabled={endpointMissing || submitting}
+            disabled={endpointMissing || submitting || !clientReady}
             onChange={(event) => handlePackageDateChange(event.target.value)}
           />
           {packageDateError ? (

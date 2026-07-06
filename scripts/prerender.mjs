@@ -65,7 +65,10 @@ async function prerender() {
       const url = route === '/' ? `${previewOrigin}/` : `${previewOrigin}${route}`;
       console.log(`Prerendering ${url}`);
 
-      await page.goto(url, { waitUntil: 'networkidle', timeout: 60_000 });
+      await page.goto(url, {
+        waitUntil: route === '/book' ? 'domcontentloaded' : 'networkidle',
+        timeout: 60_000,
+      });
       await page.waitForSelector('html[data-seo-ready="true"]', { timeout: 30_000 });
       await page.waitForSelector('#root > *', { timeout: 30_000 });
 

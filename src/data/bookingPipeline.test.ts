@@ -24,7 +24,6 @@ import {
 } from './bookingConfig';
 import {
   BOOKING_PACKAGES,
-  getPackageSessionProgressNote,
   packageSessionAllowsTownVenue,
 } from '@shared/bookingPackages';
 
@@ -249,12 +248,11 @@ describe('booking pipeline — 3-day programme copy', () => {
     expect(BOOKING_PACKAGES.town_ready_five.schedulingNote).toBe('Consecutive days where possible.');
   });
 
-  it('explains why three sessions and session-by-session progress', () => {
+  it('explains commitment and adaptive approach for the 3-day programme', () => {
     expect(BOOKING_PACKAGES.three_day.whyNote).toMatch(/reinforcement/i);
-    expect(BOOKING_PACKAGES.three_day.sessionProgress).toHaveLength(3);
-    expect(getPackageSessionProgressNote('three_day', 0)).toMatch(/Assess/i);
-    expect(getPackageSessionProgressNote('three_day', 2)).toMatch(/Consolidate/i);
-    expect(getPackageSessionProgressNote('three_day', 99)).toBeUndefined();
+    expect(BOOKING_PACKAGES.three_day.approachNote).toMatch(/adapts each session/i);
+    expect(BOOKING_PACKAGES.three_day.approachNote).toMatch(/carry it on yourself/i);
+    expect(BOOKING_PACKAGES.three_day.approachNote).not.toMatch(/Session 1/i);
   });
 
   it('offers Takaka township venue for sessions 4 and 5 of Get ready for town', () => {
