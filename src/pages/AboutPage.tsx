@@ -4,8 +4,6 @@ import Seo from '../components/Seo';
 import SectionIcon from '../components/SectionIcon';
 import SiteHeader from '../components/SiteHeader';
 import SiteFooter from '../components/SiteFooter';
-import { STANDARD_PRICING_NOTE, HOME_VISIT_PRICING_NOTE } from '../data/bookingConfig';
-import { NELSON_STANDARD_COMING_SOON_NOTE, NELSON_PRICING_ENQUIRY_NOTE } from '@shared/bookingRegions';
 
 export default function AboutPage() {
   return (
@@ -29,27 +27,11 @@ export default function AboutPage() {
           <div className="philosophy-text page-hero-bio">
             <p>
               Warwick founded Gold Standard to give owners more than a quick fix — a path to understand how
-              dogs think, how pack structure works, and how to hold calm leadership in everyday life. The name
-              reflects the standard he holds for both dog and handler: clear expectations, measured correction,
-              and results that last after the session ends.
+              dogs think, how pack structure works, and how to hold calm leadership in everyday life.
             </p>
             <p>
-              Gold Standard is an independent practice. Warwick is not affiliated with, endorsed by, or
-              certified by Beckman. When this site references Beckman-style training, it means the broader
-              structure-and-owner-coaching philosophy that influenced Warwick&apos;s approach — not an official
-              credential or approval. Warwick&apos;s model is deliberately purist: no prongs, choke chains used
-              harshly, vibration collars, or remote &ldquo;ethereal&rdquo; correction. The signal source is you —
-              presence, timing, leash, voice, and touch.
-            </p>
-            <p>
-              Training is hands-on owner coaching informed by how dogs actually negotiate rank, space, and
-              access. Your energy, attention, and consistency are the most powerful tools your dog has — not
-              gadgets that outsource authority.
-            </p>
-            <p>
-              Every dog is welcome — puppies, seniors, purebreds, mixes, easy learners, and difficult cases.
-              Whether you want basic obedience, better leash manners, social skills, or rehabilitation after
-              a rough start, Warwick will work with you to find a path forward.
+              Gold Standard is an independent practice — Beckman-inspired structure and owner coaching, but
+              Warwick is not affiliated with, endorsed by, or certified by Beckman.
             </p>
           </div>
           <div className="trust-grid">
@@ -73,99 +55,33 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="philosophy">
+      <section className="about-section about-section--soft">
         <div className="section-inner">
-          <p className="section-label">💡 The philosophy</p>
-          <h2>🌱 Embodied pack fluency —<br />for dogs and their humans.</h2>
+          <p className="section-label">✨ Why Gold Standard</p>
+          <h2>🏆 A standard for both dog and handler.</h2>
           <div className="philosophy-text">
             <p>
-              Dogs find peace and freedom when they know their place and learn trust within clear structure.
-              Gold Standard is not a gadget system and not permissive drift. It is a <strong>purist, embodied
-              model</strong>: you learn to speak the physical grammar dogs already use — posture, spatial pressure,
-              timing, and a measured leash conversation — without outsourcing authority to prongs, harsh chokes,
-              vibration collars, or remote signals.
-            </p>
-            <p>
-              The word that captures it is <strong>embodiment</strong>. Not knowing about dogs in theory, but
-              inhabiting the role of the calm anchor until your baseline, your ready stance, and your follow-through
-              all say the same thing. Dogs don&apos;t lie — they read breath, tension, and whether the line is real.
-              That integration of the handler&apos;s inner journey with the dog&apos;s ethological world is what
-              Warwick calls becoming the <strong>healthy master</strong>: measured control, clear communication,
-              attuned reading of body language, and connection that earns trust rather than demanding performance.
-            </p>
-
-            <h3>Dog-Tantra — the shared flow state</h3>
-
-            <p>
-              To achieve true embodiment, we work with what Warwick calls <strong>Dog-Tantra</strong>. Think of it
-              the way an elite rugby player or athlete experiences <strong>the Zone</strong> — not mystical, but a
-              shift in awareness away from the analytical, worrying human mind (throat and forehead, where nagging
-              lives) and into the gut and primitive brainstem. When you inhabit that deep, non-verbal pack-feeling at
-              your core, you become a somatic anchor. Dogs live on that instinctual frequency — they do not just obey
-              you; they <strong>sync</strong> with you.
-            </p>
-
-            <p>
-              Dog-Tantra is coached in person. Warwick guides you into what those subtle states feel like and
-              reflects them back so you trust your own perception — what to seek, what to reward, and when the
-              connection is real. That confirmation is what video alone cannot give.{' '}
-              <Link to={guideHref('dog-tantra')}>Read the full guide section</Link> or{' '}
-              <Link to="/book">book a session</Link>.
-            </p>
-
-            <table className="pillars-table" aria-label="Training paradigm comparison">
-              <thead>
-                <tr>
-                  <th scope="col">Paradigm</th>
-                  <th scope="col">In everyday language</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><strong>Mechanical / behavioural</strong> (Beckman-style)</td>
-                  <td>
-                    Rules, mechanics, and external structure — what to do with your hands, tools, and timing. Creates
-                    an obedient dog through clean repetition; the human remains a separate handler managing an asset.
-                  </td>
-                </tr>
-                <tr>
-                  <td><strong>Energy dominance</strong> (Millan-style)</td>
-                  <td>
-                    Projecting calm-assertive authority outward to demand submission. Relies on personal willpower and
-                    top-down rank assertion to push the dog into a calmer state.
-                  </td>
-                </tr>
-                <tr>
-                  <td><strong>Gold Standard / Dog-Tantra</strong></td>
-                  <td>
-                    Drop the separate handler entirely. Unlock deep, instinctual coordination — the same unthinking,
-                    collective flow elite players feel on the pitch. You do not manage the dog; you activate an
-                    internal pack-feeling so clear the dog syncs into your rhythm.
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-
-            <p>
-              Physical correction in this model is not pain for its own sake. It is a crisp interruption —
-              pressure, then immediate release — inside the{' '}
-              <Link to={guideHref('timing')}>one-second window</Link>. The core on-lead tool is the{' '}
-              <Link to={guideHref('leash-jerk')}>downward leash jerk</Link>: one firm pull <strong>down</strong>,
-              never up. Many dogs lean into a tight line to make themselves lighter and pull you forward — the down
-              pull removes that incentive and replaces it with a dramatic shift: the body goes <em>heavy</em>, and the
-              dog naturally chooses not to push harder. An upward pull tends to invite the opposite — brace and keep
-              pulling. Downward also keeps pressure off the larynx. The down pull sets up the{' '}
-              <Link to={guideHref('butt-push')}>butt push</Link> by shifting weight forward so the hips can turn,
-              instead of fighting the dog&apos;s full weight braced into the collar.
-            </p>
-            <p>
-              Training the owner is the product. Warwick coaches you through each step so you can maintain results
-              at home with confidence — reading precursors, holding{' '}
-              <Link to={guideHref('owner-mindset')}>calm composure</Link>, and enforcing the standard without
-              second-guessing or theatrical dominance.
+              The name reflects what Warwick holds for every partnership: clear expectations, measured
+              correction, and results that last after the session ends — not short-term compliance that
+              evaporates when the trainer leaves.
             </p>
           </div>
+          <aside className="about-callout" aria-label="Independence and Beckman references">
+            <p>
+              When this site references Beckman-style training, it means the broader structure-and-owner-coaching
+              philosophy that influenced Warwick&apos;s approach — not an official credential or approval.
+              Warwick&apos;s model is deliberately purist: no prongs, choke chains used harshly, vibration collars,
+              or remote &ldquo;ethereal&rdquo; correction. The signal source is you — presence, timing, leash,
+              voice, and touch.
+            </p>
+          </aside>
+        </div>
+      </section>
 
+      <section className="about-section">
+        <div className="section-inner">
+          <p className="section-label">💡 The philosophy</p>
+          <h2>🌱 Embodied pack fluency — five ideas that guide every session.</h2>
           <div className="philosophy-pillars" aria-label="Philosophy at a glance">
             <article className="philosophy-pillar">
               <h3>🧭 Embodiment</h3>
@@ -212,10 +128,71 @@ export default function AboutPage() {
         </div>
       </section>
 
+      <section className="about-section about-section--soft">
+        <div className="section-inner">
+          <p className="section-label">🌀 Dog-Tantra</p>
+          <h2>⚡ The shared flow state.</h2>
+          <div className="philosophy-text">
+            <p>
+              To achieve true embodiment, we work with what Warwick calls <strong>Dog-Tantra</strong>. Think of it
+              the way an elite rugby player or athlete experiences <strong>the Zone</strong> — not mystical, but a
+              shift in awareness away from the analytical, worrying human mind (throat and forehead, where nagging
+              lives) and into the gut and primitive brainstem. When you inhabit that deep, non-verbal pack-feeling at
+              your core, you become a somatic anchor. Dogs live on that instinctual frequency — they do not just obey
+              you; they <strong>sync</strong> with you.
+            </p>
+            <p>
+              Dog-Tantra is coached in person. Warwick guides you into what those subtle states feel like and
+              reflects them back so you trust your own perception — what to seek, what to reward, and when the
+              connection is real. That confirmation is what video alone cannot give.
+            </p>
+
+            <table className="pillars-table" aria-label="Training paradigm comparison">
+              <thead>
+                <tr>
+                  <th scope="col">Paradigm</th>
+                  <th scope="col">In everyday language</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Mechanical / behavioural</strong> (Beckman-style)</td>
+                  <td>
+                    Rules, mechanics, and external structure — what to do with your hands, tools, and timing. Creates
+                    an obedient dog through clean repetition; the human remains a separate handler managing an asset.
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Energy dominance</strong> (Millan-style)</td>
+                  <td>
+                    Projecting calm-assertive authority outward to demand submission. Relies on personal willpower and
+                    top-down rank assertion to push the dog into a calmer state.
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Gold Standard / Dog-Tantra</strong></td>
+                  <td>
+                    Drop the separate handler entirely. Unlock deep, instinctual coordination — the same unthinking,
+                    collective flow elite players feel on the pitch. You do not manage the dog; you activate an
+                    internal pack-feeling so clear the dog syncs into your rhythm.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <p className="about-dog-tantra-cta">
+              <Link to={guideHref('dog-tantra')}>Read the full Dog-Tantra section in the Guide</Link>
+              {' · '}
+              <Link to="/book">Book a session</Link>
+            </p>
+          </div>
+        </div>
+      </section>
+
       <section className="approach">
         <div className="section-inner">
           <p className="section-label">🧭 How it works</p>
-          <h2>🎯 The approach</h2>
+          <h2>🎯 How sessions work</h2>
           <div className="approach-body approach-body--linear">
             <p>
               When a dog understands its place in the relationship, it is a safer, happier, and more relaxed
@@ -232,43 +209,25 @@ export default function AboutPage() {
               Your home work is the sustainable core: slack leash, anchor energy, cue once, and the steady message
               that the old contract is over and the new baseline is real.
             </p>
-            <p>
-              Based in Golden Bay, with sessions across the Tasman region — Golden Bay locally, Nelson Bays
-              and beyond by arrangement. The goal is always to give you the tools to keep the training going
-              long after the session ends.
-            </p>
             <blockquote className="approach-quote">
               &ldquo;Both pet and owner&apos;s needs are met — and stress is reduced.&rdquo;
             </blockquote>
             <p className="approach-tagline">
-              🏆 Results-focused · 🤝 Individualised care · 📍 Tasman region
+              🏆 Results-focused · 🤝 Individualised care
             </p>
           </div>
         </div>
       </section>
 
-      <section>
+      <section className="about-section">
         <div className="section-inner">
           <p className="section-label">📋 What to expect</p>
-          <h2>🎯 Clear structure for both dog and owner.</h2>
-          <div className="philosophy-grid">
-            <div className="philosophy-text">
-              <p>
-                Gold Standard sessions are designed to teach the owner as much as the dog. You are coached in
-                timing, correction, reward, and how to hold calm leadership in everyday environments where
-                behaviour matters most.
-              </p>
-              <p>
-                The goal is not short-term compliance. It is long-term reliability you can sustain without
-                confusion once training sessions end.
-              </p>
-              <p>
-                If your dog has reactivity, poor leash behaviour, or anxiety patterns, the process begins with
-                safety and trust before building harder skills. Correction intensity is calibrated to the
-                individual dog — see the <Link to={guideHref('dog-language')}>Client Reference Guide</Link> for how
-                firmness is measured by breed, age, and history.
-              </p>
-            </div>
+          <h2>📋 Clear structure for both dog and owner.</h2>
+          <p className="about-expect-intro">
+            Sessions coach you as much as your dog — timing, correction, reward, and calm leadership in the
+            environments where behaviour matters most.
+          </p>
+          <div className="about-expect-grid">
             <div className="outcomes">
               <h3>📚 What you will learn</h3>
               <ul>
@@ -291,6 +250,12 @@ export default function AboutPage() {
               </ul>
             </div>
           </div>
+          <p className="about-expect-safety">
+            If your dog has reactivity, poor leash behaviour, or anxiety patterns, the process begins with
+            safety and trust before building harder skills — see the{' '}
+            <Link to={guideHref('dog-language')}>Client Reference Guide</Link> for how firmness is calibrated
+            by breed, age, and history.
+          </p>
           <p className="service-note label-with-icon">
             <SectionIcon set="guide" size="sm" />
             <span>
@@ -301,28 +266,16 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section>
-        <div className="section-inner">
-          <p className="section-label">📍 Where sessions happen</p>
-          <h2>🗺️ Service area</h2>
-          <div className="philosophy-text">
-            <p>
-              Warwick is based at Rangihaeata, Takaka — Golden Bay. Most local sessions happen in and around
-              Golden Bay, with online booking for beach sessions, home visits, and multi-day programmes. Golden Bay:{' '}
-              {STANDARD_PRICING_NOTE} Home visits: {HOME_VISIT_PRICING_NOTE}
-            </p>
-            <p>
-              {NELSON_STANDARD_COMING_SOON_NOTE} {NELSON_PRICING_ENQUIRY_NOTE} Wider Tasman region enquiries
-              are welcome — get in touch to discuss location and timing.
-            </p>
-          </div>
-        </div>
-      </section>
-
       <section className="contact">
         <div className="section-inner">
           <p className="section-label">🚀 Get started</p>
           <h2>🐾 Tell us about your dog.</h2>
+          <p className="about-location-line">
+            Based in Takaka, Golden Bay — sessions across the Tasman region.{' '}
+            <Link to="/book">Book a session</Link>
+            {' · '}
+            <Link to="/#services">View pricing</Link>
+          </p>
           <p>
             For new enquiries, include your dog&apos;s age, biggest challenge, and what success looks like for
             you. First conversation is always free.
