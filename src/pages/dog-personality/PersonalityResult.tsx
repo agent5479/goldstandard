@@ -40,6 +40,13 @@ export default function PersonalityResultView({ result, onRestart }: Personality
         <h3 className="quiz-spirit-breed-name">{spiritBreed.breed.name}</h3>
         <p className="quiz-spirit-breed-score">{spiritBreed.matchPercent}% breed match</p>
         <p className="quiz-spirit-breed-reason">{spiritBreed.reason}</p>
+        {spiritBreed.highlights && spiritBreed.highlights.length > 1 ? (
+          <ul className="quiz-spirit-breed-highlights">
+            {spiritBreed.highlights.slice(1).map((line) => (
+              <li key={line}>{line}</li>
+            ))}
+          </ul>
+        ) : null}
       </section>
 
       {closeMatches.length > 0 ? (

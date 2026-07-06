@@ -1,37 +1,45 @@
 import { describe, expect, it } from 'vitest';
 import {
-  buildRefinementProfile,
+  buildHumanProfile,
   rankBreedsInCategory,
-  PERSONALITY_REFINEMENT_TOTAL,
+  PERSONALITY_BASE_REFINEMENT_TOTAL,
+  PERSONALITY_REFINEMENT_QUESTIONS,
 } from './dogPersonalityRefinement';
 
 describe('dogPersonalityRefinement', () => {
-  it('defines five refinement questions', () => {
-    expect(PERSONALITY_REFINEMENT_TOTAL).toBe(5);
+  it('defines seven base refinement questions with analogy sublabels on key items', () => {
+    expect(PERSONALITY_BASE_REFINEMENT_TOTAL).toBe(7);
+    expect(PERSONALITY_REFINEMENT_QUESTIONS).toHaveLength(7);
+    expect(PERSONALITY_REFINEMENT_QUESTIONS.some((q) => q.analogySublabel)).toBe(true);
   });
 
   it('ranks clingy breeds with loyalty + compact preference', () => {
-    const profile = buildRefinementProfile({
+    const profile = buildHumanProfile({
       refine_build: 'build_compact',
-      social: 'social_gregarious',
-      energy: 'energy_moderate',
-      expressiveness: 'express_moderate',
-      superpower: 'super_loyalty',
+      refine_social: 'social_gregarious',
+      refine_energy: 'energy_moderate',
+      refine_expressiveness: 'express_moderate',
+      refine_curiosity: 'curiosity_people',
+      refine_compliance: 'compliance_eager',
+      refine_superpower: 'super_loyalty',
     });
     const ranked = rankBreedsInCategory('clingy', profile, 5);
     expect(ranked.length).toBeGreaterThan(0);
     expect(ranked[0].breed.category).toBe('clingy');
     expect(ranked[0].matchPercent).toBeGreaterThan(0);
     expect(ranked[0].reason.length).toBeGreaterThan(0);
+    expect(ranked[0].highlights.length).toBeGreaterThanOrEqual(0);
   });
 
   it('prefers sighthounds when speed superpower selected', () => {
-    const profile = buildRefinementProfile({
+    const profile = buildHumanProfile({
       refine_build: 'build_medium',
-      social: 'social_balanced',
-      energy: 'energy_high',
-      expressiveness: 'express_quiet',
-      superpower: 'super_speed',
+      refine_social: 'social_balanced',
+      refine_energy: 'energy_high',
+      refine_expressiveness: 'express_quiet',
+      refine_curiosity: 'curiosity_chase',
+      refine_compliance: 'compliance_balanced',
+      refine_superpower: 'super_speed',
     });
     const ranked = rankBreedsInCategory('sighthound', profile, 3);
     expect(ranked[0].breed.category).toBe('sighthound');

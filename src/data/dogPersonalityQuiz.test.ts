@@ -7,6 +7,7 @@ import {
   emptyCategoryWeights,
   mergeWeights,
   resolvePersonalityResult,
+  getPersonalityEstimatedSteps,
 } from './dogPersonalityQuiz';
 import type { BreedCategory } from './breeds';
 
@@ -121,5 +122,9 @@ describe('resolvePersonalityResult', () => {
       'small',
     ];
     expect(valid).toContain(result.category);
+  });
+
+  it('estimates up to twenty-five steps including adaptive tie-breakers', () => {
+    expect(getPersonalityEstimatedSteps()).toBe(25);
   });
 });

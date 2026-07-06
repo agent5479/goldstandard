@@ -137,9 +137,15 @@ export default function HomePage() {
               </CompactInfoPopout>
             ))}
           </div>
-          <div className="service-note-compact">
-            <div className="service-note-chips">
-              <CompactInfoPopout variant="chip" label="Golden Bay pricing" panelLabel="Golden Bay pricing">
+          <div className="service-footer">
+            <p className="section-label">📍 Sessions &amp; pricing</p>
+            <div className="service-footer-chips">
+              <CompactInfoPopout
+                className="service-footer-chip"
+                variant="chip"
+                label="Golden Bay pricing"
+                panelLabel="Golden Bay pricing"
+              >
                 <div className="service-note-pricing">
                   <p>
                     <strong>Beach / reserve</strong> — {STANDARD_PRICING_NOTE}
@@ -149,15 +155,23 @@ export default function HomePage() {
                   </p>
                 </div>
               </CompactInfoPopout>
-              <CompactInfoPopout variant="chip" label="Locations & Nelson" panelLabel="Locations and Nelson Bays">
+              <CompactInfoPopout
+                className="service-footer-chip"
+                variant="chip"
+                label="Locations & Nelson"
+                panelLabel="Locations and Nelson Bays"
+              >
                 <div className="service-note-locations">
                   <p>{NELSON_STANDARD_COMING_SOON_NOTE}</p>
                   <p>{NELSON_PRICING_ENQUIRY_NOTE}</p>
                 </div>
               </CompactInfoPopout>
             </div>
-            <p className="service-note-cta">
-              <Link to="/book">Book online</Link> or <Link to="/contact">send an enquiry</Link> to get started.
+            <p className="service-footer-cta">
+              <Link to="/book">Book online</Link>
+              {' · '}
+              <Link to="/contact">Send an enquiry</Link>
+              {' to get started.'}
             </p>
           </div>
         </div>

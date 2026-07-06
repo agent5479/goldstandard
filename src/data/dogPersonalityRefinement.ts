@@ -1,339 +1,251 @@
-import { breeds, type Breed, type BreedCategory } from './breeds';
-import { getBreedClientMixTraitLabel, getBreedSizeClass, getBreedSuggestedProfileTags } from './breedTraits';
-import type { SizeClass } from './breedSizeGrades';
-import { findIntelligenceByBreedName } from './dogIntelligence';
-
-export type RefinementBuild = 'compact' | 'medium' | 'substantial';
-export type RefinementSocial = 'gregarious' | 'balanced' | 'selective';
-export type RefinementEnergy = 'low' | 'moderate' | 'high';
-export type RefinementExpressiveness = 'quiet' | 'moderate' | 'vocal';
-export type RefinementSuperpower =
-  | 'loyalty'
-  | 'speed'
-  | 'brains'
-  | 'calm'
-  | 'charm';
-
-export interface PersonalityRefinementProfile {
-  build: RefinementBuild;
-  social: RefinementSocial;
-  energy: RefinementEnergy;
-  expressiveness: RefinementExpressiveness;
-  superpower: RefinementSuperpower;
-}
+import {
+  mergeHumanProfileFromDeltas,
+  rankBreedsInCategory,
+  type HumanTraitProfile,
+  type PersonalityBreedMatch,
+  type TraitVectorDelta,
+} from './dogPersonalityTraitMatrix';
 
 export interface RefinementOption {
   id: string;
   label: string;
   sublabel?: string;
-  profile: Partial<PersonalityRefinementProfile>;
+  delta: TraitVectorDelta;
 }
 
 export interface RefinementQuestion {
   id: string;
   prompt: string;
+  analogySublabel?: string;
   options: RefinementOption[];
 }
 
-export interface PersonalityBreedMatch {
-  breed: Breed;
-  matchPercent: number;
-  reason: string;
-}
-
 export const PERSONALITY_REFINEMENT_START_ID = 'refine_build';
+export const PERSONALITY_BASE_REFINEMENT_TOTAL = 7;
 
 export const PERSONALITY_REFINEMENT_QUESTIONS: RefinementQuestion[] = [
   {
     id: 'refine_build',
     prompt: 'Within your vibe, your build is…',
+    analogySublabel: 'Dog-world: toy lap-warmer vs gentle giant',
     options: [
       {
         id: 'build_compact',
         label: 'Compact and portable',
-        sublabel: 'Good things, small package',
-        profile: { build: 'compact' },
+        sublabel: 'Chihuahua energy — good things, small package',
+        delta: { size: 3 },
       },
       {
         id: 'build_medium',
         label: 'Medium and athletic',
-        sublabel: 'Everyday companion proportions',
-        profile: { build: 'medium' },
+        sublabel: 'Border Collie proportions — everyday companion',
+        delta: { size: 6 },
       },
       {
         id: 'build_substantial',
         label: 'Substantial — you take up space',
-        sublabel: 'Presence is part of the point',
-        profile: { build: 'substantial' },
+        sublabel: 'Great Dane presence — the room knows you arrived',
+        delta: { size: 9 },
       },
     ],
   },
   {
-    id: 'social',
+    id: 'refine_social',
     prompt: 'Your social battery looks like…',
+    analogySublabel: 'Velcro vs solo — Lab greeter vs lone-wolf dignity',
     options: [
       {
         id: 'social_gregarious',
         label: 'Everyone is a potential friend',
-        profile: { social: 'gregarious' },
+        sublabel: 'Golden Retriever at the dog park',
+        delta: { ei: 9, companion: 8 },
       },
       {
         id: 'social_balanced',
         label: 'Warm, but I pick my moments',
-        profile: { social: 'balanced' },
+        sublabel: 'Friendly spaniel — social on your terms',
+        delta: { ei: 6, companion: 5 },
       },
       {
         id: 'social_selective',
         label: 'Inner circle only — strangers can wait',
-        profile: { social: 'selective' },
+        sublabel: 'One-person Akita loyalty',
+        delta: { ei: 3, adapt: 7 },
       },
     ],
   },
   {
-    id: 'energy',
+    id: 'refine_energy',
     prompt: 'Your energy signature is…',
+    analogySublabel: 'Greyhound on the couch until a squirrel exists',
     options: [
       {
         id: 'energy_low',
         label: 'Conservation expert — save it for when it counts',
-        profile: { energy: 'low' },
+        sublabel: 'Bulldog lounge mode',
+        delta: { work: 3, inst: 3 },
       },
       {
         id: 'energy_moderate',
         label: 'Steady daily pace',
-        profile: { energy: 'moderate' },
+        sublabel: 'Beagle walk-then-nap rhythm',
+        delta: { work: 6, inst: 5 },
       },
       {
         id: 'energy_high',
         label: 'Always ready — idle is uncomfortable',
-        profile: { energy: 'high' },
+        sublabel: 'Border Collie who finished breakfast and wants a job',
+        delta: { work: 9, inst: 8 },
       },
     ],
   },
   {
-    id: 'expressiveness',
+    id: 'refine_expressiveness',
     prompt: 'When you have feelings, you…',
+    analogySublabel: 'Husky opera vs Basenji silence',
     options: [
       {
         id: 'express_quiet',
         label: 'Keep it dignified — presence over noise',
-        profile: { expressiveness: 'quiet' },
+        sublabel: 'Basenji / greyhound strong silent type',
+        delta: { vocal: 2 },
       },
       {
         id: 'express_moderate',
         label: 'Say enough to be understood',
-        profile: { expressiveness: 'moderate' },
+        sublabel: 'Most breeds — clear but not a concert',
+        delta: { vocal: 5 },
       },
       {
         id: 'express_vocal',
         label: 'Make sure the room knows',
-        profile: { expressiveness: 'vocal' },
+        sublabel: 'Husky or Beagle — feelings are a group activity',
+        delta: { vocal: 9 },
       },
     ],
   },
   {
-    id: 'superpower',
+    id: 'refine_curiosity',
+    prompt: 'Your curiosity style is…',
+    analogySublabel: 'Nose-first hound vs motion-led sighthound vs people-led companion',
+    options: [
+      {
+        id: 'curiosity_scent',
+        label: 'Follow the trail — details matter',
+        sublabel: 'Bloodhound nose-first detective',
+        delta: { scent: 9, chase: 3 },
+      },
+      {
+        id: 'curiosity_chase',
+        label: 'Eyes on the moving thing',
+        sublabel: 'Whippet — if it runs, you care',
+        delta: { chase: 9, scent: 3 },
+      },
+      {
+        id: 'curiosity_people',
+        label: 'People and vibes first',
+        sublabel: 'Cavalier — the interesting thing is who is in the room',
+        delta: { companion: 9, ei: 8 },
+      },
+    ],
+  },
+  {
+    id: 'refine_compliance',
+    prompt: 'When someone asks you to do something…',
+    analogySublabel: 'Eager retriever vs Spitz who re-reads the contract',
+    options: [
+      {
+        id: 'compliance_eager',
+        label: 'Happy to — what is next?',
+        sublabel: 'Labrador enthusiasm',
+        delta: { adapt: 3, ei: 7 },
+      },
+      {
+        id: 'compliance_balanced',
+        label: 'Usually fine — context matters',
+        sublabel: 'Typical family dog give-and-take',
+        delta: { adapt: 5 },
+      },
+      {
+        id: 'compliance_negotiate',
+        label: 'I will consider it — on my terms',
+        sublabel: 'Shiba / Husky independent contractor',
+        delta: { adapt: 8, dom: 7 },
+      },
+    ],
+  },
+  {
+    id: 'refine_superpower',
     prompt: 'Your superpower is…',
+    analogySublabel: 'The trait that sells your spirit breed',
     options: [
       {
         id: 'super_loyalty',
         label: 'Unshakeable loyalty',
-        profile: { superpower: 'loyalty' },
+        sublabel: 'Velcro companion breed',
+        delta: { ei: 9, companion: 8 },
       },
       {
         id: 'super_speed',
         label: 'Lightning reflexes',
-        profile: { superpower: 'speed' },
+        sublabel: 'Sighthound — blink and they are gone',
+        delta: { chase: 9, inst: 8 },
       },
       {
         id: 'super_brains',
         label: 'Problem-solving genius',
-        profile: { superpower: 'brains' },
+        sublabel: 'Puzzle-driven working brain',
+        delta: { iq: 9, work: 7 },
       },
       {
         id: 'super_calm',
         label: 'Calm under pressure',
-        profile: { superpower: 'calm' },
+        sublabel: 'Steady livestock guardian calm',
+        delta: { neuro: 3, vocal: 3, startle: 3 },
       },
       {
         id: 'super_charm',
         label: 'Irresistible charm',
-        profile: { superpower: 'charm' },
+        sublabel: 'Small companion wins hearts fast',
+        delta: { ei: 8, size: 4 },
       },
     ],
   },
 ];
 
-export const PERSONALITY_REFINEMENT_TOTAL = PERSONALITY_REFINEMENT_QUESTIONS.length;
+/** @deprecated Use PERSONALITY_BASE_REFINEMENT_TOTAL */
+export const PERSONALITY_REFINEMENT_TOTAL = PERSONALITY_BASE_REFINEMENT_TOTAL;
 
-const DEFAULT_PROFILE: PersonalityRefinementProfile = {
-  build: 'medium',
-  social: 'balanced',
-  energy: 'moderate',
-  expressiveness: 'moderate',
-  superpower: 'loyalty',
-};
+const ALL_REFINEMENT_QUESTIONS = new Map(
+  PERSONALITY_REFINEMENT_QUESTIONS.map((q) => [q.id, q])
+);
 
-function sizeBand(size: SizeClass): RefinementBuild {
-  if (size === 'toy' || size === 'small') return 'compact';
-  if (size === 'medium') return 'medium';
-  return 'substantial';
+function deltasFromAnswers(answers: Partial<Record<string, string>>): TraitVectorDelta[] {
+  const deltas: TraitVectorDelta[] = [];
+  for (const [questionId, optionId] of Object.entries(answers)) {
+    const question = ALL_REFINEMENT_QUESTIONS.get(questionId);
+    if (!question) continue;
+    const option = question.options.find((o) => o.id === optionId);
+    if (option) deltas.push(option.delta);
+  }
+  return deltas;
 }
 
-function scoreDimension(actual: number, target: number, spread = 3): number {
-  const diff = Math.abs(actual - target);
-  if (diff <= 1) return 12 - diff * 2;
-  if (diff <= spread) return 4 - diff;
-  return -4 - diff;
+export function buildHumanProfile(answers: Partial<Record<string, string>>): HumanTraitProfile {
+  return mergeHumanProfileFromDeltas(deltasFromAnswers(answers));
 }
 
-function chaseWeight(breedName: string, category: BreedCategory): number {
-  const profile = findIntelligenceByBreedName(breedName);
-  if (!profile) {
-    return category === 'sighthound' ? 0.5 : 0.1;
-  }
-  return profile.instinctSegments.find((s) => s.key === 'chase')?.weight ?? 0.1;
-}
-
-function buildReason(breed: Breed, highlights: string[]): string {
-  if (highlights.length > 0) return highlights[0];
-  return getBreedClientMixTraitLabel(breed.name);
-}
-
-function scoreBreedForRefinement(breed: Breed, profile: PersonalityRefinementProfile): {
-  score: number;
-  highlights: string[];
-} {
-  const intel = findIntelligenceByBreedName(breed.name);
-  const size = getBreedSizeClass(breed);
-  const tags = getBreedSuggestedProfileTags(breed.name);
-  const highlights: string[] = [];
-  let score = 50;
-
-  const buildTarget = profile.build;
-  const buildActual = sizeBand(size);
-  if (buildActual === buildTarget) {
-    score += 14;
-    if (buildTarget === 'compact') highlights.push('Compact size matches your portable vibe.');
-    if (buildTarget === 'medium') highlights.push('Medium athletic build — everyday companion energy.');
-    if (buildTarget === 'substantial') highlights.push('Substantial presence — you do not do subtle.');
-  } else {
-    score -= 8;
-  }
-
-  const ei = intel?.scores.ei ?? (breed.category === 'clingy' ? 7 : 5);
-  const socialTarget = profile.social === 'gregarious' ? 8 : profile.social === 'balanced' ? 6 : 4;
-  const socialDelta = scoreDimension(ei, socialTarget);
-  score += socialDelta;
-  if (socialDelta >= 8 && profile.social === 'gregarious') {
-    highlights.push('People-focused — greets the world like a friend.');
-  }
-  if (socialDelta >= 8 && profile.social === 'selective') {
-    highlights.push('Selective and loyal — inner circle energy.');
-  }
-
-  const work = intel?.scores.work ?? 5;
-  const inst = intel?.scores.inst ?? 5;
-  const drive = (work + inst) / 2;
-  const energyTarget = profile.energy === 'low' ? 4 : profile.energy === 'moderate' ? 6 : 8;
-  const energyDelta = scoreDimension(drive, energyTarget);
-  score += energyDelta;
-  if (energyDelta >= 8 && profile.energy === 'high') {
-    highlights.push('High drive — always ready for the next thing.');
-  }
-  if (energyDelta >= 8 && profile.energy === 'low') {
-    highlights.push('Happy to conserve energy — couch-compatible.');
-  }
-
-  const vocal = intel?.scores.vocal ?? (breed.category === 'spitz' ? 7 : 5);
-  const vocalTarget =
-    profile.expressiveness === 'quiet' ? 3 : profile.expressiveness === 'moderate' ? 5 : 8;
-  const vocalDelta = scoreDimension(vocal, vocalTarget);
-  score += vocalDelta;
-  if (vocalDelta >= 8 && profile.expressiveness === 'vocal') {
-    highlights.push('Not shy about sharing opinions.');
-  }
-  if (vocalDelta >= 8 && profile.expressiveness === 'quiet') {
-    highlights.push('Strong silent type — calm presence.');
-  }
-
-  switch (profile.superpower) {
-    case 'loyalty':
-      if (ei >= 7 || tags.includes('clingy') || breed.category === 'clingy') {
-        score += 12;
-        highlights.push('Bonds hard — loyalty is the whole brand.');
-      }
-      break;
-    case 'speed': {
-      const chase = chaseWeight(breed.name, breed.category);
-      if (chase >= 0.35 || breed.category === 'sighthound') {
-        score += 12;
-        highlights.push('Built for speed — reflexes first, questions later.');
-      }
-      break;
-    }
-    case 'brains': {
-      const iq = intel?.scores.iq ?? 5;
-      if (iq >= 7 || tags.includes('puzzle_driven')) {
-        score += 12;
-        highlights.push('Sharp and puzzle-driven — needs something to figure out.');
-      }
-      break;
-    }
-    case 'calm': {
-      const neuro = intel?.scores.neuro ?? 5;
-      if (neuro <= 5 && vocal <= 5) {
-        score += 12;
-        highlights.push('Steady temperament — calm is the default setting.');
-      }
-      break;
-    }
-    case 'charm':
-      if (size === 'toy' || size === 'small' || breed.category === 'small' || ei >= 7) {
-        score += 10;
-        highlights.push('Charm-forward — wins people over fast.');
-      }
-      break;
-  }
-
-  return { score: Math.max(0, Math.min(100, score)), highlights };
-}
-
-export function buildRefinementProfile(
-  answers: Partial<Record<string, string>>
-): PersonalityRefinementProfile {
-  const profile: PersonalityRefinementProfile = { ...DEFAULT_PROFILE };
-
-  for (const question of PERSONALITY_REFINEMENT_QUESTIONS) {
-    const answerId = answers[question.id];
-    if (!answerId) continue;
-    const option = question.options.find((o) => o.id === answerId);
-    if (!option) continue;
-    Object.assign(profile, option.profile);
-  }
-
-  return profile;
-}
-
-export function rankBreedsInCategory(
-  category: BreedCategory,
-  profile: PersonalityRefinementProfile,
-  limit = 5
-): PersonalityBreedMatch[] {
-  return breeds
-    .filter((b) => b.category === category)
-    .map((breed) => {
-      const { score, highlights } = scoreBreedForRefinement(breed, profile);
-      return {
-        breed,
-        matchPercent: score,
-        reason: buildReason(breed, highlights),
-      };
-    })
-    .sort((a, b) => b.matchPercent - a.matchPercent)
-    .slice(0, limit);
+/** @deprecated Use buildHumanProfile */
+export function buildRefinementProfile(answers: Partial<Record<string, string>>): HumanTraitProfile {
+  return buildHumanProfile(answers);
 }
 
 export function getRefinementQuestion(index: number): RefinementQuestion | undefined {
   return PERSONALITY_REFINEMENT_QUESTIONS[index];
 }
+
+export function getRefinementQuestionById(id: string): RefinementQuestion | undefined {
+  return ALL_REFINEMENT_QUESTIONS.get(id);
+}
+
+export { rankBreedsInCategory, type PersonalityBreedMatch, type HumanTraitProfile };

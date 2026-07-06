@@ -1,12 +1,13 @@
 import { breeds, breedCategories, type Breed, type BreedCategory } from './breeds';
 import { getBreedClientMixTraitLabel } from './breedTraits';
 import {
-  buildRefinementProfile,
+  buildHumanProfile,
+  PERSONALITY_BASE_REFINEMENT_TOTAL,
   PERSONALITY_REFINEMENT_START_ID,
-  PERSONALITY_REFINEMENT_TOTAL,
   rankBreedsInCategory,
   type PersonalityBreedMatch,
 } from './dogPersonalityRefinement';
+import { MAX_ADAPTIVE_QUESTIONS } from './dogPersonalityDisambiguation';
 
 export type { PersonalityBreedMatch };
 
@@ -552,13 +553,14 @@ export function resolvePersonalityResult(
   const category = resolvePersonalityCategory(weights);
   const archetype = PERSONALITY_ARCHETYPES[category];
   const categoryBreeds = breeds.filter((b) => b.category === category);
-  const profile = buildRefinementProfile(refinementAnswers);
+  const profile = buildHumanProfile(refinementAnswers);
   const ranked = rankBreedsInCategory(category, profile, 5);
 
   const fallback: PersonalityBreedMatch = {
     breed: categoryBreeds[0]!,
     matchPercent: 50,
     reason: getBreedClientMixTraitLabel(categoryBreeds[0]!.name),
+    highlights: [],
   };
 
   const spiritBreed = ranked[0] ?? fallback;
@@ -578,10 +580,10 @@ export function getBreedShowcaseNote(breedName: string): string {
 }
 
 export function getPersonalityEstimatedSteps(): number {
-  return 10 + PERSONALITY_REFINEMENT_TOTAL;
+  return 10 + PERSONALITY_BASE_REFINEMENT_TOTAL + MAX_ADAPTIVE_QUESTIONS;
 }
 
-export { PERSONALITY_REFINEMENT_START_ID, PERSONALITY_REFINEMENT_TOTAL };
+export { PERSONALITY_REFINEMENT_START_ID, PERSONALITY_BASE_REFINEMENT_TOTAL };
 
 export const PERSONALITY_QUESTION_IDS = Object.keys(PERSONALITY_QUESTIONS);
 
