@@ -95,6 +95,7 @@ export const BOOKING_FIELD_LINKS: BookingFieldLink[] = [
     sheetColumn: 'C',
     sheetHeader: 'Name',
     importTarget: 'owner.name',
+    required: true,
   },
   {
     label: 'Phone',
@@ -114,6 +115,7 @@ export const BOOKING_FIELD_LINKS: BookingFieldLink[] = [
     sheetColumn: 'E',
     sheetHeader: 'Email',
     importTarget: 'owner.email',
+    required: true,
   },
   {
     label: "Dog's name",

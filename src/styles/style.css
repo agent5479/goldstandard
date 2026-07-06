@@ -763,6 +763,51 @@ h2 {
   line-height: 1.6;
 }
 
+@media (min-width: 901px) {
+  .services-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .service-card.info-popout--card {
+    padding: 0.7rem 0.9rem 0.65rem;
+  }
+
+  .service-card.info-popout--card:hover {
+    transform: translateY(-2px);
+  }
+
+  .info-popout--card .info-popout-trigger {
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 0.55rem;
+    min-height: 0;
+  }
+
+  .info-popout--card .info-popout-icon,
+  .service-card .info-popout-icon {
+    flex: 0 0 auto;
+    font-size: 1.25rem;
+    margin-bottom: 0;
+    line-height: 1;
+  }
+
+  .info-popout--card .info-popout-label,
+  .service-card .info-popout-label {
+    flex: 1 1 auto;
+    padding-right: 0.35rem;
+    font-size: 0.98rem;
+    line-height: 1.2;
+  }
+
+  .info-popout--card .info-popout-chevron {
+    margin-top: 0;
+    width: 0.4rem;
+    height: 0.4rem;
+    opacity: 0.25;
+  }
+}
+
 .service-note {
   margin-top: 1.75rem;
   padding: 1rem 1.25rem;
@@ -1015,6 +1060,12 @@ h2 {
 
   .info-popout--card .info-popout-chevron {
     opacity: 0.35;
+  }
+
+  @media (min-width: 901px) {
+    .service-card.info-popout--card .info-popout-chevron {
+      display: none;
+    }
   }
 
   .info-popout--card:hover .info-popout-chevron,
@@ -2769,6 +2820,10 @@ body.page-guide {
 
 .booking-package-why {
   font-style: italic;
+}
+
+.booking-server-warning {
+  margin: 0 0 1rem;
 }
 
 .booking-service-help {

@@ -22,7 +22,7 @@
  *   { action: "book", region, slot_start, location, ... }
  *   { action: "book_package", package_id, sessions_json, region, ... }
  *
- * Script version: 2026-07-05-v27 (package scheduling — distinct days per session)
+ * Script version: 2026-07-06-v28 (package booking, required name/email, server capabilities)
  *   - Multi-region: golden-bay | nelson-bays (region required on availability/book)
  *   - 15-min slot grid; 55 min sessions; 5 min handover; commute buffer between locations
  *   - Nelson Bays: bookable only on days with an all-day NELSON calendar event;
@@ -52,6 +52,18 @@ const HOME_VISIT_PRICE_LABEL = "$" + HOME_VISIT_SESSION_PRICE_DOLLARS;
 const STANDARD_ADDITIONAL_PERSON_NOTE = "+$" + ADDITIONAL_PERSON_PRICE_DOLLARS + " per additional person attending";
 const PAYMENT_AT_MEETING_NOTE = "Payment is arranged at your session — no online payment on this site.";
 const NELSON_PRICING_ENQUIRY = "Pricing on enquiry — contact Warwick to confirm.";
+
+const SCRIPT_VERSION = "2026-07-06-v28";
+const SUPPORTED_ACTIONS = [
+  "availability",
+  "book",
+  "book_package",
+  "lookup_returning",
+  "list_bookings",
+  "mark_imported",
+  "mark_dismissed",
+  "enquiry"
+];
 
 /** Keep in sync with shared/bookingPackages.ts */
 const PACKAGE_CONFIG = {
@@ -325,8 +337,7 @@ function doPost(e) {
     if (action !== "enquiry") {
       return jsonResponse({
         success: false,
-        message:
-          "This booking feature is not available on the server yet. Please try again shortly, or book as a first-time client."
+        message: unknownActionMessage(action)
       });
     }
 
@@ -339,8 +350,34 @@ function doPost(e) {
 function doGet() {
   return jsonResponse({
     success: true,
-    message: "Gold Standard Dog Training form endpoint. Use POST."
+    message: "Gold Standard Dog Training form endpoint. Use POST.",
+    script_version: SCRIPT_VERSION,
+    supported_actions: SUPPORTED_ACTIONS
   });
+}
+
+function unknownActionMessage(action) {
+  if (action === "book_package") {
+    return (
+      "Package booking is not enabled on this server deployment. " +
+      "Please call Warwick on 027 814 2222."
+    );
+  }
+  return (
+    'The action "' +
+    action +
+    '" is not supported on this server. Please call Warwick on 027 814 2222.'
+  );
+}
+
+function assertBookingContactFields(name, email, phone) {
+  if (!String(name || "").trim() || !String(email || "").trim() || !String(phone || "").trim()) {
+    return "Missing required fields — name, email, and phone are required.";
+  }
+  if (!isValidEmail(email)) {
+    return "Invalid email address.";
+  }
+  return null;
 }
 
 function handleEnquiry(data) {
@@ -688,14 +725,35 @@ function applyReturningClientProfile(data) {
     };
   }
 
-  return {
+  return finalizeReturningClientProfile({
     name: name || prior.name,
     phone: phone || prior.phone,
     email: email || prior.email,
     dogName: dogName,
     dogBreed: dogBreed || prior.dogBreed,
     dogAge: dogAge || prior.dogAge
-  };
+  });
+}
+
+function finalizeReturningClientProfile(result) {
+  if (!result || result.error) {
+    return result;
+  }
+  if (!String(result.name || "").trim() || !String(result.email || "").trim()) {
+    return {
+      error:
+        "We need your name and email for confirmation — tap Details changed to add them."
+    };
+  }
+  if (!String(result.phone || "").trim()) {
+    return {
+      error: "We need your phone number for confirmation — tap Details changed to add it."
+    };
+  }
+  if (!isValidEmail(result.email)) {
+    return { error: "Invalid email address." };
+  }
+  return result;
 }
 
 function mergeExtendedJsonWithReturningClient(extendedJson, isReturning) {
@@ -742,7 +800,7 @@ function handleBooking(data) {
   const durations = getBookingDurations(bookingType, location, region);
 
   if (isReturning) {
-    const filled = applyReturningClientProfile(data);
+    const filled = finalizeReturningClientProfile(applyReturningClientProfile(data));
     if (filled.error) {
       return jsonResponse({ success: false, message: filled.error });
     }
@@ -754,7 +812,12 @@ function handleBooking(data) {
     dogAge = filled.dogAge;
   }
 
-  if (!phone || !dogName || !slotStartStr || !location || !region) {
+  var contactError = assertBookingContactFields(name, email, phone);
+  if (contactError) {
+    return jsonResponse({ success: false, message: contactError });
+  }
+
+  if (!dogName || !slotStartStr || !location || !region) {
     return jsonResponse({ success: false, message: "Missing required fields." });
   }
 
@@ -1070,7 +1133,7 @@ function handleBookPackage(data) {
   const sessions = parsePackageSessionsJson(data.sessions_json);
 
   if (isReturning) {
-    const filled = applyReturningClientProfile(data);
+    const filled = finalizeReturningClientProfile(applyReturningClientProfile(data));
     if (filled.error) {
       return jsonResponse({ success: false, message: filled.error });
     }
@@ -1082,7 +1145,12 @@ function handleBookPackage(data) {
     dogAge = filled.dogAge;
   }
 
-  if (!phone || !dogName || !region || !packageId) {
+  var packageContactError = assertBookingContactFields(name, email, phone);
+  if (packageContactError) {
+    return jsonResponse({ success: false, message: packageContactError });
+  }
+
+  if (!dogName || !region || !packageId) {
     return jsonResponse({ success: false, message: "Missing required fields." });
   }
 
@@ -1107,10 +1175,6 @@ function handleBookPackage(data) {
       success: false,
       message: "Nelson Bays packages are arranged by enquiry — please use the contact form."
     });
-  }
-
-  if (email && !isValidEmail(email)) {
-    return jsonResponse({ success: false, message: "Invalid email address." });
   }
 
   assertRateLimit("book:global", RATE_LIMIT_BOOK_GLOBAL, RATE_LIMIT_BOOK_WINDOW_SEC);

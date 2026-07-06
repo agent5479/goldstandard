@@ -8,7 +8,8 @@ Automated round-trip tests: run `npm run test:booking` (public site) and `npm ru
 
 ## Pre-flight
 
-- [ ] Apps Script **v27** deployed; `VITE_FORM_ENDPOINT` / `VITE_BOOKING_API_URL` point to the live `/exec` URL
+- [ ] Apps Script **v28** deployed; `VITE_FORM_ENDPOINT` / `VITE_BOOKING_API_URL` point to the live `/exec` URL
+- [ ] `GET` on the `/exec` URL returns `supported_actions` including `book_package`
 - [ ] Google Sheet **Submissions** tab has headers A–Q (see [`README.md`](../README.md))
 - [ ] Column **P** header: `Extended Details`
 - [ ] Column **Q** header: `Region`
@@ -94,7 +95,8 @@ Post payload must include `booking_type: standard_beach` and `location`.
 
 - [ ] Session 1 Mon, session 2 Wed, session 3 Fri (non-consecutive days allowed)
 - [ ] Sessions spread across multiple weeks (e.g. week 1, week 2, week 4) — all valid
-- [ ] Step 1 shows why three sessions and how sessions build; step 3 shows current session focus
+- [ ] Submit without name or email → blocked in UI and API
+- [ ] Sheet columns C (Name) and E (Email) populated on book and package rows
 - [ ] Same day twice → blocked in UI with clear message
 - [ ] **Change** on session 1 after session 2 scheduled → session 2 cleared; can re-pick
 - [ ] Mixed beach ($60) + home ($90) sessions in one package

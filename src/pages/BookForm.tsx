@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import type { FormEvent } from 'react';
 import BookingTrainingPriorityPicker from '../components/BookingTrainingPriorityPicker';
 import BookingConfirmationDetails from '../components/BookingConfirmationDetails';
@@ -72,7 +72,7 @@ import {
 } from '@shared/bookingPricing';
 import { Link, useSearchParams } from 'react-router-dom';
 import TurnstileField from '../components/TurnstileField';
-import { FORM_ENDPOINT, TURNSTILE_ENABLED } from '../data/formConfig';
+import { FORM_ENDPOINT, TURNSTILE_ENABLED, formatBookingApiError } from '../data/formConfig';
 import {
   buildExtendedDetailsPayload,
   CLIENT_DOG_DESEXED_OPTIONS,
@@ -105,7 +105,6 @@ type FormStatus =
 type StandardVenue = 'beach' | 'home' | null;
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const QUICK_DATES = getQuickDateOptions();
 
 type ClientPath = 'unset' | 'first_time' | 'returning';
 
@@ -160,7 +159,7 @@ async function postToEndpoint<T>(payload: Record<string, string>): Promise<T> {
 
   const result = await response.json();
   if (!response.ok || !result.success) {
-    throw new Error(result.message || 'Request failed.');
+    throw new Error(formatBookingApiError(result.message || 'Request failed.'));
   }
 
   return result as T;
@@ -208,6 +207,7 @@ export default function BookForm() {
   const [turnstileToken, setTurnstileToken] = useState('');
   const [turnstileResetSignal, setTurnstileResetSignal] = useState(0);
   const [packageDateError, setPackageDateError] = useState('');
+  const [packageBookingLive, setPackageBookingLive] = useState<boolean | null>(null);
 
   const isPackageBooking = selectedPackageId !== 'single' && selectedServiceType === 'standard_beach';
   const packageSessionCount = isPackageBooking ? getPackageSessionCount(selectedPackageId) : 1;
@@ -215,6 +215,10 @@ export default function BookForm() {
   const activeSessionProgressNote = isPackageBooking
     ? getPackageSessionProgressNote(selectedPackageId, activePackageSessionIndex)
     : undefined;
+  const quickDates = useMemo(() => {
+    const excludeDates = isPackageBooking ? packageSessions.map((session) => session.date) : [];
+    return getQuickDateOptions(4, undefined, excludeDates);
+  }, [isPackageBooking, packageSessions]);
 
   const resetReturningState = () => {
     setReturningContact('');
@@ -236,6 +240,30 @@ export default function BookForm() {
     setDogAgeFields(emptyDogAgeFields());
     setExtendedDetails(emptyExtendedDetailsState());
   };
+
+  useEffect(() => {
+    if (!FORM_ENDPOINT) return;
+    let cancelled = false;
+
+    const loadCapabilities = async () => {
+      try {
+        const response = await fetch(FORM_ENDPOINT);
+        const data = await response.json();
+        if (cancelled) return;
+        const actions = Array.isArray(data.supported_actions) ? data.supported_actions : [];
+        setPackageBookingLive(actions.includes('book_package'));
+      } catch {
+        if (!cancelled) {
+          setPackageBookingLive(null);
+        }
+      }
+    };
+
+    void loadCapabilities();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   useEffect(() => {
     const raw = searchParams.get('priorities');
@@ -579,6 +607,11 @@ export default function BookForm() {
         return;
       }
       setReturningLookup(result);
+      if (contactLooksLikeEmail(contact)) {
+        setClientEmail(contact);
+      } else {
+        setClientEmail('');
+      }
       if (result.dogs.length === 1) {
         setSelectedReturningDog(result.dogs[0].dog_name);
       }
@@ -702,17 +735,45 @@ export default function BookForm() {
         return;
       }
       dogNameValue = selectedReturningDog;
-      name = '';
-      phone = '';
-      email = '';
       if (contactLooksLikeEmail(contact)) {
         email = contact;
+        phone = clientPhone.trim();
       } else {
         phone = contact;
+        email = clientEmail.trim();
+      }
+      name = returningLookup.name?.trim() || '';
+      if (!name) {
+        setStatus({
+          kind: 'error',
+          message: 'We need your name — tap Details changed to add it.',
+        });
+        return;
+      }
+      if (!email) {
+        setStatus({ kind: 'error', message: 'Please enter your email address.' });
+        return;
+      }
+      if (!phone) {
+        setStatus({
+          kind: 'error',
+          message: 'We need your phone number — tap Details changed to add it.',
+        });
+        return;
       }
     } else {
+      if (!name) {
+        setStatus({ kind: 'error', message: 'Please enter your name.' });
+        return;
+      }
+
       if (!phone) {
         setStatus({ kind: 'error', message: 'Please enter your phone number.' });
+        return;
+      }
+
+      if (!email) {
+        setStatus({ kind: 'error', message: 'Please enter your email address.' });
         return;
       }
 
@@ -722,7 +783,7 @@ export default function BookForm() {
       }
     }
 
-    if (email && !EMAIL_PATTERN.test(email)) {
+    if (!EMAIL_PATTERN.test(email)) {
       setStatus({ kind: 'error', message: 'Please enter a valid email address.' });
       return;
     }
@@ -1048,6 +1109,13 @@ export default function BookForm() {
 
   return (
     <form className="enquiry-form booking-form" id="booking-form" noValidate onSubmit={handleSubmit}>
+      {packageBookingLive === false ? (
+        <p className="form-feedback error booking-server-warning" role="alert">
+          Online package booking is not live on the server yet — single sessions may still work. For 3-day
+          or 5-session packages, call or text{' '}
+          <a href="tel:+64278142222">027 814 2222</a>.
+        </p>
+      ) : null}
       <ol className="booking-steps" aria-label="Booking progress">
         <li className={bookingStepNavClass(1, stepFlags)}>
           <span className="booking-step-number">1</span>
@@ -1328,7 +1396,7 @@ export default function BookForm() {
         </div>
 
         <div className="booking-quick-dates" role="group" aria-label="Quick date options">
-          {QUICK_DATES.map((option) => (
+          {quickDates.map((option) => (
             <button
               key={option.value}
               type="button"
@@ -1788,6 +1856,22 @@ export default function BookForm() {
                         Booking for <strong>{selectedReturningDog}</strong>.
                       </p>
                     ) : null}
+                    {!contactLooksLikeEmail(returningContact.trim()) ? (
+                      <div className="form-field">
+                        <label htmlFor="returningSlimEmail">Email</label>
+                        <input
+                          id="returningSlimEmail"
+                          name="email"
+                          type="email"
+                          autoComplete="email"
+                          required
+                          disabled={submitting}
+                          value={clientEmail}
+                          onChange={(event) => setClientEmail(event.target.value)}
+                        />
+                        <p className="form-hint">Required — we&apos;ll send your calendar confirmation here.</p>
+                      </div>
+                    ) : null}
                     <div className="form-field">
                       <label htmlFor="bookMessageReturning">Anything else? <span className="label-optional">(optional)</span></label>
                       <textarea id="bookMessageReturning" name="message" placeholder="Optional note for this session" disabled={submitting}></textarea>
@@ -1820,8 +1904,8 @@ export default function BookForm() {
                 ) : null}
             <div className="form-row">
               <div className="form-field">
-                <label htmlFor="bookName">Your name <span className="label-optional">(optional)</span></label>
-                <input id="bookName" name="name" type="text" autoComplete="name" disabled={submitting} value={clientName} onChange={(event) => setClientName(event.target.value)} />
+                <label htmlFor="bookName">Your name</label>
+                <input id="bookName" name="name" type="text" autoComplete="name" required disabled={submitting} value={clientName} onChange={(event) => setClientName(event.target.value)} />
               </div>
               <div className="form-field">
                 <label htmlFor="bookPhone">Phone</label>
@@ -1829,9 +1913,9 @@ export default function BookForm() {
               </div>
             </div>
             <div className="form-field">
-              <label htmlFor="bookEmail">Email <span className="label-optional">(optional)</span></label>
-              <input id="bookEmail" name="email" type="email" autoComplete="email" disabled={submitting} value={clientEmail} onChange={(event) => setClientEmail(event.target.value)} />
-              <p className="form-hint">If you add an email, we&apos;ll send a calendar invite there.</p>
+              <label htmlFor="bookEmail">Email</label>
+              <input id="bookEmail" name="email" type="email" autoComplete="email" required disabled={submitting} value={clientEmail} onChange={(event) => setClientEmail(event.target.value)} />
+              <p className="form-hint">We&apos;ll send your calendar confirmation here.</p>
             </div>
             <div className="form-row">
               <div className="form-field">

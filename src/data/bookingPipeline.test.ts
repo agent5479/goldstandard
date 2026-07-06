@@ -16,10 +16,12 @@ import {
   NELSON_STANDARD_ONLINE_BOOKING,
   NELSON_ELITE_ONLINE_BOOKING,
 } from '@shared/bookingRegions';
+import { formatBookingApiError } from '../data/formConfig';
 import {
   slotStartDateKey,
   isDateUsedByOtherPackageSessions,
   formatSlotTimeFromIso,
+  getQuickDateOptions,
 } from './bookingConfig';
 import {
   BOOKING_PACKAGES,
@@ -75,7 +77,7 @@ describe('booking pipeline — form extended JSON', () => {
 
   it('documents required top-level API keys for booking', () => {
     expect(getRequiredBookingApiKeys()).toEqual(
-      expect.arrayContaining(['booking_type', 'region', 'slot_start', 'location', 'phone', 'dog_name'])
+      expect.arrayContaining(['booking_type', 'region', 'slot_start', 'location', 'name', 'phone', 'email', 'dog_name'])
     );
   });
 
@@ -237,6 +239,13 @@ describe('booking pipeline — package session dates', () => {
   it('formats slot time from ISO', () => {
     expect(formatSlotTimeFromIso('2026-07-06T10:00:00')).toMatch(/10:00/);
   });
+
+  it('excludes used package dates from quick date options', () => {
+    const options = getQuickDateOptions(4, '2026-07-16', ['2026-07-17', '2026-07-18']);
+    expect(options.some((option) => option.value === '2026-07-17')).toBe(false);
+    expect(options.some((option) => option.value === '2026-07-18')).toBe(false);
+    expect(options.length).toBe(4);
+  });
 });
 
 describe('booking pipeline — 3-day programme copy', () => {
@@ -253,5 +262,19 @@ describe('booking pipeline — 3-day programme copy', () => {
     expect(getPackageSessionProgressNote('three_day', 0)).toMatch(/Assess/i);
     expect(getPackageSessionProgressNote('three_day', 2)).toMatch(/Consolidate/i);
     expect(getPackageSessionProgressNote('three_day', 99)).toBeUndefined();
+  });
+});
+
+describe('booking pipeline — API error messaging', () => {
+  it('maps stale package booking server errors to a clear message', () => {
+    expect(
+      formatBookingApiError(
+        'This booking feature is not available on the server yet. Please try again shortly.'
+      )
+    ).toMatch(/package booking is not live/i);
+    expect(formatBookingApiError('Package booking is not enabled on this server deployment.')).toMatch(
+      /027 814 2222/
+    );
+    expect(formatBookingApiError('Missing required fields.')).toBe('Missing required fields.');
   });
 });

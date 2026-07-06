@@ -135,7 +135,12 @@ export type QuickDateOption = {
 };
 
 /** Next few bookable days for quick-pick chips. */
-export function getQuickDateOptions(count = 4, startFrom?: string): QuickDateOption[] {
+export function getQuickDateOptions(
+  count = 4,
+  startFrom?: string,
+  excludeDates: ReadonlyArray<string> = []
+): QuickDateOption[] {
+  const exclude = new Set(excludeDates);
   const options: QuickDateOption[] = [];
   const cursor = startFrom ? parseLocalDateInput(startFrom) : new Date();
   if (!startFrom) {
@@ -144,11 +149,18 @@ export function getQuickDateOptions(count = 4, startFrom?: string): QuickDateOpt
     cursor.setDate(cursor.getDate() + 1);
   }
 
-  while (options.length < count) {
-    options.push({
-      value: toLocalDateInput(cursor),
-      label: cursor.toLocaleDateString('en-NZ', { weekday: 'short', day: 'numeric', month: 'short' })
-    });
+  const maxDate = parseLocalDateInput(maxBookingDate());
+  let guard = 0;
+
+  while (options.length < count && cursor.getTime() <= maxDate.getTime() && guard < 120) {
+    guard += 1;
+    const value = toLocalDateInput(cursor);
+    if (!exclude.has(value)) {
+      options.push({
+        value,
+        label: cursor.toLocaleDateString('en-NZ', { weekday: 'short', day: 'numeric', month: 'short' })
+      });
+    }
     cursor.setDate(cursor.getDate() + 1);
   }
 

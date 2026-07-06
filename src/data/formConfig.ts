@@ -15,3 +15,25 @@ export const FORM_ENDPOINT =
 export const TURNSTILE_SITE_KEY = String(import.meta.env.VITE_TURNSTILE_SITE_KEY || '').trim();
 
 export const TURNSTILE_ENABLED = Boolean(TURNSTILE_SITE_KEY);
+
+export type FormEndpointCapabilities = {
+  success?: boolean;
+  script_version?: string;
+  supported_actions?: string[];
+};
+
+/** Map stale-server API errors to a clearer client message. */
+export function formatBookingApiError(message: string): string {
+  const lower = message.toLowerCase();
+  if (
+    lower.includes('book_package') ||
+    lower.includes('package booking is not enabled') ||
+    lower.includes('this booking feature is not available on the server yet')
+  ) {
+    return (
+      'Online package booking is not live on the server yet — please call or text 027 814 2222 ' +
+      'and Warwick will book these dates for you.'
+    );
+  }
+  return message;
+}
