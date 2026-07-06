@@ -106,3 +106,55 @@ export const SAMPLE_STANDARD_HOME_VISIT_PENDING_BOOKING = {
 export function sampleBookingPayload(overrides: Record<string, string> = {}) {
   return { ...SAMPLE_BOOKING_API_PAYLOAD, ...overrides };
 }
+
+const SAMPLE_PACKAGE_REF = 'pkg-ref-test-abc123';
+
+function packageExtendedJson(
+  packageId: 'three_day' | 'town_ready_five',
+  sessionIndex: number,
+  sessionCount: number,
+  base: Record<string, unknown> = SAMPLE_ELITE_COACHING_EXTENDED_JSON
+) {
+  return JSON.stringify({
+    ...base,
+    packageId,
+    packageRef: SAMPLE_PACKAGE_REF,
+    packageSessionIndex: sessionIndex,
+    packageSessionCount: sessionCount,
+  });
+}
+
+function packageSessionBooking(
+  sessionIndex: number,
+  packageId: 'three_day' | 'town_ready_five',
+  sessionCount: number,
+  overrides: Partial<typeof SAMPLE_PENDING_BOOKING> = {}
+) {
+  const dayOffset = sessionIndex - 1;
+  const start = new Date('2026-06-20T10:00:00+12:00');
+  start.setDate(start.getDate() + dayOffset);
+  const end = new Date(start);
+  end.setMinutes(end.getMinutes() + 55);
+
+  return {
+    ...SAMPLE_PENDING_BOOKING,
+    rowIndex: 100 + sessionIndex,
+    calendarEventId: `evt_pkg_${packageId}_${sessionIndex}`,
+    appointmentStart: start.toISOString(),
+    appointmentEnd: end.toISOString(),
+    extendedJson: packageExtendedJson(packageId, sessionIndex, sessionCount),
+    ...overrides,
+  };
+}
+
+export const SAMPLE_THREE_DAY_PACKAGE_BOOKINGS = [1, 2, 3].map((index) =>
+  packageSessionBooking(index, 'three_day', 3)
+);
+
+export const SAMPLE_TOWN_READY_PACKAGE_BOOKINGS = [1, 2, 3, 4, 5].map((index) =>
+  packageSessionBooking(index, 'town_ready_five', 5, {
+    location: index >= 4 ? 'Takaka township library' : SAMPLE_PENDING_BOOKING.location,
+  })
+);
+
+export { SAMPLE_PACKAGE_REF };

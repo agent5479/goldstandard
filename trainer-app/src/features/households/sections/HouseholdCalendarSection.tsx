@@ -1,18 +1,15 @@
-import { Card, Row, Col, Form, Button, Table } from 'react-bootstrap';
+import { Card, Row, Col, Form, Button, Table, Badge } from 'react-bootstrap';
 import { labels } from '@/data/terminology';
-import { createCalendarTemplateUrl } from '@/services/calendar';
-import type { Owner, TrainingSession } from '@/types';
-
-interface CalendarLink {
-  session: TrainingSession;
-  url: string | null;
-}
+import { createCalendarTemplateUrl, resolveCalendarUrl } from '@/services/calendar';
+import type { Dog, Owner, TrainingSession } from '@/types';
+import { formatTrainingSessionTimeRange, packageSessionLabel } from '@/utils/trainingSessionDisplay';
 
 interface HouseholdCalendarSectionProps {
   form: Partial<Owner>;
   canEdit: boolean;
+  sessions: TrainingSession[];
+  dogs: Dog[];
   sessionCalendarId: string;
-  calendarLinks: CalendarLink[];
   onSessionCalendarIdChange: (value: string) => void;
   onSaveCalendarId: () => void;
 }
@@ -20,8 +17,9 @@ interface HouseholdCalendarSectionProps {
 export function HouseholdCalendarSection({
   form,
   canEdit,
+  sessions,
+  dogs,
   sessionCalendarId,
-  calendarLinks,
   onSessionCalendarIdChange,
   onSaveCalendarId,
 }: HouseholdCalendarSectionProps) {
@@ -29,8 +27,61 @@ export function HouseholdCalendarSection({
     <Card className="hub-panel mb-4">
       <Card.Header><i className="bi bi-calendar-check me-2" />{labels.calendarLinks}</Card.Header>
       <Card.Body>
+        {sessions.length > 0 ? (
+          <Table responsive size="sm" className="mb-4">
+            <thead>
+              <tr>
+                <th>When</th>
+                <th>Dog</th>
+                <th>Location</th>
+                <th>Status</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {sessions.map((session) => {
+                const dog = session.dogId
+                  ? dogs.find((entry) => String(entry.id) === String(session.dogId))
+                  : undefined;
+                const calendarUrl = resolveCalendarUrl(session);
+                const sessionLabel = packageSessionLabel(session);
+                return (
+                  <tr key={session.id}>
+                    <td>
+                      {formatTrainingSessionTimeRange(session)}
+                      {sessionLabel && (
+                        <Badge bg="light" text="dark" className="ms-1">
+                          {sessionLabel}
+                        </Badge>
+                      )}
+                    </td>
+                    <td>{dog?.name || '—'}</td>
+                    <td>{session.trainingLocation || '—'}</td>
+                    <td>
+                      <Badge bg={session.status === 'completed' ? 'success' : session.status === 'cancelled' ? 'secondary' : 'primary'}>
+                        {session.status || 'scheduled'}
+                      </Badge>
+                    </td>
+                    <td className="text-end">
+                      {calendarUrl ? (
+                        <a href={calendarUrl} target="_blank" rel="noopener noreferrer" className="btn btn-sm btn-outline-primary">
+                          {labels.openInCalendar}
+                        </a>
+                      ) : (
+                        <span className="text-muted small">—</span>
+                      )}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </Table>
+        ) : (
+          <p className="text-muted mb-4">No scheduled appointments linked yet.</p>
+        )}
+
         {canEdit && (
-          <Row className="g-3 align-items-end mb-3">
+          <Row className="g-3 align-items-end">
             <Col md={6}>
               <Form.Group>
                 <Form.Label>{labels.pasteCalendarEventId}</Form.Label>
@@ -62,26 +113,6 @@ export function HouseholdCalendarSection({
               </Button>
             </Col>
           </Row>
-        )}
-        {calendarLinks.length > 0 ? (
-          <Table responsive size="sm" className="mt-3 mb-0">
-            <thead><tr><th>Date</th><th>Location</th><th></th></tr></thead>
-            <tbody>
-              {calendarLinks.map(({ session, url }) => (
-                <tr key={session.id}>
-                  <td>{session.scheduledDate}</td>
-                  <td>{session.trainingLocation || '—'}</td>
-                  <td>
-                    <a href={url!} target="_blank" rel="noopener noreferrer" className="btn btn-sm btn-outline-primary">
-                      {labels.openInCalendar}
-                    </a>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        ) : (
-          <p className="text-muted mb-0">No linked calendar events yet</p>
         )}
       </Card.Body>
     </Card>

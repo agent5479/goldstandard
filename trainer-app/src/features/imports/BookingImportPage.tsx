@@ -21,22 +21,27 @@ import { BookingBriefPanel } from '@/components/BookingBriefPanel';
 import { pendingBookingToBriefInput } from '@/utils/bookingBrief';
 import {
   fetchPendingBookings,
+  groupPendingBookings,
+  importPackagePlanPaths,
   importPlanPaths,
   isBookingImportConfigured,
-  markBookingDismissed,
-  markBookingImported,
+  markBookingsDismissed,
+  markBookingsImported,
   planBookingImport,
+  planPackageBookingImport,
   type BookingLinkMode,
   type PendingBooking,
+  type PendingBookingGroup,
 } from '@/services/bookingImport';
 import {
   BookingImportMatchPanel,
+  packageSessionBadge,
   pendingBookingSuggestionBadge,
   planPreviewBadges,
 } from '@/features/imports/bookingImportUi';
 import { activityActorFromUser, mutate, tenantPath } from '@/services/mutations';
 import { buildOwnerDenormalizedUpdates } from '@/utils/householdHelpers';
-import type { ActivityEvent } from '@/types';
+import type { ActivityEvent, TenantData } from '@/types';
 
 function formatWhen(booking: PendingBooking): string {
   const start = new Date(booking.appointmentStart);
@@ -62,6 +67,32 @@ function formatTimestamp(value: string): string {
   });
 }
 
+function formatGroupWhen(group: PendingBookingGroup): string {
+  const first = group.bookings[0];
+  const last = group.bookings[group.bookings.length - 1];
+  if (group.kind === 'single' || group.bookings.length === 1) {
+    return formatWhen(first);
+  }
+  const start = formatWhen(first);
+  const end = formatWhen(last);
+  return `${start} → ${end}`;
+}
+
+function planImportGroup(
+  group: PendingBookingGroup,
+  data: TenantData,
+  options: { linkMode: BookingLinkMode; overrideOwnerId?: string }
+) {
+  if (group.kind === 'package') {
+    return planPackageBookingImport(group.bookings, data, options);
+  }
+  return planBookingImport(group.bookings[0], data, options);
+}
+
+function reviewBookingForGroup(group: PendingBookingGroup): PendingBooking {
+  return group.bookings[0];
+}
+
 function extendedAssessmentBadges(booking: PendingBooking) {
   const parsed = parseBookingExtendedDetails(booking.extendedJson);
   if (!parsed.hasData) return null;
@@ -80,13 +111,13 @@ export default function BookingImportPage() {
   const { data, setData } = useTenantData();
   const [bookings, setBookings] = useState<PendingBooking[]>([]);
   const [loading, setLoading] = useState(true);
-  const [busyRow, setBusyRow] = useState<number | null>(null);
+  const [busyGroupId, setBusyGroupId] = useState<string | null>(null);
   const [deletingHistoryId, setDeletingHistoryId] = useState<string | null>(null);
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
   const [activeTab, setActiveTab] = useState<'pending' | 'handled'>('pending');
-  const [reviewBooking, setReviewBooking] = useState<PendingBooking | null>(null);
-  const [dismissBooking, setDismissBooking] = useState<PendingBooking | null>(null);
+  const [reviewGroup, setReviewGroup] = useState<PendingBookingGroup | null>(null);
+  const [dismissGroup, setDismissGroup] = useState<PendingBookingGroup | null>(null);
   const [dismissReason, setDismissReason] = useState('');
   const [importedOwnerId, setImportedOwnerId] = useState('');
   const [linkMode, setLinkMode] = useState<BookingLinkMode>('auto');
@@ -97,12 +128,11 @@ export default function BookingImportPage() {
     [linkMode, overrideOwnerId]
   );
 
+  const pendingGroups = useMemo(() => groupPendingBookings(bookings), [bookings]);
+
   const reviewPlan = useMemo(
-    () =>
-      reviewBooking
-        ? planBookingImport(reviewBooking, data, importOptions)
-        : null,
-    [reviewBooking, data, importOptions]
+    () => (reviewGroup ? planImportGroup(reviewGroup, data, importOptions) : null),
+    [reviewGroup, data, importOptions]
   );
 
   const importBlocked =
@@ -112,7 +142,7 @@ export default function BookingImportPage() {
   const actor = user?.tenantId ? activityActorFromUser(user) : undefined;
 
   const resetReviewState = () => {
-    setReviewBooking(null);
+    setReviewGroup(null);
     setLinkMode('auto');
     setOverrideOwnerId('');
   };
@@ -154,7 +184,29 @@ export default function BookingImportPage() {
     }));
   };
 
-  const handleImport = async (booking: PendingBooking) => {
+  const syncOwnerScheduleSummary = async (
+    ownerPath: string,
+    ownerId: string,
+    fallbackOwner: TenantData['owners'][number]
+  ) => {
+    let syncedOwner: TenantData['owners'][number] | undefined;
+    setData((prev) => {
+      const updates = buildOwnerDenormalizedUpdates(prev, ownerId);
+      const existing = prev.owners.find((owner) => String(owner.id) === ownerId);
+      syncedOwner = { ...(existing || fallbackOwner), ...updates };
+      return {
+        ...prev,
+        owners: prev.owners.map((owner) =>
+          String(owner.id) === ownerId ? syncedOwner! : owner
+        ),
+      };
+    });
+    if (syncedOwner) {
+      await mutate(ownerPath, syncedOwner, 'booking_import_owner_schedule', 'set');
+    }
+  };
+
+  const handleImport = async (group: PendingBookingGroup) => {
     if (!user?.tenantId || !actor) return;
 
     if (linkMode === 'existing' && !overrideOwnerId) {
@@ -162,126 +214,231 @@ export default function BookingImportPage() {
       return;
     }
 
-    const plan = planBookingImport(booking, data, importOptions);
+    const plan = planImportGroup(group, data, importOptions);
     if (!plan) {
       setError('This booking is already imported or missing required fields.');
       return;
     }
 
-    setBusyRow(booking.rowIndex);
+    setBusyGroupId(group.id);
     setError('');
     setMessage('');
 
     try {
-      const paths = importPlanPaths(user.tenantId, plan);
+      if ('sessions' in plan) {
+        const paths = importPackagePlanPaths(user.tenantId, plan);
 
-      await mutate(paths.ownerPath, plan.owner, 'booking_import_owner', 'set', () => {
+        await mutate(paths.ownerPath, plan.owner, 'booking_import_owner', 'set', () => {
+          setData((prev) => {
+            const owners = [...prev.owners];
+            const index = owners.findIndex((owner) => String(owner.id) === String(plan.owner.id));
+            if (index >= 0) owners[index] = plan.owner;
+            else owners.push(plan.owner);
+            return { ...prev, owners };
+          });
+        });
+
+        await mutate(paths.dogPath, plan.dog, 'booking_import_dog', 'set', () => {
+          setData((prev) => {
+            const dogs = [...prev.dogs];
+            const index = dogs.findIndex((dog) => String(dog.id) === String(plan.dog.id));
+            if (index >= 0) dogs[index] = plan.dog;
+            else dogs.push(plan.dog);
+            return { ...prev, dogs };
+          });
+        });
+
+        for (let index = 0; index < plan.sessions.length; index += 1) {
+          const session = plan.sessions[index];
+          const sessionPath = paths.sessionPaths[index];
+          await mutate(sessionPath, session, 'booking_import_session', 'set', () => {
+            setData((prev) => ({
+              ...prev,
+              trainingSessions: [...prev.trainingSessions, session],
+            }));
+          });
+        }
+
+        await syncOwnerScheduleSummary(
+          paths.ownerPath,
+          String(plan.owner.id),
+          plan.owner
+        );
+
+        for (let index = 0; index < plan.ageMilestoneFollowUps.length; index += 1) {
+          const followUp = plan.ageMilestoneFollowUps[index];
+          const followUpPath = paths.ageMilestoneFollowUpPaths[index];
+          await mutate(followUpPath, followUp, 'followup_schedule', 'set', () => {
+            setData((prev) => {
+              const nextSessions = [...prev.scheduledSessions, followUp];
+              const updates = buildOwnerDenormalizedUpdates(
+                { ...prev, scheduledSessions: nextSessions },
+                String(plan.owner.id)
+              );
+              const owners = prev.owners.map((owner) =>
+                String(owner.id) === String(plan.owner.id) ? { ...owner, ...updates } : owner
+              );
+              return { ...prev, scheduledSessions: nextSessions, owners };
+            });
+          });
+        }
+
+        await markBookingsImported(plan.rowIndices);
+
+        const activityEvent = await recordActivity(actor, 'booking_import', paths.ownerPath, 'set', plan.owner, {
+          summary: `Imported ${plan.packageLabel || 'package'}: ${group.bookings[0].name}${
+            group.bookings[0].dogName ? ` (${group.bookings[0].dogName})` : ''
+          } · ${plan.sessions.length} sessions`,
+          meta: {
+            rowIndices: plan.rowIndices,
+            packageId: plan.packageId,
+            packageRef: plan.packageRef,
+            sessionCount: plan.sessions.length,
+            email: group.bookings[0].email,
+            ownerIsNew: plan.ownerIsNew,
+            dogIsNew: plan.dogIsNew,
+            ownerMatchReason: plan.ownerMatchReason,
+            priorSessionCount: plan.priorSessionCount,
+            ownerId: plan.owner.id,
+            dogId: plan.dog.id,
+          },
+        });
+        appendActivity(activityEvent);
+
+        setBookings((prev) =>
+          prev.filter((row) => !plan.rowIndices.includes(row.rowIndex))
+        );
+        resetReviewState();
+        setImportedOwnerId(String(plan.owner.id));
+        setMessage(
+          `Imported ${plan.packageLabel || 'package'} for ${group.bookings[0].name} (${plan.sessions.length} sessions).`
+        );
+        return;
+      }
+
+      const singlePlan = plan;
+      const paths = importPlanPaths(user.tenantId, singlePlan);
+
+      await mutate(paths.ownerPath, singlePlan.owner, 'booking_import_owner', 'set', () => {
         setData((prev) => {
           const owners = [...prev.owners];
-          const index = owners.findIndex((owner) => String(owner.id) === String(plan.owner.id));
-          if (index >= 0) owners[index] = plan.owner;
-          else owners.push(plan.owner);
+          const index = owners.findIndex((owner) => String(owner.id) === String(singlePlan.owner.id));
+          if (index >= 0) owners[index] = singlePlan.owner;
+          else owners.push(singlePlan.owner);
           return { ...prev, owners };
         });
       });
 
-      await mutate(paths.dogPath, plan.dog, 'booking_import_dog', 'set', () => {
+      await mutate(paths.dogPath, singlePlan.dog, 'booking_import_dog', 'set', () => {
         setData((prev) => {
           const dogs = [...prev.dogs];
-          const index = dogs.findIndex((dog) => String(dog.id) === String(plan.dog.id));
-          if (index >= 0) dogs[index] = plan.dog;
-          else dogs.push(plan.dog);
+          const index = dogs.findIndex((dog) => String(dog.id) === String(singlePlan.dog.id));
+          if (index >= 0) dogs[index] = singlePlan.dog;
+          else dogs.push(singlePlan.dog);
           return { ...prev, dogs };
         });
       });
 
-      await mutate(paths.sessionPath, plan.session, 'booking_import_session', 'set', () => {
+      await mutate(paths.sessionPath, singlePlan.session, 'booking_import_session', 'set', () => {
         setData((prev) => ({
           ...prev,
-          trainingSessions: [...prev.trainingSessions, plan.session],
+          trainingSessions: [...prev.trainingSessions, singlePlan.session],
         }));
       });
 
-      for (let index = 0; index < plan.ageMilestoneFollowUps.length; index += 1) {
-        const followUp = plan.ageMilestoneFollowUps[index];
+      await syncOwnerScheduleSummary(
+        paths.ownerPath,
+        String(singlePlan.owner.id),
+        singlePlan.owner
+      );
+
+      for (let index = 0; index < singlePlan.ageMilestoneFollowUps.length; index += 1) {
+        const followUp = singlePlan.ageMilestoneFollowUps[index];
         const followUpPath = paths.ageMilestoneFollowUpPaths[index];
         await mutate(followUpPath, followUp, 'followup_schedule', 'set', () => {
           setData((prev) => {
             const nextSessions = [...prev.scheduledSessions, followUp];
             const updates = buildOwnerDenormalizedUpdates(
               { ...prev, scheduledSessions: nextSessions },
-              String(plan.owner.id)
+              String(singlePlan.owner.id)
             );
             const owners = prev.owners.map((owner) =>
-              String(owner.id) === String(plan.owner.id) ? { ...owner, ...updates } : owner
+              String(owner.id) === String(singlePlan.owner.id) ? { ...owner, ...updates } : owner
             );
             return { ...prev, scheduledSessions: nextSessions, owners };
           });
         });
       }
 
-      await markBookingImported(booking.rowIndex);
+      await markBookingsImported([group.bookings[0].rowIndex]);
 
-      const activityEvent = await recordActivity(actor, 'booking_import', paths.ownerPath, 'set', plan.owner, {
-        summary: `Imported booking: ${booking.name}${booking.dogName ? ` (${booking.dogName})` : ''}`,
+      const activityEvent = await recordActivity(actor, 'booking_import', paths.ownerPath, 'set', singlePlan.owner, {
+        summary: `Imported booking: ${group.bookings[0].name}${
+          group.bookings[0].dogName ? ` (${group.bookings[0].dogName})` : ''
+        }`,
         meta: {
-          rowIndex: booking.rowIndex,
-          email: booking.email,
-          ownerIsNew: plan.ownerIsNew,
-          dogIsNew: plan.dogIsNew,
-          ownerMatchReason: plan.ownerMatchReason,
-          priorSessionCount: plan.priorSessionCount,
-          ownerId: plan.owner.id,
-          dogId: plan.dog.id,
+          rowIndex: group.bookings[0].rowIndex,
+          email: group.bookings[0].email,
+          ownerIsNew: singlePlan.ownerIsNew,
+          dogIsNew: singlePlan.dogIsNew,
+          ownerMatchReason: singlePlan.ownerMatchReason,
+          priorSessionCount: singlePlan.priorSessionCount,
+          ownerId: singlePlan.owner.id,
+          dogId: singlePlan.dog.id,
         },
       });
       appendActivity(activityEvent);
 
-      setBookings((prev) => prev.filter((row) => row.rowIndex !== booking.rowIndex));
+      setBookings((prev) => prev.filter((row) => row.rowIndex !== group.bookings[0].rowIndex));
       resetReviewState();
-      setImportedOwnerId(String(plan.owner.id));
-      setMessage(`Imported ${booking.name}${booking.dogName ? ` (${booking.dogName})` : ''}.`);
+      setImportedOwnerId(String(singlePlan.owner.id));
+      setMessage(
+        `Imported ${group.bookings[0].name}${group.bookings[0].dogName ? ` (${group.bookings[0].dogName})` : ''}.`
+      );
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Import failed');
     } finally {
-      setBusyRow(null);
+      setBusyGroupId(null);
     }
   };
 
   const handleDismiss = async () => {
-    if (!dismissBooking || !actor) return;
+    if (!dismissGroup || !actor) return;
 
-    setBusyRow(dismissBooking.rowIndex);
+    setBusyGroupId(dismissGroup.id);
     setError('');
 
     try {
-      await markBookingDismissed(dismissBooking.rowIndex);
+      const rowIndices = dismissGroup.bookings.map((booking) => booking.rowIndex);
+      await markBookingsDismissed(rowIndices);
 
       const activityEvent = await recordActivity(
         actor,
         'booking_dismiss',
-        `bookings/sheet/${dismissBooking.rowIndex}`,
+        `bookings/sheet/${rowIndices.join(',')}`,
         'set',
-        dismissBooking,
+        dismissGroup.bookings[0],
         {
-          summary: `Dismissed booking: ${dismissBooking.name}${dismissBooking.dogName ? ` (${dismissBooking.dogName})` : ''}`,
+          summary: `Dismissed booking: ${dismissGroup.bookings[0].name}${
+            dismissGroup.bookings[0].dogName ? ` (${dismissGroup.bookings[0].dogName})` : ''
+          }${dismissGroup.kind === 'package' ? ` · ${dismissGroup.bookings.length} sessions` : ''}`,
           meta: {
-            rowIndex: dismissBooking.rowIndex,
-            email: dismissBooking.email,
+            rowIndices,
+            email: dismissGroup.bookings[0].email,
             reason: dismissReason.trim() || undefined,
           },
         }
       );
       appendActivity(activityEvent);
 
-      setBookings((prev) => prev.filter((row) => row.rowIndex !== dismissBooking.rowIndex));
-      setDismissBooking(null);
+      setBookings((prev) => prev.filter((row) => !rowIndices.includes(row.rowIndex)));
+      setDismissGroup(null);
       setDismissReason('');
-      setMessage(`Dismissed booking for ${dismissBooking.name}.`);
+      setMessage(`Dismissed booking for ${dismissGroup.bookings[0].name}.`);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Dismiss failed');
     } finally {
-      setBusyRow(null);
+      setBusyGroupId(null);
     }
   };
 
@@ -348,7 +505,7 @@ export default function BookingImportPage() {
       <Nav variant="tabs" className="mb-3">
         <Nav.Item>
           <Nav.Link active={activeTab === 'pending'} onClick={() => setActiveTab('pending')}>
-            {labels.bookingPending} ({bookings.length})
+            {labels.bookingPending} ({pendingGroups.length})
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
@@ -363,7 +520,7 @@ export default function BookingImportPage() {
           {activeTab === 'pending' ? (
             loading ? (
               <div className="text-center py-5"><Spinner animation="border" /></div>
-            ) : bookings.length === 0 ? (
+            ) : pendingGroups.length === 0 ? (
               <p className="text-muted mb-0">{configured ? 'No pending website bookings to import.' : 'Configure booking import to load submissions.'}</p>
             ) : (
               <Table responsive hover className="align-middle mb-0">
@@ -372,18 +529,19 @@ export default function BookingImportPage() {
                     <th>When</th>
                     <th>Client</th>
                     <th>Dog</th>
-                    <th>Location</th>
+                    <th>Sessions</th>
                     <th>Preview</th>
                     <th></th>
                   </tr>
                 </thead>
                 <tbody>
-                  {bookings.map((booking) => {
-                    const plan = planBookingImport(booking, data);
+                  {pendingGroups.map((group) => {
+                    const booking = group.bookings[0];
+                    const plan = planImportGroup(group, data, { linkMode: 'auto' });
                     const topSuggestion = pendingBookingSuggestionBadge(booking, data);
                     return (
-                      <tr key={booking.rowIndex}>
-                        <td>{formatWhen(booking)}</td>
+                      <tr key={group.id}>
+                        <td>{formatGroupWhen(group)}</td>
                         <td>
                           <div className="fw-semibold">{booking.name}</div>
                           <div className="small text-muted">{booking.email}</div>
@@ -395,26 +553,47 @@ export default function BookingImportPage() {
                           {booking.dogAge && <Badge bg="light" text="dark">{booking.dogAge}</Badge>}
                         </td>
                         <td>
-                          <div>{booking.location || '—'}</div>
-                          {booking.region && (
-                            <Badge bg="secondary" className="mt-1">{booking.region.replace('-', ' ')}</Badge>
+                          {group.kind === 'package' ? (
+                            <>
+                              <div className="fw-semibold">{group.packageLabel || 'Package'}</div>
+                              <ul className="small text-muted mb-0 ps-3">
+                                {group.bookings.map((session) => (
+                                  <li key={session.rowIndex}>
+                                    {formatWhen(session)} · {session.location || '—'}
+                                  </li>
+                                ))}
+                              </ul>
+                            </>
+                          ) : (
+                            <>
+                              <div>{booking.location || '—'}</div>
+                              {booking.region && (
+                                <Badge bg="secondary" className="mt-1">{booking.region.replace('-', ' ')}</Badge>
+                              )}
+                            </>
                           )}
                         </td>
-                        <td><div className="d-flex flex-wrap gap-1">{planPreviewBadges(plan)}{extendedAssessmentBadges(booking)}{topSuggestion && plan?.ownerIsNew && (
-                          <Badge bg="light" text="dark" className="me-1" title={topSuggestion.reasons.join(', ')}>
-                            Possible: {topSuggestion.owner.name || topSuggestion.owner.id}
-                          </Badge>
-                        )}</div></td>
+                        <td>
+                          <div className="d-flex flex-wrap gap-1">
+                            {planPreviewBadges(plan)}
+                            {extendedAssessmentBadges(booking)}
+                            {topSuggestion && plan && 'ownerIsNew' in plan && plan.ownerIsNew && (
+                              <Badge bg="light" text="dark" className="me-1" title={topSuggestion.reasons.join(', ')}>
+                                Possible: {topSuggestion.owner.name || topSuggestion.owner.id}
+                              </Badge>
+                            )}
+                          </div>
+                        </td>
                         <td className="text-end text-nowrap">
                           <Button
                             size="sm"
                             variant="outline-primary"
                             className="me-1"
-                            disabled={!canImport || busyRow === booking.rowIndex}
+                            disabled={!canImport || busyGroupId === group.id}
                             onClick={() => {
                               setLinkMode('auto');
                               setOverrideOwnerId('');
-                              setReviewBooking(booking);
+                              setReviewGroup(group);
                             }}
                           >
                             {labels.bookingReview}
@@ -422,8 +601,8 @@ export default function BookingImportPage() {
                           <Button
                             size="sm"
                             variant="outline-secondary"
-                            disabled={!canImport || busyRow === booking.rowIndex}
-                            onClick={() => setDismissBooking(booking)}
+                            disabled={!canImport || busyGroupId === group.id}
+                            onClick={() => setDismissGroup(group)}
                           >
                             {labels.bookingDismiss}
                           </Button>
@@ -496,7 +675,7 @@ export default function BookingImportPage() {
       </Card>
 
       <Modal
-        show={Boolean(reviewBooking)}
+        show={Boolean(reviewGroup)}
         onHide={resetReviewState}
         size="lg"
       >
@@ -504,62 +683,109 @@ export default function BookingImportPage() {
           <Modal.Title>{labels.bookingImportConfirm}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {reviewBooking && (
-            <>
-              <div className="mb-3">{planPreviewBadges(reviewPlan)}</div>
-              <BookingImportMatchPanel
-                booking={reviewBooking}
-                plan={reviewPlan}
-                data={data}
-                linkMode={linkMode}
-                onLinkModeChange={setLinkMode}
-                overrideOwnerId={overrideOwnerId}
-                onOverrideOwnerIdChange={setOverrideOwnerId}
-              />
-              <dl className="row mb-0 small">
-                <dt className="col-sm-3">Submitted</dt>
-                <dd className="col-sm-9">{formatTimestamp(reviewBooking.timestamp)}</dd>
-                <dt className="col-sm-3">Appointment</dt>
-                <dd className="col-sm-9">
-                  {formatWhen(reviewBooking)}
-                  {reviewBooking.appointmentEnd && (
-                    <span className="text-muted"> → {formatTimestamp(reviewBooking.appointmentEnd)}</span>
-                  )}
-                </dd>
-                <dt className="col-sm-3">Client</dt>
-                <dd className="col-sm-9">{reviewBooking.name} · {reviewBooking.email} · {reviewBooking.phone}</dd>
-                <dt className="col-sm-3">Dog</dt>
-                <dd className="col-sm-9">
-                  {reviewBooking.dogName || '—'} · {reviewBooking.dogBreed} · {reviewBooking.dogAge}
-                </dd>
-                <dt className="col-sm-3">Location</dt>
-                <dd className="col-sm-9">
-                  {reviewBooking.location || '—'}
-                  {reviewBooking.region ? (
-                    <span className="text-muted"> · {reviewBooking.region.replace('-', ' ')}</span>
-                  ) : null}
-                </dd>
-                {(() => {
-                  const address = parseBookingExtendedDetails(reviewBooking.extendedJson).clientAddress;
-                  if (!address) return null;
-                  return (
+          {reviewGroup && (() => {
+            const reviewBooking = reviewBookingForGroup(reviewGroup);
+            return (
+              <>
+                <div className="mb-3">{planPreviewBadges(reviewPlan)}</div>
+                <BookingImportMatchPanel
+                  booking={reviewBooking}
+                  plan={reviewPlan}
+                  data={data}
+                  linkMode={linkMode}
+                  onLinkModeChange={setLinkMode}
+                  overrideOwnerId={overrideOwnerId}
+                  onOverrideOwnerIdChange={setOverrideOwnerId}
+                />
+                {reviewGroup.kind === 'package' && (
+                  <div className="mb-3">
+                    <h6 className="text-muted mb-2">
+                      {reviewGroup.packageLabel || 'Package'} · {reviewGroup.bookings.length} sessions
+                    </h6>
+                    <Table responsive size="sm" className="mb-0">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>When</th>
+                          <th>Location</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {reviewGroup.bookings.map((session) => (
+                          <tr key={session.rowIndex}>
+                            <td>{packageSessionBadge(session) || '—'}</td>
+                            <td>{formatWhen(session)}</td>
+                            <td>
+                              {session.location || '—'}
+                              {session.region && (
+                                <span className="text-muted small"> · {session.region.replace('-', ' ')}</span>
+                              )}
+                            </td>
+                            <td className="text-muted small">{session.calendarEventId || '—'}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </Table>
+                  </div>
+                )}
+                <dl className="row mb-0 small">
+                  <dt className="col-sm-3">Submitted</dt>
+                  <dd className="col-sm-9">{formatTimestamp(reviewBooking.timestamp)}</dd>
+                  {reviewGroup.kind === 'single' && (
                     <>
-                      <dt className="col-sm-3">Address</dt>
-                      <dd className="col-sm-9">{address}</dd>
+                      <dt className="col-sm-3">Appointment</dt>
+                      <dd className="col-sm-9">
+                        {formatWhen(reviewBooking)}
+                        {reviewBooking.appointmentEnd && (
+                          <span className="text-muted"> → {formatTimestamp(reviewBooking.appointmentEnd)}</span>
+                        )}
+                      </dd>
                     </>
-                  );
-                })()}
-                <dt className="col-sm-3">Notes</dt>
-                <dd className="col-sm-9">{reviewBooking.message?.trim() || '—'}</dd>
-                <dt className="col-sm-3">Calendar ID</dt>
-                <dd className="col-sm-9"><code>{reviewBooking.calendarEventId || '—'}</code></dd>
-              </dl>
-              <div className="mt-3 pt-3 border-top">
-                <h6 className="text-muted mb-2">{labels.bookingBrief}</h6>
-                <BookingBriefPanel input={pendingBookingToBriefInput(reviewBooking)} />
-              </div>
-            </>
-          )}
+                  )}
+                  <dt className="col-sm-3">Client</dt>
+                  <dd className="col-sm-9">{reviewBooking.name} · {reviewBooking.email} · {reviewBooking.phone}</dd>
+                  <dt className="col-sm-3">Dog</dt>
+                  <dd className="col-sm-9">
+                    {reviewBooking.dogName || '—'} · {reviewBooking.dogBreed} · {reviewBooking.dogAge}
+                  </dd>
+                  {reviewGroup.kind === 'single' && (
+                    <>
+                      <dt className="col-sm-3">Location</dt>
+                      <dd className="col-sm-9">
+                        {reviewBooking.location || '—'}
+                        {reviewBooking.region ? (
+                          <span className="text-muted"> · {reviewBooking.region.replace('-', ' ')}</span>
+                        ) : null}
+                      </dd>
+                    </>
+                  )}
+                  {(() => {
+                    const address = parseBookingExtendedDetails(reviewBooking.extendedJson).clientAddress;
+                    if (!address) return null;
+                    return (
+                      <>
+                        <dt className="col-sm-3">Address</dt>
+                        <dd className="col-sm-9">{address}</dd>
+                      </>
+                    );
+                  })()}
+                  <dt className="col-sm-3">Notes</dt>
+                  <dd className="col-sm-9">{reviewBooking.message?.trim() || '—'}</dd>
+                  {reviewGroup.kind === 'single' && (
+                    <>
+                      <dt className="col-sm-3">Calendar ID</dt>
+                      <dd className="col-sm-9"><code>{reviewBooking.calendarEventId || '—'}</code></dd>
+                    </>
+                  )}
+                </dl>
+                <div className="mt-3 pt-3 border-top">
+                  <h6 className="text-muted mb-2">{labels.bookingBrief}</h6>
+                  <BookingBriefPanel input={pendingBookingToBriefInput(reviewBooking)} />
+                </div>
+              </>
+            );
+          })()}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={resetReviewState}>
@@ -568,29 +794,41 @@ export default function BookingImportPage() {
           <Button
             variant="primary"
             disabled={
-              !reviewBooking ||
+              !reviewGroup ||
               !reviewPlan ||
               importBlocked ||
               !canImport ||
-              busyRow === reviewBooking?.rowIndex
+              busyGroupId === reviewGroup?.id
             }
-            onClick={() => reviewBooking && void handleImport(reviewBooking)}
+            onClick={() => reviewGroup && void handleImport(reviewGroup)}
           >
-            {busyRow === reviewBooking?.rowIndex ? 'Importing…' : labels.bookingImportConfirm}
+            {busyGroupId === reviewGroup?.id
+              ? 'Importing…'
+              : reviewGroup?.kind === 'package' && reviewPlan && 'sessions' in reviewPlan
+                ? `${labels.bookingImportConfirm} (${reviewPlan.sessions.length} sessions)`
+                : labels.bookingImportConfirm}
           </Button>
         </Modal.Footer>
       </Modal>
 
-      <Modal show={Boolean(dismissBooking)} onHide={() => setDismissBooking(null)}>
+      <Modal show={Boolean(dismissGroup)} onHide={() => setDismissGroup(null)}>
         <Modal.Header closeButton>
           <Modal.Title>{labels.bookingDismiss}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <p className="mb-3">
             Dismiss this booking without creating a household? It will be removed from the pending queue.
+            {dismissGroup?.kind === 'package' && (
+              <span> All {dismissGroup.bookings.length} package sessions will be dismissed together.</span>
+            )}
           </p>
-          {dismissBooking && (
-            <p className="fw-semibold">{dismissBooking.name} · {dismissBooking.email}</p>
+          {dismissGroup && (
+            <p className="fw-semibold">
+              {dismissGroup.bookings[0].name} · {dismissGroup.bookings[0].email}
+              {dismissGroup.kind === 'package' && (
+                <span className="text-muted fw-normal"> · {dismissGroup.packageLabel || 'Package'}</span>
+              )}
+            </p>
           )}
           <Form.Group>
             <Form.Label>{labels.bookingDismissReason}</Form.Label>
@@ -604,19 +842,19 @@ export default function BookingImportPage() {
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setDismissBooking(null)}>Cancel</Button>
+          <Button variant="secondary" onClick={() => setDismissGroup(null)}>Cancel</Button>
           <Button
             variant="danger"
-            disabled={!dismissBooking || !canImport || busyRow === dismissBooking?.rowIndex}
+            disabled={!dismissGroup || !canImport || busyGroupId === dismissGroup?.id}
             onClick={() => void handleDismiss()}
           >
-            {busyRow === dismissBooking?.rowIndex ? 'Dismissing…' : labels.bookingDismiss}
+            {busyGroupId === dismissGroup?.id ? 'Dismissing…' : labels.bookingDismiss}
           </Button>
         </Modal.Footer>
       </Modal>
 
       <p className="small text-muted mt-3">
-        Review each confirmed booking — auto-match by email or phone, search suggested households when contact details differ, or create a new record. Each import adds a scheduled session. Dismiss clears the row without importing. Open households from <Link to="/households">Households</Link>.
+        Review each confirmed booking — auto-match by email or phone, search suggested households when contact details differ, or create a new record. Package bookings import as one household with all scheduled sessions; single sessions add one session each. Dismiss clears the row(s) without importing. Open households from <Link to="/households">Households</Link>.
       </p>
     </div>
   );

@@ -7,6 +7,11 @@ import {
   type DesexedStatus,
 } from '@/services/bookingExtendedDetails';
 import type { PendingBooking } from '@/services/bookingImport';
+import {
+  formatBookingWhen,
+  parseBookingInstant,
+  parseBookingWallDateTime,
+} from '@shared/bookingDateTime';
 import type { BookingSnapshot, TrainingSession } from '@/types';
 
 export type { DesexedStatus };
@@ -272,16 +277,20 @@ export function sessionToBriefInput(
 }
 
 export function parseSessionStart(session: TrainingSession): Date | null {
+  const fromInstant = parseBookingInstant(session.appointmentStart);
+  if (fromInstant) return fromInstant;
   if (!session.scheduledDate) return null;
-  const time = session.startTime || '00:00';
-  const date = new Date(`${session.scheduledDate}T${time}`);
-  return Number.isNaN(date.getTime()) ? null : date;
+  return parseBookingWallDateTime(session.scheduledDate, session.startTime || '00:00');
 }
 
 export function parsePendingStart(booking: PendingBooking): Date | null {
-  if (!booking.appointmentStart) return null;
-  const date = new Date(booking.appointmentStart);
-  return Number.isNaN(date.getTime()) ? null : date;
+  return parseBookingInstant(booking.appointmentStart);
+}
+
+export function formatSessionWhen(session: TrainingSession): string {
+  const start = parseSessionStart(session);
+  if (!start) return session.scheduledDate || '—';
+  return formatBookingWhen(start);
 }
 
 export function desexedStatusLabel(status: DesexedStatus | undefined): string | undefined {

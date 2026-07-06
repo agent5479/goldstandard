@@ -2,7 +2,13 @@ import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Alert, Badge, Form, ListGroup } from 'react-bootstrap';
 import { parseBookingExtendedDetails } from '@/services/bookingExtendedDetails';
-import type { BookingImportPlan, BookingLinkMode, PendingBooking } from '@/services/bookingImport';
+import type {
+  BookingImportPlan,
+  BookingLinkMode,
+  PackageBookingImportPlan,
+  PendingBooking,
+} from '@/services/bookingImport';
+import { parsePackageBookingMeta } from '@/services/bookingExtendedDetails';
 import {
   findBookingHouseholdSuggestions,
   ownerMatchesSearch,
@@ -23,11 +29,19 @@ function householdMatchLabel(reason: BookingImportPlan['ownerMatchReason']): str
   }
 }
 
-export function planPreviewBadges(plan: BookingImportPlan | null) {
+export function planPreviewBadges(plan: BookingImportPlan | PackageBookingImportPlan | null) {
   if (!plan) {
     return <Badge bg="secondary">Session already imported or missing required fields</Badge>;
   }
 
+  if ('sessions' in plan) {
+    return packagePlanPreviewBadges(plan);
+  }
+
+  return singlePlanPreviewBadges(plan);
+}
+
+function singlePlanPreviewBadges(plan: BookingImportPlan) {
   return (
     <>
       <Badge bg={plan.ownerIsNew ? 'success' : 'info'} className="me-1">
@@ -57,6 +71,48 @@ export function planPreviewBadges(plan: BookingImportPlan | null) {
   );
 }
 
+function packagePlanPreviewBadges(plan: PackageBookingImportPlan) {
+  return (
+    <>
+      <Badge bg="primary" className="me-1">
+        {plan.packageLabel || 'Package'} · {plan.sessions.length} session
+        {plan.sessions.length === 1 ? '' : 's'}
+      </Badge>
+      <Badge bg={plan.ownerIsNew ? 'success' : 'info'} className="me-1">
+        {householdMatchLabel(plan.ownerMatchReason)}
+      </Badge>
+      <Badge bg={plan.dogIsNew ? 'success' : 'info'} className="me-1">
+        {plan.dogIsNew ? 'New dog' : 'Existing dog'}
+      </Badge>
+      {!plan.ownerIsNew && plan.priorSessionCount > 0 && (
+        <Badge bg="light" text="dark" className="me-1">
+          {plan.priorSessionCount} prior session{plan.priorSessionCount === 1 ? '' : 's'}
+        </Badge>
+      )}
+      {plan.skippedSessionCount > 0 && (
+        <Badge bg="secondary" className="me-1">
+          {plan.skippedSessionCount} already imported
+        </Badge>
+      )}
+      {plan.ageMilestoneFollowUps.map((followUp) => (
+        <Badge key={followUp.id} bg="warning" text="dark" className="me-1">
+          + {followUp.taskName || 'check-in'} {followUp.scheduledDate}
+        </Badge>
+      ))}
+    </>
+  );
+}
+
+export function packageSessionBadge(booking: PendingBooking) {
+  const meta = parsePackageBookingMeta(booking.extendedJson);
+  if (!meta.packageSessionIndex || !meta.packageSessionCount) return null;
+  return (
+    <Badge bg="light" text="dark" className="me-1">
+      Session {meta.packageSessionIndex}/{meta.packageSessionCount}
+    </Badge>
+  );
+}
+
 export function pendingBookingSuggestionBadge(
   booking: PendingBooking,
   data: TenantData
@@ -66,7 +122,7 @@ export function pendingBookingSuggestionBadge(
 
 interface BookingImportMatchPanelProps {
   booking: PendingBooking;
-  plan: BookingImportPlan | null;
+  plan: BookingImportPlan | PackageBookingImportPlan | null;
   data: TenantData;
   linkMode: BookingLinkMode;
   onLinkModeChange: (mode: BookingLinkMode) => void;

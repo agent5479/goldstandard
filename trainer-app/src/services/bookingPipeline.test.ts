@@ -1,7 +1,22 @@
 import { describe, expect, it } from 'vitest';
-import { SAMPLE_HOME_VISIT_EXTENDED_JSON, SAMPLE_STANDARD_HOME_VISIT_EXTENDED_JSON, SAMPLE_STANDARD_HOME_VISIT_PENDING_BOOKING, SAMPLE_PENDING_BOOKING } from '@shared/bookingTestFixture';
+import {
+  SAMPLE_HOME_VISIT_EXTENDED_JSON,
+  SAMPLE_PACKAGE_REF,
+  SAMPLE_STANDARD_HOME_VISIT_EXTENDED_JSON,
+  SAMPLE_STANDARD_HOME_VISIT_PENDING_BOOKING,
+  SAMPLE_PENDING_BOOKING,
+  SAMPLE_THREE_DAY_PACKAGE_BOOKINGS,
+  SAMPLE_TOWN_READY_PACKAGE_BOOKINGS,
+} from '@shared/bookingTestFixture';
+import { BOOKING_PACKAGES } from '@shared/bookingPackages';
 import { parseBookingExtendedDetails } from './bookingExtendedDetails';
-import { planBookingImport, findBookingOwnerByContact } from './bookingImport';
+import {
+  groupPendingBookings,
+  planBookingImport,
+  planPackageBookingImport,
+  findBookingOwnerByContact,
+} from './bookingImport';
+import { groupHouseholdSessions } from '@/utils/trainingSessionDisplay';
 import { findBookingHouseholdSuggestions } from '@/utils/bookingHouseholdMatch';
 import type { Owner, TenantData } from '@/types';
 
@@ -241,5 +256,86 @@ describe('booking pipeline — trainer import', () => {
 
     const suggestions = findBookingHouseholdSuggestions(booking, tenant);
     expect(suggestions[0]?.owner.id).toBe('owner_phone');
+  });
+
+  it('groups package rows by packageRef and sorts by session index', () => {
+    const shuffled = [
+      SAMPLE_THREE_DAY_PACKAGE_BOOKINGS[2],
+      SAMPLE_PENDING_BOOKING,
+      SAMPLE_THREE_DAY_PACKAGE_BOOKINGS[0],
+      SAMPLE_THREE_DAY_PACKAGE_BOOKINGS[1],
+    ];
+
+    const groups = groupPendingBookings(shuffled);
+    expect(groups).toHaveLength(2);
+
+    const packageGroup = groups.find((group) => group.kind === 'package');
+    expect(packageGroup).toBeDefined();
+    expect(packageGroup!.id).toBe(SAMPLE_PACKAGE_REF);
+    expect(packageGroup!.packageId).toBe('three_day');
+    expect(packageGroup!.packageLabel).toBe(BOOKING_PACKAGES.three_day.label);
+    expect(packageGroup!.bookings.map((row) => row.rowIndex)).toEqual([101, 102, 103]);
+
+    const singleGroup = groups.find((group) => group.kind === 'single');
+    expect(singleGroup!.bookings).toHaveLength(1);
+    expect(singleGroup!.bookings[0].rowIndex).toBe(SAMPLE_PENDING_BOOKING.rowIndex);
+  });
+
+  it('plans 3-day package import as one household with three sessions', () => {
+    const plan = planPackageBookingImport(SAMPLE_THREE_DAY_PACKAGE_BOOKINGS, emptyTenant);
+    expect(plan).not.toBeNull();
+    expect(plan!.packageId).toBe('three_day');
+    expect(plan!.packageRef).toBe(SAMPLE_PACKAGE_REF);
+    expect(plan!.packageLabel).toBe(BOOKING_PACKAGES.three_day.label);
+    expect(plan!.sessions).toHaveLength(3);
+    expect(plan!.rowIndices).toEqual([101, 102, 103]);
+    expect(plan!.dog.id).toBe(`dog_pkg_${SAMPLE_PACKAGE_REF}`);
+    expect(plan!.ownerIsNew).toBe(true);
+    expect(plan!.dogIsNew).toBe(true);
+    expect(new Set(plan!.sessions.map((session) => session.ownerId)).size).toBe(1);
+    expect(new Set(plan!.sessions.map((session) => session.dogId)).size).toBe(1);
+    expect(plan!.sessions[0].bookingSnapshot?.dogName).toBe(SAMPLE_PENDING_BOOKING.dogName);
+    expect(plan!.sessions[0].scheduledDate).toBe('2026-06-20');
+    expect(plan!.sessions[0].startTime).toBe('10:00');
+    expect(plan!.sessions[0].appointmentStart).toBe(SAMPLE_THREE_DAY_PACKAGE_BOOKINGS[0].appointmentStart);
+  });
+
+  it('plans 5-session town package with all sessions', () => {
+    const plan = planPackageBookingImport(SAMPLE_TOWN_READY_PACKAGE_BOOKINGS, emptyTenant);
+    expect(plan).not.toBeNull();
+    expect(plan!.packageId).toBe('town_ready_five');
+    expect(plan!.sessions).toHaveLength(5);
+    expect(plan!.sessions[3].trainingLocation).toBe('Takaka township library');
+    expect(plan!.sessions[4].trainingLocation).toBe('Takaka township library');
+  });
+
+  it('skips already-imported package sessions but imports the rest', () => {
+    const firstSessionPlan = planBookingImport(SAMPLE_THREE_DAY_PACKAGE_BOOKINGS[0], emptyTenant);
+    expect(firstSessionPlan).not.toBeNull();
+
+    const tenant: TenantData = {
+      ...emptyTenant,
+      owners: [firstSessionPlan!.owner],
+      dogs: [firstSessionPlan!.dog],
+      trainingSessions: [firstSessionPlan!.session],
+    };
+
+    const plan = planPackageBookingImport(SAMPLE_THREE_DAY_PACKAGE_BOOKINGS, tenant);
+    expect(plan).not.toBeNull();
+    expect(plan!.sessions).toHaveLength(2);
+    expect(plan!.skippedSessionCount).toBe(1);
+    expect(plan!.rowIndices).toEqual([102, 103]);
+    expect(plan!.owner.id).toBe(firstSessionPlan!.owner.id);
+  });
+
+  it('groups imported household sessions by package for display', () => {
+    const plan = planPackageBookingImport(SAMPLE_THREE_DAY_PACKAGE_BOOKINGS, emptyTenant);
+    expect(plan).not.toBeNull();
+
+    const groups = groupHouseholdSessions(plan!.sessions);
+    expect(groups).toHaveLength(1);
+    expect(groups[0].kind).toBe('package');
+    expect(groups[0].sessions).toHaveLength(3);
+    expect(groups[0].packageLabel).toBe(BOOKING_PACKAGES.three_day.label);
   });
 });

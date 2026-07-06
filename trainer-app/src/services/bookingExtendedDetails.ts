@@ -55,7 +55,40 @@ export interface ParsedBookingExtendedDetails {
   isHomeAddress?: boolean;
   locationKind?: 'standard' | 'home_visit' | 'elite_coaching';
   returningClient?: boolean;
+  packageId?: string;
+  packageRef?: string;
+  packageSessionIndex?: number;
+  packageSessionCount?: number;
   hasData: boolean;
+}
+
+export interface PackageBookingMeta {
+  packageId?: string;
+  packageRef?: string;
+  packageSessionIndex?: number;
+  packageSessionCount?: number;
+}
+
+function readPackageBookingMeta(raw: Record<string, unknown>): PackageBookingMeta {
+  return {
+    packageId: typeof raw.packageId === 'string' ? raw.packageId : undefined,
+    packageRef: typeof raw.packageRef === 'string' ? raw.packageRef : undefined,
+    packageSessionIndex:
+      typeof raw.packageSessionIndex === 'number' ? raw.packageSessionIndex : undefined,
+    packageSessionCount:
+      typeof raw.packageSessionCount === 'number' ? raw.packageSessionCount : undefined,
+  };
+}
+
+/** Package linkage stored in column P JSON — independent of demographics parsing. */
+export function parsePackageBookingMeta(json?: string): PackageBookingMeta {
+  if (!json?.trim()) return {};
+  try {
+    const raw = JSON.parse(json) as Record<string, unknown>;
+    return readPackageBookingMeta(raw);
+  } catch {
+    return {};
+  }
 }
 
 const ALLOWED_PROFILE_TAG_IDS = new Set(ALL_DOG_PROFILE_TAGS.map((t) => t.id));
@@ -107,7 +140,12 @@ export function parseBookingExtendedDetails(json?: string): ParsedBookingExtende
       isHomeAddress?: boolean;
       locationKind?: string;
       returningClient?: boolean;
+      packageId?: string;
+      packageRef?: string;
+      packageSessionIndex?: number;
+      packageSessionCount?: number;
     };
+    const packageMeta = readPackageBookingMeta(raw);
     if (raw.v !== EXTENDED_DETAILS_SCHEMA_VERSION) return empty;
 
     const sex = parseDogSex(raw.sex);
@@ -176,6 +214,7 @@ export function parseBookingExtendedDetails(json?: string): ParsedBookingExtende
       isHomeAddress,
       locationKind,
       returningClient: returningClient || undefined,
+      ...packageMeta,
       hasData: true,
     };
   } catch {

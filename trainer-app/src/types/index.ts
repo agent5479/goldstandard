@@ -212,6 +212,10 @@ export interface TrainingSession {
   notes?: string;
   focusAreas?: string[];
   bookingSnapshot?: BookingSnapshot;
+  /** Original sheet/calendar start — use for display when present. */
+  appointmentStart?: string;
+  /** Original sheet/calendar end. */
+  appointmentEnd?: string;
   updatedAt?: string;
   [key: string]: unknown;
 }

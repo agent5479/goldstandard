@@ -1620,31 +1620,54 @@ function handleListBookings(data) {
 function handleMarkImported(data) {
   assertTrainerImportKey(data);
 
-  var rowIndex = Number(data.row_index);
-  if (!rowIndex || rowIndex < 2) {
+  var rowIndices = normalizeTrainerRowIndices(data.row_indices);
+  if (!rowIndices.length && data.row_index != null) {
+    rowIndices = normalizeTrainerRowIndices([data.row_index]);
+  }
+  if (!rowIndices.length) {
     throw new Error("Invalid row index.");
   }
 
-  getSubmissionsSheet()
-    .getRange(rowIndex, TRAINER_IMPORTED_COL)
-    .setValue(new Date().toISOString());
+  var sheet = getSubmissionsSheet();
+  var importedAt = new Date().toISOString();
+  for (var i = 0; i < rowIndices.length; i++) {
+    sheet.getRange(rowIndices[i], TRAINER_IMPORTED_COL).setValue(importedAt);
+  }
 
-  return jsonResponse({ success: true });
+  return jsonResponse({ success: true, imported: rowIndices.length });
 }
 
 function handleMarkDismissed(data) {
   assertTrainerImportKey(data);
 
-  var rowIndex = Number(data.row_index);
-  if (!rowIndex || rowIndex < 2) {
+  var rowIndices = normalizeTrainerRowIndices(data.row_indices);
+  if (!rowIndices.length && data.row_index != null) {
+    rowIndices = normalizeTrainerRowIndices([data.row_index]);
+  }
+  if (!rowIndices.length) {
     throw new Error("Invalid row index.");
   }
 
-  getSubmissionsSheet()
-    .getRange(rowIndex, TRAINER_IMPORTED_COL)
-    .setValue("dismissed:" + new Date().toISOString());
+  var sheet = getSubmissionsSheet();
+  var dismissedAt = "dismissed:" + new Date().toISOString();
+  for (var j = 0; j < rowIndices.length; j++) {
+    sheet.getRange(rowIndices[j], TRAINER_IMPORTED_COL).setValue(dismissedAt);
+  }
 
-  return jsonResponse({ success: true });
+  return jsonResponse({ success: true, dismissed: rowIndices.length });
+}
+
+function normalizeTrainerRowIndices(raw) {
+  if (!raw) return [];
+  var list = Array.isArray(raw) ? raw : [raw];
+  var out = [];
+  for (var i = 0; i < list.length; i++) {
+    var rowIndex = Number(list[i]);
+    if (rowIndex && rowIndex >= 2) {
+      out.push(rowIndex);
+    }
+  }
+  return out;
 }
 
 function getBookingCalendar() {

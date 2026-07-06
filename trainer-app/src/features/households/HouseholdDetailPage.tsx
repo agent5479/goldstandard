@@ -20,7 +20,6 @@ import { BookingRegionBadge } from '@/components/BookingRegionBadge';
 import { ARCHIVED_DOG_STAGE, DEFAULT_TRAINING_STAGE } from '@/data/householdTypes';
 import { BOOKING_LOCATIONS, BOOKING_MAP_CENTER } from '@/data/bookingLocations';
 import { DEFAULT_TRAINING_FOCUS } from '@/data/trainingFocus';
-import { resolveCalendarUrl } from '@/services/calendar';
 import {
   getOwnerDogs,
   getOwnerLogs,
@@ -32,6 +31,7 @@ import {
   isDogArchived,
   resolveOwnerBookingRegion,
 } from '@/utils/householdHelpers';
+import { sortOwnerSessionsChronologically } from '@/utils/trainingSessionDisplay';
 import type { HouseholdVocalCalls } from '@/data/vocalCalls';
 import type { OwnerCapacityDomain, SkillGrade } from '@/data/assessmentTaxonomy';
 import type { Dog, Owner, ScheduledSession, TrainingSession } from '@/types';
@@ -42,6 +42,7 @@ import { HouseholdVocalCallsSection } from '@/features/households/sections/House
 import { HouseholdFirstDogSection } from '@/features/households/sections/HouseholdFirstDogSection';
 import { HouseholdDogsSection } from '@/features/households/sections/HouseholdDogsSection';
 import { HouseholdActivitySection } from '@/features/households/sections/HouseholdActivitySection';
+import { HouseholdBookingsSection } from '@/features/households/sections/HouseholdBookingsSection';
 import { HouseholdCalendarSection } from '@/features/households/sections/HouseholdCalendarSection';
 import type { HouseholdTab } from '@/features/households/sections/types';
 import { householdReturnPath, type HouseholdNavState } from '@/utils/householdNavigation';
@@ -149,7 +150,10 @@ export default function HouseholdDetailPage() {
   const ownerId = isNew ? '' : String(id);
   const dogs = useMemo(() => (ownerId ? getOwnerDogs(data, ownerId) : []), [data, ownerId]);
   const logs = useMemo(() => (ownerId ? getOwnerLogs(data, ownerId).slice(0, 10) : []), [data, ownerId]);
-  const sessions = useMemo(() => (ownerId ? getOwnerSessions(data, ownerId).slice(0, 5) : []), [data, ownerId]);
+  const sessions = useMemo(
+    () => (ownerId ? sortOwnerSessionsChronologically(getOwnerSessions(data, ownerId)) : []),
+    [data, ownerId]
+  );
   const followUps = useMemo(() => (ownerId ? getOwnerFollowUps(data, ownerId).filter((f) => f.status !== 'completed') : []), [data, ownerId]);
   const clientReports = useMemo(
     () => (ownerId ? getOwnerClientReports(data, ownerId).slice(0, 5) : []),
@@ -675,9 +679,7 @@ export default function HouseholdDetailPage() {
     setSessionCalendarId('');
   };
 
-  const calendarLinks = sessions
-    .map((s) => ({ session: s, url: resolveCalendarUrl(s) }))
-    .filter((x) => x.url);
+  const calendarLinks = sessions;
 
   const formProps = {
     form,
@@ -811,6 +813,7 @@ export default function HouseholdDetailPage() {
             <>
               {activeTab === 'overview' && ownerId && (
                 <>
+                  <HouseholdBookingsSection sessions={sessions} dogs={dogs} />
                   <HouseholdDogsSection
                     ownerId={ownerId}
                     owner={form as Owner}
@@ -841,8 +844,9 @@ export default function HouseholdDetailPage() {
                 <HouseholdCalendarSection
                   form={form}
                   canEdit={canEdit}
+                  sessions={calendarLinks}
+                  dogs={dogs}
                   sessionCalendarId={sessionCalendarId}
-                  calendarLinks={calendarLinks}
                   onSessionCalendarIdChange={setSessionCalendarId}
                   onSaveCalendarId={() => void handleSaveCalendarId()}
                 />

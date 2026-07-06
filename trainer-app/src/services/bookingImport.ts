@@ -16,7 +16,14 @@ import { planDogAgeMilestoneFollowUps } from '@/utils/puppyCheckIn';
 import {
   mergeImportedDogExtendedDetails,
   parseBookingExtendedDetails,
+  parsePackageBookingMeta,
 } from '@/services/bookingExtendedDetails';
+import { BOOKING_PACKAGES, isBookingPackageId } from '@shared/bookingPackages';
+import {
+  formatBookingDateOnly,
+  formatBookingTimeOnly,
+  parseBookingInstant,
+} from '@shared/bookingDateTime';
 import { getEnv } from './env';
 import { tenantPath } from './mutations';
 
@@ -50,12 +57,33 @@ export interface BookingImportPlan {
   possibleDuplicateOwners: Owner[];
 }
 
+export interface PackageBookingImportPlan extends Omit<BookingImportPlan, 'session'> {
+  sessions: TrainingSession[];
+  rowIndices: number[];
+  packageId?: string;
+  packageRef?: string;
+  packageLabel?: string;
+  skippedSessionCount: number;
+}
+
+export type PendingBookingGroup = {
+  id: string;
+  kind: 'package' | 'single';
+  bookings: PendingBooking[];
+  packageId?: string;
+  packageLabel?: string;
+};
+
 export type BookingLinkMode = 'auto' | 'existing' | 'force_new';
 
 export interface BookingImportOptions {
   linkMode?: BookingLinkMode;
   /** Required when linkMode === 'existing'. */
   overrideOwnerId?: string;
+  /** Stable dog id for multi-session packages. */
+  preferredDogId?: string;
+  /** Prefer demographics from this row when building the dog profile. */
+  extendedSourceBooking?: PendingBooking;
 }
 
 export function isBookingImportConfigured(): boolean {
@@ -89,11 +117,31 @@ export async function fetchPendingBookings(): Promise<PendingBooking[]> {
 }
 
 export async function markBookingImported(rowIndex: number): Promise<void> {
-  await postBookingAction('mark_imported', { row_index: rowIndex });
+  await markBookingsImported([rowIndex]);
+}
+
+export async function markBookingsImported(rowIndices: number[]): Promise<void> {
+  const unique = [...new Set(rowIndices)].filter((rowIndex) => rowIndex >= 2);
+  if (!unique.length) return;
+  if (unique.length === 1) {
+    await postBookingAction('mark_imported', { row_index: unique[0] });
+    return;
+  }
+  await postBookingAction('mark_imported', { row_indices: unique });
 }
 
 export async function markBookingDismissed(rowIndex: number): Promise<void> {
-  await postBookingAction('mark_dismissed', { row_index: rowIndex });
+  await markBookingsDismissed([rowIndex]);
+}
+
+export async function markBookingsDismissed(rowIndices: number[]): Promise<void> {
+  const unique = [...new Set(rowIndices)].filter((rowIndex) => rowIndex >= 2);
+  if (!unique.length) return;
+  if (unique.length === 1) {
+    await postBookingAction('mark_dismissed', { row_index: unique[0] });
+    return;
+  }
+  await postBookingAction('mark_dismissed', { row_indices: unique });
 }
 
 function normalizeEmail(email: string): string {
@@ -140,17 +188,7 @@ function idFromCalendarEvent(calendarEventId?: string): string {
 }
 
 function parseSheetDate(value: string): Date | null {
-  if (!value) return null;
-  const date = new Date(value);
-  return Number.isNaN(date.getTime()) ? null : date;
-}
-
-function formatDateOnly(date: Date): string {
-  return date.toISOString().slice(0, 10);
-}
-
-function formatTimeOnly(date: Date): string {
-  return date.toTimeString().slice(0, 5);
+  return parseBookingInstant(value);
 }
 
 export function findBookingOwnerByContact(
@@ -194,6 +232,130 @@ export function countOwnerTrainingSessions(data: TenantData, ownerId: string): n
   return data.trainingSessions.filter((session) => String(session.ownerId) === String(ownerId)).length;
 }
 
+function sortPackageBookings(bookings: PendingBooking[]): PendingBooking[] {
+  return [...bookings].sort((a, b) => {
+    const metaA = parsePackageBookingMeta(a.extendedJson);
+    const metaB = parsePackageBookingMeta(b.extendedJson);
+    if (metaA.packageSessionIndex != null && metaB.packageSessionIndex != null) {
+      return metaA.packageSessionIndex - metaB.packageSessionIndex;
+    }
+    const startA = parseSheetDate(a.appointmentStart)?.getTime() ?? 0;
+    const startB = parseSheetDate(b.appointmentStart)?.getTime() ?? 0;
+    return startA - startB;
+  });
+}
+
+export function groupPendingBookings(bookings: PendingBooking[]): PendingBookingGroup[] {
+  const packageMap = new Map<string, PendingBooking[]>();
+  const singles: PendingBooking[] = [];
+
+  for (const booking of bookings) {
+    const meta = parsePackageBookingMeta(booking.extendedJson);
+    if (meta.packageRef) {
+      const rows = packageMap.get(meta.packageRef) || [];
+      rows.push(booking);
+      packageMap.set(meta.packageRef, rows);
+    } else {
+      singles.push(booking);
+    }
+  }
+
+  const groups: PendingBookingGroup[] = [];
+
+  for (const [packageRef, rows] of packageMap) {
+    const sorted = sortPackageBookings(rows);
+    const packageId = parsePackageBookingMeta(sorted[0].extendedJson).packageId;
+    const packageLabel =
+      packageId && isBookingPackageId(packageId) ? BOOKING_PACKAGES[packageId].label : undefined;
+    groups.push({
+      id: packageRef,
+      kind: 'package',
+      bookings: sorted,
+      packageId,
+      packageLabel,
+    });
+  }
+
+  for (const booking of singles) {
+    groups.push({
+      id: `single-${booking.rowIndex}`,
+      kind: 'single',
+      bookings: [booking],
+    });
+  }
+
+  return groups.sort((a, b) => {
+    const startA = parseSheetDate(a.bookings[0].appointmentStart)?.getTime() ?? 0;
+    const startB = parseSheetDate(b.bookings[0].appointmentStart)?.getTime() ?? 0;
+    return startA - startB;
+  });
+}
+
+function pickRichestExtendedBooking(bookings: PendingBooking[]): PendingBooking {
+  return bookings.reduce((best, booking) => {
+    const parsed = parseBookingExtendedDetails(booking.extendedJson);
+    const bestParsed = parseBookingExtendedDetails(best.extendedJson);
+    return parsed.hasData && !bestParsed.hasData ? booking : best;
+  }, bookings[0]);
+}
+
+function resolvePackageOwnerAddress(
+  bookings: PendingBooking[],
+  existingOwner?: Owner
+): string | undefined {
+  for (const booking of bookings) {
+    const extended = parseBookingExtendedDetails(booking.extendedJson);
+    if (
+      extended.clientAddress &&
+      (extended.locationKind === 'home_visit' || isHomeVisitLocation(booking.location))
+    ) {
+      return extended.clientAddress;
+    }
+  }
+  return existingOwner?.address;
+}
+
+function buildTrainingSessionFromBooking(
+  booking: PendingBooking,
+  ownerId: string,
+  dogId: string
+): TrainingSession {
+  const extended = parseBookingExtendedDetails(booking.extendedJson);
+  const isHomeVisit =
+    extended.locationKind === 'home_visit' || isHomeVisitLocation(booking.location);
+  const location = getLocationByName(booking.location);
+  const start = parseSheetDate(booking.appointmentStart);
+  const end = parseSheetDate(booking.appointmentEnd);
+  const now = new Date().toISOString();
+  const eventKey = idFromCalendarEvent(booking.calendarEventId);
+
+  return {
+    id: `session_${eventKey}`,
+    ownerId,
+    dogId,
+    scheduledDate: start ? formatBookingDateOnly(start) : formatBookingDateOnly(new Date()),
+    startTime: start ? formatBookingTimeOnly(start) : undefined,
+    endTime: end ? formatBookingTimeOnly(end) : undefined,
+    appointmentStart: booking.appointmentStart || undefined,
+    appointmentEnd: booking.appointmentEnd || undefined,
+    trainingLocation: booking.location,
+    latitude: isHomeVisit ? undefined : location?.lat,
+    longitude: isHomeVisit ? undefined : location?.lng,
+    calendarEventId: booking.calendarEventId,
+    status: 'scheduled',
+    notes: booking.message?.trim() || undefined,
+    bookingSnapshot: {
+      clientName: booking.name?.trim() || undefined,
+      dogName: booking.dogName?.trim() || undefined,
+      dogBreed: booking.dogBreed?.trim() || undefined,
+      dogAge: booking.dogAge?.trim() || undefined,
+      message: booking.message?.trim() || undefined,
+      extendedJson: booking.extendedJson,
+    },
+    updatedAt: now,
+  };
+}
+
 export function planBookingImport(
   booking: PendingBooking,
   data: TenantData,
@@ -217,7 +379,8 @@ export function planBookingImport(
 
   const emailRaw = booking.email?.trim();
   const nameRaw = booking.name?.trim();
-  const extended = parseBookingExtendedDetails(booking.extendedJson);
+  const extendedSource = options.extendedSourceBooking ?? booking;
+  const extended = parseBookingExtendedDetails(extendedSource.extendedJson);
   const isHomeVisit =
     extended.locationKind === 'home_visit' || isHomeVisitLocation(booking.location);
   const location = getLocationByName(booking.location);
@@ -249,7 +412,6 @@ export function planBookingImport(
         ? ownerIdFromEmail(emailRaw)
         : ownerIdFromPhone(phone);
   const start = parseSheetDate(booking.appointmentStart);
-  const end = parseSheetDate(booking.appointmentEnd);
   const now = new Date().toISOString();
 
   const owner: Owner = {
@@ -276,10 +438,12 @@ export function planBookingImport(
   };
 
   const eventKey = idFromCalendarEvent(booking.calendarEventId);
-  const dogId = `dog_${eventKey}`;
   const existingDog = data.dogs.find(
     (dog) => dog.ownerId === ownerId && dog.name?.trim().toLowerCase() === booking.dogName.trim().toLowerCase()
   );
+  const dogId = existingDog
+    ? String(existingDog.id)
+    : options.preferredDogId || `dog_${eventKey}`;
   const dogIsNew = !existingDog;
   const extendedMerge = mergeImportedDogExtendedDetails(
     existingDog || {},
@@ -354,29 +518,7 @@ export function planBookingImport(
     updatedAt: now,
   };
 
-  const session: TrainingSession = {
-    id: `session_${eventKey}`,
-    ownerId,
-    dogId: String(dog.id),
-    scheduledDate: start ? formatDateOnly(start) : formatDateOnly(new Date()),
-    startTime: start ? formatTimeOnly(start) : undefined,
-    endTime: end ? formatTimeOnly(end) : undefined,
-    trainingLocation: booking.location,
-    latitude: isHomeVisit ? undefined : location?.lat,
-    longitude: isHomeVisit ? undefined : location?.lng,
-    calendarEventId: booking.calendarEventId,
-    status: 'scheduled',
-    notes: booking.message?.trim() || undefined,
-    bookingSnapshot: {
-      clientName: booking.name?.trim() || undefined,
-      dogName: booking.dogName?.trim() || undefined,
-      dogBreed: booking.dogBreed?.trim() || undefined,
-      dogAge: booking.dogAge?.trim() || undefined,
-      message: booking.message?.trim() || undefined,
-      extendedJson: booking.extendedJson,
-    },
-    updatedAt: now,
-  };
+  const session = buildTrainingSessionFromBooking(booking, ownerId, String(dog.id));
 
   const ageChanged = Boolean(
     importedAge &&
@@ -410,6 +552,62 @@ export function planBookingImport(
   };
 }
 
+export function planPackageBookingImport(
+  bookings: PendingBooking[],
+  data: TenantData,
+  options: BookingImportOptions = {}
+): PackageBookingImportPlan | null {
+  if (!bookings.length) return null;
+
+  const sorted = sortPackageBookings(bookings);
+  const importable = sorted.filter(
+    (booking) =>
+      !data.trainingSessions.some((session) => session.calendarEventId === booking.calendarEventId)
+  );
+  if (!importable.length) return null;
+
+  const primary = importable[0];
+  const packageMeta = parsePackageBookingMeta(primary.extendedJson);
+  const packageRef = packageMeta.packageRef;
+  const packageId = packageMeta.packageId;
+  const packageLabel =
+    packageId && isBookingPackageId(packageId) ? BOOKING_PACKAGES[packageId].label : undefined;
+
+  const basePlan = planBookingImport(primary, data, {
+    ...options,
+    preferredDogId: packageRef ? `dog_pkg_${sanitizeFirebaseKey(packageRef)}` : undefined,
+    extendedSourceBooking: pickRichestExtendedBooking(sorted),
+  });
+  if (!basePlan) return null;
+
+  const packageAddress = resolvePackageOwnerAddress(sorted, basePlan.owner);
+  const owner =
+    packageAddress && packageAddress !== basePlan.owner.address
+      ? { ...basePlan.owner, address: packageAddress }
+      : basePlan.owner;
+
+  const sessions = importable.map((booking) =>
+    buildTrainingSessionFromBooking(booking, String(owner.id), String(basePlan.dog.id))
+  );
+
+  return {
+    owner,
+    dog: basePlan.dog,
+    sessions,
+    ageMilestoneFollowUps: basePlan.ageMilestoneFollowUps,
+    ownerIsNew: basePlan.ownerIsNew,
+    dogIsNew: basePlan.dogIsNew,
+    ownerMatchReason: basePlan.ownerMatchReason,
+    priorSessionCount: basePlan.priorSessionCount,
+    possibleDuplicateOwners: basePlan.possibleDuplicateOwners,
+    rowIndices: importable.map((booking) => booking.rowIndex),
+    packageId,
+    packageRef,
+    packageLabel,
+    skippedSessionCount: sorted.length - importable.length,
+  };
+}
+
 function mergeNotes(existing: string | undefined, incoming: string | undefined): string | undefined {
   const next = incoming?.trim();
   if (!next) return existing;
@@ -423,6 +621,19 @@ export function importPlanPaths(tenantId: string, plan: BookingImportPlan) {
     ownerPath: tenantPath(tenantId, 'owners', plan.owner.id),
     dogPath: tenantPath(tenantId, 'dogs', plan.dog.id),
     sessionPath: tenantPath(tenantId, 'trainingSessions', plan.session.id),
+    ageMilestoneFollowUpPaths: plan.ageMilestoneFollowUps.map((followUp) =>
+      tenantPath(tenantId, 'scheduledSessions', followUp.id)
+    ),
+  };
+}
+
+export function importPackagePlanPaths(tenantId: string, plan: PackageBookingImportPlan) {
+  return {
+    ownerPath: tenantPath(tenantId, 'owners', plan.owner.id),
+    dogPath: tenantPath(tenantId, 'dogs', plan.dog.id),
+    sessionPaths: plan.sessions.map((session) =>
+      tenantPath(tenantId, 'trainingSessions', session.id)
+    ),
     ageMilestoneFollowUpPaths: plan.ageMilestoneFollowUps.map((followUp) =>
       tenantPath(tenantId, 'scheduledSessions', followUp.id)
     ),
