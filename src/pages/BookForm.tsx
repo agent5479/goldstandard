@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { FormEvent } from 'react';
 import BookingTrainingPriorityPicker from '../components/BookingTrainingPriorityPicker';
 import BookingConfirmationDetails from '../components/BookingConfirmationDetails';
@@ -8,7 +8,6 @@ import DogBreedSelector from '../components/DogBreedSelector';
 import {
   defaultBookingDate,
   formatDisplayDate,
-  getQuickDateOptions,
   maxBookingDate,
   minBookingDate,
   SESSION_MINUTES,
@@ -41,6 +40,8 @@ import {
   isEliteCoachingLocation,
   isAddressBasedLocation,
   isStandardHomeVisitLocation,
+  isTownshipTrainingLocation,
+  getTownshipTrainingLocationId,
   NELSON_BAYS_PLACEHOLDER_ID,
   type BookingLocation,
 } from '../data/bookingLocations';
@@ -62,12 +63,12 @@ import {
   getPackageConfig,
   getPackageSessionCount,
   getPackageSessionProgressNote,
+  packageSessionAllowsTownVenue,
   type BookingPackageId,
   type PackageSessionDraft,
 } from '@shared/bookingPackages';
 import {
   formatPriceLine,
-  getGoldenBayPricingSummaryLines,
   getRegionPricing,
 } from '@shared/bookingPricing';
 import { Link, useSearchParams } from 'react-router-dom';
@@ -102,7 +103,7 @@ type FormStatus =
     }
   | { kind: 'error'; message: string };
 
-type StandardVenue = 'beach' | 'home' | null;
+type StandardVenue = 'beach' | 'home' | 'town' | null;
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -148,6 +149,27 @@ function bookingStepPanelClass(step: BookingStepId, flags: BookingStepFlags): st
 function bookingStepNavClass(step: BookingStepId, flags: BookingStepFlags): string {
   const state = getBookingStepVisualState(step, flags);
   return state === 'upcoming' ? 'is-upcoming' : `is-${state}`;
+}
+
+function getPackageBookingStepEyebrow(
+  step: BookingStepId,
+  isActive: boolean,
+  activeSessionIndex: number,
+  sessionCount: number
+): string {
+  const prefix = isActive ? 'Current step' : `Step ${step}`;
+  return `${prefix} — session ${activeSessionIndex + 1} of ${sessionCount}`;
+}
+
+function formatPackageSessionLocationLabel(session: PackageSessionDraft): string {
+  const location = getLocationById(session.locationId);
+  if (!location) return 'Location';
+  if (isStandardHomeVisitLocation(session.locationId) && session.clientAddress?.trim()) {
+    const preview = session.clientAddress.trim();
+    const shortPreview = preview.length > 40 ? `${preview.slice(0, 37)}…` : preview;
+    return `Home visit — ${shortPreview}`;
+  }
+  return location.name;
 }
 
 async function postToEndpoint<T>(payload: Record<string, string>): Promise<T> {
@@ -212,14 +234,11 @@ export default function BookForm() {
   const isPackageBooking = selectedPackageId !== 'single' && selectedServiceType === 'standard_beach';
   const packageSessionCount = isPackageBooking ? getPackageSessionCount(selectedPackageId) : 1;
   const activePackageConfig = isPackageBooking ? getPackageConfig(selectedPackageId) : null;
-  const activeSessionProgressNote = isPackageBooking
-    ? getPackageSessionProgressNote(selectedPackageId, activePackageSessionIndex)
-    : undefined;
-  const quickDates = useMemo(() => {
-    const excludeDates = isPackageBooking ? packageSessions.map((session) => session.date) : [];
-    return getQuickDateOptions(4, undefined, excludeDates);
-  }, [isPackageBooking, packageSessions]);
-
+  const showActivePackageForm =
+    isPackageBooking && packageSessions.length <= activePackageSessionIndex;
+  const showTownVenueOption =
+    isPackageBooking &&
+    packageSessionAllowsTownVenue(selectedPackageId, activePackageSessionIndex);
   const resetReturningState = () => {
     setReturningContact('');
     setReturningLookup(null);
@@ -471,7 +490,13 @@ export default function BookForm() {
     setDate(session.date);
     setSelectedLocationId(session.locationId);
     setSelectedSlot('');
-    setStandardVenue(isStandardHomeVisitLocation(session.locationId) ? 'home' : 'beach');
+    setStandardVenue(
+      isStandardHomeVisitLocation(session.locationId)
+        ? 'home'
+        : isTownshipTrainingLocation(session.locationId)
+          ? 'town'
+          : 'beach'
+    );
     setClientAddress(session.clientAddress || '');
     setIsHomeAddress(session.isHomeAddress ?? null);
     setPackageDateError('');
@@ -1271,15 +1296,7 @@ export default function BookForm() {
                       ? 'Beach sessions — opening on advertised dates'
                       : NELSON_PRICING_ENQUIRY_NOTE}
                 </span>
-              ) : (
-                <span className="booking-region-note">
-                  {isEliteService
-                    ? getRegionPricing(region.id).elite_coaching.pricingNote
-                    : isPackageBooking
-                      ? getGoldenBayPricingSummaryLines().join(' · ')
-                      : `${getRegionPricing(region.id).beach.pricingNote} · ${getRegionPricing(region.id).home_visit.pricingNote}`}
-                </span>
-              )}
+              ) : null}
             </button>
             );
           })}
@@ -1308,7 +1325,16 @@ export default function BookForm() {
       >
         <header className="booking-step-header">
           <p className="booking-step-eyebrow">
-            {getBookingStepVisualState(3, stepFlags) === 'active' ? 'Current step' : 'Step 3'}
+            {isPackageBooking && showActivePackageForm
+              ? getPackageBookingStepEyebrow(
+                  3,
+                  getBookingStepVisualState(3, stepFlags) === 'active',
+                  activePackageSessionIndex,
+                  packageSessionCount
+                )
+              : getBookingStepVisualState(3, stepFlags) === 'active'
+                ? 'Current step'
+                : 'Step 3'}
           </p>
           <h3 id="booking-step-location" className="booking-step-title">
             {isEliteService ? 'Choose a date & meeting place' : 'Choose a date & location'}
@@ -1332,49 +1358,89 @@ export default function BookForm() {
           <>
         {isPackageBooking && activePackageConfig ? (
           <>
-            <p className="form-hint booking-step-done-note" role="status">
-              Scheduling session <strong>{activePackageSessionIndex + 1}</strong> of{' '}
-              <strong>{packageSessionCount}</strong> — {activePackageConfig.label}
-            </p>
             {activePackageSessionIndex === 0 && activePackageConfig.whyNote ? (
               <p className="form-hint booking-package-why">{activePackageConfig.whyNote}</p>
             ) : null}
-            {activeSessionProgressNote ? (
-              <p className="form-hint booking-package-progress-current">
-                <strong>Session {activePackageSessionIndex + 1} focus:</strong> {activeSessionProgressNote}
-              </p>
-            ) : null}
             <p className="form-hint">{activePackageConfig.schedulingNote}</p>
-            {activePackageSessionIndex > 0 ? (
-              <p className="form-hint">
-                Pick a <strong>different day</strong> for session {activePackageSessionIndex + 1} — each session in
-                this package must be on its own date.
-              </p>
-            ) : null}
-            {packageSessions.length > 0 ? (
-              <ul className="form-hint booking-package-sessions">
-                {packageSessions.map((session, index) => {
-                  const loc = getLocationById(session.locationId);
-                  return (
-                    <li key={`${session.slotStart}-${index}`}>
-                      Session {index + 1}: {formatDisplayDate(session.date)} · {loc?.name ?? 'Location'} ·{' '}
-                      {formatSlotTimeFromIso(session.slotStart)}
-                      {' · '}
-                      <button
-                        type="button"
-                        className="booking-inline-link"
-                        disabled={submitting}
-                        onClick={() => handleEditPackageSession(index)}
-                      >
-                        Change
-                      </button>
-                    </li>
-                  );
-                })}
-              </ul>
-            ) : null}
+            <div className="booking-package-session-stack">
+              {Array.from({ length: packageSessionCount }, (_, index) => {
+                const session = packageSessions[index];
+                const isDone = Boolean(session);
+                const isActive = showActivePackageForm && index === activePackageSessionIndex;
+                const isUpcoming = !isDone && index > activePackageSessionIndex;
+                if (isUpcoming) return null;
+                const sessionProgressNote = getPackageSessionProgressNote(selectedPackageId, index);
+
+                return (
+                  <div
+                    key={`package-session-${index}`}
+                    className={`booking-package-session-card${isDone ? ' is-done' : isActive ? ' is-active' : ' is-upcoming'}`}
+                  >
+                    <div className="booking-package-session-card-header">
+                      <strong>
+                        Session {index + 1} of {packageSessionCount}
+                      </strong>
+                      {isDone && session ? (
+                        <button
+                          type="button"
+                          className="booking-inline-link"
+                          disabled={submitting}
+                          onClick={() => handleEditPackageSession(index)}
+                        >
+                          Change
+                        </button>
+                      ) : null}
+                    </div>
+                    {isDone && session ? (
+                      <p className="booking-package-session-summary">
+                        {formatDisplayDate(session.date)}
+                        {' · '}
+                        {formatPackageSessionLocationLabel(session)}
+                        {' · '}
+                        {formatSlotTimeFromIso(session.slotStart)}
+                      </p>
+                    ) : null}
+                    {isActive ? (
+                      <>
+                        {sessionProgressNote ? (
+                          <p className="form-hint booking-package-progress-current">
+                            <strong>Session {index + 1} focus:</strong> {sessionProgressNote}
+                          </p>
+                        ) : null}
+                        {index > 0 ? (
+                          <p className="form-hint">
+                            Pick a <strong>different day</strong> for session {index + 1} — each session in this
+                            package must be on its own date.
+                          </p>
+                        ) : null}
+                        <div className="form-field">
+                          <label htmlFor="bookingDate">Date</label>
+                          <input
+                            id="bookingDate"
+                            name="booking_date"
+                            type="date"
+                            required
+                            min={minBookingDate()}
+                            max={maxBookingDate()}
+                            value={date}
+                            disabled={endpointMissing || submitting}
+                            onChange={(event) => handlePackageDateChange(event.target.value)}
+                          />
+                          {packageDateError ? (
+                            <p className="form-feedback error" role="alert">
+                              {packageDateError}
+                            </p>
+                          ) : null}
+                        </div>
+                      </>
+                    ) : null}
+                  </div>
+                );
+              })}
+            </div>
           </>
         ) : null}
+        {(!isPackageBooking || showActivePackageForm) && !isPackageBooking ? (
         <div className="form-field">
           <label htmlFor="bookingDate">Date</label>
           <input
@@ -1394,22 +1460,10 @@ export default function BookForm() {
             </p>
           ) : null}
         </div>
+        ) : null}
 
-        <div className="booking-quick-dates" role="group" aria-label="Quick date options">
-          {quickDates.map((option) => (
-            <button
-              key={option.value}
-              type="button"
-              className={`booking-quick-date${date === option.value ? ' is-selected' : ''}`}
-              disabled={endpointMissing || submitting}
-              onClick={() => handlePackageDateChange(option.value)}
-            >
-              {option.label}
-            </button>
-          ))}
-        </div>
-
-        {isEliteService ? (
+        {(!isPackageBooking || showActivePackageForm) &&
+          (isEliteService ? (
           <>
             <p className="form-hint booking-home-visit-pricing">{ELITE_PRICING_NOTE}</p>
             <fieldset className="form-field">
@@ -1541,6 +1595,25 @@ export default function BookForm() {
                       <strong>Home visit</strong>
                       <span className="booking-region-note">{HOME_VISIT_PRICING_NOTE}</span>
                     </label>
+                    {showTownVenueOption ? (
+                      <label className={`booking-meeting-btn${standardVenue === 'town' ? ' is-selected' : ''}`}>
+                        <input
+                          type="radio"
+                          name="standard_venue"
+                          checked={standardVenue === 'town'}
+                          disabled={submitting}
+                          onChange={() => {
+                            setStandardVenue('town');
+                            setSelectedLocationId(getTownshipTrainingLocationId('golden-bay'));
+                            setSelectedSlot('');
+                            setClientAddress('');
+                            setIsHomeAddress(null);
+                          }}
+                        />
+                        <strong>Takaka township</strong>
+                        <span className="booking-region-note">By the library — pavement, traffic, and town distractions</span>
+                      </label>
+                    ) : null}
                   </div>
                 </fieldset>
               </>
@@ -1606,6 +1679,16 @@ export default function BookForm() {
                   Continue with this home visit
                 </button>
               </>
+            ) : standardVenue === 'town' ? (
+              <>
+                <p className="form-hint">
+                  Town sessions meet by the <strong>Takaka Memorial Library</strong> — markets, pavement, traffic, and
+                  real-world distractions.
+                </p>
+                <p className="booking-step-done-note">
+                  <strong>{getLocationById(getTownshipTrainingLocationId('golden-bay'))?.name}</strong>
+                </p>
+              </>
             ) : (
               <>
                 <p className="form-hint">Tap a pin on the map or choose a location below. Public beaches and reserves in Golden Bay.</p>
@@ -1619,7 +1702,30 @@ export default function BookForm() {
               </>
             )}
           </>
-        )}
+        ))}
+        {isPackageBooking && showActivePackageForm ? (
+          <div className="booking-package-session-upcoming-stack">
+            {Array.from({ length: packageSessionCount }, (_, index) => {
+              const isDone = Boolean(packageSessions[index]);
+              const isUpcoming = !isDone && index > activePackageSessionIndex;
+              if (!isUpcoming) return null;
+
+              return (
+                <div
+                  key={`package-session-upcoming-${index}`}
+                  className="booking-package-session-card is-upcoming"
+                >
+                  <div className="booking-package-session-card-header">
+                    <strong>
+                      Session {index + 1} of {packageSessionCount}
+                    </strong>
+                  </div>
+                  <p className="form-hint booking-package-session-placeholder">Not scheduled yet</p>
+                </div>
+              );
+            })}
+          </div>
+        ) : null}
           </>
         )}
         </div>
@@ -1659,7 +1765,16 @@ export default function BookForm() {
       >
         <header className="booking-step-header">
           <p className="booking-step-eyebrow">
-            {getBookingStepVisualState(4, stepFlags) === 'active' ? 'Current step' : 'Step 4'}
+            {isPackageBooking && showActivePackageForm
+              ? getPackageBookingStepEyebrow(
+                  4,
+                  getBookingStepVisualState(4, stepFlags) === 'active',
+                  activePackageSessionIndex,
+                  packageSessionCount
+                )
+              : getBookingStepVisualState(4, stepFlags) === 'active'
+                ? 'Current step'
+                : 'Step 4'}
           </p>
           <h3 id="booking-step-time" className="booking-step-title">Choose a time</h3>
           {stepTimeDone && selectedSlotData ? (

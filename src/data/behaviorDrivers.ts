@@ -140,6 +140,7 @@ export const BEHAVIOR_DRIVERS: BehaviorDriverDef[] = [
       'Counter-surfer, door dasher, attention sport after privileged upbringing',
       'Pushy mouthing that escalates under correction — not sad, negotiating',
       'Confident adolescent or adult turning recall into a game',
+      'Mean mug stare contests, couch takeover, steer lean on walks — handler-directed displacing',
     ],
     notThisWhen: [
       'Dog gets sad, shuts down, or licks more under No/Stop — insecurity loop, not entitlement',

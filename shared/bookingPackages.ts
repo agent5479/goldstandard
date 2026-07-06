@@ -78,6 +78,11 @@ export function getPackageSessionProgressNote(
   return config.sessionProgress?.[sessionIndex];
 }
 
+/** Sessions 4–5 of Get ready for town use the Takaka township meeting point. */
+export function packageSessionAllowsTownVenue(packageId: BookingPackageId, sessionIndex: number): boolean {
+  return packageId === 'town_ready_five' && sessionIndex >= 3;
+}
+
 export function isBookingPackageId(value: string): value is BookingPackageId {
   return value === 'single' || value === 'three_day' || value === 'town_ready_five';
 }

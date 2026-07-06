@@ -79,6 +79,7 @@ export function inferRegionFromLocationName(locationName: string): BookingRegion
     'rototai reserve',
     'rangihaeata beach',
     'patons rock',
+    'takaka township',
   ];
   if (goldenBayNames.some((loc) => name === loc)) return 'golden-bay';
   return '';

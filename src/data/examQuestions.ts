@@ -2610,6 +2610,51 @@ export const examQuestions: Question[] = [
     explanation: 'You lead. Cutting in front is not excused by excitement — see I don\'t care and Leash & line.',
     guideLink: '#leash'
   },
+  {
+    topic: 'Body language',
+    breedCategory: 'all',
+    track: 'both',
+    dedupGroup: 'mean-mug-stare',
+    text: 'Your dog freezes, lowers its head slightly, and locks unblinking eye contact with you. What is this?',
+    options: [
+      'A mean-mug challenge — rigid stare contest; break it with calm spatial pressure, not a stare-back battle',
+      'Play invitation — engage with rough wrestling to match the dog\'s energy and build bond',
+      'Soft check-in — the dog is asking permission before moving forward on the walk',
+      'Medical concern — contact a vet urgently before any boundary correction continues in training today',
+    ],
+    explanation: 'Rigid freeze plus hard locked stare is a rank challenge, not loose play. Break contact and hold the line.',
+    guideLink: '#pushy-space-games',
+  },
+  {
+    topic: 'Adult expectations',
+    breedCategory: 'all',
+    track: 'both',
+    dedupGroup: 'displacing-human',
+    text: 'On walks your dog leans its full weight into your leg to steer you off the path. What is this?',
+    options: [
+      'Displacing — claiming direction; reset position with leash work, not yielding the line',
+      'Trust lean in living mode — accept the contact and keep walking as the dog chooses',
+      'Fear — create distance and soothe until the dog relaxes before continuing the walk',
+      'Normal exploration — let the dog set the route so sniffing stays unrestrained',
+    ],
+    explanation: 'Steer lean is displacing — the dog claims direction by making you move. Reset position; you lead the walk.',
+    guideLink: '#pushy-space-games',
+  },
+  {
+    topic: 'Relationship habits',
+    breedCategory: 'all',
+    track: 'both',
+    dedupGroup: 'displacing-human',
+    text: 'Your dog nudges and squeezes until you move off the couch spot you were in. What is going on?',
+    options: [
+      'Displacing — claiming the resource; make them move, do not yield the seat',
+      'Cuddles — the dog wants closeness and you should shift over to make room',
+      'Anxiety — add reassurance and let them take the spot so they feel safe',
+      'Play — laugh it off and wrestle for the cushion to keep things light',
+    ],
+    explanation: 'Couch takeover is displacing — a claim on the best seat. Yielding teaches pushy wins; reset position calmly.',
+    guideLink: '#pushy-space-games',
+  },
 
   // ── Psychology & body language (guide expansion) ──────────────────────────
   {

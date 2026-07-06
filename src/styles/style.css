@@ -2818,6 +2818,60 @@ body.page-guide {
   padding-left: 0;
 }
 
+.booking-package-session-stack,
+.booking-package-session-upcoming-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.booking-package-session-upcoming-stack {
+  margin-top: 1rem;
+  margin-bottom: 0;
+}
+
+.booking-package-session-card {
+  border: 1px solid rgba(45, 74, 45, 0.12);
+  border-radius: 10px;
+  padding: 0.9rem 1rem;
+  background: #fff;
+}
+
+.booking-package-session-card.is-done {
+  border-color: rgba(49, 138, 83, 0.28);
+  background: rgba(49, 138, 83, 0.04);
+}
+
+.booking-package-session-card.is-active {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 1px rgba(184, 131, 42, 0.18);
+}
+
+.booking-package-session-card.is-upcoming {
+  opacity: 0.68;
+}
+
+.booking-package-session-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.45rem;
+  color: var(--forest);
+}
+
+.booking-package-session-summary {
+  margin: 0;
+  font-size: 0.92rem;
+  color: #2d6a45;
+  line-height: 1.45;
+}
+
+.booking-package-session-placeholder {
+  margin: 0;
+}
+
 .booking-package-why {
   font-style: italic;
 }
@@ -2889,45 +2943,6 @@ body.page-guide {
 .booking-step-panel.is-upcoming .booking-step-body {
   padding-top: 0.85rem;
   padding-bottom: 0.95rem;
-}
-
-.booking-quick-dates {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.55rem;
-  margin-bottom: 0.85rem;
-}
-
-.booking-quick-date {
-  border: 1px solid rgba(45, 74, 45, 0.14);
-  background: linear-gradient(180deg, #fff 0%, rgba(45, 74, 45, 0.02) 100%);
-  color: var(--forest);
-  border-radius: 999px;
-  padding: 0.45rem 0.95rem;
-  font: inherit;
-  font-size: 0.9rem;
-  font-weight: 500;
-  cursor: pointer;
-  box-shadow: 0 1px 2px rgba(45, 74, 45, 0.05);
-  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s, transform 0.15s;
-}
-
-.booking-quick-date:hover:not(:disabled) {
-  border-color: rgba(184, 131, 42, 0.45);
-  background: rgba(184, 131, 42, 0.08);
-  transform: translateY(-1px);
-}
-
-.booking-quick-date.is-selected {
-  border-color: var(--gold);
-  background: linear-gradient(180deg, rgba(184, 131, 42, 0.16) 0%, rgba(184, 131, 42, 0.06) 100%);
-  box-shadow: 0 0 0 1px rgba(184, 131, 42, 0.2);
-  font-weight: 600;
-}
-
-.booking-quick-date:disabled {
-  opacity: 0.55;
-  cursor: not-allowed;
 }
 
 .booking-slot-list {

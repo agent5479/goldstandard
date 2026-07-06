@@ -134,6 +134,34 @@ export default function SectionReadingDog() {
 
       <p>If you recognise this in your household, it is fixable. The method in this guide — <a href="#access">access</a>, <a href="#timing">timing</a>, <a href="#corrections">corrections without drama</a>, and <a href="#speaking-aloud">speaking structure aloud</a> — rebuilds the relationship frame. Mention it in sessions so the recovery plan matches the dog you actually have, not the dog you wish you had started with.</p>
 
+      <h3 id="pushy-space-games">👊 Pushy space games (handler-directed)</h3>
+
+      <p>Dogs test rank and access on humans too — not only on other dogs. Two patterns show up constantly in households that excuse pushy behaviour as affection or excitement. Learn to name them early; they belong on the <a href="#im-over-it">I'm over it</a> line, not the sympathy line.</p>
+
+      <div className="two-col">
+        <div className="col-card">
+          <h4>😠 Mean mug</h4>
+          <p>Prolonged, hard, unblinking staring at you or another animal — a non-verbal stare contest. The dog freezes, may lower the head slightly, and locks eyes. They are waiting to see who looks away first. If you back down, flinch, or laugh it off, they read it as a win.</p>
+          <p><strong>Not play:</strong> true play is loose and bouncy — elbows down, rear up, fluid movement, often with a wagging tail. A dominance stare is rigid. Do not answer with a stare-back battle; break contact with calm spatial pressure or a redirect inside the <a href="#timing">one-second window</a> — <a href="#butt-push">butt push</a>, <a href="#collar-snatch">collar grab</a>, or position reset as appropriate.</p>
+        </div>
+        <div className="col-card">
+          <h4>🚪 Displacing</h4>
+          <p>Using the body to move a human out of a space or take over what the human is doing. Common forms:</p>
+          <ul className="checklist">
+            <li><strong>Couch takeover</strong> — nudging, squeezing, or pushing until you vacate your exact spot</li>
+            <li><strong>Wedge</strong> — forcing between you and a partner or another dog to break up contact</li>
+            <li><strong>Path block</strong> — planting in a doorway or hallway so you walk around them</li>
+            <li><strong>Steer lean</strong> — leaning full weight into your leg on walks to redirect where you go; often the most common form</li>
+          </ul>
+          <p>The intent is a claim on a resource — the best seat, your attention, or right-of-way. Making you move is how they take ownership. This is not cuddles; in <a href="#context-of-contact">training mode</a>, reset position and hold the line — see <a href="#leash">Leash &amp; line</a> and <a href="#i-dont-care">I don't care</a>.</p>
+        </div>
+      </div>
+
+      <div className="callout">
+        <strong>📚 A note on &ldquo;dominance&rdquo;</strong>
+        <p>Modern veterinary behaviourists often read these moves as <strong>resource guarding</strong> or a <strong>lack of impulse control</strong> — the dog learned that being pushy gets the best seat, the most attention, or the last word. They are not plotting household dictatorship. This guide still uses &ldquo;dominance&rdquo; as shorthand for rank games between dogs and pushy space tests on humans, but the fix is the same either way: clear boundaries, earned access, and calm structure — not winning a staring contest.</p>
+      </div>
+
       <h3 id="three-second-pause">⏸️ The three-second pause</h3>
 
       <p>Before you pet your dog, call them over, or move toward them — pause for three seconds. Use that brief moment to read what their body is actually saying: ear position, eye softness, where their weight sits. Weight shifted back, ears pinned, or a turned head means they are not ready. A loose body with weight forward and soft eyes means safer to engage.</p>
@@ -248,8 +276,18 @@ export default function SectionReadingDog() {
             </tr>
             <tr>
               <td><strong>Eye contact (duration)</strong></td>
-              <td>Brief soft glances = check-in and pack awareness. Hard, sustained stare = challenge or fixation</td>
+              <td>Brief soft glances = check-in and pack awareness. Hard, sustained stare = challenge or fixation — handler-directed <a href="#pushy-space-games">mean mug</a> is a rank stare contest, not affection</td>
               <td>The <a href="#check-in-seven">seven-second check-in</a> is healthy attention; a locked stare at another dog is an early conflict flag — see <a href="#dog-meetings">Dog meetings</a></td>
+            </tr>
+            <tr>
+              <td><strong>Mean mug</strong></td>
+              <td>Rigid freeze, head slightly lowered, hard unblinking stare at handler or animal — non-verbal challenge; who looks away first</td>
+              <td>Not loose play — break with spatial pressure or redirect, not a stare-back contest. See <a href="#pushy-space-games">pushy space games</a></td>
+            </tr>
+            <tr>
+              <td><strong>Displacing</strong></td>
+              <td>Body used to move a human — couch takeover, wedge between people, path block, or <strong>steer lean</strong> on walks</td>
+              <td>Claim on space or attention, not cuddles. Reset position; do not yield the seat, path, or walk direction — <a href="#pushy-space-games">pushy space games</a>, <a href="#leash">Leash &amp; line</a></td>
             </tr>
             <tr>
               <td><strong>Stiffening / freeze</strong></td>

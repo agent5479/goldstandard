@@ -25,6 +25,7 @@ export const GOLDEN_BAY_HOME_VISIT_ID = 'golden-bay-home-visit';
 export const GOLDEN_BAY_ELITE_ID = 'golden-bay-elite-coaching';
 export const NELSON_BAYS_ELITE_ID = 'nelson-bays-elite-coaching';
 export const NELSON_BAYS_HOME_VISIT_ID = 'nelson-bays-home-visit';
+export const TAKAKA_TOWNSHIP_LIBRARY_ID = 'takaka-township-library';
 
 export const BOOKING_LOCATIONS: BookingLocation[] = [
   {
@@ -54,6 +55,13 @@ export const BOOKING_LOCATIONS: BookingLocation[] = [
     regionId: 'golden-bay',
     lat: -40.78749415603961,
     lng: 172.76151432229932,
+  },
+  {
+    id: TAKAKA_TOWNSHIP_LIBRARY_ID,
+    name: 'Takaka township — by the library',
+    regionId: 'golden-bay',
+    lat: -40.8533,
+    lng: 172.8062,
   },
   {
     id: GOLDEN_BAY_HOME_VISIT_ID,
@@ -151,6 +159,17 @@ export function isEliteCoachingLocation(idOrName: string): boolean {
   if (byId?.kind === 'elite_coaching') return true;
   const byName = getLocationByName(idOrName);
   return byName?.kind === 'elite_coaching';
+}
+
+export function isTownshipTrainingLocation(idOrName: string): boolean {
+  const byId = getLocationById(idOrName);
+  if (byId?.id === TAKAKA_TOWNSHIP_LIBRARY_ID) return true;
+  const byName = getLocationByName(idOrName);
+  return byName?.id === TAKAKA_TOWNSHIP_LIBRARY_ID;
+}
+
+export function getTownshipTrainingLocationId(_regionId: BookingRegionId): string {
+  return TAKAKA_TOWNSHIP_LIBRARY_ID;
 }
 
 export function isAddressBasedLocation(idOrName: string): boolean {

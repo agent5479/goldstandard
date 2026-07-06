@@ -55,6 +55,7 @@ const UNDERSTANDING_ANCHORS = [
   'breed-temperament',
   'breed-age-intensity',
   'common-pitfalls',
+  'pushy-space-games',
   'symptom-glossary',
   'trauma-signals',
   'trauma-vs-hardship',

@@ -51,7 +51,8 @@ export default function SectionExpectations() {
         <li><strong>No bolting through doors</strong> — wait, permission, then move. Reset every surge without drama</li>
         <li><strong>No jumping on people</strong> — four paws down or <a href="#collar-snatch">collar grab</a> reset; excitement is not an excuse</li>
         <li><strong>No action without permission</strong> — doors, leash clips, releases, and access all require your assent</li>
-        <li><strong>No crossing in front on walks</strong> — you lead; the dog walks beside or slightly behind — see <a href="#leash">Leash &amp; line</a></li>
+        <li><strong>No crossing in front on walks</strong> — you lead; the dog walks beside or slightly behind. No <a href="#pushy-space-games">steer lean</a> to redirect the route — see <a href="#leash">Leash &amp; line</a></li>
+        <li><strong>No displacing you from space</strong> — couch takeover, wedging between people, or blocking your path is a resource claim, not affection — see <a href="#pushy-space-games">pushy space games</a></li>
         <li><strong>Same rules for every handler</strong> — mixed messages from family who miss the puppy days slow <a href="#graduation">graduation</a> exponentially</li>
       </ul>
 

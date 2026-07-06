@@ -21,11 +21,11 @@ import {
   slotStartDateKey,
   isDateUsedByOtherPackageSessions,
   formatSlotTimeFromIso,
-  getQuickDateOptions,
 } from './bookingConfig';
 import {
   BOOKING_PACKAGES,
   getPackageSessionProgressNote,
+  packageSessionAllowsTownVenue,
 } from '@shared/bookingPackages';
 
 describe('booking pipeline — form extended JSON', () => {
@@ -239,13 +239,6 @@ describe('booking pipeline — package session dates', () => {
   it('formats slot time from ISO', () => {
     expect(formatSlotTimeFromIso('2026-07-06T10:00:00')).toMatch(/10:00/);
   });
-
-  it('excludes used package dates from quick date options', () => {
-    const options = getQuickDateOptions(4, '2026-07-16', ['2026-07-17', '2026-07-18']);
-    expect(options.some((option) => option.value === '2026-07-17')).toBe(false);
-    expect(options.some((option) => option.value === '2026-07-18')).toBe(false);
-    expect(options.length).toBe(4);
-  });
 });
 
 describe('booking pipeline — 3-day programme copy', () => {
@@ -262,6 +255,13 @@ describe('booking pipeline — 3-day programme copy', () => {
     expect(getPackageSessionProgressNote('three_day', 0)).toMatch(/Assess/i);
     expect(getPackageSessionProgressNote('three_day', 2)).toMatch(/Consolidate/i);
     expect(getPackageSessionProgressNote('three_day', 99)).toBeUndefined();
+  });
+
+  it('offers Takaka township venue for sessions 4 and 5 of Get ready for town', () => {
+    expect(packageSessionAllowsTownVenue('town_ready_five', 2)).toBe(false);
+    expect(packageSessionAllowsTownVenue('town_ready_five', 3)).toBe(true);
+    expect(packageSessionAllowsTownVenue('town_ready_five', 4)).toBe(true);
+    expect(packageSessionAllowsTownVenue('three_day', 2)).toBe(false);
   });
 });
 

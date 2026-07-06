@@ -129,44 +129,6 @@ export function shortSlotLabel(label: string): string {
   return comma >= 0 ? label.slice(comma + 2) : label;
 }
 
-export type QuickDateOption = {
-  value: string;
-  label: string;
-};
-
-/** Next few bookable days for quick-pick chips. */
-export function getQuickDateOptions(
-  count = 4,
-  startFrom?: string,
-  excludeDates: ReadonlyArray<string> = []
-): QuickDateOption[] {
-  const exclude = new Set(excludeDates);
-  const options: QuickDateOption[] = [];
-  const cursor = startFrom ? parseLocalDateInput(startFrom) : new Date();
-  if (!startFrom) {
-    cursor.setDate(cursor.getDate() + 1);
-  } else {
-    cursor.setDate(cursor.getDate() + 1);
-  }
-
-  const maxDate = parseLocalDateInput(maxBookingDate());
-  let guard = 0;
-
-  while (options.length < count && cursor.getTime() <= maxDate.getTime() && guard < 120) {
-    guard += 1;
-    const value = toLocalDateInput(cursor);
-    if (!exclude.has(value)) {
-      options.push({
-        value,
-        label: cursor.toLocaleDateString('en-NZ', { weekday: 'short', day: 'numeric', month: 'short' })
-      });
-    }
-    cursor.setDate(cursor.getDate() + 1);
-  }
-
-  return options;
-}
-
 function parseLocalDateInput(dateStr: string): Date {
   const [year, month, day] = dateStr.split('-').map(Number);
   return new Date(year, month - 1, day);

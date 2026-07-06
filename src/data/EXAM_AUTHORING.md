@@ -67,6 +67,8 @@ Explanations should reflect Gold Standard values from the client playbook — ha
 - `context-contact` — training vs living mode contact
 - `whale-eye-response` — response to whale eye (not identification)
 - `demanding-paw` — attention demand pawing
+- `mean-mug-stare` — rigid handler-directed stare contest vs play
+- `displacing-human` — body used to move handler (couch, wedge, steer lean)
 - `sigh-context` — sigh with body state
 - `pack-guarding` — bathroom follow / pack guard
 - `intact-three-paths` — lifestyle path selection (Socialite / Sentinel / Containment)

@@ -108,6 +108,8 @@ export default function SectionLeash() {
 
       <p>For dogs over seven months, cutting in front or surging ahead is not excused by excitement — the <a href="#i-dont-care">I don't care</a> standard applies on every walk. Reset with <a href="#leash-jerk">downward leash jerk</a> or position correction; the line does not move because the dog is "just happy to be out."</p>
 
+      <p>Watch for <strong>steer lean</strong> — the dog pressing full body weight into your leg to redirect where you walk. That is <a href="#pushy-space-games">displacing</a>, not cooperation. Stop, reset position beside or behind you, and resume only when the line is slack and the body yields.</p>
+
       <h3 id="leash-accountability">🧲 Correcting the choice to leave</h3>
 
       <p>

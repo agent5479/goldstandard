@@ -241,6 +241,7 @@ const LOCATIONS = {
   "Rototai Reserve": { lat: -40.83335723736718, lng: 172.83987286746938, region: "golden-bay" },
   "Rangihaeata Beach": { lat: -40.79828176324812, lng: 172.78051321002076, region: "golden-bay" },
   "Patons Rock": { lat: -40.78749415603961, lng: 172.76151432229932, region: "golden-bay" },
+  "Takaka township — by the library": { lat: -40.8533, lng: 172.8062, region: "golden-bay" },
   "Elite coaching — Golden Bay": { lat: -40.8064, lng: 172.794, region: "golden-bay", homeVisit: true, eliteCoaching: true },
   "Home visit — Golden Bay": { lat: -40.8064, lng: 172.794, region: "golden-bay", homeVisit: true, eliteCoaching: false },
   "Nelson Bays — location to be confirmed": { lat: -41.27, lng: 173.28, region: "nelson-bays" },
