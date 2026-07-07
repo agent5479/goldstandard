@@ -65,33 +65,45 @@ export default function HeroGallery() {
     setLightbox({ src, alt: photo.alt, caption: photo.label });
   };
 
+  const renderPhotoCell = (photo: HeroPhoto, keySuffix: string, duplicate = false) => (
+    <figure
+      className={`hero-photo-cell${duplicate ? ' hero-photo-cell--duplicate' : ''}`}
+      key={`${photo.full}${keySuffix}`}
+      aria-hidden={duplicate || undefined}
+    >
+      <button
+        type="button"
+        className="hero-photo-trigger"
+        aria-label={`View larger photo of ${photo.label}`}
+        tabIndex={duplicate ? -1 : undefined}
+        onMouseEnter={(event) => showPreview(photo, event.currentTarget)}
+        onMouseLeave={() => setPreview(null)}
+        onFocus={(event) => showPreview(photo, event.currentTarget)}
+        onBlur={() => setPreview(null)}
+        onClick={() => openLightbox(photo)}
+      >
+        <img
+          src={asset(photo.thumb)}
+          alt={photo.alt}
+          width={72}
+          height={72}
+          loading={photo.eager ? 'eager' : 'lazy'}
+          fetchPriority={photo.highPriority ? 'high' : undefined}
+          decoding="async"
+        />
+      </button>
+    </figure>
+  );
+
   return (
     <>
       <div className="hero-photo-grid" aria-label="Dogs in training">
-        {HERO_PHOTOS.map((photo) => (
-          <figure className="hero-photo-cell" key={photo.full}>
-            <button
-              type="button"
-              className="hero-photo-trigger"
-              aria-label={`View larger photo of ${photo.label}`}
-              onMouseEnter={(event) => showPreview(photo, event.currentTarget)}
-              onMouseLeave={() => setPreview(null)}
-              onFocus={(event) => showPreview(photo, event.currentTarget)}
-              onBlur={() => setPreview(null)}
-              onClick={() => openLightbox(photo)}
-            >
-              <img
-                src={asset(photo.thumb)}
-                alt={photo.alt}
-                width={88}
-                height={88}
-                loading={photo.eager ? 'eager' : 'lazy'}
-                fetchPriority={photo.highPriority ? 'high' : undefined}
-                decoding="async"
-              />
-            </button>
-          </figure>
-        ))}
+        <div className="hero-photo-grid-viewport">
+          <div className="hero-photo-grid-track">
+            {HERO_PHOTOS.map((photo) => renderPhotoCell(photo, ''))}
+            {HERO_PHOTOS.map((photo) => renderPhotoCell(photo, '-dup', true))}
+          </div>
+        </div>
       </div>
 
       <div
