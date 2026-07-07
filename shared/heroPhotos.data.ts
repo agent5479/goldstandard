@@ -78,4 +78,16 @@ export const HERO_PHOTOS = [
     alt: 'Tussock',
     label: 'Tussock',
   },
+  {
+    thumb: 'images/thumbs/basilcavoodlepuppy.jpg',
+    full: 'images/basilcavoodlepuppy.jpg',
+    alt: 'Basil',
+    label: 'Basil',
+  },
+  {
+    thumb: 'images/thumbs/olliewelshterrierpuppy.jpg',
+    full: 'images/olliewelshterrierpuppy.jpg',
+    alt: 'Ollie',
+    label: 'Ollie',
+  },
 ] as const;
