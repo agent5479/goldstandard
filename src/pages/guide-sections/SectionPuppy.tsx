@@ -586,9 +586,22 @@ export default function SectionPuppy() {
             toy or texture
           </li>
           <li>
-            <strong>Hemp rope tug</strong> — teach them to bring the rope to you for engagement rather than jumping up
+            <strong>Hemp rope tug</strong> — teach them to bring the rope to you for engagement rather than jumping up.
+            When playing tug, <strong>hold the tether, toy, or rope steady</strong> and let the puppy pull against your
+            grip — do not jerk or yank. Sharp jerking during teething can rip teeth out or injure the neck
           </li>
         </ul>
+
+        <div className="dont">
+          <strong>⚠️ Tug safety: hold, don&apos;t jerk</strong>
+          <p>
+            Tug is useful outlet play — but your job is to anchor the toy, not whip it around. Hold the rope or tether
+            firmly and allow the puppy to work against steady resistance. Jerking, snapping, or lifting the toy sharply
+            risks tooth damage (especially while adult teeth are coming in) and neck strain. Keep sessions short, end
+            before over-arousal, and transition to a calming chew when wind-down is needed — see{' '}
+            <a href="#puppy-separation-rest">separation &amp; rest</a>.
+          </p>
+        </div>
 
         <p>
           <strong>The goal:</strong> the puppy learns to bring the rope to you for engagement instead of jumping. If
@@ -774,8 +787,9 @@ export default function SectionPuppy() {
         <p>
           Intelligent working breeds — terriers, gundogs, herding types — need dedicated mental stimulation and structured
           outlets for teething and prey drive. Puzzle feeding, scatter work from the daily ration, and scheduled tug or
-          chase sessions prevent destructive behaviour that gets mislabelled as &quot;bad temperament.&quot; Read{' '}
-          <a href="#breed-temperament">breed variance</a> and calibrate intensity to the individual.
+          chase sessions prevent destructive behaviour that gets mislabelled as &quot;bad temperament&quot; — hold tug toys
+          steady; never jerk. Read <a href="#breed-temperament">breed variance</a> and calibrate intensity to the
+          individual.
         </p>
 
         <h3 id="puppy-planner">📅 Puppy Planner — your rhythm by age & breed</h3>
