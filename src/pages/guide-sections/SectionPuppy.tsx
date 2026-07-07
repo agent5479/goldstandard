@@ -189,6 +189,34 @@ export default function SectionPuppy() {
           <li>After security is felt: transition toward crate independence — not before</li>
         </ul>
 
+        <h3 id="puppy-separation-rest">🛏️ Separation, vocalization &amp; protecting rest</h3>
+
+        <p>
+          Separation distress in young companion breeds is often tied to baby-style handling — constant carrying, intense
+          eye gazing, and a household that revolves around the puppy. Unwinding that means treating them like a dog:
+          projecting confident energy that <strong>everything is fine</strong>, and giving them independence in measured
+          doses.
+        </p>
+
+        <ul className="checklist">
+          <li>
+            <strong>Isolation vocalization:</strong> if the puppy yaps or whines alone in a room, you may enter the space
+            — but they remain completely invisible. No eye contact, no speaking, no acknowledgement. Go about your business
+            with the expectation that they will adjust; they match your energy when you do not negotiate with noise. The
+            wider goal is the <a href="#puppy-guest-protocol">ghost puppy baseline</a> — being ignored in a busy home is
+            safe, not abandonment
+          </li>
+          <li>
+            <strong>Protect sleep:</strong> do not interrupt naps or crate rest. An under-rested puppy enters an overexcited,
+            non-learning brain state where bad associations form easily — see the sleep callout above
+          </li>
+          <li>
+            <strong>Wind-down after play:</strong> high-intensity, long excitement sessions strain a young nervous system.
+            Cap arousal with clear calm-down routines — chew time, low lighting, enforced nap — so the brain stays
+            receptive
+          </li>
+        </ul>
+
         <h3 id="puppy-toilet-training">🚽 Toilet training: the golden routine</h3>
 
         <p>
@@ -331,6 +359,45 @@ export default function SectionPuppy() {
           <li>Not using food as training currency? Structured mealtimes still help toilet predictability — bowl OK if you are not running hunger-dependent proximity work</li>
         </ul>
 
+        <h3 id="puppy-affection-motivation">❤️ Affection, motivation &amp; treats</h3>
+
+        <p>
+          Some puppies — especially small crosses bred for companionship — arrive home already{' '}
+          <strong>saturated with touch</strong>. They are incredibly well-loved from day one, and standard petting or
+          lap time stops working as a training reward because it is always available. When affection is free and
+          constant, it is no longer currency.
+        </p>
+
+        <ul className="checklist">
+          <li>
+            <strong>Strategic treat use:</strong> high-value, &quot;exotic&quot; treats become the primary motivator when
+            touch no longer lands — but ration them carefully. Treats given freely between sessions lose value fast; save
+            them for training wins, not background snacking
+          </li>
+          <li>
+            <strong>Proximity over hand-feeding:</strong> drop food on the ground at your feet rather than feeding from
+            your fingers — builds a positive association with being close to you without inviting nipping or
+            hand-centred nagging. See <a href="#puppy-behavior-design">behavioral design</a>
+          </li>
+          <li>
+            <strong>Reward the calm baseline:</strong> mark and treat when the puppy is simply being quiet and doing
+            nothing in particular — not only when they perform on cue. That establishes calm neutrality as the default
+            state worth keeping. Reward correct behaviour immediately; avoid calling the puppy multiple times, which
+            dilutes commands — see <a href="#cue-once">Say it once</a>
+          </li>
+        </ul>
+
+        <div className="callout">
+          <strong>👀 Reduce prolonged eye gazing</strong>
+          <p>
+            Intense, face-to-face staring rituals — common with affection-heavy households — can deepen separation
+            distress and over-humanise the dog (&quot;putting a human soul in a dog body&quot;). Dogs read proximity and
+            expectation differently from us. Soften direct eye contact at home; focus on quiet expectations and
+            rewarding calm neutrality instead. See <a href="#common-pitfalls">common pitfalls</a> and{' '}
+            <a href="#pushy-space-games">pushy space games</a> for when staring becomes a rank test rather than bonding.
+          </p>
+        </div>
+
         <h3 id="puppy-behavior-design">🧠 Behavioral design: set up the win</h3>
 
         <p>
@@ -382,7 +449,9 @@ export default function SectionPuppy() {
           When the puppy jumps, do not physically shove them into a sit — that trains learned helplessness and can
           accidentally reward them with touch. Execute a neutral, entirely impassive <strong>walk-back</strong> barrier:
           guide them backward in a boring, repetitive experience until they choose to sit on their own. You are not
-          forcing the sit — you are removing the reward of forward pressure until they decide to stop jumping.
+          forcing the sit — you are removing the reward of forward pressure until they decide to stop jumping. The same
+          walk-back and <strong>be boring</strong> pattern applies to lap-nagging and attention pestering — see{' '}
+          <a href="#puppy-guest-protocol">ghost puppy baseline</a>.
         </p>
 
         <p>
@@ -403,6 +472,33 @@ export default function SectionPuppy() {
           </p>
         </div>
 
+        <h4>Family communication: one voice, not barking</h4>
+
+        <p>
+          The entire household needs a shared, <strong>compassionate, calm</strong> internal energy — dogs read collective
+          expectation and temperament. Mixed signals from different handlers teach the puppy that rules are negotiable;
+          the family must project a unified agreement of what is expected. Shouting across the house or yelling at the
+          puppy is interpreted as <strong>barking</strong>, not leadership. If they have heard the command, do not repeat
+          it more than once or twice — step in with structure instead. See <a href="#cue-once">Say it once</a> and{' '}
+          <a href="#speaking-aloud">Speak it aloud</a>.
+        </p>
+
+        <h4>Vocal barking interruption</h4>
+
+        <p>
+          When the puppy barks — often alert or protective rather than defiance — gently touch the hip to physically
+          redirect attention, then speak aloud with calm authority: <em>&quot;We&apos;ve got this — you don&apos;t have
+          to protect us. We&apos;re not barking.&quot;</em> The touch breaks the loop; the words carry settled pack energy.
+          Not anger, not repeated nagging — one clear interruption, then neutral expectation. See{' '}
+          <a href="#verbal-correction">Verbal correction</a>.
+        </p>
+
+        <p>
+          If you need to catch or pursue the puppy, remain entirely impassive, neutral, and quiet — persistently and
+          relentlessly, without emotional drama. Chasing with excitement teaches bolting wins; joyless pursuit teaches it
+          cannot — see <a href="#go-get-recall">go-get recall</a> and <a href="#expectations">Expectations</a>.
+        </p>
+
         <h4>Vocabulary consistency</h4>
 
         <p>
@@ -410,6 +506,17 @@ export default function SectionPuppy() {
           example: GOOD, NO, SIT, OUTSIDE, WAIT, COME (pick five that cover praise, reset, position, toilet, and
           release/recall). Mixed messages from family who each invent their own cues slow progress exponentially. See{' '}
           <a href="#speaking-aloud">Speak it aloud</a> and <a href="#cue-once">Say it once</a>.
+        </p>
+
+        <h4 id="puppy-long-leash-boundary">Long-leash boundary technique</h4>
+
+        <p>
+          A longer, light leash is highly effective for puppy boundary work indoors or in the garden. Coil the leash in
+          your hand, drop the excess on the ground, and <strong>stand on it</strong>. When the puppy reaches the end of
+          the allowed radius, their own momentum pulls them <strong>down toward the ground</strong> — not up into a
+          handler&apos;s hand. That creates a clearer, more neutral boundary association than you lifting or jerking
+          upward. Pair with downward tension only — see <a href="#leash-weight">line weight &amp; dangle</a> and{' '}
+          <a href="#leash-jerk">downward leash jerk</a>.
         </p>
 
         <h4>Lighter leash tension</h4>
@@ -436,10 +543,32 @@ export default function SectionPuppy() {
         <h3 id="puppy-mouthing-play">🦷 Mouthing, teething, and appropriate play</h3>
 
         <p>
-          Mouthing is a normal combination of <strong>teething, arousal, and anxiety</strong> — not defiance. During{' '}
-          <a href="#puppy-age-stages">Stage 3 (4–7 months)</a>, the teething urge is overwhelming — satiation through
-          chew toys is the core goal, not punishment. Redirect onto appropriate textures via structured games rather than
-          stiff corrections that escalate arousal further.
+          Mouthing is a normal combination of <strong>teething, arousal, and anxiety</strong> — not defiance. It must
+          happen; the goal is to channel it, not suppress it with anger. When the puppy mouths, control your internal
+          energy, interrupt calmly, and redirect to an approved chew — never react with frustration that spikes arousal
+          further. During <a href="#puppy-age-stages">Stage 3 (4–7 months)</a>, the teething urge is overwhelming —
+          satiation through chew toys is the core goal, not punishment.
+        </p>
+
+        <div className="callout pro-tip">
+          <strong>🧊 Teething relief &amp; regulation: frozen broth cloth</strong>
+          <p>
+            Roll a clean cloth, soak it in kibble broth or water, and freeze it. The cold soothes inflamed gums and gives
+            a safe, constructive outlet when mouthing pressure peaks — especially for small companion crosses at four to
+            seven months. After high-excitement play with children, transition immediately to this calming chew: it
+            regulates arousal as well as teething pain.
+          </p>
+        </div>
+
+        <h4>Overstimulation &amp; de-escalation</h4>
+
+        <p>
+          High-intensity, long excitement sessions — especially with children — strain a young nervous system and are
+          harmful over extended periods. When overstimulation shows up as frantic mouthing, yap, or inability to settle,
+          do not match the energy. Interrupt calmly and move straight into a <strong>regulating mouthing experience</strong>{' '}
+          — frozen broth cloth, approved chew, or low floor scruffle — so the brain winds down instead of stacking more
+          arousal. Cap play before the witching hour; enforced nap follows wind-down. See{' '}
+          <a href="#puppy-separation-rest">separation &amp; rest</a>.
         </p>
 
         <div className="callout">
@@ -571,7 +700,64 @@ export default function SectionPuppy() {
 
         <p>
           The same structure must hold across every handler — children included. Mixed messages from a busy household
-          slow progress exponentially.
+          slow progress exponentially. Consistency is non-negotiable; expectations must still stay fair for a young puppy
+          — firm and clear about boundaries, never hardline or harsh.
+        </p>
+
+        <h3 id="puppy-guest-protocol">👻 Social dynamics, guest protocols &amp; the ghost puppy baseline</h3>
+
+        <p>
+          Companion-type puppies — especially small crosses bred for constant contact — easily become the permanent
+          center of attention. That feels loving in the moment, but it trains the opposite of independence: attachment
+          complexes, separation distress, and panic in low-attention situations — howling in the car after two minutes,
+          melting down when you leave the room. The <strong>ghost puppy</strong> baseline reverses that early.
+        </p>
+
+        <h4>Guests: complete ignore</h4>
+
+        <p>
+          When new people enter the home, they must completely ignore the puppy — no eye contact, no speaking, no
+          touching. The arrival of guests is not about them. This cultivates a calm <strong>proximity is good</strong>{' '}
+          culture: being near the family is normal and safe, not a launch pad for performance. Once the puppy settles,
+          calm interaction can happen on your schedule — not at the door.
+        </p>
+
+        <h4>Independence: being ignored as a safe baseline</h4>
+
+        <p>
+          The same principle applies daily, not only when visitors arrive. The puppy needs time in their own designated
+          space — crate, pen, or tethered corner — while the household carries on with normal routines{' '}
+          <strong>without giving active attention</strong>. Cooking, conversation, chores: life continues; the puppy is
+          not interrupted, soothed, or made the focus. Experiencing being ignored in a busy environment teaches that
+          lack of active attention is a <strong>safe, normal baseline</strong> — not an emergency. That is how they learn
+          to be left alone without escalating into yap, panic, or car howling. Bridge to{' '}
+          <a href="#puppy-separation-rest">separation &amp; rest</a> and{' '}
+          <a href="#puppy-early-security">early security</a> — closeness first, then measured independence.
+        </p>
+
+        <h4>Managing nagging: the &quot;be boring&quot; reset</h4>
+
+        <p>
+          Puppies who are always the center of attention often train their owners to tolerate <strong>nagging</strong> —
+          forcing onto laps, pushing into hands, or persisting until the human pets them out of exhaustion. That is not
+          affection; it is demand behaviour on a slow loop. When the puppy pushes for attention, family members walk
+          backwards gently into their space until they choose to sit. The instant they sit, <strong>be boring</strong> —
+          withdraw active focus so they forget the demanding behaviour. Reset on your terms; then mark calm contact when
+          it arrives unprompted.
+        </p>
+
+        <p>
+          This applies to pawing, nudging, vocal pestering, and jumping — not only four paws off the floor. Never reward
+          the nag cycle; reward the clean calm that was not preceded by pushiness in that moment. Same rule as the jump
+          walk-back in <a href="#puppy-behavior-design">behavioral design</a>.
+        </p>
+
+        <h4>Child regulation rule</h4>
+
+        <p>
+          Children must maintain emotional regulation when interacting with the puppy. If a child cannot engage without
+          becoming frustrated, they should not handle the dog at that time — for both their safety and the puppy&apos;s
+          nervous system. Supervised, calm contact only when the puppy is rested, not overtired.
         </p>
 
         <h4>Busy households</h4>
@@ -604,9 +790,12 @@ export default function SectionPuppy() {
         <div className="callout">
           <strong>🎓 What comes next</strong>
           <p>
-            The puppy phase is establishment, not graduation. Carry rhythm into{' '}
-            <a href="#check-in-seven">seven-second check-in</a> and <a href="#daily">daily practice</a>. Expectations
-            shift by stage — see <a href="#puppy-age-stages">developmental stages</a>: manners tighten from{' '}
+            The puppy phase is establishment, not graduation. Getting these foundations right — calm baseline, strategic
+            motivation, ghost puppy baseline, protected sleep — prevents neurotic patterns later and steers toward the
+            long-term goal: an off-lead capable dog with reliable recall, emotionally stable, and free of random barking.
+            Carry rhythm into <a href="#check-in-seven">seven-second check-in</a> and{' '}
+            <a href="#daily">daily practice</a>. Expectations shift by stage — see{' '}
+            <a href="#puppy-age-stages">developmental stages</a>: manners tighten from{' '}
             <a href="#i-dont-care">seven months</a>, formal obedience and corrections ramp late in the first year,
             full accountability by <strong>12–18 months</strong>, then{' '}
             <a href="#graduation">graduation to adulthood</a>. At ~18 months, personality is largely set — social

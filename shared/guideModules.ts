@@ -185,11 +185,15 @@ const PUPPY_PHASE_ANCHORS = [
   'puppy-toilet-training',
   'puppy-daily-structure',
   'puppy-nutrition-access',
+  'puppy-affection-motivation',
   'puppy-behavior-design',
+  'puppy-long-leash-boundary',
+  'puppy-separation-rest',
   'puppy-mouthing-play',
   'puppy-check-in',
   'puppy-tracking',
   'puppy-household-dynamics',
+  'puppy-guest-protocol',
   'puppy-planner',
 ] as const;
 
