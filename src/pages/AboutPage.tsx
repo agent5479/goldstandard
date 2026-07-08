@@ -4,6 +4,8 @@ import Seo from '../components/Seo';
 import SectionIcon from '../components/SectionIcon';
 import SiteHeader from '../components/SiteHeader';
 import SiteFooter from '../components/SiteFooter';
+import { STANDARD_PRICING_NOTE, HOME_VISIT_PRICING_NOTE } from '../data/bookingConfig';
+import { NELSON_STANDARD_COMING_SOON_NOTE, NELSON_PRICING_ENQUIRY_NOTE } from '@shared/bookingRegions';
 
 export default function AboutPage() {
   return (
@@ -274,7 +276,7 @@ export default function AboutPage() {
             Based in Takaka, Golden Bay — sessions across the Tasman region.{' '}
             <Link to="/book">Book a session</Link>
             {' · '}
-            <Link to="/#services">View pricing</Link>
+            <Link to="/about#pricing">View pricing</Link>
           </p>
           <p>
             For new enquiries, include your dog&apos;s age, biggest challenge, and what success looks like for
@@ -288,6 +290,39 @@ export default function AboutPage() {
               Call 027 814 2222
             </a>
           </div>
+        </div>
+      </section>
+
+      <section className="about-section about-section--soft" id="pricing">
+        <div className="section-inner">
+          <p className="section-label">📍 Sessions &amp; pricing</p>
+          <h2>💰 Session rates &amp; locations.</h2>
+          <p className="about-expect-intro">
+            First conversation is always free. Session rates depend on where we meet and what your dog needs —
+            here is what to expect.
+          </p>
+          <div className="pricing-grid">
+            <article className="pricing-block">
+              <h3>🏖️ Golden Bay</h3>
+              <p>
+                <strong>Beach / reserve</strong> — {STANDARD_PRICING_NOTE}
+              </p>
+              <p>
+                <strong>Home visits</strong> — {HOME_VISIT_PRICING_NOTE}
+              </p>
+            </article>
+            <article className="pricing-block">
+              <h3>📍 Nelson Bays &amp; other locations</h3>
+              <p>{NELSON_STANDARD_COMING_SOON_NOTE}</p>
+              <p>{NELSON_PRICING_ENQUIRY_NOTE}</p>
+            </article>
+          </div>
+          <p className="about-location-line">
+            <Link to="/book">Book online</Link>
+            {' · '}
+            <Link to="/contact">Send an enquiry</Link>
+            {' to get started.'}
+          </p>
         </div>
       </section>
 

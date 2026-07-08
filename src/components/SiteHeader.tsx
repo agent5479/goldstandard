@@ -55,6 +55,7 @@ export default function SiteHeader() {
       <ul className="site-header-nav" id="site-nav">
         <li><Link to="/about" onClick={close}>About</Link></li>
         <li><Link to="/#services" onClick={close}>Services</Link></li>
+        <li><Link to="/about#pricing" onClick={close}>Pricing</Link></li>
         <li><Link to="/exam" onClick={close}>Exam</Link></li>
         <li><Link to="/intelligence" onClick={close}>Breed Analysis</Link></li>
         <li className="nav-cta"><Link to="/book" onClick={close}>Book</Link></li>

@@ -6,8 +6,6 @@ import SiteFooter from '../components/SiteFooter';
 import ProblemFinderModal from '../components/ProblemFinderModal';
 import HeroGallery from './HeroGallery';
 import CompactInfoPopout from '../components/CompactInfoPopout';
-import { STANDARD_PRICING_NOTE, HOME_VISIT_PRICING_NOTE } from '../data/bookingConfig';
-import { NELSON_STANDARD_COMING_SOON_NOTE, NELSON_PRICING_ENQUIRY_NOTE } from '@shared/bookingRegions';
 import { SITE_DEFAULT_TITLE, SITE_META_DESCRIPTION, SITE_OG_DESCRIPTION } from '../data/siteConfig';
 import { asset } from '../asset';
 import SectionIcon from '../components/SectionIcon';
@@ -15,39 +13,51 @@ import SectionIcon from '../components/SectionIcon';
 const SERVICES = [
   {
     icon: '🐕',
-    title: 'General Obedience & Shaping',
+    title: 'Everyday manners & obedience',
     description:
-      'Sit, lie, fetch, wait, heel — and more. Built around your goals, with you coached through each step. With the right understanding of correction, reward, and your own energy, a dog can be shaped into almost anything you want it to be.',
+      'Sit, lie, wait, heel, come when called — the basics that make daily life easy, built around your goals. With the right mix of correction, reward, and your own energy, your dog can be shaped into almost anything you want.',
+  },
+  {
+    icon: '🐶',
+    title: 'Puppies started right',
+    description:
+      'The early months set everything up. Toilet training, biting and mouthing, crate and sleep routines, and calm structure — matched to your puppy\u2019s age so you build the right habits before problems ever take hold.',
   },
   {
     icon: '🛡️',
-    title: 'Safety & Control',
+    title: 'Safe and under control',
     description:
-      'Lunge control, fixation interruption, safe walking without crossing in front, road awareness. The skills that matter when something unexpected happens — so your dog is one you can trust in any situation.',
+      'Stopping the lunge, breaking a fixation, walking without pulling or cutting in front, staying aware of the road. The skills that matter when something unexpected happens — so you can trust your dog in any situation.',
+  },
+  {
+    icon: '🏠',
+    title: 'Calm at home & greetings',
+    description:
+      'Jumping on visitors, bolting the door, barking, or a dog that just can\u2019t settle. We build calm thresholds and quiet greetings so your home feels relaxed — for you, your guests, and your dog.',
   },
   {
     icon: '🤝',
-    title: 'Facilitated Socialisation',
+    title: 'Calm around other dogs',
     description:
-      'Structured sessions with suitable dogs to build healthy social habits and allow natural correction. A social dog is a regulated dog — one that reads other animals and responds calmly rather than reactively.',
+      'Structured sessions with the right dogs, so yours learns healthy social habits and how to be corrected naturally. A social dog is a settled dog — one that reads other animals and stays calm instead of reacting.',
   },
   {
     icon: '🔗',
-    title: 'Rehabilitation',
+    title: 'A fresh start for tough cases',
     description:
-      'For dogs with difficult histories, high anxiety, or entrenched behaviours. Starts by meeting the dog where it is — safely and without force — and building the trust required for training to take hold.',
+      'For dogs with a hard history, high anxiety, or habits that feel stuck. We meet your dog where it is — safely, without force — and rebuild the trust that training needs to take hold.',
   },
   {
     icon: '🧭',
-    title: 'Owner Coaching',
+    title: 'Coaching for you, too',
     description:
-      "Your energy, attention, and consistency are the most powerful training tools your dog has. Sessions include coaching you in how to hold your own — so the results don't evaporate the moment Warwick leaves.",
+      "Your energy, attention, and consistency are the most powerful tools your dog has. Every session coaches you in how to hold your own — so the results don't disappear the moment Warwick leaves.",
   },
   {
     icon: '📍',
-    title: 'In-Environment Training',
+    title: 'Training in the real world',
     description:
-      'Markets, beaches, roads, other dogs — real-world environments where the training has to hold. Practising where the triggers actually exist is what turns learned behaviour into reliable behaviour.',
+      'Markets, beaches, roads, other dogs — the places training actually has to hold. Practising where the real distractions are is what turns a learned trick into reliable behaviour.',
   },
 ] as const;
 
@@ -118,62 +128,34 @@ export default function HomePage() {
 
       <section className="services" id="services">
         <div className="section-inner">
-          <figure className="feature-image feature-image--small">
-            <img src={asset('images/archieglory.jpg')} alt="Dog in training — Gold Standard Dog Training, Golden Bay" width={480} height={640} loading="lazy" decoding="async" />
-          </figure>
           <p className="section-label">🛠️ What's on offer</p>
           <h2>🐾 Services</h2>
-          <div className="services-grid">
-            {SERVICES.map((service) => (
-              <CompactInfoPopout
-                key={service.title}
-                className="service-card"
-                variant="card"
-                icon={service.icon}
-                label={service.title}
-                panelLabel={service.title}
-              >
-                <p>{service.description}</p>
-              </CompactInfoPopout>
-            ))}
-          </div>
-          <div className="service-footer">
-            <p className="section-label">📍 Sessions &amp; pricing</p>
-            <div className="service-footer-chips">
-              <CompactInfoPopout
-                className="service-footer-chip"
-                variant="chip"
-                label="Golden Bay pricing"
-                panelLabel="Golden Bay pricing"
-              >
-                <div className="service-note-pricing">
-                  <p>
-                    <strong>Beach / reserve</strong> — {STANDARD_PRICING_NOTE}
-                  </p>
-                  <p>
-                    <strong>Home visits</strong> — {HOME_VISIT_PRICING_NOTE}
-                  </p>
-                </div>
-              </CompactInfoPopout>
-              <CompactInfoPopout
-                className="service-footer-chip"
-                variant="chip"
-                label="Locations & Nelson"
-                panelLabel="Locations and Nelson Bays"
-              >
-                <div className="service-note-locations">
-                  <p>{NELSON_STANDARD_COMING_SOON_NOTE}</p>
-                  <p>{NELSON_PRICING_ENQUIRY_NOTE}</p>
-                </div>
-              </CompactInfoPopout>
+          <div className="services-layout">
+            <figure className="feature-image feature-image--services">
+              <img src={asset('images/archieglory.jpg')} alt="Dog in training — Gold Standard Dog Training, Golden Bay" width={480} height={640} loading="lazy" decoding="async" />
+            </figure>
+            <div className="services-grid">
+              {SERVICES.map((service) => (
+                <CompactInfoPopout
+                  key={service.title}
+                  className="service-card"
+                  variant="card"
+                  icon={service.icon}
+                  label={service.title}
+                  panelLabel={service.title}
+                >
+                  <p>{service.description}</p>
+                </CompactInfoPopout>
+              ))}
             </div>
-            <p className="service-footer-cta">
-              <Link to="/book">Book online</Link>
-              {' · '}
-              <Link to="/contact">Send an enquiry</Link>
-              {' to get started.'}
-            </p>
           </div>
+          <p className="service-footer-cta">
+            <Link to="/book">Book online</Link>
+            {' · '}
+            <Link to="/contact">Send an enquiry</Link>
+            {' · '}
+            <Link to="/about#pricing">Sessions &amp; pricing</Link>
+          </p>
         </div>
       </section>
 

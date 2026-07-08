@@ -69,6 +69,9 @@ import {
 import {
   formatPriceLine,
   getRegionPricing,
+  getBeachSessionShape,
+  TWO_DOG_CHANGEOVER_NOTE,
+  TWO_DOG_SESSION_MINUTES,
 } from '@shared/bookingPricing';
 import { Link, useSearchParams } from 'react-router-dom';
 import TurnstileField from '../components/TurnstileField';
@@ -233,9 +236,19 @@ export default function BookForm() {
   const [packageDateError, setPackageDateError] = useState('');
   const [packageBookingLive, setPackageBookingLive] = useState<boolean | null>(null);
   const [townPrereqConfirmed, setTownPrereqConfirmed] = useState<boolean | null>(null);
+  const [dogCount, setDogCount] = useState<1 | 2>(1);
+  const [dog2Name, setDog2Name] = useState('');
+  const [dog2Breed, setDog2Breed] = useState('');
+  const [dog2AgeFields, setDog2AgeFields] = useState<DogAgeFieldsValue>(() => emptyDogAgeFields());
 
   const isPackageBooking = selectedPackageId !== 'single' && selectedServiceType === 'standard_beach';
   const isTownPackage = isPackageBooking && isTownReadyPackage(selectedPackageId);
+  const isTwoDogEligible =
+    selectedServiceType === 'standard_beach' &&
+    !isPackageBooking &&
+    standardVenue === 'beach' &&
+    selectedRegionId === 'golden-bay';
+  const isTwoDog = isTwoDogEligible && dogCount === 2;
   const packageSessionCount = isPackageBooking ? getPackageSessionCount(selectedPackageId) : 1;
   const activePackageConfig = isPackageBooking ? getPackageConfig(selectedPackageId) : null;
   const showActivePackageForm =
@@ -259,6 +272,13 @@ export default function BookForm() {
     setDogBreed('');
     setDogAgeFields(emptyDogAgeFields());
     setExtendedDetails(emptyExtendedDetailsState());
+  };
+
+  const resetTwoDogState = () => {
+    setDogCount(1);
+    setDog2Name('');
+    setDog2Breed('');
+    setDog2AgeFields(emptyDogAgeFields());
   };
 
   useEffect(() => {
@@ -352,6 +372,7 @@ export default function BookForm() {
           date,
           region: selectedRegionId,
           location: locationForFilter.name,
+          dogs: isTwoDog ? '2' : '1',
           website: '',
         };
 
@@ -381,7 +402,7 @@ export default function BookForm() {
     return () => {
       cancelled = true;
     };
-  }, [date, selectedRegionId, selectedLocationId, selectedServiceType, isPackageBooking, packageSessions, activePackageSessionIndex]);
+  }, [date, selectedRegionId, selectedLocationId, selectedServiceType, isPackageBooking, packageSessions, activePackageSessionIndex, isTwoDog]);
 
   useEffect(() => {
     if (!selectedServiceType) return;
@@ -396,6 +417,7 @@ export default function BookForm() {
     setSlotsError('');
     setStatus({ kind: 'idle' });
     setTownPrereqConfirmed(null);
+    resetTwoDogState();
     resetClientDetailsState();
   }, [selectedServiceType, selectedPackageId]);
 
@@ -407,6 +429,7 @@ export default function BookForm() {
     setIsHomeAddress(null);
     setSlotsError('');
     setStatus({ kind: 'idle' });
+    resetTwoDogState();
     resetClientDetailsState();
   }, [selectedRegionId]);
 
@@ -437,6 +460,7 @@ export default function BookForm() {
     setIsHomeAddress(null);
     setPackageDateError('');
     setTownPrereqConfirmed(null);
+    resetTwoDogState();
     setStatus({ kind: 'idle' });
     scrollTo(regionRef);
   };
@@ -454,6 +478,7 @@ export default function BookForm() {
     setIsHomeAddress(null);
     setPackageDateError('');
     setTownPrereqConfirmed(null);
+    resetTwoDogState();
     scrollTo(regionRef);
   };
 
@@ -824,6 +849,11 @@ export default function BookForm() {
       }
     }
 
+    if (isTwoDog && !dog2Name.trim()) {
+      setStatus({ kind: 'error', message: 'Please enter your second dog\'s name.' });
+      return;
+    }
+
     if (!EMAIL_PATTERN.test(email)) {
       setStatus({ kind: 'error', message: 'Please enter a valid email address.' });
       return;
@@ -978,6 +1008,12 @@ export default function BookForm() {
       payload.client_address = trimmedAddress;
       payload.is_home_address = isHomeAddress ? 'yes' : 'no';
     }
+    if (isTwoDog) {
+      payload.dogs = '2';
+      payload.dog2_name = dog2Name.trim();
+      payload.dog2_breed = dog2Breed;
+      payload.dog2_age = buildAgeLabel(dog2AgeFields.ageYearsAtRecord, dog2AgeFields.ageMonthsAtRecord) ?? '';
+    }
 
     try {
       setStatus({ kind: 'submitting' });
@@ -991,6 +1027,7 @@ export default function BookForm() {
       setClientAddress('');
       setIsHomeAddress(null);
       setExtendedDetails(emptyExtendedDetailsState());
+      resetTwoDogState();
       resetClientDetailsState();
       setTurnstileToken('');
       setTurnstileResetSignal((n) => n + 1);
@@ -1045,7 +1082,8 @@ export default function BookForm() {
     Boolean(selectedReturningDog) &&
     (detailsChanged ? Boolean(dogName.trim()) : true);
   const firstTimeReady = clientPath === 'first_time';
-  const stepDetailsReady = stepTimeDone && (returningReady || firstTimeReady);
+  const stepDetailsReady =
+    stepTimeDone && (returningReady || firstTimeReady) && (!isTwoDog || Boolean(dog2Name.trim()));
   const showFullDetailsForm =
     clientPath === 'first_time' || (clientPath === 'returning' && detailsChanged);
   const showReturningSlim =
@@ -1085,13 +1123,17 @@ export default function BookForm() {
     ? ELITE_SESSION_MINUTES
     : isStandardHomeVisitLocation(selectedLocationId)
       ? HOME_VISIT_SESSION_MINUTES
-      : SESSION_MINUTES;
+      : isTwoDog
+        ? TWO_DOG_SESSION_MINUTES
+        : SESSION_MINUTES;
   const confirmPricingNote = selectedRegionId
     ? isEliteService
       ? formatPriceLine(selectedRegionId, 'elite_coaching')
       : isStandardHomeVisitLocation(selectedLocationId)
         ? formatPriceLine(selectedRegionId, 'home_visit')
-        : formatPriceLine(selectedRegionId, 'beach')
+        : isTwoDog
+          ? `$${getBeachSessionShape(2).priceDollars} · ${TWO_DOG_SESSION_MINUTES}-minute two-dog session (40 min per dog). ${PAYMENT_AT_MEETING_NOTE}`
+          : formatPriceLine(selectedRegionId, 'beach')
     : '';
 
   if (status.kind === 'success') {
@@ -1667,6 +1709,7 @@ export default function BookForm() {
                           setStandardVenue('home');
                           setSelectedLocationId('');
                           setSelectedSlot('');
+                          resetTwoDogState();
                         }}
                       />
                       <strong>Home visit</strong>
@@ -1749,6 +1792,46 @@ export default function BookForm() {
               </>
             ) : (
               <>
+                {selectedRegionId === 'golden-bay' && !isPackageBooking ? (
+                  <fieldset className="form-field">
+                    <legend>How many dogs?</legend>
+                    <div className="booking-meeting-picker" role="radiogroup" aria-label="Number of dogs">
+                      <label className={`booking-meeting-btn${dogCount === 1 ? ' is-selected' : ''}`}>
+                        <input
+                          type="radio"
+                          name="dog_count"
+                          checked={dogCount === 1}
+                          disabled={submitting}
+                          onChange={() => {
+                            setDogCount(1);
+                            setSelectedSlot('');
+                          }}
+                        />
+                        <strong>One dog</strong>
+                        <span className="booking-region-note">$60 · {SESSION_MINUTES}-minute session</span>
+                      </label>
+                      <label className={`booking-meeting-btn${dogCount === 2 ? ' is-selected' : ''}`}>
+                        <input
+                          type="radio"
+                          name="dog_count"
+                          checked={dogCount === 2}
+                          disabled={submitting}
+                          onChange={() => {
+                            setDogCount(2);
+                            setSelectedSlot('');
+                          }}
+                        />
+                        <strong>Two dogs</strong>
+                        <span className="booking-region-note">
+                          $100 · {TWO_DOG_SESSION_MINUTES}-minute session (40 min per dog)
+                        </span>
+                      </label>
+                    </div>
+                    {isTwoDog ? (
+                      <p className="form-hint booking-package-prereq">{TWO_DOG_CHANGEOVER_NOTE}</p>
+                    ) : null}
+                  </fieldset>
+                ) : null}
                 <p className="form-hint">Tap a pin on the map or choose a location below. Public beaches and reserves in Golden Bay.</p>
                 <BookingLocationMap
                   locations={regionLocations}
@@ -2226,6 +2309,46 @@ export default function BookForm() {
               }}
             />
               </>
+            ) : null}
+
+            {isTwoDog ? (
+              <div className="form-field booking-second-dog">
+                <p className="form-hint">
+                  <strong>Second dog</strong> — this session covers both dogs, 40 minutes each with a changeover in the middle.
+                </p>
+                <div className="form-row">
+                  <div className="form-field">
+                    <label htmlFor="bookDog2Name">Second dog&apos;s name</label>
+                    <input
+                      id="bookDog2Name"
+                      name="dog2_name"
+                      type="text"
+                      autoComplete="off"
+                      required
+                      disabled={submitting}
+                      value={dog2Name}
+                      onChange={(event) => setDog2Name(event.target.value)}
+                    />
+                  </div>
+                  <div className="form-field">
+                    <label htmlFor="bookDog2Age">
+                      Second dog&apos;s age <span className="label-optional">(optional)</span>
+                    </label>
+                    <DogAgeFields
+                      value={dog2AgeFields}
+                      onChange={(patch) => setDog2AgeFields((prev) => ({ ...prev, ...patch }))}
+                      breed={dog2Breed}
+                      disabled={submitting}
+                    />
+                  </div>
+                </div>
+                <DogBreedSelector
+                  value={dog2Breed}
+                  onChange={setDog2Breed}
+                  disabled={submitting}
+                  mixMode="simple"
+                />
+              </div>
             ) : null}
           </>
         )}

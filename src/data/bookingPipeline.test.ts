@@ -26,6 +26,11 @@ import {
   BOOKING_PACKAGES,
   isTownReadyPackage,
 } from '@shared/bookingPackages';
+import {
+  getBeachSessionShape,
+  STANDARD_SESSION_MINUTES,
+  TWO_DOG_SESSION_MINUTES,
+} from '@shared/bookingPricing';
 
 describe('booking pipeline — form extended JSON', () => {
   it('builds extended JSON with sex, desexed, tags, notes, and skill grades', () => {
@@ -260,6 +265,30 @@ describe('booking pipeline — 3-day programme copy', () => {
     expect(isTownReadyPackage('three_day')).toBe(false);
     expect(isTownReadyPackage('single')).toBe(false);
     expect(BOOKING_PACKAGES.town_ready_five.sessionCount).toBe(2);
+  });
+});
+
+describe('booking pipeline — two-dog beach session shape', () => {
+  it('keeps the standard single-dog shape for one dog', () => {
+    const shape = getBeachSessionShape(1);
+    expect(shape.dogCount).toBe(1);
+    expect(shape.sessionMinutes).toBe(STANDARD_SESSION_MINUTES);
+    expect(shape.priceDollars).toBe(60);
+    expect(shape.priceLabel).toBe('$60');
+  });
+
+  it('uses the 85-minute $100 pair for two dogs', () => {
+    const shape = getBeachSessionShape(2);
+    expect(shape.dogCount).toBe(2);
+    expect(shape.sessionMinutes).toBe(TWO_DOG_SESSION_MINUTES);
+    expect(shape.sessionMinutes).toBe(85);
+    expect(shape.priceDollars).toBe(100);
+    expect(shape.priceLabel).toBe('$100');
+  });
+
+  it('clamps out-of-range dog counts to the two-dog cap', () => {
+    expect(getBeachSessionShape(3).dogCount).toBe(2);
+    expect(getBeachSessionShape(0).dogCount).toBe(1);
   });
 });
 

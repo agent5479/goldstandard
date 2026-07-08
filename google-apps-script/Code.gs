@@ -53,7 +53,16 @@ const STANDARD_ADDITIONAL_PERSON_NOTE = "+$" + ADDITIONAL_PERSON_PRICE_DOLLARS +
 const PAYMENT_AT_MEETING_NOTE = "Payment is arranged at your session — no online payment on this site.";
 const NELSON_PRICING_ENQUIRY = "Pricing on enquiry — contact Warwick to confirm.";
 
-const SCRIPT_VERSION = "2026-07-06-v28";
+/** Two-dog beach sessions — keep in sync with shared/bookingPricing.ts */
+const TWO_DOG_SESSION_PRICE_DOLLARS = 100;
+const TWO_DOG_PER_DOG_MINUTES = 40;
+const TWO_DOG_CHANGEOVER_MINUTES = 5;
+const TWO_DOG_SESSION_MINUTES = TWO_DOG_PER_DOG_MINUTES * 2 + TWO_DOG_CHANGEOVER_MINUTES;
+const TWO_DOG_PRICE_LABEL = "$" + TWO_DOG_SESSION_PRICE_DOLLARS;
+const MAX_BEACH_DOGS = 2;
+const TWO_DOG_CHANGEOVER_NOTE = "Two-dog session: each dog gets its own focused time with a short changeover in the middle. Please have a plan to hold, crate, or secure the waiting dog during the swap.";
+
+const SCRIPT_VERSION = "2026-07-09-v30";
 const SUPPORTED_ACTIONS = [
   "availability",
   "book",
@@ -487,9 +496,10 @@ function handleAvailability(data) {
     });
   }
 
+  const dogCount = resolveDogCount(data, bookingType, locationName, region);
   const bookingWindow = getBookingWindowForDate(date);
-  const rawSlots = getAvailableSlots(date, region, locationName, bookingType);
-  const durations = getBookingDurations(bookingType, locationName, region);
+  const rawSlots = getAvailableSlots(date, region, locationName, bookingType, dogCount);
+  const durations = getBookingDurations(bookingType, locationName, region, dogCount);
 
   const slots = rawSlots.map(function (slot) {
     const sessionEnd = new Date(slot.start.getTime() + durations.sessionMinutes * 60 * 1000);
@@ -780,6 +790,34 @@ function mergeExtendedJsonWithReturningClient(extendedJson, isReturning) {
   return merged;
 }
 
+function mergeExtendedJsonWithSecondDog(extendedJson, dog2Name, dog2Breed, dog2Age) {
+  if (!dog2Name) {
+    return extendedJson;
+  }
+  var obj = {};
+  if (extendedJson) {
+    try {
+      obj = JSON.parse(extendedJson);
+    } catch (e) {
+      obj = {};
+    }
+  }
+  if (!obj.v) {
+    obj.v = 1;
+  }
+  obj.dogCount = 2;
+  obj.secondDog = {
+    name: dog2Name,
+    breed: dog2Breed || "",
+    age: dog2Age || ""
+  };
+  var merged = JSON.stringify(obj);
+  if (merged.length > EXTENDED_JSON_MAX) {
+    return extendedJson;
+  }
+  return merged;
+}
+
 function handleBooking(data) {
   assertTurnstileToken(data);
 
@@ -790,6 +828,9 @@ function handleBooking(data) {
   var dogName = String(data.dog_name || "").trim();
   var dogBreed = String(data.dog_breed || "").trim();
   var dogAge = String(data.dog_age || "").trim();
+  var dog2Name = String(data.dog2_name || "").trim();
+  var dog2Breed = String(data.dog2_breed || "").trim();
+  var dog2Age = String(data.dog2_age || "").trim();
   const message = String(data.message || "").trim();
   const slotStartStr = String(data.slot_start || "").trim();
   const location = String(data.location || "").trim();
@@ -798,7 +839,9 @@ function handleBooking(data) {
   const isHomeAddressRaw = String(data.is_home_address || "").trim().toLowerCase();
   var extendedJsonRaw = normalizeExtendedJson(data.extended_json);
   const bookingType = resolveBookingType(data, location);
-  const durations = getBookingDurations(bookingType, location, region);
+  const requestedDogs = parseInt(String(data.dogs || "1"), 10) || 1;
+  const dogCount = resolveDogCount(data, bookingType, location, region);
+  const durations = getBookingDurations(bookingType, location, region, dogCount);
 
   if (isReturning) {
     const filled = finalizeReturningClientProfile(applyReturningClientProfile(data));
@@ -820,6 +863,17 @@ function handleBooking(data) {
 
   if (!dogName || !slotStartStr || !location || !region) {
     return jsonResponse({ success: false, message: "Missing required fields." });
+  }
+
+  if (requestedDogs >= 2 && dogCount < 2) {
+    return jsonResponse({
+      success: false,
+      message: "Two-dog sessions are only available for beach or reserve sessions in Golden Bay."
+    });
+  }
+
+  if (dogCount >= 2 && !dog2Name) {
+    return jsonResponse({ success: false, message: "Please provide the second dog's name." });
   }
 
   assertRateLimit("book:global", RATE_LIMIT_BOOK_GLOBAL, RATE_LIMIT_BOOK_WINDOW_SEC);
@@ -882,6 +936,10 @@ function handleBooking(data) {
     bookingType
   );
   extendedJson = mergeExtendedJsonWithReturningClient(extendedJson, isReturning);
+  if (dogCount >= 2) {
+    extendedJson = mergeExtendedJsonWithSecondDog(extendedJson, dog2Name, dog2Breed, dog2Age);
+  }
+  var combinedDogName = dogCount >= 2 && dog2Name ? dogName + " & " + dog2Name : dogName;
 
   const slotStart = parseLocalDateTime(slotStartStr);
   if (!slotStart) {
@@ -910,7 +968,7 @@ function handleBooking(data) {
     }
 
     const calendar = getBookingCalendar();
-    const title = buildEventTitle(name, dogName, bookingType);
+    const title = buildEventTitle(name, combinedDogName, bookingType);
     const locationLabel = buildLocationLabel(location, clientAddress);
     const description = buildEventDescription(
       name,
@@ -929,7 +987,11 @@ function handleBooking(data) {
       sessionEnd,
       calendarEnd,
       locationLabel,
-      bookingType
+      bookingType,
+      dogCount,
+      dog2Name,
+      dog2Breed,
+      dog2Age
     );
     const event = calendar.createEvent(title, slotStart, calendarEnd, {
       description: description,
@@ -959,7 +1021,11 @@ function handleBooking(data) {
           message: message,
           extendedJson: extendedJson,
           clientAddress: clientAddress,
-          isHomeAddressRaw: isHomeAddressRaw
+          isHomeAddressRaw: isHomeAddressRaw,
+          dogCount: dogCount,
+          dog2Name: dog2Name,
+          dog2Breed: dog2Breed,
+          dog2Age: dog2Age
         })
       });
     }
@@ -970,7 +1036,7 @@ function handleBooking(data) {
       name,
       phone,
       email,
-      dogName,
+      combinedDogName,
       dogBreed,
       dogAge,
       message,
@@ -1001,7 +1067,11 @@ function handleBooking(data) {
       message: message,
       extendedJson: extendedJson,
       clientAddress: clientAddress,
-      isHomeAddressRaw: isHomeAddressRaw
+      isHomeAddressRaw: isHomeAddressRaw,
+      dogCount: dogCount,
+      dog2Name: dog2Name,
+      dog2Breed: dog2Breed,
+      dog2Age: dog2Age
     });
 
     sendNotificationEmail({
@@ -1503,18 +1573,48 @@ function formatSubmissionPriceLine(bookingType, locationName, regionId) {
   return tier.pricingNote;
 }
 
-function getBookingDurations(bookingType, locationName, regionId) {
+/** True when a two-dog beach session is allowed for this booking context. */
+function isTwoDogEligible(bookingType, locationName, regionId) {
+  if (bookingType !== "standard_beach") return false;
+  if ((regionId || "golden-bay") !== "golden-bay") return false;
+  var venueKind = inferVenueKindFromLocation(locationName || "", bookingType);
+  return venueKind === "beach";
+}
+
+/** Parse and clamp the requested dog count; returns 2 only when eligible. */
+function resolveDogCount(data, bookingType, locationName, regionId) {
+  var raw = parseInt(String((data && data.dogs) || "1"), 10);
+  if (!raw || raw < 2) return 1;
+  if (raw > MAX_BEACH_DOGS) raw = MAX_BEACH_DOGS;
+  return isTwoDogEligible(bookingType, locationName, regionId) ? raw : 1;
+}
+
+function getBookingDurations(bookingType, locationName, regionId, dogCount) {
   regionId = regionId || "golden-bay";
   var venueKind = inferVenueKindFromLocation(locationName || "", bookingType);
   var tier = getRegionPricingTier(regionId, venueKind);
   var config = BOOKING_TYPES[bookingType] || BOOKING_TYPES.standard_beach;
+
+  if (dogCount && dogCount >= MAX_BEACH_DOGS && isTwoDogEligible(bookingType, locationName, regionId)) {
+    return {
+      sessionMinutes: TWO_DOG_SESSION_MINUTES,
+      calendarBlockMinutes: TWO_DOG_SESSION_MINUTES,
+      label: config.label + " (two dogs)",
+      priceLabel: TWO_DOG_PRICE_LABEL,
+      pricingNote: TWO_DOG_PRICE_LABEL + " · " + TWO_DOG_SESSION_MINUTES + "-minute two-dog session (40 min per dog).",
+      venueKind: venueKind,
+      dogCount: MAX_BEACH_DOGS
+    };
+  }
+
   return {
     sessionMinutes: tier.sessionMinutes,
     calendarBlockMinutes: tier.calendarBlockMinutes,
     label: config.label,
     priceLabel: tier.priceLabel,
     pricingNote: tier.pricingNote,
-    venueKind: venueKind
+    venueKind: venueKind,
+    dogCount: 1
   };
 }
 
@@ -1678,9 +1778,9 @@ function getBookingCalendar() {
   return calendar;
 }
 
-function getAvailableSlots(date, regionId, locationName, bookingType) {
+function getAvailableSlots(date, regionId, locationName, bookingType, dogCount) {
   bookingType = bookingType || "standard_beach";
-  const durations = getBookingDurations(bookingType, locationName, regionId);
+  const durations = getBookingDurations(bookingType, locationName, regionId, dogCount);
   const windows = getBookingWindows(date, regionId);
   if (!windows.length) {
     return [];
@@ -2354,7 +2454,7 @@ function buildEventTitle(name, dogName, bookingType) {
   return prefix + "🐕 DOGS — Booking";
 }
 
-function buildEventDescription(name, phone, email, dogName, dogBreed, dogAge, message, location, extendedJson, clientAddress, isHomeAddressRaw, region, slotStart, sessionEnd, calendarEnd, locationLabel, bookingType) {
+function buildEventDescription(name, phone, email, dogName, dogBreed, dogAge, message, location, extendedJson, clientAddress, isHomeAddressRaw, region, slotStart, sessionEnd, calendarEnd, locationLabel, bookingType, dogCount, dog2Name, dog2Breed, dog2Age) {
   var submissionSummary = buildBookingSubmissionSummary({
     bookingType: bookingType,
     region: region,
@@ -2372,7 +2472,11 @@ function buildEventDescription(name, phone, email, dogName, dogBreed, dogAge, me
     message: message,
     extendedJson: extendedJson,
     clientAddress: clientAddress,
-    isHomeAddressRaw: isHomeAddressRaw
+    isHomeAddressRaw: isHomeAddressRaw,
+    dogCount: dogCount,
+    dog2Name: dog2Name,
+    dog2Breed: dog2Breed,
+    dog2Age: dog2Age
   });
 
   return (
@@ -2546,7 +2650,7 @@ function buildBookingSubmissionSummary(options) {
   var bookingType = options.bookingType || "standard_beach";
   var regionId = options.region || "golden-bay";
   var locationName = options.location || options.locationLabel || "";
-  var durations = getBookingDurations(bookingType, locationName, regionId);
+  var durations = getBookingDurations(bookingType, locationName, regionId, options.dogCount);
   var regionLabel = REGIONS[options.region] ? REGIONS[options.region].label : options.region;
   var sessionEnd = options.sessionEnd || options.slotEnd;
   var calendarEnd = options.calendarEnd || options.slotEnd;
@@ -2603,7 +2707,10 @@ function buildBookingSubmissionSummary(options) {
     submissionLine("Location", options.locationLabel)
   ];
   if (durations.priceLabel || durations.pricingNote) {
-    sessionLines.push(submissionLine("Price", formatSubmissionPriceLine(bookingType, locationName, regionId)));
+    var priceLine = durations.dogCount >= 2
+      ? durations.pricingNote
+      : formatSubmissionPriceLine(bookingType, locationName, regionId);
+    sessionLines.push(submissionLine("Price", priceLine));
     sessionLines.push(submissionLine("Payment", PAYMENT_AT_MEETING_NOTE));
   }
 
@@ -2614,8 +2721,19 @@ function buildBookingSubmissionSummary(options) {
       submissionLine("Phone", options.phone),
       submissionLine("Email", options.email)
     ]),
-    submissionSection("Your dog", dogLines)
+    submissionSection(options.dogCount >= 2 ? "First dog" : "Your dog", dogLines)
   ];
+
+  if (options.dogCount >= 2 && options.dog2Name) {
+    blocks.push(
+      submissionSection("Second dog", [
+        submissionLine("Name", options.dog2Name),
+        submissionLine("Breed", options.dog2Breed),
+        submissionLine("Age", options.dog2Age)
+      ])
+    );
+    blocks.push(submissionSection("Two-dog session", [TWO_DOG_CHANGEOVER_NOTE]));
+  }
 
   if (isAddressBasedLocation(options.location) && options.clientAddress) {
     blocks.push(

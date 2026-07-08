@@ -12,6 +12,52 @@ export const HOME_VISIT_SESSION_MINUTES = 60;
 export const ELITE_SESSION_MINUTES = 150;
 export const ELITE_CALENDAR_BLOCK_MINUTES = 240;
 
+/**
+ * Two-dog beach sessions: each dog gets its own focused window plus a single
+ * changeover buffer, and the pair is a flat price. Only offered for
+ * beach/reserve standard sessions (see getBeachSessionShape).
+ */
+export const TWO_DOG_SESSION_PRICE_DOLLARS = 100;
+export const TWO_DOG_PER_DOG_MINUTES = 40;
+export const TWO_DOG_CHANGEOVER_MINUTES = 5;
+export const TWO_DOG_SESSION_MINUTES =
+  TWO_DOG_PER_DOG_MINUTES * 2 + TWO_DOG_CHANGEOVER_MINUTES;
+
+export const MAX_BEACH_DOGS = 2;
+
+export type BeachSessionShape = {
+  dogCount: number;
+  sessionMinutes: number;
+  priceDollars: number;
+  priceLabel: string;
+};
+
+/**
+ * Duration + price for a beach/reserve standard session by dog count.
+ * 1 dog keeps the standard 55 min / $60; 2 dogs is the 85 min / $100 pair.
+ * Mirror this logic in google-apps-script/Code.gs getBookingDurations.
+ */
+export function getBeachSessionShape(dogCount: number): BeachSessionShape {
+  const clamped = dogCount >= MAX_BEACH_DOGS ? MAX_BEACH_DOGS : 1;
+  if (clamped === MAX_BEACH_DOGS) {
+    return {
+      dogCount: MAX_BEACH_DOGS,
+      sessionMinutes: TWO_DOG_SESSION_MINUTES,
+      priceDollars: TWO_DOG_SESSION_PRICE_DOLLARS,
+      priceLabel: `$${TWO_DOG_SESSION_PRICE_DOLLARS}`,
+    };
+  }
+  return {
+    dogCount: 1,
+    sessionMinutes: STANDARD_SESSION_MINUTES,
+    priceDollars: STANDARD_SESSION_PRICE_DOLLARS,
+    priceLabel: `$${STANDARD_SESSION_PRICE_DOLLARS}`,
+  };
+}
+
+export const TWO_DOG_CHANGEOVER_NOTE =
+  'Two-dog session: each dog gets its own focused time with a short changeover in the middle. Please have a plan to hold, crate, or secure the waiting dog during the swap.';
+
 export const STANDARD_PRICE_LABEL = `$${STANDARD_SESSION_PRICE_DOLLARS}`;
 export const HOME_VISIT_PRICE_LABEL = `$${HOME_VISIT_SESSION_PRICE_DOLLARS}`;
 export const ELITE_PRICE_LABEL = `$${ELITE_SESSION_PRICE_DOLLARS}`;
