@@ -24,7 +24,7 @@ import {
 } from './bookingConfig';
 import {
   BOOKING_PACKAGES,
-  packageSessionAllowsTownVenue,
+  isTownReadyPackage,
 } from '@shared/bookingPackages';
 
 describe('booking pipeline — form extended JSON', () => {
@@ -255,11 +255,11 @@ describe('booking pipeline — 3-day programme copy', () => {
     expect(BOOKING_PACKAGES.three_day.approachNote).not.toMatch(/Session 1/i);
   });
 
-  it('offers Takaka township venue for sessions 4 and 5 of Get ready for town', () => {
-    expect(packageSessionAllowsTownVenue('town_ready_five', 2)).toBe(false);
-    expect(packageSessionAllowsTownVenue('town_ready_five', 3)).toBe(true);
-    expect(packageSessionAllowsTownVenue('town_ready_five', 4)).toBe(true);
-    expect(packageSessionAllowsTownVenue('three_day', 2)).toBe(false);
+  it('identifies the town-ready package and its 2-session count', () => {
+    expect(isTownReadyPackage('town_ready_five')).toBe(true);
+    expect(isTownReadyPackage('three_day')).toBe(false);
+    expect(isTownReadyPackage('single')).toBe(false);
+    expect(BOOKING_PACKAGES.town_ready_five.sessionCount).toBe(2);
   });
 });
 

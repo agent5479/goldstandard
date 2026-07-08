@@ -69,7 +69,7 @@ const SUPPORTED_ACTIONS = [
 const PACKAGE_CONFIG = {
   single: { label: "Single session", sessionCount: 1 },
   three_day: { label: "3-day programme", sessionCount: 3 },
-  town_ready_five: { label: "Get ready for town", sessionCount: 5 }
+  town_ready_five: { label: "Get ready for town", sessionCount: 2 }
 };
 
 /** Flip to true when Nelson beach sessions open on advertised dates. Keep in sync with shared/bookingRegions.ts */

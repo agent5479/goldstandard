@@ -151,9 +151,9 @@ export const SAMPLE_THREE_DAY_PACKAGE_BOOKINGS = [1, 2, 3].map((index) =>
   packageSessionBooking(index, 'three_day', 3)
 );
 
-export const SAMPLE_TOWN_READY_PACKAGE_BOOKINGS = [1, 2, 3, 4, 5].map((index) =>
-  packageSessionBooking(index, 'town_ready_five', 5, {
-    location: index >= 4 ? 'Takaka township library' : SAMPLE_PENDING_BOOKING.location,
+export const SAMPLE_TOWN_READY_PACKAGE_BOOKINGS = [1, 2].map((index) =>
+  packageSessionBooking(index, 'town_ready_five', 2, {
+    location: 'Takaka township library',
   })
 );
 

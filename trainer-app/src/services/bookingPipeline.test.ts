@@ -300,13 +300,13 @@ describe('booking pipeline — trainer import', () => {
     expect(plan!.sessions[0].appointmentStart).toBe(SAMPLE_THREE_DAY_PACKAGE_BOOKINGS[0].appointmentStart);
   });
 
-  it('plans 5-session town package with all sessions', () => {
+  it('plans 2-session town package with all sessions', () => {
     const plan = planPackageBookingImport(SAMPLE_TOWN_READY_PACKAGE_BOOKINGS, emptyTenant);
     expect(plan).not.toBeNull();
     expect(plan!.packageId).toBe('town_ready_five');
-    expect(plan!.sessions).toHaveLength(5);
-    expect(plan!.sessions[3].trainingLocation).toBe('Takaka township library');
-    expect(plan!.sessions[4].trainingLocation).toBe('Takaka township library');
+    expect(plan!.sessions).toHaveLength(2);
+    expect(plan!.sessions[0].trainingLocation).toBe('Takaka township library');
+    expect(plan!.sessions[1].trainingLocation).toBe('Takaka township library');
   });
 
   it('skips already-imported package sessions but imports the rest', () => {

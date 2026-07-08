@@ -62,7 +62,7 @@ import {
   STANDARD_BOOKING_PACKAGE_LIST,
   getPackageConfig,
   getPackageSessionCount,
-  packageSessionAllowsTownVenue,
+  isTownReadyPackage,
   type BookingPackageId,
   type PackageSessionDraft,
 } from '@shared/bookingPackages';
@@ -232,15 +232,14 @@ export default function BookForm() {
   const [turnstileResetSignal, setTurnstileResetSignal] = useState(0);
   const [packageDateError, setPackageDateError] = useState('');
   const [packageBookingLive, setPackageBookingLive] = useState<boolean | null>(null);
+  const [townPrereqConfirmed, setTownPrereqConfirmed] = useState<boolean | null>(null);
 
   const isPackageBooking = selectedPackageId !== 'single' && selectedServiceType === 'standard_beach';
+  const isTownPackage = isPackageBooking && isTownReadyPackage(selectedPackageId);
   const packageSessionCount = isPackageBooking ? getPackageSessionCount(selectedPackageId) : 1;
   const activePackageConfig = isPackageBooking ? getPackageConfig(selectedPackageId) : null;
   const showActivePackageForm =
     isPackageBooking && packageSessions.length <= activePackageSessionIndex;
-  const showTownVenueOption =
-    isPackageBooking &&
-    packageSessionAllowsTownVenue(selectedPackageId, activePackageSessionIndex);
   const resetReturningState = () => {
     setReturningContact('');
     setReturningLookup(null);
@@ -396,6 +395,7 @@ export default function BookForm() {
     setActivePackageSessionIndex(0);
     setSlotsError('');
     setStatus({ kind: 'idle' });
+    setTownPrereqConfirmed(null);
     resetClientDetailsState();
   }, [selectedServiceType, selectedPackageId]);
 
@@ -436,6 +436,7 @@ export default function BookForm() {
     setClientAddress('');
     setIsHomeAddress(null);
     setPackageDateError('');
+    setTownPrereqConfirmed(null);
     setStatus({ kind: 'idle' });
     scrollTo(regionRef);
   };
@@ -452,6 +453,7 @@ export default function BookForm() {
     setClientAddress('');
     setIsHomeAddress(null);
     setPackageDateError('');
+    setTownPrereqConfirmed(null);
     scrollTo(regionRef);
   };
 
@@ -543,11 +545,16 @@ export default function BookForm() {
         const nextIndex = activePackageSessionIndex + 1;
         setActivePackageSessionIndex(nextIndex);
         setSelectedSlot('');
-        setSelectedLocationId('');
-        setStandardVenue(null);
         setClientAddress('');
         setIsHomeAddress(null);
         setStatus({ kind: 'idle' });
+        if (isTownPackage && townPrereqConfirmed) {
+          setStandardVenue('town');
+          setSelectedLocationId(getTownshipTrainingLocationId(selectedRegionId || 'golden-bay'));
+        } else {
+          setSelectedLocationId('');
+          setStandardVenue(null);
+        }
         scrollTo(locationRef);
         return;
       }
@@ -918,6 +925,7 @@ export default function BookForm() {
         setClientAddress('');
         setIsHomeAddress(null);
         setStandardVenue(null);
+        setTownPrereqConfirmed(null);
         setExtendedDetails(emptyExtendedDetailsState());
         resetClientDetailsState();
         setTurnstileToken('');
@@ -1399,7 +1407,7 @@ export default function BookForm() {
                         {formatSlotTimeFromIso(session.slotStart)}
                       </p>
                     ) : null}
-                    {isActive ? (
+                    {isActive && (!isTownPackage || townPrereqConfirmed === true) ? (
                       <>
                         {index > 0 ? (
                           <p className="form-hint">
@@ -1549,6 +1557,81 @@ export default function BookForm() {
               Continue — location to be confirmed
             </button>
           </>
+        ) : isTownPackage ? (
+          <>
+            {townPrereqConfirmed !== true ? (
+              <>
+                <p className="form-hint booking-package-prereq">
+                  Get ready for town is for dogs that have completed the 3-session foundation programme.
+                </p>
+                <fieldset className="form-field">
+                  <legend>Have you completed 3 sessions with Warwick?</legend>
+                  <div className="booking-meeting-picker" role="radiogroup" aria-label="3-session prerequisite confirmation">
+                    <label className="booking-meeting-btn">
+                      <input
+                        type="radio"
+                        name="town_prereq"
+                        checked={false}
+                        disabled={submitting}
+                        onChange={() => {
+                          setTownPrereqConfirmed(true);
+                          setStandardVenue('town');
+                          setSelectedLocationId(getTownshipTrainingLocationId(selectedRegionId || 'golden-bay'));
+                          setSelectedSlot('');
+                          setClientAddress('');
+                          setIsHomeAddress(null);
+                        }}
+                      />
+                      <strong>Yes, I have.</strong>
+                    </label>
+                    <label className={`booking-meeting-btn${townPrereqConfirmed === false ? ' is-selected' : ''}`}>
+                      <input
+                        type="radio"
+                        name="town_prereq"
+                        checked={townPrereqConfirmed === false}
+                        disabled={submitting}
+                        onChange={() => {
+                          setTownPrereqConfirmed(false);
+                          setStandardVenue(null);
+                          setSelectedLocationId('');
+                          setSelectedSlot('');
+                          setClientAddress('');
+                          setIsHomeAddress(null);
+                        }}
+                      />
+                      <strong>No, not yet.</strong>
+                    </label>
+                  </div>
+                </fieldset>
+                {townPrereqConfirmed === false ? (
+                  <div className="form-feedback error" role="alert">
+                    <p>
+                      We recommend starting with the 3-day foundation programme to build core skills before
+                      town-specific training.
+                    </p>
+                    <button
+                      type="button"
+                      className="btn btn-primary mt-2"
+                      disabled={submitting}
+                      onClick={() => handlePackageSelect('three_day')}
+                    >
+                      Switch to the 3-day programme
+                    </button>
+                  </div>
+                ) : null}
+              </>
+            ) : (
+              <>
+                <p className="form-hint">
+                  Town sessions meet by the <strong>Takaka Memorial Library</strong> — markets, pavement, traffic, and
+                  real-world distractions.
+                </p>
+                <p className="booking-step-done-note">
+                  <strong>{getLocationById(getTownshipTrainingLocationId(selectedRegionId || 'golden-bay'))?.name}</strong>
+                </p>
+              </>
+            )}
+          </>
         ) : (
           <>
             {!standardVenue ? (
@@ -1589,25 +1672,6 @@ export default function BookForm() {
                       <strong>Home visit</strong>
                       <span className="booking-region-note">{HOME_VISIT_PRICING_NOTE}</span>
                     </label>
-                    {showTownVenueOption ? (
-                      <label className={`booking-meeting-btn${standardVenue === 'town' ? ' is-selected' : ''}`}>
-                        <input
-                          type="radio"
-                          name="standard_venue"
-                          checked={standardVenue === 'town'}
-                          disabled={submitting}
-                          onChange={() => {
-                            setStandardVenue('town');
-                            setSelectedLocationId(getTownshipTrainingLocationId('golden-bay'));
-                            setSelectedSlot('');
-                            setClientAddress('');
-                            setIsHomeAddress(null);
-                          }}
-                        />
-                        <strong>Takaka township</strong>
-                        <span className="booking-region-note">By the library — pavement, traffic, and town distractions</span>
-                      </label>
-                    ) : null}
                   </div>
                 </fieldset>
               </>
@@ -1782,6 +1846,10 @@ export default function BookForm() {
         {!stepLocationDone ? (
           <p className="form-hint">
             {isEliteService ? 'Confirm your meeting place above to see available times.' : 'Choose a date and location above to see available times.'}
+          </p>
+        ) : isPackageBooking && !showActivePackageForm ? (
+          <p className="form-hint">
+            All {packageSessionCount} sessions scheduled — review them in step 3 above, then add your details below.
           </p>
         ) : (
           <>

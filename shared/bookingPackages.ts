@@ -40,9 +40,13 @@ export const BOOKING_PACKAGES: Record<BookingPackageId, BookingPackageConfig> = 
   town_ready_five: {
     id: 'town_ready_five',
     label: 'Get ready for town',
-    sessionCount: 5,
+    sessionCount: 2,
     headline:
-      'Five sessions, progressing beyond the foundational three sessions into a focus on town readiness — markets, pavement, traffic, and real distractions.',
+      'Two town sessions for dogs who have completed the 3-session foundation — markets, pavement, traffic, and real distractions.',
+    whyNote:
+      'This builds on the 3-session foundation. Once your dog is solid at a beach or reserve, two focused town sessions transfer that work into the busy, unpredictable environment of Takaka township.',
+    approachNote:
+      'Warwick adapts each town session to how your dog handles the pavement, traffic, and foot-traffic on the day — proofing the skills you already have where they matter most.',
     schedulingNote: 'Consecutive days where possible.',
   },
 };
@@ -67,9 +71,9 @@ export function getPackageSessionCount(packageId: BookingPackageId): number {
   return BOOKING_PACKAGES[packageId].sessionCount;
 }
 
-/** Sessions 4–5 of Get ready for town use the Takaka township meeting point. */
-export function packageSessionAllowsTownVenue(packageId: BookingPackageId, sessionIndex: number): boolean {
-  return packageId === 'town_ready_five' && sessionIndex >= 3;
+/** Get ready for town runs entirely at the Takaka township meeting point. */
+export function isTownReadyPackage(packageId: BookingPackageId): boolean {
+  return packageId === 'town_ready_five';
 }
 
 export function isBookingPackageId(value: string): value is BookingPackageId {
