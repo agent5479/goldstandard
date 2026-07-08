@@ -30,6 +30,7 @@ const ALIASES: { terms: string[]; anchor: string }[] = [
   { terms: ['go-get', 'go get recall', 'go get method', 'treat at feet', 'reserved treat recall'], anchor: 'go-get-recall' },
   { terms: ["im over it", "i'm over it", 'misbehaviour attitude', 'calm certainty', 'not negotiating', 'over it rule', 'expect you to know', 'i expect you to know'], anchor: 'im-over-it' },
   { terms: ["i don't care", 'dont care', 'adult standard', 'seven months behaviour', '7 months adult', 'puppy excuse', 'excited not excuse', 'nervous not excuse', 'adult dog'], anchor: 'i-dont-care' },
+  { terms: ['love at the right time', 'timed affection', 'soothing loop', 'comfort during reaction', 'misbehavior loop', 'accidental reinforcement', 'reserved love', 'earned connection'], anchor: 'love-at-the-right-time' },
   { terms: ['trust', 'advocate', 'trust not love', 'stranger petting', 'vet fear', 'kids discomfort'], anchor: 'trust-not-just-love' },
   { terms: ['leaning', 'dependency', 'self-regulation', 'lean against', 'social regulation', 'other dogs support'], anchor: 'social-regulation' },
   { terms: ['speak aloud', 'speaking aloud', 'voice principle', 'declare expectation', 'say it aloud'], anchor: 'speaking-aloud' },

@@ -59,6 +59,7 @@ export const BEHAVIOR_DRIVERS: BehaviorDriverDef[] = [
       'Does the behaviour track your mood — worse when you are anxious or excited?',
       'Do you match the dog\'s arousal at greetings or on walks?',
       'Is dramatic praise or baby-talk reinforcing the exact moment you want to suppress?',
+      'Does affection land during arousal or distress — or only after calm and compliance?',
     ],
     looksLike: [
       'Dog fills a leadership gap when handler broadcasts tension down the leash',
@@ -71,7 +72,7 @@ export const BEHAVIOR_DRIVERS: BehaviorDriverDef[] = [
     ],
     primaryResponse:
       'Reset owner baseline — new subconscious standard, neutral accountability, no yo-yo. Fix handler contribution before blaming the dog.',
-    guideAnchors: ['owner-mindset', 'new-baseline', 'correction-praise-trap', 'common-pitfalls', 'pack-leader-energy'],
+    guideAnchors: ['owner-mindset', 'new-baseline', 'love-at-the-right-time', 'correction-praise-trap', 'common-pitfalls', 'pack-leader-energy'],
     playbookEligible: false,
   },
   {

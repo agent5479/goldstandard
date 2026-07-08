@@ -11,6 +11,7 @@ export const GUIDE_EXAM_ANCHORS = new Set([
   'go-get-recall',
   'im-over-it',
   'i-dont-care',
+  'love-at-the-right-time',
   'trust-not-just-love',
   'social-regulation',
   'speaking-aloud',

@@ -19,6 +19,7 @@ const CONTENTS_LINKS: ContentsLink[] = [
   { moduleId: 'leadership', group: '👤 Leadership', anchor: 'go-get-recall', label: '🦴 Go-get recall' },
   { moduleId: 'leadership', group: '👤 Leadership', anchor: 'im-over-it', label: "🛑 I'm over it" },
   { moduleId: 'leadership', group: '👤 Leadership', anchor: 'i-dont-care', label: "🎓 I don't care (7+ months)" },
+  { moduleId: 'leadership', group: '👤 Leadership', anchor: 'love-at-the-right-time', label: '❤️ Love at the right time' },
   { moduleId: 'leadership', group: '👤 Leadership', anchor: 'trust-not-just-love', label: '🤝 Trust, not just love' },
   { moduleId: 'leadership', group: '👤 Leadership', anchor: 'social-regulation', label: '🤝 Self-regulation (training mode)' },
   { moduleId: 'leadership', group: '👤 Leadership', anchor: 'speaking-aloud', label: '🗣️ Speak it aloud' },

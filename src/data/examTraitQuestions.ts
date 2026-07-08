@@ -122,7 +122,7 @@ export const traitExamQuestions: Question[] = [
     ],
     explanation:
       'Baby talk and soothing during reactions can reinforce the loop. Hold structure; reward earned calm, not the episode.',
-    guideLink: '#common-pitfalls',
+    guideLink: '#love-at-the-right-time',
   },
   {
     topic: 'Relationship habits',
@@ -233,7 +233,7 @@ export const traitExamQuestions: Question[] = [
     ],
     explanation:
       'Cavoodle-type crosses inherit miniature-poodle stress sensitivity. Reward earned calm, not the episode.',
-    guideLink: '#common-pitfalls',
+    guideLink: '#love-at-the-right-time',
   },
   {
     topic: 'Breed trait',
@@ -480,7 +480,7 @@ export const traitExamQuestions: Question[] = [
     ],
     explanation:
       'Soothing during reactions can reinforce stress loops. Structure, timing, and earned calm beat emotional rescue.',
-    guideLink: '#common-pitfalls',
+    guideLink: '#love-at-the-right-time',
   },
   {
     topic: 'Breed trait',
@@ -544,7 +544,7 @@ export const traitExamQuestions: Question[] = [
     ],
     explanation:
       'Elevated stress sensitivity plus in-moment soothing can spiral. Structure and timing matter more than emotional rescue.',
-    guideLink: '#common-pitfalls',
+    guideLink: '#love-at-the-right-time',
   },
   {
     topic: 'Breed trait',

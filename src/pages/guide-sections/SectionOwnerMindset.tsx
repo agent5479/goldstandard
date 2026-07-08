@@ -160,7 +160,7 @@ export default function SectionOwnerMindset() {
           <li>Walk forward with relaxed confidence, not a tight grip and a watchful eye</li>
           <li>
             Do not shush, reassure, or over-focus when the dog is reacting — that counts as attention,
-            which is a reward (<a href="#rewards">see Rewards</a>)
+            which is a reward (<a href="#rewards">see Rewards</a> and <a href="#love-at-the-right-time">Love at the right time</a>)
           </li>
           <li>
             Expect the dog to manage itself. Correct when the standard breaks — including at the{' '}

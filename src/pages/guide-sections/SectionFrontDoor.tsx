@@ -38,7 +38,7 @@ export default function SectionFrontDoor() {
 
       <p>The threshold works both ways. Matching your dog's frantic, high-energy helicopter tail-wagging the moment you walk in accidentally reinforces emotional dysregulation. It continuously pushes their nervous system's arousal threshold higher and builds a chronically stressed baseline.</p>
 
-      <p>When you arrive home, walk in quietly, set your things down, and ignore them for the first sixty seconds. Wait for ten to thirty seconds of calm behaviour — all four paws on the floor, body settled — before you engage. That is not coldness; it is structure. You are teaching the dog that calm earns connection, not chaos.</p>
+      <p>When you arrive home, walk in quietly, set your things down, and ignore them for the first sixty seconds. Wait for ten to thirty seconds of calm behaviour — all four paws on the floor, body settled — before you engage. That is not coldness; it is structure. You are teaching the dog that calm earns connection, not chaos — see <a href="#love-at-the-right-time">Love at the right time</a>.</p>
 
       <ul className="checklist">
         <li>Enter quietly — no high-pitched greeting that matches their energy</li>

@@ -73,9 +73,33 @@ export default function SectionExpectations() {
         <p>Dogs need to stretch tolerances sometimes — a good sniff, a moment of curiosity, a small push against the boundary. That's healthy. It grows their brain and their confidence. The key is that it happens on your terms, within a structure you control — the same frame as <a href="#access">earned access</a>. It's not about the dog. But it is for the dog.</p>
       </div>
 
+      <h3 id="love-at-the-right-time">❤️ Love at the right time</h3>
+
+      <p>Most owners are not trying to reward bad behaviour. They are trying to love their dog through a hard moment — and the love lands on the wrong beat. Soothing talk during whining, excited greetings that match frenzy, baby talk during a reaction, or dramatic praise right after a correction all teach the same lesson: <strong>this state gets you</strong>. The dog rehearses the opening of the sequence because that is what reliably produces connection.</p>
+
+      <div className="mantra">
+        <p>"Learning to give love at the right time."</p>
+      </div>
+
+      <p>Love is not the problem. <strong>Untimed</strong> love is. You are not withholding affection — you are <em>reserving</em> it so it teaches something true. Structure first; warmth on the other side of calm. Bond-heavy breeds still need genuine warmth — see <a href="#breed-temperament">breed temperament</a> and <a href="#context-of-contact">context of contact</a> — but warmth during the episode reads as endorsement, and structure without any rebuild reads as abandonment. The skill is sequencing.</p>
+
+      <ul className="checklist">
+        <li><strong>Warmth after calm</strong> — reset body, four paws down, look at you instead of the trigger — not during the episode</li>
+        <li><strong>Same rule everywhere</strong> — door whining, <a href="#home-return">greeting frenzy</a>, reactivity on walks, and post-correction compliance</li>
+        <li><strong>Inside the <a href="#timing">one-second window</a></strong> — correct or hold structure when the behaviour begins; affection lands after the standard is met</li>
+        <li><strong>Not the <a href="#correction-praise-trap">correction-then-praise loop</a></strong> — compliance after a fix earns neutrality, not a jackpot that retrains the break</li>
+      </ul>
+
+      <div className="callout">
+        <strong>The loop you may be training by accident</strong>
+        <p>
+          Trigger → arousal or distress → handler love (soothing, baby talk, excited greeting) → the state becomes the path to you. Break the chain by holding structure through the episode and offering connection only once the body settles.
+        </p>
+      </div>
+
       <h3 id="trust-not-just-love">🤝 Trust, not just love</h3>
 
-      <p>Love alone is not enough. Dogs who only love their owners often remain reactive or anxious because they do not trust their owner to safely navigate the environment. Trust is earned through unwavering consistency and by advocating for them — not through affection alone.</p>
+      <p>Once affection is timed correctly, trust still has to be earned in the environment — not through comfort-talk alone. Love alone is not enough. Dogs who only love their owners often remain reactive or anxious because they do not trust their owner to safely navigate the world. Trust is earned through unwavering consistency and by advocating for them — not through affection alone.</p>
 
       <p>When your dog shows discomfort around kids, strangers, or at the vet, do not push them through it to satisfy others. Step in, create distance, get down on their level, and be a calm anchor so they know you have things handled. That is the difference between a dog that loves you and a dog that chooses you in the moments that matter — the same frame as <a href="#common-pitfalls">guardian-breed pitfalls</a> and <a href="#access">earned access</a>.</p>
 

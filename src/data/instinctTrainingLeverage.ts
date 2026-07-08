@@ -272,7 +272,7 @@ export const INSTINCT_LEVERAGE_PROFILES: InstinctLeverageProfile[] = [
           'Withhold engagement until calm coordination — do not reward every alert glance with soothing talk.',
         useWhen: 'Vigilance breeds entrench anxiety when every scan gets reassurance.',
         interrupts: ['territorial vigilance', 'handler-sensitive loops'],
-        guideAnchors: ['breed-temperament', 'trust-not-just-love'],
+        guideAnchors: ['breed-temperament', 'love-at-the-right-time', 'trust-not-just-love'],
         lifePhases: ['all'],
       },
       {
