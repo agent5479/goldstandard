@@ -75,9 +75,10 @@ export const REHABILITATION_PLAYBOOKS: RehabilitationPlaybook[] = [
       'lip_lick_displacement',
       'compulsive_lick_handler',
       'submissive_urination_greeting',
+      'shutdown_tolerate_touch',
     ],
     primaryGuideAnchor: 'pattern-playbook-handler-sensitive',
-    relatedGuideAnchors: ['three-second-pause', 'pack-leader-energy', 'correction-praise-trap'],
+    relatedGuideAnchors: ['three-second-pause', 'touch-saturation', 'learned-helplessness', 'pack-leader-energy', 'correction-praise-trap'],
   },
   {
     patternKey: 'anxious_attachment',
@@ -342,9 +343,11 @@ export const REHABILITATION_PLAYBOOKS: RehabilitationPlaybook[] = [
       'submissive_urination_greeting',
       'stare_lock_trigger',
       'barrier_lunge',
+      'strategic_avoidance_person',
+      'guard_safe_space',
     ],
     primaryGuideAnchor: 'pattern-playbook-fear-reactive',
-    relatedGuideAnchors: ['when-not-firmer', 'three-second-pause', 'symptom-glossary'],
+    relatedGuideAnchors: ['when-not-firmer', 'three-second-pause', 'touch-saturation', 'learned-helplessness', 'symptom-glossary'],
   },
 ];
 

@@ -20,7 +20,8 @@ export type ProblemOutcomeId =
   | 'puppy'
   | 'dog_issues'
   | 'obedience'
-  | 'repetitive_soothing';
+  | 'repetitive_soothing'
+  | 'handling_touch';
 
 export type ImpactLevel = 1 | 2 | 3 | 4 | 5;
 
@@ -182,7 +183,13 @@ export const PROBLEM_OUTCOMES: Record<ProblemOutcomeId, ProblemOutcome> = {
     ],
     bookingTags: tagsFor('anxious'),
     neuroPatternHints: ['handler_sensitive', 'fear_reactive', 'hyper_vigilant'],
-    symptomExpressionHints: ['whale_eye_handler', 'lip_lick_displacement', 'submissive_urination_greeting'],
+    symptomExpressionHints: [
+      'whale_eye_handler',
+      'lip_lick_displacement',
+      'submissive_urination_greeting',
+      'shutdown_tolerate_touch',
+      'strategic_avoidance_person',
+    ],
     driverConsiderations: ['trauma_security', 'owner_dynamics', 'skill_gap'],
   },
   separation: {
@@ -353,6 +360,33 @@ export const PROBLEM_OUTCOMES: Record<ProblemOutcomeId, ProblemOutcome> = {
     ],
     driverConsiderations: ['entitlement_hardship', 'breed_expression', 'owner_dynamics', 'trauma_security'],
   },
+  handling_touch: {
+    id: 'handling_touch',
+    label: 'Touch sensitivity or handling avoidance',
+    summary:
+      'A dog that tolerates rather than enjoys petting, ducks the reaching hand, or slips away from certain people is often touch-saturated — over-handled to the point that contact became a demand. Left unread, a please-driven dog shuts down and stops signalling. Consent-led handling and reduced touch volume rebuild a genuine bond.',
+    urgencyNotes: {
+      1: 'A dog that sometimes moves away from petting is telling you something — reading it early prevents avoidance becoming a habit.',
+      2: 'Regular ducking, leaving, or tolerating without enjoyment responds well to the consent test and reduced handling.',
+      3: 'When a dog actively avoids family members or hides, touch saturation and shutdown are worth addressing before the bond erodes.',
+      4: 'A dog that freezes and endures handling looks calm but is often flooded — this is workable once everyone respects consent.',
+      5: 'Stiffening, growling, or snapping when approached or handled is a safety signal — do not punish it; prioritise this with Warwick.',
+    },
+    guideLinks: [
+      { anchor: 'three-second-pause', label: 'The three-second pause' },
+      { anchor: 'touch-saturation', label: 'Touch saturation & consent test' },
+      { anchor: 'learned-helplessness', label: 'Learned helplessness' },
+      { anchor: 'symptom-expression-index', label: 'Symptom expression index' },
+    ],
+    bookingTags: ['anxious', 'rehabituation'],
+    neuroPatternHints: ['handler_sensitive', 'fear_reactive'],
+    symptomExpressionHints: [
+      'shutdown_tolerate_touch',
+      'strategic_avoidance_person',
+      'guard_safe_space',
+    ],
+    driverConsiderations: ['owner_dynamics', 'trauma_security', 'breed_expression'],
+  },
 };
 
 export const PROBLEM_CONTEXTS: ProblemContext[] = [
@@ -365,14 +399,14 @@ export const PROBLEM_CONTEXTS: ProblemContext[] = [
   {
     id: 'home',
     label: 'At home',
-    description: 'Barking, doors, visitors, separation, yard boundaries, or impulse indoors.',
-    outcomeIds: ['barking', 'doors_guests', 'separation', 'yard_boundaries', 'impulse', 'repetitive_soothing'],
+    description: 'Barking, doors, visitors, separation, yard boundaries, impulse, or touch and handling indoors.',
+    outcomeIds: ['barking', 'doors_guests', 'separation', 'yard_boundaries', 'impulse', 'repetitive_soothing', 'handling_touch'],
   },
   {
     id: 'social',
     label: 'Around people or other dogs',
-    description: 'Jumping on guests, anxiety, repetitive soothing, or trouble with other dogs in social situations.',
-    outcomeIds: ['jumping', 'anxious', 'dog_issues', 'leash_reactive', 'repetitive_soothing'],
+    description: 'Jumping on guests, anxiety, touch sensitivity, repetitive soothing, or trouble with other dogs in social situations.',
+    outcomeIds: ['jumping', 'anxious', 'handling_touch', 'dog_issues', 'leash_reactive', 'repetitive_soothing'],
   },
   {
     id: 'basics',

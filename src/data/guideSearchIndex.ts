@@ -43,6 +43,8 @@ const ALIASES: { terms: string[]; anchor: string }[] = [
   { terms: ['dog ready stance', 'hindquarters', 'back legs', 'stiffening', 'locking eyes', 'braced rear', 'precursor', 'hips push', 'im not worried', "i'm not worried"], anchor: 'dog-ready-stance' },
   { terms: ['reading dog', 'learning edge', 'looks worse', 'cognitive overload', 'forgets commands'], anchor: 'reading-dog' },
   { terms: ['3 second pause', 'three second pause', 'three-second pause', 'micro-signals', 'before petting', 'sigh', 'decompression sigh'], anchor: 'three-second-pause' },
+  { terms: ['touch saturation', 'consent test', 'two hand rule', '5 second test', 'five second test', 'over-handling', 'overhandling', 'tolerating petting', 'am i touching for me', 'petting consent'], anchor: 'touch-saturation' },
+  { terms: ['learned helplessness', 'shutdown dog', 'shut down dog', 'snapped out of nowhere', 'snapping out of nowhere', 'hiding from kids', 'strategic avoidance', 'stuffed animal', 'freeze and tolerate'], anchor: 'learned-helplessness' },
   { terms: ['training mode', 'living mode', 'context of contact', 'trust lean', 'demand lean', 'lean on legs', 'rest contact', 'psychology'], anchor: 'context-of-contact' },
   { terms: ['staffy', 'collie', 'breed', 'terrier', 'sighthound', 'scenthound', 'guardian', 'spitz', 'giant breed', 'small breed', 'clingy', 'herding', 'breed variance'], anchor: 'breed-temperament' },
   { terms: ['rehabilitation', 'substitution', 'substitute dont suppress', 'mouth job', 'chin command', 'nose command', 'compulsive licking', 'licky dog', 'behavioral decoupling', 'proactive guidance'], anchor: 'rehabilitation-patterns' },

@@ -166,7 +166,7 @@ export default function SectionReadingDog() {
 
       <p>Before you pet your dog, call them over, or move toward them — pause for three seconds. Use that brief moment to read what their body is actually saying: ear position, eye softness, where their weight sits. Weight shifted back, ears pinned, or a turned head means they are not ready. A loose body with weight forward and soft eyes means safer to engage.</p>
 
-      <p>Failing to read these micro-signals pushes dogs into interactions they cannot comfortably exit. Over time that creates learned helplessness — the dog stops signalling because signalling did not work. What owners then call "snapping out of nowhere" is often the end of a conversation they never learned to hear. Cross-check every pause against the <a href="#symptom-glossary">Symptom glossary</a> below.</p>
+      <p>Failing to read these micro-signals pushes dogs into interactions they cannot comfortably exit. Over time that creates <a href="#learned-helplessness">learned helplessness</a> — the dog stops signalling because signalling did not work. What owners then call "snapping out of nowhere" is often the end of a conversation they never learned to hear. Cross-check every pause against the <a href="#symptom-glossary">Symptom glossary</a> below.</p>
 
       <ul className="checklist">
         <li>Pause before touch, approach, or calling over — not only around strangers</li>
@@ -175,6 +175,48 @@ export default function SectionReadingDog() {
         <li>Weight back or stiff posture = create space; do not push through</li>
         <li>When in doubt, wait — the dog will tell you when they are ready</li>
       </ul>
+
+      <h3 id="touch-saturation">🖐️ Touch saturation and the consent test</h3>
+
+      <p>Dogs love being petted — until they do not. Touch is a reward only while the dog wants it; past a certain threshold it stops being comfort and becomes a demand the dog has to tolerate. In a busy household — especially one with several children — a dog can be touched, patted, nudged, and leaned on far more than the average dog, and saturation is not just possible, it is likely. A pup that resists being handled by certain people is often not being "grumpy": it is protecting a nervous system that has had enough.</p>
+
+      <p>The trap is that a sweet, please-driven dog will endure petting it does not want because it wants to be a "good dog." It sits there stiffening, yawning, or lip-licking while the human reads the stillness as enjoyment. Forcing the dog to stay in that spot builds a negative association — interacting with certain people becomes a chore rather than a bond, and a fresh neurosis path opens up.</p>
+
+      <div className="callout">
+        <strong>🤝 The consent test (two-hand / five-second rule)</strong>
+        <p>Pet the dog with one or two hands for about five seconds, then <strong>stop</strong> and take your hands away. If the dog leans back in, nudges, or re-initiates, the answer is yes — carry on. If it stays still, turns away, ducks the reaching hand, or walks off, the answer is no — respect it. This single habit prevents sensory burnout and makes the affection that does happen genuinely mutual.</p>
+      </div>
+
+      <p>Behind the test sits one honest question: <strong>"Am I touching this dog for me, for them, or for both?"</strong> When the touch is purely for the human — a self-soothing habit, a stress regulator, a reflex — you are extracting your own touch needs at the dog's expense, and the relationship quietly flips from partnership to extraction. Touching for both is the goal; touching only for you is the warning sign.</p>
+
+      <p>This applies to every breed, but the risk is weighted. Conflict-avoidant, hyper-intelligent, people-pleasing types — and small dogs whose boundaries get violated more often precisely because they are "cute" and easy to scoop up — reach saturation quietly and pay for it later. See <a href="#breed-temperament">breed temperament</a> for where this lands hardest, and <a href="#learned-helplessness">learned helplessness</a> for what happens if the signals keep getting ignored.</p>
+
+      <h3 id="learned-helplessness">🥀 Learned helplessness: the shutdown dog</h3>
+
+      <p>When a dog's subtle boundaries — turning the head, stiffening, lip-licking — are repeatedly overridden, it learns that its signals do not matter. So it stops sending them. The dog goes still and lets itself be handled, lying like a stuffed animal while a child smothers it. Owners read this as a calm, tolerant, "bombproof" dog. It is not calm. Its stress hormones are through the roof; it has simply given up trying to change the outcome. That is <strong>learned helplessness</strong>, and left running it drains the natural playfulness out of a dog and leaves a flat, chronically stressed baseline.</p>
+
+      <p>This is a shutdown of overload, not stubbornness — the same read as the traumatised nervous system on the <a href="#trauma-hardship-calibration">correction scale</a>. The danger is that a still dog looks like a solved dog, so the pressure keeps coming. When the please-driven default finally cannot hold, the neurosis surfaces along one of a few predictable paths:</p>
+
+      <div className="two-col">
+        <div className="col-card">
+          <h4>🫥 Strategic avoidance</h4>
+          <p>A bright dog maps who does what and starts pre-empting it — slipping under tables, behind couches, or into quiet corners, and quietly leaving the room when a particular person enters. It buys safety by disappearing, and the bond with those people erodes. See <a href="#symptom-strategic-avoidance">strategic avoidance</a> in the symptom index.</p>
+        </div>
+        <div className="col-card">
+          <h4>🛡️ Guarding a safe space or person</h4>
+          <p>Feeling vulnerable to touch from anyone at any time, the dog anchors to one spot or one adult and defends it — stiffening or growling when a child approaches its crate, bed, or lap. It is not being mean; it is defending the last boundary it feels it has. See <a href="#symptom-guard-safe-space">guarding a safe space</a>.</p>
+        </div>
+        <div className="col-card">
+          <h4>💥 The "sudden" snap</h4>
+          <p>The most dangerous path, because the buildup is invisible to most people. A dog pushed past saturation for months while practising helplessness eventually boils over — a child leans in for a hug and the dog snaps "out of nowhere." In reality it gave hundreds of silent warnings and finally used the only tool left. Small, cute dogs get their boundaries crossed more, which makes this escalation tragically common. See <a href="#symptom-shutdown-tolerate-touch">freeze-and-tolerate</a>.</p>
+        </div>
+        <div className="col-card">
+          <h4>🌀 Displacement neuroses</h4>
+          <p>Anxious energy that cannot escape the touch has to go somewhere: obsessive paw-licking or leg-chewing (sometimes to raw sores), compulsive pacing, or a spike in separation anxiety as the dog becomes codependent on whichever adult actually protects its space. See the <a href="#symptom-expression-index">Symptom index</a>.</p>
+        </div>
+      </div>
+
+      <p>The takeaway: for a sensitive, please-driven dog the risk is rarely that it becomes a bully — it is that it becomes an anxious, hyper-vigilant nervous wreck that reads human hands as a demand rather than a comfort. Holding the <a href="#touch-saturation">consent boundary</a> now protects both the dog's mental health and the safety of the people around it. Rebuild through the <a href="#three-second-pause">three-second pause</a>, earned contact, and — where a loop has already formed — the <a href="#rehabilitation-patterns">substitution path</a>.</p>
 
       <h3 id="context-of-contact">🛋️ The context of contact: training mode vs living mode</h3>
 
@@ -323,6 +365,21 @@ export default function SectionReadingDog() {
               <td><strong>Helicopter tail (high arousal)</strong></td>
               <td>Fast circular wagging at greetings — excitement dysregulation, not calm happiness</td>
               <td>Matching this energy at the door raises the arousal baseline; wait for settled body before engaging — see <a href="#home-return">coming home</a></td>
+            </tr>
+            <tr>
+              <td><strong>Freeze-and-tolerate (shutdown under touch)</strong></td>
+              <td>Goes still and endures petting or handling like a stuffed animal — not relaxation but a flooded, shut-down nervous system that has given up signalling</td>
+              <td>Read the body: loose and soft = enjoying it; still but stiff, tense, or lip-licking = <a href="#learned-helplessness">learned helplessness</a>. Run the <a href="#touch-saturation">consent test</a>; do not mistake tolerance for consent</td>
+            </tr>
+            <tr>
+              <td><strong>Strategic avoidance / leaving</strong></td>
+              <td>Quietly gets up and leaves, or hides under tables and behind couches, when a specific person approaches — pre-empting unwanted handling</td>
+              <td>Often follows <a href="#touch-saturation">touch saturation</a>; the bond erodes if ignored. Let the dog opt out, reduce handling volume, rebuild with the <a href="#three-second-pause">three-second pause</a></td>
+            </tr>
+            <tr>
+              <td><strong>Ducking the head reach</strong></td>
+              <td>Turns or leans the head away from a reaching hand — a clear consent "no", not shyness to push past</td>
+              <td>Reach for the chest or side, not over the skull; if the dog still ducks, do not touch. Common precursor to freeze-and-tolerate when overridden repeatedly</td>
             </tr>
           </tbody>
         </table>

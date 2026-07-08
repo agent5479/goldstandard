@@ -33,6 +33,8 @@ const CONTENTS_LINKS: ContentsLink[] = [
   { moduleId: 'understanding', group: '🧠 Understanding', anchor: 'reading-dog', label: '📖 Reading your dog' },
   { moduleId: 'understanding', group: '🧠 Understanding', anchor: 'dog-tantra-reading', label: '🌀 Somatic reading' },
   { moduleId: 'understanding', group: '🧠 Understanding', anchor: 'three-second-pause', label: '⏸️ Three-second pause' },
+  { moduleId: 'understanding', group: '🧠 Understanding', anchor: 'touch-saturation', label: '🖐️ Touch saturation' },
+  { moduleId: 'understanding', group: '🧠 Understanding', anchor: 'learned-helplessness', label: '🥀 Learned helplessness' },
   { moduleId: 'understanding', group: '🧠 Understanding', anchor: 'context-of-contact', label: '🛋️ Context of contact' },
   { moduleId: 'understanding', group: '🧠 Understanding', anchor: 'breed-temperament', label: '🐾 Breed variance' },
   { moduleId: 'understanding', group: '🧠 Understanding', anchor: 'common-pitfalls', label: '⚠️ Common pitfalls' },

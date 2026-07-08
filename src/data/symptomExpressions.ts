@@ -202,6 +202,65 @@ export const SYMPTOM_EXPRESSIONS: SymptomExpression[] = [
     guideAnchor: 'symptom-submissive-urination-greeting',
   },
 
+  /* ── Touch saturation / learned helplessness ── */
+  {
+    id: 'shutdown_tolerate_touch',
+    label: 'Freeze-and-tolerate under handling',
+    target: 'handler',
+    summary:
+      'Goes still and endures petting or handling like a stuffed animal — learned helplessness from ignored boundaries, not calm enjoyment.',
+    linkedPatterns: ['handler_sensitive', 'fear_reactive'],
+    confusableDrivers: ['owner_dynamics', 'trauma_security'],
+    distinguishFrom:
+      'A genuinely relaxed dog is loose and soft and re-initiates contact. Still-but-stiff, tense, or lip-licking while tolerating is shutdown — cortisol high, signals given up. Not stubbornness.',
+    substitution:
+      'Run the consent test — one to two hands for five seconds, then stop and read re-initiation. Reduce handling volume; let the dog opt in.',
+    decoupling:
+      'Do not reward tolerating by continuing or escalating touch. Never smother a dog that has gone still — stillness is not consent.',
+    proactiveGuidance:
+      'Three-second pause before touch; reach for chest not skull; stop the moment the body stiffens or the head turns away.',
+    glossaryAnchor: 'symptom-glossary',
+    guideAnchor: 'symptom-shutdown-tolerate-touch',
+  },
+  {
+    id: 'strategic_avoidance_person',
+    label: 'Strategic avoidance of a person',
+    target: 'handler',
+    summary:
+      'Quietly leaves the room or hides when a specific person approaches — pre-empting unwanted handling after touch saturation.',
+    linkedPatterns: ['fear_reactive', 'hyper_vigilant'],
+    confusableDrivers: ['owner_dynamics', 'trauma_security'],
+    distinguishFrom:
+      'Not aloofness or independence — the avoidance is person-specific and follows a history of overridden boundaries. Bond erodes with the people avoided.',
+    substitution:
+      'Let the dog opt out; make that person a source of calm space and choice, not pursuit. Rebuild with earned, consent-led contact.',
+    decoupling:
+      'Do not chase, corner, or lure the dog out to be petted — that confirms the person cannot be escaped.',
+    proactiveGuidance:
+      'Reduce handling volume from the avoided person; three-second pause; reward voluntary approach only.',
+    glossaryAnchor: 'symptom-glossary',
+    guideAnchor: 'symptom-strategic-avoidance',
+  },
+  {
+    id: 'guard_safe_space',
+    label: 'Guarding a safe space or person',
+    target: 'environment',
+    summary:
+      'Stiffens or growls when approached on a crate, bed, or lap — defending the last boundary after feeling touch-vulnerable everywhere else.',
+    linkedPatterns: ['fear_reactive', 'territorial_vigilance'],
+    confusableDrivers: ['entitlement_hardship', 'trauma_security'],
+    distinguishFrom:
+      'Insecurity-driven safe-space guarding (soft, defensive, follows touch saturation) differs from entitled resource claiming (stiff, forward, privileged history). Read the history and body.',
+    substitution:
+      'Restore whole-house consent so the dog does not need one anchor. Teach off/place with earned access; never reach into the safe space to force contact.',
+    decoupling:
+      'Do not punish the growl — it is the warning you want kept. Do not corner the dog on its bed or lap.',
+    proactiveGuidance:
+      'Approach low and side-on; invite off the space rather than reaching in; reduce the touch pressure that drove the anchoring.',
+    glossaryAnchor: 'symptom-glossary',
+    guideAnchor: 'symptom-guard-safe-space',
+  },
+
   /* ── Arousal / movement ── */
   {
     id: 'pacing_perimeter',

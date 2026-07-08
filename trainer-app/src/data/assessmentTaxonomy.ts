@@ -88,6 +88,8 @@ export const GUIDE_ANCHORS: GuideAnchor[] = [
   { id: 'reading-dog', label: 'Reading your dog', icon: 'bi-book', groupId: 'understanding' },
   { id: 'dog-tantra-reading', label: 'Somatic reading', icon: 'bi-broadcast', groupId: 'understanding' },
   { id: 'three-second-pause', label: 'Three-second pause', icon: 'bi-pause-circle', groupId: 'understanding' },
+  { id: 'touch-saturation', label: 'Touch saturation', icon: 'bi-hand-index', groupId: 'understanding' },
+  { id: 'learned-helplessness', label: 'Learned helplessness', icon: 'bi-emoji-frown', groupId: 'understanding' },
   { id: 'context-of-contact', label: 'Context of contact', icon: 'bi-house-heart', groupId: 'understanding' },
   { id: 'breed-temperament', label: 'Breed variance', icon: 'bi-paw', groupId: 'understanding' },
   { id: 'breed-age-intensity', label: 'Age × temperament', icon: 'bi-sliders', groupId: 'understanding' },

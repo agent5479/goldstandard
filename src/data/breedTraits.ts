@@ -128,7 +128,7 @@ export const breedTypeProfiles: Record<BreedCategory, BreedTypeProfile> = {
   clingy: {
     label: 'Clingy & people-focused',
     summary:
-      'Bonds intensely and is highly responsive to affection — but sensitive to harsh rejection or corrections delivered with frustration. Calm, matter-of-fact energy; rebuild quickly after a reset.',
+      'Bonds intensely and is highly responsive to affection — but sensitive to harsh rejection or corrections delivered with frustration. Calm, matter-of-fact energy; rebuild quickly after a reset. Please-driven dogs tolerate over-handling rather than signalling, so watch for touch saturation and shutdown.',
     personality:
       'Bonds intensely to people and reads handler emotion closely. Sensitive to harsh rejection, cold withdrawal, or corrections delivered with frustration — the delivery matters as much as the rule. Rebuild warmth quickly after a reset; structure without affection can read as abandonment.',
     working:
@@ -216,7 +216,7 @@ export const breedTypeProfiles: Record<BreedCategory, BreedTypeProfile> = {
   small: {
     label: 'Small breed',
     summary:
-      'Carrying, hand-feeding, and excusing pushy behaviour because it is "cute" often produces a dog that cannot tolerate boundaries from anyone — including you.',
+      'Carrying, hand-feeding, and excusing pushy behaviour because it is "cute" often produces a dog that cannot tolerate boundaries from anyone — including you. Easy to scoop up and over-handle, so touch saturation and learned-helplessness shutdown are common when boundaries go unread.',
     personality:
       'Often excused as "cute" — carried, hand-fed, and allowed to push because of size. Same standard as big dogs; intolerance of boundaries from anyone, including you, is a common outcome of indulgence.',
     working:
@@ -311,7 +311,7 @@ const breedOverrideMap: Record<string, BreedTraitProfile> = {
     clientSummary: 'Stable retriever — cooperative and people-pleasing.',
     overrides: {
       personality:
-        'Stable people-pleaser — bonds intensely but tolerates correction recovery well. Less prone to hyper-vigilant stress loops than toy or miniature poodles; calm matter-of-fact delivery lands best.',
+        'Stable people-pleaser — bonds intensely but tolerates correction recovery well. Less prone to hyper-vigilant stress loops than toy or miniature poodles; calm matter-of-fact delivery lands best. The people-pleasing streak cuts both ways: will endure over-handling to be a "good dog", so run the consent test rather than assuming a still dog is a happy one.',
       working:
         'Cooperative retriever engine — food, play, and access all work; responds to calm approval more than excited praise during reactions.',
     },
@@ -376,7 +376,7 @@ const breedOverrideMap: Record<string, BreedTraitProfile> = {
     clientSummary: 'People-focused cross — sensitive and puzzle-driven; avoid spoiling.',
     overrides: {
       personality:
-        'Intensely people-focused from both parent types — inherits miniature-poodle neurotic and anxious tendencies more than retriever-stable Golden. Sensitive to handler mood; easily spoiled if treated as a toy.',
+        'Intensely people-focused from both parent types — inherits miniature-poodle neurotic and anxious tendencies more than retriever-stable Golden. Sensitive to handler mood; easily spoiled if treated as a toy. Conflict-avoidant and please-driven: tolerates over-handling rather than signalling, so touch saturation and learned-helplessness shutdown are real risks in busy, multi-person homes.',
       working:
         'Companion engine with puzzle drive from the poodle side — needs mental outlets, not just lap time; access training prevents indulgence spirals.',
     },
@@ -565,7 +565,7 @@ const breedOverrideMap: Record<string, BreedTraitProfile> = {
   },
   'Cavalier King Charles Spaniel': {
     overrides: {
-      personality: 'Soft, people-focused — sensitive to harsh correction; rebuild warmth quickly; easily becomes anxious if structure collapses.',
+      personality: 'Soft, people-focused — sensitive to harsh correction; rebuild warmth quickly; easily becomes anxious if structure collapses. Desperate-to-please and conflict-avoidant: endures unwanted handling rather than signalling, so touch saturation and shutdown are high risks — hold the consent boundary.',
     },
   },
   'Maltese Shih Tzu cross': { sizeClass: 'small' },

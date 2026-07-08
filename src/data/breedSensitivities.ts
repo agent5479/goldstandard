@@ -43,7 +43,7 @@ export const SENSITIVITY_GUIDE_ANCHORS: Record<SensitivityId, string[]> = {
   movement_visual: ['breed-temperament', 'butt-push'],
   separation: ['rehabilitation-patterns', 'pattern-playbook-separation'],
   novelty: ['true-canine-trauma', 'expectations'],
-  touch_handling: ['three-second-pause', 'collar-snatch'],
+  touch_handling: ['three-second-pause', 'touch-saturation', 'learned-helplessness', 'collar-snatch'],
   social_stranger: ['dog-meetings', 'front-door'],
 };
 
@@ -179,7 +179,7 @@ export const CATEGORY_SENSITIVITY_DEFAULTS: Record<BreedCategory, SensitivityLev
 
 export const CATEGORY_SENSITIVITY_SUMMARIES: Record<BreedCategory, string> = {
   clingy:
-    'People-focused types often amplify stress when handler mood is inconsistent — cold withdrawal, excitement-matching, or indulgence without structure.',
+    'People-focused types often amplify stress when handler mood is inconsistent — cold withdrawal, excitement-matching, or indulgence without structure. Please-driven dogs tolerate over-handling rather than signalling, so watch for touch saturation and shutdown.',
   sighthound:
     'Soft-tempered and chase-driven — movement flashes and harsh correction delivery are common trigger paths; manage triggers before the chase launches.',
   herding:
@@ -195,7 +195,7 @@ export const CATEGORY_SENSITIVITY_SUMMARIES: Record<BreedCategory, string> = {
   giant:
     'Slow to mature — early indulgence and weak thresholds become dangerous at full size; novelty and stranger exposure need structure.',
   small:
-    'Often over-handled — cute excuses for pushy behaviour amplify handler-mood and touch sensitivities.',
+    'Often over-handled — cute excuses for pushy behaviour amplify handler-mood and touch sensitivities. Boundaries get violated more because they are easy to pick up, so touch saturation and learned helplessness are real risks.',
 };
 
 export const CATEGORY_LIFE_PHASE_DEFAULTS: Record<BreedCategory, BreedLifePhaseNotes> = {
@@ -296,11 +296,13 @@ const POODLE_COMPANION_SENSITIVITY: BreedSensitivityProfile = {
     handler_mood: 'elevated',
     separation: 'elevated',
     correction_delivery: 'elevated',
+    touch_handling: 'elevated',
   },
   notes: {
     handler_mood: 'Puzzle-driven and handler-attuned — owner frustration can gamify the relationship.',
     separation: 'Common distress when alone if structure and warmth are inconsistent.',
     correction_delivery: 'Unfair or frustrated delivery lands harder than on retriever-stable types.',
+    touch_handling: 'Please-driven and conflict-avoidant — tolerates over-handling rather than signalling; prone to touch saturation and shutdown in busy households.',
   },
 };
 
@@ -340,10 +342,18 @@ export const BREED_SENSITIVITY_OVERRIDES: Record<string, BreedSensitivityProfile
       handler_mood: 'low',
       separation: 'moderate',
       correction_delivery: 'low',
+      touch_handling: 'moderate',
+    },
+    notes: {
+      touch_handling: 'People-pleasing to a fault — will tolerate over-handling to be a "good dog"; run the consent test rather than assuming a still dog is a happy one.',
     },
     summary: 'Stable retriever — tolerates correction recovery well; less handler-mood amplification than poodle or bull companion types.',
   },
-  'Cavoodle / Spoodle': POODLE_COMPANION_SENSITIVITY,
+  'Cavoodle / Spoodle': {
+    ...POODLE_COMPANION_SENSITIVITY,
+    summary:
+      'Cavalier warmth plus poodle handler-attunement — conflict-avoidant and please-driven; high touch-saturation and learned-helplessness risk in busy, multi-person homes.',
+  },
   'Labradoodle / Groodle': {
     levels: {
       handler_mood: 'moderate',
@@ -408,10 +418,11 @@ export const BREED_SENSITIVITY_OVERRIDES: Record<string, BreedSensitivityProfile
     levels: {
       handler_mood: 'elevated',
       correction_delivery: 'high',
-      touch_handling: 'elevated',
+      touch_handling: 'high',
     },
     notes: {
       correction_delivery: 'Soft shutdown under harsh correction — rebuild warmth quickly after resets.',
+      touch_handling: 'Desperate-to-please and conflict-avoidant — endures unwanted handling rather than signalling; among the highest touch-saturation and shutdown risk.',
     },
   },
   'German Wirehaired Pointer': {
@@ -442,7 +453,7 @@ export const BREED_SENSITIVITY_OVERRIDES: Record<string, BreedSensitivityProfile
       social_stranger: 'elevated',
     },
     notes: {
-      touch_handling: 'Often over-handled — same boundary standard despite size.',
+      touch_handling: 'Often over-handled and scooped up — same boundary standard despite size; watch for touch saturation and freeze-and-tolerate.',
     },
   },
   'Shih Tzu': {
