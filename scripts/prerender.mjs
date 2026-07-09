@@ -12,7 +12,7 @@ import { preview } from 'vite';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, '..');
 const outDir = join(root, 'docs');
-const siteBase = '/goldstandard';
+const siteBase = '';
 
 /** Keep in sync with src/data/prerenderRoutes.ts and App.tsx */
 const routes = [
@@ -43,7 +43,7 @@ async function prerender() {
   console.log('Starting vite preview for prerender…');
   const previewServer = await preview({
     root,
-    base: siteBase + '/',
+    base: '/',
     build: { outDir: 'docs' },
     preview: { port: 4173, strictPort: false },
   });

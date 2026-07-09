@@ -2,7 +2,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 
-// Site is served from GitHub Pages at /goldstandard/, built output is
+// Site is served from the custom domain root (/), built output is
 // committed to docs/ (Pages is configured to serve main → /docs).
 export default defineConfig({
   plugins: [react()],
@@ -11,7 +11,7 @@ export default defineConfig({
       '@shared': path.resolve(__dirname, './shared'),
     },
   },
-  base: '/goldstandard/',
+  base: '/',
   build: {
     outDir: 'docs',
     emptyOutDir: true

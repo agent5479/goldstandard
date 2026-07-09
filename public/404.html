@@ -7,7 +7,7 @@
     // GitHub Pages SPA fallback: stash the requested path and bounce to the
     // app entry, which restores it before React Router mounts.
     (function () {
-      var base = '/goldstandard/';
+      var base = '/';
       var path = location.pathname + location.search + location.hash;
       sessionStorage.setItem('gsdt:spa-redirect', path);
       location.replace(base);

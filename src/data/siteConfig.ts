@@ -1,5 +1,5 @@
 /** Public marketing site — GitHub Pages base URL (no trailing slash). */
-export const SITE_URL = 'https://agent5479.github.io/goldstandard';
+export const SITE_URL = 'https://goldstandarddogtraining.nz';
 
 export const SITE_NAME = 'Gold Standard Dog Training';
 

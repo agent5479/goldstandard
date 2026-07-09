@@ -7,7 +7,7 @@ import './styles/style.css';
 const rootEl = document.getElementById('root')!;
 const app = (
   <StrictMode>
-    <BrowserRouter basename="/goldstandard">
+    <BrowserRouter basename="/">
       <App />
     </BrowserRouter>
   </StrictMode>
