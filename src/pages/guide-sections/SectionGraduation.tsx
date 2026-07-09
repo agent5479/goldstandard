@@ -18,7 +18,7 @@ export default function SectionGraduation() {
         <p>Whether it is a recall, a jump correction, or holding a boundary at the door — the message is the same: you do not give up, you do not negotiate away the standard, and the dog cannot win by outlasting you. Persistence is not harshness. It is clarity, repeated until it lands. See <a href="#expectations">Expectations</a>, <a href="#collar-snatch">collar grab</a>, and <a href="#front-door">It starts at the front door</a>.</p>
       </div>
 
-      <p className="guide-contact">Questions between sessions? Call or text Warwick: <strong><a href="tel:+64278142222">027 814 2222</a></strong> or email <strong><a href="mailto:goldstandardtakaka@gmail.com">goldstandardtakaka@gmail.com</a></strong>.</p>
+      <p className="guide-contact">Questions between sessions? Call or text Warwick: <strong><a href="tel:+64278142222">027 814 2222</a></strong> or email <strong><a href="mailto:warwick.marshall@gmail.com">warwick.marshall@gmail.com</a></strong>.</p>
       </div>
     </section>
   );

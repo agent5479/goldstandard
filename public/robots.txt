@@ -3,7 +3,7 @@
 # Website: https://agent5479.github.io/goldstandard/
 # Book online: https://agent5479.github.io/goldstandard/book
 # Resources: /guide · /exam · /intelligence (breed analysis)
-# Contact: Warwick Marshall · 027 814 2222 · goldstandardtakaka@gmail.com
+# Contact: Warwick Marshall · 027 814 2222 · warwick.marshall@gmail.com
 # Address: Rangihaeata, Takaka 7182, Golden Bay, NZ
 
 User-agent: *

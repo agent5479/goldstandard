@@ -249,7 +249,7 @@ export default function HomePage() {
             </div>
             <div className="contact-item">
               <span className="contact-label">Email</span>
-              <a href="mailto:goldstandardtakaka@gmail.com">goldstandardtakaka@gmail.com</a>
+              <a href="mailto:warwick.marshall@gmail.com">warwick.marshall@gmail.com</a>
             </div>
             <div className="contact-item">
               <span className="contact-label">Location</span>

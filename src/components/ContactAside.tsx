@@ -33,7 +33,7 @@ export default function ContactAside({ active }: ContactAsideProps) {
 
       <ul className="contact-list">
         <li><span>Phone</span><a href="tel:+64278142222">027 814 2222</a></li>
-        <li><span>Email</span><a href="mailto:goldstandardtakaka@gmail.com">goldstandardtakaka@gmail.com</a></li>
+        <li><span>Email</span><a href="mailto:warwick.marshall@gmail.com">warwick.marshall@gmail.com</a></li>
       </ul>
 
       {active === 'contact' ? (

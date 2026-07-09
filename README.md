@@ -7,7 +7,7 @@
 | **Live website** | [agent5479.github.io/goldstandard](https://agent5479.github.io/goldstandard/) |
 | **Book a session** | [Online booking — Golden Bay & Nelson Bays](https://agent5479.github.io/goldstandard/book) |
 | **Phone** | [027 814 2222](tel:+64278142222) |
-| **Email** | goldstandardtakaka@gmail.com |
+| **Email** | warwick.marshall@gmail.com |
 | **Location** | Rangihaeata, Takaka 7182, Golden Bay, New Zealand |
 
 ## Service area (New Zealand)
@@ -34,7 +34,7 @@ Sessions include obedience, recall, leash work, reactivity, rehabilitation, owne
 - **Area:** Golden Bay, Takaka, Nelson Bays, Greater Tasman Region, New Zealand  
 - **Street address:** Rangihaeata, Takaka, Golden Bay 7182, NZ  
 - **Phone:** [027 814 2222](tel:+64278142222)  
-- **Email:** goldstandardtakaka@gmail.com  
+- **Email:** warwick.marshall@gmail.com  
 - **Facebook:** [Gold Standard Dog Training](https://www.facebook.com/profile.php?id=61580061262910)
 
 ## Public site
