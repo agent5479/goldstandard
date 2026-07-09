@@ -78,9 +78,29 @@ export default function SectionSocialNeeds() {
 
         <p>Humans are limited by mass and reaction time — we must move our whole body across a space, often arriving after escalation has already occurred. A stable, neutral <strong>master dog</strong> — a socially competent adult with a deep off-switch and strong spatial presence — can act as a biological balancer within the flow of canine communication. Facilitated socialisation with suitable dogs in sessions provides this: a regulated dog is one that reads other animals and responds calmly rather than reactively.</p>
 
+        <p>
+          A true master dog can also deliver <strong>optimal corrections</strong> that humans often struggle to pull off
+          consistently. It can close distance instantly, apply full-body spatial authority (not just a leash or a hand),
+          and correct at the exact millisecond a dominance play or fixation begins — with timing, placement, and
+          certainty that would otherwise require the handler to already be in position.
+        </p>
+
+        <ul className="checklist">
+          <li><strong>Mass and presence:</strong> enough physical authority that a clean correction lands without escalating into chaos</li>
+          <li><strong>Spatial awareness:</strong> reads angles, pressure, and proximity before humans notice the shift</li>
+          <li><strong>Medium to low neurotic tendencies:</strong> deep off-switch and emotional stability after the moment</li>
+          <li><strong>Speed and timing:</strong> fast enough to preempt the snap-window, not arrive after it</li>
+          <li><strong>Protective and dominant tendencies:</strong> expressed as controlled authority, not reactive aggression</li>
+        </ul>
+
+        <p>
+          Breed examples that often have the raw ingredients (not guarantees): Rottweiler, Doberman, Alsatian, Cane
+          Corso, Akita, Dogo Argentino, Malinois, Mastiff.
+        </p>
+
         <ul className="checklist">
           <li><strong>Proximity and preemption:</strong> senses shifting tension before a T-bone or over-neck stand solidifies — locked eyes, rigid tail flags</li>
-          <li><strong>Biological correction:</strong> clean body block or precise flank bump to the instigator — the same language as a <a href="#butt-push">butt push</a>, delivered dog-to-dog</li>
+          <li><strong>Biological correction:</strong> clean body block or precise flank bump to the instigator — a timed correction humans often miss, the same language as a <a href="#butt-push">butt push</a>, delivered dog-to-dog</li>
           <li><strong>Vacuum of neutrality:</strong> the instant the correction lands, arousal drops to absolute zero — no grudge, no lingering tension. Young or reactive dogs learn natural boundaries without human emotional contamination</li>
           <li><strong>Household example:</strong> hold the same standards for every dog in the household — permission, leash work, access earned and revoked the same way. As you reshape one dog's relationship with you, he can lead the others by example — but only if the frame is consistent across the pack</li>
         </ul>

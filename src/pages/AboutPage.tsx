@@ -40,10 +40,6 @@ export default function AboutPage() {
               Warwick founded Gold Standard to give owners more than a quick fix — a path to understand how
               dogs think, how pack structure works, and how to hold calm leadership in everyday life.
             </p>
-            <p>
-              Gold Standard is an independent practice — Beckman-inspired structure and owner coaching, but
-              Warwick is not affiliated with, endorsed by, or certified by Beckman.
-            </p>
           </div>
           <div className="trust-grid">
             <article className="trust-card">
@@ -139,67 +135,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="about-section about-section--soft">
-        <div className="section-inner">
-          <p className="section-label">Dog-Tantra</p>
-          <h2>The shared flow state.</h2>
-          <div className="philosophy-text">
-            <p>
-              To achieve true embodiment, we work with what Warwick calls <strong>Dog-Tantra</strong>. Think of it
-              the way an elite rugby player or athlete experiences <strong>the Zone</strong> — not mystical, but a
-              shift in awareness away from the analytical, worrying human mind (throat and forehead, where nagging
-              lives) and into the gut and primitive brainstem. When you inhabit that deep, non-verbal pack-feeling at
-              your core, you become a somatic anchor. Dogs live on that instinctual frequency — they do not just obey
-              you; they <strong>sync</strong> with you.
-            </p>
-            <p>
-              Dog-Tantra is coached in person. Warwick guides you into what those subtle states feel like and
-              reflects them back so you trust your own perception — what to seek, what to reward, and when the
-              connection is real. That confirmation is what video alone cannot give.
-            </p>
-
-            <table className="pillars-table" aria-label="Training paradigm comparison">
-              <thead>
-                <tr>
-                  <th scope="col">Paradigm</th>
-                  <th scope="col">In everyday language</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><strong>Mechanical / behavioural</strong> (Beckman-style)</td>
-                  <td>
-                    Rules, mechanics, and external structure — what to do with your hands, tools, and timing. Creates
-                    an obedient dog through clean repetition; the human remains a separate handler managing an asset.
-                  </td>
-                </tr>
-                <tr>
-                  <td><strong>Energy dominance</strong> (Millan-style)</td>
-                  <td>
-                    Projecting calm-assertive authority outward to demand submission. Relies on personal willpower and
-                    top-down rank assertion to push the dog into a calmer state.
-                  </td>
-                </tr>
-                <tr>
-                  <td><strong>Gold Standard / Dog-Tantra</strong></td>
-                  <td>
-                    Drop the separate handler entirely. Unlock deep, instinctual coordination — the same unthinking,
-                    collective flow elite players feel on the pitch. You do not manage the dog; you activate an
-                    internal pack-feeling so clear the dog syncs into your rhythm.
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-
-            <p className="about-dog-tantra-cta">
-              <Link to={guideHref('dog-tantra')}>Read the full Dog-Tantra section in the Guide</Link>
-              {' · '}
-              <Link to="/book">Book a session</Link>
-            </p>
-          </div>
-        </div>
-      </section>
-
       <section className="approach">
         <div className="section-inner">
           <p className="section-label">How it works</p>
@@ -225,6 +160,67 @@ export default function AboutPage() {
             </blockquote>
             <p className="approach-tagline">
               Results-focused · Individualised care
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="about-section about-section--soft">
+        <div className="section-inner">
+          <p className="section-label">Dog-Tantra</p>
+          <h2>Pack sensitivity — likened to tantra.</h2>
+          <div className="philosophy-text">
+            <p>
+              Warwick uses <strong>Dog-Tantra</strong> as shorthand for a practical skill: <strong>pack sensitivity</strong>.
+              It is likened to tantra in the sense that it is about sensitivity and alignment — not mysticism. You shift
+              awareness out of the analytical, worrying human mind and into a calmer, embodied baseline so your posture,
+              breath, and follow-through are congruent.
+            </p>
+            <p>
+              Dogs read that baseline first. When you become a stable somatic anchor, the dog synchronises into your
+              rhythm — not because you managed every behaviour, but because the leadership signal is continuous.
+            </p>
+            <p>
+              This is coached in person. Warwick guides you into what those subtle states feel like and reflects them
+              back so you can trust your perception — what to seek, what to reward, and when the connection is real.
+            </p>
+
+            <table className="pillars-table" aria-label="Training paradigm comparison">
+              <thead>
+                <tr>
+                  <th scope="col">Paradigm</th>
+                  <th scope="col">In everyday language</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Mechanical / behavioural</strong> (Beckman-style)</td>
+                  <td>
+                    Rules, mechanics, and external structure — what to do with your hands, tools, and timing. Creates
+                    an obedient dog through clean repetition; the human remains a separate handler managing an asset.
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Energy dominance</strong> (Millan-style)</td>
+                  <td>
+                    Projecting calm-assertive authority outward to demand submission. Relies on personal willpower and
+                    top-down rank assertion to push the dog into a calmer state.
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Gold Standard (pack sensitivity)</strong></td>
+                  <td>
+                    Pair clean mechanics with embodied alignment. You do not micromanage the dog; you hold a baseline
+                    so clear the dog can relax into the structure and synchronise to your rhythm.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <p className="about-dog-tantra-cta">
+              <Link to={guideHref('dog-tantra')}>Read the full Dog-Tantra section in the Guide</Link>
+              {' · '}
+              <Link to="/book">Book a session</Link>
             </p>
           </div>
         </div>
