@@ -12,10 +12,8 @@ export default function SectionButtPush() {
       <p>This is the primary tool for in-place reactivity — the continuous bark, the stare at a trigger, the stiffening that feeds on itself. Pair it with the <a href="#ready-stance">ready stance</a> so you reach the dog inside the <a href="#timing">one-second window</a>. This is for <a href="#context-of-contact">training mode</a> accountability — not for pushing a dog away during calm living-mode rest contact.</p>
 
       <p>
-        On lead, the <a href="#butt-push">butt push</a> pairs with the <a href="#leash-jerk">downward leash jerk</a>:
-        the down pull makes the dog heavy and shifts weight forward, so the hindquarters are available to turn. After an
-        upward pull the dog is braced into you — pushing the hips then fights their full bodyweight. Jerk down, release
-        to slack, then push the flank if the fixation has not broken.
+        On lead, pair with the <a href="#leash-jerk">downward leash jerk</a> — down first, slack, then push
+        the flank if fixation has not broken. See Leash jerk for the full biomechanics and pairing sequence.
       </p>
 
       <ol className="steps">

@@ -15,17 +15,11 @@ export default function SectionReadingDog() {
 
       <p>
         Reading your dog is not only visual textbook analysis. When your{' '}
-        <a href="#dog-tantra">Dog-Tantra</a> axis is locked — heavy gut, open occiput, calm baseline — you
-        <strong> feel</strong> the dog&apos;s tension shift before the bark or lunge lands. That is somatic field
-        matching: your nervous system registers their arousal change because you are not stuck in your analytical
-        mind nagging from the throat.
-      </p>
-
-      <p>
-        Practice this on walks: peripheral awareness for the dog&apos;s{' '}
-        <a href="#dog-ready-stance">ready stance</a> loading, gut-heavy handler baseline, and the{' '}
-        <a href="#three-second-pause">three-second pause</a> when you sense the field spike — before you need the
-        butt push or jerk.
+        <a href="#dog-tantra">Dog-Tantra</a> axis is locked, you feel tension shift before the bark or lunge
+        lands — somatic field matching, not throat-level nagging. See Dog-Tantra for the full gut-and-occiput
+        frame; practice peripheral awareness for the dog&apos;s{' '}
+        <a href="#dog-ready-stance">ready stance</a> loading and the{' '}
+        <a href="#three-second-pause">three-second pause</a> when you sense the field spike.
       </p>
 
       <div className="callout">

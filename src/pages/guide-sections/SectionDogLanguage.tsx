@@ -11,9 +11,7 @@ export default function SectionDogLanguage() {
 
       <h3 id="not-a-game">🎯 Not a game — someone has to be the boss</h3>
 
-      <p>This ties directly to <a href="#im-over-it">I'm over it</a> in Expectations. The pack needs a boss, and you are that boss. That is not dominance theatre — it is the new pack structure the dog must adapt to immediately, not negotiate into place over weeks of mixed messages. Firmness is structural: the energy lives in your being and your arm, the same forward settled presence as the <a href="#ready-stance">ready stance</a>, not hope or hesitation dressed up as patience.</p>
-
-      <p>Gruff correction is not a game the dog can win by making you react. When they test whether pushing you is engaging — recall turned into sport, boundary treated as optional — the answer must be clear enough that the negotiation ends. Then you move on, <em>I'm over it</em>, as if the moment barely registered.</p>
+      <p>This ties directly to <a href="#im-over-it">I'm over it</a> in Expectations — pack structure is not negotiated into place over weeks of mixed messages. Gruff correction is not a game the dog can win by making you react; when they test whether pushing you is engaging, the answer must be clear enough that the negotiation ends. Then you move on, <em>I'm over it</em>, as if the moment barely registered.</p>
 
       <h3 id="when-firmer">⚡ When firmer treatment is appropriate</h3>
 

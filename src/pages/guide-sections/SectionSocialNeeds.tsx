@@ -64,7 +64,7 @@ export default function SectionSocialNeeds() {
 
         <h3 id="other-dog-ready-stance">⚠️ When the other dog is braced</h3>
 
-        <p>Read the <em>other</em> dog's ready stance the same way you read your own dog's precursors — see <a href="#dog-ready-stance">Reading the dog's ready stance</a>. If a dog approaches with stiffening, locked eyes, braced rear legs, or locked forward focus, and you turn or redirect yours away, your dog briefly turns his back and becomes vulnerable. That is why the leash is non-negotiable in greetings: yours can watch, but you must be ready to intervene the instant the dynamic shifts — <a href="#leash-jerk">downward leash jerk</a>, spatial block, or extraction before a snap lands.</p>
+        <p>Read the <em>other</em> dog&apos;s <a href="#dog-ready-stance">ready stance</a> the same way you read your own dog&apos;s precursors. If you turn or redirect yours away while the other dog is braced, your dog briefly becomes vulnerable — that is why the leash is non-negotiable in greetings. Intervene the instant the dynamic shifts — see <a href="#dog-meetings-leash">Leash on for dog meetings</a>.</p>
 
         <h3 id="intact-muzzle-protocol">🛡️ Intact dogs: unstructured meetings and who you cannot trust</h3>
 

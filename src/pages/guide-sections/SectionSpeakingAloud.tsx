@@ -27,7 +27,9 @@ export default function SectionSpeakingAloud() {
       <p>Repeating commands over and over — "Sit, sit, come on, sit…" — teaches your dog that the first prompt is optional and that boundary negotiation is a game they can win. The same applies to a running commentary on the walk: "heel, heel, good, heel, stay with me" every few metres. The standard is one clear cue first — then enforcement or silence, not a live soundtrack. What happens next depends on whether they actually heard you.</p>
 
       <p>
-        The end state is a dog that holds the <a href="#baseline-expectation">baseline</a> without micromanagement: you should be able to walk, look at the sky, and think your own thoughts while the dog regulates its own position beside you. Cues are for boundaries and resets — not a metronome that keeps the dog performing.
+        The end state is a dog that holds the <a href="#baseline-expectation">baseline</a> without
+        micromanagement — see Access and <a href="#new-baseline">Owner mindset: the new baseline</a>. Cues are
+        for boundaries and resets — not a metronome that keeps the dog performing.
       </p>
 
       <p>Sometimes a dog that looks like it ignored you simply did not hear — fixated on a scent, locked on a trigger, or tuned out. There is usually an indicator they registered the sound: ears flick, a small head turn, a huff. That varies across individuals; learn your dog's tells. When fixation explains the blank response, <strong>one</strong> second cue is fair — delivered with an escalation in tone intensity that carries your disinterest in renegotiating the compliance hierarchy this time. Not pleading. Not nagging. The energy of <a href="#im-over-it">I'm over it</a>.</p>

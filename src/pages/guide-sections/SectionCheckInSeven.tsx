@@ -12,11 +12,9 @@ export default function SectionCheckInSeven() {
       <p>If the look comes, acknowledge it calmly and let them continue. If it doesn't, the access contract is broken — and the leash goes back on, using the same disappointed tone and reset as any other correction to earned freedom (<a href="#access">Access training</a>).</p>
 
       <h3>🐶 Puppies</h3>
-      <p>Young dogs are easier to train on this — but the establishment protocol matters. See <a href="#puppy-check-in">Puppy check-in</a> for the full baseline: proactive eye-contact marking, hallway recall, and chase games that build connection through reward rather than anxiety.</p>
+      <p>Young dogs are easier to train on this — but the establishment protocol matters. See <a href="#puppy-check-in">Puppy check-in</a> for the full baseline: proactive eye-contact marking, hallway recall, chase games, and when the strategic hide tactic is appropriate.</p>
 
-      <p>With confident, resilient puppies only, you can strategically hide — step behind a tree, bend out of sight — and let them register, briefly, that they are alone. Not to frighten them, but to make the pack link tangible: you are the anchor, and drifting too far has consequence. That hide tactic is a relative condition, not the default — see <a href="#puppy-check-in">Puppy check-in</a>.</p>
-
-      <p><strong>Relative condition:</strong> use the hide tactic only with confident, resilient puppies — not with fearful, shutdown, or <a href="#trauma-signals">trauma-signalling</a> dogs. For those dogs, shorten the distance and rebuild check-in at closer range instead.</p>
+      <p><strong>Relative condition:</strong> the hide tactic applies only to confident, resilient puppies — not fearful, shutdown, or <a href="#trauma-signals">trauma-signalling</a> dogs. For those dogs, shorten the distance and rebuild check-in at closer range instead; see Puppy check-in.</p>
 
       <h3>🐕 Adults</h3>
       <p>Harder, but achievable. At seven seconds, turn and call — or use a <a href="#verbal-correction">sharp human bark</a> to snap attention back before they have fully committed to distance. If they don't come immediately, leash on. No negotiation, no second-chance chase. The standard is immediate response, not eventual return — a tighter version of the recall standard in <a href="#expectations">Expectations</a>.</p>

@@ -44,9 +44,11 @@ export default function SectionIntactLargeMales() {
         <h3 id="intact-large-males-mindset">🎯 Leadership through clarity</h3>
 
         <p>
-          A resilient, clear-headed dog is not emotionally damaged by firm corrections — he reaches the calm
-          state he needs because you held a firm, strong expectation. Clarity is not cruelty. Certainty is what
-          lets an adult dog relax into knowing the line is real.
+          At this mass and life stage, handler clarity is not optional polish — it is how a powerful adult learns
+          where the line is. The same principles that govern every dog apply here with higher stakes: certainty
+          before action, permission before release, and no negotiation at thresholds. See{' '}
+          <a href="#owner-mindset">Owner mindset</a>, <a href="#expectations">Expectations</a>, and{' '}
+          <a href="#front-door">It starts at the front door</a>.
         </p>
 
         <div className="mantra">
@@ -60,98 +62,70 @@ export default function SectionIntactLargeMales() {
         </div>
 
         <p>
-          Project that posture in your body — the same forward, settled presence as the{' '}
-          <a href="#ready-stance">ready stance</a> and <a href="#speaking-aloud">speak it aloud</a>. Say it
-          aloud when you need to lock the attitude in before your hands move.
-        </p>
-
-        <p>
-          <strong>The standard starts at the front door.</strong> Do not wait until you are out on a walk to
-          establish control. Leadership, focus, and eye contact must be granted and verified before he is ever
-          given permission to cross the threshold of your home — see{' '}
-          <a href="#front-door">It starts at the front door</a> and the{' '}
-          <a href="#check-in-seven">seven-second check-in</a>. That same frame governs every resource, every
-          release, every decision about where attention and body go next.
+          Project that posture in your body — see <a href="#ready-stance">ready stance</a> and{' '}
+          <a href="#speaking-aloud">speak it aloud</a> — and lock the attitude in before your hands move. For
+          intact large males still building structure, the standard must be verified at the{' '}
+          <a href="#front-door">front door</a> and on every release through the{' '}
+          <a href="#check-in-seven">seven-second check-in</a>, not only once you are out on the walk.
         </p>
 
         <h3 id="intact-large-males-mechanics">🥋 Handling and physical mechanics</h3>
 
         <p>
-          At this mass, mastering your physical mechanics is a <strong>non-negotiable safety requirement</strong>,
-          not polish. You cannot out-muscle a 45–50 kg dog that commits to a lunge or fixation. He will constantly
-          push and test your strength — maintain your <a href="#ready-stance">ready stance</a> with an engaged
-          core and act as an immovable anchor.
+          At 40–50+ kg, you cannot out-muscle a committed lunge or fixation. Your body mechanics are a safety
+          requirement, not an advanced skill — see <a href="#ready-stance">ready stance</a> and{' '}
+          <a href="#dog-ready-stance">reading the dog's ready stance</a>. The methods are the same as elsewhere
+          in this guide; the margin for error is not.
         </p>
 
         <ul className="checklist">
           <li>
-            <strong>Say a command once.</strong> If he chooses to ignore it, immediately follow through with a
-            swift, firm physical correction — see <a href="#cue-once">Say it once</a>,{' '}
-            <a href="#leash-jerk">downward leash jerk</a>, and <a href="#butt-push">butt push</a>. Repeated
-            nagging teaches him that words are optional.
+            <a href="#cue-once">Say it once</a> — then follow through; nagging teaches that words are optional
           </li>
           <li>
-            <strong>Read before he commits.</strong> Learn his subtle body language before he fully locks onto a
-            distraction — see <a href="#dog-ready-stance">The dog's ready stance</a>. Use spatial pressure or
-            physical redirection to break visual lock and force a check-in with you for permission.
+            <a href="#leash-jerk">Downward leash jerk</a> and <a href="#butt-push">butt push</a> — break fixation
+            while you still have leverage
           </li>
           <li>
-            <strong>Act inside the one-second window.</strong> At this size, a missed precursor becomes a
-            handler emergency — see <a href="#timing">Timing</a>.
+            <a href="#timing">One-second window</a> — at this size, a missed precursor becomes a handler emergency
           </li>
         </ul>
 
         <h3 id="intact-large-males-recall">🦴 Recall, leash culture, and road safety</h3>
 
         <p>
-          <strong>Recall and heel are everything.</strong> Deliberately ignoring a recall cannot be treated as a
-          game or a minor error. Failure to respect heel or recall boundaries leads to costly vet visits and
-          dangerous accidents — see <a href="#expectations">Expectations</a> and the{' '}
-          <a href="#go-get-recall">go-get method</a> for building recall in training. After a bolt, pursue{' '}
-          <em>joylessly</em> and <em>relentlessly</em> — no drama the dog can feed on.
+          For a large intact male still building structure, recall failure and heel drift are not minor training
+          gaps — they are how costly vet visits and road accidents happen. Apply the same standards as the rest
+          of the guide, without softening them because he feels young or eager: see{' '}
+          <a href="#expectations">Expectations</a>, the <a href="#go-get-recall">go-get method</a>, and{' '}
+          <a href="#im-over-it">I'm over it</a> for recall pursuit — joylessly and relentlessly, without drama
+          he can feed on.
         </p>
 
         <p>
-          Due to raw physical power, <strong>absolute road awareness and neutrality around traffic</strong> are
-          paramount for survival — see <a href="#road-safety">Road safety</a> and the{' '}
-          <a href="#road-seven-months">seven-month road crucible</a>. Be uncompromising with your standards near
-          roadways. Beside traffic there is no controlled failure — only an invariant reflex built on-lead first.
+          Beside traffic there is no controlled failure — only an invariant reflex built on-lead first. See{' '}
+          <a href="#road-safety">Road safety</a> and the <a href="#road-seven-months">seven-month road crucible</a>.
         </p>
 
         <h3 id="intact-large-males-meetings">🔗 First meetings and earned freedom</h3>
 
         <p>
-          <strong>Off-leash freedom is a privilege earned through absolute perfection</strong> — not a right
-          during first meetings with other dogs. He must remain under mechanical control until his maturity and
-          neutrality are completely locked in. Going completely leash-free is not an option during first
-          introductions — see <a href="#dog-meetings-leash">Leash on for dog meetings</a> and{' '}
-          <a href="#dominance-navigation">Learning dominance navigation</a>.
-        </p>
-
-        <p>
-          Avoid unstructured, unleashed meetings with unfamiliar intact dogs — the arousal and rank pressure are
-          not worth the gamble. You often cannot control or trust other owners' dogs — see{' '}
+          Rank pressure, testosterone, and mass compound at every greeting. Off-leash freedom during first
+          introductions is not an option while structure is still being built — the social rules are the same as
+          for other dogs in training, with less room for recovery when the moment goes wrong. See{' '}
+          <a href="#dog-meetings-leash">Leash on for dog meetings</a>,{' '}
+          <a href="#dominance-navigation">Learning dominance navigation</a>, and{' '}
           <a href="#intact-muzzle-protocol">Intact dogs and unstructured meetings</a>.
         </p>
 
         <h3 id="intact-large-males-outlets">🔓 Biological needs — on your terms</h3>
 
         <p>
-          A large athletic dog carries a massive engine. To keep his mind calm, respect his biological drives —
-          but <strong>on your terms</strong>.
+          A large athletic intact male carries a massive engine. Outlets matter — but on your schedule, not his
+          demand. Runs and sniff sessions are earned through calm coordination first; see{' '}
+          <a href="#sniff-breaks">Sniff breaks</a> and <a href="#access">Access training</a> for how access is
+          granted and revoked, not used as a bribe mid-meltdown.
         </p>
-
-        <ul className="checklist">
-          <li>
-            Provide dedicated, structured outlets — long runs, intense sniffing sessions — to safely burn physical
-            energy; see <a href="#sniff-breaks">Sniff breaks</a> and <a href="#access">Access training</a>.
-          </li>
-          <li>
-            <strong>Crucial distinction:</strong> this energy burn must happen on your schedule. He does not get
-            to demand freedom. Access to runs and sniffs is a <em>reward</em> for showing calm coordination and
-            focus first — not a bribe to stop bad behaviour in the moment.
-          </li>
-        </ul>
 
         <h3 id="intact-three-paths">🛤️ The critical crossroads: three lifestyle paths</h3>
 
@@ -168,7 +142,8 @@ export default function SectionIntactLargeMales() {
           Intact males inherently face higher social friction. Neutered males may show unprovoked hostility toward
           them. Intact dogs instinctually posture — <em>bow up</em> — around other intact males. Biological drives
           (marking, licking, humping) are highly resistant to standard operant training and will not disappear because
-          you wish they would. See <a href="#intact-muzzle-protocol">Intact dogs and unstructured meetings</a>.
+          you wish they would. See <a href="#social-friction">Micro-signals of social friction</a> and{' '}
+          <a href="#intact-muzzle-protocol">Intact dogs and unstructured meetings</a>.
         </p>
 
         <h4 id="intact-environment-restrictions">How intact status shrinks your world</h4>
@@ -243,16 +218,10 @@ export default function SectionIntactLargeMales() {
         </div>
 
         <p>
-          No matter which path you choose, you must remain the sole decision-maker in this relationship. He needs
-          to check with you before every action — see <a href="#check-in-seven">The seven-second check-in</a>.
+          No matter which path you choose, you must remain the sole decision-maker in this relationship — see the{' '}
+          <a href="#owner-mindset">Gold Standard Rule</a>, <a href="#check-in-seven">The seven-second check-in</a>,
+          and <a href="#front-door">It starts at the front door</a>.
         </p>
-
-        <div className="callout">
-          <strong>⭐ The Gold Standard Rule</strong>
-          <p>
-            The dog does not decide what happens — you do. Permission before action, not action until stopped.
-          </p>
-        </div>
       </div>
     </section>
   );

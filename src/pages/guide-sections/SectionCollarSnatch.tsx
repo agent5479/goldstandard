@@ -10,11 +10,10 @@ export default function SectionCollarSnatch() {
       <div className="callout">
         <strong>Diagnose before you grab</strong>
         <p>
-          Before a high-level correction, diagnose history using <a href="#trauma-vs-hardship">Trauma vs hardship</a>.{' '}
-          <strong>Entitled dog reacting to an unprivileged boundary?</strong> Correct instantly — collar grab, verbal pop,
-          relentless follow-through. <strong>Traumatized nervous system in a panic flash?</strong> Guide calmly; security
-          and lighter entry — see <a href="#trauma-hardship-calibration">Calibrating the correction scale</a> and{' '}
-          <a href="#when-not-firmer">When it is not appropriate</a>.
+          Diagnose history first — see <a href="#trauma-vs-hardship">Trauma vs hardship</a> and{' '}
+          <a href="#when-not-firmer">When it is not appropriate</a>. Entitled boundary push: correct instantly
+          inside the <a href="#timing">one-second window</a>. Trauma or panic flash: guide calmly with lighter
+          entry — see <a href="#trauma-hardship-calibration">Calibrating the correction scale</a>.
         </p>
       </div>
 

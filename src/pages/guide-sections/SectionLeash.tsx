@@ -83,22 +83,11 @@ export default function SectionLeash() {
 
       <h3>⬇️ Downward correction. Slack line. No tension.</h3>
 
-      <p>How you hold the leash is doing constant communication. A tight, upward-pulled leash tells the dog you're nervous and reactive. It creates a feedback loop — you tighten, the dog feels it and escalates, you tighten more. Many dogs also learn to <strong>lean into the line</strong> to make themselves lighter and pull forward; sustained tension feeds that habit rather than breaking it.</p>
-
-      <div className="two-col">
-        <div className="col-card">
-          <h4>✅ What to do</h4>
-          <p>Keep the leash slack. When a correction is needed, pull <strong>downward</strong>, firmly and briefly, then release back to slack — see <a href="#leash-jerk">Downward leash jerk</a> for the full pattern. The down pull makes the dog heavy and removes the lean-on-the-line incentive in one sharp moment. The slack line is also information — it lets you read the dog's personality and natural impulses, rather than suppressing them with constant tension.</p>
-        </div>
-        <div className="col-card">
-          <h4>🚫 What to avoid</h4>
-          <p>Never pull <strong>upward</strong> — this puts pressure on the larynx and can cause injury. Avoid holding sustained tension as a method of control; it teaches the dog to lean into the line and stay light. Sustained tension is not leadership; it's anxiety transmitted through a leash.</p>
-        </div>
-      </div>
+      <p>How you hold the leash is constant communication. Keep the line slack; when a correction is needed, pull <strong>downward</strong>, firmly and briefly, then release back to slack. Never pull upward — see <a href="#leash-jerk">Downward leash jerk</a> for the full pattern, biomechanics, and pairing with the <a href="#butt-push">butt push</a>.</p>
 
       <div className="callout">
         <strong>📊 Slack is information</strong>
-        <p>A relaxed leash lets you see who your dog actually is. You'll notice where its attention goes, how quickly it fixates, whether it's scent-driven or visually triggered — see <a href="#breed-temperament">breed temperament</a> and <a href="#butt-push">butt push</a> when fixation builds. You can't see any of that through a tight line. Slack-leash walking is the goal and also the ongoing diagnostic tool.</p>
+        <p>A relaxed leash lets you see who your dog actually is — where attention goes, how quickly fixation builds, whether they are scent- or sight-driven. You cannot read any of that through a tight line. Slack-leash walking is the goal and the ongoing diagnostic tool; see <a href="#breed-temperament">breed temperament</a> and <a href="#butt-push">butt push</a> when fixation builds.</p>
       </div>
 
       <h3>🚶 Walking position</h3>

@@ -10,11 +10,10 @@ export default function SectionVerbalCorrection() {
       <div className="callout">
         <strong>Diagnose before you bark</strong>
         <p>
-          Before a gruff verbal pop, diagnose history using <a href="#trauma-vs-hardship">Trauma vs hardship</a>.{' '}
-          <strong>Entitled dog pushing an unprivileged boundary?</strong> Correct instantly — one sharp pop, then move on.{' '}
-          <strong>Traumatized nervous system in a panic flash?</strong> Guide calmly; security and lighter entry — see{' '}
-          <a href="#trauma-hardship-calibration">Calibrating the correction scale</a> and{' '}
-          <a href="#when-not-firmer">When it is not appropriate</a>.
+          Diagnose history first — see <a href="#trauma-vs-hardship">Trauma vs hardship</a> and{' '}
+          <a href="#when-not-firmer">When it is not appropriate</a>. Entitled boundary push: correct instantly
+          inside the <a href="#timing">one-second window</a>. Trauma or panic flash: guide calmly with lighter
+          entry — see <a href="#trauma-hardship-calibration">Calibrating the correction scale</a>.
         </p>
       </div>
 

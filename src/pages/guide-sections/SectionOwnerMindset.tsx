@@ -104,7 +104,7 @@ export default function SectionOwnerMindset() {
                 </td>
                 <td>
                   <strong>Self-regulation</strong> — one clear command; the dog regulates position and state
-                  of mind while you walk, look at the sky, and think your own thoughts
+                  of mind while you hold the <a href="#baseline-expectation">baseline expectation</a>
                 </td>
               </tr>
               <tr>

@@ -10,11 +10,10 @@ export default function SectionReadyStance() {
       <div className="callout pro-tip">
         <strong>🌀 Dog-Tantra activation</strong>
         <p>
-          Ready stance is not only martial-athletic posture — it is physical activation of the{' '}
-          <a href="#dog-tantra">Dog-Tantra</a> axis. Before you adopt stance, drop awareness out of throat and
-          forehead into the <a href="#dog-tantra-lower-core">weighted anchor (lower core)</a> and the{' '}
-          <a href="#dog-tantra-occiput">aware lookout (occiput)</a>. Heavy gut, open back-of-skull awareness —
-          then engage core and move.
+          Ready stance activates the <a href="#dog-tantra">Dog-Tantra</a> axis — drop awareness into the{' '}
+          <a href="#dog-tantra-lower-core">weighted anchor</a> and{' '}
+          <a href="#dog-tantra-occiput">aware lookout</a> before you engage core and move. See Dog-Tantra for
+          the full somatic frame.
         </p>
       </div>
 
@@ -32,9 +31,7 @@ export default function SectionReadyStance() {
         <li>Occiput open — peripheral vision active; avoid predator-forward stare at triggers</li>
         <li>Hands free and close to the dog when passing triggers; leash managed so a correction does not require fumbling</li>
         <li>Adopt the stance at the <a href="#front-door">door</a>, at every threshold, and whenever you sense reactivity building</li>
-        <li>Watch for the <em>precursor</em>, not the full behaviour — the head snap, the body freeze, the first intake of breath before a bark (<a href="#symptom-glossary">Symptom glossary</a>, <a href="#timing">Timing</a>)</li>
-        <li>Position yourself within reach at all times, especially in trigger-rich environments</li>
-        <li>If you miss it, stay calm. Reset, stay close, and return to the ready stance for the next moment</li>
+        <li>Build the precursor reflex — see <a href="#timing">Timing</a> and <a href="#symptom-glossary">Symptom glossary</a></li>
         <li>Practice core engagement deliberately on quiet walks — the stance should feel familiar before triggers demand it</li>
       </ul>
 
@@ -44,7 +41,7 @@ export default function SectionReadyStance() {
 
       <p>A dog in a healthy cooperative state carries weight evenly; the body is loose enough to yield. When arousal builds, watch for his <strong>ready stance</strong> loading — stiffening, locking eyes, braced hindquarters, or a stiff spine. That is the precursor window: fixation, a lunge, or a push into social space before the full behaviour lands. That is the dog's version of a ready stance — not calm neutrality.</p>
 
-      <p>When you catch that precursor, a <a href="#butt-push">butt push</a> to the hips or a <a href="#leash-jerk">downward leash jerk</a> breaks focus and turns the head back to you. Pair it with calm handler energy — matter-of-fact words like <em>I'm not worried</em> — not reassurance directed at the dog's fear, but the energy of someone who already knows how this goes. See <a href="#im-over-it">I'm over it</a> and <a href="#speaking-aloud">Speak it aloud</a>.</p>
+      <p>When you catch that precursor, break focus with a <a href="#butt-push">butt push</a> or <a href="#leash-jerk">downward leash jerk</a> inside the <a href="#timing">one-second window</a> — see Timing for the reflex checklist and Dog language for calibration.</p>
 
       <ul className="checklist">
         <li>Peripheral awareness on walks — catch stiffening, locked eyes, and braced rear legs before the lunge</li>
