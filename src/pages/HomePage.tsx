@@ -77,12 +77,16 @@ export default function HomePage() {
 
       <section className="hero">
         <div className="hero-body">
-          <p className="hero-eyebrow">🌿 Golden Bay &amp; Tasman Region · New Zealand</p>
-          <h1>🐾 The dog you always wanted<br /><span>is already in there.</span></h1>
+          <p className="hero-eyebrow">Golden Bay &amp; Tasman Region · New Zealand</p>
+          <h1>Gold Standard Dog Training</h1>
+          <p className="hero-headline">
+            The dog you always wanted <span>is already in there.</span>
+          </p>
           <HeroGallery />
-          <p className="hero-lead">✨ Effective dog training and rehabilitation — Results are quick and lasting!</p>
-          <p className="hero-sub">🧠 With clear structure and calm standards, Warwick helps you understand how your dog thinks and how to shape their world.</p>
-          <p className="hero-payoff">😌 From puppies to seniors, big or small — every breed and temperament — dogs are happier when they know their place, and so will you be.</p>
+          <p className="hero-lead">
+            With clear structure and calm standards, Warwick helps you understand how your dog thinks —
+            effective training and rehabilitation with quick, lasting results.
+          </p>
           <div className="hero-cta">
             <Link to="/book" className="btn btn-primary">Book a session</Link>
             <button
@@ -92,30 +96,31 @@ export default function HomePage() {
             >
               What&apos;s going on with your dog?
             </button>
-            <a href="tel:+64278142222" className="btn btn-secondary">Call 027 814 2222</a>
           </div>
-        </div>
-
-        <div className="hero-footer">
-          <div className="hero-stat">
-            <strong>📍 Tasman region</strong>
-            Based in Golden Bay &amp; Takaka
-          </div>
-          <div className="hero-stat">
-            <strong>🏆 Beckman-inspired</strong>
-            Structured coaching &amp; clear standards
-          </div>
-          <div className="hero-stat">
-            <strong>🐕 All dogs</strong>
-            Every age, breed, and temperament
-          </div>
+          <p className="hero-phone-link">
+            Or call <a href="tel:+64278142222">027 814 2222</a>
+          </p>
         </div>
       </section>
 
       <section className="about-teaser">
         <div className="section-inner">
-          <p className="section-label">👋 Meet your trainer</p>
-          <h2>🐾 Warwick Marshall</h2>
+          <div className="hero-stats-strip" aria-label="At a glance">
+            <div className="hero-stat">
+              <strong>Tasman region</strong>
+              Based in Golden Bay &amp; Takaka
+            </div>
+            <div className="hero-stat">
+              <strong>Beckman-inspired</strong>
+              Structured coaching &amp; clear standards
+            </div>
+            <div className="hero-stat">
+              <strong>All dogs</strong>
+              Every age, breed, and temperament
+            </div>
+          </div>
+          <p className="section-label">Meet your trainer</p>
+          <h2>Warwick Marshall</h2>
           <p>
             Based in Takaka, Golden Bay — working with dogs and owners across the Tasman region. Clear
             structure, Beckman-inspired coaching, and real-world session work tailored to your goals.
@@ -128,8 +133,8 @@ export default function HomePage() {
 
       <section className="services" id="services">
         <div className="section-inner">
-          <p className="section-label">🛠️ What's on offer</p>
-          <h2>🐾 Services</h2>
+          <p className="section-label">What&apos;s on offer</p>
+          <h2>Services</h2>
           <div className="services-layout">
             <figure className="feature-image feature-image--services">
               <img src={asset('images/archieglory.jpg')} alt="Dog in training — Gold Standard Dog Training, Golden Bay" width={480} height={640} loading="lazy" decoding="async" />
@@ -230,8 +235,8 @@ export default function HomePage() {
           <figure className="feature-image feature-image--small">
             <img src={asset('images/archiesit.jpg')} alt="Trained dog — Gold Standard Dog Training, Golden Bay" width={480} height={600} loading="lazy" decoding="async" />
           </figure>
-          <p className="section-label">📞 Get in touch</p>
-          <h2>🚀 Ready to get started?</h2>
+          <p className="section-label">Get in touch</p>
+          <h2>Ready to get started?</h2>
           <p>Call or text Warwick to discuss your dog, or book a session online. First conversation is always free.</p>
           <div className="contact-cta-row">
             <Link to="/book" className="btn btn-primary">Book a session</Link>
@@ -239,15 +244,15 @@ export default function HomePage() {
           </div>
           <div className="contact-options">
             <div className="contact-item">
-              <span className="contact-label">📱 Phone</span>
+              <span className="contact-label">Phone</span>
               <a href="tel:+64278142222">027 814 2222</a>
             </div>
             <div className="contact-item">
-              <span className="contact-label">✉️ Email</span>
+              <span className="contact-label">Email</span>
               <a href="mailto:goldstandardtakaka@gmail.com">goldstandardtakaka@gmail.com</a>
             </div>
             <div className="contact-item">
-              <span className="contact-label">📍 Location</span>
+              <span className="contact-label">Location</span>
               <span>Rangihaeata, Takaka — Golden Bay</span>
             </div>
           </div>

@@ -2,11 +2,21 @@ import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { TRAINER_APP_URL } from '../data/trainerAppConfig';
 
+const TOOL_LINKS = [
+  { to: '/exam', label: 'Exam' },
+  { to: '/intelligence', label: 'Breed Analysis' },
+  { to: '/dog-personality', label: 'Dog Personality' },
+  { to: '/breed-finder', label: 'Breed Finder' },
+] as const;
+
 /** Sticky site header with mobile menu toggle (port of nav.js). */
 export default function SiteHeader() {
   const [open, setOpen] = useState(false);
+  const [toolsOpen, setToolsOpen] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const toolsRef = useRef<HTMLLIElement>(null);
+  const toolsButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     document.body.classList.toggle('nav-open', open);
@@ -16,14 +26,26 @@ export default function SiteHeader() {
   }, [open]);
 
   useEffect(() => {
-    if (!open) return;
+    if (!open && !toolsOpen) return;
 
     const onDocClick = (event: MouseEvent) => {
-      if (headerRef.current?.contains(event.target as Node)) return;
+      const target = event.target as Node;
+      if (headerRef.current?.contains(target)) {
+        if (toolsOpen && toolsRef.current && !toolsRef.current.contains(target)) {
+          setToolsOpen(false);
+        }
+        return;
+      }
       setOpen(false);
+      setToolsOpen(false);
     };
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
+        if (toolsOpen) {
+          setToolsOpen(false);
+          toolsButtonRef.current?.focus();
+          return;
+        }
         setOpen(false);
         buttonRef.current?.focus();
       }
@@ -35,9 +57,12 @@ export default function SiteHeader() {
       document.removeEventListener('click', onDocClick);
       document.removeEventListener('keydown', onKeyDown);
     };
-  }, [open]);
+  }, [open, toolsOpen]);
 
-  const close = () => setOpen(false);
+  const close = () => {
+    setOpen(false);
+    setToolsOpen(false);
+  };
 
   return (
     <header className={`site-header${open ? ' is-open' : ''}`} data-site-header ref={headerRef}>
@@ -56,8 +81,29 @@ export default function SiteHeader() {
         <li><Link to="/about" onClick={close}>About</Link></li>
         <li><Link to="/#services" onClick={close}>Services</Link></li>
         <li><Link to="/about#pricing" onClick={close}>Pricing</Link></li>
-        <li><Link to="/exam" onClick={close}>Exam</Link></li>
-        <li><Link to="/intelligence" onClick={close}>Breed Analysis</Link></li>
+        <li className="nav-tools" ref={toolsRef}>
+          <button
+            type="button"
+            className="nav-tools-trigger"
+            aria-expanded={toolsOpen}
+            aria-controls="nav-tools-panel"
+            ref={toolsButtonRef}
+            onClick={() => setToolsOpen((value) => !value)}
+          >
+            Tools
+          </button>
+          <ul
+            id="nav-tools-panel"
+            className={`nav-tools-panel${toolsOpen ? ' is-open' : ''}`}
+            hidden={!toolsOpen}
+          >
+            {TOOL_LINKS.map((link) => (
+              <li key={link.to}>
+                <Link to={link.to} onClick={close}>{link.label}</Link>
+              </li>
+            ))}
+          </ul>
+        </li>
         <li className="nav-cta"><Link to="/book" onClick={close}>Book</Link></li>
         <li><Link to="/contact" onClick={close}>Contact</Link></li>
         <li className="nav-highlight"><Link to="/guide" onClick={close}>Client Guide</Link></li>

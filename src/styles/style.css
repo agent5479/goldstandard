@@ -138,6 +138,55 @@ body::before {
   opacity: 1;
 }
 
+.nav-tools {
+  position: relative;
+}
+
+.nav-tools-trigger {
+  appearance: none;
+  border: 0;
+  background: none;
+  padding: 0;
+  margin: 0;
+  color: var(--text);
+  font: inherit;
+  font-size: 0.86rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.nav-tools-trigger:hover,
+.nav-tools-trigger[aria-expanded="true"] {
+  color: var(--moss);
+}
+
+.nav-tools-panel {
+  position: absolute;
+  top: calc(100% + 0.45rem);
+  left: 0;
+  z-index: 160;
+  min-width: 11.5rem;
+  margin: 0;
+  padding: 0.45rem 0;
+  list-style: none;
+  background: var(--surface);
+  border: 1px solid rgba(45, 74, 45, 0.14);
+  border-radius: 4px;
+  box-shadow: 0 8px 24px rgba(24, 38, 24, 0.12);
+}
+
+.nav-tools-panel a {
+  display: block;
+  padding: 0.45rem 0.9rem;
+  white-space: nowrap;
+}
+
+.nav-tools-panel a:hover {
+  background: rgba(45, 74, 45, 0.06);
+}
+
 /* Homepage: header overlays the hero instead of pushing it down */
 .page-home .site-header {
   position: fixed;
@@ -223,6 +272,11 @@ body::before {
   text-transform: uppercase;
 }
 
+.site-footer .footer-links-divider {
+  color: rgba(255, 255, 255, 0.35);
+  user-select: none;
+}
+
 /* ── ANIMATIONS ── */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(18px); }
@@ -295,13 +349,52 @@ body::before {
 
 .hero h1 span { color: var(--gold); }
 
+.hero-headline {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.45rem, 3.8vw, 2.15rem);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--forest);
+  margin-bottom: 1.25rem;
+  opacity: 0;
+  animation: fadeUp 0.7s 0.48s forwards;
+}
+
+.hero-headline span { color: var(--gold); }
+
 .hero-lead {
   font-size: 1.15rem;
   font-weight: 600;
   color: var(--forest);
-  margin-bottom: 0.85rem;
+  margin-bottom: 1.5rem;
   opacity: 0;
   animation: fadeUp 0.7s 0.6s forwards;
+}
+
+.hero-phone-link {
+  margin-top: 0.85rem;
+  font-size: 0.95rem;
+  color: var(--light-text);
+  opacity: 0;
+  animation: fadeUp 0.7s 0.88s forwards;
+}
+
+.hero-phone-link a {
+  color: var(--forest);
+  font-weight: 600;
+}
+
+.hero-phone-link a:hover {
+  color: var(--gold);
+}
+
+.hero-stats-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem 2.25rem;
+  padding-bottom: 1.75rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(45, 74, 45, 0.13);
 }
 
 .hero-sub {
@@ -2304,7 +2397,11 @@ body.page-guide {
 
 .page-hero-bio {
   max-width: 42rem;
-  margin: 1.5rem 0 2rem;
+  margin: 0 0 2rem;
+}
+
+.page-hero-cta {
+  margin-top: 1.5rem;
 }
 
 .page-hero--book .page-hero-book-grid {
@@ -3481,7 +3578,9 @@ body.page-guide {
 
   .hero-eyebrow,
   .hero h1,
+  .hero-headline,
   .hero-lead,
+  .hero-phone-link,
   .hero-sub,
   .hero-payoff,
   .hero-photo-grid,
@@ -3576,6 +3675,17 @@ body.page-guide {
   .site-header-nav .nav-highlight a { width: 100%; display: inline-block; }
   .site-header-nav .nav-cta a { width: 100%; display: inline-block; text-align: center; }
   .site-header-nav a { font-size: 0.8rem; }
+  .nav-tools { width: 100%; }
+  .nav-tools-trigger { width: 100%; text-align: left; }
+  .nav-tools-panel {
+    position: static;
+    width: 100%;
+    margin-top: 0.35rem;
+    box-shadow: none;
+    border: 1px solid rgba(45, 74, 45, 0.1);
+  }
+  .nav-tools-panel[hidden] { display: none; }
+  .nav-tools-panel.is-open { display: block; }
   .form-row { grid-template-columns: 1fr; gap: 0; }
   .booking-steps { flex-direction: column; }
   .contact-cta-row .btn { width: 100%; text-align: center; }

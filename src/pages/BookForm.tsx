@@ -1196,7 +1196,7 @@ export default function BookForm() {
       {clientReady && packageBookingLive === false ? (
         <p className="form-feedback error booking-server-warning" role="alert">
           Online package booking is not live on the server yet — single sessions may still work. For 3-day
-          or 5-session packages, call or text{' '}
+          or Get ready for town packages, call or text{' '}
           <a href="tel:+64278142222">027 814 2222</a>.
         </p>
       ) : null}
@@ -2131,7 +2131,22 @@ export default function BookForm() {
                         />
                         <p className="form-hint">Required — we&apos;ll send your calendar confirmation here.</p>
                       </div>
-                    ) : null}
+                    ) : (
+                      <div className="form-field">
+                        <label htmlFor="returningSlimPhone">Phone</label>
+                        <input
+                          id="returningSlimPhone"
+                          name="phone"
+                          type="tel"
+                          autoComplete="tel"
+                          required
+                          disabled={submitting}
+                          value={clientPhone}
+                          onChange={(event) => setClientPhone(event.target.value)}
+                        />
+                        <p className="form-hint">Required — we may need to reach you about your session.</p>
+                      </div>
+                    )}
                     <div className="form-field">
                       <label htmlFor="bookMessageReturning">Anything else? <span className="label-optional">(optional)</span></label>
                       <textarea id="bookMessageReturning" name="message" placeholder="Optional note for this session" disabled={submitting}></textarea>

@@ -67,6 +67,9 @@ jobs:
           test -f docs/guide/index.html
           test -f docs/exam/index.html
           test -f docs/intelligence/index.html
+          test -f docs/dog-personality/index.html
+          test -f docs/breed-finder/index.html
+          test -f docs/guide/foundation/index.html
           test -f docs/.nojekyll
           test -f docs/404.html
           grep -q 'data-seo-ready="true"' docs/about/index.html

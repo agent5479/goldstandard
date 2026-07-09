@@ -19,13 +19,22 @@ export default function AboutPage() {
 
       <section className="page-hero">
         <div className="page-hero-inner">
-          <p className="section-label">👋 Meet your trainer</p>
-          <h1>🐾 Warwick Marshall</h1>
+          <p className="section-label">Gold Standard Dog Training</p>
+          <h1>Warwick Marshall</h1>
           <p className="page-hero-lead">
             Gold Standard Dog Training helps owners build calm, reliable behaviour through clear structure,
             embodied leadership, and real-world session work. Based in Takaka and Golden Bay, Warwick works
             with dogs and owners across the Tasman region.
           </p>
+          <div className="contact-cta-row page-hero-cta">
+            <Link to="/book" className="btn btn-primary">Book a session</Link>
+            <Link to="/contact" className="btn btn-secondary">Send an enquiry</Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="about-section about-section--soft">
+        <div className="section-inner">
           <div className="philosophy-text page-hero-bio">
             <p>
               Warwick founded Gold Standard to give owners more than a quick fix — a path to understand how
@@ -38,29 +47,29 @@ export default function AboutPage() {
           </div>
           <div className="trust-grid">
             <article className="trust-card">
-              <strong>📍 Service area</strong>
+              <strong>Service area</strong>
               <span>Based in Golden Bay — sessions across the Tasman region.</span>
             </article>
             <article className="trust-card">
-              <strong>🏆 Method focus</strong>
+              <strong>Method focus</strong>
               <span>Embodied, purist coaching — leash, body, and voice; no shock or prong reliance.</span>
             </article>
             <article className="trust-card">
-              <strong>🐕 Dog types</strong>
+              <strong>Dog types</strong>
               <span>All ages, breeds, and temperaments — from puppies to seniors.</span>
             </article>
             <article className="trust-card">
-              <strong>🤝 Session style</strong>
+              <strong>Session style</strong>
               <span>Hands-on, in-environment, and tailored to your goals.</span>
             </article>
           </div>
         </div>
       </section>
 
-      <section className="about-section about-section--soft">
+      <section className="about-section">
         <div className="section-inner">
-          <p className="section-label">✨ Why Gold Standard</p>
-          <h2>🏆 A standard for both dog and handler.</h2>
+          <p className="section-label">Why Gold Standard</p>
+          <h2>A standard for both dog and handler.</h2>
           <div className="philosophy-text">
             <p>
               The name reflects what Warwick holds for every partnership: clear expectations, measured
@@ -82,11 +91,11 @@ export default function AboutPage() {
 
       <section className="about-section">
         <div className="section-inner">
-          <p className="section-label">💡 The philosophy</p>
-          <h2>🌱 Embodied pack fluency — five ideas that guide every session.</h2>
+          <p className="section-label">The philosophy</p>
+          <h2>Embodied pack fluency — five ideas that guide every session.</h2>
           <div className="philosophy-pillars" aria-label="Philosophy at a glance">
             <article className="philosophy-pillar">
-              <h3>🧭 Embodiment</h3>
+              <h3>Embodiment</h3>
               <p>
                 You are the signal source. Posture, breath, tension, and follow-through must congrue — see{' '}
                 <Link to={guideHref('dog-tantra')}>Dog-Tantra</Link>,{' '}
@@ -95,7 +104,7 @@ export default function AboutPage() {
               </p>
             </article>
             <article className="philosophy-pillar">
-              <h3>🛡️ Presence over devices</h3>
+              <h3>Presence over devices</h3>
               <p>
                 No prongs, harsh chokes, vibration collars, or remote correction. Authority stays in the
                 relationship, where it can be timed, calibrated, and released — see{' '}
@@ -103,7 +112,7 @@ export default function AboutPage() {
               </p>
             </article>
             <article className="philosophy-pillar">
-              <h3>⬇️ Measured physical grammar</h3>
+              <h3>Measured physical grammar</h3>
               <p>
                 Leash, voice, touch — downward pressure and instant slack. The down pull makes the dog heavy,
                 ends the lean-on-the-line trick, and protects the throat — governed by{' '}
@@ -111,7 +120,7 @@ export default function AboutPage() {
               </p>
             </article>
             <article className="philosophy-pillar">
-              <h3>🧠 The internal journey</h3>
+              <h3>The internal journey</h3>
               <p>
                 Becoming the healthy master is individual evolution: baseline shift, pack presence, and the
                 confidence to hold structure without shushing or negotiating — see{' '}
@@ -119,7 +128,7 @@ export default function AboutPage() {
               </p>
             </article>
             <article className="philosophy-pillar">
-              <h3>🐕 Ethological integration</h3>
+              <h3>Ethological integration</h3>
               <p>
                 Reading body language, posturing, and social friction; shaping access and rank within the pack
                 grammar — not fighting the dog kingdom, but fluently joining it — see{' '}
@@ -132,8 +141,8 @@ export default function AboutPage() {
 
       <section className="about-section about-section--soft">
         <div className="section-inner">
-          <p className="section-label">🌀 Dog-Tantra</p>
-          <h2>⚡ The shared flow state.</h2>
+          <p className="section-label">Dog-Tantra</p>
+          <h2>The shared flow state.</h2>
           <div className="philosophy-text">
             <p>
               To achieve true embodiment, we work with what Warwick calls <strong>Dog-Tantra</strong>. Think of it
@@ -193,8 +202,8 @@ export default function AboutPage() {
 
       <section className="approach">
         <div className="section-inner">
-          <p className="section-label">🧭 How it works</p>
-          <h2>🎯 How sessions work</h2>
+          <p className="section-label">How it works</p>
+          <h2>How sessions work</h2>
           <div className="approach-body approach-body--linear">
             <p>
               When a dog understands its place in the relationship, it is a safer, happier, and more relaxed
@@ -215,7 +224,7 @@ export default function AboutPage() {
               &ldquo;Both pet and owner&apos;s needs are met — and stress is reduced.&rdquo;
             </blockquote>
             <p className="approach-tagline">
-              🏆 Results-focused · 🤝 Individualised care
+              Results-focused · Individualised care
             </p>
           </div>
         </div>
@@ -223,32 +232,32 @@ export default function AboutPage() {
 
       <section className="about-section">
         <div className="section-inner">
-          <p className="section-label">📋 What to expect</p>
-          <h2>📋 Clear structure for both dog and owner.</h2>
+          <p className="section-label">What to expect</p>
+          <h2>Clear structure for both dog and owner.</h2>
           <p className="about-expect-intro">
             Sessions coach you as much as your dog — timing, correction, reward, and calm leadership in the
             environments where behaviour matters most.
           </p>
           <div className="about-expect-grid">
             <div className="outcomes">
-              <h3>📚 What you will learn</h3>
+              <h3>What you will learn</h3>
               <ul>
-                <li>✅ How to correct effectively — and when not to</li>
-                <li>🎯 How to reward the right behaviour at the right moment</li>
-                <li>⚡ How to embody calm authority — energy, stance, and follow-through</li>
-                <li>👀 How to read your dog before it reacts</li>
-                <li>🦮 How to use the leash as conversation, not constant tension</li>
-                <li>🔄 How to maintain the results yourself, every day</li>
-                <li>💪 Confidence handling difficult moments in real environments</li>
+                <li>How to correct effectively — and when not to</li>
+                <li>How to reward the right behaviour at the right moment</li>
+                <li>How to embody calm authority — energy, stance, and follow-through</li>
+                <li>How to read your dog before it reacts</li>
+                <li>How to use the leash as conversation, not constant tension</li>
+                <li>How to maintain the results yourself, every day</li>
+                <li>Confidence handling difficult moments in real environments</li>
               </ul>
             </div>
             <div className="outcomes">
-              <h3>🐕 What your dog can achieve</h3>
+              <h3>What your dog can achieve</h3>
               <ul>
-                <li>📣 Consistent recall and slack-leash walking</li>
-                <li>🛑 Impulse control and calmer responses to triggers</li>
-                <li>🤝 Healthier social habits with other dogs</li>
-                <li>😌 Calm, trusting behaviour at home and out in the world</li>
+                <li>Consistent recall and slack-leash walking</li>
+                <li>Impulse control and calmer responses to triggers</li>
+                <li>Healthier social habits with other dogs</li>
+                <li>Calm, trusting behaviour at home and out in the world</li>
               </ul>
             </div>
           </div>
@@ -270,8 +279,8 @@ export default function AboutPage() {
 
       <section className="contact">
         <div className="section-inner">
-          <p className="section-label">🚀 Get started</p>
-          <h2>🐾 Tell us about your dog.</h2>
+          <p className="section-label">Get started</p>
+          <h2>Tell us about your dog.</h2>
           <p className="about-location-line">
             Based in Takaka, Golden Bay — sessions across the Tasman region.{' '}
             <Link to="/book">Book a session</Link>
@@ -295,15 +304,15 @@ export default function AboutPage() {
 
       <section className="about-section about-section--soft" id="pricing">
         <div className="section-inner">
-          <p className="section-label">📍 Sessions &amp; pricing</p>
-          <h2>💰 Session rates &amp; locations.</h2>
+          <p className="section-label">Sessions &amp; pricing</p>
+          <h2>Session rates &amp; locations.</h2>
           <p className="about-expect-intro">
             First conversation is always free. Session rates depend on where we meet and what your dog needs —
             here is what to expect.
           </p>
           <div className="pricing-grid">
             <article className="pricing-block">
-              <h3>🏖️ Golden Bay</h3>
+              <h3>Golden Bay</h3>
               <p>
                 <strong>Beach / reserve</strong> — {STANDARD_PRICING_NOTE}
               </p>
@@ -312,7 +321,7 @@ export default function AboutPage() {
               </p>
             </article>
             <article className="pricing-block">
-              <h3>📍 Nelson Bays &amp; other locations</h3>
+              <h3>Nelson Bays &amp; other locations</h3>
               <p>{NELSON_STANDARD_COMING_SOON_NOTE}</p>
               <p>{NELSON_PRICING_ENQUIRY_NOTE}</p>
             </article>
