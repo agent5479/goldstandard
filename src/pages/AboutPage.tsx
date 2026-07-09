@@ -168,13 +168,13 @@ export default function AboutPage() {
       <section className="about-section about-section--soft">
         <div className="section-inner">
           <p className="section-label">Dog-Tantra</p>
-          <h2>Pack sensitivity — likened to tantra.</h2>
+          <h2>Pack sensitivity and embodied leadership.</h2>
           <div className="philosophy-text">
             <p>
               Warwick uses <strong>Dog-Tantra</strong> as shorthand for a practical skill: <strong>pack sensitivity</strong>.
-              It is likened to tantra in the sense that it is about sensitivity and alignment — not mysticism. You shift
-              awareness out of the analytical, worrying human mind and into a calmer, embodied baseline so your posture,
-              breath, and follow-through are congruent.
+              You can think of it as something he <em>likens to tantra</em> — in the sense that it is about sensitivity
+              and alignment, not mysticism. You shift awareness out of the analytical, worrying human mind and into a
+              calmer, embodied baseline so your posture, breath, and follow-through are congruent.
             </p>
             <p>
               Dogs read that baseline first. When you become a stable somatic anchor, the dog synchronises into your
