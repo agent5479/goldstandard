@@ -164,7 +164,7 @@ export default function SectionOwnerMindset() {
           </li>
           <li>
             Expect the dog to manage itself. Correct when the standard breaks — including at the{' '}
-            <em>precursor</em> (stiffening, fixation, the first bark) inside the{' '}
+            <em>precursor</em> (stiffening, fixation, lip lick, wag that stops, the first bark) inside the{' '}
             <a href="#timing">one-second window</a>, not only after a full reaction
           </li>
           <li>Your energy says more than any command. Calm, certain expectation is the message</li>

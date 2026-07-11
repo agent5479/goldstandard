@@ -39,12 +39,12 @@ export default function SectionReadyStance() {
 
       <p>The handler's ready stance is half the picture. Your dog has one too — and you should be reading it continuously on outings, especially around triggers and other dogs.</p>
 
-      <p>A dog in a healthy cooperative state carries weight evenly; the body is loose enough to yield. When arousal builds, watch for his <strong>ready stance</strong> loading — stiffening, locking eyes, braced hindquarters, or a stiff spine. That is the precursor window: fixation, a lunge, or a push into social space before the full behaviour lands. That is the dog's version of a ready stance — not calm neutrality.</p>
+      <p>A dog in a healthy cooperative state carries weight evenly; the body is loose enough to yield. When arousal builds, watch for his <strong>ready stance</strong> loading — stiffening, locking eyes, braced hindquarters, or a stiff spine. It is not only the back legs: a sudden lip lick, or a wagging tail that goes still, can be the same precursor window. That window is fixation, a lunge, or a push into social space before the full behaviour lands. That is the dog's version of a ready stance — not calm neutrality.</p>
 
       <p>When you catch that precursor, break focus with a <a href="#butt-push">butt push</a> or <a href="#leash-jerk">downward leash jerk</a> inside the <a href="#timing">one-second window</a> — see Timing for the reflex checklist and Dog language for calibration.</p>
 
       <ul className="checklist">
-        <li>Peripheral awareness on walks — catch stiffening, locked eyes, and braced rear legs before the lunge</li>
+        <li>Peripheral awareness on walks — catch stiffening, locked eyes, braced rear legs, lip lick, or a wag that stops, before the lunge</li>
         <li>Butt push or downward jerk at the precursor; hips turned, head follows — don't hover afterward</li>
         <li>Handler verbal is for your body first; the dog reads certainty, not comfort-talk</li>
       </ul>

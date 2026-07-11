@@ -40,7 +40,7 @@ const ALIASES: { terms: string[]; anchor: string }[] = [
   { terms: ['weighted anchor', 'heavy gut', 'lower core anchor', 'gut weight'], anchor: 'dog-tantra-lower-core' },
   { terms: ['occiput', 'aware lookout', 'back of skull', 'primitive brain awareness'], anchor: 'dog-tantra-occiput' },
   { terms: ['somatic reading', 'feel before bark', 'field matching', 'somatic field'], anchor: 'dog-tantra-reading' },
-  { terms: ['dog ready stance', 'hindquarters', 'back legs', 'stiffening', 'locking eyes', 'braced rear', 'precursor', 'hips push', 'im not worried', "i'm not worried"], anchor: 'dog-ready-stance' },
+  { terms: ['dog ready stance', 'hindquarters', 'back legs', 'stiffening', 'locking eyes', 'braced rear', 'lip lick', 'lip licking', 'tail stops wagging', 'wag stops', 'precursor', 'hips push', 'im not worried', "i'm not worried"], anchor: 'dog-ready-stance' },
   { terms: ['reading dog', 'learning edge', 'looks worse', 'cognitive overload', 'forgets commands'], anchor: 'reading-dog' },
   { terms: ['3 second pause', 'three second pause', 'three-second pause', 'micro-signals', 'before petting', 'sigh', 'decompression sigh'], anchor: 'three-second-pause' },
   { terms: ['touch saturation', 'consent test', 'two hand rule', '5 second test', 'five second test', 'over-handling', 'overhandling', 'tolerating petting', 'am i touching for me', 'petting consent'], anchor: 'touch-saturation' },

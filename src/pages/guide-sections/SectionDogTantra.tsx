@@ -84,7 +84,7 @@ export default function SectionDogTantra() {
         </p>
 
         <ul className="checklist">
-          <li>Peripheral awareness catches precursors — stiffening, eye-lock — before the lunge</li>
+          <li>Peripheral awareness catches precursors — stiffening, eye-lock, lip lick, wag that stops — before the lunge</li>
           <li>Forward predator stare invites fixation; open occiput awareness invites check-in</li>
           <li>Pair with <a href="#ready-stance">ready stance</a> — body forward, attention wide</li>
         </ul>
