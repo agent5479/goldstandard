@@ -106,6 +106,7 @@ export default function SiteHeader() {
         </li>
         <li className="nav-cta"><Link to="/book" onClick={close}>Book</Link></li>
         <li><Link to="/contact" onClick={close}>Contact</Link></li>
+        <li className="nav-highlight"><Link to="/intelligence" onClick={close}>Breed Analysis</Link></li>
         <li className="nav-highlight"><Link to="/guide" onClick={close}>Client Guide</Link></li>
         <li className="nav-staff">
           <a
