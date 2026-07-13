@@ -12,7 +12,7 @@ interface PersonalityResultViewProps {
 }
 
 export default function PersonalityResultView({ result, onRestart }: PersonalityResultViewProps) {
-  const { archetype, breeds, category, spiritBreed, closeMatches } = result;
+  const { archetype, breeds, category, spiritBreed, spiritReading, closeMatches } = result;
   const resultRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -47,6 +47,34 @@ export default function PersonalityResultView({ result, onRestart }: Personality
             ))}
           </ul>
         ) : null}
+      </section>
+
+      <section className="quiz-spirit-reading" aria-labelledby="spirit-reading-heading">
+        <p className="quiz-spirit-reading-label" id="spirit-reading-heading">
+          Your spirit chart
+        </p>
+        <h3 className="quiz-spirit-reading-epithet">{spiritReading.epithet}</h3>
+        <p className="quiz-spirit-reading-for">{spiritBreed.breed.name}</p>
+
+        <div className="quiz-spirit-reading-sections">
+          {spiritReading.sections.map((section) => (
+            <article
+              key={section.id}
+              className={`quiz-spirit-reading-card${
+                section.id === 'chart-highlights' ? ' quiz-spirit-reading-card--highlights' : ''
+              }`}
+            >
+              <h4 className="quiz-spirit-reading-card-title">{section.title}</h4>
+              <div className="quiz-spirit-reading-card-body">
+                {section.body.split('\n').map((paragraph, index) => (
+                  <p key={`${section.id}-${index}`}>{paragraph}</p>
+                ))}
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <blockquote className="quiz-spirit-reading-closing">{spiritReading.closing}</blockquote>
       </section>
 
       {closeMatches.length > 0 ? (

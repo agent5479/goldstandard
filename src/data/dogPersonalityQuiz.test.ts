@@ -94,6 +94,9 @@ describe('resolvePersonalityResult', () => {
     expect(result.breeds.every((b) => b.category === 'clingy')).toBe(true);
     expect(result.spiritBreed.breed.category).toBe('clingy');
     expect(result.spiritBreed.matchPercent).toBeGreaterThan(0);
+    expect(result.spiritReading.breedName).toBe(result.spiritBreed.breed.name);
+    expect(result.spiritReading.sections.length).toBeGreaterThanOrEqual(5);
+    expect(result.spiritReading.epithet.length).toBeGreaterThan(0);
   });
 
   it('returns a valid category when all weights are zero', () => {

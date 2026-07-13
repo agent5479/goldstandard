@@ -1,4 +1,9 @@
 import { breeds, breedCategories, type Breed, type BreedCategory } from './breeds';
+import {
+  getBreedSpiritReading,
+  personalizeSpiritReading,
+  type BreedSpiritReading,
+} from './breedSpiritReadings';
 import { getBreedClientMixTraitLabel } from './breedTraits';
 import {
   accumulateCategoryWeightsFromAnswers,
@@ -29,6 +34,7 @@ export interface PersonalityResult {
   breeds: Breed[];
   weights: Record<BreedCategory, number>;
   spiritBreed: PersonalityBreedMatch;
+  spiritReading: BreedSpiritReading;
   closeMatches: PersonalityBreedMatch[];
 }
 
@@ -555,6 +561,9 @@ export function resolvePersonalityResult(
   };
 
   const spiritBreed = ranked[0] ?? fallback;
+  const baseReading =
+    getBreedSpiritReading(spiritBreed.breed.name) ??
+    getBreedSpiritReading(fallback.breed.name)!;
 
   return {
     category,
@@ -562,6 +571,10 @@ export function resolvePersonalityResult(
     breeds: categoryBreeds,
     weights,
     spiritBreed,
+    spiritReading: personalizeSpiritReading(baseReading, {
+      highlights: spiritBreed.highlights,
+      archetypeHeadline: archetype.headline,
+    }),
     closeMatches: ranked.slice(1, 4),
   };
 }
