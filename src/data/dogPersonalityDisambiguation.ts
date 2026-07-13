@@ -1,16 +1,43 @@
 import type { BreedCategory } from './breeds';
 import {
+  allocationQuestionAxes,
+  polesFromLegacyOptions,
+  type AllocationQuestion,
+} from './dogPersonalityAllocation';
+import {
   getBreedRankingMargin,
   rankBreedsInCategory,
   varianceOnAxis,
   type HumanTraitProfile,
+  type TraitVectorDelta,
 } from './dogPersonalityTraitMatrix';
-import type { RefinementQuestion } from './dogPersonalityRefinement';
+
+interface LegacyDisambiguationOption {
+  id: string;
+  label: string;
+  sublabel?: string;
+  delta: TraitVectorDelta;
+}
+
+interface LegacyDisambiguationQuestion {
+  id: string;
+  prompt: string;
+  analogySublabel?: string;
+  options: LegacyDisambiguationOption[];
+}
+
+function toAllocationQuestion(question: LegacyDisambiguationQuestion): AllocationQuestion {
+  return {
+    id: question.id,
+    prompt: question.prompt,
+    poles: polesFromLegacyOptions(question.options),
+  };
+}
 
 export const DISAMBIGUATION_MARGIN = 6;
 export const MAX_ADAPTIVE_QUESTIONS = 8;
 
-const DISAMBIGUATION_BANK: Record<BreedCategory, RefinementQuestion[]> = {
+const DISAMBIGUATION_BANK: Record<BreedCategory, LegacyDisambiguationQuestion[]> = {
   clingy: [
     {
       id: 'dis_clingy_team',
@@ -444,29 +471,20 @@ const DISAMBIGUATION_BANK: Record<BreedCategory, RefinementQuestion[]> = {
   ],
 };
 
-export function getDisambiguationBank(category: BreedCategory): RefinementQuestion[] {
-  return DISAMBIGUATION_BANK[category] ?? [];
+export function getDisambiguationBank(category: BreedCategory): AllocationQuestion[] {
+  return (DISAMBIGUATION_BANK[category] ?? []).map(toAllocationQuestion);
 }
 
 export function getDisambiguationQuestionById(
   category: BreedCategory,
   id: string
-): RefinementQuestion | undefined {
-  return getDisambiguationBank(category).find((q) => q.id === id);
+): AllocationQuestion | undefined {
+  const legacy = DISAMBIGUATION_BANK[category]?.find((q) => q.id === id);
+  return legacy ? toAllocationQuestion(legacy) : undefined;
 }
 
 export function getAllDisambiguationCategories(): BreedCategory[] {
   return Object.keys(DISAMBIGUATION_BANK) as BreedCategory[];
-}
-
-function questionAxes(question: RefinementQuestion): (keyof import('./dogPersonalityTraitMatrix').TraitVector)[] {
-  const axes = new Set<keyof import('./dogPersonalityTraitMatrix').TraitVector>();
-  for (const opt of question.options) {
-    for (const key of Object.keys(opt.delta) as (keyof import('./dogPersonalityTraitMatrix').TraitVector)[]) {
-      axes.add(key);
-    }
-  }
-  return [...axes];
 }
 
 export function planAdaptiveQuestion(
@@ -474,7 +492,7 @@ export function planAdaptiveQuestion(
   profile: HumanTraitProfile,
   answeredIds: Set<string>,
   adaptiveCount: number
-): RefinementQuestion | null {
+): AllocationQuestion | null {
   if (adaptiveCount >= MAX_ADAPTIVE_QUESTIONS) return null;
 
   const margin = getBreedRankingMargin(category, profile);
@@ -484,11 +502,11 @@ export function planAdaptiveQuestion(
   const bank = getDisambiguationBank(category).filter((q) => !answeredIds.has(q.id));
   if (bank.length === 0) return null;
 
-  let best: RefinementQuestion | null = null;
+  let best: AllocationQuestion | null = null;
   let bestScore = -1;
 
   for (const question of bank) {
-    const axes = questionAxes(question);
+    const axes = allocationQuestionAxes(question);
     let splitScore = 0;
     for (const axis of axes) {
       splitScore += varianceOnAxis(topBreeds, axis);

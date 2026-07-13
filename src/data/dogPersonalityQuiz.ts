@@ -1,32 +1,20 @@
 import { breeds, breedCategories, type Breed, type BreedCategory } from './breeds';
 import { getBreedClientMixTraitLabel } from './breedTraits';
 import {
-  buildHumanProfile,
-  PERSONALITY_BASE_REFINEMENT_TOTAL,
-  PERSONALITY_REFINEMENT_START_ID,
+  accumulateCategoryWeightsFromAnswers,
+  buildHumanProfileFromAllocations,
+  type AllocationQuestion,
+} from './dogPersonalityAllocation';
+import { MAX_ADAPTIVE_QUESTIONS } from './dogPersonalityDisambiguation';
+import { getAdaptiveAllocationQuestions } from './dogPersonalityRefinement';
+import {
   rankBreedsInCategory,
   type PersonalityBreedMatch,
-} from './dogPersonalityRefinement';
-import { MAX_ADAPTIVE_QUESTIONS } from './dogPersonalityDisambiguation';
+} from './dogPersonalityTraitMatrix';
 
 export type { PersonalityBreedMatch };
 
-export const PERSONALITY_START_ID = 'q_start';
-export const PERSONALITY_REFINE_SENTINEL = 'REFINE' as const;
-
-export interface PersonalityOption {
-  id: string;
-  label: string;
-  sublabel?: string;
-  next: string | typeof PERSONALITY_REFINE_SENTINEL;
-  weights: Partial<Record<BreedCategory, number>>;
-}
-
-export interface PersonalityQuestion {
-  id: string;
-  prompt: string;
-  options: PersonalityOption[];
-}
+export const PERSONALITY_ALLOCATION_TOTAL = 12;
 
 export interface PersonalityArchetype {
   category: BreedCategory;
@@ -103,395 +91,308 @@ export const PERSONALITY_ARCHETYPES: Record<BreedCategory, PersonalityArchetype>
   },
 };
 
-export const PERSONALITY_QUESTIONS: Record<string, PersonalityQuestion> = {
-  q_start: {
-    id: 'q_start',
-    prompt: 'Your default energy level on a normal Tuesday is…',
-    options: [
+export const PERSONALITY_ALLOCATION_QUESTIONS: AllocationQuestion[] = [
+  {
+    id: 'alloc_energy',
+    prompt: 'Your default energy level on a normal Tuesday is closest to…',
+    poles: [
       {
-        id: 'start_couch',
-        label: 'Recharge mode — conserve, observe, nap strategically',
-        next: 'q_low_energy',
-        weights: W({ sighthound: 2, small: 1, guardian: 1 }),
+        id: 'energy_recharge',
+        label: 'Recharge mode — conserve, observe, rest strategically',
+        categoryWeights: W({ sighthound: 3, small: 2, guardian: 2 }),
+        traitDelta: { work: 3, inst: 3 },
       },
       {
-        id: 'start_steady',
+        id: 'energy_steady',
         label: 'Steady and reliable — I show up the same way most days',
-        next: 'q_steady',
-        weights: W({ clingy: 1, herding: 1, guardian: 1 }),
+        categoryWeights: W({ clingy: 2, herding: 2, guardian: 2 }),
+        traitDelta: { work: 6, inst: 5 },
       },
       {
-        id: 'start_high',
+        id: 'energy_high',
         label: 'High octane — I need outlets or I get restless',
-        next: 'q_high_energy',
-        weights: W({ terrier: 2, herding: 1, spitz: 1 }),
+        categoryWeights: W({ terrier: 3, herding: 2, spitz: 2 }),
+        traitDelta: { work: 9, inst: 8 },
       },
       {
-        id: 'start_adaptive',
+        id: 'energy_adaptive',
         label: 'Depends who is in the room — I read the vibe first',
-        next: 'q_social_read',
-        weights: W({ clingy: 1, guardian: 1, herding: 1 }),
+        categoryWeights: W({ clingy: 2, guardian: 2, herding: 2 }),
+        traitDelta: { adapt: 6, ei: 6 },
       },
     ],
   },
-
-  q_low_energy: {
-    id: 'q_low_energy',
-    prompt: 'Low-energy you still has preferences. Which fits best?',
-    options: [
-      {
-        id: 'low_sprint',
-        label: 'Short bursts of speed, then back to the blanket',
-        sublabel: 'Greyhound energy in human form',
-        next: 'q_movement',
-        weights: W({ sighthound: 3 }),
-      },
-      {
-        id: 'low_snuggle',
-        label: 'Snuggle first — movement is negotiable',
-        next: 'q_attachment',
-        weights: W({ clingy: 2, small: 2 }),
-      },
-      {
-        id: 'low_guard',
-        label: 'I hold the fort — quiet, watchful, loyal',
-        next: 'q_guard_style',
-        weights: W({ guardian: 2, giant: 2 }),
-      },
-    ],
-  },
-
-  q_steady: {
-    id: 'q_steady',
-    prompt: 'Your steady rhythm looks most like…',
-    options: [
-      {
-        id: 'steady_routine',
-        label: 'Routine and teamwork — I like knowing the plan',
-        next: 'q_work_style',
-        weights: W({ herding: 2, clingy: 2 }),
-      },
-      {
-        id: 'steady_purpose',
-        label: 'Work with a point — give me a reason and I deliver',
-        next: 'q_nose_or_job',
-        weights: W({ terrier: 2, scenthound: 2 }),
-      },
-      {
-        id: 'steady_solo',
-        label: 'Independent projects — I do my best work alone',
-        next: 'q_independence',
-        weights: W({ spitz: 2, giant: 1, sighthound: 1 }),
-      },
-    ],
-  },
-
-  q_high_energy: {
-    id: 'q_high_energy',
-    prompt: 'When your energy spikes, you usually…',
-    options: [
-      {
-        id: 'high_sport',
-        label: 'Go hard — sport, hike, run, compete',
-        next: 'q_outdoors',
-        weights: W({ terrier: 2, herding: 2, spitz: 1 }),
-      },
-      {
-        id: 'high_chaos',
-        label: 'Stir the pot — chaos is entertaining',
-        next: 'q_vocal',
-        weights: W({ terrier: 3, spitz: 1 }),
-      },
-      {
-        id: 'high_focus',
-        label: 'Lock onto one thing until it is solved',
-        next: 'q_nose_or_job',
-        weights: W({ scenthound: 2, herding: 2, terrier: 1 }),
-      },
-    ],
-  },
-
-  q_social_read: {
-    id: 'q_social_read',
+  {
+    id: 'alloc_social',
     prompt: 'At a gathering, your first move is…',
-    options: [
+    poles: [
       {
         id: 'social_greet',
         label: 'Find my people and check in with everyone',
-        next: 'q_attachment',
-        weights: W({ clingy: 3 }),
+        categoryWeights: W({ clingy: 4 }),
+        traitDelta: { ei: 9, companion: 8 },
       },
       {
         id: 'social_scan',
-        label: 'Scan for threats, exits, and who is in charge',
-        next: 'q_guard_style',
-        weights: W({ guardian: 3, giant: 1 }),
+        label: 'Scan for who is in charge, exits, and anything off',
+        categoryWeights: W({ guardian: 4, giant: 2 }),
+        traitDelta: { prot: 8, guard: 7 },
       },
       {
         id: 'social_periphery',
         label: 'Lurk at the edge until something interesting happens',
-        next: 'q_movement',
-        weights: W({ sighthound: 2, scenthound: 1, herding: 1 }),
+        categoryWeights: W({ sighthound: 3, scenthound: 2, herding: 2 }),
+        traitDelta: { adapt: 7, chase: 5 },
       },
     ],
   },
-
-  q_attachment: {
-    id: 'q_attachment',
+  {
+    id: 'alloc_attachment',
     prompt: 'How attached do you get to your favourite people?',
-    options: [
+    poles: [
       {
         id: 'attach_velcro',
-        label: 'Velcro — where you go, I go',
-        next: 'q_vocal',
-        weights: W({ clingy: 3, small: 1 }),
+        label: 'Where you go, I go',
+        categoryWeights: W({ clingy: 4, small: 2 }),
+        traitDelta: { ei: 9, companion: 8 },
       },
       {
         id: 'attach_warm',
-        label: 'Warm but I need my own space too',
-        next: 'q_independence',
-        weights: W({ sighthound: 2, spitz: 1, guardian: 1 }),
+        label: 'Warm, but I need my own space too',
+        categoryWeights: W({ sighthound: 3, spitz: 2, guardian: 2 }),
+        traitDelta: { ei: 5, adapt: 6 },
       },
       {
         id: 'attach_selective',
-        label: 'Selective — inner circle only, everyone else can wait',
-        next: 'q_size_vibe',
-        weights: W({ guardian: 2, giant: 2, spitz: 1 }),
+        label: 'Inner circle only — everyone else can wait',
+        categoryWeights: W({ guardian: 3, giant: 3, spitz: 2 }),
+        traitDelta: { ei: 3, adapt: 8 },
       },
     ],
   },
-
-  q_movement: {
-    id: 'q_movement',
-    prompt: 'Something zooms past you at speed. You…',
-    options: [
-      {
-        id: 'move_chase',
-        label: 'Launch — instinct takes over',
-        next: 'q_outdoors',
-        weights: W({ sighthound: 3, terrier: 1, herding: 1 }),
-      },
-      {
-        id: 'move_track',
-        label: 'Track it with your eyes and plan an intercept',
-        next: 'q_work_style',
-        weights: W({ herding: 3 }),
-      },
-      {
-        id: 'move_watch',
-        label: 'Note it, maybe stretch, probably stay put',
-        next: 'q_size_vibe',
-        weights: W({ sighthound: 2, guardian: 1, small: 1 }),
-      },
-    ],
-  },
-
-  q_guard_style: {
-    id: 'q_guard_style',
-    prompt: 'Someone unfamiliar approaches your home. You…',
-    options: [
-      {
-        id: 'guard_alert',
-        label: 'Alert the household — better safe than sorry',
-        next: 'q_vocal',
-        weights: W({ guardian: 3, spitz: 1 }),
-      },
-      {
-        id: 'guard_size',
-        label: 'Let my presence do the talking — I do not need to shout',
-        next: 'q_size_vibe',
-        weights: W({ giant: 3, guardian: 2 }),
-      },
-      {
-        id: 'guard_welcome',
-        label: 'Welcome them — strangers are friends you have not met',
-        next: 'q_final',
-        weights: W({ clingy: 2, small: 1 }),
-      },
-    ],
-  },
-
-  q_nose_or_job: {
-    id: 'q_nose_or_job',
+  {
+    id: 'alloc_drive',
     prompt: 'You are more driven by…',
-    options: [
+    poles: [
       {
-        id: 'drive_scent',
+        id: 'drive_trail',
         label: 'Following a trail — curiosity pulls me along',
-        next: 'q_vocal',
-        weights: W({ scenthound: 3 }),
+        categoryWeights: W({ scenthound: 4 }),
+        traitDelta: { scent: 9, chase: 3 },
       },
       {
         id: 'drive_job',
         label: 'Finishing the job — puzzles, tasks, problems',
-        next: 'q_work_style',
-        weights: W({ terrier: 2, herding: 2 }),
+        categoryWeights: W({ terrier: 3, herding: 3 }),
+        traitDelta: { iq: 8, work: 8 },
       },
       {
         id: 'drive_both',
-        label: 'A bit of both — sniff around, then commit',
-        next: 'q_outdoors',
-        weights: W({ scenthound: 1, terrier: 1, herding: 1 }),
+        label: 'A bit of both — explore, then commit',
+        categoryWeights: W({ scenthound: 2, terrier: 2, herding: 2 }),
+        traitDelta: { scent: 6, work: 6 },
       },
     ],
   },
-
-  q_independence: {
-    id: 'q_independence',
+  {
+    id: 'alloc_independence',
     prompt: 'Independence for you means…',
-    options: [
+    poles: [
       {
         id: 'indep_vocal',
         label: 'I say what I think — take it or leave it',
-        next: 'q_vocal',
-        weights: W({ spitz: 3, terrier: 1 }),
+        categoryWeights: W({ spitz: 4, terrier: 2 }),
+        traitDelta: { vocal: 8, dom: 7 },
       },
       {
         id: 'indep_aloof',
-        label: 'Polite distance — I am friendly on my terms',
-        next: 'q_size_vibe',
-        weights: W({ sighthound: 2, giant: 1, guardian: 1 }),
+        label: 'Polite distance — friendly on my terms',
+        categoryWeights: W({ sighthound: 3, giant: 2, guardian: 2 }),
+        traitDelta: { ei: 4, adapt: 7 },
       },
       {
         id: 'indep_endure',
         label: 'I can handle a long day alone if the deal is fair',
-        next: 'q_size_vibe',
-        weights: W({ spitz: 2, giant: 2, guardian: 1 }),
+        categoryWeights: W({ spitz: 3, giant: 3, guardian: 2 }),
+        traitDelta: { adapt: 8, companion: 3 },
       },
     ],
   },
-
-  q_work_style: {
-    id: 'q_work_style',
+  {
+    id: 'alloc_work',
     prompt: 'Your ideal kind of work looks like…',
-    options: [
+    poles: [
       {
         id: 'work_team',
         label: 'Team coordination — everyone in their lane',
-        next: 'q_final',
-        weights: W({ herding: 3, clingy: 1 }),
+        categoryWeights: W({ herding: 4, clingy: 2 }),
+        traitDelta: { herding_eye: 8, dom: 6 },
       },
       {
         id: 'work_solo',
         label: 'Solo mission with a clear reward at the end',
-        next: 'q_final',
-        weights: W({ terrier: 2, scenthound: 2 }),
+        categoryWeights: W({ terrier: 3, scenthound: 3 }),
+        traitDelta: { iq: 7, adapt: 6 },
       },
       {
         id: 'work_boss',
         label: 'I am the project manager — others adapt to me',
-        next: 'q_final',
-        weights: W({ spitz: 2, small: 2, giant: 1 }),
+        categoryWeights: W({ spitz: 3, small: 3, giant: 2 }),
+        traitDelta: { dom: 8, vocal: 6 },
       },
     ],
   },
-
-  q_outdoors: {
-    id: 'q_outdoors',
-    prompt: 'Your perfect weekend terrain is…',
-    options: [
+  {
+    id: 'alloc_movement',
+    prompt: 'Something zooms past you at speed. You…',
+    poles: [
       {
-        id: 'out_trail',
-        label: 'Open trail — miles, weather, and momentum',
-        next: 'q_final',
-        weights: W({ spitz: 2, terrier: 2, scenthound: 1 }),
+        id: 'move_chase',
+        label: 'Launch — instinct takes over',
+        categoryWeights: W({ sighthound: 4, terrier: 2, herding: 2 }),
+        traitDelta: { chase: 9, inst: 8 },
       },
       {
-        id: 'out_park',
-        label: 'Park or paddock — space to run, then done',
-        next: 'q_final',
-        weights: W({ herding: 2, clingy: 1, terrier: 1 }),
+        id: 'move_track',
+        label: 'Track it and plan an intercept',
+        categoryWeights: W({ herding: 4 }),
+        traitDelta: { herding_eye: 9, chase: 6 },
       },
       {
-        id: 'out_balcony',
-        label: 'Balcony counts — short outing, long lounge',
-        next: 'q_final',
-        weights: W({ sighthound: 2, small: 2 }),
+        id: 'move_watch',
+        label: 'Note it, maybe stretch, probably stay put',
+        categoryWeights: W({ sighthound: 3, guardian: 2, small: 2 }),
+        traitDelta: { work: 3, chase: 3 },
       },
     ],
   },
-
-  q_vocal: {
-    id: 'q_vocal',
+  {
+    id: 'alloc_communication',
     prompt: 'Your communication style is best described as…',
-    options: [
+    poles: [
       {
-        id: 'vocal_opinion',
-        label: 'Opinionated broadcaster — I have a podcast in my head',
-        next: 'q_final',
-        weights: W({ spitz: 3, scenthound: 2, small: 1 }),
+        id: 'comm_opinion',
+        label: 'Opinionated — I have a podcast in my head',
+        categoryWeights: W({ spitz: 4, scenthound: 2, small: 2 }),
+        traitDelta: { vocal: 9 },
       },
       {
-        id: 'vocal_brief',
+        id: 'comm_brief',
         label: 'Brief and direct — point made, moving on',
-        next: 'q_final',
-        weights: W({ terrier: 2, herding: 1, guardian: 1 }),
+        categoryWeights: W({ terrier: 3, herding: 2, guardian: 2 }),
+        traitDelta: { vocal: 4 },
       },
       {
-        id: 'vocal_silent',
+        id: 'comm_silent',
         label: 'Strong silent type — presence over chatter',
-        next: 'q_final',
-        weights: W({ giant: 2, sighthound: 2, guardian: 1 }),
+        categoryWeights: W({ giant: 3, sighthound: 3, guardian: 2 }),
+        traitDelta: { vocal: 2 },
       },
     ],
   },
-
-  q_size_vibe: {
-    id: 'q_size_vibe',
-    prompt: 'If you were a dog, your vibe would be…',
-    options: [
+  {
+    id: 'alloc_build',
+    prompt: 'Your physical presence is…',
+    poles: [
       {
-        id: 'size_pocket',
-        label: 'Pocket-sized with main-character energy',
-        next: 'q_final',
-        weights: W({ small: 4 }),
+        id: 'build_compact',
+        label: 'Compact and portable',
+        categoryWeights: W({ small: 4 }),
+        traitDelta: { size: 3 },
       },
       {
-        id: 'size_medium',
-        label: 'Medium athletic — built for daily life',
-        next: 'q_final',
-        weights: W({ clingy: 1, herding: 1, terrier: 1, scenthound: 1 }),
+        id: 'build_medium',
+        label: 'Medium and athletic',
+        categoryWeights: W({ clingy: 1, herding: 1, terrier: 1 }),
+        traitDelta: { size: 6 },
       },
       {
-        id: 'size_mountain',
-        label: 'Mountain — take up space, move deliberately',
-        next: 'q_final',
-        weights: W({ giant: 4, guardian: 1 }),
+        id: 'build_substantial',
+        label: 'Substantial — you take up space',
+        categoryWeights: W({ giant: 4, guardian: 2 }),
+        traitDelta: { size: 9 },
       },
     ],
   },
-
-  q_final: {
-    id: 'q_final',
-    prompt: 'Last one — what do people rely on you for most?',
-    options: [
+  {
+    id: 'alloc_expressiveness',
+    prompt: 'When you have feelings, you…',
+    poles: [
       {
-        id: 'final_loyalty',
+        id: 'express_quiet',
+        label: 'Keep it dignified — presence over noise',
+        categoryWeights: W({ sighthound: 2, giant: 2 }),
+        traitDelta: { vocal: 2 },
+      },
+      {
+        id: 'express_moderate',
+        label: 'Say enough to be understood',
+        categoryWeights: W({ clingy: 1, herding: 1 }),
+        traitDelta: { vocal: 5 },
+      },
+      {
+        id: 'express_vocal',
+        label: 'Make sure the room knows',
+        categoryWeights: W({ spitz: 2, scenthound: 2 }),
+        traitDelta: { vocal: 9 },
+      },
+    ],
+  },
+  {
+    id: 'alloc_curiosity',
+    prompt: 'Your curiosity style is…',
+    poles: [
+      {
+        id: 'curiosity_scent',
+        label: 'Follow the trail — details matter',
+        categoryWeights: W({ scenthound: 3 }),
+        traitDelta: { scent: 9, chase: 3 },
+      },
+      {
+        id: 'curiosity_chase',
+        label: 'Eyes on the moving thing',
+        categoryWeights: W({ sighthound: 3, terrier: 2 }),
+        traitDelta: { chase: 9, scent: 3 },
+      },
+      {
+        id: 'curiosity_people',
+        label: 'People and vibes first',
+        categoryWeights: W({ clingy: 3, small: 2 }),
+        traitDelta: { companion: 9, ei: 8 },
+      },
+    ],
+  },
+  {
+    id: 'alloc_reliance',
+    prompt: 'What do people rely on you for most?',
+    poles: [
+      {
+        id: 'rely_loyalty',
         label: 'Unwavering loyalty and warmth',
-        next: PERSONALITY_REFINE_SENTINEL,
-        weights: W({ clingy: 3 }),
+        categoryWeights: W({ clingy: 4 }),
+        traitDelta: { ei: 9, companion: 8 },
       },
       {
-        id: 'final_calm',
+        id: 'rely_calm',
         label: 'Calm under pressure and good judgment',
-        next: PERSONALITY_REFINE_SENTINEL,
-        weights: W({ guardian: 2, giant: 2, sighthound: 1 }),
+        categoryWeights: W({ guardian: 3, giant: 3, sighthound: 2 }),
+        traitDelta: { neuro: 3, vocal: 3, startle: 3 },
       },
       {
-        id: 'final_drive',
+        id: 'rely_drive',
         label: 'Getting things done when everyone else quit',
-        next: PERSONALITY_REFINE_SENTINEL,
-        weights: W({ terrier: 2, herding: 2, spitz: 1 }),
+        categoryWeights: W({ terrier: 3, herding: 3, spitz: 2 }),
+        traitDelta: { work: 9, iq: 7 },
       },
       {
-        id: 'final_fun',
+        id: 'rely_fun',
         label: 'Making ordinary days feel less ordinary',
-        next: PERSONALITY_REFINE_SENTINEL,
-        weights: W({ small: 2, scenthound: 1, clingy: 1 }),
+        categoryWeights: W({ small: 3, scenthound: 2, clingy: 2 }),
+        traitDelta: { ei: 8, size: 4 },
       },
     ],
   },
-};
+];
 
 const ALL_CATEGORIES: BreedCategory[] = [
   'clingy',
@@ -504,6 +405,10 @@ const ALL_CATEGORIES: BreedCategory[] = [
   'giant',
   'small',
 ];
+
+const ALLOCATION_BY_ID = new Map(
+  PERSONALITY_ALLOCATION_QUESTIONS.map((question) => [question.id, question])
+);
 
 export function emptyCategoryWeights(): Record<BreedCategory, number> {
   return Object.fromEntries(ALL_CATEGORIES.map((c) => [c, 0])) as Record<BreedCategory, number>;
@@ -521,15 +426,12 @@ export function mergeWeights(
   return next;
 }
 
-export function getPersonalityQuestion(id: string): PersonalityQuestion | undefined {
-  return PERSONALITY_QUESTIONS[id];
+export function getAllocationQuestion(id: string): AllocationQuestion | undefined {
+  return ALLOCATION_BY_ID.get(id);
 }
 
-export function getOptionById(
-  question: PersonalityQuestion,
-  optionId: string
-): PersonalityOption | undefined {
-  return question.options.find((o) => o.id === optionId);
+export function getAllocationQuestionByIndex(index: number): AllocationQuestion | undefined {
+  return PERSONALITY_ALLOCATION_QUESTIONS[index];
 }
 
 export function resolvePersonalityCategory(weights: Record<BreedCategory, number>): BreedCategory {
@@ -546,14 +448,40 @@ export function resolvePersonalityCategory(weights: Record<BreedCategory, number
     : (ranked[0]?.category ?? 'clingy');
 }
 
+function allQuestionsForAnswers(answers: Partial<Record<string, number[]>>): AllocationQuestion[] {
+  const linear = PERSONALITY_ALLOCATION_QUESTIONS.filter((q) => answers[q.id]);
+  const adaptiveIds = Object.keys(answers).filter(
+    (id) => !ALLOCATION_BY_ID.has(id) && answers[id]
+  );
+  const adaptive = adaptiveIds
+    .map((id) => getAdaptiveAllocationQuestions().find((q) => q.id === id))
+    .filter((q): q is AllocationQuestion => q !== undefined);
+  return [...linear, ...adaptive];
+}
+
+export function accumulateWeightsFromAnswers(
+  answers: Partial<Record<string, number[]>>
+): Record<BreedCategory, number> {
+  return accumulateCategoryWeightsFromAnswers(
+    answers,
+    allQuestionsForAnswers(answers),
+    mergeWeights,
+    emptyCategoryWeights
+  );
+}
+
+export function buildHumanProfile(answers: Partial<Record<string, number[]>>): import('./dogPersonalityTraitMatrix').HumanTraitProfile {
+  return buildHumanProfileFromAllocations(answers, allQuestionsForAnswers(answers));
+}
+
 export function resolvePersonalityResult(
-  weights: Record<BreedCategory, number>,
-  refinementAnswers: Partial<Record<string, string>> = {}
+  answers: Partial<Record<string, number[]>>
 ): PersonalityResult {
+  const weights = accumulateWeightsFromAnswers(answers);
   const category = resolvePersonalityCategory(weights);
   const archetype = PERSONALITY_ARCHETYPES[category];
   const categoryBreeds = breeds.filter((b) => b.category === category);
-  const profile = buildHumanProfile(refinementAnswers);
+  const profile = buildHumanProfile(answers);
   const ranked = rankBreedsInCategory(category, profile, 5);
 
   const fallback: PersonalityBreedMatch = {
@@ -580,13 +508,11 @@ export function getBreedShowcaseNote(breedName: string): string {
 }
 
 export function getPersonalityEstimatedSteps(): number {
-  return 10 + PERSONALITY_BASE_REFINEMENT_TOTAL + MAX_ADAPTIVE_QUESTIONS;
+  return PERSONALITY_ALLOCATION_TOTAL + MAX_ADAPTIVE_QUESTIONS;
 }
-
-export { PERSONALITY_REFINEMENT_START_ID, PERSONALITY_BASE_REFINEMENT_TOTAL };
-
-export const PERSONALITY_QUESTION_IDS = Object.keys(PERSONALITY_QUESTIONS);
 
 export function getArchetypeCategoryLabel(category: BreedCategory): string {
   return breedCategories[category].label;
 }
+
+export { PERSONALITY_ALLOCATION_TOTAL as PERSONALITY_BASE_REFINEMENT_TOTAL };

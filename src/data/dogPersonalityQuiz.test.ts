@@ -1,115 +1,86 @@
 import { describe, expect, it } from 'vitest';
+import { getDefaultSharesForQuestion } from './dogPersonalityAllocation';
 import {
-  PERSONALITY_QUESTIONS,
-  PERSONALITY_QUESTION_IDS,
-  PERSONALITY_START_ID,
-  PERSONALITY_REFINE_SENTINEL,
-  emptyCategoryWeights,
-  mergeWeights,
+  PERSONALITY_ALLOCATION_QUESTIONS,
+  PERSONALITY_ALLOCATION_TOTAL,
+  accumulateWeightsFromAnswers,
+  buildHumanProfile,
+  resolvePersonalityCategory,
   resolvePersonalityResult,
   getPersonalityEstimatedSteps,
 } from './dogPersonalityQuiz';
 import type { BreedCategory } from './breeds';
 
-type VisitState = 'unvisited' | 'visiting' | 'done';
-
-function collectReachableRefine(startId: string): Set<string> {
-  const results = new Set<string>();
-
-  function walk(id: string, state: Map<string, VisitState>) {
-    if (id === PERSONALITY_REFINE_SENTINEL) {
-      results.add(PERSONALITY_REFINE_SENTINEL);
-      return;
-    }
-    const nodeState = state.get(id);
-    if (nodeState === 'visiting') return;
-    if (nodeState === 'done') return;
-
-    state.set(id, 'visiting');
-    const question = PERSONALITY_QUESTIONS[id];
-    if (!question) return;
-
-    for (const option of question.options) {
-      walk(option.next, state);
-    }
-    state.set(id, 'done');
-  }
-
-  const state = new Map<string, VisitState>();
-  walk(startId, state);
-  return results;
+function maxPoleAnswer(questionId: string, poleIndex: number): Record<string, number[]> {
+  const question = PERSONALITY_ALLOCATION_QUESTIONS.find((q) => q.id === questionId)!;
+  const shares = getDefaultSharesForQuestion(question).map((_, i) => (i === poleIndex ? 100 : 0));
+  return { [questionId]: shares };
 }
 
-function findOrphanNodes(): string[] {
-  const referenced = new Set<string>([PERSONALITY_START_ID]);
-  for (const question of Object.values(PERSONALITY_QUESTIONS)) {
-    for (const option of question.options) {
-      if (option.next !== PERSONALITY_REFINE_SENTINEL) referenced.add(option.next);
-    }
-  }
-  return PERSONALITY_QUESTION_IDS.filter((id) => !referenced.has(id));
-}
+describe('dogPersonalityQuiz allocation', () => {
+  it('defines twelve linear allocation questions', () => {
+    expect(PERSONALITY_ALLOCATION_TOTAL).toBe(12);
+    expect(PERSONALITY_ALLOCATION_QUESTIONS).toHaveLength(12);
+  });
 
-function findDeadEnds(): string[] {
-  const dead: string[] = [];
-  for (const [id, question] of Object.entries(PERSONALITY_QUESTIONS)) {
-    if (question.options.length === 0) dead.push(id);
-    for (const option of question.options) {
-      if (option.next !== PERSONALITY_REFINE_SENTINEL && !PERSONALITY_QUESTIONS[option.next]) {
-        dead.push(`${id} → ${option.next}`);
+  it('every question has at least two poles with scoring data', () => {
+    for (const question of PERSONALITY_ALLOCATION_QUESTIONS) {
+      expect(question.poles.length).toBeGreaterThanOrEqual(2);
+      for (const pole of question.poles) {
+        const hasCategory = Object.keys(pole.categoryWeights).length > 0;
+        const hasTrait = Object.keys(pole.traitDelta).length > 0;
+        expect(hasCategory || hasTrait).toBe(true);
       }
     }
-  }
-  return dead;
-}
-
-describe('dogPersonalityQuiz tree', () => {
-  it('defines exactly 15 question nodes', () => {
-    expect(PERSONALITY_QUESTION_IDS).toHaveLength(15);
   });
 
-  it('has no orphan nodes', () => {
-    expect(findOrphanNodes()).toEqual([]);
+  it('accumulates category weights from slider shares', () => {
+    const answers = {
+      ...maxPoleAnswer('alloc_social', 0),
+      ...maxPoleAnswer('alloc_attachment', 0),
+      ...maxPoleAnswer('alloc_reliance', 0),
+    };
+    const weights = accumulateWeightsFromAnswers(answers);
+    expect(weights.clingy).toBeGreaterThan(weights.terrier);
+    expect(resolvePersonalityCategory(weights)).toBe('clingy');
   });
 
-  it('has no dead-end references', () => {
-    expect(findDeadEnds()).toEqual([]);
-  });
+  it('blends trait profile from proportional shares', () => {
+    const question = PERSONALITY_ALLOCATION_QUESTIONS.find((q) => q.id === 'alloc_build')!;
+    const shares = getDefaultSharesForQuestion(question);
+    const compactIdx = question.poles.findIndex((p) => p.id === 'build_compact');
+    const substantialIdx = question.poles.findIndex((p) => p.id === 'build_substantial');
+    shares[compactIdx] = 50;
+    shares[substantialIdx] = 50;
 
-  it('reaches breed refinement from start on every branch', () => {
-    const results = collectReachableRefine(PERSONALITY_START_ID);
-    expect(results.has(PERSONALITY_REFINE_SENTINEL)).toBe(true);
-  });
-
-  it('every question has at least two options', () => {
-    for (const question of Object.values(PERSONALITY_QUESTIONS)) {
-      expect(question.options.length).toBeGreaterThanOrEqual(2);
-    }
-  });
-
-  it('every option has at least one weight', () => {
-    for (const question of Object.values(PERSONALITY_QUESTIONS)) {
-      for (const option of question.options) {
-        expect(Object.keys(option.weights).length).toBeGreaterThan(0);
-      }
-    }
+    const profile = buildHumanProfile({ alloc_build: shares });
+    expect(profile.size).toBeGreaterThan(5);
+    expect(profile.size).toBeLessThan(8);
   });
 });
 
 describe('resolvePersonalityResult', () => {
-  it('picks clingy when clingy weights dominate', () => {
-    const weights = mergeWeights(emptyCategoryWeights(), { clingy: 10, terrier: 1 });
-    const result = resolvePersonalityResult(weights);
+  it('picks clingy when clingy-weighted answers dominate', () => {
+    const answers: Record<string, number[]> = {};
+    for (const question of PERSONALITY_ALLOCATION_QUESTIONS) {
+      const clingyIdx = question.poles.findIndex((p) => (p.categoryWeights.clingy ?? 0) >= 3);
+      if (clingyIdx >= 0) {
+        answers[question.id] = question.poles.map((_, i) => (i === clingyIdx ? 100 : 0));
+      } else {
+        answers[question.id] = getDefaultSharesForQuestion(question);
+      }
+    }
+
+    const result = resolvePersonalityResult(answers);
     expect(result.category).toBe('clingy');
     expect(result.archetype.headline).toMatch(/Velcro/i);
-    expect(result.breeds.length).toBeGreaterThan(0);
     expect(result.breeds.every((b) => b.category === 'clingy')).toBe(true);
     expect(result.spiritBreed.breed.category).toBe('clingy');
     expect(result.spiritBreed.matchPercent).toBeGreaterThan(0);
   });
 
   it('returns a valid category when all weights are zero', () => {
-    const result = resolvePersonalityResult(emptyCategoryWeights());
+    const result = resolvePersonalityResult({});
     const valid: BreedCategory[] = [
       'clingy',
       'sighthound',
@@ -124,7 +95,7 @@ describe('resolvePersonalityResult', () => {
     expect(valid).toContain(result.category);
   });
 
-  it('estimates up to twenty-five steps including adaptive tie-breakers', () => {
-    expect(getPersonalityEstimatedSteps()).toBe(25);
+  it('estimates linear plus adaptive tie-breaker steps', () => {
+    expect(getPersonalityEstimatedSteps()).toBe(20);
   });
 });

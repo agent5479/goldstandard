@@ -6954,6 +6954,57 @@ a.problem-finder-tertiary {
   line-height: 1.4;
 }
 
+.quiz-linked-sliders {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  margin: 0.5rem 0 0.75rem;
+}
+
+.quiz-linked-slider-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.quiz-linked-slider-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.75rem;
+}
+
+.quiz-linked-slider-label {
+  font-size: 1.02rem;
+  color: var(--forest);
+  line-height: 1.35;
+}
+
+.quiz-linked-slider-value {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--gold);
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+}
+
+.quiz-linked-slider-input {
+  width: 100%;
+  accent-color: var(--gold);
+}
+
+.quiz-linked-slider-input:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.quiz-linked-sliders-hint {
+  font-size: 0.88rem;
+  color: var(--light-text);
+  margin: 0.25rem 0 0;
+  line-height: 1.45;
+}
+
 .dog-personality-result,
 .breed-finder-result {
   scroll-margin-top: calc(var(--site-header-height) + 1rem);

@@ -46,7 +46,7 @@ describe('dogPersonalityDisambiguation', () => {
     const question = planAdaptiveQuestion('clingy', profile, answered, 0);
     if (question) {
       expect(question.id.startsWith('dis_')).toBe(true);
-      expect(question.options.length).toBeGreaterThanOrEqual(2);
+      expect(question.poles.length).toBeGreaterThanOrEqual(2);
     }
   });
 

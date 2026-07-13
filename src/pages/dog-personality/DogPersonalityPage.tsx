@@ -5,92 +5,80 @@ import SiteHeader from '../../components/SiteHeader';
 import SiteFooter from '../../components/SiteFooter';
 import SectionIcon from '../../components/SectionIcon';
 import QuizShell from '../../components/quiz/QuizShell';
+import QuizLinkedSliders from '../../components/quiz/QuizLinkedSliders';
 import PersonalityResultView from './PersonalityResult';
+import { getDefaultSharesForQuestion, type AllocationQuestion } from '../../data/dogPersonalityAllocation';
 import {
-  PERSONALITY_REFINE_SENTINEL,
-  PERSONALITY_START_ID,
-  emptyCategoryWeights,
-  getOptionById,
+  isRefinementSeparated,
+  planAdaptiveQuestion,
+} from '../../data/dogPersonalityDisambiguation';
+import {
+  PERSONALITY_ALLOCATION_QUESTIONS,
+  PERSONALITY_ALLOCATION_TOTAL,
+  accumulateWeightsFromAnswers,
+  buildHumanProfile,
+  getAllocationQuestionByIndex,
   getPersonalityEstimatedSteps,
-  getPersonalityQuestion,
-  mergeWeights,
   resolvePersonalityCategory,
   resolvePersonalityResult,
   type PersonalityResult,
 } from '../../data/dogPersonalityQuiz';
-import {
-  isRefinementSeparated,
-  planAdaptiveQuestion,
-  getDisambiguationQuestionById,
-} from '../../data/dogPersonalityDisambiguation';
-import {
-  PERSONALITY_REFINEMENT_QUESTIONS,
-  buildHumanProfile,
-  getRefinementQuestionById,
-} from '../../data/dogPersonalityRefinement';
-import type { RefinementQuestion } from '../../data/dogPersonalityRefinement';
-
-interface PathEntry {
-  questionId: string;
-  optionId: string;
-}
+import { lookupAllocationQuestion } from '../../data/dogPersonalityRefinement';
 
 type Step =
   | { kind: 'intro' }
   | {
       kind: 'question';
-      questionId: string;
-      path: PathEntry[];
-      stepIndex: number;
-    }
-  | {
-      kind: 'refine';
-      path: PathEntry[];
-      categoryWeights: ReturnType<typeof emptyCategoryWeights>;
-      refineAnswers: Record<string, string>;
+      questionIndex: number;
+      answers: Record<string, number[]>;
       questionHistory: string[];
       adaptiveCount: number;
       stepIndex: number;
     }
   | { kind: 'result'; result: PersonalityResult };
 
-function weightsFromPath(path: PathEntry[]): ReturnType<typeof emptyCategoryWeights> {
-  let weights = emptyCategoryWeights();
-  for (const entry of path) {
-    const question = getPersonalityQuestion(entry.questionId);
-    const option = question ? getOptionById(question, entry.optionId) : undefined;
-    if (option) weights = mergeWeights(weights, option.weights);
-  }
-  return weights;
+function currentQuestionId(step: Extract<Step, { kind: 'question' }>): string | undefined {
+  return step.questionHistory[step.questionHistory.length - 1];
 }
 
-function isBaseRefinementQuestion(id: string): boolean {
-  return PERSONALITY_REFINEMENT_QUESTIONS.some((q) => q.id === id);
-}
-
-function lookupRefinementQuestion(
+function lookupQuestion(
   category: ReturnType<typeof resolvePersonalityCategory>,
   questionId: string
-): RefinementQuestion | undefined {
-  return (
-    getRefinementQuestionById(questionId) ??
-    getDisambiguationQuestionById(category, questionId)
-  );
+): AllocationQuestion | undefined {
+  const linear = PERSONALITY_ALLOCATION_QUESTIONS.find((q) => q.id === questionId);
+  if (linear) return linear;
+  return lookupAllocationQuestion(category, questionId);
 }
 
-function baseRefinementComplete(answers: Record<string, string>): boolean {
-  return PERSONALITY_REFINEMENT_QUESTIONS.every((q) => answers[q.id]);
+function sharesForQuestion(
+  question: AllocationQuestion,
+  answers: Record<string, number[]>
+): number[] {
+  return answers[question.id] ?? getDefaultSharesForQuestion(question);
+}
+
+function linearPhaseComplete(answers: Record<string, number[]>): boolean {
+  return PERSONALITY_ALLOCATION_QUESTIONS.every((q) => answers[q.id]);
 }
 
 export default function DogPersonalityPage() {
   const [step, setStep] = useState<Step>({ kind: 'intro' });
-  const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null);
+  const [sliderValues, setSliderValues] = useState<number[]>([]);
   const introRef = useRef<HTMLDivElement>(null);
   const skipIntroScroll = useRef(true);
 
   const goTo = (next: Step) => {
     setStep(next);
-    setSelectedOptionId(null);
+    if (next.kind === 'question') {
+      const questionId = currentQuestionId(next);
+      if (questionId) {
+        const category = resolvePersonalityCategory(accumulateWeightsFromAnswers(next.answers));
+        const question = lookupQuestion(category, questionId);
+        if (question) {
+          setSliderValues(sharesForQuestion(question, next.answers));
+        }
+      }
+    }
   };
 
   useEffect(() => {
@@ -103,102 +91,74 @@ export default function DogPersonalityPage() {
   }, [step]);
 
   const startQuiz = () => {
+    const firstId = PERSONALITY_ALLOCATION_QUESTIONS[0]!.id;
+    const first = PERSONALITY_ALLOCATION_QUESTIONS[0]!;
     goTo({
       kind: 'question',
-      questionId: PERSONALITY_START_ID,
-      path: [],
+      questionIndex: 0,
+      answers: {},
+      questionHistory: [firstId],
+      adaptiveCount: 0,
       stepIndex: 1,
     });
+    setSliderValues(getDefaultSharesForQuestion(first));
   };
 
-  const handleArchetypeContinue = () => {
+  const handleContinue = () => {
     if (step.kind !== 'question') return;
-    const question = getPersonalityQuestion(step.questionId);
-    if (!question || !selectedOptionId) return;
 
-    const option = getOptionById(question, selectedOptionId);
-    if (!option) return;
+    const questionId = currentQuestionId(step);
+    if (!questionId) return;
 
-    const nextPath: PathEntry[] = [...step.path, { questionId: step.questionId, optionId: selectedOptionId }];
-    const nextWeights = weightsFromPath(nextPath);
-
-    if (option.next === PERSONALITY_REFINE_SENTINEL) {
-      const firstBaseId = PERSONALITY_REFINEMENT_QUESTIONS[0]!.id;
-      goTo({
-        kind: 'refine',
-        path: nextPath,
-        categoryWeights: nextWeights,
-        refineAnswers: {},
-        questionHistory: [firstBaseId],
-        adaptiveCount: 0,
-        stepIndex: step.stepIndex + 1,
-      });
-      return;
-    }
-
-    goTo({
-      kind: 'question',
-      questionId: option.next,
-      path: nextPath,
-      stepIndex: step.stepIndex + 1,
-    });
-  };
-
-  const handleRefineContinue = () => {
-    if (step.kind !== 'refine' || !selectedOptionId) return;
-
-    const currentId = step.questionHistory[step.questionHistory.length - 1];
-    if (!currentId) return;
-
-    const category = resolvePersonalityCategory(step.categoryWeights);
-    const question = lookupRefinementQuestion(category, currentId);
+    const category = resolvePersonalityCategory(accumulateWeightsFromAnswers(step.answers));
+    const question = lookupQuestion(category, questionId);
     if (!question) return;
 
-    const nextAnswers = { ...step.refineAnswers, [question.id]: selectedOptionId };
-    const answeredAdaptive = !isBaseRefinementQuestion(currentId);
+    const nextAnswers = { ...step.answers, [question.id]: [...sliderValues] };
+    const answeredAdaptive = !PERSONALITY_ALLOCATION_QUESTIONS.some((q) => q.id === question.id);
     const adaptiveCount = answeredAdaptive ? step.adaptiveCount + 1 : step.adaptiveCount;
 
-    if (!baseRefinementComplete(nextAnswers)) {
-      const nextBase = PERSONALITY_REFINEMENT_QUESTIONS.find((q) => !nextAnswers[q.id]);
-      if (!nextBase) return;
+    if (!linearPhaseComplete(nextAnswers)) {
+      const nextIndex = step.questionIndex + 1;
+      const nextQuestion = getAllocationQuestionByIndex(nextIndex);
+      if (!nextQuestion) return;
 
       goTo({
-        ...step,
-        refineAnswers: nextAnswers,
-        questionHistory: [...step.questionHistory, nextBase.id],
+        kind: 'question',
+        questionIndex: nextIndex,
+        answers: nextAnswers,
+        questionHistory: [...step.questionHistory, nextQuestion.id],
         adaptiveCount,
         stepIndex: step.stepIndex + 1,
       });
       return;
     }
 
-    if (isRefinementSeparated(category, buildHumanProfile(nextAnswers), adaptiveCount)) {
+    const profile = buildHumanProfile(nextAnswers);
+
+    if (isRefinementSeparated(category, profile, adaptiveCount)) {
       goTo({
         kind: 'result',
-        result: resolvePersonalityResult(step.categoryWeights, nextAnswers),
+        result: resolvePersonalityResult(nextAnswers),
       });
       return;
     }
 
     const answeredIds = new Set(Object.keys(nextAnswers));
-    const nextAdaptive = planAdaptiveQuestion(
-      category,
-      buildHumanProfile(nextAnswers),
-      answeredIds,
-      adaptiveCount
-    );
+    const nextAdaptive = planAdaptiveQuestion(category, profile, answeredIds, adaptiveCount);
 
     if (!nextAdaptive) {
       goTo({
         kind: 'result',
-        result: resolvePersonalityResult(step.categoryWeights, nextAnswers),
+        result: resolvePersonalityResult(nextAnswers),
       });
       return;
     }
 
     goTo({
-      ...step,
-      refineAnswers: nextAnswers,
+      kind: 'question',
+      questionIndex: step.questionIndex,
+      answers: nextAnswers,
       questionHistory: [...step.questionHistory, nextAdaptive.id],
       adaptiveCount,
       stepIndex: step.stepIndex + 1,
@@ -206,46 +166,24 @@ export default function DogPersonalityPage() {
   };
 
   const handleBack = () => {
-    if (step.kind === 'question') {
-      if (step.path.length === 0) return;
-      const priorPath = step.path.slice(0, -1);
-      const returningTo = step.path[step.path.length - 1].questionId;
-      goTo({
-        kind: 'question',
-        questionId: returningTo,
-        path: priorPath,
-        stepIndex: Math.max(1, step.stepIndex - 1),
-      });
-      return;
-    }
+    if (step.kind !== 'question' || step.questionHistory.length <= 1) return;
 
-    if (step.kind === 'refine') {
-      if (step.questionHistory.length <= 1) {
-        const last = step.path[step.path.length - 1];
-        if (!last) return;
-        goTo({
-          kind: 'question',
-          questionId: last.questionId,
-          path: step.path.slice(0, -1),
-          stepIndex: Math.max(1, step.stepIndex - 1),
-        });
-        return;
-      }
+    const removedId = step.questionHistory[step.questionHistory.length - 1]!;
+    const priorHistory = step.questionHistory.slice(0, -1);
+    const priorAnswers = { ...step.answers };
+    delete priorAnswers[removedId];
 
-      const removedId = step.questionHistory[step.questionHistory.length - 1]!;
-      const priorAnswers = { ...step.refineAnswers };
-      delete priorAnswers[removedId];
+    const wasAdaptive = !PERSONALITY_ALLOCATION_QUESTIONS.some((q) => q.id === removedId);
+    const priorIndex = Math.max(0, step.questionIndex - (wasAdaptive ? 0 : 1));
 
-      const wasAdaptive = !isBaseRefinementQuestion(removedId);
-
-      goTo({
-        ...step,
-        questionHistory: step.questionHistory.slice(0, -1),
-        refineAnswers: priorAnswers,
-        adaptiveCount: wasAdaptive ? Math.max(0, step.adaptiveCount - 1) : step.adaptiveCount,
-        stepIndex: Math.max(1, step.stepIndex - 1),
-      });
-    }
+    goTo({
+      kind: 'question',
+      questionIndex: priorIndex,
+      answers: priorAnswers,
+      questionHistory: priorHistory,
+      adaptiveCount: wasAdaptive ? Math.max(0, step.adaptiveCount - 1) : step.adaptiveCount,
+      stepIndex: Math.max(1, step.stepIndex - 1),
+    });
   };
 
   const restart = () => goTo({ kind: 'intro' });
@@ -256,7 +194,7 @@ export default function DogPersonalityPage() {
     <>
       <Seo
         title="What Kind of Dog Are You? | Gold Standard Dog Training"
-        description="A playful branching quiz — discover your dog personality archetype, then narrow to your spirit breed. Free fun tool from Gold Standard Dog Training, Golden Bay & Nelson Bays, NZ."
+        description="A playful personality quiz — slide to allocate how much each trait fits you, discover your dog personality archetype, then narrow to your spirit breed. Free fun tool from Gold Standard Dog Training, Golden Bay & Nelson Bays, NZ."
         path="/dog-personality"
         bodyClass="page-dog-personality"
         iconSet="personality"
@@ -274,8 +212,8 @@ export default function DogPersonalityPage() {
             <h1>What kind of dog are you?</h1>
           </div>
           <p>
-            A branching quiz for fun — answer questions to find your temperament archetype, then narrow to
-            the specific breed that best matches your vibe. Nothing is stored or sent.
+            A playful quiz for fun — answer human questions with linked sliders, find your temperament
+            archetype, then narrow to the breed that best matches your vibe. Nothing is stored or sent.
           </p>
         </div>
       </section>
@@ -284,9 +222,9 @@ export default function DogPersonalityPage() {
         {step.kind === 'intro' && (
           <div className="quiz-intro-card" ref={introRef} tabIndex={-1}>
             <p>
-              Roughly twenty-five questions across two rounds — first your personality type, then refinement
-              (and optional tie-breakers) to land on a specific spirit breed. Real temperament categories
-              from the breed guide, BuzzFeed energy.
+              Twelve slider questions allocate how much each trait fits you — then optional tie-breakers
+              if your spirit breed is still close. Real temperament categories from the breed guide, BuzzFeed
+              energy.
             </p>
             <p>
               Looking for a real breed recommendation instead? Try{' '}
@@ -301,69 +239,44 @@ export default function DogPersonalityPage() {
         )}
 
         {step.kind === 'question' && (() => {
-          const question = getPersonalityQuestion(step.questionId);
-          if (!question) return null;
-          const selected = question.options.find((o) => o.id === selectedOptionId);
-          return (
-            <QuizShell
-              contextLabel="Dog personality quiz"
-              prompt={question.prompt}
-              options={question.options.map((o) => ({
-                id: o.id,
-                label: o.label,
-                sublabel: o.sublabel,
-              }))}
-              selectedId={selectedOptionId}
-              onSelect={setSelectedOptionId}
-              onContinue={handleArchetypeContinue}
-              onBack={step.path.length > 0 ? handleBack : undefined}
-              onRestart={restart}
-              stepIndex={step.stepIndex}
-              estimatedTotal={estimatedTotal}
-              continueLabel={
-                selected?.next === PERSONALITY_REFINE_SENTINEL ? 'Narrow my breed →' : 'Next'
-              }
-            />
-          );
-        })()}
+          const questionId = currentQuestionId(step);
+          if (!questionId) return null;
 
-        {step.kind === 'refine' && (() => {
-          const category = resolvePersonalityCategory(step.categoryWeights);
-          const currentId = step.questionHistory[step.questionHistory.length - 1];
-          const question = currentId ? lookupRefinementQuestion(category, currentId) : undefined;
+          const category = resolvePersonalityCategory(accumulateWeightsFromAnswers(step.answers));
+          const question = lookupQuestion(category, questionId);
           if (!question) return null;
 
-          const existingAnswer = step.refineAnswers[question.id];
-          const effectiveSelected = selectedOptionId ?? existingAnswer ?? null;
-          const inAdaptivePhase = baseRefinementComplete(step.refineAnswers) || !isBaseRefinementQuestion(question.id);
-          const baseRemaining = PERSONALITY_REFINEMENT_QUESTIONS.filter((q) => !step.refineAnswers[q.id]).length;
-          const isLastBase =
-            !inAdaptivePhase && baseRemaining <= 1 && !step.refineAnswers[question.id];
+          const inAdaptivePhase = linearPhaseComplete(step.answers);
+          const linearRemaining =
+            PERSONALITY_ALLOCATION_TOTAL -
+            PERSONALITY_ALLOCATION_QUESTIONS.filter((q) => step.answers[q.id]).length;
+          const isLastLinear =
+            !inAdaptivePhase && linearRemaining <= 1 && !step.answers[question.id];
 
           return (
             <QuizShell
-              contextLabel={inAdaptivePhase ? 'Tie-breaker' : 'Narrow your breed'}
+              mode="sliders"
+              contextLabel={inAdaptivePhase ? 'Tie-breaker' : 'Dog personality quiz'}
               prompt={question.prompt}
-              options={question.options.map((o) => ({
-                id: o.id,
-                label: o.label,
-                sublabel: o.sublabel,
-              }))}
-              selectedId={effectiveSelected}
-              onSelect={setSelectedOptionId}
-              onContinue={handleRefineContinue}
-              onBack={handleBack}
+              onContinue={handleContinue}
+              onBack={step.questionHistory.length > 1 ? handleBack : undefined}
               onRestart={restart}
               stepIndex={step.stepIndex}
               estimatedTotal={estimatedTotal}
               continueLabel={
                 inAdaptivePhase
                   ? 'Next tie-breaker →'
-                  : isLastBase
-                    ? 'Almost there →'
+                  : isLastLinear
+                    ? 'See my result →'
                     : 'Next'
               }
-            />
+            >
+              <QuizLinkedSliders
+                poles={question.poles.map((pole) => ({ id: pole.id, label: pole.label }))}
+                values={sliderValues}
+                onChange={setSliderValues}
+              />
+            </QuizShell>
           );
         })()}
 

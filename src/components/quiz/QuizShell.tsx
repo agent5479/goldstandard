@@ -10,23 +10,26 @@ export interface QuizShellOption {
 interface QuizShellProps {
   contextLabel: string;
   prompt: string;
-  options: QuizShellOption[];
-  selectedId: string | null;
-  onSelect: (id: string) => void;
+  mode?: 'options' | 'sliders';
+  options?: QuizShellOption[];
+  selectedId?: string | null;
+  onSelect?: (id: string) => void;
   onContinue: () => void;
   onBack?: () => void;
   onRestart?: () => void;
   stepIndex: number;
   estimatedTotal: number;
   continueLabel?: string;
+  continueDisabled?: boolean;
   children?: ReactNode;
 }
 
 export default function QuizShell({
   contextLabel,
   prompt,
-  options,
-  selectedId,
+  mode = 'options',
+  options = [],
+  selectedId = null,
   onSelect,
   onContinue,
   onBack,
@@ -34,6 +37,7 @@ export default function QuizShell({
   stepIndex,
   estimatedTotal,
   continueLabel = 'Next',
+  continueDisabled,
   children,
 }: QuizShellProps) {
   const shellRef = useRef<HTMLDivElement>(null);
@@ -59,19 +63,23 @@ export default function QuizShell({
       <div className="exam-question-card">
         <h2 className="exam-question-text">{prompt}</h2>
 
-        <div className="quiz-option-grid" role="group" aria-label="Answer options">
-          {options.map((option) => (
-            <QuizOptionCard
-              key={option.id}
-              label={option.label}
-              sublabel={option.sublabel}
-              selected={selectedId === option.id}
-              onSelect={() => onSelect(option.id)}
-            />
-          ))}
-        </div>
+        {mode === 'options' ? (
+          <div className="quiz-option-grid" role="group" aria-label="Answer options">
+            {options.map((option) => (
+              <QuizOptionCard
+                key={option.id}
+                label={option.label}
+                sublabel={option.sublabel}
+                selected={selectedId === option.id}
+                onSelect={() => onSelect?.(option.id)}
+              />
+            ))}
+          </div>
+        ) : (
+          children
+        )}
 
-        {children}
+        {mode === 'options' ? children : null}
 
         <footer className="exam-quiz-footer">
           <div className="quiz-shell-footer-left">
@@ -86,7 +94,12 @@ export default function QuizShell({
               </button>
             ) : null}
           </div>
-          <button type="button" className="btn btn-primary" disabled={!selectedId} onClick={onContinue}>
+          <button
+            type="button"
+            className="btn btn-primary"
+            disabled={continueDisabled ?? (mode === 'options' && !selectedId)}
+            onClick={onContinue}
+          >
             {continueLabel}
           </button>
         </footer>
