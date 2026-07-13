@@ -1,29 +1,35 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { guideHref } from '@shared/guideHref';
+import QuizLinkedSliders from './quiz/QuizLinkedSliders';
 import {
   buildBookingPrioritiesUrl,
-  buildEnquiryMessage,
-  getContextById,
+  buildEnquiryMessageFromShares,
+  contextSharesToWeights,
+  dominantContextId,
+  getContextAllocationQuestion,
+  getDefaultContextShares,
+  getDefaultImpactShares,
+  getDefaultIssueShares,
+  getImpactAllocationQuestion,
   getImpactNote,
-  getOutcomesForContext,
+  getIssueAllocationQuestion,
   IMPACT_LABELS,
+  issueSharesToWeights,
   mergeBookingTags,
   mergeDriverConsiderations,
   mergeGuideLinksForResults,
-  mergeOutcomes,
+  mergeOutcomesWeighted,
   mergeSymptomExpressionHints,
-  PROBLEM_CONTEXTS,
+  outcomeIdsFromShares,
+  resolveImpactFromShares,
   saveProblemFinderHandoff,
   shouldShowPuppyNav,
-  toggleProblemOutcome,
-  type ImpactLevel,
-  type ProblemContextId,
-  type ProblemOutcomeId,
 } from '../data/problemFinder';
 import ProblemFinderPuppyNav from './ProblemFinderPuppyNav';
 import { getBehaviorDriver } from '../data/behaviorDrivers';
 import { getSymptomExpression } from '../data/symptomExpressions';
+import { flattenPoles } from '../data/allocationHelpers';
 
 type FinderStep = 'context' | 'issue' | 'impact' | 'results';
 
@@ -42,18 +48,48 @@ function stepIndex(step: FinderStep): number {
 export default function ProblemFinderModal({ open, onClose }: ProblemFinderModalProps) {
   const navigate = useNavigate();
   const [step, setStep] = useState<FinderStep>('context');
-  const [contextId, setContextId] = useState<ProblemContextId | null>(null);
-  const [outcomeIds, setOutcomeIds] = useState<ProblemOutcomeId[]>([]);
-  const [impact, setImpact] = useState<ImpactLevel>(3);
+  const [contextShares, setContextShares] = useState<number[]>(getDefaultContextShares());
+  const [issueShares, setIssueShares] = useState<number[]>([]);
+  const [impactShares, setImpactShares] = useState<number[]>(getDefaultImpactShares());
   const dialogRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
   const previousFocusRef = useRef<HTMLElement | null>(null);
 
+  const contextQuestion = useMemo(() => getContextAllocationQuestion(), []);
+  const contextWeights = useMemo(
+    () => contextSharesToWeights(contextQuestion.poles!.map((pole) => pole.id), contextShares),
+    [contextQuestion, contextShares]
+  );
+  const issueQuestion = useMemo(
+    () => getIssueAllocationQuestion(contextWeights),
+    [contextWeights]
+  );
+  const impactQuestion = useMemo(() => getImpactAllocationQuestion(), []);
+
+  const issueWeights = useMemo(
+    () => issueSharesToWeights(flattenPoles(issueQuestion).map((pole) => pole.id), issueShares),
+    [issueQuestion, issueShares]
+  );
+
+  const outcomeIds = useMemo(() => outcomeIdsFromShares(issueWeights), [issueWeights]);
+  const outcomes = useMemo(() => mergeOutcomesWeighted(issueWeights), [issueWeights]);
+  const impact = useMemo(
+    () => resolveImpactFromShares(impactShares, impactQuestion),
+    [impactShares, impactQuestion]
+  );
+  const contextId = useMemo(() => dominantContextId(contextWeights), [contextWeights]);
+
+  const guideLinks = mergeGuideLinksForResults(outcomeIds);
+  const showPuppyNav = shouldShowPuppyNav(outcomeIds);
+  const bookingTags = mergeBookingTags(outcomes);
+  const driverConsiderations = mergeDriverConsiderations(outcomes);
+  const symptomHints = mergeSymptomExpressionHints(outcomes);
+
   const reset = useCallback(() => {
     setStep('context');
-    setContextId(null);
-    setOutcomeIds([]);
-    setImpact(3);
+    setContextShares(getDefaultContextShares());
+    setIssueShares([]);
+    setImpactShares(getDefaultImpactShares());
   }, []);
 
   const handleClose = useCallback(() => {
@@ -81,18 +117,19 @@ export default function ProblemFinderModal({ open, onClose }: ProblemFinderModal
     };
   }, [open, handleClose]);
 
+  useEffect(() => {
+    if (issueShares.length === 0 && issueQuestion.poles?.length) {
+      setIssueShares(getDefaultIssueShares(contextWeights));
+    } else if (issueShares.length !== (issueQuestion.poles?.length ?? 0)) {
+      setIssueShares(getDefaultIssueShares(contextWeights));
+    }
+  }, [issueQuestion, contextWeights, issueShares.length]);
+
   if (!open) return null;
 
   const currentStep = stepIndex(step);
   const progress = step === 'results' ? 100 : Math.round((currentStep / 3) * 100);
-  const context = contextId ? getContextById(contextId) : null;
-  const outcomes = mergeOutcomes(outcomeIds);
-  const issueOptions = contextId ? getOutcomesForContext(contextId) : [];
-  const guideLinks = mergeGuideLinksForResults(outcomeIds);
-  const showPuppyNav = shouldShowPuppyNav(outcomeIds);
-  const bookingTags = mergeBookingTags(outcomes);
-  const driverConsiderations = mergeDriverConsiderations(outcomes);
-  const symptomHints = mergeSymptomExpressionHints(outcomes);
+  const hasIssueWeight = issueShares.some((share) => share > 0);
 
   const goBack = () => {
     if (step === 'issue') {
@@ -104,18 +141,13 @@ export default function ProblemFinderModal({ open, onClose }: ProblemFinderModal
     }
   };
 
-  const selectContext = (id: ProblemContextId) => {
-    setContextId(id);
-    setOutcomeIds([]);
+  const continueToIssues = () => {
+    setIssueShares(getDefaultIssueShares(contextWeights));
     setStep('issue');
   };
 
-  const toggleOutcome = (id: ProblemOutcomeId) => {
-    setOutcomeIds((prev) => toggleProblemOutcome(prev, id));
-  };
-
   const continueToImpact = () => {
-    if (outcomeIds.length > 0) setStep('impact');
+    if (hasIssueWeight) setStep('impact');
   };
 
   const showResults = () => {
@@ -123,14 +155,17 @@ export default function ProblemFinderModal({ open, onClose }: ProblemFinderModal
   };
 
   const sendEnquiry = () => {
-    if (!context || outcomes.length === 0) return;
+    if (outcomes.length === 0) return;
 
     saveProblemFinderHandoff({
-      message: buildEnquiryMessage(context, outcomes, impact),
+      message: buildEnquiryMessageFromShares(contextWeights, issueWeights, impact),
       outcomeIds,
-      contextId: context.id,
+      contextId,
       impact,
       createdAt: Date.now(),
+      contextShares: contextWeights,
+      issueShares: issueWeights,
+      impactShares,
     });
 
     handleClose();
@@ -184,44 +219,39 @@ export default function ProblemFinderModal({ open, onClose }: ProblemFinderModal
         {step === 'context' && (
           <section className="problem-finder-step" aria-labelledby="pf-context-heading">
             <p id="pf-context-heading" className="problem-finder-lead">
-              Where does the problem show up most?
+              {contextQuestion.prompt}
             </p>
-            <div className="problem-finder-cards">
-              {PROBLEM_CONTEXTS.map((entry) => (
-                <button
-                  key={entry.id}
-                  type="button"
-                  className="exam-category-card problem-finder-card"
-                  onClick={() => selectContext(entry.id)}
-                >
-                  <span className="problem-finder-card-title">{entry.label}</span>
-                  <span className="problem-finder-card-desc">{entry.description}</span>
-                </button>
-              ))}
+            <p className="problem-finder-select-hint">
+              Allocate 100% across where the problem shows up — more than one area can share emphasis.
+            </p>
+            <QuizLinkedSliders
+              className="problem-finder-sliders"
+              poles={contextQuestion.poles ?? []}
+              values={contextShares}
+              onChange={setContextShares}
+            />
+            <div className="problem-finder-nav">
+              <button type="button" className="btn btn-primary" onClick={continueToIssues}>
+                Continue
+              </button>
             </div>
           </section>
         )}
 
-        {step === 'issue' && context && (
+        {step === 'issue' && (
           <section className="problem-finder-step" aria-labelledby="pf-issue-heading">
             <p id="pf-issue-heading" className="problem-finder-lead">
-              Select all that apply
+              {issueQuestion.prompt}
             </p>
-            <p className="problem-finder-select-hint">Choose every issue you want help with.</p>
-            <p className="problem-finder-context-note">You chose: {context.label}</p>
-            <div className="problem-finder-cards problem-finder-cards--compact">
-              {issueOptions.map((entry) => (
-                <button
-                  key={entry.id}
-                  type="button"
-                  className={`exam-category-card problem-finder-card${outcomeIds.includes(entry.id) ? ' is-selected' : ''}`}
-                  aria-pressed={outcomeIds.includes(entry.id)}
-                  onClick={() => toggleOutcome(entry.id)}
-                >
-                  <span className="problem-finder-card-title">{entry.label}</span>
-                </button>
-              ))}
-            </div>
+            <p className="problem-finder-select-hint">
+              Split 100% across the issues that apply — weight what matters most right now.
+            </p>
+            <QuizLinkedSliders
+              className="problem-finder-sliders"
+              poles={issueQuestion.poles ?? []}
+              values={issueShares}
+              onChange={setIssueShares}
+            />
             <div className="problem-finder-nav">
               <button type="button" className="btn btn-secondary" onClick={goBack}>
                 Back
@@ -229,7 +259,7 @@ export default function ProblemFinderModal({ open, onClose }: ProblemFinderModal
               <button
                 type="button"
                 className="btn btn-primary"
-                disabled={outcomeIds.length === 0}
+                disabled={!hasIssueWeight}
                 onClick={continueToImpact}
               >
                 Continue
@@ -238,50 +268,21 @@ export default function ProblemFinderModal({ open, onClose }: ProblemFinderModal
           </section>
         )}
 
-        {step === 'impact' && context && outcomes.length > 0 && (
+        {step === 'impact' && outcomes.length > 0 && (
           <section className="problem-finder-step" aria-labelledby="pf-impact-heading">
             <p id="pf-impact-heading" className="problem-finder-lead">
-              How much is this affecting daily life?
+              {impactQuestion.prompt}
             </p>
             <p className="problem-finder-context-note">
               Focus areas: {outcomes.map((entry) => entry.label).join(', ')}
             </p>
-
-            <div className="problem-finder-impact">
-              <input
-                type="range"
-                className="problem-finder-slider"
-                min={1}
-                max={5}
-                step={1}
-                value={impact}
-                aria-valuemin={1}
-                aria-valuemax={5}
-                aria-valuenow={impact}
-                aria-valuetext={IMPACT_LABELS[impact]}
-                onChange={(event) => setImpact(Number(event.target.value) as ImpactLevel)}
-              />
-              <div className="problem-finder-impact-labels" aria-hidden="true">
-                <span>Minor</span>
-                <span>Daily life</span>
-                <span>Safety</span>
-              </div>
-              <p className="problem-finder-impact-value">{IMPACT_LABELS[impact]}</p>
-
-              <div className="problem-finder-impact-buttons" role="group" aria-label="Impact level">
-                {([1, 2, 3, 4, 5] as const).map((level) => (
-                  <button
-                    key={level}
-                    type="button"
-                    className={`problem-finder-impact-btn${impact === level ? ' is-selected' : ''}`}
-                    aria-pressed={impact === level}
-                    onClick={() => setImpact(level)}
-                  >
-                    {level}
-                  </button>
-                ))}
-              </div>
-            </div>
+            <QuizLinkedSliders
+              className="problem-finder-sliders"
+              poles={impactQuestion.poles ?? []}
+              values={impactShares}
+              onChange={setImpactShares}
+            />
+            <p className="problem-finder-impact-value">{IMPACT_LABELS[impact]}</p>
 
             <div className="problem-finder-nav">
               <button type="button" className="btn btn-secondary" onClick={goBack}>
@@ -294,7 +295,7 @@ export default function ProblemFinderModal({ open, onClose }: ProblemFinderModal
           </section>
         )}
 
-        {step === 'results' && context && outcomes.length > 0 && (
+        {step === 'results' && outcomes.length > 0 && (
           <section className="problem-finder-step problem-finder-results" aria-labelledby="pf-results-heading">
             <p className="problem-finder-kicker">Your focus areas</p>
             <h3 id="pf-results-heading" className="visually-hidden">Your focus areas</h3>

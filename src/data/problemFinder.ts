@@ -2,6 +2,12 @@ import { BOOKING_CONCERN_TO_TAGS } from '@shared/clientBookingTags';
 import { PUPPY_PHASE_NAV_LINKS } from '../pages/guide-sections/GuideContentsNav';
 import type { NeuroPattern } from './breedTraits';
 import type { BehaviorDriver } from './behaviorDrivers';
+import type { AllocationQuestion } from './allocationHelpers';
+import {
+  flattenPoles,
+  getDefaultSharesForQuestion,
+} from './allocationHelpers';
+import { ALLOCATION_SCALE_TOTAL } from '../utils/allocationScales';
 
 export const PUPPY_PHASE_ANCHORS = new Set(PUPPY_PHASE_NAV_LINKS.map((link) => link.anchor));
 
@@ -447,6 +453,9 @@ export interface ProblemFinderHandoff {
   contextId: ProblemContextId;
   impact: ImpactLevel;
   createdAt: number;
+  contextShares?: Partial<Record<ProblemContextId, number>>;
+  issueShares?: Partial<Record<ProblemOutcomeId, number>>;
+  impactShares?: number[];
 }
 
 export function toggleProblemOutcome(
@@ -564,4 +573,194 @@ export function clearProblemFinderHandoff(): void {
 export function getImpactNote(outcomes: ProblemOutcome[], impact: ImpactLevel): string {
   if (outcomes.length === 0) return IMPACT_LABELS[impact];
   return outcomes[0].urgencyNotes[impact];
+}
+
+export function getContextAllocationQuestion(): AllocationQuestion {
+  return {
+    id: 'context',
+    prompt: 'Where does the problem show up most?',
+    poles: PROBLEM_CONTEXTS.map((entry) => ({
+      id: entry.id,
+      label: entry.label,
+      sublabel: entry.description,
+    })),
+  };
+}
+
+export function contextSharesToWeights(
+  contextIds: string[],
+  shares: number[]
+): Partial<Record<ProblemContextId, number>> {
+  const weights: Partial<Record<ProblemContextId, number>> = {};
+  for (let i = 0; i < contextIds.length; i++) {
+    const id = contextIds[i] as ProblemContextId;
+    weights[id] = shares[i] ?? 0;
+  }
+  return weights;
+}
+
+export function getIssueAllocationQuestion(
+  contextShares: Partial<Record<ProblemContextId, number>>
+): AllocationQuestion {
+  const activeContexts = PROBLEM_CONTEXTS.filter((entry) => (contextShares[entry.id] ?? 0) > 0);
+  const outcomeIds = new Set<ProblemOutcomeId>();
+
+  for (const context of activeContexts) {
+    for (const outcomeId of context.outcomeIds) {
+      outcomeIds.add(outcomeId);
+    }
+  }
+
+  if (outcomeIds.size === 0) {
+    for (const context of PROBLEM_CONTEXTS) {
+      for (const outcomeId of context.outcomeIds) {
+        outcomeIds.add(outcomeId);
+      }
+    }
+  }
+
+  const poles = [...outcomeIds].map((id) => {
+    const outcome = getOutcomeById(id);
+    return {
+      id,
+      label: outcome.label,
+      sublabel: outcome.summary,
+    };
+  });
+
+  return {
+    id: 'issues',
+    prompt: 'How much does each issue apply?',
+    poles,
+  };
+}
+
+export function getImpactAllocationQuestion(): AllocationQuestion {
+  return {
+    id: 'impact',
+    prompt: 'How much is this affecting daily life?',
+    poles: ([1, 2, 3, 4, 5] as ImpactLevel[]).map((level) => ({
+      id: String(level),
+      label: IMPACT_LABELS[level],
+    })),
+  };
+}
+
+export function issueSharesToWeights(
+  outcomeIds: string[],
+  shares: number[]
+): Partial<Record<ProblemOutcomeId, number>> {
+  const weights: Partial<Record<ProblemOutcomeId, number>> = {};
+  for (let i = 0; i < outcomeIds.length; i++) {
+    const id = outcomeIds[i] as ProblemOutcomeId;
+    weights[id] = shares[i] ?? 0;
+  }
+  return weights;
+}
+
+export function resolveImpactFromShares(
+  shares: number[],
+  question: AllocationQuestion = getImpactAllocationQuestion()
+): ImpactLevel {
+  const poles = flattenPoles(question);
+  let weightedSum = 0;
+  let total = 0;
+
+  for (let i = 0; i < poles.length; i++) {
+    const weight = shares[i] ?? 0;
+    if (weight <= 0) continue;
+    const level = Number(poles[i]!.id) as ImpactLevel;
+    weightedSum += level * weight;
+    total += weight;
+  }
+
+  if (total <= 0) return 3;
+  return Math.max(1, Math.min(5, Math.round(weightedSum / total))) as ImpactLevel;
+}
+
+export function dominantContextId(
+  contextShares: Partial<Record<ProblemContextId, number>>
+): ProblemContextId {
+  let bestId: ProblemContextId = PROBLEM_CONTEXTS[0]!.id;
+  let bestWeight = -1;
+
+  for (const context of PROBLEM_CONTEXTS) {
+    const weight = contextShares[context.id] ?? 0;
+    if (weight > bestWeight) {
+      bestWeight = weight;
+      bestId = context.id;
+    }
+  }
+
+  return bestId;
+}
+
+export function mergeOutcomesWeighted(
+  issueShares: Partial<Record<ProblemOutcomeId, number>>,
+  minWeight = 1
+): ProblemOutcome[] {
+  return Object.entries(issueShares)
+    .filter(([, weight]) => (weight ?? 0) >= minWeight)
+    .sort(([, a], [, b]) => (b ?? 0) - (a ?? 0))
+    .map(([id]) => getOutcomeById(id as ProblemOutcomeId));
+}
+
+export function outcomeIdsFromShares(
+  issueShares: Partial<Record<ProblemOutcomeId, number>>,
+  minWeight = 1
+): ProblemOutcomeId[] {
+  return Object.entries(issueShares)
+    .filter(([, weight]) => (weight ?? 0) >= minWeight)
+    .sort(([, a], [, b]) => (b ?? 0) - (a ?? 0))
+    .map(([id]) => id as ProblemOutcomeId);
+}
+
+export function buildEnquiryMessageFromShares(
+  contextShares: Partial<Record<ProblemContextId, number>>,
+  issueShares: Partial<Record<ProblemOutcomeId, number>>,
+  impact: ImpactLevel
+): string {
+  const context = getContextById(dominantContextId(contextShares));
+  const outcomes = mergeOutcomesWeighted(issueShares);
+  const contextLines = PROBLEM_CONTEXTS.filter((entry) => (contextShares[entry.id] ?? 0) > 0)
+    .map((entry) => {
+      const share = contextShares[entry.id] ?? 0;
+      const percent = Math.round((share / ALLOCATION_SCALE_TOTAL) * 1000) / 10;
+      return `- ${entry.label} (${percent}%)`;
+    })
+    .join('\n');
+
+  const issueLines = outcomes
+    .map((outcome) => {
+      const share = issueShares[outcome.id] ?? 0;
+      const percent = Math.round((share / ALLOCATION_SCALE_TOTAL) * 1000) / 10;
+      return `- ${outcome.label} (${percent}%)`;
+    })
+    .join('\n');
+
+  return [
+    'Problem Finder summary',
+    '',
+    'Where (allocated emphasis):',
+    contextLines || `- ${context.label}`,
+    'Issues:',
+    issueLines,
+    `How much it's affecting us: ${IMPACT_LABELS[impact]}`,
+    '',
+    "I'd like help with these areas. Please let me know the best next step.",
+  ].join('\n');
+}
+
+export function getDefaultContextShares(): number[] {
+  return getDefaultSharesForQuestion(getContextAllocationQuestion());
+}
+
+export function getDefaultIssueShares(
+  contextShares: Partial<Record<ProblemContextId, number>>
+): number[] {
+  return getDefaultSharesForQuestion(getIssueAllocationQuestion(contextShares));
+}
+
+export function getDefaultImpactShares(): number[] {
+  return getDefaultSharesForQuestion(getImpactAllocationQuestion());
 }

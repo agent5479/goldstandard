@@ -232,7 +232,7 @@ function randomSharesForQuestion(question: AllocationQuestion): number[] {
     const moves = 2 + Math.floor(Math.random() * 3);
     for (let m = 0; m < moves; m++) {
       const poleIndex = Math.floor(Math.random() * dimension.poles.length);
-      const nextValue = Math.floor(Math.random() * 101);
+      const nextValue = Math.round(Math.random() * 1000) / 10;
       dimShares = redistributeLinkedSliders(dimShares, poleIndex, nextValue);
     }
     shares.push(...dimShares);

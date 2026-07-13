@@ -1,11 +1,16 @@
 import { describe, expect, it } from 'vitest';
 import {
+  buildHouseholdProfileFromShares,
+  rankBreedsFromShareAnswers,
+  BREED_FINDER_ALLOCATION_QUESTIONS,
   parseHouseholdProfile,
   rankBreedsForHousehold,
   scoreBreedForHousehold,
   BREED_FINDER_QUESTIONS,
   type HouseholdProfile,
 } from './breedFinder';
+import { getDefaultSharesForQuestion } from './allocationHelpers';
+import { ALLOCATION_SCALE_TOTAL } from '../utils/allocationScales';
 import { breeds } from './breeds';
 
 function apartmentCalmCompanion(): HouseholdProfile {
@@ -113,5 +118,26 @@ describe('scoreBreedForHousehold', () => {
     expect(results.length).toBeGreaterThan(0);
     expect(results[0].matchReasons.length).toBeGreaterThan(0);
     expect(results[0].score).toBeGreaterThanOrEqual(45);
+  });
+
+  it('ranks breeds from slider share answers', () => {
+    const answers: Record<string, number[]> = {};
+    for (const question of BREED_FINDER_ALLOCATION_QUESTIONS) {
+      answers[question.id] = getDefaultSharesForQuestion(question);
+    }
+
+    const dwelling = BREED_FINDER_ALLOCATION_QUESTIONS.find((q) => q.id === 'dwelling')!;
+    const dwellingShares = getDefaultSharesForQuestion(dwelling);
+    const apartmentIdx = dwelling.poles!.findIndex((pole) => pole.id === 'apartment');
+    for (let i = 0; i < dwellingShares.length; i++) {
+      dwellingShares[i] = i === apartmentIdx ? ALLOCATION_SCALE_TOTAL : 0;
+    }
+    answers.dwelling = dwellingShares;
+
+    const profile = buildHouseholdProfileFromShares(answers);
+    expect(profile.dwelling).toBe('apartment');
+
+    const results = rankBreedsFromShareAnswers(answers, { limit: 3 });
+    expect(results.length).toBeGreaterThan(0);
   });
 });

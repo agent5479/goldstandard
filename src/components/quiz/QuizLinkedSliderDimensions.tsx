@@ -1,5 +1,6 @@
 import type { AllocationDimension } from '../../data/dogPersonalityAllocation';
 import QuizLinkedSliders from './QuizLinkedSliders';
+import { ALLOCATION_SCALE_TOTAL } from '../../utils/allocationScales';
 
 interface QuizLinkedSliderDimensionsProps {
   dimensions: AllocationDimension[];
@@ -12,7 +13,7 @@ export default function QuizLinkedSliderDimensions({
   dimensions,
   values,
   onChange,
-  total = 100,
+  total = ALLOCATION_SCALE_TOTAL,
 }: QuizLinkedSliderDimensionsProps) {
   let offset = 0;
 

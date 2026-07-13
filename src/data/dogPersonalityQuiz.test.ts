@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { getDefaultSharesForQuestion, getQuestionDimensions } from './dogPersonalityAllocation';
+import { ALLOCATION_SCALE_TOTAL } from '../utils/allocationScales';
 import {
   PERSONALITY_ALLOCATION_QUESTIONS,
   PERSONALITY_ALLOCATION_TOTAL,
@@ -13,7 +14,9 @@ import type { BreedCategory } from './breeds';
 
 function maxPoleAnswer(questionId: string, poleIndex: number): Record<string, number[]> {
   const question = PERSONALITY_ALLOCATION_QUESTIONS.find((q) => q.id === questionId)!;
-  const shares = getDefaultSharesForQuestion(question).map((_, i) => (i === poleIndex ? 100 : 0));
+  const shares = getDefaultSharesForQuestion(question).map((_, i) =>
+    i === poleIndex ? ALLOCATION_SCALE_TOTAL : 0
+  );
   return { [questionId]: shares };
 }
 
@@ -53,8 +56,8 @@ describe('dogPersonalityQuiz allocation', () => {
     const heightDim = question.dimensions![0]!;
     const shortOffset = heightDim.poles.findIndex((p) => p.id === 'height_short');
     const tallOffset = heightDim.poles.findIndex((p) => p.id === 'height_tall');
-    shares[shortOffset] = 50;
-    shares[tallOffset] = 50;
+    shares[shortOffset] = 500;
+    shares[tallOffset] = 500;
 
     const profile = buildHumanProfile({ alloc_build: shares });
     expect(profile.size).toBeGreaterThan(4);
@@ -80,7 +83,7 @@ describe('resolvePersonalityResult', () => {
         });
         if (bestIdx >= 0) {
           for (let i = 0; i < dimension.poles.length; i++) {
-            shares[offset + i] = offset + i === bestIdx ? 100 : 0;
+            shares[offset + i] = offset + i === bestIdx ? ALLOCATION_SCALE_TOTAL : 0;
           }
         }
         offset += dimension.poles.length;

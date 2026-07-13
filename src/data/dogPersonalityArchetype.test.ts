@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { ALLOCATION_SCALE_TOTAL } from '../utils/allocationScales';
 import {
   flattenPoles,
   getDefaultSharesForQuestion,
@@ -56,7 +57,7 @@ function categoryDominantAnswers(category: BreedCategory): Record<string, number
       const poleIndex = dominantPoleIndex(dimension.poles, category);
       if (poleIndex >= 0) {
         for (let i = 0; i < dimension.poles.length; i++) {
-          shares[offset + i] = i === poleIndex ? 100 : 0;
+          shares[offset + i] = i === poleIndex ? ALLOCATION_SCALE_TOTAL : 0;
         }
       }
       offset += dimension.poles.length;
@@ -106,7 +107,7 @@ describe('personality archetype spot checks', () => {
       const answers = categoryDominantAnswers(category);
       const touched = PERSONALITY_ALLOCATION_QUESTIONS.filter((question) => {
         const shares = answers[question.id] ?? [];
-        return shares.some((share) => share === 100);
+        return shares.some((share) => share === ALLOCATION_SCALE_TOTAL);
       }).length;
       expect(touched).toBeGreaterThanOrEqual(3);
       expect(flattenPoles(PERSONALITY_ALLOCATION_QUESTIONS[0]!).length).toBeGreaterThan(0);

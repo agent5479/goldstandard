@@ -6623,6 +6623,19 @@ body.problem-finder-open {
   margin-bottom: 0.35rem;
 }
 
+.problem-finder-sliders {
+  margin-bottom: 0.75rem;
+}
+
+.problem-finder-sliders .quiz-linked-slider-row + .quiz-linked-slider-row {
+  margin-top: 0.65rem;
+}
+
+.problem-finder-sliders .quiz-linked-sliders-hint {
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+}
+
 .problem-finder-cards--compact .problem-finder-card.is-selected {
   border-color: var(--gold);
   box-shadow: 0 0 0 2px rgba(201, 162, 39, 0.35);

@@ -1,9 +1,16 @@
-import { breeds, type Breed, type BreedCategory } from './breeds';
+﻿import { breeds, type Breed, type BreedCategory } from './breeds';
 import { breedPhysicalAppearance } from './breedPhysicalAppearance';
 import { getBreedSizeClass, getBreedSuggestedProfileTags } from './breedTraits';
 import type { SizeClass } from './breedSizeGrades';
 import { findIntelligenceByBreedName } from './dogIntelligence';
 import { getBreedSensitivityDetail } from './breedSensitivityResolvers';
+import { ALLOCATION_SCALE_TOTAL } from '../utils/allocationScales';
+import type { AllocationQuestion } from './allocationHelpers';
+import {
+  buildFieldWeightsFromShares,
+  dominantPoleId,
+  flattenPoles,
+} from './allocationHelpers';
 
 export type DwellingType = 'apartment' | 'townhouse' | 'house' | 'rural';
 export type YardSize = 'none' | 'small' | 'medium' | 'large';
@@ -49,7 +56,7 @@ export interface BreedMatchResult {
 }
 
 export const BREED_FINDER_DISCLAIMER =
-  'A starting point for research — not a substitute for meeting the dog, the breeder, or the individual temperament. Every dog is an individual; structure and training matter more than breed labels.';
+  'A starting point for research â€” not a substitute for meeting the dog, the breeder, or the individual temperament. Every dog is an individual; structure and training matter more than breed labels.';
 
 export const BREED_FINDER_QUESTIONS: BreedFinderQuestion[] = [
   {
@@ -79,7 +86,7 @@ export const BREED_FINDER_QUESTIONS: BreedFinderQuestion[] = [
     section: 'Living situation',
     prompt: 'How much barking can your household tolerate?',
     options: [
-      { value: 'low', label: 'Very little — neighbours or babies are close' },
+      { value: 'low', label: 'Very little â€” neighbours or babies are close' },
       { value: 'medium', label: 'Some vocalising is fine' },
       { value: 'high', label: 'Bring on the opinions' },
     ],
@@ -125,7 +132,7 @@ export const BREED_FINDER_QUESTIONS: BreedFinderQuestion[] = [
       { value: '2', label: 'Casual', sublabel: 'Daily walks, nothing extreme' },
       { value: '3', label: 'Moderate', sublabel: 'Regular exercise most days' },
       { value: '4', label: 'Active', sublabel: 'Runs, hikes, or sport several times a week' },
-      { value: '5', label: 'Athlete', sublabel: 'High endurance — the dog is part of the training plan' },
+      { value: '5', label: 'Athlete', sublabel: 'High endurance â€” the dog is part of the training plan' },
     ],
   },
   {
@@ -144,8 +151,8 @@ export const BREED_FINDER_QUESTIONS: BreedFinderQuestion[] = [
     prompt: 'Your dog-handling experience',
     options: [
       { value: 'first', label: 'First dog or returning after a long gap' },
-      { value: 'some', label: 'Had dogs before — comfortable with basics' },
-      { value: 'experienced', label: 'Experienced — structure and corrections are familiar' },
+      { value: 'some', label: 'Had dogs before â€” comfortable with basics' },
+      { value: 'experienced', label: 'Experienced â€” structure and corrections are familiar' },
     ],
   },
   {
@@ -153,9 +160,9 @@ export const BREED_FINDER_QUESTIONS: BreedFinderQuestion[] = [
     section: 'Preferences',
     prompt: 'Size preference',
     options: [
-      { value: 'small', label: 'Small — portable, lap-friendly' },
-      { value: 'medium', label: 'Medium — everyday companion size' },
-      { value: 'large', label: 'Large — substantial presence' },
+      { value: 'small', label: 'Small â€” portable, lap-friendly' },
+      { value: 'medium', label: 'Medium â€” everyday companion size' },
+      { value: 'large', label: 'Large â€” substantial presence' },
       { value: 'any', label: 'No strong preference' },
     ],
   },
@@ -164,9 +171,9 @@ export const BREED_FINDER_QUESTIONS: BreedFinderQuestion[] = [
     section: 'Preferences',
     prompt: 'Grooming and coat maintenance',
     options: [
-      { value: 'minimal', label: 'Minimal — wash-and-wear, short coat preferred' },
-      { value: 'moderate', label: 'Moderate — brushing now and then is fine' },
-      { value: 'happy', label: 'Happy to groom — long coats and trips to the groomer OK' },
+      { value: 'minimal', label: 'Minimal â€” wash-and-wear, short coat preferred' },
+      { value: 'moderate', label: 'Moderate â€” brushing now and then is fine' },
+      { value: 'happy', label: 'Happy to groom â€” long coats and trips to the groomer OK' },
     ],
   },
   {
@@ -174,11 +181,11 @@ export const BREED_FINDER_QUESTIONS: BreedFinderQuestion[] = [
     section: 'Preferences',
     prompt: 'What do you mainly want from your dog?',
     options: [
-      { value: 'companion', label: 'Companion — bonded family member' },
+      { value: 'companion', label: 'Companion â€” bonded family member' },
       { value: 'running', label: 'Running or adventure partner' },
       { value: 'calm', label: 'Calm and low-key at home' },
-      { value: 'working', label: 'Working drive — jobs, puzzles, purpose' },
-      { value: 'watchdog', label: 'Watchdog — alert and protective' },
+      { value: 'working', label: 'Working drive â€” jobs, puzzles, purpose' },
+      { value: 'watchdog', label: 'Watchdog â€” alert and protective' },
     ],
   },
 ];
@@ -214,44 +221,106 @@ function getChaseWeight(breedName: string, category: BreedCategory): number {
   return chase?.weight ?? 0.1;
 }
 
+export type HouseholdFieldWeights = Partial<Record<keyof HouseholdProfile, Record<string, number>>>;
+
+export const BREED_FINDER_ALLOCATION_QUESTIONS: AllocationQuestion[] = BREED_FINDER_QUESTIONS.map(
+  (question) => ({
+    id: question.id,
+    prompt: question.prompt,
+    poles: question.options.map((option) => ({
+      id: option.value,
+      label: option.label,
+      sublabel: option.sublabel,
+    })),
+  })
+);
+
+interface ScoringContext {
+  profile: HouseholdProfile;
+  fieldWeights?: HouseholdFieldWeights;
+  total?: number;
+}
+
+function fieldFraction(ctx: ScoringContext, field: keyof HouseholdProfile, value: string): number {
+  const weights = ctx.fieldWeights?.[field];
+  const total = ctx.total ?? ALLOCATION_SCALE_TOTAL;
+  if (weights) return (weights[value] ?? 0) / total;
+  const current = ctx.profile[field];
+  return current === value || String(current) === value ? 1 : 0;
+}
+
+function weightedActivity(ctx: ScoringContext): number {
+  const total = ctx.total ?? ALLOCATION_SCALE_TOTAL;
+  const weights = ctx.fieldWeights?.activity;
+  if (weights) {
+    let sum = 0;
+    for (const [value, weight] of Object.entries(weights)) {
+      sum += Number(value) * weight;
+    }
+    return sum / total;
+  }
+  return ctx.profile.activity;
+}
+
+function noteAt(threshold: number, fraction: number): boolean {
+  return fraction >= threshold;
+}
+
 function scoreSize(
   _breed: Breed,
   size: SizeClass,
-  profile: HouseholdProfile,
+  ctx: ScoringContext,
   reasons: string[],
   cautions: string[]
 ): number {
   let delta = 0;
 
-  if (sizeClassMatchesPref(size, profile.sizePref)) {
-    delta += 12;
-    if (profile.sizePref !== 'any') {
-      reasons.push(`Fits your ${profile.sizePref} size preference.`);
+  for (const pref of ['small', 'medium', 'large', 'any'] as SizePreference[]) {
+    const fraction = fieldFraction(ctx, 'sizePref', pref);
+    if (fraction <= 0) continue;
+    if (sizeClassMatchesPref(size, pref)) {
+      delta += fraction * 12;
+      if (pref !== 'any' && noteAt(0.5, fraction)) {
+        reasons.push(`Fits your ${pref} size preference.`);
+      }
+    } else if (pref !== 'any') {
+      delta -= fraction * 8;
     }
-  } else if (profile.sizePref !== 'any') {
-    delta -= 8;
   }
 
-  if (profile.dwelling === 'apartment') {
+  const apartmentFrac = fieldFraction(ctx, 'dwelling', 'apartment');
+  if (apartmentFrac > 0) {
     if (size === 'giant') {
-      delta -= 22;
-      cautions.push('Giant breeds are a tough fit for apartment living — space and leash manners matter enormously.');
+      delta -= apartmentFrac * 22;
+      if (noteAt(0.5, apartmentFrac)) {
+        cautions.push(
+          'Giant breeds are a tough fit for apartment living â€” space and leash manners matter enormously.'
+        );
+      }
     } else if (size === 'large') {
-      delta -= 12;
-      cautions.push('Large breeds need careful management in tighter living spaces.');
+      delta -= apartmentFrac * 12;
+      if (noteAt(0.5, apartmentFrac)) {
+        cautions.push('Large breeds need careful management in tighter living spaces.');
+      }
     } else if (size === 'toy' || size === 'small') {
-      delta += 8;
-      reasons.push('Compact size suits apartment or townhouse living.');
+      delta += apartmentFrac * 8;
+      if (noteAt(0.5, apartmentFrac)) {
+        reasons.push('Compact size suits apartment or townhouse living.');
+      }
     }
   }
 
-  if (profile.yard === 'none' && (size === 'large' || size === 'giant')) {
-    delta -= 6;
+  const noYardFrac = fieldFraction(ctx, 'yard', 'none');
+  if (noYardFrac > 0 && (size === 'large' || size === 'giant')) {
+    delta -= noYardFrac * 6;
   }
 
-  if (profile.yard === 'large' && (size === 'large' || size === 'giant')) {
-    delta += 6;
-    reasons.push('Large property can suit a bigger dog.');
+  const largeYardFrac = fieldFraction(ctx, 'yard', 'large');
+  if (largeYardFrac > 0 && (size === 'large' || size === 'giant')) {
+    delta += largeYardFrac * 6;
+    if (noteAt(0.5, largeYardFrac)) {
+      reasons.push('Large property can suit a bigger dog.');
+    }
   }
 
   return delta;
@@ -260,7 +329,7 @@ function scoreSize(
 function scoreVocalAndNoise(
   breedName: string,
   category: BreedCategory,
-  profile: HouseholdProfile,
+  ctx: ScoringContext,
   reasons: string[],
   cautions: string[]
 ): number {
@@ -268,22 +337,29 @@ function scoreVocalAndNoise(
   const vocal = intel?.scores.vocal ?? (category === 'spitz' || category === 'scenthound' ? 7 : 5);
   let delta = 0;
 
-  if (profile.noiseTolerance === 'low') {
+  const lowNoiseFrac = fieldFraction(ctx, 'noiseTolerance', 'low');
+  if (lowNoiseFrac > 0) {
     if (vocal >= 7) {
-      delta -= 18;
-      cautions.push('This breed type tends to be vocal — may stress noise-sensitive households.');
+      delta -= lowNoiseFrac * 18;
+      if (noteAt(0.5, lowNoiseFrac)) {
+        cautions.push('This breed type tends to be vocal â€” may stress noise-sensitive households.');
+      }
     } else if (vocal <= 4) {
-      delta += 8;
-      reasons.push('Generally quieter — good for close neighbours.');
+      delta += lowNoiseFrac * 8;
+      if (noteAt(0.5, lowNoiseFrac)) {
+        reasons.push('Generally quieter â€” good for close neighbours.');
+      }
     }
   }
 
-  if (profile.dwelling === 'apartment' && vocal >= 7) {
-    delta -= 10;
+  const apartmentFrac = fieldFraction(ctx, 'dwelling', 'apartment');
+  if (apartmentFrac > 0 && vocal >= 7) {
+    delta -= apartmentFrac * 10;
   }
 
-  if (profile.noiseTolerance === 'high' && vocal >= 6) {
-    delta += 4;
+  const highNoiseFrac = fieldFraction(ctx, 'noiseTolerance', 'high');
+  if (highNoiseFrac > 0 && vocal >= 6) {
+    delta += highNoiseFrac * 4;
   }
 
   return delta;
@@ -292,7 +368,7 @@ function scoreVocalAndNoise(
 function scoreActivity(
   breedName: string,
   _category: BreedCategory,
-  profile: HouseholdProfile,
+  ctx: ScoringContext,
   reasons: string[],
   cautions: string[]
 ): number {
@@ -300,31 +376,47 @@ function scoreActivity(
   const work = intel?.scores.work ?? 5;
   const inst = intel?.scores.inst ?? 5;
   const drive = (work + inst) / 2;
+  const activity = weightedActivity(ctx);
+  const lowWeight = Math.max(0, Math.min(1, (2.5 - activity) / 1.5));
+  const highWeight = Math.max(0, Math.min(1, (activity - 3.5) / 1.5));
   let delta = 0;
 
-  if (profile.activity <= 2) {
+  if (lowWeight > 0) {
     if (drive >= 7) {
-      delta -= 16;
-      cautions.push('High working drive — needs more exercise and purpose than your activity level suggests.');
+      delta -= 16 * lowWeight;
+      if (noteAt(0.5, lowWeight)) {
+        cautions.push(
+          'High working drive â€” needs more exercise and purpose than your activity level suggests.'
+        );
+      }
     } else if (drive <= 4) {
-      delta += 12;
-      reasons.push('Lower drive — suits a couch-first or casual lifestyle.');
+      delta += 12 * lowWeight;
+      if (noteAt(0.5, lowWeight)) {
+        reasons.push('Lower drive â€” suits a couch-first or casual lifestyle.');
+      }
     }
   }
 
-  if (profile.activity >= 4) {
+  if (highWeight > 0) {
     if (drive >= 7) {
-      delta += 14;
-      reasons.push('Working drive and stamina match an active household.');
+      delta += 14 * highWeight;
+      if (noteAt(0.5, highWeight)) {
+        reasons.push('Working drive and stamina match an active household.');
+      }
     } else if (drive <= 4) {
-      delta -= 8;
-      cautions.push('May not keep pace with a high-activity runner without extra motivation.');
+      delta -= 8 * highWeight;
+      if (noteAt(0.5, highWeight)) {
+        cautions.push('May not keep pace with a high-activity runner without extra motivation.');
+      }
     }
   }
 
-  if (profile.yard === 'none' && drive >= 7 && profile.activity <= 3) {
-    delta -= 8;
-    cautions.push('High-drive dog with limited yard — plan daily structured outlets.');
+  const noYardFrac = fieldFraction(ctx, 'yard', 'none');
+  if (noYardFrac > 0 && drive >= 7 && activity <= 3) {
+    delta -= noYardFrac * 8;
+    if (noteAt(0.5, noYardFrac)) {
+      cautions.push('High-drive dog with limited yard â€” plan daily structured outlets.');
+    }
   }
 
   return delta;
@@ -332,7 +424,7 @@ function scoreActivity(
 
 function scoreExperience(
   breed: Breed,
-  profile: HouseholdProfile,
+  ctx: ScoringContext,
   reasons: string[],
   cautions: string[]
 ): number {
@@ -340,24 +432,32 @@ function scoreExperience(
   const adapt = intel?.scores.adapt ?? 5;
   let delta = 0;
 
-  if (profile.experience === 'first') {
+  const firstFrac = fieldFraction(ctx, 'experience', 'first');
+  if (firstFrac > 0) {
     if (breed.category === 'spitz' || breed.category === 'giant') {
-      delta -= 12;
-      cautions.push('Independent or slow-maturing types can challenge first-time owners — structure is essential.');
+      delta -= firstFrac * 12;
+      if (noteAt(0.5, firstFrac)) {
+        cautions.push(
+          'Independent or slow-maturing types can challenge first-time owners â€” structure is essential.'
+        );
+      }
     }
     if (adapt <= 4) {
-      delta -= 8;
+      delta -= firstFrac * 8;
     }
     if (breed.category === 'clingy' && adapt >= 6) {
-      delta += 8;
-      reasons.push('People-focused and generally cooperative — forgiving for newer handlers with clear structure.');
+      delta += firstFrac * 8;
+      if (noteAt(0.5, firstFrac)) {
+        reasons.push(
+          'People-focused and generally cooperative â€” forgiving for newer handlers with clear structure.'
+        );
+      }
     }
   }
 
-  if (profile.experience === 'experienced') {
-    if (breed.category === 'guardian' || breed.category === 'terrier') {
-      delta += 4;
-    }
+  const experiencedFrac = fieldFraction(ctx, 'experience', 'experienced');
+  if (experiencedFrac > 0 && (breed.category === 'guardian' || breed.category === 'terrier')) {
+    delta += experiencedFrac * 4;
   }
 
   return delta;
@@ -365,7 +465,7 @@ function scoreExperience(
 
 function scoreVisitorsAndGuard(
   breed: Breed,
-  profile: HouseholdProfile,
+  ctx: ScoringContext,
   reasons: string[],
   cautions: string[]
 ): number {
@@ -373,22 +473,32 @@ function scoreVisitorsAndGuard(
   const prot = intel?.scores.prot ?? 5;
   let delta = 0;
 
-  if (profile.visitors === 'frequent') {
+  const frequentVisitors = fieldFraction(ctx, 'visitors', 'frequent');
+  if (frequentVisitors > 0) {
     if (prot >= 7 || breed.category === 'guardian') {
-      delta -= 14;
-      cautions.push('Strong guarding instinct — frequent visitors need clear threshold and greeting routines.');
+      delta -= frequentVisitors * 14;
+      if (noteAt(0.5, frequentVisitors)) {
+        cautions.push(
+          'Strong guarding instinct â€” frequent visitors need clear threshold and greeting routines.'
+        );
+      }
     } else if (breed.category === 'clingy') {
-      delta += 6;
-      reasons.push('Typically sociable with people — easier with a busy household.');
+      delta += frequentVisitors * 6;
+      if (noteAt(0.5, frequentVisitors)) {
+        reasons.push('Typically sociable with people â€” easier with a busy household.');
+      }
     }
   }
 
-  if (profile.goal === 'watchdog') {
+  const watchdogFrac = fieldFraction(ctx, 'goal', 'watchdog');
+  if (watchdogFrac > 0) {
     if (prot >= 6 || breed.category === 'guardian' || breed.category === 'giant') {
-      delta += 14;
-      reasons.push('Natural watchdog tendencies — alert without needing to be taught suspicion.');
+      delta += watchdogFrac * 14;
+      if (noteAt(0.5, watchdogFrac)) {
+        reasons.push('Natural watchdog tendencies â€” alert without needing to be taught suspicion.');
+      }
     } else {
-      delta -= 6;
+      delta -= watchdogFrac * 6;
     }
   }
 
@@ -397,26 +507,34 @@ function scoreVisitorsAndGuard(
 
 function scoreSeparation(
   breedName: string,
-  profile: HouseholdProfile,
+  ctx: ScoringContext,
   reasons: string[],
   cautions: string[]
 ): number {
   const level = getSeparationLevel(breedName);
   let delta = 0;
 
-  if (profile.timeDaily === 'low') {
+  const lowTimeFrac = fieldFraction(ctx, 'timeDaily', 'low');
+  if (lowTimeFrac > 0) {
     if (level === 'high' || level === 'elevated') {
-      delta -= 18;
-      cautions.push('Prone to separation distress — long workdays need a plan, not hope.');
+      delta -= lowTimeFrac * 18;
+      if (noteAt(0.5, lowTimeFrac)) {
+        cautions.push('Prone to separation distress â€” long workdays need a plan, not hope.');
+      }
     } else if (level === 'low') {
-      delta += 8;
-      reasons.push('More tolerant of alone time — suits a busier weekday schedule.');
+      delta += lowTimeFrac * 8;
+      if (noteAt(0.5, lowTimeFrac)) {
+        reasons.push('More tolerant of alone time â€” suits a busier weekday schedule.');
+      }
     }
   }
 
-  if (profile.timeDaily === 'high' && (level === 'high' || level === 'elevated')) {
-    delta += 4;
-    reasons.push('Bonds closely — fine when you are home most of the day.');
+  const highTimeFrac = fieldFraction(ctx, 'timeDaily', 'high');
+  if (highTimeFrac > 0 && (level === 'high' || level === 'elevated')) {
+    delta += highTimeFrac * 4;
+    if (noteAt(0.5, highTimeFrac)) {
+      reasons.push('Bonds closely â€” fine when you are home most of the day.');
+    }
   }
 
   return delta;
@@ -424,7 +542,7 @@ function scoreSeparation(
 
 function scoreKidsAndPets(
   breed: Breed,
-  profile: HouseholdProfile,
+  ctx: ScoringContext,
   reasons: string[],
   cautions: string[]
 ): number {
@@ -432,38 +550,64 @@ function scoreKidsAndPets(
   const tags = getBreedSuggestedProfileTags(breed.name);
   const size = getBreedSizeClass(breed);
 
-  if (profile.kids === 'young' || profile.kids === 'all') {
+  const youngKids =
+    fieldFraction(ctx, 'kids', 'young') + fieldFraction(ctx, 'kids', 'all');
+  if (youngKids > 0) {
     if (breed.category === 'terrier') {
-      delta -= 10;
-      cautions.push('Terrier types can be snappy with rough handling — clear boundaries for kids and dog.');
+      delta -= youngKids * 10;
+      if (noteAt(0.5, youngKids)) {
+        cautions.push(
+          'Terrier types can be snappy with rough handling â€” clear boundaries for kids and dog.'
+        );
+      }
     }
     if (size === 'giant') {
-      delta -= 8;
-      cautions.push('Giant breeds need calm greetings from day one — cute puppy habits become dangerous fast.');
+      delta -= youngKids * 8;
+      if (noteAt(0.5, youngKids)) {
+        cautions.push(
+          'Giant breeds need calm greetings from day one â€” cute puppy habits become dangerous fast.'
+        );
+      }
     }
     if (breed.category === 'clingy') {
-      delta += 6;
-      reasons.push('Typically family-oriented — often good with children when structure is consistent.');
+      delta += youngKids * 6;
+      if (noteAt(0.5, youngKids)) {
+        reasons.push(
+          'Typically family-oriented â€” often good with children when structure is consistent.'
+        );
+      }
     }
   }
 
-  if (profile.otherPets === 'cats' || profile.otherPets === 'both') {
+  const catFrac =
+    fieldFraction(ctx, 'otherPets', 'cats') + fieldFraction(ctx, 'otherPets', 'both');
+  if (catFrac > 0) {
     const chase = getChaseWeight(breed.name, breed.category);
     if (chase >= 0.35) {
-      delta -= 16;
-      cautions.push('Strong chase instinct — cat households need management, not optimism.');
+      delta -= catFrac * 16;
+      if (noteAt(0.5, catFrac)) {
+        cautions.push('Strong chase instinct â€” cat households need management, not optimism.');
+      }
     } else if (chase < 0.15) {
-      delta += 6;
-      reasons.push('Lower chase drive — generally easier around cats with introductions done properly.');
+      delta += catFrac * 6;
+      if (noteAt(0.5, catFrac)) {
+        reasons.push(
+          'Lower chase drive â€” generally easier around cats with introductions done properly.'
+        );
+      }
     }
   }
 
-  if (profile.otherPets === 'dogs' || profile.otherPets === 'both') {
+  const dogFrac =
+    fieldFraction(ctx, 'otherPets', 'dogs') + fieldFraction(ctx, 'otherPets', 'both');
+  if (dogFrac > 0) {
     const intel = findIntelligenceByBreedName(breed.name);
     const dom = intel?.scores.dom ?? 5;
     if (tags.includes('pack_guarding') || tags.includes('hierarchy_priority') || dom >= 7) {
-      delta -= 10;
-      cautions.push('Can be selective with other dogs — introductions and structure matter.');
+      delta -= dogFrac * 10;
+      if (noteAt(0.5, dogFrac)) {
+        cautions.push('Can be selective with other dogs â€” introductions and structure matter.');
+      }
     }
   }
 
@@ -472,26 +616,34 @@ function scoreKidsAndPets(
 
 function scoreGrooming(
   breed: Breed,
-  profile: HouseholdProfile,
+  ctx: ScoringContext,
   reasons: string[],
   cautions: string[]
 ): number {
   const highMaintenance = hasHighGroomingCoat(breed.name);
   let delta = 0;
 
-  if (profile.grooming === 'minimal' && highMaintenance) {
-    delta -= 12;
-    cautions.push('Coat needs more maintenance than you prefer — budget time or grooming visits.');
+  const minimalFrac = fieldFraction(ctx, 'grooming', 'minimal');
+  if (minimalFrac > 0) {
+    if (highMaintenance) {
+      delta -= minimalFrac * 12;
+      if (noteAt(0.5, minimalFrac)) {
+        cautions.push('Coat needs more maintenance than you prefer â€” budget time or grooming visits.');
+      }
+    } else {
+      delta += minimalFrac * 6;
+      if (noteAt(0.5, minimalFrac)) {
+        reasons.push('Lower-maintenance coat for your preferences.');
+      }
+    }
   }
 
-  if (profile.grooming === 'happy' && highMaintenance) {
-    delta += 6;
-    reasons.push('Coat type matches your grooming tolerance.');
-  }
-
-  if (profile.grooming === 'minimal' && !highMaintenance) {
-    delta += 6;
-    reasons.push('Lower-maintenance coat for your preferences.');
+  const happyFrac = fieldFraction(ctx, 'grooming', 'happy');
+  if (happyFrac > 0 && highMaintenance) {
+    delta += happyFrac * 6;
+    if (noteAt(0.5, happyFrac)) {
+      reasons.push('Coat type matches your grooming tolerance.');
+    }
   }
 
   return delta;
@@ -499,7 +651,7 @@ function scoreGrooming(
 
 function scoreGoal(
   breed: Breed,
-  profile: HouseholdProfile,
+  ctx: ScoringContext,
   reasons: string[],
   cautions: string[]
 ): number {
@@ -508,73 +660,87 @@ function scoreGoal(
   const neuro = intel?.scores.neuro ?? 5;
   let delta = 0;
 
-  switch (profile.goal) {
-    case 'companion':
-      if (breed.category === 'clingy' || breed.category === 'small') {
-        delta += 10;
-        reasons.push('People-focused companion type — built for bonded family life.');
+  const companionFrac = fieldFraction(ctx, 'goal', 'companion');
+  if (companionFrac > 0 && (breed.category === 'clingy' || breed.category === 'small')) {
+    delta += companionFrac * 10;
+    if (noteAt(0.5, companionFrac)) {
+      reasons.push('People-focused companion type â€” built for bonded family life.');
+    }
+  }
+
+  const runningFrac = fieldFraction(ctx, 'goal', 'running');
+  if (runningFrac > 0 && (work >= 7 || breed.category === 'spitz' || breed.category === 'terrier')) {
+    delta += runningFrac * 12;
+    if (noteAt(0.5, runningFrac)) {
+      reasons.push('Stamina and drive suit a running or adventure partner.');
+    }
+  }
+
+  const calmFrac = fieldFraction(ctx, 'goal', 'calm');
+  if (calmFrac > 0) {
+    if (neuro >= 7) {
+      delta -= calmFrac * 10;
+      if (noteAt(0.5, calmFrac)) {
+        cautions.push('Can be stress-prone â€” calm home still needs structure, not just vibes.');
       }
-      break;
-    case 'running':
-      if (work >= 7 || breed.category === 'spitz' || breed.category === 'terrier') {
-        delta += 12;
-        reasons.push('Stamina and drive suit a running or adventure partner.');
+    }
+    if (work <= 5 && (breed.category === 'sighthound' || breed.category === 'clingy')) {
+      delta += calmFrac * 10;
+      if (noteAt(0.5, calmFrac)) {
+        reasons.push('Generally settles well when exercise is met â€” good calm-home candidate.');
       }
-      break;
-    case 'calm':
-      if (neuro >= 7) {
-        delta -= 10;
-        cautions.push('Can be stress-prone — calm home still needs structure, not just vibes.');
-      }
-      if (work <= 5 && (breed.category === 'sighthound' || breed.category === 'clingy')) {
-        delta += 10;
-        reasons.push('Generally settles well when exercise is met — good calm-home candidate.');
-      }
-      break;
-    case 'working':
-      if (breed.category === 'herding' || breed.category === 'terrier' || breed.category === 'scenthound') {
-        delta += 12;
-        reasons.push('Working heritage — thrives on jobs, puzzles, and earned access.');
-      }
-      break;
-    case 'watchdog':
-      break;
+    }
+  }
+
+  const workingFrac = fieldFraction(ctx, 'goal', 'working');
+  if (
+    workingFrac > 0 &&
+    (breed.category === 'herding' || breed.category === 'terrier' || breed.category === 'scenthound')
+  ) {
+    delta += workingFrac * 12;
+    if (noteAt(0.5, workingFrac)) {
+      reasons.push('Working heritage â€” thrives on jobs, puzzles, and earned access.');
+    }
   }
 
   return delta;
 }
 
-function scoreRural(
-  breed: Breed,
-  profile: HouseholdProfile,
-  reasons: string[]
-): number {
+function scoreRural(breed: Breed, ctx: ScoringContext, reasons: string[]): number {
   let delta = 0;
-  if (profile.dwelling === 'rural') {
+  const ruralFrac = fieldFraction(ctx, 'dwelling', 'rural');
+  if (ruralFrac > 0) {
     if (breed.category === 'giant' || breed.category === 'scenthound' || breed.category === 'herding') {
-      delta += 8;
-      reasons.push('Working or guardian heritage suits rural or lifestyle-block living.');
+      delta += ruralFrac * 8;
+      if (noteAt(0.5, ruralFrac)) {
+        reasons.push('Working or guardian heritage suits rural or lifestyle-block living.');
+      }
     }
   }
   return delta;
 }
 
-export function scoreBreedForHousehold(breed: Breed, profile: HouseholdProfile): BreedMatchResult {
+export function scoreBreedForHousehold(
+  breed: Breed,
+  profile: HouseholdProfile,
+  options?: { fieldWeights?: HouseholdFieldWeights }
+): BreedMatchResult {
   const reasons: string[] = [];
   const cautions: string[] = [];
   const size = getBreedSizeClass(breed);
+  const ctx: ScoringContext = { profile, fieldWeights: options?.fieldWeights };
 
   let score = 50;
-  score += scoreSize(breed, size, profile, reasons, cautions);
-  score += scoreVocalAndNoise(breed.name, breed.category, profile, reasons, cautions);
-  score += scoreActivity(breed.name, breed.category, profile, reasons, cautions);
-  score += scoreExperience(breed, profile, reasons, cautions);
-  score += scoreVisitorsAndGuard(breed, profile, reasons, cautions);
-  score += scoreSeparation(breed.name, profile, reasons, cautions);
-  score += scoreKidsAndPets(breed, profile, reasons, cautions);
-  score += scoreGrooming(breed, profile, reasons, cautions);
-  score += scoreGoal(breed, profile, reasons, cautions);
-  score += scoreRural(breed, profile, reasons);
+  score += scoreSize(breed, size, ctx, reasons, cautions);
+  score += scoreVocalAndNoise(breed.name, breed.category, ctx, reasons, cautions);
+  score += scoreActivity(breed.name, breed.category, ctx, reasons, cautions);
+  score += scoreExperience(breed, ctx, reasons, cautions);
+  score += scoreVisitorsAndGuard(breed, ctx, reasons, cautions);
+  score += scoreSeparation(breed.name, ctx, reasons, cautions);
+  score += scoreKidsAndPets(breed, ctx, reasons, cautions);
+  score += scoreGrooming(breed, ctx, reasons, cautions);
+  score += scoreGoal(breed, ctx, reasons, cautions);
+  score += scoreRural(breed, ctx, reasons);
 
   score = Math.max(0, Math.min(100, score));
 
@@ -582,7 +748,7 @@ export function scoreBreedForHousehold(breed: Breed, profile: HouseholdProfile):
   const uniqueCautions = [...new Set(cautions)].slice(0, 3);
 
   if (uniqueReasons.length === 0 && score >= 55) {
-    uniqueReasons.push('No major mismatches flagged for your answers — worth meeting individuals from this breed.');
+    uniqueReasons.push('No major mismatches flagged for your answers â€” worth meeting individuals from this breed.');
   }
 
   return {
@@ -596,12 +762,12 @@ export function scoreBreedForHousehold(breed: Breed, profile: HouseholdProfile):
 
 export function rankBreedsForHousehold(
   profile: HouseholdProfile,
-  options: { limit?: number; minScore?: number } = {}
+  options: { limit?: number; minScore?: number; fieldWeights?: HouseholdFieldWeights } = {}
 ): BreedMatchResult[] {
-  const { limit = 5, minScore = 45 } = options;
+  const { limit = 5, minScore = 45, fieldWeights } = options;
 
   return breeds
-    .map((breed) => scoreBreedForHousehold(breed, profile))
+    .map((breed) => scoreBreedForHousehold(breed, profile, { fieldWeights }))
     .filter((r) => r.score >= minScore)
     .sort((a, b) => b.score - a.score)
     .slice(0, limit);
@@ -631,3 +797,54 @@ export function getBreedFinderSectionLabel(questionIndex: number): string {
 }
 
 export const BREED_FINDER_TOTAL_STEPS = BREED_FINDER_QUESTIONS.length;
+
+function buildHouseholdFieldWeights(
+  answers: Record<string, number[]>,
+  total = ALLOCATION_SCALE_TOTAL
+): HouseholdFieldWeights {
+  const weights: HouseholdFieldWeights = {};
+
+  for (const question of BREED_FINDER_ALLOCATION_QUESTIONS) {
+    const shares = answers[question.id];
+    if (!shares) continue;
+    weights[question.id as keyof HouseholdProfile] = buildFieldWeightsFromShares(question, shares);
+  }
+
+  void total;
+  return weights;
+}
+
+export function buildHouseholdProfileFromShares(
+  answers: Record<string, number[]>
+): HouseholdProfile {
+  const profile = parseHouseholdProfile({});
+
+  for (const question of BREED_FINDER_ALLOCATION_QUESTIONS) {
+    const shares = answers[question.id];
+    if (!shares) continue;
+    const poles = flattenPoles(question);
+    const dominant = dominantPoleId(poles, shares);
+    if (!dominant) continue;
+
+    if (question.id === 'activity') {
+      profile.activity = Math.max(
+        1,
+        Math.min(5, Math.round(weightedActivity({ profile, fieldWeights: buildHouseholdFieldWeights(answers) })))
+      ) as ActivityLevel;
+    } else {
+      const field = question.id as keyof HouseholdProfile;
+      (profile[field] as string) = dominant;
+    }
+  }
+
+  return profile;
+}
+
+export function rankBreedsFromShareAnswers(
+  answers: Record<string, number[]>,
+  options: { limit?: number; minScore?: number } = {}
+): BreedMatchResult[] {
+  const fieldWeights = buildHouseholdFieldWeights(answers);
+  const profile = buildHouseholdProfileFromShares(answers);
+  return rankBreedsForHousehold(profile, { ...options, fieldWeights });
+}

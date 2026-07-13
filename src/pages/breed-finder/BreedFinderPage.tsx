@@ -5,31 +5,42 @@ import SiteHeader from '../../components/SiteHeader';
 import SiteFooter from '../../components/SiteFooter';
 import SectionIcon from '../../components/SectionIcon';
 import QuizShell from '../../components/quiz/QuizShell';
+import QuizLinkedSliders from '../../components/quiz/QuizLinkedSliders';
 import BreedFinderResultView from './BreedFinderResult';
+import { getDefaultSharesForQuestion } from '../../data/allocationHelpers';
 import {
-  BREED_FINDER_QUESTIONS,
+  BREED_FINDER_ALLOCATION_QUESTIONS,
   BREED_FINDER_TOTAL_STEPS,
   getBreedFinderSectionLabel,
-  parseHouseholdProfile,
-  rankBreedsForHousehold,
+  rankBreedsFromShareAnswers,
   type BreedMatchResult,
-  type HouseholdProfile,
 } from '../../data/breedFinder';
 
 type Step =
   | { kind: 'intro' }
-  | { kind: 'question'; index: number; answers: Partial<Record<keyof HouseholdProfile, string>> }
+  | { kind: 'question'; index: number; answers: Record<string, number[]> }
   | { kind: 'result'; results: BreedMatchResult[] };
+
+function sharesForQuestion(questionId: string, answers: Record<string, number[]>): number[] {
+  const question = BREED_FINDER_ALLOCATION_QUESTIONS.find((q) => q.id === questionId);
+  if (!question) return [];
+  return answers[questionId] ?? getDefaultSharesForQuestion(question);
+}
 
 export default function BreedFinderPage() {
   const [step, setStep] = useState<Step>({ kind: 'intro' });
-  const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null);
+  const [sliderValues, setSliderValues] = useState<number[]>([]);
   const introRef = useRef<HTMLDivElement>(null);
   const skipIntroScroll = useRef(true);
 
   const goTo = (next: Step) => {
     setStep(next);
-    setSelectedOptionId(null);
+    if (next.kind === 'question') {
+      const question = BREED_FINDER_ALLOCATION_QUESTIONS[next.index];
+      if (question) {
+        setSliderValues(sharesForQuestion(question.id, next.answers));
+      }
+    }
   };
 
   useEffect(() => {
@@ -42,21 +53,22 @@ export default function BreedFinderPage() {
   }, [step]);
 
   const startFinder = () => {
+    const first = BREED_FINDER_ALLOCATION_QUESTIONS[0]!;
     goTo({ kind: 'question', index: 0, answers: {} });
+    setSliderValues(getDefaultSharesForQuestion(first));
   };
 
   const restart = () => goTo({ kind: 'intro' });
 
   const handleContinue = () => {
-    if (step.kind !== 'question' || !selectedOptionId) return;
+    if (step.kind !== 'question') return;
 
-    const question = BREED_FINDER_QUESTIONS[step.index];
-    const nextAnswers = { ...step.answers, [question.id]: selectedOptionId };
+    const question = BREED_FINDER_ALLOCATION_QUESTIONS[step.index]!;
+    const nextAnswers = { ...step.answers, [question.id]: sliderValues };
     const nextIndex = step.index + 1;
 
     if (nextIndex >= BREED_FINDER_TOTAL_STEPS) {
-      const profile = parseHouseholdProfile(nextAnswers);
-      const results = rankBreedsForHousehold(profile, { limit: 5, minScore: 45 });
+      const results = rankBreedsFromShareAnswers(nextAnswers, { limit: 5, minScore: 45 });
       goTo({ kind: 'result', results });
       return;
     }
@@ -91,9 +103,9 @@ export default function BreedFinderPage() {
             <h1>What kind of dog should you get?</h1>
           </div>
           <p>
-            Twelve questions about your home, household, and lifestyle — then ranked breed matches to help you
-            choose the most compatible dog, with reasons and honest caveats. A research starting point, not a
-            guarantee. Nothing is stored or sent.
+            Twelve questions about your home, household, and lifestyle — allocate 100% across each
+            answer, then ranked breed matches to help you choose the most compatible dog, with reasons
+            and honest caveats. A research starting point, not a guarantee. Nothing is stored or sent.
           </p>
         </div>
       </section>
@@ -104,6 +116,10 @@ export default function BreedFinderPage() {
             <p>
               We score every breed in the reference against your answers — size, noise, activity, kids,
               other pets, experience, and what you want from the relationship.
+            </p>
+            <p>
+              Each question uses linked sliders that always sum to 100%. Split your emphasis across
+              options — for example, mostly apartment with some townhouse time.
             </p>
             <p>
               For a lighter personality mirror, try{' '}
@@ -118,22 +134,15 @@ export default function BreedFinderPage() {
         )}
 
         {step.kind === 'question' && (() => {
-          const question = BREED_FINDER_QUESTIONS[step.index];
+          const question = BREED_FINDER_ALLOCATION_QUESTIONS[step.index]!;
           const sectionLabel = getBreedFinderSectionLabel(step.index);
-          const existingAnswer = step.answers[question.id];
-          const effectiveSelected = selectedOptionId ?? existingAnswer ?? null;
+          const poles = question.poles ?? [];
 
           return (
             <QuizShell
               contextLabel={`Choose your breed — ${sectionLabel}`}
               prompt={question.prompt}
-              options={question.options.map((o) => ({
-                id: o.value,
-                label: o.label,
-                sublabel: o.sublabel,
-              }))}
-              selectedId={effectiveSelected}
-              onSelect={setSelectedOptionId}
+              mode="sliders"
               onContinue={handleContinue}
               onBack={step.index > 0 ? handleBack : undefined}
               onRestart={restart}
@@ -142,7 +151,13 @@ export default function BreedFinderPage() {
               continueLabel={
                 step.index === BREED_FINDER_TOTAL_STEPS - 1 ? 'See my matches' : 'Next'
               }
-            />
+            >
+              <QuizLinkedSliders
+                poles={poles}
+                values={sliderValues}
+                onChange={setSliderValues}
+              />
+            </QuizShell>
           );
         })()}
 

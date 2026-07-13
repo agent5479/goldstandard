@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { getDefaultSharesForQuestion, flattenPoles, getQuestionDimensions } from './dogPersonalityAllocation';
+import { ALLOCATION_SCALE_TOTAL } from '../utils/allocationScales';
 import { PERSONALITY_ALLOCATION_QUESTIONS, buildHumanProfile } from './dogPersonalityQuiz';
 import { rankBreedsInCategory } from './dogPersonalityRefinement';
 
@@ -12,7 +13,7 @@ function answerQuestion(questionId: string, poleId: string): Record<string, numb
     const localIdx = dimension.poles.findIndex((p) => p.id === poleId);
     if (localIdx >= 0) {
       for (let i = 0; i < dimension.poles.length; i++) {
-        shares[offset + i] = i === localIdx ? 100 : 0;
+        shares[offset + i] = i === localIdx ? ALLOCATION_SCALE_TOTAL : 0;
       }
       break;
     }
