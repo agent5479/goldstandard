@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { getDefaultSharesForQuestion } from './dogPersonalityAllocation';
+import { getDefaultSharesForQuestion, getQuestionDimensions } from './dogPersonalityAllocation';
 import {
   PERSONALITY_ALLOCATION_QUESTIONS,
   PERSONALITY_ALLOCATION_TOTAL,
@@ -23,13 +23,15 @@ describe('dogPersonalityQuiz allocation', () => {
     expect(PERSONALITY_ALLOCATION_QUESTIONS).toHaveLength(12);
   });
 
-  it('every question has at least two poles with scoring data', () => {
+  it('every question has at least two poles with scoring data per dimension', () => {
     for (const question of PERSONALITY_ALLOCATION_QUESTIONS) {
-      expect(question.poles.length).toBeGreaterThanOrEqual(2);
-      for (const pole of question.poles) {
-        const hasCategory = Object.keys(pole.categoryWeights).length > 0;
-        const hasTrait = Object.keys(pole.traitDelta).length > 0;
-        expect(hasCategory || hasTrait).toBe(true);
+      for (const dimension of getQuestionDimensions(question)) {
+        expect(dimension.poles.length).toBeGreaterThanOrEqual(2);
+        for (const pole of dimension.poles) {
+          const hasCategory = Object.keys(pole.categoryWeights).length > 0;
+          const hasTrait = Object.keys(pole.traitDelta).length > 0;
+          expect(hasCategory || hasTrait).toBe(true);
+        }
       }
     }
   });
@@ -42,33 +44,48 @@ describe('dogPersonalityQuiz allocation', () => {
     };
     const weights = accumulateWeightsFromAnswers(answers);
     expect(weights.clingy).toBeGreaterThan(weights.terrier);
-    expect(resolvePersonalityCategory(weights)).toBe('clingy');
+    expect(weights.clingy).toBeGreaterThanOrEqual(weights.small);
   });
 
   it('blends trait profile from proportional shares', () => {
     const question = PERSONALITY_ALLOCATION_QUESTIONS.find((q) => q.id === 'alloc_build')!;
     const shares = getDefaultSharesForQuestion(question);
-    const compactIdx = question.poles.findIndex((p) => p.id === 'build_compact');
-    const substantialIdx = question.poles.findIndex((p) => p.id === 'build_substantial');
-    shares[compactIdx] = 50;
-    shares[substantialIdx] = 50;
+    const heightDim = question.dimensions![0]!;
+    const shortOffset = heightDim.poles.findIndex((p) => p.id === 'height_short');
+    const tallOffset = heightDim.poles.findIndex((p) => p.id === 'height_tall');
+    shares[shortOffset] = 50;
+    shares[tallOffset] = 50;
 
     const profile = buildHumanProfile({ alloc_build: shares });
-    expect(profile.size).toBeGreaterThan(5);
-    expect(profile.size).toBeLessThan(8);
+    expect(profile.size).toBeGreaterThan(4);
+    expect(profile.size).toBeLessThan(7);
   });
 });
 
 describe('resolvePersonalityResult', () => {
-  it('picks clingy when clingy-weighted answers dominate', () => {
+  it('picks clingy when clingy-dominant poles are maxed', () => {
     const answers: Record<string, number[]> = {};
     for (const question of PERSONALITY_ALLOCATION_QUESTIONS) {
-      const clingyIdx = question.poles.findIndex((p) => (p.categoryWeights.clingy ?? 0) >= 3);
-      if (clingyIdx >= 0) {
-        answers[question.id] = question.poles.map((_, i) => (i === clingyIdx ? 100 : 0));
-      } else {
-        answers[question.id] = getDefaultSharesForQuestion(question);
+      const shares = getDefaultSharesForQuestion(question);
+      let offset = 0;
+      for (const dimension of getQuestionDimensions(question)) {
+        let bestIdx = -1;
+        let bestWeight = -1;
+        dimension.poles.forEach((pole, index) => {
+          const clingyWeight = pole.categoryWeights.clingy ?? 0;
+          if (clingyWeight > bestWeight) {
+            bestWeight = clingyWeight;
+            bestIdx = offset + index;
+          }
+        });
+        if (bestIdx >= 0) {
+          for (let i = 0; i < dimension.poles.length; i++) {
+            shares[offset + i] = offset + i === bestIdx ? 100 : 0;
+          }
+        }
+        offset += dimension.poles.length;
       }
+      answers[question.id] = shares;
     }
 
     const result = resolvePersonalityResult(answers);

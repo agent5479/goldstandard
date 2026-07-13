@@ -7005,6 +7005,36 @@ a.problem-finder-tertiary {
   line-height: 1.45;
 }
 
+.quiz-linked-slider-dimensions {
+  display: flex;
+  flex-direction: column;
+  gap: 1.35rem;
+}
+
+.quiz-linked-slider-dimension {
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid rgba(45, 74, 45, 0.1);
+}
+
+.quiz-linked-slider-dimension:last-of-type {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.quiz-linked-slider-dimension-label {
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--light-text);
+  margin: 0 0 0.65rem;
+}
+
+.quiz-linked-slider-dimension .quiz-linked-sliders {
+  gap: 0.85rem;
+  margin: 0;
+}
+
 .dog-personality-result,
 .breed-finder-result {
   scroll-margin-top: calc(var(--site-header-height) + 1rem);

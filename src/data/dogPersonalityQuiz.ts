@@ -9,6 +9,7 @@ import { MAX_ADAPTIVE_QUESTIONS } from './dogPersonalityDisambiguation';
 import { getAdaptiveAllocationQuestions } from './dogPersonalityRefinement';
 import {
   rankBreedsInCategory,
+  type HumanTraitProfile,
   type PersonalityBreedMatch,
 } from './dogPersonalityTraitMatrix';
 
@@ -99,25 +100,25 @@ export const PERSONALITY_ALLOCATION_QUESTIONS: AllocationQuestion[] = [
       {
         id: 'energy_recharge',
         label: 'Recharge mode — conserve, observe, rest strategically',
-        categoryWeights: W({ sighthound: 3, small: 2, guardian: 2 }),
+        categoryWeights: W({ sighthound: 2, small: 2, guardian: 2, scenthound: 2, clingy: 3 }),
         traitDelta: { work: 3, inst: 3 },
       },
       {
         id: 'energy_steady',
         label: 'Steady and reliable — I show up the same way most days',
-        categoryWeights: W({ clingy: 2, herding: 2, guardian: 2 }),
+        categoryWeights: W({ clingy: 4, herding: 4, guardian: 2, scenthound: 2 }),
         traitDelta: { work: 6, inst: 5 },
       },
       {
         id: 'energy_high',
         label: 'High octane — I need outlets or I get restless',
-        categoryWeights: W({ terrier: 3, herding: 2, spitz: 2 }),
-        traitDelta: { work: 9, inst: 8 },
+        categoryWeights: W({ terrier: 4, herding: 3, clingy: 3 }),
+        traitDelta: { work: 9, inst: 8, sled_endurance: 7 },
       },
       {
         id: 'energy_adaptive',
         label: 'Depends who is in the room — I read the vibe first',
-        categoryWeights: W({ clingy: 2, guardian: 2, herding: 2 }),
+        categoryWeights: W({ clingy: 3, guardian: 3, herding: 2, spitz: 1 }),
         traitDelta: { adapt: 6, ei: 6 },
       },
     ],
@@ -129,20 +130,20 @@ export const PERSONALITY_ALLOCATION_QUESTIONS: AllocationQuestion[] = [
       {
         id: 'social_greet',
         label: 'Find my people and check in with everyone',
-        categoryWeights: W({ clingy: 4 }),
+        categoryWeights: W({ clingy: 4, small: 4, spitz: 1 }),
         traitDelta: { ei: 9, companion: 8 },
       },
       {
         id: 'social_scan',
         label: 'Scan for who is in charge, exits, and anything off',
-        categoryWeights: W({ guardian: 4, giant: 2 }),
+        categoryWeights: W({ guardian: 4, giant: 3, terrier: 1 }),
         traitDelta: { prot: 8, guard: 7 },
       },
       {
         id: 'social_periphery',
         label: 'Lurk at the edge until something interesting happens',
-        categoryWeights: W({ sighthound: 3, scenthound: 2, herding: 2 }),
-        traitDelta: { adapt: 7, chase: 5 },
+        categoryWeights: W({ sighthound: 2, scenthound: 3, herding: 3, clingy: 2 }),
+        traitDelta: { adapt: 7, chase: 5, scent: 4 },
       },
     ],
   },
@@ -153,19 +154,19 @@ export const PERSONALITY_ALLOCATION_QUESTIONS: AllocationQuestion[] = [
       {
         id: 'attach_velcro',
         label: 'Where you go, I go',
-        categoryWeights: W({ clingy: 4, small: 2 }),
-        traitDelta: { ei: 9, companion: 8 },
+        categoryWeights: W({ clingy: 4, small: 4 }),
+        traitDelta: { ei: 9, companion: 8, retrieve: 6 },
       },
       {
         id: 'attach_warm',
         label: 'Warm, but I need my own space too',
-        categoryWeights: W({ sighthound: 3, spitz: 2, guardian: 2 }),
+        categoryWeights: W({ sighthound: 2, spitz: 2, guardian: 2, scenthound: 1, clingy: 3 }),
         traitDelta: { ei: 5, adapt: 6 },
       },
       {
         id: 'attach_selective',
         label: 'Inner circle only — everyone else can wait',
-        categoryWeights: W({ guardian: 3, giant: 3, spitz: 2 }),
+        categoryWeights: W({ guardian: 4, giant: 1, terrier: 4, spitz: 1 }),
         traitDelta: { ei: 3, adapt: 8 },
       },
     ],
@@ -177,20 +178,14 @@ export const PERSONALITY_ALLOCATION_QUESTIONS: AllocationQuestion[] = [
       {
         id: 'drive_trail',
         label: 'Following a trail — curiosity pulls me along',
-        categoryWeights: W({ scenthound: 4 }),
+        categoryWeights: W({ scenthound: 3, sighthound: 2, giant: 2, small: 2, clingy: 2 }),
         traitDelta: { scent: 9, chase: 3 },
       },
       {
         id: 'drive_job',
         label: 'Finishing the job — puzzles, tasks, problems',
-        categoryWeights: W({ terrier: 3, herding: 3 }),
-        traitDelta: { iq: 8, work: 8 },
-      },
-      {
-        id: 'drive_both',
-        label: 'A bit of both — explore, then commit',
-        categoryWeights: W({ scenthound: 2, terrier: 2, herding: 2 }),
-        traitDelta: { scent: 6, work: 6 },
+        categoryWeights: W({ terrier: 4, herding: 4, clingy: 4 }),
+        traitDelta: { iq: 8, work: 8, retrieve: 5 },
       },
     ],
   },
@@ -201,20 +196,20 @@ export const PERSONALITY_ALLOCATION_QUESTIONS: AllocationQuestion[] = [
       {
         id: 'indep_vocal',
         label: 'I say what I think — take it or leave it',
-        categoryWeights: W({ spitz: 4, terrier: 2 }),
+        categoryWeights: W({ spitz: 3, terrier: 2 }),
         traitDelta: { vocal: 8, dom: 7 },
       },
       {
         id: 'indep_aloof',
         label: 'Polite distance — friendly on my terms',
-        categoryWeights: W({ sighthound: 3, giant: 2, guardian: 2 }),
+        categoryWeights: W({ sighthound: 2, giant: 2, guardian: 2, scenthound: 2, spitz: 1 }),
         traitDelta: { ei: 4, adapt: 7 },
       },
       {
         id: 'indep_endure',
         label: 'I can handle a long day alone if the deal is fair',
-        categoryWeights: W({ spitz: 3, giant: 3, guardian: 2 }),
-        traitDelta: { adapt: 8, companion: 3 },
+        categoryWeights: W({ spitz: 3, giant: 2, guardian: 2, small: 3 }),
+        traitDelta: { adapt: 8, companion: 3, sled_endurance: 6 },
       },
     ],
   },
@@ -225,19 +220,19 @@ export const PERSONALITY_ALLOCATION_QUESTIONS: AllocationQuestion[] = [
       {
         id: 'work_team',
         label: 'Team coordination — everyone in their lane',
-        categoryWeights: W({ herding: 4, clingy: 2 }),
-        traitDelta: { herding_eye: 8, dom: 6 },
+        categoryWeights: W({ herding: 4, clingy: 3, terrier: 2, spitz: 1 }),
+        traitDelta: { herding_eye: 8, dom: 6, retrieve: 7 },
       },
       {
         id: 'work_solo',
         label: 'Solo mission with a clear reward at the end',
-        categoryWeights: W({ terrier: 3, scenthound: 3 }),
-        traitDelta: { iq: 7, adapt: 6 },
+        categoryWeights: W({ terrier: 4, scenthound: 1, clingy: 2 }),
+        traitDelta: { iq: 7, adapt: 6, hunt_dig: 5 },
       },
       {
         id: 'work_boss',
         label: 'I am the project manager — others adapt to me',
-        categoryWeights: W({ spitz: 3, small: 3, giant: 2 }),
+        categoryWeights: W({ small: 4, giant: 3, guardian: 1, spitz: 1 }),
         traitDelta: { dom: 8, vocal: 6 },
       },
     ],
@@ -249,19 +244,19 @@ export const PERSONALITY_ALLOCATION_QUESTIONS: AllocationQuestion[] = [
       {
         id: 'move_chase',
         label: 'Launch — instinct takes over',
-        categoryWeights: W({ sighthound: 4, terrier: 2, herding: 2 }),
-        traitDelta: { chase: 9, inst: 8 },
+        categoryWeights: W({ sighthound: 2, terrier: 4, herding: 3, clingy: 2 }),
+        traitDelta: { chase: 9, inst: 8, hunt_dig: 6 },
       },
       {
         id: 'move_track',
         label: 'Track it and plan an intercept',
-        categoryWeights: W({ herding: 4 }),
-        traitDelta: { herding_eye: 9, chase: 6 },
+        categoryWeights: W({ herding: 4, scenthound: 2 }),
+        traitDelta: { herding_eye: 9, chase: 6, scent: 5 },
       },
       {
         id: 'move_watch',
         label: 'Note it, maybe stretch, probably stay put',
-        categoryWeights: W({ sighthound: 3, guardian: 2, small: 2 }),
+        categoryWeights: W({ sighthound: 2, guardian: 3, small: 3, giant: 1, clingy: 3 }),
         traitDelta: { work: 3, chase: 3 },
       },
     ],
@@ -273,19 +268,19 @@ export const PERSONALITY_ALLOCATION_QUESTIONS: AllocationQuestion[] = [
       {
         id: 'comm_opinion',
         label: 'Opinionated — I have a podcast in my head',
-        categoryWeights: W({ spitz: 4, scenthound: 2, small: 2 }),
+        categoryWeights: W({ spitz: 3, scenthound: 2, small: 3 }),
         traitDelta: { vocal: 9 },
       },
       {
         id: 'comm_brief',
         label: 'Brief and direct — point made, moving on',
-        categoryWeights: W({ terrier: 3, herding: 2, guardian: 2 }),
+        categoryWeights: W({ terrier: 4, herding: 3, guardian: 2, clingy: 2, small: 2 }),
         traitDelta: { vocal: 4 },
       },
       {
         id: 'comm_silent',
         label: 'Strong silent type — presence over chatter',
-        categoryWeights: W({ giant: 3, sighthound: 3, guardian: 2 }),
+        categoryWeights: W({ giant: 3, sighthound: 2, guardian: 3 }),
         traitDelta: { vocal: 2 },
       },
     ],
@@ -293,24 +288,60 @@ export const PERSONALITY_ALLOCATION_QUESTIONS: AllocationQuestion[] = [
   {
     id: 'alloc_build',
     prompt: 'Your physical presence is…',
-    poles: [
+    dimensions: [
       {
-        id: 'build_compact',
-        label: 'Compact and portable',
-        categoryWeights: W({ small: 4 }),
-        traitDelta: { size: 3 },
+        id: 'build_height',
+        label: 'Height',
+        poles: [
+          {
+            id: 'height_tall',
+            label: 'Tall — rangy, long-limbed',
+            categoryWeights: W({ giant: 2, sighthound: 2, spitz: 2 }),
+            traitDelta: { size: 8 },
+          },
+          {
+            id: 'height_short',
+            label: 'Short — compact, close to the ground',
+            categoryWeights: W({ small: 4, clingy: 3, scenthound: 1 }),
+            traitDelta: { size: 3 },
+          },
+        ],
       },
       {
-        id: 'build_medium',
-        label: 'Medium and athletic',
-        categoryWeights: W({ clingy: 1, herding: 1, terrier: 1 }),
-        traitDelta: { size: 6 },
+        id: 'build_frame',
+        label: 'Build',
+        poles: [
+          {
+            id: 'frame_broad',
+            label: 'Broad — solid, takes up width',
+            categoryWeights: W({ giant: 3, guardian: 3, terrier: 1, spitz: 1 }),
+            traitDelta: { size: 8, dom: 6 },
+          },
+          {
+            id: 'frame_slim',
+            label: 'Slim — lean and streamlined',
+            categoryWeights: W({ sighthound: 3, herding: 2, spitz: 1 }),
+            traitDelta: { size: 5 },
+          },
+        ],
       },
       {
-        id: 'build_substantial',
-        label: 'Substantial — you take up space',
-        categoryWeights: W({ giant: 4, guardian: 2 }),
-        traitDelta: { size: 9 },
+        id: 'build_posture',
+        label: 'Default posture',
+        poles: [
+          {
+            id: 'posture_curl',
+            label: 'Curl up — contained, tucked in',
+            categoryWeights: W({ small: 3, clingy: 3, scenthound: 1 }),
+            traitDelta: { size: 3, companion: 7 },
+          },
+          {
+            id: 'posture_stretch',
+            label: 'Stretch out — expansive, sprawled',
+            categoryWeights: W({ giant: 2, sighthound: 2, spitz: 2 }),
+            traitDelta: { size: 7 },
+          },
+        ],
       },
     ],
   },
@@ -321,19 +352,19 @@ export const PERSONALITY_ALLOCATION_QUESTIONS: AllocationQuestion[] = [
       {
         id: 'express_quiet',
         label: 'Keep it dignified — presence over noise',
-        categoryWeights: W({ sighthound: 2, giant: 2 }),
+        categoryWeights: W({ sighthound: 2, giant: 2, guardian: 2, clingy: 2 }),
         traitDelta: { vocal: 2 },
       },
       {
         id: 'express_moderate',
         label: 'Say enough to be understood',
-        categoryWeights: W({ clingy: 1, herding: 1 }),
+        categoryWeights: W({ clingy: 4, herding: 3, small: 4 }),
         traitDelta: { vocal: 5 },
       },
       {
         id: 'express_vocal',
         label: 'Make sure the room knows',
-        categoryWeights: W({ spitz: 2, scenthound: 2 }),
+        categoryWeights: W({ spitz: 3, scenthound: 2, terrier: 2 }),
         traitDelta: { vocal: 9 },
       },
     ],
@@ -343,21 +374,21 @@ export const PERSONALITY_ALLOCATION_QUESTIONS: AllocationQuestion[] = [
     prompt: 'Your curiosity style is…',
     poles: [
       {
-        id: 'curiosity_scent',
-        label: 'Follow the trail — details matter',
-        categoryWeights: W({ scenthound: 3 }),
-        traitDelta: { scent: 9, chase: 3 },
+        id: 'curiosity_information',
+        label: 'Information — rabbit holes, research, figuring things out',
+        categoryWeights: W({ scenthound: 2, terrier: 3, herding: 3, clingy: 2 }),
+        traitDelta: { scent: 8, iq: 7 },
       },
       {
-        id: 'curiosity_chase',
-        label: 'Eyes on the moving thing',
-        categoryWeights: W({ sighthound: 3, terrier: 2 }),
-        traitDelta: { chase: 9, scent: 3 },
+        id: 'curiosity_sports',
+        label: 'Sports and action — competition, movement, something to chase',
+        categoryWeights: W({ sighthound: 2, terrier: 4, herding: 3, clingy: 2 }),
+        traitDelta: { chase: 9, inst: 8, work: 7, hunt_dig: 5 },
       },
       {
-        id: 'curiosity_people',
-        label: 'People and vibes first',
-        categoryWeights: W({ clingy: 3, small: 2 }),
+        id: 'curiosity_parties',
+        label: 'Parties and people — who is here, what is the vibe',
+        categoryWeights: W({ clingy: 4, small: 4, guardian: 2 }),
         traitDelta: { companion: 9, ei: 8 },
       },
     ],
@@ -369,25 +400,25 @@ export const PERSONALITY_ALLOCATION_QUESTIONS: AllocationQuestion[] = [
       {
         id: 'rely_loyalty',
         label: 'Unwavering loyalty and warmth',
-        categoryWeights: W({ clingy: 4 }),
-        traitDelta: { ei: 9, companion: 8 },
+        categoryWeights: W({ clingy: 4, small: 2 }),
+        traitDelta: { ei: 9, companion: 8, retrieve: 8 },
       },
       {
         id: 'rely_calm',
         label: 'Calm under pressure and good judgment',
-        categoryWeights: W({ guardian: 3, giant: 3, sighthound: 2 }),
+        categoryWeights: W({ guardian: 4, giant: 2, sighthound: 2, small: 2, clingy: 3 }),
         traitDelta: { neuro: 3, vocal: 3, startle: 3 },
       },
       {
         id: 'rely_drive',
         label: 'Getting things done when everyone else quit',
-        categoryWeights: W({ terrier: 3, herding: 3, spitz: 2 }),
-        traitDelta: { work: 9, iq: 7 },
+        categoryWeights: W({ terrier: 4, herding: 3, clingy: 3, spitz: 2 }),
+        traitDelta: { work: 9, iq: 7, sled_endurance: 5 },
       },
       {
         id: 'rely_fun',
         label: 'Making ordinary days feel less ordinary',
-        categoryWeights: W({ small: 3, scenthound: 2, clingy: 2 }),
+        categoryWeights: W({ small: 4, scenthound: 3, clingy: 4 }),
         traitDelta: { ei: 8, size: 4 },
       },
     ],
@@ -434,18 +465,50 @@ export function getAllocationQuestionByIndex(index: number): AllocationQuestion 
   return PERSONALITY_ALLOCATION_QUESTIONS[index];
 }
 
-export function resolvePersonalityCategory(weights: Record<BreedCategory, number>): BreedCategory {
+function breedCountForCategory(category: BreedCategory): number {
+  return breeds.filter((breed) => breed.category === category).length;
+}
+
+function categoryResolutionScore(
+  weights: Record<BreedCategory, number>,
+  category: BreedCategory
+): number {
+  const count = breedCountForCategory(category);
+  if (count <= 0) return 0;
+  const inventoryExponent = 0.68;
+  return (weights[category] ?? 0) / Math.pow(count, inventoryExponent);
+}
+
+export function resolvePersonalityCategory(
+  weights: Record<BreedCategory, number>,
+  profile?: HumanTraitProfile
+): BreedCategory {
   const ranked = ALL_CATEGORIES
-    .map((category) => ({ category, score: weights[category] ?? 0 }))
+    .map((category) => ({
+      category,
+      score: categoryResolutionScore(weights, category),
+    }))
     .sort((a, b) => b.score - a.score);
 
   const top = ranked[0]?.score ?? 0;
   const tied = ranked.filter((r) => r.score === top && top > 0);
-  return tied.length > 1
-    ? tied.sort(
-        (a, b) => ALL_CATEGORIES.indexOf(a.category) - ALL_CATEGORIES.indexOf(b.category)
-      )[0].category
-    : (ranked[0]?.category ?? 'clingy');
+
+  if (tied.length > 1) {
+    if (profile) {
+      const byAffinity = tied
+        .map((entry) => ({
+          category: entry.category,
+          affinity: rankBreedsInCategory(entry.category, profile, 1)[0]?.matchPercent ?? 0,
+        }))
+        .sort((a, b) => b.affinity - a.affinity);
+      return byAffinity[0]!.category;
+    }
+
+    const countFor = (category: BreedCategory) => breedCountForCategory(category);
+    return tied.sort((a, b) => countFor(b.category) - countFor(a.category))[0]!.category;
+  }
+
+  return ranked[0]?.category ?? 'clingy';
 }
 
 function allQuestionsForAnswers(answers: Partial<Record<string, number[]>>): AllocationQuestion[] {
@@ -478,10 +541,10 @@ export function resolvePersonalityResult(
   answers: Partial<Record<string, number[]>>
 ): PersonalityResult {
   const weights = accumulateWeightsFromAnswers(answers);
-  const category = resolvePersonalityCategory(weights);
+  const profile = buildHumanProfile(answers);
+  const category = resolvePersonalityCategory(weights, profile);
   const archetype = PERSONALITY_ARCHETYPES[category];
   const categoryBreeds = breeds.filter((b) => b.category === category);
-  const profile = buildHumanProfile(answers);
   const ranked = rankBreedsInCategory(category, profile, 5);
 
   const fallback: PersonalityBreedMatch = {

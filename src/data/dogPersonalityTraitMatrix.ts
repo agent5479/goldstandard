@@ -158,6 +158,18 @@ function scoreDimension(actual: number, target: number, spread = 3): number {
   return -4 - diff;
 }
 
+export const CATEGORY_AXIS_WEIGHTS: Record<BreedCategory, Partial<Record<keyof TraitVector, number>>> = {
+  clingy: { ei: 1.5, companion: 1.5, retrieve: 1.5, size: 1.5, startle: 1.5 },
+  sighthound: { chase: 1.5, work: 1.5, size: 1.5, ei: 1.5, inst: 1.5 },
+  herding: { herding_eye: 1.5, iq: 1.5, work: 1.5, vocal: 1.5, dom: 1.5 },
+  spitz: { vocal: 1.5, sled_endurance: 1.5, adapt: 1.5, prot: 1.5, size: 1.5 },
+  terrier: { hunt_dig: 1.5, chase: 1.5, dom: 1.5, vocal: 1.5, size: 1.5 },
+  scenthound: { scent: 1.5, vocal: 1.5, ei: 1.5, size: 1.5, work: 1.5 },
+  guardian: { prot: 1.5, guard: 1.5, vocal: 1.5, size: 1.5, work: 1.5 },
+  giant: { size: 1.5, work: 1.5, prot: 1.5, ei: 1.5, guard: 1.5 },
+  small: { size: 1.5, dom: 1.5, vocal: 1.5, ei: 1.5, iq: 1.5 },
+};
+
 const HIGHLIGHT_RULES: {
   key: keyof TraitVector;
   minDelta: number;
@@ -176,14 +188,17 @@ const HIGHLIGHT_RULES: {
 
 export function scoreBreedAgainstProfile(
   breed: Breed,
-  profile: HumanTraitProfile
+  profile: HumanTraitProfile,
+  category?: BreedCategory
 ): { score: number; highlights: string[] } {
   const vector = buildBreedTraitVector(breed);
+  const axisWeights = category ? CATEGORY_AXIS_WEIGHTS[category] : undefined;
   let score = 40;
   const highlights: string[] = [];
 
   for (const key of Object.keys(profile) as (keyof TraitVector)[]) {
-    score += scoreDimension(vector[key], profile[key]);
+    const weight = axisWeights?.[key] ?? 1;
+    score += scoreDimension(vector[key], profile[key]) * weight;
   }
 
   for (const rule of HIGHLIGHT_RULES) {
@@ -209,7 +224,7 @@ export function rankBreedsInCategory(
   return breeds
     .filter((b) => b.category === category)
     .map((breed) => {
-      const { score, highlights } = scoreBreedAgainstProfile(breed, profile);
+      const { score, highlights } = scoreBreedAgainstProfile(breed, profile, category);
       return {
         breed,
         matchPercent: score,

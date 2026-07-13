@@ -35,6 +35,21 @@ function toAllocationQuestion(question: LegacyDisambiguationQuestion): Allocatio
 }
 
 export const DISAMBIGUATION_MARGIN = 6;
+export const DISAMBIGUATION_MARGIN_BY_CATEGORY: Record<BreedCategory, number> = {
+  clingy: 8,
+  sighthound: 6,
+  herding: 6,
+  spitz: 6,
+  terrier: 6,
+  scenthound: 5,
+  guardian: 6,
+  giant: 6,
+  small: 6,
+};
+
+export function getDisambiguationMargin(category: BreedCategory): number {
+  return DISAMBIGUATION_MARGIN_BY_CATEGORY[category] ?? DISAMBIGUATION_MARGIN;
+}
 export const MAX_ADAPTIVE_QUESTIONS = 8;
 
 const DISAMBIGUATION_BANK: Record<BreedCategory, LegacyDisambiguationQuestion[]> = {
@@ -84,6 +99,15 @@ const DISAMBIGUATION_BANK: Record<BreedCategory, LegacyDisambiguationQuestion[]>
         { id: 'alone_quiet', label: 'Wait patiently', sublabel: 'Quiet confidence', delta: { vocal: 2, startle: 4 } },
         { id: 'alone_whine', label: 'Express concern', sublabel: 'Audible protest', delta: { vocal: 7, startle: 7 } },
         { id: 'alone_panic', label: 'Full drama', sublabel: 'Separation song', delta: { vocal: 9, startle: 9 } },
+      ],
+    },
+    {
+      id: 'dis_clingy_retrieve',
+      prompt: 'Your fetch-the-ball energy…',
+      options: [
+        { id: 'retrieve_obsessed', label: 'Again. Again. Again.', sublabel: 'Retriever drive', delta: { retrieve: 9, work: 7 } },
+        { id: 'retrieve_sometimes', label: 'Fun in bursts', sublabel: 'Casual play', delta: { retrieve: 6, ei: 6 } },
+        { id: 'retrieve_nah', label: 'I brought it back once — that counts', sublabel: 'Low fetch drive', delta: { retrieve: 3, adapt: 6 } },
       ],
     },
   ],
@@ -496,7 +520,7 @@ export function planAdaptiveQuestion(
   if (adaptiveCount >= MAX_ADAPTIVE_QUESTIONS) return null;
 
   const margin = getBreedRankingMargin(category, profile);
-  if (margin >= DISAMBIGUATION_MARGIN) return null;
+  if (margin >= getDisambiguationMargin(category)) return null;
 
   const topBreeds = rankBreedsInCategory(category, profile, 5).map((m) => m.breed);
   const bank = getDisambiguationBank(category).filter((q) => !answeredIds.has(q.id));
@@ -526,5 +550,5 @@ export function isRefinementSeparated(
   adaptiveCount: number
 ): boolean {
   if (adaptiveCount >= MAX_ADAPTIVE_QUESTIONS) return true;
-  return getBreedRankingMargin(category, profile) >= DISAMBIGUATION_MARGIN;
+  return getBreedRankingMargin(category, profile) >= getDisambiguationMargin(category);
 }

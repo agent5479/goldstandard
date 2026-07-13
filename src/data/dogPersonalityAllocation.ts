@@ -15,14 +15,34 @@ export interface AllocationPole {
   traitDelta: TraitVectorDelta;
 }
 
-export interface AllocationQuestion {
+export interface AllocationDimension {
   id: string;
-  prompt: string;
+  label: string;
   poles: AllocationPole[];
 }
 
+export interface AllocationQuestion {
+  id: string;
+  prompt: string;
+  /** Single linked group (default). */
+  poles?: AllocationPole[];
+  /** Independent linked groups, each summing to 100%. */
+  dimensions?: AllocationDimension[];
+}
+
+export function getQuestionDimensions(question: AllocationQuestion): AllocationDimension[] {
+  if (question.dimensions?.length) return question.dimensions;
+  return [{ id: question.id, label: '', poles: question.poles ?? [] }];
+}
+
+export function flattenPoles(question: AllocationQuestion): AllocationPole[] {
+  return getQuestionDimensions(question).flatMap((dimension) => dimension.poles);
+}
+
 export function getDefaultSharesForQuestion(question: AllocationQuestion, total = 100): number[] {
-  return defaultLinkedShares(question.poles.length, total);
+  return getQuestionDimensions(question).flatMap((dimension) =>
+    defaultLinkedShares(dimension.poles.length, total)
+  );
 }
 
 export function blendTraitDeltaFromShares(
@@ -60,16 +80,22 @@ export function accumulateCategoryWeightsFromAnswers(
     const shares = answers[question.id];
     if (!shares) continue;
 
-    for (let i = 0; i < question.poles.length; i++) {
-      const pole = question.poles[i]!;
-      const fraction = (shares[i] ?? 0) / 100;
-      if (fraction <= 0) continue;
+    let offset = 0;
+    for (const dimension of getQuestionDimensions(question)) {
+      const dimShares = shares.slice(offset, offset + dimension.poles.length);
+      offset += dimension.poles.length;
 
-      const scaled: Partial<Record<BreedCategory, number>> = {};
-      for (const [cat, value] of Object.entries(pole.categoryWeights)) {
-        scaled[cat as BreedCategory] = (value ?? 0) * fraction;
+      for (let i = 0; i < dimension.poles.length; i++) {
+        const pole = dimension.poles[i]!;
+        const fraction = (dimShares[i] ?? 0) / 100;
+        if (fraction <= 0) continue;
+
+        const scaled: Partial<Record<BreedCategory, number>> = {};
+        for (const [cat, value] of Object.entries(pole.categoryWeights)) {
+          scaled[cat as BreedCategory] = (value ?? 0) * fraction;
+        }
+        weights = mergeWeights(weights, scaled);
       }
-      weights = mergeWeights(weights, scaled);
     }
   }
 
@@ -85,9 +111,15 @@ export function buildHumanProfileFromAllocations(
   for (const question of questions) {
     const shares = answers[question.id];
     if (!shares) continue;
-    const blended = blendTraitDeltaFromShares(question.poles, shares);
-    if (Object.keys(blended).length > 0) {
-      profile = applyTraitDelta(profile, blended);
+
+    let offset = 0;
+    for (const dimension of getQuestionDimensions(question)) {
+      const dimShares = shares.slice(offset, offset + dimension.poles.length);
+      offset += dimension.poles.length;
+      const blended = blendTraitDeltaFromShares(dimension.poles, dimShares);
+      if (Object.keys(blended).length > 0) {
+        profile = applyTraitDelta(profile, blended);
+      }
     }
   }
 
@@ -108,10 +140,34 @@ export function polesFromLegacyOptions(
 
 export function allocationQuestionAxes(question: AllocationQuestion): (keyof TraitVector)[] {
   const axes = new Set<keyof TraitVector>();
-  for (const pole of question.poles) {
+  for (const pole of flattenPoles(question)) {
     for (const key of Object.keys(pole.traitDelta) as (keyof TraitVector)[]) {
       axes.add(key);
     }
   }
   return [...axes];
+}
+
+export function computeTotalMaxCategoryWeights(
+  questions: AllocationQuestion[],
+  categories: BreedCategory[]
+): Record<BreedCategory, number> {
+  const totals = Object.fromEntries(categories.map((category) => [category, 0])) as Record<
+    BreedCategory,
+    number
+  >;
+
+  for (const question of questions) {
+    for (const dimension of getQuestionDimensions(question)) {
+      for (const cat of categories) {
+        const maxOnQuestion = Math.max(
+          0,
+          ...dimension.poles.map((pole) => pole.categoryWeights[cat] ?? 0)
+        );
+        totals[cat] += maxOnQuestion;
+      }
+    }
+  }
+
+  return totals;
 }

@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   DISAMBIGUATION_MARGIN,
+  getDisambiguationMargin,
   MAX_ADAPTIVE_QUESTIONS,
   getAllDisambiguationCategories,
   getDisambiguationBank,
@@ -28,7 +29,7 @@ describe('dogPersonalityDisambiguation', () => {
     for (const category of ALL_CATEGORIES) {
       const bank = getDisambiguationBank(category);
       expect(bank.length).toBeGreaterThanOrEqual(4);
-      expect(bank.length).toBeLessThanOrEqual(6);
+      expect(bank.length).toBeLessThanOrEqual(7);
     }
   });
 
@@ -52,6 +53,8 @@ describe('dogPersonalityDisambiguation', () => {
 
   it('uses configured margin threshold', () => {
     expect(DISAMBIGUATION_MARGIN).toBe(6);
+    expect(getDisambiguationMargin('clingy')).toBe(8);
+    expect(getDisambiguationMargin('scenthound')).toBe(5);
     expect(MAX_ADAPTIVE_QUESTIONS).toBe(8);
   });
 });

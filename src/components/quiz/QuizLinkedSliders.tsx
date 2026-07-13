@@ -10,6 +10,7 @@ interface QuizLinkedSlidersProps {
   values: number[];
   onChange: (values: number[]) => void;
   total?: number;
+  showHint?: boolean;
 }
 
 export default function QuizLinkedSliders({
@@ -17,6 +18,7 @@ export default function QuizLinkedSliders({
   values,
   onChange,
   total = 100,
+  showHint = true,
 }: QuizLinkedSlidersProps) {
   const handleChange = (index: number, raw: number) => {
     onChange(redistributeLinkedSliders(values, index, raw, total));
@@ -57,9 +59,11 @@ export default function QuizLinkedSliders({
           </div>
         );
       })}
-      <p className="quiz-linked-sliders-hint">
-        Sliders share 100% — raising one lowers the others proportionally.
-      </p>
+      {showHint ? (
+        <p className="quiz-linked-sliders-hint">
+          Sliders share 100% — raising one pulls from the others, weighted by how high they already sit.
+        </p>
+      ) : null}
     </div>
   );
 }

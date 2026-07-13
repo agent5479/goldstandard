@@ -6,8 +6,9 @@ import SiteFooter from '../../components/SiteFooter';
 import SectionIcon from '../../components/SectionIcon';
 import QuizShell from '../../components/quiz/QuizShell';
 import QuizLinkedSliders from '../../components/quiz/QuizLinkedSliders';
+import QuizLinkedSliderDimensions from '../../components/quiz/QuizLinkedSliderDimensions';
 import PersonalityResultView from './PersonalityResult';
-import { getDefaultSharesForQuestion, type AllocationQuestion } from '../../data/dogPersonalityAllocation';
+import { getDefaultSharesForQuestion, getQuestionDimensions, type AllocationQuestion } from '../../data/dogPersonalityAllocation';
 import {
   isRefinementSeparated,
   planAdaptiveQuestion,
@@ -72,7 +73,10 @@ export default function DogPersonalityPage() {
     if (next.kind === 'question') {
       const questionId = currentQuestionId(next);
       if (questionId) {
-        const category = resolvePersonalityCategory(accumulateWeightsFromAnswers(next.answers));
+        const category = resolvePersonalityCategory(
+          accumulateWeightsFromAnswers(next.answers),
+          buildHumanProfile(next.answers)
+        );
         const question = lookupQuestion(category, questionId);
         if (question) {
           setSliderValues(sharesForQuestion(question, next.answers));
@@ -110,7 +114,10 @@ export default function DogPersonalityPage() {
     const questionId = currentQuestionId(step);
     if (!questionId) return;
 
-    const category = resolvePersonalityCategory(accumulateWeightsFromAnswers(step.answers));
+    const category = resolvePersonalityCategory(
+      accumulateWeightsFromAnswers(step.answers),
+      buildHumanProfile(step.answers)
+    );
     const question = lookupQuestion(category, questionId);
     if (!question) return;
 
@@ -242,7 +249,10 @@ export default function DogPersonalityPage() {
           const questionId = currentQuestionId(step);
           if (!questionId) return null;
 
-          const category = resolvePersonalityCategory(accumulateWeightsFromAnswers(step.answers));
+          const category = resolvePersonalityCategory(
+      accumulateWeightsFromAnswers(step.answers),
+      buildHumanProfile(step.answers)
+    );
           const question = lookupQuestion(category, questionId);
           if (!question) return null;
 
@@ -271,11 +281,19 @@ export default function DogPersonalityPage() {
                     : 'Next'
               }
             >
-              <QuizLinkedSliders
-                poles={question.poles.map((pole) => ({ id: pole.id, label: pole.label }))}
-                values={sliderValues}
-                onChange={setSliderValues}
-              />
+              {question.dimensions?.length ? (
+                <QuizLinkedSliderDimensions
+                  dimensions={getQuestionDimensions(question)}
+                  values={sliderValues}
+                  onChange={setSliderValues}
+                />
+              ) : (
+                <QuizLinkedSliders
+                  poles={(question.poles ?? []).map((pole) => ({ id: pole.id, label: pole.label }))}
+                  values={sliderValues}
+                  onChange={setSliderValues}
+                />
+              )}
             </QuizShell>
           );
         })()}
