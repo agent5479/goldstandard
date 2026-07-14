@@ -619,6 +619,23 @@ export const NAMED_CROSS_BREEDS = new Set([
   'Lurcher',
 ]);
 
+/** Parent breed names used to average intelligence proxies for named crosses. */
+export const NAMED_CROSS_PARENTS: Record<string, string[]> = {
+  'Labradoodle / Groodle': ['Labrador Retriever', 'Poodle (Standard)'],
+  'Cavoodle / Spoodle': ['Cavalier King Charles Spaniel', 'Miniature Poodle'],
+  'Cockapoo': ['Cocker Spaniel', 'Miniature Poodle'],
+  'Schnoodle': ['Miniature Schnauzer', 'Miniature Poodle'],
+  'Bernedoodle': ['Bernese Mountain Dog', 'Poodle (Standard)'],
+  'Retrodoodle / Sheepadoodle': ['Old English Sheepdog', 'Poodle (Standard)'],
+  'Border Collie x Huntaway': ['Border Collie', 'NZ Huntaway'],
+  'Pig Dog (NZ hunting cross)': ['Staffordshire Bull Terrier (Staffy)', 'Greyhound'],
+  'Spaniel-cross working dog': ['Springer Spaniel', 'Border Collie'],
+  'Beagle-cross': ['Beagle', 'Staffordshire Bull Terrier (Staffy)'],
+  'Maltese Shih Tzu cross': ['Maltese', 'Shih Tzu'],
+  'Chihuahua cross': ['Chihuahua', 'Jack Russell Terrier'],
+  'Pomsky': ['Pomeranian', 'Siberian Husky'],
+  'Lurcher': ['Greyhound', 'Border Collie'],
+};
 type RawCoren = CorenScores & { breed: string; rank: number };
 
 const COREN_TOP_50: RawCoren[] = [
@@ -1157,6 +1174,87 @@ function buildAllProfiles(): DogIntelligenceProfile[] {
 
 export const dogIntelligenceProfiles: DogIntelligenceProfile[] = buildAllProfiles();
 
+function averageScores(profiles: DogIntelligenceProfile[]): IntelligenceScores {
+  const keys = INTELLIGENCE_DIMENSION_KEYS;
+  const result = {} as IntelligenceScores;
+  for (const key of keys) {
+    result[key] = profiles.reduce((sum, profile) => sum + profile.scores[key], 0) / profiles.length;
+  }
+  return result;
+}
+
+function averageInstinctSegments(
+  profiles: DogIntelligenceProfile[],
+  instScore: number
+): TraitSegment[] {
+  const byKey = new Map<string, { label: string; hue: string; weight: number }>();
+  for (const profile of profiles) {
+    for (const segment of profile.instinctSegments) {
+      const existing = byKey.get(segment.key);
+      if (existing) {
+        existing.weight += segment.weight;
+      } else {
+        byKey.set(segment.key, {
+          label: segment.label,
+          hue: segment.hue,
+          weight: segment.weight,
+        });
+      }
+    }
+  }
+
+  const averaged = [...byKey.entries()].map(([key, value]) => ({
+    key: key as InstinctSubtype,
+    label: value.label,
+    hue: value.hue,
+    weight: value.weight / profiles.length,
+    score: instScore * (value.weight / profiles.length),
+  }));
+
+  const weightSum = averaged.reduce((sum, segment) => sum + segment.weight, 0);
+  if (weightSum <= 0) return averaged;
+  return averaged.map((segment) => ({
+    ...segment,
+    weight: segment.weight / weightSum,
+    score: instScore * (segment.weight / weightSum),
+  }));
+}
+
+function buildNamedCrossProxyProfiles(
+  purebredProfiles: DogIntelligenceProfile[]
+): DogIntelligenceProfile[] {
+  const byName = new Map(purebredProfiles.map((profile) => [profile.breed, profile]));
+  const proxies: DogIntelligenceProfile[] = [];
+
+  for (const breed of breeds) {
+    if (!NAMED_CROSS_BREEDS.has(breed.name)) continue;
+    const parents = NAMED_CROSS_PARENTS[breed.name] ?? [];
+    const parentProfiles = parents
+      .map((name) => byName.get(name))
+      .filter((profile): profile is DogIntelligenceProfile => profile !== undefined);
+
+    if (parentProfiles.length === 0) {
+      proxies.push(buildProfileForBreed(breed.name, breed.category));
+      continue;
+    }
+
+    const scores = averageScores(parentProfiles);
+    proxies.push({
+      breed: breed.name,
+      breedKeys: [breed.name],
+      rank: 0,
+      sizeClass: BREED_SIZE_GRADES[breed.name] ?? parentProfiles[0]!.sizeClass,
+      scores,
+      instinctSegments: averageInstinctSegments(parentProfiles, scores.inst),
+      neuroSegments: buildNeuroSegments(breed.name, breed.category, scores.neuro),
+      source: 'estimated',
+    });
+  }
+
+  return proxies;
+}
+
+const namedCrossProxyProfiles = buildNamedCrossProxyProfiles(dogIntelligenceProfiles);
 export const INTELLIGENCE_SCORE_CEILING = 10;
 
 function computeScoreFloors(
@@ -1181,6 +1279,12 @@ export function scoreBoundsFor(dimension: IntelligenceDimension): {
 
 const profileByName = new Map<string, DogIntelligenceProfile>();
 for (const profile of dogIntelligenceProfiles) {
+  profileByName.set(profile.breed.toLowerCase(), profile);
+  for (const key of profile.breedKeys) {
+    profileByName.set(key.toLowerCase(), profile);
+  }
+}
+for (const profile of namedCrossProxyProfiles) {
   profileByName.set(profile.breed.toLowerCase(), profile);
   for (const key of profile.breedKeys) {
     profileByName.set(key.toLowerCase(), profile);

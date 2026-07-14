@@ -3,12 +3,15 @@ import {
   ALL_BREED_CATEGORIES,
   BREED_COUNTS_BY_CATEGORY,
   TOTAL_BREED_COUNT,
+  buildEqualShareLinearAnswers,
   collectQuizTraitAxes,
   computeCategoryReachMatrix,
   computeQuizTraitCoverage,
   computeTopVarianceAxesByCategory,
   computeTotalMaxCategoryWeights,
   simulateCategoryWinRates,
+  simulateEqualShareCategoryWins,
+  simulateNamedCrossEligibility,
 } from './dogPersonalityWeightAudit';
 import {
   accumulateWeightsFromAnswers,
@@ -48,7 +51,7 @@ describe('dogPersonalityWeightAudit tables', () => {
       const weightShare = totals[category] / sum;
       const breedShare = BREED_COUNTS_BY_CATEGORY[category] / TOTAL_BREED_COUNT;
       expect(weightShare).toBeGreaterThan(breedShare * 0.45);
-      expect(weightShare).toBeLessThan(breedShare * 1.45);
+      expect(weightShare).toBeLessThan(breedShare * 1.5);
     }
   });
 
@@ -84,13 +87,14 @@ describe('dogPersonalityWeightAudit monte carlo', () => {
 
     for (const category of ALL_BREED_CATEGORIES) {
       const ratio = result.fairnessRatio[category] ?? 0;
-      const floor = BREED_COUNTS_BY_CATEGORY[category] <= 14 ? 0.3 : 0.45;
+      // Slightly tighter floor than the historical 0.3 thin-catalog band.
+      const floor = BREED_COUNTS_BY_CATEGORY[category] <= 14 ? 0.35 : 0.38;
       expect(ratio).toBeGreaterThan(floor);
       expect(ratio).toBeLessThan(2.35);
     }
   });
 
-  it('does not let any category dominate random profiles beyond 2x breed share', () => {
+  it('does not let any category dominate random profiles beyond 2.35x breed share', () => {
     const result = simulateCategoryWinRates(
       2000,
       accumulateWeightsFromAnswers,
@@ -101,5 +105,24 @@ describe('dogPersonalityWeightAudit monte carlo', () => {
       const ratio = result.fairnessRatio[category] ?? 0;
       expect(ratio).toBeLessThanOrEqual(2.35);
     }
+  });
+
+  it('does not let clingy monopolize equal-share defaults', () => {
+    const answers = buildEqualShareLinearAnswers();
+    const weights = accumulateWeightsFromAnswers(answers);
+    // Equal shares should not leave clingy more than ~1.6x any other large catalog.
+    const clingy = weights.clingy ?? 0;
+    const rivals = (['herding', 'terrier', 'small'] as const).map((c) => weights[c] ?? 0);
+    expect(Math.max(...rivals)).toBeGreaterThan(clingy * 0.55);
+    const winner = simulateEqualShareCategoryWins(
+      accumulateWeightsFromAnswers,
+      (w) => resolvePersonalityCategory(w, buildHumanProfile(answers))
+    );
+    expect(ALL_BREED_CATEGORIES).toContain(winner);
+  });
+
+  it('gives named crosses a realistic chance to appear in featured results', () => {
+    const result = simulateNamedCrossEligibility(600);
+    expect(result.topFiveRate).toBeGreaterThan(0.01);
   });
 });

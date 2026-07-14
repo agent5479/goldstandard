@@ -114,15 +114,8 @@ export default function DogPersonalityPage() {
     const questionId = currentQuestionId(step);
     if (!questionId) return;
 
-    const category = resolvePersonalityCategory(
-      accumulateWeightsFromAnswers(step.answers),
-      buildHumanProfile(step.answers)
-    );
-    const question = lookupQuestion(category, questionId);
-    if (!question) return;
-
-    const nextAnswers = { ...step.answers, [question.id]: [...sliderValues] };
-    const answeredAdaptive = !PERSONALITY_ALLOCATION_QUESTIONS.some((q) => q.id === question.id);
+    const nextAnswers = { ...step.answers, [questionId]: [...sliderValues] };
+    const answeredAdaptive = !PERSONALITY_ALLOCATION_QUESTIONS.some((q) => q.id === questionId);
     const adaptiveCount = answeredAdaptive ? step.adaptiveCount + 1 : step.adaptiveCount;
 
     if (!linearPhaseComplete(nextAnswers)) {
@@ -142,6 +135,10 @@ export default function DogPersonalityPage() {
     }
 
     const profile = buildHumanProfile(nextAnswers);
+    const category = resolvePersonalityCategory(
+      accumulateWeightsFromAnswers(nextAnswers),
+      profile
+    );
 
     if (isRefinementSeparated(category, profile, adaptiveCount)) {
       goTo({

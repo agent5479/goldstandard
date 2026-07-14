@@ -12,7 +12,16 @@ interface PersonalityResultViewProps {
 }
 
 export default function PersonalityResultView({ result, onRestart }: PersonalityResultViewProps) {
-  const { archetype, breeds, category, spiritBreed, spiritReading, closeMatches } = result;
+  const {
+    archetype,
+    breeds,
+    category,
+    spiritBreed,
+    spiritReading,
+    closeMatches,
+    nearMissMatches,
+    runnerUpCategory,
+  } = result;
   const resultRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -82,6 +91,25 @@ export default function PersonalityResultView({ result, onRestart }: Personality
           <h3 id="close-matches-heading">Close matches</h3>
           <div className="quiz-breed-grid">
             {closeMatches.map((match) => (
+              <article key={match.breed.name} className="quiz-breed-chip quiz-breed-chip--match">
+                <span className="quiz-breed-chip-name">{match.breed.name}</span>
+                <span className="quiz-breed-chip-score">{match.matchPercent}% match</span>
+                <span className="quiz-breed-chip-note">{match.reason}</span>
+              </article>
+            ))}
+          </div>
+        </section>
+      ) : null}
+
+      {nearMissMatches.length > 0 && runnerUpCategory ? (
+        <section className="quiz-breed-showcase" aria-labelledby="near-miss-heading">
+          <h3 id="near-miss-heading">Also a strong fit</h3>
+          <p className="quiz-near-miss-lead">
+            Your answers sat close to the {getArchetypeCategoryLabel(runnerUpCategory)} tribe —
+            these breeds were nearly as good a match.
+          </p>
+          <div className="quiz-breed-grid">
+            {nearMissMatches.map((match) => (
               <article key={match.breed.name} className="quiz-breed-chip quiz-breed-chip--match">
                 <span className="quiz-breed-chip-name">{match.breed.name}</span>
                 <span className="quiz-breed-chip-score">{match.matchPercent}% match</span>

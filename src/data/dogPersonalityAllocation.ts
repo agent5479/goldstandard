@@ -1,6 +1,6 @@
 import type { BreedCategory } from './breeds';
 import {
-  applyTraitDelta,
+  mergeHumanProfileFromDeltas,
   neutralTraitProfile,
   type HumanTraitProfile,
   type TraitVector,
@@ -116,7 +116,7 @@ export function buildHumanProfileFromAllocations(
   questions: AllocationQuestion[],
   total = ALLOCATION_SCALE_TOTAL
 ): HumanTraitProfile {
-  let profile = neutralTraitProfile();
+  const deltas: TraitVectorDelta[] = [];
 
   for (const question of questions) {
     const shares = answers[question.id];
@@ -128,12 +128,12 @@ export function buildHumanProfileFromAllocations(
       offset += dimension.poles.length;
       const blended = blendTraitDeltaFromShares(dimension.poles, dimShares, total);
       if (Object.keys(blended).length > 0) {
-        profile = applyTraitDelta(profile, blended);
+        deltas.push(blended);
       }
     }
   }
 
-  return profile;
+  return deltas.length > 0 ? mergeHumanProfileFromDeltas(deltas) : neutralTraitProfile();
 }
 
 /** Convert legacy categorical options into allocation poles (adaptive banks). */

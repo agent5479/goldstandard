@@ -143,10 +143,24 @@ export function applyTraitDelta(base: HumanTraitProfile, delta: TraitVectorDelta
   return next;
 }
 
+/** Average non-empty deltas per axis so early questions are not erased by later ones. */
 export function mergeHumanProfileFromDeltas(deltas: TraitVectorDelta[]): HumanTraitProfile {
-  let profile = neutralTraitProfile();
+  const sums: Partial<Record<keyof TraitVector, number>> = {};
+  const counts: Partial<Record<keyof TraitVector, number>> = {};
+
   for (const delta of deltas) {
-    profile = applyTraitDelta(profile, delta);
+    for (const key of Object.keys(delta) as (keyof TraitVector)[]) {
+      const value = delta[key];
+      if (value === undefined) continue;
+      sums[key] = (sums[key] ?? 0) + value;
+      counts[key] = (counts[key] ?? 0) + 1;
+    }
+  }
+
+  const profile = neutralTraitProfile();
+  for (const key of Object.keys(sums) as (keyof TraitVector)[]) {
+    const count = counts[key] ?? 1;
+    profile[key] = Math.max(1, Math.min(10, sums[key]! / count));
   }
   return profile;
 }

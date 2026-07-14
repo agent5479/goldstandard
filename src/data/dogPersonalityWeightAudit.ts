@@ -1,11 +1,16 @@
 import { breeds, type BreedCategory } from './breeds';
 import {
   flattenPoles,
+  getDefaultSharesForQuestion,
   getQuestionDimensions,
   type AllocationQuestion,
 } from './dogPersonalityAllocation';
 import { getDisambiguationBank } from './dogPersonalityDisambiguation';
-import { PERSONALITY_ALLOCATION_QUESTIONS } from './dogPersonalityQuiz';
+import { NAMED_CROSS_BREEDS } from './dogIntelligence';
+import {
+  PERSONALITY_ALLOCATION_QUESTIONS,
+  resolvePersonalityResult,
+} from './dogPersonalityQuiz';
 import {
   buildBreedTraitVector,
   type HumanTraitProfile,
@@ -318,4 +323,59 @@ export function ceilingFairnessDeviation(
       withinTolerance: ratio >= 1 - tolerance && ratio <= 1 + tolerance,
     };
   });
+}
+
+export function buildEqualShareLinearAnswers(
+  questions: AllocationQuestion[] = PERSONALITY_ALLOCATION_QUESTIONS
+): Record<string, number[]> {
+  const answers: Record<string, number[]> = {};
+  for (const question of questions) {
+    answers[question.id] = getDefaultSharesForQuestion(question);
+  }
+  return answers;
+}
+
+export function simulateEqualShareCategoryWins(
+  accumulateWeights: (answers: Record<string, number[]>) => Record<BreedCategory, number>,
+  resolveCategory: (weights: Record<BreedCategory, number>) => BreedCategory
+): BreedCategory {
+  const answers = buildEqualShareLinearAnswers();
+  return resolveCategory(accumulateWeights(answers));
+}
+
+export interface NamedCrossEligibilityResult {
+  samples: number;
+  spiritWins: number;
+  topFiveHits: number;
+  spiritWinRate: number;
+  topFiveRate: number;
+}
+
+export function simulateNamedCrossEligibility(
+  samples = 800
+): NamedCrossEligibilityResult {
+  let spiritWins = 0;
+  let topFiveHits = 0;
+
+  for (let i = 0; i < samples; i++) {
+    const answers = buildRandomLinearAnswers();
+    const result = resolvePersonalityResult(answers);
+    const featured = [
+      result.spiritBreed,
+      ...result.closeMatches,
+      ...result.nearMissMatches,
+    ];
+    if (NAMED_CROSS_BREEDS.has(result.spiritBreed.breed.name)) spiritWins += 1;
+    if (featured.some((match) => NAMED_CROSS_BREEDS.has(match.breed.name))) {
+      topFiveHits += 1;
+    }
+  }
+
+  return {
+    samples,
+    spiritWins,
+    topFiveHits,
+    spiritWinRate: spiritWins / samples,
+    topFiveRate: topFiveHits / samples,
+  };
 }

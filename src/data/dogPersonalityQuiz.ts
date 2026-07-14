@@ -36,6 +36,9 @@ export interface PersonalityResult {
   spiritBreed: PersonalityBreedMatch;
   spiritReading: BreedSpiritReading;
   closeMatches: PersonalityBreedMatch[];
+  /** Strong fits from a runner-up category when resolution scores are close. */
+  nearMissMatches: PersonalityBreedMatch[];
+  runnerUpCategory: BreedCategory | null;
 }
 
 const W = (weights: Partial<Record<BreedCategory, number>>): Partial<Record<BreedCategory, number>> =>
@@ -106,7 +109,7 @@ export const PERSONALITY_ALLOCATION_QUESTIONS: AllocationQuestion[] = [
       {
         id: 'energy_recharge',
         label: 'Recharge mode — conserve, observe, rest strategically',
-        categoryWeights: W({ sighthound: 2, small: 2, guardian: 2, scenthound: 2, clingy: 3 }),
+        categoryWeights: W({ sighthound: 2, small: 2, guardian: 2, scenthound: 2, clingy: 2 }),
         traitDelta: { work: 3, inst: 3 },
       },
       {
@@ -118,7 +121,7 @@ export const PERSONALITY_ALLOCATION_QUESTIONS: AllocationQuestion[] = [
       {
         id: 'energy_high',
         label: 'High octane — I need outlets or I get restless',
-        categoryWeights: W({ terrier: 4, herding: 3, clingy: 3 }),
+        categoryWeights: W({ terrier: 4, herding: 3, clingy: 2 }),
         traitDelta: { work: 9, inst: 8, sled_endurance: 7 },
       },
       {
@@ -136,13 +139,13 @@ export const PERSONALITY_ALLOCATION_QUESTIONS: AllocationQuestion[] = [
       {
         id: 'social_greet',
         label: 'Find my people and check in with everyone',
-        categoryWeights: W({ clingy: 4, small: 4, spitz: 1 }),
+        categoryWeights: W({ clingy: 4, small: 3, spitz: 1 }),
         traitDelta: { ei: 9, companion: 8 },
       },
       {
         id: 'social_scan',
         label: 'Scan for who is in charge, exits, and anything off',
-        categoryWeights: W({ guardian: 4, giant: 3, terrier: 1 }),
+        categoryWeights: W({ guardian: 4, giant: 1, terrier: 1, spitz: 1 }),
         traitDelta: { prot: 8, guard: 7 },
       },
       {
@@ -160,7 +163,7 @@ export const PERSONALITY_ALLOCATION_QUESTIONS: AllocationQuestion[] = [
       {
         id: 'attach_velcro',
         label: 'Where you go, I go',
-        categoryWeights: W({ clingy: 4, small: 4 }),
+        categoryWeights: W({ clingy: 4, small: 3 }),
         traitDelta: { ei: 9, companion: 8, retrieve: 6 },
       },
       {
@@ -190,7 +193,7 @@ export const PERSONALITY_ALLOCATION_QUESTIONS: AllocationQuestion[] = [
       {
         id: 'drive_job',
         label: 'Finishing the job — puzzles, tasks, problems',
-        categoryWeights: W({ terrier: 4, herding: 4, clingy: 4 }),
+        categoryWeights: W({ terrier: 4, herding: 4, clingy: 3 }),
         traitDelta: { iq: 8, work: 8, retrieve: 5 },
       },
     ],
@@ -202,7 +205,7 @@ export const PERSONALITY_ALLOCATION_QUESTIONS: AllocationQuestion[] = [
       {
         id: 'indep_vocal',
         label: 'I say what I think — take it or leave it',
-        categoryWeights: W({ spitz: 3, terrier: 2 }),
+        categoryWeights: W({ spitz: 4, terrier: 2 }),
         traitDelta: { vocal: 8, dom: 7 },
       },
       {
@@ -226,7 +229,7 @@ export const PERSONALITY_ALLOCATION_QUESTIONS: AllocationQuestion[] = [
       {
         id: 'work_team',
         label: 'Team coordination — everyone in their lane',
-        categoryWeights: W({ herding: 4, clingy: 3, terrier: 2, spitz: 1 }),
+        categoryWeights: W({ herding: 4, clingy: 2, terrier: 2, spitz: 1 }),
         traitDelta: { herding_eye: 8, dom: 6, retrieve: 7 },
       },
       {
@@ -364,7 +367,7 @@ export const PERSONALITY_ALLOCATION_QUESTIONS: AllocationQuestion[] = [
       {
         id: 'express_moderate',
         label: 'Say enough to be understood',
-        categoryWeights: W({ clingy: 4, herding: 3, small: 4 }),
+        categoryWeights: W({ clingy: 4, herding: 3, small: 3 }),
         traitDelta: { vocal: 5 },
       },
       {
@@ -382,7 +385,7 @@ export const PERSONALITY_ALLOCATION_QUESTIONS: AllocationQuestion[] = [
       {
         id: 'curiosity_information',
         label: 'Information — rabbit holes, research, figuring things out',
-        categoryWeights: W({ scenthound: 2, terrier: 3, herding: 3, clingy: 2 }),
+        categoryWeights: W({ scenthound: 2, terrier: 3, herding: 3, clingy: 1 }),
         traitDelta: { scent: 8, iq: 7 },
       },
       {
@@ -394,7 +397,7 @@ export const PERSONALITY_ALLOCATION_QUESTIONS: AllocationQuestion[] = [
       {
         id: 'curiosity_parties',
         label: 'Parties and people — who is here, what is the vibe',
-        categoryWeights: W({ clingy: 4, small: 4, guardian: 2 }),
+        categoryWeights: W({ clingy: 4, small: 3, guardian: 1 }),
         traitDelta: { companion: 9, ei: 8 },
       },
     ],
@@ -412,7 +415,7 @@ export const PERSONALITY_ALLOCATION_QUESTIONS: AllocationQuestion[] = [
       {
         id: 'rely_calm',
         label: 'Calm under pressure and good judgment',
-        categoryWeights: W({ guardian: 4, giant: 2, sighthound: 2, small: 2, clingy: 3 }),
+        categoryWeights: W({ guardian: 4, giant: 2, sighthound: 2, small: 2, clingy: 1 }),
         traitDelta: { neuro: 3, vocal: 3, startle: 3 },
       },
       {
@@ -481,14 +484,19 @@ function categoryResolutionScore(
 ): number {
   const count = breedCountForCategory(category);
   if (count <= 0) return 0;
-  const inventoryExponent = 0.68;
+  // Mild inventory damping. Values near 0.8 over-reward thin catalogs under random profiles;
+  // weight rebalance carries most of the fairness work vs clingy co-max poles.
+  const inventoryExponent = 0.7;
   return (weights[category] ?? 0) / Math.pow(count, inventoryExponent);
 }
 
-export function resolvePersonalityCategory(
+/** Relative score gap under which the runner-up category also surfaces near-miss breeds. */
+export const NEAR_MISS_CATEGORY_RATIO = 0.82;
+
+export function rankCategoryResolution(
   weights: Record<BreedCategory, number>,
   profile?: HumanTraitProfile
-): BreedCategory {
+): { category: BreedCategory; score: number }[] {
   const ranked = ALL_CATEGORIES
     .map((category) => ({
       category,
@@ -504,17 +512,34 @@ export function resolvePersonalityCategory(
       const byAffinity = tied
         .map((entry) => ({
           category: entry.category,
+          score: entry.score,
           affinity: rankBreedsInCategory(entry.category, profile, 1)[0]?.matchPercent ?? 0,
         }))
         .sort((a, b) => b.affinity - a.affinity);
-      return byAffinity[0]!.category;
+      const order = byAffinity.map((entry) => entry.category);
+      return [
+        ...byAffinity.map(({ category, score }) => ({ category, score })),
+        ...ranked.filter((entry) => !order.includes(entry.category)),
+      ];
     }
 
     const countFor = (category: BreedCategory) => breedCountForCategory(category);
-    return tied.sort((a, b) => countFor(b.category) - countFor(a.category))[0]!.category;
+    const byCount = [...tied].sort((a, b) => countFor(b.category) - countFor(a.category));
+    const order = byCount.map((entry) => entry.category);
+    return [
+      ...byCount,
+      ...ranked.filter((entry) => !order.includes(entry.category)),
+    ];
   }
 
-  return ranked[0]?.category ?? 'clingy';
+  return ranked;
+}
+
+export function resolvePersonalityCategory(
+  weights: Record<BreedCategory, number>,
+  profile?: HumanTraitProfile
+): BreedCategory {
+  return rankCategoryResolution(weights, profile)[0]?.category ?? 'clingy';
 }
 
 function allQuestionsForAnswers(answers: Partial<Record<string, number[]>>): AllocationQuestion[] {
@@ -548,7 +573,8 @@ export function resolvePersonalityResult(
 ): PersonalityResult {
   const weights = accumulateWeightsFromAnswers(answers);
   const profile = buildHumanProfile(answers);
-  const category = resolvePersonalityCategory(weights, profile);
+  const resolution = rankCategoryResolution(weights, profile);
+  const category = resolution[0]?.category ?? 'clingy';
   const archetype = PERSONALITY_ARCHETYPES[category];
   const categoryBreeds = breeds.filter((b) => b.category === category);
   const ranked = rankBreedsInCategory(category, profile, 5);
@@ -565,6 +591,16 @@ export function resolvePersonalityResult(
     getBreedSpiritReading(spiritBreed.breed.name) ??
     getBreedSpiritReading(fallback.breed.name)!;
 
+  const topScore = resolution[0]?.score ?? 0;
+  const runnerUp = resolution[1];
+  const includeNearMiss =
+    !!runnerUp &&
+    topScore > 0 &&
+    runnerUp.score >= topScore * NEAR_MISS_CATEGORY_RATIO;
+  const nearMissMatches = includeNearMiss
+    ? rankBreedsInCategory(runnerUp.category, profile, 3)
+    : [];
+
   return {
     category,
     archetype,
@@ -576,6 +612,8 @@ export function resolvePersonalityResult(
       archetypeHeadline: archetype.headline,
     }),
     closeMatches: ranked.slice(1, 4),
+    nearMissMatches,
+    runnerUpCategory: includeNearMiss ? runnerUp.category : null,
   };
 }
 

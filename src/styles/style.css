@@ -7684,3 +7684,10 @@ a.problem-finder-tertiary {
     text-align: center;
   }
 }
+
+.quiz-near-miss-lead {
+  color: var(--light-text);
+  font-size: 1rem;
+  margin: 0 0 1rem;
+  max-width: 40rem;
+}
