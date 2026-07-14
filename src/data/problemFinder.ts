@@ -624,7 +624,6 @@ export function getIssueAllocationQuestion(
     return {
       id,
       label: outcome.label,
-      sublabel: outcome.summary,
     };
   });
 
@@ -695,24 +694,47 @@ export function dominantContextId(
   return bestId;
 }
 
-export function mergeOutcomesWeighted(
-  issueShares: Partial<Record<ProblemOutcomeId, number>>,
-  minWeight = 1
+/** Minimum allocation share (of 1000) for an issue to count as a focus area (~10%). */
+export const MIN_FOCUS_WEIGHT = 100;
+export const MAX_FOCUS_OUTCOMES = 3;
+
+/** Ranked focus outcomes: ≥10% weight, max 3; if none clear the floor, keep the top one. */
+export function selectFocusOutcomes(
+  issueShares: Partial<Record<ProblemOutcomeId, number>>
 ): ProblemOutcome[] {
-  return Object.entries(issueShares)
-    .filter(([, weight]) => (weight ?? 0) >= minWeight)
-    .sort(([, a], [, b]) => (b ?? 0) - (a ?? 0))
-    .map(([id]) => getOutcomeById(id as ProblemOutcomeId));
+  const ranked = Object.entries(issueShares)
+    .filter(([, weight]) => (weight ?? 0) > 0)
+    .sort(([, a], [, b]) => (b ?? 0) - (a ?? 0));
+
+  if (ranked.length === 0) return [];
+
+  const focused = ranked
+    .filter(([, weight]) => (weight ?? 0) >= MIN_FOCUS_WEIGHT)
+    .slice(0, MAX_FOCUS_OUTCOMES);
+
+  if (focused.length === 0) {
+    return [getOutcomeById(ranked[0]![0] as ProblemOutcomeId)];
+  }
+
+  return focused.map(([id]) => getOutcomeById(id as ProblemOutcomeId));
+}
+
+export function selectFocusOutcomeIds(
+  issueShares: Partial<Record<ProblemOutcomeId, number>>
+): ProblemOutcomeId[] {
+  return selectFocusOutcomes(issueShares).map((outcome) => outcome.id);
+}
+
+export function mergeOutcomesWeighted(
+  issueShares: Partial<Record<ProblemOutcomeId, number>>
+): ProblemOutcome[] {
+  return selectFocusOutcomes(issueShares);
 }
 
 export function outcomeIdsFromShares(
-  issueShares: Partial<Record<ProblemOutcomeId, number>>,
-  minWeight = 1
+  issueShares: Partial<Record<ProblemOutcomeId, number>>
 ): ProblemOutcomeId[] {
-  return Object.entries(issueShares)
-    .filter(([, weight]) => (weight ?? 0) >= minWeight)
-    .sort(([, a], [, b]) => (b ?? 0) - (a ?? 0))
-    .map(([id]) => id as ProblemOutcomeId);
+  return selectFocusOutcomeIds(issueShares);
 }
 
 export function buildEnquiryMessageFromShares(
@@ -721,7 +743,7 @@ export function buildEnquiryMessageFromShares(
   impact: ImpactLevel
 ): string {
   const context = getContextById(dominantContextId(contextShares));
-  const outcomes = mergeOutcomesWeighted(issueShares);
+  const outcomes = selectFocusOutcomes(issueShares);
   const contextLines = PROBLEM_CONTEXTS.filter((entry) => (contextShares[entry.id] ?? 0) > 0)
     .map((entry) => {
       const share = contextShares[entry.id] ?? 0;

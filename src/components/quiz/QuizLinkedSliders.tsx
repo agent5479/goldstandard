@@ -17,6 +17,7 @@ interface QuizLinkedSlidersProps {
   onChange: (values: number[]) => void;
   total?: number;
   showHint?: boolean;
+  showValues?: boolean;
   className?: string;
 }
 
@@ -26,6 +27,7 @@ export default function QuizLinkedSliders({
   onChange,
   total = ALLOCATION_SCALE_TOTAL,
   showHint = true,
+  showValues = true,
   className,
 }: QuizLinkedSlidersProps) {
   const handleChange = (index: number, displayPercent: number) => {
@@ -58,9 +60,11 @@ export default function QuizLinkedSliders({
                   <span className="quiz-linked-slider-sublabel">{pole.sublabel}</span>
                 ) : null}
               </label>
-              <span className="quiz-linked-slider-value" aria-hidden="true">
-                {display}%
-              </span>
+              {showValues ? (
+                <span className="quiz-linked-slider-value" aria-hidden="true">
+                  {display}%
+                </span>
+              ) : null}
             </div>
             <input
               id={`quiz-slider-${pole.id}`}

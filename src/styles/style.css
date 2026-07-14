@@ -6988,6 +6988,8 @@ a.problem-finder-tertiary {
 }
 
 .quiz-linked-slider-label {
+  flex: 1;
+  min-width: 0;
   font-size: 1.02rem;
   color: var(--forest);
   line-height: 1.35;

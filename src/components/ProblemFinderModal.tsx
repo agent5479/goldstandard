@@ -19,10 +19,10 @@ import {
   mergeBookingTags,
   mergeDriverConsiderations,
   mergeGuideLinksForResults,
-  mergeOutcomesWeighted,
   mergeSymptomExpressionHints,
-  outcomeIdsFromShares,
   resolveImpactFromShares,
+  selectFocusOutcomeIds,
+  selectFocusOutcomes,
   saveProblemFinderHandoff,
   shouldShowPuppyNav,
 } from '../data/problemFinder';
@@ -71,8 +71,8 @@ export default function ProblemFinderModal({ open, onClose }: ProblemFinderModal
     [issueQuestion, issueShares]
   );
 
-  const outcomeIds = useMemo(() => outcomeIdsFromShares(issueWeights), [issueWeights]);
-  const outcomes = useMemo(() => mergeOutcomesWeighted(issueWeights), [issueWeights]);
+  const outcomeIds = useMemo(() => selectFocusOutcomeIds(issueWeights), [issueWeights]);
+  const outcomes = useMemo(() => selectFocusOutcomes(issueWeights), [issueWeights]);
   const impact = useMemo(
     () => resolveImpactFromShares(impactShares, impactQuestion),
     [impactShares, impactQuestion]
@@ -229,6 +229,7 @@ export default function ProblemFinderModal({ open, onClose }: ProblemFinderModal
               poles={contextQuestion.poles ?? []}
               values={contextShares}
               onChange={setContextShares}
+              showValues={false}
             />
             <div className="problem-finder-nav">
               <button type="button" className="btn btn-primary" onClick={continueToIssues}>
@@ -251,6 +252,7 @@ export default function ProblemFinderModal({ open, onClose }: ProblemFinderModal
               poles={issueQuestion.poles ?? []}
               values={issueShares}
               onChange={setIssueShares}
+              showValues={false}
             />
             <div className="problem-finder-nav">
               <button type="button" className="btn btn-secondary" onClick={goBack}>
@@ -281,6 +283,7 @@ export default function ProblemFinderModal({ open, onClose }: ProblemFinderModal
               poles={impactQuestion.poles ?? []}
               values={impactShares}
               onChange={setImpactShares}
+              showValues={false}
             />
             <p className="problem-finder-impact-value">{IMPACT_LABELS[impact]}</p>
 
