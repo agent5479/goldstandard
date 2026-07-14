@@ -4,6 +4,7 @@ export const PRERENDER_ROUTES = [
   '/about',
   '/contact',
   '/book',
+  '/start',
   '/guide',
   '/guide/foundation',
   '/guide/leadership',

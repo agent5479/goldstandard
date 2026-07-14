@@ -64,6 +64,7 @@ jobs:
           test -f docs/about/index.html
           test -f docs/contact/index.html
           test -f docs/book/index.html
+          test -f docs/start/index.html
           test -f docs/guide/index.html
           test -f docs/exam/index.html
           test -f docs/intelligence/index.html
@@ -78,7 +79,10 @@ jobs:
           grep -q 'goldstandarddogtraining.nz' docs/CNAME
           grep -q 'Sitemap: https://goldstandarddogtraining.nz/sitemap.xml' docs/robots.txt
           grep -q 'https://goldstandarddogtraining.nz/book' docs/sitemap.xml
+          grep -q 'https://goldstandarddogtraining.nz/start' docs/sitemap.xml
           grep -q 'data-seo-ready="true"' docs/about/index.html
+          grep -q 'data-seo-ready="true"' docs/start/index.html
+          grep -q "You're not failing" docs/start/index.html
           grep -q 'gsdt-site-jsonld' docs/index.html
           grep -q 'ProfessionalService' docs/index.html
           grep -q '<h1' docs/book/index.html

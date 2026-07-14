@@ -10,6 +10,7 @@ export const SITE_ORIGIN = 'https://goldstandarddogtraining.nz';
 export const SEO_ROUTES = [
   { path: '/', changefreq: 'weekly', priority: '1.0' },
   { path: '/book', changefreq: 'weekly', priority: '0.9' },
+  { path: '/start', changefreq: 'weekly', priority: '0.9' },
   { path: '/contact', changefreq: 'monthly', priority: '0.8' },
   { path: '/about', changefreq: 'monthly', priority: '0.8' },
   { path: '/guide', changefreq: 'monthly', priority: '0.7' },
