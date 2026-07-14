@@ -1,4 +1,4 @@
-/** Public marketing routes baked to static HTML during `npm run build`. Keep in sync with `App.tsx`. */
+/** Public marketing routes baked to static HTML during `npm run build`. Keep in sync with `scripts/seoRoutes.mjs` and `App.tsx`. */
 export const PRERENDER_ROUTES = [
   '/',
   '/about',

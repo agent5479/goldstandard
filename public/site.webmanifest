@@ -2,6 +2,8 @@
   "name": "Gold Standard Dog Training",
   "short_name": "Gold Standard",
   "description": "Dog training, rehabilitation, and in-person coaching in Golden Bay, Nelson Bays and Greater Tasman Region, New Zealand. Proven, structured methods — trust, obedience, and peace for dogs and owners.",
+  "id": "https://goldstandarddogtraining.nz/",
+  "lang": "en-NZ",
   "icons": [
     {
       "src": "images/icons/dog192.jpg",
@@ -19,5 +21,6 @@
   "theme_color": "#2d4a2d",
   "background_color": "#f8f5ee",
   "display": "browser",
-  "start_url": "./"
+  "start_url": "/",
+  "scope": "/"
 }

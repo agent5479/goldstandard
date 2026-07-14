@@ -4,10 +4,11 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "predev": "node scripts/sync-hero-photos.mjs",
+    "predev": "node scripts/sync-hero-photos.mjs && node scripts/generate-sitemap.mjs",
     "dev": "vite",
-    "prebuild": "node scripts/sync-hero-photos.mjs",
+    "prebuild": "node scripts/sync-hero-photos.mjs && node scripts/generate-sitemap.mjs",
     "build": "tsc -b && vite build && node scripts/prerender.mjs",
+    "generate:sitemap": "node scripts/generate-sitemap.mjs",
     "preview": "vite preview",
     "test": "vitest run",
     "test:booking": "vitest run src/data/bookingPipeline.test.ts",

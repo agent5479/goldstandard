@@ -41,47 +41,98 @@
   <meta name="twitter:image" content="https://goldstandarddogtraining.nz/images/icons/dog1024.jpg">
   <meta name="twitter:image:alt" content="Gold Standard Dog Training — dog training in Golden Bay &amp; Tasman Region, New Zealand">
 
-  <script type="application/ld+json">
+  <script type="application/ld+json" id="gsdt-site-jsonld">
   {
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    "name": "Gold Standard Dog Training",
-    "alternateName": "Warwick Marshall Dog Training",
-    "url": "https://goldstandarddogtraining.nz/",
-    "logo": "https://goldstandarddogtraining.nz/images/icons/dog512.jpg",
-    "image": "https://goldstandarddogtraining.nz/images/icons/dog1024.jpg",
-    "description": "Warwick Marshall — dog training and rehabilitation in Golden Bay, serving the wider Tasman region, New Zealand. Structured, results-focused coaching and in-person session work.",
-    "telephone": "+64278142222",
-    "email": "warwick.marshall@gmail.com",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "Rangihaeata",
-      "addressLocality": "Takaka",
-      "addressRegion": "Golden Bay",
-      "postalCode": "7182",
-      "addressCountry": "NZ"
-    },
-    "geo": {
-      "@type": "GeoCoordinates",
-      "latitude": -40.853,
-      "longitude": 172.806
-    },
-    "areaServed": [
-      { "@type": "Place", "name": "Golden Bay, New Zealand" },
-      { "@type": "Place", "name": "Takaka, New Zealand" },
-      { "@type": "Place", "name": "Pohara, New Zealand" },
-      { "@type": "Place", "name": "Nelson Bays, New Zealand" },
-      { "@type": "Place", "name": "Motueka, New Zealand" },
-      { "@type": "Place", "name": "Richmond, New Zealand" },
-      { "@type": "Place", "name": "Greater Tasman Region, New Zealand" }
-    ],
-    "founder": {
-      "@type": "Person",
-      "name": "Warwick Marshall",
-      "jobTitle": "Dog Trainer",
-      "worksFor": { "@type": "LocalBusiness", "name": "Gold Standard Dog Training" }
-    },
-    "sameAs": ["https://www.facebook.com/profile.php?id=61580061262910"]
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://goldstandarddogtraining.nz/#website",
+        "url": "https://goldstandarddogtraining.nz/",
+        "name": "Gold Standard Dog Training",
+        "description": "Warwick Marshall — dog training and rehabilitation in Golden Bay, serving the wider Tasman region, NZ. Structured, results-focused coaching and in-person session work. Call 027 814 2222.",
+        "inLanguage": "en-NZ",
+        "publisher": { "@id": "https://goldstandarddogtraining.nz/#business" }
+      },
+      {
+        "@type": ["LocalBusiness", "ProfessionalService"],
+        "@id": "https://goldstandarddogtraining.nz/#business",
+        "name": "Gold Standard Dog Training",
+        "alternateName": "Warwick Marshall Dog Training",
+        "url": "https://goldstandarddogtraining.nz/",
+        "logo": "https://goldstandarddogtraining.nz/images/icons/dog512.jpg",
+        "image": "https://goldstandarddogtraining.nz/images/icons/dog1024.jpg",
+        "description": "Warwick Marshall — dog training and rehabilitation in Golden Bay, serving the wider Tasman region, NZ. Structured, results-focused coaching and in-person session work. Call 027 814 2222.",
+        "telephone": "+64278142222",
+        "email": "warwick.marshall@gmail.com",
+        "priceRange": "$$",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Rangihaeata",
+          "addressLocality": "Takaka",
+          "addressRegion": "Golden Bay",
+          "postalCode": "7182",
+          "addressCountry": "NZ"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": -40.853,
+          "longitude": 172.806
+        },
+        "areaServed": [
+          { "@type": "Place", "name": "Golden Bay, New Zealand" },
+          { "@type": "Place", "name": "Takaka, New Zealand" },
+          { "@type": "Place", "name": "Pohara, New Zealand" },
+          { "@type": "Place", "name": "Nelson Bays, New Zealand" },
+          { "@type": "Place", "name": "Motueka, New Zealand" },
+          { "@type": "Place", "name": "Richmond, New Zealand" },
+          { "@type": "Place", "name": "Greater Tasman Region, New Zealand" }
+        ],
+        "founder": { "@id": "https://goldstandarddogtraining.nz/#warwick" },
+        "sameAs": ["https://www.facebook.com/profile.php?id=61580061262910"],
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Dog training services",
+          "itemListElement": [
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Private dog training session",
+                "description": "In-person obedience, recall, leash work, and owner coaching.",
+                "url": "https://goldstandarddogtraining.nz/book"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Dog rehabilitation coaching",
+                "description": "Structured rehabilitation for reactivity, anxiety, and difficult histories.",
+                "url": "https://goldstandarddogtraining.nz/book"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "@type": "Person",
+        "@id": "https://goldstandarddogtraining.nz/#warwick",
+        "name": "Warwick Marshall",
+        "jobTitle": "Dog Trainer",
+        "url": "https://goldstandarddogtraining.nz/about",
+        "worksFor": { "@id": "https://goldstandarddogtraining.nz/#business" },
+        "telephone": "+64278142222",
+        "email": "warwick.marshall@gmail.com",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Takaka",
+          "addressRegion": "Golden Bay",
+          "addressCountry": "NZ"
+        },
+        "sameAs": ["https://www.facebook.com/profile.php?id=61580061262910"]
+      }
+    ]
   }
   </script>
 

@@ -6,7 +6,8 @@ import {
   type GuideModuleId,
 } from './guideModules';
 
-export const PUBLIC_GUIDE_BASE_URL = 'https://agent5479.github.io/goldstandard/guide';
+/** Canonical public guide base — must match SITE_URL custom domain. */
+export const PUBLIC_GUIDE_BASE_URL = 'https://goldstandarddogtraining.nz/guide';
 
 export function resolveGuideLocation(anchor: string): {
   moduleId: GuideModuleId;

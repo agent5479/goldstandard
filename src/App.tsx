@@ -10,6 +10,7 @@ import ExamPage from './pages/ExamPage';
 import IntelligencePage from './pages/IntelligencePage';
 import DogPersonalityPage from './pages/dog-personality/DogPersonalityPage';
 import BreedFinderPage from './pages/breed-finder/BreedFinderPage';
+import NotFoundPage from './pages/NotFoundPage';
 
 /** Redirect legacy .html URLs to their SPA routes, preserving the hash. */
 function LegacyRedirect({ to }: { to: string }) {
@@ -43,7 +44,7 @@ export default function App() {
         <Route path="/dog-personality.html" element={<LegacyRedirect to="/dog-personality" />} />
         <Route path="/breed-finder.html" element={<LegacyRedirect to="/breed-finder" />} />
 
-        <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </>
   );

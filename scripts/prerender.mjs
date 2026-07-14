@@ -8,31 +8,14 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright';
 import { preview } from 'vite';
+import { SEO_ROUTES } from './seoRoutes.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, '..');
 const outDir = join(root, 'docs');
-const siteBase = '';
 
-/** Keep in sync with src/data/prerenderRoutes.ts and App.tsx */
-const routes = [
-  '/',
-  '/about',
-  '/contact',
-  '/book',
-  '/guide',
-  '/guide/foundation',
-  '/guide/leadership',
-  '/guide/understanding',
-  '/guide/social',
-  '/guide/training',
-  '/guide/puppy-phase',
-  '/guide/daily-life',
-  '/exam',
-  '/intelligence',
-  '/dog-personality',
-  '/breed-finder',
-];
+/** Keep in sync with src/data/prerenderRoutes.ts */
+const routes = SEO_ROUTES.map((route) => route.path);
 
 function routeToOutputFile(route) {
   if (route === '/') return join(outDir, 'index.html');

@@ -1,4 +1,4 @@
-/** Public marketing site — GitHub Pages base URL (no trailing slash). */
+/** Public marketing site — custom domain (no trailing slash). */
 export const SITE_URL = 'https://goldstandarddogtraining.nz';
 
 export const SITE_NAME = 'Gold Standard Dog Training';
@@ -48,7 +48,123 @@ export const SITE_OG_DESCRIPTION =
 
 export const SITE_OG_IMAGE = `${SITE_URL}/images/icons/dog1024.jpg`;
 
+export const SITE_PHONE = '+64278142222';
+export const SITE_PHONE_DISPLAY = '027 814 2222';
+export const SITE_EMAIL = 'warwick.marshall@gmail.com';
+export const SITE_FACEBOOK_URL = 'https://www.facebook.com/profile.php?id=61580061262910';
+export const SITE_LOCALE = 'en_NZ';
+
 export function siteUrl(path = ''): string {
   if (!path || path === '/') return `${SITE_URL}/`;
   return `${SITE_URL}${path.startsWith('/') ? path : `/${path}`}`;
+}
+
+/** Structured data graph for the marketing site (home + entity). */
+export function buildSiteJsonLd(): Record<string, unknown> {
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'WebSite',
+        '@id': `${SITE_URL}/#website`,
+        url: `${SITE_URL}/`,
+        name: SITE_NAME,
+        description: SITE_META_DESCRIPTION,
+        inLanguage: 'en-NZ',
+        publisher: { '@id': `${SITE_URL}/#business` },
+      },
+      {
+        '@type': ['LocalBusiness', 'ProfessionalService'],
+        '@id': `${SITE_URL}/#business`,
+        name: SITE_NAME,
+        alternateName: 'Warwick Marshall Dog Training',
+        url: `${SITE_URL}/`,
+        logo: `${SITE_URL}/images/icons/dog512.jpg`,
+        image: SITE_OG_IMAGE,
+        description: SITE_META_DESCRIPTION,
+        telephone: SITE_PHONE,
+        email: SITE_EMAIL,
+        priceRange: '$$',
+        address: {
+          '@type': 'PostalAddress',
+          streetAddress: SITE_ADDRESS_STREET,
+          addressLocality: SITE_LOCALITY,
+          addressRegion: SITE_ADDRESS_REGION,
+          postalCode: SITE_POSTAL_CODE,
+          addressCountry: SITE_COUNTRY,
+        },
+        geo: {
+          '@type': 'GeoCoordinates',
+          latitude: SITE_GEO_LAT,
+          longitude: SITE_GEO_LNG,
+        },
+        areaServed: SITE_SERVICE_AREAS.map((name) => ({
+          '@type': 'Place',
+          name,
+        })),
+        founder: { '@id': `${SITE_URL}/#warwick` },
+        sameAs: [SITE_FACEBOOK_URL],
+        hasOfferCatalog: {
+          '@type': 'OfferCatalog',
+          name: 'Dog training services',
+          itemListElement: [
+            {
+              '@type': 'Offer',
+              itemOffered: {
+                '@type': 'Service',
+                name: 'Private dog training session',
+                description: 'In-person obedience, recall, leash work, and owner coaching.',
+                url: `${SITE_URL}/book`,
+              },
+            },
+            {
+              '@type': 'Offer',
+              itemOffered: {
+                '@type': 'Service',
+                name: 'Dog rehabilitation coaching',
+                description: 'Structured rehabilitation for reactivity, anxiety, and difficult histories.',
+                url: `${SITE_URL}/book`,
+              },
+            },
+          ],
+        },
+      },
+      {
+        '@type': 'Person',
+        '@id': `${SITE_URL}/#warwick`,
+        name: 'Warwick Marshall',
+        jobTitle: 'Dog Trainer',
+        url: `${SITE_URL}/about`,
+        worksFor: { '@id': `${SITE_URL}/#business` },
+        telephone: SITE_PHONE,
+        email: SITE_EMAIL,
+        address: {
+          '@type': 'PostalAddress',
+          addressLocality: SITE_LOCALITY,
+          addressRegion: SITE_ADDRESS_REGION,
+          addressCountry: SITE_COUNTRY,
+        },
+        sameAs: [SITE_FACEBOOK_URL],
+      },
+    ],
+  };
+}
+
+export function buildWebPageJsonLd(options: {
+  title: string;
+  description: string;
+  path: string;
+}): Record<string, unknown> {
+  const url = siteUrl(options.path);
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': `${url}#webpage`,
+    url,
+    name: options.title,
+    description: options.description,
+    isPartOf: { '@id': `${SITE_URL}/#website` },
+    about: { '@id': `${SITE_URL}/#business` },
+    inLanguage: 'en-NZ',
+  };
 }

@@ -8,7 +8,7 @@ on:
       - 'src/**'
       - 'shared/**'
       - 'public/**'
-      - 'scripts/prerender.mjs'
+      - 'scripts/**'
       - 'index.html'
       - 'vite.config.ts'
       - 'package.json'
@@ -19,7 +19,7 @@ on:
       - 'src/**'
       - 'shared/**'
       - 'public/**'
-      - 'scripts/prerender.mjs'
+      - 'scripts/**'
       - 'index.html'
       - 'vite.config.ts'
       - 'package.json'
@@ -72,11 +72,21 @@ jobs:
           test -f docs/guide/foundation/index.html
           test -f docs/.nojekyll
           test -f docs/404.html
+          test -f docs/robots.txt
+          test -f docs/sitemap.xml
+          test -f docs/CNAME
+          grep -q 'goldstandarddogtraining.nz' docs/CNAME
+          grep -q 'Sitemap: https://goldstandarddogtraining.nz/sitemap.xml' docs/robots.txt
+          grep -q 'https://goldstandarddogtraining.nz/book' docs/sitemap.xml
           grep -q 'data-seo-ready="true"' docs/about/index.html
+          grep -q 'gsdt-site-jsonld' docs/index.html
+          grep -q 'ProfessionalService' docs/index.html
           grep -q '<h1' docs/book/index.html
           grep -q 'Breed Analysis' docs/index.html
           grep -q 'Breed Analysis' docs/guide/index.html
           grep -q 'breed-rankings' docs/intelligence/index.html
+          grep -q 'rel="canonical"' docs/dog-personality/index.html
+          grep -q 'noindex' docs/404.html
 
       - name: Upload Pages artifact
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'

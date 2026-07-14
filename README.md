@@ -4,8 +4,8 @@
 
 | | |
 |---|---|
-| **Live website** | [agent5479.github.io/goldstandard](https://agent5479.github.io/goldstandard/) |
-| **Book a session** | [Online booking — Golden Bay & Nelson Bays](https://agent5479.github.io/goldstandard/book) |
+| **Live website** | [goldstandarddogtraining.nz](https://goldstandarddogtraining.nz/) |
+| **Book a session** | [Online booking — Golden Bay & Nelson Bays](https://goldstandarddogtraining.nz/book) |
 | **Phone** | [027 814 2222](tel:+64278142222) |
 | **Email** | warwick.marshall@gmail.com |
 | **Location** | Rangihaeata, Takaka 7182, Golden Bay, New Zealand |
@@ -41,13 +41,15 @@ Sessions include obedience, recall, leash work, reactivity, rehabilitation, owne
 
 | Page | URL |
 |------|-----|
-| **Home** | [agent5479.github.io/goldstandard](https://agent5479.github.io/goldstandard/) |
-| **Book a session** | [/book](https://agent5479.github.io/goldstandard/book) |
-| **Contact / enquiry** | [/contact](https://agent5479.github.io/goldstandard/contact) |
-| **Client guide** | [/guide](https://agent5479.github.io/goldstandard/guide) — principles, corrections, leash work, access training, timing, rewards |
-| **Knowledge exam** | [/exam](https://agent5479.github.io/goldstandard/exam) — 24-question breed-aware owner exam + full trainer track |
-| **Breed analysis** | [/intelligence](https://agent5479.github.io/goldstandard/intelligence) — breed IQ & temperament comparison, mix explorer |
-| **About** | [/about](https://agent5479.github.io/goldstandard/about) |
+| **Home** | [goldstandarddogtraining.nz](https://goldstandarddogtraining.nz/) |
+| **Book a session** | [/book](https://goldstandarddogtraining.nz/book) |
+| **Contact / enquiry** | [/contact](https://goldstandarddogtraining.nz/contact) |
+| **Client guide** | [/guide](https://goldstandarddogtraining.nz/guide) — principles, corrections, leash work, access training, timing, rewards |
+| **Knowledge exam** | [/exam](https://goldstandarddogtraining.nz/exam) — 24-question breed-aware owner exam + full trainer track |
+| **Breed analysis** | [/intelligence](https://goldstandarddogtraining.nz/intelligence) — breed IQ & temperament comparison, mix explorer |
+| **What dog am I?** | [/dog-personality](https://goldstandarddogtraining.nz/dog-personality) |
+| **Breed finder** | [/breed-finder](https://goldstandarddogtraining.nz/breed-finder) |
+| **About** | [/about](https://goldstandarddogtraining.nz/about) |
 
 Legacy `.html` URLs (e.g. `guide.html`, `intelligence.html`) redirect to the routes above.
 
@@ -59,18 +61,20 @@ This repository powers a public marketing site indexed by Google, Bing, and othe
 
 | Resource | URL |
 |----------|-----|
-| **Canonical home** | [agent5479.github.io/goldstandard/](https://agent5479.github.io/goldstandard/) |
-| **Sitemap** | […/sitemap.xml](https://agent5479.github.io/goldstandard/sitemap.xml) |
-| **Robots** | […/robots.txt](https://agent5479.github.io/goldstandard/robots.txt) |
+| **Canonical home** | [goldstandarddogtraining.nz](https://goldstandarddogtraining.nz/) |
+| **Sitemap** | […/sitemap.xml](https://goldstandarddogtraining.nz/sitemap.xml) |
+| **Robots** | […/robots.txt](https://goldstandarddogtraining.nz/robots.txt) |
 
-- **Canonical base:** `https://agent5479.github.io/goldstandard/`
+- **Canonical base:** `https://goldstandarddogtraining.nz/`
 - **Geo targeting:** Tasman Region (`NZ-TAS`) — Takaka, Golden Bay; service extends to Nelson Bays
-- **Structured data:** `LocalBusiness` JSON-LD in [`index.html`](index.html) (address, geo coordinates, service areas, phone, email)
+- **Structured data:** `WebSite` + `LocalBusiness`/`ProfessionalService` + `Person` JSON-LD in [`index.html`](index.html) (address, geo, service areas, offers); per-route `WebPage` via [`Seo.tsx`](src/components/Seo.tsx)
 - **Per-route SEO:** titles, descriptions, canonical URLs, and Open Graph tags via [`src/components/Seo.tsx`](src/components/Seo.tsx) and defaults in [`src/data/siteConfig.ts`](src/data/siteConfig.ts)
-- **Static prerender (SSG):** `npm run build` runs Vite, then [`scripts/prerender.mjs`](scripts/prerender.mjs) exports each public route as fully rendered HTML under `docs/` (e.g. `docs/about/index.html`) so crawlers receive baked content instantly on GitHub Pages — no client-only shell for `/about`, `/book`, etc.
-- **Static crawl files:** [`public/robots.txt`](public/robots.txt) and [`public/sitemap.xml`](public/sitemap.xml) — copied into `docs/` on build
-- **Social preview:** `images/dog1024.jpg` (favicons: `dog16.jpg` … `dog512.jpg`, [`site.webmanifest`](public/site.webmanifest))
-- **CI / deploy:** [`.github/workflows/site.yml`](.github/workflows/site.yml) builds, verifies prerendered HTML, and deploys `docs/` to GitHub Pages on push to `main`. In repo **Settings → Pages**, set **Source** to **GitHub Actions** (not “Deploy from branch”).
+- **Static prerender (SSG):** `npm run build` runs Vite, then [`scripts/prerender.mjs`](scripts/prerender.mjs) exports each public route as fully rendered HTML under `docs/` so crawlers receive baked content on GitHub Pages
+- **Sitemap:** generated on every build from [`scripts/seoRoutes.mjs`](scripts/seoRoutes.mjs) via [`scripts/generate-sitemap.mjs`](scripts/generate-sitemap.mjs)
+- **Crawl files:** [`public/robots.txt`](public/robots.txt), generated `public/sitemap.xml`, and [`public/CNAME`](public/CNAME) for the custom domain
+- **Social preview:** `images/icons/dog1024.jpg` (favicons + [`site.webmanifest`](public/site.webmanifest))
+- **CI / deploy:** [`.github/workflows/site.yml`](.github/workflows/site.yml) builds, verifies prerendered HTML + crawl files, and deploys `docs/` via GitHub Actions. In repo **Settings → Pages**, set **Source** to **GitHub Actions**, and confirm the custom domain `goldstandarddogtraining.nz`
+- **After deploy:** submit the sitemap in [Google Search Console](https://search.google.com/search-console) for `https://goldstandarddogtraining.nz/sitemap.xml` (and Bing Webmaster Tools if desired)
 
 The private trainer app at [gsdt-trainer-private.web.app](https://gsdt-trainer-private.web.app/) is **not** indexed (`noindex`, separate `robots.txt`).
 

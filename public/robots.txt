@@ -2,7 +2,7 @@
 # Service area: Golden Bay · Takaka · Pohara · Nelson Bays · Motueka · Richmond · Greater Tasman Region
 # Website: https://goldstandarddogtraining.nz/
 # Book online: https://goldstandarddogtraining.nz/book
-# Resources: /guide · /exam · /intelligence (breed analysis)
+# Resources: /guide · /exam · /intelligence (breed analysis) · /dog-personality · /breed-finder
 # Contact: Warwick Marshall · 027 814 2222 · warwick.marshall@gmail.com
 # Address: Rangihaeata, Takaka 7182, Golden Bay, NZ
 
@@ -10,6 +10,9 @@ User-agent: *
 Allow: /
 
 User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
 Allow: /
 
 User-agent: Bingbot

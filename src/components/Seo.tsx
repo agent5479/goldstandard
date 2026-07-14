@@ -2,9 +2,12 @@ import { useEffect } from 'react';
 import {
   SITE_GEO_LAT,
   SITE_GEO_LNG,
+  SITE_LOCALE,
   SITE_NAME,
   SITE_OG_IMAGE,
   SITE_REGION_LABEL,
+  buildSiteJsonLd,
+  buildWebPageJsonLd,
   siteUrl,
 } from '../data/siteConfig';
 import {
@@ -32,6 +35,9 @@ interface SeoProps {
   ogImageAlt?: string;
 }
 
+const SITE_JSON_LD_ID = 'gsdt-site-jsonld';
+const PAGE_JSON_LD_ID = 'gsdt-page-jsonld';
+
 function setMeta(attr: 'name' | 'property', key: string, content: string) {
   let el = document.querySelector(`meta[${attr}="${key}"]`);
   if (!el) {
@@ -54,6 +60,17 @@ function setLink(rel: string, href: string, sizes?: string) {
     document.head.appendChild(el);
   }
   el.href = href;
+}
+
+function setJsonLd(id: string, data: Record<string, unknown>) {
+  let el = document.getElementById(id) as HTMLScriptElement | null;
+  if (!el) {
+    el = document.createElement('script');
+    el.id = id;
+    el.type = 'application/ld+json';
+    document.head.appendChild(el);
+  }
+  el.textContent = JSON.stringify(data);
 }
 
 function applyFavicons(iconSet: IconSetId) {
@@ -94,6 +111,7 @@ export default function Seo({
     const set = ICON_SETS[iconSet];
     const image = ogImage ?? set.ogImage;
     const imageAlt = ogImageAlt ?? set.ogImageAlt;
+    const isHome = !path || path === '/';
 
     document.title = title;
 
@@ -102,12 +120,14 @@ export default function Seo({
     setMeta('name', 'geo.region', 'NZ-TAS');
     setMeta('name', 'geo.placename', `${SITE_REGION_LABEL}, New Zealand`);
     setMeta('name', 'geo.position', `${SITE_GEO_LAT};${SITE_GEO_LNG}`);
+    setMeta('name', 'ICBM', `${SITE_GEO_LAT}, ${SITE_GEO_LNG}`);
     setLink('canonical', url);
 
     setMeta('property', 'og:title', title);
     setMeta('property', 'og:description', social);
     setMeta('property', 'og:type', 'website');
     setMeta('property', 'og:url', url);
+    setMeta('property', 'og:locale', SITE_LOCALE);
     applySocialImage(set, image, imageAlt);
     setMeta('property', 'og:site_name', SITE_NAME);
 
@@ -116,6 +136,13 @@ export default function Seo({
     setMeta('name', 'twitter:description', social);
 
     applyFavicons(iconSet);
+
+    setJsonLd(SITE_JSON_LD_ID, buildSiteJsonLd());
+    if (index && !isHome) {
+      setJsonLd(PAGE_JSON_LD_ID, buildWebPageJsonLd({ title, description, path }));
+    } else {
+      document.getElementById(PAGE_JSON_LD_ID)?.remove();
+    }
 
     document.documentElement.dataset.seoReady = 'true';
 
