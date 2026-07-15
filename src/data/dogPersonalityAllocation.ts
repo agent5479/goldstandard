@@ -8,9 +8,43 @@ import {
 } from './dogPersonalityTraitMatrix';
 import {
   shareFraction,
+  isExclusiveQuestion,
+  type AllocationResponseMode,
 } from './allocationHelpers';
 import { ALLOCATION_SCALE_TOTAL } from '../utils/allocationScales';
 import { defaultLinkedShares } from '../utils/linkedSliders';
+
+export {
+  isExclusiveQuestion,
+};
+export type { AllocationResponseMode };
+
+export function exclusiveSharesForPole(
+  question: AllocationQuestion,
+  poleId: string,
+  total = ALLOCATION_SCALE_TOTAL
+): number[] {
+  return flattenPoles(question).map((pole) => (pole.id === poleId ? total : 0));
+}
+
+export function selectedPoleIdFromShares(
+  question: AllocationQuestion,
+  shares: number[]
+): string | undefined {
+  const poles = flattenPoles(question);
+  let bestId: string | undefined;
+  let bestShare = 0;
+
+  for (let i = 0; i < poles.length; i++) {
+    const share = shares[i] ?? 0;
+    if (share > bestShare) {
+      bestShare = share;
+      bestId = poles[i]!.id;
+    }
+  }
+
+  return bestId;
+}
 
 export interface AllocationPole {
   id: string;
@@ -31,6 +65,7 @@ export interface AllocationQuestion {
   prompt: string;
   poles?: AllocationPole[];
   dimensions?: AllocationDimension[];
+  responseMode?: AllocationResponseMode;
 }
 
 export function getQuestionDimensions(question: AllocationQuestion): AllocationDimension[] {
@@ -46,6 +81,9 @@ export function getDefaultSharesForQuestion(
   question: AllocationQuestion,
   total = ALLOCATION_SCALE_TOTAL
 ): number[] {
+  if (isExclusiveQuestion(question)) {
+    return flattenPoles(question).map(() => 0);
+  }
   return getQuestionDimensions(question).flatMap((dimension) =>
     defaultLinkedShares(dimension.poles.length, total)
   );

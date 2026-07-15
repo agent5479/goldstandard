@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { guideHref } from '@shared/guideHref';
 import QuizLinkedSliders from './quiz/QuizLinkedSliders';
+import QuizOptionCard from './quiz/QuizOptionCard';
 import {
   buildBookingPrioritiesUrl,
   buildEnquiryMessageFromShares,
@@ -14,7 +15,6 @@ import {
   getImpactAllocationQuestion,
   getImpactNote,
   getIssueAllocationQuestion,
-  IMPACT_LABELS,
   issueSharesToWeights,
   mergeBookingTags,
   mergeDriverConsiderations,
@@ -26,10 +26,14 @@ import {
   saveProblemFinderHandoff,
   shouldShowPuppyNav,
 } from '../data/problemFinder';
+import {
+  exclusiveSharesForPole,
+  flattenPoles,
+  selectedPoleIdFromShares,
+} from '../data/allocationHelpers';
 import ProblemFinderPuppyNav from './ProblemFinderPuppyNav';
 import { getBehaviorDriver } from '../data/behaviorDrivers';
 import { getSymptomExpression } from '../data/symptomExpressions';
-import { flattenPoles } from '../data/allocationHelpers';
 
 type FinderStep = 'context' | 'issue' | 'impact' | 'results';
 
@@ -278,20 +282,28 @@ export default function ProblemFinderModal({ open, onClose }: ProblemFinderModal
             <p className="problem-finder-context-note">
               Focus areas: {outcomes.map((entry) => entry.label).join(', ')}
             </p>
-            <QuizLinkedSliders
-              className="problem-finder-sliders"
-              poles={impactQuestion.poles ?? []}
-              values={impactShares}
-              onChange={setImpactShares}
-              showValues={false}
-            />
-            <p className="problem-finder-impact-value">{IMPACT_LABELS[impact]}</p>
+            <p className="problem-finder-select-hint">Choose the level that fits best right now.</p>
+            <div className="quiz-option-grid" role="group" aria-label="Impact level">
+              {(impactQuestion.poles ?? []).map((pole) => (
+                <QuizOptionCard
+                  key={pole.id}
+                  label={pole.label}
+                  selected={selectedPoleIdFromShares(impactQuestion, impactShares) === pole.id}
+                  onSelect={() => setImpactShares(exclusiveSharesForPole(impactQuestion, pole.id))}
+                />
+              ))}
+            </div>
 
             <div className="problem-finder-nav">
               <button type="button" className="btn btn-secondary" onClick={goBack}>
                 Back
               </button>
-              <button type="button" className="btn btn-primary" onClick={showResults}>
+              <button
+                type="button"
+                className="btn btn-primary"
+                disabled={!selectedPoleIdFromShares(impactQuestion, impactShares)}
+                onClick={showResults}
+              >
                 See my results
               </button>
             </div>

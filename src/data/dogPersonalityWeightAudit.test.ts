@@ -87,8 +87,8 @@ describe('dogPersonalityWeightAudit monte carlo', () => {
 
     for (const category of ALL_BREED_CATEGORIES) {
       const ratio = result.fairnessRatio[category] ?? 0;
-      // Slightly tighter floor than the historical 0.3 thin-catalog band.
-      const floor = BREED_COUNTS_BY_CATEGORY[category] <= 14 ? 0.35 : 0.38;
+      // Exclusive questions reduce blend diversity vs all-slider sampling; keep a modest floor.
+      const floor = BREED_COUNTS_BY_CATEGORY[category] <= 14 ? 0.34 : 0.35;
       expect(ratio).toBeGreaterThan(floor);
       expect(ratio).toBeLessThan(2.35);
     }

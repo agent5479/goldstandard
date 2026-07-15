@@ -1,8 +1,10 @@
 import { breeds, type BreedCategory } from './breeds';
 import {
+  exclusiveSharesForPole,
   flattenPoles,
   getDefaultSharesForQuestion,
   getQuestionDimensions,
+  isExclusiveQuestion,
   type AllocationQuestion,
 } from './dogPersonalityAllocation';
 import { getDisambiguationBank } from './dogPersonalityDisambiguation';
@@ -230,6 +232,13 @@ export function buildCategoryAxisWeights(
 }
 
 function randomSharesForQuestion(question: AllocationQuestion): number[] {
+  if (isExclusiveQuestion(question)) {
+    const poles = flattenPoles(question);
+    if (poles.length === 0) return [];
+    const pick = poles[Math.floor(Math.random() * poles.length)]!;
+    return exclusiveSharesForPole(question, pick.id);
+  }
+
   const shares: number[] = [];
 
   for (const dimension of getQuestionDimensions(question)) {

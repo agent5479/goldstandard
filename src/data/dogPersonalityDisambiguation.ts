@@ -30,6 +30,7 @@ function toAllocationQuestion(question: LegacyDisambiguationQuestion): Allocatio
   return {
     id: question.id,
     prompt: question.prompt,
+    responseMode: 'exclusive',
     poles: polesFromLegacyOptions(question.options),
   };
 }

@@ -8,7 +8,14 @@ import QuizShell from '../../components/quiz/QuizShell';
 import QuizLinkedSliders from '../../components/quiz/QuizLinkedSliders';
 import QuizLinkedSliderDimensions from '../../components/quiz/QuizLinkedSliderDimensions';
 import PersonalityResultView from './PersonalityResult';
-import { getDefaultSharesForQuestion, getQuestionDimensions, type AllocationQuestion } from '../../data/dogPersonalityAllocation';
+import {
+  exclusiveSharesForPole,
+  getDefaultSharesForQuestion,
+  getQuestionDimensions,
+  isExclusiveQuestion,
+  selectedPoleIdFromShares,
+  type AllocationQuestion,
+} from '../../data/dogPersonalityAllocation';
 import {
   isRefinementSeparated,
   planAdaptiveQuestion,
@@ -216,8 +223,9 @@ export default function DogPersonalityPage() {
             <h1>What kind of dog are you?</h1>
           </div>
           <p>
-            A playful quiz for fun — answer human questions with linked sliders, find your temperament
-            archetype, then narrow to the breed that best matches your vibe. Nothing is stored or sent.
+            A playful quiz for fun — mix single-choice moments with linked sliders for traits you blend,
+            find your temperament archetype, then narrow to the breed that best matches your vibe.
+            Nothing is stored or sent.
           </p>
         </div>
       </section>
@@ -226,9 +234,9 @@ export default function DogPersonalityPage() {
         {step.kind === 'intro' && (
           <div className="quiz-intro-card" ref={introRef} tabIndex={-1}>
             <p>
-              Twelve slider questions allocate how much each trait fits you — then optional tie-breakers
-              if your spirit breed is still close. Real temperament categories from the breed guide, BuzzFeed
-              energy.
+              Most questions use linked sliders so you can blend traits. A few ask for a single best fit,
+              and tie-breakers are single choice too — then we narrow to your spirit breed. Real
+              temperament categories from the breed guide, BuzzFeed energy.
             </p>
             <p>
               Looking for a real breed recommendation instead? Try{' '}
@@ -260,11 +268,31 @@ export default function DogPersonalityPage() {
           const isLastLinear =
             !inAdaptivePhase && linearRemaining <= 1 && !step.answers[question.id];
 
+          const exclusive = isExclusiveQuestion(question);
+          const selectedId = exclusive
+            ? selectedPoleIdFromShares(question, sliderValues) ?? null
+            : null;
+
           return (
             <QuizShell
-              mode="sliders"
+              mode={exclusive ? 'options' : 'sliders'}
               contextLabel={inAdaptivePhase ? 'Tie-breaker' : 'Dog personality quiz'}
               prompt={question.prompt}
+              options={
+                exclusive
+                  ? (question.poles ?? []).map((pole) => ({
+                      id: pole.id,
+                      label: pole.label,
+                      sublabel: pole.sublabel,
+                    }))
+                  : undefined
+              }
+              selectedId={selectedId}
+              onSelect={
+                exclusive
+                  ? (id) => setSliderValues(exclusiveSharesForPole(question, id))
+                  : undefined
+              }
               onContinue={handleContinue}
               onBack={step.questionHistory.length > 1 ? handleBack : undefined}
               onRestart={restart}
@@ -278,19 +306,20 @@ export default function DogPersonalityPage() {
                     : 'Next'
               }
             >
-              {question.dimensions?.length ? (
+              {!exclusive && question.dimensions?.length ? (
                 <QuizLinkedSliderDimensions
                   dimensions={getQuestionDimensions(question)}
                   values={sliderValues}
                   onChange={setSliderValues}
                 />
-              ) : (
+              ) : null}
+              {!exclusive && !question.dimensions?.length ? (
                 <QuizLinkedSliders
                   poles={(question.poles ?? []).map((pole) => ({ id: pole.id, label: pole.label }))}
                   values={sliderValues}
                   onChange={setSliderValues}
                 />
-              )}
+              ) : null}
             </QuizShell>
           );
         })()}

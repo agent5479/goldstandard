@@ -6,6 +6,7 @@ import type { AllocationQuestion } from './allocationHelpers';
 import {
   flattenPoles,
   getDefaultSharesForQuestion,
+  selectedPoleIdFromShares,
 } from './allocationHelpers';
 import { ALLOCATION_SCALE_TOTAL } from '../utils/allocationScales';
 
@@ -638,6 +639,7 @@ export function getImpactAllocationQuestion(): AllocationQuestion {
   return {
     id: 'impact',
     prompt: 'How much is this affecting daily life?',
+    responseMode: 'exclusive',
     poles: ([1, 2, 3, 4, 5] as ImpactLevel[]).map((level) => ({
       id: String(level),
       label: IMPACT_LABELS[level],
@@ -661,6 +663,13 @@ export function resolveImpactFromShares(
   shares: number[],
   question: AllocationQuestion = getImpactAllocationQuestion()
 ): ImpactLevel {
+  const selected = selectedPoleIdFromShares(question, shares);
+  if (selected) {
+    const level = Number(selected);
+    if (level >= 1 && level <= 5) return level as ImpactLevel;
+  }
+
+  // Legacy blended shares (pre-exclusive UI) — weighted average fallback.
   const poles = flattenPoles(question);
   let weightedSum = 0;
   let total = 0;

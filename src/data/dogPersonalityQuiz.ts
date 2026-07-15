@@ -135,6 +135,7 @@ export const PERSONALITY_ALLOCATION_QUESTIONS: AllocationQuestion[] = [
   {
     id: 'alloc_social',
     prompt: 'At a gathering, your first move is…',
+    responseMode: 'exclusive',
     poles: [
       {
         id: 'social_greet',
@@ -249,6 +250,7 @@ export const PERSONALITY_ALLOCATION_QUESTIONS: AllocationQuestion[] = [
   {
     id: 'alloc_movement',
     prompt: 'Something zooms past you at speed. You…',
+    responseMode: 'exclusive',
     poles: [
       {
         id: 'move_chase',

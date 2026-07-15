@@ -25,8 +25,8 @@ describe('problemFinder allocation', () => {
     expect(issueQuestion.poles?.every((pole) => !('sublabel' in pole && pole.sublabel))).toBe(true);
   });
 
-  it('resolves weighted impact level', () => {
-    const impactShares = [0, 0, 0, 800, 200];
+  it('resolves exclusive impact level from one-hot shares', () => {
+    const impactShares = [0, 0, 0, ALLOCATION_SCALE_TOTAL, 0];
     expect(resolveImpactFromShares(impactShares)).toBe(4);
   });
 

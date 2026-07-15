@@ -7,7 +7,12 @@ import SectionIcon from '../../components/SectionIcon';
 import QuizShell from '../../components/quiz/QuizShell';
 import QuizLinkedSliders from '../../components/quiz/QuizLinkedSliders';
 import BreedFinderResultView from './BreedFinderResult';
-import { getDefaultSharesForQuestion } from '../../data/allocationHelpers';
+import {
+  exclusiveSharesForPole,
+  getDefaultSharesForQuestion,
+  isExclusiveQuestion,
+  selectedPoleIdFromShares,
+} from '../../data/allocationHelpers';
 import {
   BREED_FINDER_ALLOCATION_QUESTIONS,
   BREED_FINDER_TOTAL_STEPS,
@@ -103,8 +108,8 @@ export default function BreedFinderPage() {
             <h1>What kind of dog should you get?</h1>
           </div>
           <p>
-            Twelve questions about your home, household, and lifestyle — allocate 100% across each
-            answer, then ranked breed matches to help you choose the most compatible dog, with reasons
+            Twelve questions about your home, household, and lifestyle — pick the best fit for most
+            answers, or split emphasis where goals overlap — then ranked breed matches with reasons
             and honest caveats. A research starting point, not a guarantee. Nothing is stored or sent.
           </p>
         </div>
@@ -118,8 +123,8 @@ export default function BreedFinderPage() {
               other pets, experience, and what you want from the relationship.
             </p>
             <p>
-              Each question uses linked sliders that always sum to 100%. Split your emphasis across
-              options — for example, mostly apartment with some townhouse time.
+              Most questions are a single choice (for example where you live, or how much space you
+              have). For what you want from a dog, linked sliders let you split 100% across goals.
             </p>
             <p>
               For a lighter personality mirror, try{' '}
@@ -137,12 +142,29 @@ export default function BreedFinderPage() {
           const question = BREED_FINDER_ALLOCATION_QUESTIONS[step.index]!;
           const sectionLabel = getBreedFinderSectionLabel(step.index);
           const poles = question.poles ?? [];
+          const exclusive = isExclusiveQuestion(question);
+          const selectedId = exclusive ? selectedPoleIdFromShares(question, sliderValues) ?? null : null;
 
           return (
             <QuizShell
               contextLabel={`Choose your breed — ${sectionLabel}`}
               prompt={question.prompt}
-              mode="sliders"
+              mode={exclusive ? 'options' : 'sliders'}
+              options={
+                exclusive
+                  ? poles.map((pole) => ({
+                      id: pole.id,
+                      label: pole.label,
+                      sublabel: pole.sublabel,
+                    }))
+                  : undefined
+              }
+              selectedId={selectedId}
+              onSelect={
+                exclusive
+                  ? (id) => setSliderValues(exclusiveSharesForPole(question, id))
+                  : undefined
+              }
               onContinue={handleContinue}
               onBack={step.index > 0 ? handleBack : undefined}
               onRestart={restart}
@@ -152,11 +174,13 @@ export default function BreedFinderPage() {
                 step.index === BREED_FINDER_TOTAL_STEPS - 1 ? 'See my matches' : 'Next'
               }
             >
-              <QuizLinkedSliders
-                poles={poles}
-                values={sliderValues}
-                onChange={setSliderValues}
-              />
+              {!exclusive ? (
+                <QuizLinkedSliders
+                  poles={poles}
+                  values={sliderValues}
+                  onChange={setSliderValues}
+                />
+              ) : null}
             </QuizShell>
           );
         })()}

@@ -227,6 +227,7 @@ export const BREED_FINDER_ALLOCATION_QUESTIONS: AllocationQuestion[] = BREED_FIN
   (question) => ({
     id: question.id,
     prompt: question.prompt,
+    responseMode: question.id === 'goal' ? 'allocate' : 'exclusive',
     poles: question.options.map((option) => ({
       id: option.value,
       label: option.label,
