@@ -1,3 +1,4 @@
+import { useRef, useState } from 'react';
 import { redistributeLinkedSliders } from '../../utils/linkedSliders';
 import {
   ALLOCATION_SCALE_TOTAL,
@@ -21,6 +22,11 @@ interface QuizLinkedSlidersProps {
   className?: string;
 }
 
+interface DragState {
+  index: number;
+  percent: number;
+}
+
 export default function QuizLinkedSliders({
   poles,
   values,
@@ -30,8 +36,17 @@ export default function QuizLinkedSliders({
   showValues = true,
   className,
 }: QuizLinkedSlidersProps) {
-  const handleChange = (index: number, displayPercent: number) => {
+  const [drag, setDrag] = useState<DragState | null>(null);
+  const dragRef = useRef<DragState | null>(null);
+
+  const setDragState = (next: DragState | null) => {
+    dragRef.current = next;
+    setDrag(next);
+  };
+
+  const commit = (index: number, displayPercent: number) => {
     onChange(redistributeLinkedSliders(values, index, displayPercent, total));
+    setDragState(null);
   };
 
   const displayPercent = (weight: number) => formatAllocationPercent(weight, total);
@@ -44,8 +59,12 @@ export default function QuizLinkedSliders({
     >
       {poles.map((pole, index) => {
         const weight = values[index] ?? 0;
-        const display = displayPercent(weight);
-        const displayNumber = Number(display);
+        const committedDisplay = displayPercent(weight);
+        const isDragging = drag?.index === index;
+        const displayNumber = isDragging ? drag.percent : Number(committedDisplay);
+        const display = isDragging
+          ? formatAllocationPercent(parseAllocationPercentInput(drag.percent), total)
+          : committedDisplay;
         const othersAtZero = weight === total;
         const disabled = othersAtZero
           ? false
@@ -79,15 +98,39 @@ export default function QuizLinkedSliders({
               aria-valuemax={100}
               aria-valuenow={displayNumber}
               aria-valuetext={`${display} percent`}
-              onChange={(event) => handleChange(index, Number(event.target.value))}
+              onPointerDown={(event) => {
+                if (disabled) return;
+                event.currentTarget.setPointerCapture(event.pointerId);
+                setDragState({ index, percent: displayNumber });
+              }}
+              onChange={(event) => {
+                const nextPercent = Number(event.target.value);
+                if (dragRef.current?.index === index) {
+                  setDragState({ index, percent: nextPercent });
+                  return;
+                }
+                // Keyboard / non-pointer adjustments commit immediately.
+                commit(index, nextPercent);
+              }}
+              onPointerUp={() => {
+                const active = dragRef.current;
+                if (active?.index === index) {
+                  commit(index, active.percent);
+                }
+              }}
+              onPointerCancel={() => {
+                if (dragRef.current?.index === index) {
+                  setDragState(null);
+                }
+              }}
             />
           </div>
         );
       })}
       {showHint ? (
         <p className="quiz-linked-sliders-hint">
-          Sliders share 100% — raising one pulls from the others proportionally. Options at 0% stay at
-          0 until you lower another slider.
+          Sliders share 100% — drag to set emphasis, then release to snap the others into balance.
+          Options at 0% stay at 0 until you lower another slider.
         </p>
       ) : null}
     </div>
