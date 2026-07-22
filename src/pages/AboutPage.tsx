@@ -40,6 +40,15 @@ export default function AboutPage() {
               Warwick founded Gold Standard to give owners more than a quick fix — a path to understand how
               dogs think, how pack structure works, and how to hold calm leadership in everyday life.
             </p>
+            <p>
+              He doesn&apos;t just train dogs. He teaches owners how to become someone their dog naturally
+              wants to follow — without intimidation, shouting, or constant bribery. It requires clarity.
+              Dogs crave it: when they know who is making decisions, where the boundaries sit, and what is
+              expected of them, they relax. Confidence replaces anxiety. Calm replaces chaos.
+            </p>
+            <p>
+              Owners often say, &ldquo;I finally feel like I&apos;m enjoying my dog again.&rdquo;
+            </p>
           </div>
           <div className="trust-grid">
             <article className="trust-card">

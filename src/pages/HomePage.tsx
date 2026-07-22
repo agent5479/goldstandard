@@ -4,6 +4,7 @@ import Seo from '../components/Seo';
 import SiteHeader from '../components/SiteHeader';
 import SiteFooter from '../components/SiteFooter';
 import ProblemFinderModal from '../components/ProblemFinderModal';
+import PainQuotesRotator from '../components/PainQuotesRotator';
 import HeroGallery from './HeroGallery';
 import CompactInfoPopout from '../components/CompactInfoPopout';
 import { SITE_DEFAULT_TITLE, SITE_META_DESCRIPTION, SITE_OG_DESCRIPTION } from '../data/siteConfig';
@@ -82,6 +83,7 @@ export default function HomePage() {
           <p className="hero-headline">
             The dog you always wanted <span>is already in there.</span>
           </p>
+          <PainQuotesRotator />
           <HeroGallery />
           <p className="hero-lead">
             With clear structure and calm standards, Warwick helps you understand how your dog thinks —
@@ -119,14 +121,8 @@ export default function HomePage() {
               Every age, breed, and temperament
             </div>
           </div>
-          <p className="section-label">Meet your trainer</p>
-          <h2>Warwick Marshall</h2>
-          <p>
-            Based in Takaka, Golden Bay — working with dogs and owners across the Tasman region. Clear
-            structure, embodied coaching, and real-world session work tailored to your goals.
-          </p>
           <Link to="/about" className="resource-card-cta">
-            Read about Warwick and the approach →
+            About Warwick and the approach →
           </Link>
         </div>
       </section>

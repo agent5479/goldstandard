@@ -3,14 +3,6 @@ import Seo from '../components/Seo';
 import SiteHeader from '../components/SiteHeader';
 import SiteFooter from '../components/SiteFooter';
 
-const HOOK_QUOTES = [
-  'I thought having a dog would be enjoyable…',
-  "Why does everyone else's dog seem easier?",
-  "I'm starting to dread walking him.",
-  'Have I ruined my puppy?',
-  'Maybe my dog is just stubborn.',
-] as const;
-
 const FAILED_ADVICE = [
   'Distract them with treats',
   'Repeat commands louder',
@@ -57,13 +49,7 @@ export default function StartPage() {
             <p className="start-eyebrow">Golden Bay &amp; Tasman Region · New Zealand</p>
             <h1 id="start-brand">Gold Standard Dog Training</h1>
             <p className="start-hook-lead">You didn&apos;t get a dog to spend every walk frustrated.</p>
-            <ul className="start-quotes">
-              {HOOK_QUOTES.map((quote) => (
-                <li key={quote}>
-                  <q>{quote}</q>
-                </li>
-              ))}
-            </ul>
+            <StartCtaGroup />
           </div>
         </section>
 
@@ -150,35 +136,6 @@ export default function StartPage() {
           </div>
         </section>
 
-        <section className="start-authority" aria-labelledby="start-warwick">
-          <div className="start-inner">
-            <p className="start-eyebrow">Meet your trainer</p>
-            <h2 id="start-warwick">Hi, I&apos;m Warwick.</h2>
-            <div className="start-prose">
-              <p>
-                I don&apos;t just train dogs. I teach owners how to become someone their dog naturally wants
-                to follow.
-              </p>
-              <p>That doesn&apos;t require intimidation.</p>
-              <p>It doesn&apos;t require shouting.</p>
-              <p>And it doesn&apos;t require constant bribery.</p>
-              <p className="start-payoff">It requires clarity.</p>
-              <p>
-                Dogs crave clarity. When they know who is making decisions, where the boundaries sit, and what
-                is expected of them, something remarkable happens:
-              </p>
-            </div>
-            <ul className="start-line-list start-line-list--outcomes">
-              <li>They relax.</li>
-              <li>Confidence replaces anxiety.</li>
-              <li>Calm replaces chaos.</li>
-            </ul>
-            <blockquote className="start-quote-block">
-              <p>And owners often tell me, &ldquo;I finally feel like I&apos;m enjoying my dog again.&rdquo;</p>
-            </blockquote>
-          </div>
-        </section>
-
         <section className="start-philosophy" aria-labelledby="start-philosophy-heading">
           <div className="start-inner">
             <p className="start-eyebrow">The philosophy</p>
@@ -187,7 +144,7 @@ export default function StartPage() {
               <p>Commands are easy.</p>
               <p>Trust, respect, and leadership are harder. But those are the things that last.</p>
               <p className="start-payoff">
-                That&apos;s why my goal isn&apos;t simply to teach your dog to sit on cue. It&apos;s to build a
+                That&apos;s why the goal isn&apos;t simply to teach your dog to sit on cue. It&apos;s to build a
                 relationship where your dog wants to listen—even when there isn&apos;t a treat in sight.
               </p>
             </div>

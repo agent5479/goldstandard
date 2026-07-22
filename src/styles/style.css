@@ -362,6 +362,41 @@ body::before {
 
 .hero-headline span { color: var(--gold); }
 
+.pain-quotes-rotator {
+  min-height: 2.75rem;
+  margin: 0 0 1.15rem;
+  display: flex;
+  align-items: center;
+  opacity: 0;
+  animation: fadeUp 0.7s 0.52s forwards;
+}
+
+.pain-quotes-rotator-quote {
+  quotes: '"' '"';
+  display: block;
+  margin: 0;
+  font-style: italic;
+  color: var(--light-text);
+  font-size: clamp(1rem, 2.4vw, 1.12rem);
+  line-height: 1.45;
+  max-width: 36rem;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.pain-quotes-rotator-quote::before { content: open-quote; }
+.pain-quotes-rotator-quote::after { content: close-quote; }
+
+.pain-quotes-rotator-quote.is-visible {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pain-quotes-rotator-quote {
+    transition: none;
+  }
+}
+
 .hero-lead {
   font-size: 1.15rem;
   font-weight: 600;
@@ -604,6 +639,7 @@ body::before {
 .about-teaser .resource-card-cta {
   display: inline-block;
   text-decoration: none;
+  margin-top: 0.25rem;
 }
 
 .about-teaser .resource-card-cta:hover {
@@ -3579,6 +3615,7 @@ body.page-guide {
   .hero-eyebrow,
   .hero h1,
   .hero-headline,
+  .pain-quotes-rotator,
   .hero-lead,
   .hero-phone-link,
   .hero-sub,
@@ -7412,7 +7449,6 @@ a.problem-finder-tertiary {
 .start-contrast,
 .start-pivot,
 .start-framework,
-.start-authority,
 .start-philosophy {
   padding: 4.5rem 0;
 }
@@ -7437,10 +7473,6 @@ a.problem-finder-tertiary {
 .start-framework {
   background: var(--surface-soft);
   border-top: 1px solid rgba(184, 131, 42, 0.22);
-}
-
-.start-authority {
-  background: var(--surface);
 }
 
 .start-philosophy {
@@ -7480,38 +7512,6 @@ a.problem-finder-tertiary {
   opacity: 0;
   animation: fadeUp 0.7s 0.35s forwards;
 }
-
-.start-quotes {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 0.85rem;
-  margin: 0;
-  padding: 0;
-}
-
-.start-quotes li {
-  opacity: 0;
-  animation: fadeUp 0.55s forwards;
-}
-
-.start-quotes li:nth-child(1) { animation-delay: 0.45s; }
-.start-quotes li:nth-child(2) { animation-delay: 0.55s; }
-.start-quotes li:nth-child(3) { animation-delay: 0.65s; }
-.start-quotes li:nth-child(4) { animation-delay: 0.75s; }
-.start-quotes li:nth-child(5) { animation-delay: 0.85s; }
-
-.start-quotes q {
-  quotes: '"' '"';
-  display: block;
-  font-style: italic;
-  color: var(--light-text);
-  font-size: 1.12rem;
-  line-height: 1.45;
-}
-
-.start-quotes q::before { content: open-quote; }
-.start-quotes q::after { content: close-quote; }
 
 .start-contrast-grid {
   display: grid;
@@ -7672,7 +7672,6 @@ a.problem-finder-tertiary {
   .start-contrast,
   .start-pivot,
   .start-framework,
-  .start-authority,
   .start-philosophy {
     padding: 3.25rem 0;
   }
