@@ -1,0 +1,3 @@
+# Force LF in GitHub Actions workflows so bash run steps do not fail on CRLF.
+.github/workflows/*.yml text eol=lf
+.github/workflows/*.yaml text eol=lf
