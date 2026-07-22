@@ -117,6 +117,7 @@ const CONTENTS_LINKS: ContentsLink[] = [
   { moduleId: 'daily-life', group: '🏠 Daily life', anchor: 'check-in-seven', label: '👁️ 7-second check-in' },
   { moduleId: 'daily-life', group: '🏠 Daily life', anchor: 'daily', label: '📅 Daily practice' },
   { moduleId: 'daily-life', group: '🏠 Daily life', anchor: 'graduation', label: '🎓 Graduation' },
+  { moduleId: 'daily-life', group: '🏠 Daily life', anchor: 'session-home-gap', label: '🏠 Session → home gap' },
 ];
 
 function groupLinks(links: ContentsLink[]) {

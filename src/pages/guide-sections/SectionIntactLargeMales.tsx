@@ -55,8 +55,8 @@ export default function SectionIntactLargeMales() {
           <p>
             <em>
               This is your place. I expect you to understand that. It's not about you. We're not barking, we're
-              not worried, I've got this. You don't make the decisions. You will be more free and happier in
-              your place. Puppy days are over.
+              not growling, we're not worried, I've got this. You don't make the decisions. You will be more free
+              and happier in your place. Puppy days are over.
             </em>
           </p>
         </div>

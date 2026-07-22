@@ -208,6 +208,7 @@ const DAILY_LIFE_ANCHORS = [
   'check-in-seven',
   'daily',
   'graduation',
+  'session-home-gap',
 ] as const;
 
 export const GUIDE_MODULES: GuideModuleMeta[] = [

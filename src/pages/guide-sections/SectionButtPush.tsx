@@ -17,10 +17,10 @@ export default function SectionButtPush() {
       </p>
 
       <ol className="steps">
-        <li>Notice the behaviour starting — fixation, the first bark, body stiffening</li>
+        <li>Notice the behaviour starting — fixation, the first bark, body stiffening, growling that locks onto a target</li>
         <li>Move calmly to the dog's side. No raised voice, no shushing</li>
-        <li>Apply a firm sideways push to the hips or hindquarters to turn the dog — it will look to you and recenter its consciousness</li>
-        <li>Immediately return to your calm, forward-facing posture</li>
+        <li>Apply a sideways push to the hips or hindquarters to turn the dog — firm when needed; once association is built, a light touch can be enough</li>
+        <li>When the dog looks at you, hold neutral pack language — <em>We&apos;re not barking</em> / <em>we&apos;re not growling</em> / <em>I&apos;m not worried</em> — then return to calm, forward-facing posture</li>
         <li>Expect the dog to settle. Don't hover or watch for what it does next</li>
       </ol>
 
@@ -29,7 +29,15 @@ export default function SectionButtPush() {
         <p>Don't give attention — verbal or physical — during or just after a reaction. Saying "it's okay" or reaching down to comfort is read as a reward for the excited state (<a href="#rewards">Rewards</a>). Correct and move on, as if it barely warranted your notice.</p>
       </div>
 
-      <p>The correction should carry the energy of mild interruption, not anger or frustration. Think of it as reminding the dog of something it already knows — because at this point, it does. A calm handler phrase — <em>I'm not worried</em> or the energy of <a href="#im-over-it">I'm over it</a> — can land in the same instant as the push; the words settle your body, and the dog reads that certainty before it reads comfort-talk.</p>
+      <p>
+        Mild interruption, not anger — you are reminding the dog of something it already knows. The words settle{' '}
+        <em>your</em> body; the dog reads that certainty before it reads comfort-talk. It is not the dog&apos;s fault
+        that arousal rose; you are learning to speak the interrupt in pack language. Pair the same energy with{' '}
+        <a href="#im-over-it">I&apos;m over it</a>, and build a reminder command so the physical touch can fade — see{' '}
+        <a href="#verbal-correction">Verbal correction</a> and <a href="#unique-sound-touch">unique sound, then unique touch</a>.
+        Puppy-scale hip touch uses the same script in{' '}
+        <a href="#puppy-behavior-design">behavioral design</a>.
+      </p>
 
       <p><strong>Relative condition:</strong> adjust firmness for age and breed — see <a href="#breed-temperament">breed temperament</a> and <a href="#correction-intensity">calibration in Dog language</a>. A clingy, people-focused dog still gets corrected in the act; the recovery afterward may need a quicker return to calm neutrality rather than prolonged coldness.</p>
       </div>

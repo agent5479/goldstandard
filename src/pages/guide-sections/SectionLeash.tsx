@@ -38,7 +38,7 @@ export default function SectionLeash() {
 
       <ul className="checklist">
         <li><strong>Low-line correction:</strong> when delivering a light touch or corrective tug to interrupt fixation, drop the hand <em>below</em> the dog's neck line. This angles pressure downward and slightly sideways — cleanly disrupting forward momentum without choking the throat or triggering an upward pull reflex. Same principle as the <a href="#leash-jerk">downward leash jerk</a></li>
-        <li><strong>Behind-the-back control:</strong> for highly reactive or powerful dogs, holding the line behind your back leverages core, hips, and centre of gravity — preventing the dog from pulling your arms forward and keeping a stable, immovable anchor</li>
+        <li><strong>Behind-the-back control:</strong> for highly reactive or powerful dogs, holding the line behind your back leverages core, hips, and centre of gravity — preventing the dog from pulling your arms forward, keeping a stable immovable anchor, and freeing a hand for the <a href="#butt-push">butt push</a> without adding leash tension</li>
         <li><strong>Knee-brace squat:</strong> shorten the line, drop into a low squat, and brace the line behind the back of the knee. The dog's pulling force routes into the ground through your leg muscles — safe, steady, and unyielding without arm strength alone</li>
       </ul>
 

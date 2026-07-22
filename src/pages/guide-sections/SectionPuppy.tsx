@@ -486,10 +486,13 @@ export default function SectionPuppy() {
         <h4>Vocal barking interruption</h4>
 
         <p>
-          When the puppy barks — often alert or protective rather than defiance — gently touch the hip to physically
-          redirect attention, then speak aloud with calm authority: <em>&quot;We&apos;ve got this — you don&apos;t have
-          to protect us. We&apos;re not barking.&quot;</em> The touch breaks the loop; the words carry settled pack energy.
-          Not anger, not repeated nagging — one clear interruption, then neutral expectation. See{' '}
+          When the puppy barks or growls into fixation — often alert or protective rather than defiance — gently touch
+          the hip to redirect attention, then speak aloud with calm authority:{' '}
+          <em>&quot;We&apos;ve got this — you don&apos;t have to protect us. We&apos;re not barking / we&apos;re not
+          growling.&quot;</em>{' '}
+          The touch breaks the loop; the words carry settled pack energy. Not anger, not repeated nagging — one clear
+          interruption, then neutral expectation. Adult scale of the same interrupt:{' '}
+          <a href="#butt-push">butt push</a>; association fade:{' '}
           <a href="#verbal-correction">Verbal correction</a>.
         </p>
 

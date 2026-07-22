@@ -19,9 +19,17 @@ export default function SectionCollarSnatch() {
 
       <p>This is the jawbone / base-of-neck touch — the second key contact point in the <a href="#unique-sound-touch">unique sound, then unique touch</a> pattern. A flat, straight hand placed under the jaw or at the side of the neck steers the dog's physical momentum away from the trigger or temptation cleanly and confidently — not a shove, not a choke, but a boundary the dog has not learned to ignore.</p>
 
-      <p id="jumping-up">Grab the collar at the neckline, give a clear verbal command — <strong>"No"</strong> or your chosen reset word — walk the dog backwards, and sit them down. Over time the verbal alone should be enough when association is built — see <a href="#verbal-correction">Verbal correction</a>. The same pattern applies to jumping, lunging, licking, and mouthing: interrupt, reposition, settle.</p>
+      <p id="jumping-up">Grab the collar at the neckline, give a clear verbal command — <strong>"No"</strong> or your chosen reset word — walk the dog backwards, and sit them down. Over time the verbal alone should be enough when association is built — see <a href="#verbal-correction">Verbal correction</a>. The same pattern applies to jumping, lunging, licking, and mouthing: interrupt, reposition, settle. Delivery is boring and impassive — the adult version of the puppy <a href="#puppy-behavior-design">walk-back to sit</a>, not a negotiation or a situational exception.</p>
 
       <p>Lunging is the same correction as jumping — the dog is coming off the ground or forward on impulse. Do not meet it with tension or a pulled-up leash. Snatch the collar, reset position, sit. Relentless persistence applies here too: one firm reset is not a lesson. The dog learns when the standard never wavers — see <a href="#expectations">Expectations</a>.</p>
+
+      <p>
+        When new people cannot hold a calm greeting themselves, <em>you</em> manage the dog: walk-back to sit
+        every time, no emotional content, then engage only after four paws stay down. Guests who can ignore
+        the leap follow <a href="#puppy-guest-protocol">ghost puppy / guest protocol</a> and{' '}
+        <a href="#home-return">Coming home</a>. Do not treat a sit that started with a jump — see{' '}
+        <a href="#correction-praise-trap">correction-praise trap</a>.
+      </p>
 
       <ol className="steps">
         <li>Catch the behaviour in the act — within the <a href="#timing">one-second window</a></li>
