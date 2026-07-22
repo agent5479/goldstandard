@@ -823,6 +823,15 @@ h2 {
   margin-top: 2rem;
 }
 
+.about-philosophy-subhead {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.35rem, 2.8vw, 1.65rem);
+  font-weight: 700;
+  color: var(--forest);
+  line-height: 1.25;
+  margin: 2rem 0 0;
+}
+
 /* philosophy */
 .philosophy {
   background: var(--surface-soft);
@@ -839,7 +848,7 @@ h2 {
 
 .philosophy-text p { color: var(--text); margin-bottom: 1rem; }
 .philosophy-text p:last-child { margin-bottom: 0; }
-.philosophy a {
+.philosophy-text a {
   color: var(--forest);
   font-weight: 600;
   text-decoration: none;
@@ -7448,8 +7457,7 @@ a.problem-finder-tertiary {
 .start-hook,
 .start-contrast,
 .start-pivot,
-.start-framework,
-.start-philosophy {
+.start-framework {
   padding: 4.5rem 0;
 }
 
@@ -7473,11 +7481,6 @@ a.problem-finder-tertiary {
 .start-framework {
   background: var(--surface-soft);
   border-top: 1px solid rgba(184, 131, 42, 0.22);
-}
-
-.start-philosophy {
-  background:
-    linear-gradient(180deg, var(--page-bg) 0%, var(--surface-soft) 100%);
   padding-bottom: 5.5rem;
 }
 
@@ -7671,9 +7674,12 @@ a.problem-finder-tertiary {
   .start-hook,
   .start-contrast,
   .start-pivot,
-  .start-framework,
-  .start-philosophy {
+  .start-framework {
     padding: 3.25rem 0;
+  }
+
+  .start-framework {
+    padding-bottom: 4.5rem;
   }
 
   .start-inner {

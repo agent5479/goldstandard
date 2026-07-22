@@ -41,13 +41,9 @@ export default function AboutPage() {
               dogs think, how pack structure works, and how to hold calm leadership in everyday life.
             </p>
             <p>
-              He doesn&apos;t just train dogs. He teaches owners how to become someone their dog naturally
-              wants to follow — without intimidation, shouting, or constant bribery. It requires clarity.
-              Dogs crave it: when they know who is making decisions, where the boundaries sit, and what is
-              expected of them, they relax. Confidence replaces anxiety. Calm replaces chaos.
-            </p>
-            <p>
-              Owners often say, &ldquo;I finally feel like I&apos;m enjoying my dog again.&rdquo;
+              Owners often say, &ldquo;I finally feel like I&apos;m enjoying my dog again.&rdquo; The approach
+              behind that — relationship before commands — is laid out in{' '}
+              <a href="#about-philosophy">The philosophy</a> below.
             </p>
           </div>
           <div className="trust-grid">
@@ -86,26 +82,39 @@ export default function AboutPage() {
             <p>
               When this site references Beckman-style training, it means the broader structure-and-owner-coaching
               philosophy that influenced Warwick&apos;s approach — not an official credential or approval.
-              Warwick&apos;s model is deliberately purist: no prongs, choke chains used harshly, vibration collars,
-              or remote &ldquo;ethereal&rdquo; correction. The signal source is you — presence, timing, leash,
-              voice, and touch.
+              Warwick&apos;s model is deliberately purist: the signal source is you — presence, timing, leash,
+              voice, and touch — not remote or aversive gear. See{' '}
+              <Link to={guideHref('collars-excluded')}>collars we exclude</Link> in the philosophy section.
             </p>
           </aside>
         </div>
       </section>
 
-      <section className="about-section">
+      <section className="about-section" id="about-philosophy">
         <div className="section-inner">
           <p className="section-label">The philosophy</p>
-          <h2>Embodied pack fluency — five ideas that guide every session.</h2>
+          <h2>We aren&apos;t training commands. We&apos;re rebuilding relationships.</h2>
+          <div className="philosophy-text">
+            <p>
+              Warwick doesn&apos;t just train dogs — he teaches owners how to become someone their dog naturally
+              wants to follow, without intimidation, shouting, or constant bribery. Commands are easy; trust,
+              respect, and leadership are harder, and those are the things that last.
+            </p>
+            <p>
+              The goal isn&apos;t simply to teach your dog to sit on cue. It&apos;s a relationship where your
+              dog wants to listen — even when there isn&apos;t a treat in sight. When the line is clear, dogs
+              relax: confidence replaces anxiety, calm replaces chaos.
+            </p>
+          </div>
+          <h3 className="about-philosophy-subhead">Embodied pack fluency — five ideas that guide every session.</h3>
           <div className="philosophy-pillars" aria-label="Philosophy at a glance">
             <article className="philosophy-pillar">
               <h3>Embodiment</h3>
               <p>
-                You are the signal source. Posture, breath, tension, and follow-through must congrue — see{' '}
-                <Link to={guideHref('dog-tantra')}>Dog-Tantra</Link>,{' '}
-                <Link to={guideHref('pack-leader-energy')}>anchor energy</Link>, and{' '}
-                <Link to={guideHref('ready-stance')}>ready stance</Link>.
+                You are the signal source — posture, breath, tension, and follow-through must congrue before
+                your hands move. See <Link to={guideHref('ready-stance')}>ready stance</Link> and{' '}
+                <Link to={guideHref('pack-leader-energy')}>anchor energy</Link>; the coached skill is expanded
+                under <a href="#about-dog-tantra">Dog-Tantra</a> below.
               </p>
             </article>
             <article className="philosophy-pillar">
@@ -150,10 +159,8 @@ export default function AboutPage() {
           <h2>How sessions work</h2>
           <div className="approach-body approach-body--linear">
             <p>
-              When a dog understands its place in the relationship, it is a safer, happier, and more relaxed
-              dog. Gold Standard training harnesses pack instinct through strong expectations and consistent
-              boundaries — but the handler must evolve first. Understanding psychology matters; holding structure
-              through embodied presence matters more. That means fast, firm{' '}
+              Gold Standard training harnesses pack instinct through strong expectations and consistent
+              boundaries — but the handler must evolve first. That means fast, firm{' '}
               <Link to={guideHref('corrections')}>correction</Link> from a calm place when the line is crossed —
               the same grammar dogs use with each other — with intensity{' '}
               <Link to={guideHref('dog-language')}>measured to the dog</Link> by breed, age, and history.
@@ -174,23 +181,19 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="about-section about-section--soft">
+      <section className="about-section about-section--soft" id="about-dog-tantra">
         <div className="section-inner">
           <p className="section-label">Dog-Tantra</p>
           <h2>Pack sensitivity and embodied leadership.</h2>
           <div className="philosophy-text">
             <p>
-              Warwick uses <strong>Dog-Tantra</strong> as shorthand for a practical skill: <strong>pack sensitivity</strong>.
-              You can think of it as something he <em>likens to tantra</em> — in the sense that it is about sensitivity
-              and alignment, not mysticism. You shift awareness out of the analytical, worrying human mind and into a
-              calmer, embodied baseline so your posture, breath, and follow-through are congruent.
+              <strong>Dog-Tantra</strong> is Warwick&apos;s shorthand for <strong>pack sensitivity</strong> — the
+              coached skill behind the Embodiment pillar above. He likens it to tantra only in the sense of
+              sensitivity and alignment, not mysticism: shifting out of the analytical, worrying mind into a
+              calmer baseline the dog can synchronise to.
             </p>
             <p>
-              Dogs read that baseline first. When you become a stable somatic anchor, the dog synchronises into your
-              rhythm — not because you managed every behaviour, but because the leadership signal is continuous.
-            </p>
-            <p>
-              This is coached in person. Warwick guides you into what those subtle states feel like and reflects them
+              This is taught in person. Warwick guides you into what those states feel like and reflects them
               back so you can trust your perception — what to seek, what to reward, and when the connection is real.
             </p>
 

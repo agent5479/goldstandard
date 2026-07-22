@@ -133,21 +133,6 @@ export default function StartPage() {
                 understand why the behaviour exists, training becomes dramatically simpler.
               </p>
             </div>
-          </div>
-        </section>
-
-        <section className="start-philosophy" aria-labelledby="start-philosophy-heading">
-          <div className="start-inner">
-            <p className="start-eyebrow">The philosophy</p>
-            <h2 id="start-philosophy-heading">We aren&apos;t training commands. We&apos;re rebuilding relationships.</h2>
-            <div className="start-prose">
-              <p>Commands are easy.</p>
-              <p>Trust, respect, and leadership are harder. But those are the things that last.</p>
-              <p className="start-payoff">
-                That&apos;s why the goal isn&apos;t simply to teach your dog to sit on cue. It&apos;s to build a
-                relationship where your dog wants to listen—even when there isn&apos;t a treat in sight.
-              </p>
-            </div>
             <StartCtaGroup primaryLabel="Reclaim your relationship — book a session" />
             <p className="start-deeper-link">
               Want the deeper method?{' '}
