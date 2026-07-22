@@ -6,9 +6,6 @@ node_modules/
 # Trainer app — hero images synced from public/images at dev/build time
 trainer-app/public/images/
 
-# Trainer app — bordered metadata icons generated at dev/build time
-trainer-app/public/favicon/
-
 # Local reference copy only — not part of the published site
 demosuite/
 

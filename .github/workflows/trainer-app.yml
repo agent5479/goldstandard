@@ -55,22 +55,9 @@ jobs:
           VITE_BOOKING_IMPORT_KEY: ${{ secrets.VITE_BOOKING_IMPORT_KEY }}
         run: |
           set -euo pipefail
-          echo "NODE_ENV=${NODE_ENV:-unset}"
-          echo "Checking build tooling…"
-          test -f node_modules/vite/package.json || { echo "::error::vite missing after npm ci"; exit 1; }
-          test -f node_modules/typescript/package.json || { echo "::error::typescript missing after npm ci"; exit 1; }
-          test -f node_modules/sharp/package.json || { echo "::error::sharp missing after npm ci"; exit 1; }
-          node -e "import('sharp').then(() => console.log('sharp load ok')).catch((err) => { console.error(err); console.error('::error::sharp failed to load'); process.exit(1); })"
-          echo "Syncing hero photos…"
-          node ../scripts/sync-hero-photos.mjs
-          node scripts/sync-hero-images.js
-          node scripts/generate-trainer-favicons.js
-          echo "Compiling TypeScript…"
-          npx tsc -b
-          echo "Bundling with Vite…"
-          npx vite build
-          node scripts/inject-runtime-config.js
-          echo "Build complete."
+          npm run build 2>&1 | tee /tmp/trainer-build.log
+          test -f dist/index.html
+          test -f dist/images/thumbs/olliewelshterrierpuppy.jpg
 
       - name: Validate Firebase deploy secret
         env:
@@ -125,7 +112,10 @@ jobs:
           echo "Hosting deploy: ${{ steps.deploy_hosting.outcome }}"
           echo "Database rules deploy: ${{ steps.deploy_database.outcome }}"
           if [ "${{ steps.build.outcome }}" != "success" ]; then
-            echo "::error::Trainer app build failed — hosting was not updated. Check the Build step log (vite/tsc/sharp must install via npm ci --include=dev)."
+            echo "::group::Build log"
+            cat /tmp/trainer-build.log || true
+            echo "::endgroup::"
+            echo "::error::Trainer app build failed — hosting was not updated. See Build log above."
             exit 1
           fi
           if [ "${{ steps.deploy_hosting.outcome }}" != "success" ]; then

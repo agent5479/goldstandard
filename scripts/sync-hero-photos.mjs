@@ -5,7 +5,6 @@
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { basename, dirname, extname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import sharp from 'sharp';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const repoRoot = join(__dirname, '..');
@@ -79,6 +78,7 @@ function labelFromFilename(name) {
 async function ensureThumb(sourcePath, thumbPath) {
   if (existsSync(thumbPath)) return;
 
+  const { default: sharp } = await import('sharp');
   mkdirSync(dirname(thumbPath), { recursive: true });
   await sharp(sourcePath)
     .resize(THUMB_SIZE, THUMB_SIZE, { fit: 'cover', position: 'centre' })

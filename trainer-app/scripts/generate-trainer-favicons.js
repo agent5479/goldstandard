@@ -1,11 +1,11 @@
 /**
  * Builds bordered trainer metadata icons from the public site dog favicons.
  * Output: trainer-app/public/favicon/dog{N}.jpg with a red frame for tab/PWA/tile distinction.
+ * Skips regeneration when all outputs already exist (CI-friendly without sharp).
  */
 import { existsSync, mkdirSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
-import sharp from 'sharp';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const sourceDir = join(__dirname, '..', 'public', 'images', 'icons');
@@ -17,7 +17,11 @@ function borderWidth(size) {
   return Math.max(2, Math.round(size * 0.125));
 }
 
-async function generateIcon(size) {
+function allOutputsExist() {
+  return SIZES.every((size) => existsSync(join(targetDir, `dog${size}.jpg`)));
+}
+
+async function generateIcon(size, sharp) {
   const sourcePath = join(sourceDir, `dog${size}.jpg`);
   if (!existsSync(sourcePath)) {
     console.error(`Missing source icon: ${sourcePath}`);
@@ -45,8 +49,14 @@ async function generateIcon(size) {
 
 mkdirSync(targetDir, { recursive: true });
 
+if (allOutputsExist()) {
+  console.log(`Trainer favicons already present → ${targetDir}`);
+  process.exit(0);
+}
+
+const { default: sharp } = await import('sharp');
 for (const size of SIZES) {
-  await generateIcon(size);
+  await generateIcon(size, sharp);
 }
 
 console.log(`Generated ${SIZES.length} bordered trainer icons → ${targetDir}`);
