@@ -78,16 +78,19 @@ export default function StartPage() {
                 </ul>
               </div>
             </div>
-            <p className="start-prose start-prose--emphasis">
-              Somewhere along the way, you started wondering whether this is just what owning a dog is like.
-            </p>
+            <div className="start-prose">
+              <p className="start-prose--emphasis">
+                Somewhere along the way, you started wondering whether this is just what owning a dog is like...
+              </p>
+              <p className="start-payoff">But it doesn&apos;t have to be!</p>
+            </div>
           </div>
         </section>
 
         <section className="start-pivot" aria-labelledby="start-pivot-heading">
           <div className="start-inner">
-            <h2 id="start-pivot-heading" className="start-pivot-verb">
-              It isn&apos;t.
+            <h2 id="start-pivot-heading" className="visually-hidden">
+              Why it doesn&apos;t have to stay this way
             </h2>
             <div className="start-prose">
               <p>
