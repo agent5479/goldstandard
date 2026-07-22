@@ -41,6 +41,7 @@ function labelFromFilename(name) {
 
   const suffixes = [
     'collierottweiler',
+    'blacklabadolescent',
     'welshterrierpuppy',
     'chihuahuapuppy',
     'cavoodlepuppy',

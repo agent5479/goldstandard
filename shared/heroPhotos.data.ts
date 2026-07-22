@@ -90,4 +90,10 @@ export const HERO_PHOTOS = [
     alt: 'Ollie',
     label: 'Ollie',
   },
+  {
+    thumb: 'images/thumbs/bellablacklabadolescent.jpg',
+    full: 'images/bellablacklabadolescent.jpg',
+    alt: 'Bella',
+    label: 'Bella',
+  },
 ] as const;
