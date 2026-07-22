@@ -53,7 +53,24 @@ jobs:
           VITE_DEFAULT_TENANT_ID: gsdt
           VITE_BOOKING_API_URL: ${{ secrets.VITE_BOOKING_API_URL }}
           VITE_BOOKING_IMPORT_KEY: ${{ secrets.VITE_BOOKING_IMPORT_KEY }}
-        run: npm run build
+        run: |
+          set -euo pipefail
+          echo "NODE_ENV=${NODE_ENV:-unset}"
+          echo "Checking build tooling…"
+          test -f node_modules/vite/package.json || { echo "::error::vite missing after npm ci"; exit 1; }
+          test -f node_modules/typescript/package.json || { echo "::error::typescript missing after npm ci"; exit 1; }
+          test -f node_modules/sharp/package.json || { echo "::error::sharp missing after npm ci"; exit 1; }
+          node -e "import('sharp').then(() => console.log('sharp load ok')).catch((err) => { console.error(err); console.error('::error::sharp failed to load'); process.exit(1); })"
+          echo "Syncing hero photos…"
+          node ../scripts/sync-hero-photos.mjs
+          node scripts/sync-hero-images.js
+          node scripts/generate-trainer-favicons.js
+          echo "Compiling TypeScript…"
+          npx tsc -b
+          echo "Bundling with Vite…"
+          npx vite build
+          node scripts/inject-runtime-config.js
+          echo "Build complete."
 
       - name: Validate Firebase deploy secret
         env:
