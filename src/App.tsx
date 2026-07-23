@@ -10,7 +10,6 @@ import ExamPage from './pages/ExamPage';
 import IntelligencePage from './pages/IntelligencePage';
 import DogPersonalityPage from './pages/dog-personality/DogPersonalityPage';
 import BreedFinderPage from './pages/breed-finder/BreedFinderPage';
-import StartPage from './pages/StartPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 /** Redirect legacy .html URLs to their SPA routes, preserving the hash. */
@@ -28,7 +27,7 @@ export default function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/book" element={<BookPage />} />
-        <Route path="/start" element={<StartPage />} />
+        <Route path="/start" element={<Navigate to="/book" replace />} />
         <Route path="/guide" element={<GuidePage />} />
         <Route path="/guide/:moduleId" element={<GuideModulePage />} />
         <Route path="/exam" element={<ExamPage />} />

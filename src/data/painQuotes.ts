@@ -1,4 +1,4 @@
-/** Owner pain-point lines — rotated on the home hero; kept out of the /start booking path. */
+/** Owner pain-point lines — rotated on the home hero. */
 export const PAIN_QUOTES = [
   '😩 I thought having a dog would be enjoyable… 😩',
   "🤦 Why does everyone else's dog seem easier? 🤦",

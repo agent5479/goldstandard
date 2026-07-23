@@ -10,6 +10,7 @@ interface ContentsLink {
 }
 
 const CONTENTS_LINKS: ContentsLink[] = [
+  { moduleId: 'foundation', group: '🏛️ Foundation', anchor: 'missing-framework', label: '🧭 Missing a framework' },
   { moduleId: 'foundation', group: '🏛️ Foundation', anchor: 'pillars', label: '🏆 Four pillars' },
 
   { moduleId: 'leadership', group: '👤 Leadership', anchor: 'owner-mindset', label: '👤 Owner mindset' },

@@ -90,7 +90,7 @@ export default function HomePage() {
             effective training and rehabilitation with quick, lasting results.
           </p>
           <div className="hero-cta">
-            <Link to="/start" className="btn btn-primary">Book a session</Link>
+            <Link to="/book" className="btn btn-primary">Book a session</Link>
             <button
               type="button"
               className="btn btn-secondary"
@@ -151,7 +151,7 @@ export default function HomePage() {
             </div>
           </div>
           <p className="service-footer-cta">
-            <Link to="/start">Book online</Link>
+            <Link to="/book">Book online</Link>
             {' · '}
             <Link to="/contact">Send an enquiry</Link>
             {' · '}
@@ -235,7 +235,7 @@ export default function HomePage() {
           <h2>Ready to get started?</h2>
           <p>Call or text Warwick to discuss your dog, or book a session online. First conversation is always free.</p>
           <div className="contact-cta-row">
-            <Link to="/start" className="btn btn-primary">Book a session</Link>
+            <Link to="/book" className="btn btn-primary">Book a session</Link>
             <Link to="/contact" className="btn btn-secondary">Send an enquiry</Link>
           </div>
           <div className="contact-options">

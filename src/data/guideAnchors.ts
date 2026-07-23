@@ -1,5 +1,6 @@
 /** Known guide anchors for exam guideLink validation. */
 export const GUIDE_EXAM_ANCHORS = new Set([
+  'missing-framework',
   'pillars',
   'pack-leader-energy',
   'owner-mindset',

@@ -1,5 +1,6 @@
 import type { ComponentType } from 'react';
 import type { GuideModuleId } from '@shared/guideModules';
+import SectionMissingFramework from '../pages/guide-sections/SectionMissingFramework';
 import SectionPillars from '../pages/guide-sections/SectionPillars';
 import SectionOwnerMindset from '../pages/guide-sections/SectionOwnerMindset';
 import SectionExpectations from '../pages/guide-sections/SectionExpectations';
@@ -37,7 +38,7 @@ import {
 } from '../pages/guide-sections/guideThemeDividers';
 
 export const guideModuleSections: Record<GuideModuleId, ComponentType[]> = {
-  foundation: [SectionPillars],
+  foundation: [SectionMissingFramework, SectionPillars],
   leadership: [
     GuideThemeLeadership,
     SectionOwnerMindset,

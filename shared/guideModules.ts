@@ -20,7 +20,7 @@ export interface GuideModuleMeta {
   anchors: string[];
 }
 
-const FOUNDATION_ANCHORS = ['pillars', 'pack-leader-energy'] as const;
+const FOUNDATION_ANCHORS = ['missing-framework', 'pillars', 'pack-leader-energy'] as const;
 
 const LEADERSHIP_ANCHORS = [
   'guide-theme-leadership',
@@ -217,9 +217,9 @@ export const GUIDE_MODULES: GuideModuleMeta[] = [
     route: '/guide/foundation',
     part: 'Part 1',
     title: 'Foundation',
-    description: 'Four pillars — authority, preparation, consistency, and real-world wins.',
-    readMinutes: 8,
-    primaryAnchors: ['pillars'],
+    description: 'Orientation, four pillars, and the authority that makes lasting results possible.',
+    readMinutes: 10,
+    primaryAnchors: ['missing-framework', 'pillars'],
     anchors: [...FOUNDATION_ANCHORS],
   },
   {

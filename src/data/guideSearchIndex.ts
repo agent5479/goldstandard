@@ -21,6 +21,7 @@ const stripEmoji = (text: string) =>
 const normalize = (text: string) => stripEmoji(text).toLowerCase();
 
 const ALIASES: { terms: string[]; anchor: string }[] = [
+  { terms: ['missing framework', 'youre not failing', "you're not failing", 'not failing', 'symptom not problem', 'imagined vs reality', 'why behaviour exists', 'start here', 'orientation'], anchor: 'missing-framework' },
   { terms: ['pillars', 'three pillars', 'four pillars', 'preparation', 'consistency', 'real world wins', 'gold standard rule', 'authority', 'drain the tank', 'sit', 'wait', 'nothing for free', 'consent', 'release', 'pack leader', 'pack leader energy', 'anchor energy', 'energy', 'caesar', 'cesar', 'millan', 'dogs dont lie', "dogs don't lie", 'biofeedback'], anchor: 'pillars' },
   { terms: ['owner mindset', 'anxiety', 'calm leadership', 'owner energy', 'nervous handler', 'reassurance', 'shush', "it's okay", 'subconscious baseline', 'internal thermostat', 'new baseline', 'gamified loop', 'cultural reset', 'dramatic praise', 'internal expectations'], anchor: 'owner-mindset' },
   { terms: ['subconscious shift', 'transforming standards', 'old baseline new baseline', 'self regulation walk', 'neutral accountability'], anchor: 'new-baseline' },

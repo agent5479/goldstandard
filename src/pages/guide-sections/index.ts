@@ -1,3 +1,4 @@
+import SectionMissingFramework from './SectionMissingFramework';
 import SectionPillars from './SectionPillars';
 import SectionOwnerMindset from './SectionOwnerMindset';
 import SectionExpectations from './SectionExpectations';
@@ -35,6 +36,7 @@ import {
 
 /** All guide sections in document order. */
 export const guideSections = [
+  SectionMissingFramework,
   SectionPillars,
   GuideThemeLeadership,
   SectionOwnerMindset,
