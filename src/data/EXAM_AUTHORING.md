@@ -87,6 +87,8 @@ Explanations should reflect Gold Standard values from the client playbook — ha
 - `expectation-of-excellence` — time buffer before praise after correction
 - `intact-health-baseline` — intact health framing in this model
 - `intact-social-penalty` — intact social friction costs
+- `controlled-confrontation` — slack lines / yield / handler lock vs free-for-all
+- `controlled-confrontation-timing` — master dog timing vs late human leash pop
 - `intact-environment-restrictions` — daycare, boarding, parks
 - `biological-drive-fairness` — intact without outlets
 - `surgical-alternatives` — vasectomy / hormone-sparing options

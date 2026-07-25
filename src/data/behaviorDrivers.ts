@@ -199,7 +199,7 @@ export const BEHAVIOR_DRIVERS: BehaviorDriverDef[] = [
     ],
     primaryResponse:
       'Structured social exposure with sharp boundaries — dominance navigation, social friction, meetings on leash until maturity.',
-    guideAnchors: ['dominance-navigation', 'social-friction', 'dog-meetings', 'dog-meetings-leash'],
+    guideAnchors: ['dominance-navigation', 'social-friction', 'dog-meetings', 'dog-meetings-leash', 'master-dog', 'controlled-confrontation'],
     playbookEligible: false,
   },
   {

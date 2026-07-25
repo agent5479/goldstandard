@@ -690,6 +690,38 @@ export const examQuestions: Question[] = [
     topic: 'Off-leash social',
     breedCategory: 'all',
     track: 'both',
+    dedupGroup: 'controlled-confrontation',
+    text: 'What makes Controlled Confrontation different from a free-for-all scuffle?',
+    options: [
+      'Slack safety lines, light-switch yield when the client softens, and instant handler lock if energy escalates',
+      'Both dogs off-lead with no lines so they can settle rank without human interference at all',
+      'The louder dog wins — handlers wait until one clearly dominates before stepping in to praise',
+      'Keep dogs on short tight leashes and shout over them until both go quiet and look at their owners',
+    ],
+    explanation:
+      'Controlled Confrontation is surgical: tensionless lines, yield creates immediate relief, and handlers lock the moment teaching becomes danger — not a chaotic brawl.',
+    guideLink: '#controlled-confrontation',
+  },
+  {
+    topic: 'Off-leash social',
+    breedCategory: 'all',
+    track: 'both',
+    dedupGroup: 'controlled-confrontation-timing',
+    text: 'Why can a master dog\'s correction land cleaner than a late human leash pop?',
+    options: [
+      'Native timing and zero ego — it interrupts intent before action, without emotional noise down the leash',
+      'Master dogs rely on size alone — a heavier dog replaces timing and structure as the main teaching tool',
+      'Handlers should stay silent and soft during social moments so only other dogs shape the boundary',
+      'Leash pops are secondary because treats and praise should carry most of the social feedback instead',
+    ],
+    explanation:
+      'Dogs read species-level social feedback humans cannot fully replicate. A balanced master dog closes distance at the millisecond of intent and drops to neutrality — no grudge, no delayed confusion.',
+    guideLink: '#controlled-confrontation',
+  },
+  {
+    topic: 'Off-leash social',
+    breedCategory: 'all',
+    track: 'both',
     text: 'Why is missing micro-signals of social friction dangerous?',
     options: [
       'The gap to a fast snap can be milliseconds — late intervention risks injury, chaos, and vet visits',

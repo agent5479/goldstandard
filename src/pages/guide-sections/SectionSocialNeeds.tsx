@@ -13,7 +13,7 @@ export default function SectionSocialNeeds() {
 
         <h3 id="dog-meetings">🐕‍🦺 When dogs meet: play, correction, and real conflict</h3>
 
-        <p>Not every noisy interaction is a fight. Owners often interrupt the exact moment that would have taught the dog something valuable — a clear correction from a calm, experienced, socially competent dog is sometimes the best teacher a pushy youngster will ever get. That is <strong>dog-to-dog</strong> boundary-setting, not a licence for chaos. Compassionate hardline between dogs is not cruelty: it is one dog teaching another in a language humans often misread — the same pack language your hand speaks when calibrated correctly; see <a href="#dog-language">Dog language</a>.</p>
+        <p>Not every noisy interaction is a fight. Owners often interrupt the exact moment that would have taught the dog something valuable — a clear correction from a calm, experienced, socially competent dog is sometimes the best teacher a pushy youngster will ever get. That is <strong>dog-to-dog</strong> boundary-setting, not a licence for chaos. Compassionate hardline between dogs is not cruelty: it is one dog teaching another in a language humans often misread — the same pack language your hand speaks when calibrated correctly; see <a href="#dog-language">Dog language</a>. In facilitated sessions, that teaching is formalised as <a href="#controlled-confrontation">Controlled Confrontation</a> with a <a href="#master-dog">master dog</a>.</p>
 
         <p><strong>Relative condition:</strong> let dogs negotiate when both are free to yield, bodies stay loose, and the moment ends cleanly. Intervene when the dynamic is one-sided, trapped, or unsafe — regardless of noise level. True off-lead reliability requires reading the exact millisecond play becomes predatory or dominant — see <a href="#social-friction">Micro-signals of social friction</a> below.</p>
 
@@ -25,7 +25,7 @@ export default function SectionSocialNeeds() {
 
         <p>Expect your dog to learn how to read and navigate dominance — not by avoiding other dogs, but through structured exposure with you as backup. Mounting, barging, rough sniffing, and the signals in <a href="#social-friction">social friction</a> are antisocial dominance culture, not harmless play. There are more signals than these — learn them, name them, and correct early when your dog offers them; intervene when others offer them to yours.</p>
 
-        <p>Healthy negotiation between calm, socially competent dogs still happens — see <a href="#master-dog">The master dog</a>. The goal is a dog that can hold neutrality in a group, not one that never meets another dog until adulthood.</p>
+        <p>Healthy negotiation between calm, socially competent dogs still happens — see <a href="#master-dog">The master dog</a> and <a href="#controlled-confrontation">Controlled Confrontation</a>. The goal is a dog that can hold neutrality in a group, not one that never meets another dog until adulthood.</p>
 
         <h3 id="social-friction">⚡ Micro-signals of social friction</h3>
 
@@ -76,7 +76,7 @@ export default function SectionSocialNeeds() {
 
         <h3 id="master-dog">🐕‍🦺 The master dog: silent authority</h3>
 
-        <p>Humans are limited by mass and reaction time — we must move our whole body across a space, often arriving after escalation has already occurred. A stable, neutral <strong>master dog</strong> — a socially competent adult with a deep off-switch and strong spatial presence — can act as a biological balancer within the flow of canine communication. Facilitated socialisation with suitable dogs in sessions provides this: a regulated dog is one that reads other animals and responds calmly rather than reactively.</p>
+        <p>Humans are limited by mass and reaction time — we must move our whole body across a space, often arriving after escalation has already occurred. A stable, neutral <strong>master dog</strong> — a socially competent adult with a deep off-switch and strong spatial presence — can act as a biological balancer within the flow of canine communication. In sessions this dog may be called a <strong>Master Helper Dog</strong>; the role is the same. Facilitated socialisation with suitable dogs provides this: a regulated dog is one that reads other animals and responds calmly rather than reactively.</p>
 
         <p>
           A true master dog can also deliver <strong>optimal corrections</strong> that humans often struggle to pull off
@@ -105,7 +105,90 @@ export default function SectionSocialNeeds() {
           <li><strong>Household example:</strong> hold the same standards for every dog in the household — permission, leash work, access earned and revoked the same way. As you reshape one dog's relationship with you, he can lead the others by example — but only if the frame is consistent across the pack</li>
         </ul>
 
-        <p>A master dog is not a licence for chaos — it is a teacher in a language humans often misread. Your role remains tactical: sharp boundaries, <a href="#off-lead-intervention">removal of access</a> when needed, and reading the micro-signals before they become snaps.</p>
+        <p>A master dog is not a licence for chaos — it is a teacher in a language humans often misread. Your role remains tactical: sharp boundaries, <a href="#off-lead-intervention">removal of access</a> when needed, and reading the micro-signals before they become snaps. When that teaching is formalised under safety lines in session, it is <a href="#controlled-confrontation">Controlled Confrontation</a>.</p>
+
+        <h3 id="controlled-confrontation">⚔️ Controlled Confrontation</h3>
+
+        <p>
+          Human handlers can teach commands, build engagement, and manage leashes. Deep-seated pushiness, high-arousal
+          dominance, and spatial disrespect are often corrected more cleanly by a balanced master dog speaking native
+          canine language than by a late human leash pop. Dogs process social feedback from their own species at a
+          neurological level no human can fully replicate — that is the gap Controlled Confrontation fills.
+        </p>
+
+        <p>
+          This is <strong>not</strong> a chaotic free-for-all. It is a surgical, highly structured interaction where two
+          dogs enter physical social feedback under exact safety parameters. It is also distinct from the{' '}
+          <a href="#controlled-crucible">controlled crucible</a>: the crucible is about failing safely off-lead and
+          earning access; Controlled Confrontation is the dog-to-dog correction ritual inside facilitated social work.
+        </p>
+
+        <div className="two-col">
+          <div className="col-card">
+            <h4>Human limitation</h4>
+            <ul className="checklist">
+              <li><strong>Delayed timing</strong> — corrections often land after intent has already become action</li>
+              <li><strong>Emotional noise</strong> — tension, anger, or anxiety travels down the leash</li>
+              <li><strong>Artificial pressure</strong> — leash pops and verbal cues feel like human rules, not pack language</li>
+            </ul>
+          </div>
+          <div className="col-card">
+            <h4>Master dog advantage</h4>
+            <ul className="checklist">
+              <li><strong>Microsecond precision</strong> — reads muscular shifts and interrupts intent before it commits</li>
+              <li><strong>Zero ego</strong> — unemotional feedback; full authority without malice or grudge</li>
+              <li><strong>Native language</strong> — body blocks, spatial pins, and flank corrections hardwired into canine social DNA</li>
+            </ul>
+          </div>
+        </div>
+
+        <h4>Mechanics of the controlled fight</h4>
+
+        <ol className="steps">
+          <li><strong>Pushy or high-arousal approach</strong> — client dog tests space, rank, or intensity</li>
+          <li><strong>Ritualized correction</strong> — master dog delivers precise, native social pressure</li>
+          <li>
+            <strong>Branch:</strong> client yields (shoulders drop, head turn, step back) → pressure drops and calm resets
+            instantly; <em>or</em> client escalates → handlers lock the interaction via tensionless safety lines before
+            teaching becomes danger
+          </li>
+        </ol>
+
+        <h4>Three rules of Controlled Confrontation</h4>
+
+        <ul className="checklist">
+          <li>
+            <strong>Slack-line safety:</strong> both dogs work on tensionless safety lines (and muzzles when necessary).
+            Lines stay loose so real body language can be read, but handlers stand ready to lock the moment the second
+            energy leaves a teaching window — see <a href="#intact-muzzle-protocol">intact muzzle protocol</a> and{' '}
+            <a href="#off-lead-intervention">off-lead intervention</a>
+          </li>
+          <li>
+            <strong>Light-switch yield:</strong> the instant the client dog yields — drop in shoulders, head turn, or step
+            back — the master dog drops all pressure. Submission creates immediate relief and safety; that pairing is the
+            lesson
+          </li>
+          <li>
+            <strong>No unfinished business:</strong> because the correction is native canine language followed by absolute
+            neutrality, client dogs do not hold a grudge against the human. They accept a boundary set by a superior
+            social anchor, then return to calm
+          </li>
+        </ul>
+
+        <div className="callout">
+          <strong>🧭 Safety boundary</strong>
+          <p>
+            Read <a href="#social-friction">social friction</a> and <a href="#other-dog-ready-stance">the other dog&apos;s
+            ready stance</a> throughout. If the picture turns one-sided, trapped, or predatory, extract — do not &quot;let
+            them work it out.&quot; Controlled Confrontation only exists inside structure; without it, you have a brawl.
+          </p>
+        </div>
+
+        <p>
+          When a pushy dog hits an unyielding wall of calm canine authority, the mindset shifts: they stop hunting
+          boundaries to test and begin looking to the pack — and to you — for guidance. Your tactical role never
+          disappears; the master dog fills the neurological gap humans cannot close alone.
+        </p>
 
         <div className="two-col">
           <div className="col-card">

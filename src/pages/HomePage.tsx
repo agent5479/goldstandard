@@ -40,7 +40,7 @@ const SERVICES = [
     icon: '🤝',
     title: 'Calm around other dogs',
     description:
-      'Structured sessions with the right dogs, so yours learns healthy social habits and how to be corrected naturally. A social dog is a settled dog — one that reads other animals and stays calm instead of reacting.',
+      'Structured sessions with the right dogs — including Controlled Confrontation with a balanced master helper dog when pushiness needs native canine feedback. Yours learns healthy social habits and how to be corrected naturally. A social dog is a settled dog — one that reads other animals and stays calm instead of reacting.',
   },
   {
     icon: '🔗',

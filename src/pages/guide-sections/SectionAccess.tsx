@@ -44,7 +44,7 @@ export default function SectionAccess() {
 
       <p>For everyday safety, keep your dog leashed — that is the general rule. But if the goal is true behavioural reliability and real-world recall, permanent containment is a dead end. Mistakes are not unexpected hiccups; they are part of the learning sequence, and repetition in a controlled setting is mandatory. Your responsibility is to provide a structured crucible: the opportunity to <strong>fail safely</strong>.</p>
 
-      <p>The objective is not the absolute avoidance of every antisocial moment — it is a dog that can handle healthy exposure, navigate <a href="#social-friction">canine social friction</a>, and look to you for regulation when boundaries blur. That means earned off-lead access in controlled environments, with instant consequences when the standard breaks. This is the opposite of <a href="#road-safety">road safety</a> — beside traffic there is no controlled failure, only an invariant reflex built on-lead first.</p>
+      <p>The objective is not the absolute avoidance of every antisocial moment — it is a dog that can handle healthy exposure, navigate <a href="#social-friction">canine social friction</a>, and look to you for regulation when boundaries blur. That means earned off-lead access in controlled environments, with instant consequences when the standard breaks. This is the opposite of <a href="#road-safety">road safety</a> — beside traffic there is no controlled failure, only an invariant reflex built on-lead first. The crucible is about failing safely and earning freedom; when a balanced <a href="#master-dog">master dog</a> delivers native social corrections inside that structure, that ritual is <a href="#controlled-confrontation">Controlled Confrontation</a> — related, not the same tool.</p>
 
       <ul className="checklist">
         <li><strong>Everyday default:</strong> leash for safety until the standard is proven in real conditions</li>
@@ -62,7 +62,7 @@ export default function SectionAccess() {
         <li><strong>Calm reset</strong> — disappointed tone, walk on, no lecture. Freedom returns only when behaviour earns it again</li>
       </ol>
 
-      <p>The dog learns that antisocial behaviour instantly collapses its world, while a calm, neutral state of mind is the only key that unlocks freedom. Pair with <a href="#dog-meetings">Dog meetings</a> and, where available, a stable <a href="#master-dog">master dog</a> in structured social sessions.</p>
+      <p>The dog learns that antisocial behaviour instantly collapses its world, while a calm, neutral state of mind is the only key that unlocks freedom. Pair with <a href="#dog-meetings">Dog meetings</a> and, where available, a stable <a href="#master-dog">master dog</a> in structured social sessions — including <a href="#controlled-confrontation">Controlled Confrontation</a> when the teaching moment is dog-to-dog rather than leash-only.</p>
 
       <h3 id="road-safety">🛣️ Road safety: the absolute boundary (rural NZ)</h3>
 

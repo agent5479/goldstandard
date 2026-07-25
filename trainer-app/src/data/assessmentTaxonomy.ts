@@ -118,6 +118,7 @@ export const GUIDE_ANCHORS: GuideAnchor[] = [
   { id: 'surgical-alternatives', label: 'Surgical alternatives', icon: 'bi-scissors', groupId: 'social' },
   { id: 'social-friction', label: 'Social friction signals', icon: 'bi-lightning', groupId: 'social' },
   { id: 'master-dog', label: 'Master dog', icon: 'bi-star', groupId: 'social' },
+  { id: 'controlled-confrontation', label: 'Controlled confrontation', icon: 'bi-shield-check', groupId: 'social' },
   { id: 'timing', label: 'Timing', icon: 'bi-stopwatch', groupId: 'training' },
   { id: 'rewards', label: 'Rewards', icon: 'bi-gift', groupId: 'training' },
   { id: 'go-get-recall', label: 'Go-get recall', icon: 'bi-arrow-repeat', groupId: 'training' },

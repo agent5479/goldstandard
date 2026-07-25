@@ -98,6 +98,7 @@ export const GUIDE_EXAM_ANCHORS = new Set([
   'surgical-alternatives',
   'social-friction',
   'master-dog',
+  'controlled-confrontation',
   'corrections',
   'architecture-of-clarity',
   'conservation-of-force',

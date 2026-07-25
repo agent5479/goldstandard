@@ -122,6 +122,7 @@ const SOCIAL_ANCHORS = [
   'other-dog-ready-stance',
   'intact-muzzle-protocol',
   'master-dog',
+  'controlled-confrontation',
   'intact-large-males',
   'intact-health-baseline',
   'intact-large-males-mindset',

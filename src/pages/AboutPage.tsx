@@ -146,7 +146,10 @@ export default function AboutPage() {
               <p>
                 Reading body language, posturing, and social friction; shaping access and rank within the pack
                 grammar — not fighting the dog kingdom, but fluently joining it — see{' '}
-                <Link to={guideHref('reading-dog')}>reading your dog</Link>.
+                <Link to={guideHref('reading-dog')}>reading your dog</Link>. Where human timing and mass fall short,
+                facilitated work with a balanced master dog —{' '}
+                <Link to={guideHref('controlled-confrontation')}>Controlled Confrontation</Link> — delivers native
+                social corrections that resolve pushiness at the source.
               </p>
             </article>
           </div>
@@ -168,8 +171,12 @@ export default function AboutPage() {
             <p>
               Warwick demonstrates the full toolkit in session — including when a downward jerk, butt push, or
               spatial block lands — so you learn timing and calibration, not dependency on Warwick forever.
-              Your home work is the sustainable core: slack leash, anchor energy, cue once, and the steady message
-              that the old contract is over and the new baseline is real.
+              Where deep pushiness or high-arousal dominance needs native canine feedback, sessions may use a
+              balanced master helper dog in{' '}
+              <Link to={guideHref('controlled-confrontation')}>Controlled Confrontation</Link>: slack-line safety,
+              light-switch yield, and calm reset — not a free-for-all. Your home work is the sustainable core: slack
+              leash, anchor energy, cue once, and the steady message that the old contract is over and the new baseline
+              is real.
             </p>
             <blockquote className="approach-quote">
               &ldquo;Both pet and owner&apos;s needs are met — and stress is reduced.&rdquo;

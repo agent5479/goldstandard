@@ -60,6 +60,7 @@ const CONTENTS_LINKS: ContentsLink[] = [
   { moduleId: 'social', group: '🐕‍🦺 Social needs', anchor: 'other-dog-ready-stance', label: '⚠️ Other dog braced' },
   { moduleId: 'social', group: '🐕‍🦺 Social needs', anchor: 'intact-muzzle-protocol', label: '🛡️ Intact & muzzles' },
   { moduleId: 'social', group: '🐕‍🦺 Social needs', anchor: 'master-dog', label: '🐕‍🦺 Master dog' },
+  { moduleId: 'social', group: '🐕‍🦺 Social needs', anchor: 'controlled-confrontation', label: '⚔️ Controlled confrontation' },
   { moduleId: 'social', group: '🐕‍🦺 Social needs', anchor: 'intact-large-males', label: '🐕‍🦺 Intact large males' },
   { moduleId: 'social', group: '🐕‍🦺 Social needs', anchor: 'intact-health-baseline', label: '🩺 Intact health baseline' },
   { moduleId: 'social', group: '🐕‍🦺 Social needs', anchor: 'intact-three-paths', label: '🛤️ Three lifestyle paths' },
