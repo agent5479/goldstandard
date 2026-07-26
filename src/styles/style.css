@@ -683,6 +683,12 @@ body::before {
   border-top: 2px solid rgba(184, 131, 42, 0.35);
 }
 
+.about-teaser .pain-quotes-rotator {
+  margin-bottom: 1.75rem;
+  opacity: 1;
+  animation: none;
+}
+
 .about-teaser p {
   color: var(--text);
   max-width: 42rem;
@@ -3677,7 +3683,6 @@ body.page-guide {
   .hero-eyebrow,
   .hero h1,
   .hero-headline,
-  .pain-quotes-rotator,
   .hero-lead,
   .hero-phone-link,
   .hero-sub,

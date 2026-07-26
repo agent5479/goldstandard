@@ -83,7 +83,6 @@ export default function HomePage() {
           <p className="hero-headline">
             The dog you always wanted <span>is already in there.</span>
           </p>
-          <PainQuotesRotator />
           <HeroGallery />
           <p className="hero-lead">
             Give your dog the confidence to know how to handle any new situation without having to
@@ -107,6 +106,7 @@ export default function HomePage() {
 
       <section className="about-teaser">
         <div className="section-inner">
+          <PainQuotesRotator />
           <div className="hero-stats-strip" aria-label="At a glance">
             <div className="hero-stat">
               <strong>Tasman region</strong>
