@@ -86,8 +86,8 @@ export default function HomePage() {
           <PainQuotesRotator />
           <HeroGallery />
           <p className="hero-lead">
-            With clear structure and calm standards, Warwick helps you understand how your dog thinks —
-            effective training and rehabilitation with quick, lasting results.
+            Give your dog the confidence to know how to handle any new situation without having to
+            revert to default behaviour.
           </p>
           <div className="hero-cta">
             <Link to="/book" className="btn btn-primary">Book a session</Link>

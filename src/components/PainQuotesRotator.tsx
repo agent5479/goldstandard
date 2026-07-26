@@ -5,10 +5,13 @@ const ROTATE_MS = 5500;
 const FADE_MS = 550;
 const MAX_FONT_PX = 26.4; // ~1.65rem
 const MIN_FONT_PX = 13;
+/** Desktop-only single-line fit; tablet/mobile allow wrap. */
+const SINGLE_LINE_MQ = '(min-width: 900px)';
 
 /**
  * One pain quote at a time in the home hero — fades on a timer.
- * Font auto-shrinks so each quote stays on a single line.
+ * Desktop: font auto-shrinks to stay on one line.
+ * Tablet/mobile: wraps (up to two lines), centered.
  * With prefers-reduced-motion, shows the first quote statically.
  */
 export default function PainQuotesRotator() {
@@ -56,9 +59,18 @@ export default function PainQuotesRotator() {
     if (!stage || !quote) return;
 
     let cancelled = false;
+    const singleLineMq = window.matchMedia(SINGLE_LINE_MQ);
 
     const fit = () => {
       if (cancelled) return;
+
+      if (!singleLineMq.matches) {
+        quote.style.fontSize = '';
+        quote.style.whiteSpace = '';
+        return;
+      }
+
+      quote.style.whiteSpace = 'nowrap';
       quote.style.fontSize = `${MAX_FONT_PX}px`;
 
       if (quote.scrollWidth <= stage.clientWidth) return;
@@ -83,12 +95,14 @@ export default function PainQuotesRotator() {
 
     fit();
     void document.fonts.ready.then(fit);
+    singleLineMq.addEventListener('change', fit);
 
     const observer = new ResizeObserver(fit);
     observer.observe(stage);
     return () => {
       cancelled = true;
       observer.disconnect();
+      singleLineMq.removeEventListener('change', fit);
     };
   }, [index, visible]);
 
