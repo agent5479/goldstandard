@@ -82,8 +82,9 @@ export default function AboutPage() {
             <p>
               When this site references Beckman-style training, it means the broader structure-and-owner-coaching
               philosophy that influenced Warwick&apos;s approach — not an official credential or approval.
-              Warwick&apos;s model is deliberately purist: the signal source is you — presence, timing, leash,
-              voice, and touch — not remote or aversive gear. See{' '}
+              Warwick&apos;s model is deliberately purist: no prongs, shock, vibration, or remote correction — the
+              signal source is you. That still includes measured physical correction through leash, voice, and
+              touch — brief, calibrated, and released the instant the message lands. See{' '}
               <Link to={guideHref('collars-excluded')}>collars we exclude</Link> in the philosophy section.
             </p>
           </aside>
@@ -120,8 +121,9 @@ export default function AboutPage() {
             <article className="philosophy-pillar">
               <h3>Presence over devices</h3>
               <p>
-                No prongs, harsh chokes, vibration collars, or remote correction. Authority stays in the
-                relationship, where it can be timed, calibrated, and released — see{' '}
+                No prongs, harsh chokes, vibration collars, or remote correction — but yes to measured leash,
+                voice, and touch from the handler. Authority stays in the relationship, where it can be timed,
+                calibrated, and released — see{' '}
                 <Link to={guideHref('collars-excluded')}>collars we exclude</Link>.
               </p>
             </article>
@@ -166,17 +168,26 @@ export default function AboutPage() {
               boundaries — but the handler must evolve first. That means fast, firm{' '}
               <Link to={guideHref('corrections')}>correction</Link> from a calm place when the line is crossed —
               the same grammar dogs use with each other — with intensity{' '}
-              <Link to={guideHref('dog-language')}>measured to the dog</Link> by breed, age, and history.
+              <Link to={guideHref('dog-language')}>measured to the dog</Link> by breed, age, and history. Firm
+              physical resets are part of the toolkit: not optional add-ons, but how the boundary becomes real.
             </p>
             <p>
               Warwick demonstrates the full toolkit in session — including when a downward jerk, butt push, or
               spatial block lands — so you learn timing and calibration, not dependency on Warwick forever.
-              Where deep pushiness or high-arousal dominance needs native canine feedback, sessions may use a
-              balanced master helper dog in{' '}
+              Intensity is tuned to the dog in front of you; the fundamentals still include physical
+              boundary-setting. If that is not a fit for how you want to handle your dog, better to know before
+              booking. Where deep pushiness or high-arousal dominance needs native canine feedback, sessions may
+              use a balanced master helper dog in{' '}
               <Link to={guideHref('controlled-confrontation')}>Controlled Confrontation</Link>: slack-line safety,
               light-switch yield, and calm reset — not a free-for-all. Your home work is the sustainable core: slack
               leash, anchor energy, cue once, and the steady message that the old contract is over and the new baseline
               is real.
+            </p>
+            <p>
+              Preferred equipment is a flat collar or properly positioned slip lead. A head collar — Gentle Leader,
+              Halti, or similar — may be coached as temporary management for older or physically limited handlers
+              with strong dogs. Chest and shoulder harnesses are not used — see{' '}
+              <Link to={guideHref('head-halter')}>head halter guidance</Link>.
             </p>
             <blockquote className="approach-quote">
               &ldquo;Both pet and owner&apos;s needs are met — and stress is reduced.&rdquo;
@@ -184,6 +195,16 @@ export default function AboutPage() {
             <p className="approach-tagline">
               Results-focused · Individualised care
             </p>
+            <aside className="about-callout" aria-label="Is this the right fit">
+              <p>
+                <strong>Is this the right fit?</strong> Consistency and calm follow-through matter — half-hearted
+                correction confuses the dog. If firm physical boundaries feel wrong for how you want to handle
+                your dog, this method is not the right fit, and that is fine to decide early. The first
+                conversation is always free — <Link to="/contact">send an enquiry</Link>
+                {' or '}
+                <Link to="/book">book a session</Link> to talk it through.
+              </p>
+            </aside>
           </div>
         </div>
       </section>

@@ -9,15 +9,32 @@ export default function SectionCollarSelection() {
 
       <p>The preferred tools are a <strong>flat collar</strong> or a <strong>properly positioned slip lead</strong> — both allow precise, instant pressure-and-release that teaches the dog to consciously choose calm. Everything else in this section is either a narrow exception or excluded outright.</p>
 
-      <h3 id="head-halter">🛡️ When the head halter is the right choice (exceptions only)</h3>
+      <h3 id="head-halter">🛡️ When the head halter is the right choice (coached exception)</h3>
 
-      <p>A head halter — Gentle Leader, Halti, or similar — is never a core teaching tool in this method. It is used strictly as a temporary management device or safety brake under highly specific conditions. The halter is a mechanical override that micro-manages the body rather than teaching the brain. It keeps the handler safe while you work on impulse control and state of mind through the methods elsewhere in this guide.</p>
+      <p>
+        A head halter — <strong>Gentle Leader</strong>, Halti, or similar — is never a core teaching tool in this
+        method. It is a temporary management device: a mechanical override that micro-manages the body rather than
+        teaching the brain. It keeps the handler safe while you work on impulse control and state of mind through the
+        methods elsewhere in this guide. Sessions may include technique coaching — timing, slack, and turning the head
+        to break a lock, not yanking.
+      </p>
+
+      <p>
+        This means a <strong>head collar only</strong> — the leash attaches under the chin and turns the head. Chest
+        harnesses and shoulder or front-clip harnesses remain excluded; they engage the opposition reflex and teach
+        pulling — see <a href="#collars-excluded">collars we exclude</a>.
+      </p>
 
       <div className="two-col">
         <div className="col-card">
           <h4>⚖️ Handler safety multiplier</h4>
           <p><strong>The condition:</strong> severe physical limitations — advanced arthritis, back injury, frailty — or an extreme weight mismatch, such as a 50kg handler walking a highly reactive 45kg mastiff.</p>
           <p><strong>Why it is used:</strong> human safety comes first. The leash attaches under the chin, providing mechanical leverage that lets a physically compromised handler maintain control without being dragged or injured.</p>
+        </div>
+        <div className="col-card">
+          <h4>🧓 Older handlers with strong dogs</h4>
+          <p><strong>The condition:</strong> an older or physically limited owner whose dog still has real mass and drive — already on a Gentle Leader-style head collar, or needing one so walks stay safe while structure is rebuilt.</p>
+          <p><strong>Why it is used:</strong> leverage buys time for the handler. Coaching covers fit, slack-line feel, and turning the head to interrupt fixation — not continuous pressure. Flat-collar and slip-lead work continue in parallel; the head collar is temporary management, not the end of the training arc.</p>
         </div>
         <div className="col-card">
           <h4>👁️ Breaking the explosive visual lock</h4>
@@ -31,7 +48,7 @@ export default function SectionCollarSelection() {
         </div>
       </div>
 
-      <h3 id="collars-excluded">🚫 Why we do not use spiked, choker, or chest harnesses</h3>
+      <h3 id="collars-excluded">🚫 Why we do not use spiked, choker, or chest / shoulder harnesses</h3>
 
       <p>These three common tools directly conflict with the goals of this method — calm accountability, crisp communication, and a dog whose brain stays open to learning.</p>
 
@@ -47,8 +64,8 @@ export default function SectionCollarSelection() {
       </div>
 
       <div className="col-card">
-        <h4>⛔ Chest harnesses</h4>
-        <p>Chest harnesses wrap around the strongest parts of the dog's body. They directly trigger the <strong>opposition reflex</strong> — the instinct to pull harder against pressure on the chest or neck. Instead of teaching the dog to respect your space and regulate its own energy, a harness encourages the dog to put weight into the straps and drag you down the street. It communicates <em>pull</em>, which is the opposite of a loose-leash, cooperative state of mind — see <a href="#leash">Leash work</a>.</p>
+        <h4>⛔ Chest / shoulder harnesses</h4>
+        <p>Chest harnesses and shoulder or front-clip harnesses wrap around the strongest parts of the dog's body. They directly trigger the <strong>opposition reflex</strong> — the instinct to pull harder against pressure on the chest or neck. Instead of teaching the dog to respect your space and regulate its own energy, a harness encourages the dog to put weight into the straps and drag you down the street. It communicates <em>pull</em>, which is the opposite of a loose-leash, cooperative state of mind — see <a href="#leash">Leash work</a>. Do not confuse these with a <a href="#head-halter">head collar</a>, which attaches under the chin and is a coached exception only.</p>
       </div>
 
       <div className="pillars guide-glossary">
@@ -67,9 +84,9 @@ export default function SectionCollarSelection() {
               <td>Precise, instant pressure-and-release — teaches the dog to choose calm</td>
             </tr>
             <tr>
-              <td><strong>Head halter</strong></td>
-              <td>Emergency exception only</td>
-              <td>Temporary safety brake for extreme physical mismatch or severe handler limitation</td>
+              <td><strong>Head halter (Gentle Leader / Halti)</strong></td>
+              <td>Coached exception</td>
+              <td>Temporary management for handler safety, strong-dog leverage, or older handlers — flat-collar work continues</td>
             </tr>
             <tr>
               <td><strong>Spiked / prong collar</strong></td>
@@ -82,7 +99,7 @@ export default function SectionCollarSelection() {
               <td>Fails to provide clean, instant release — muddies communication</td>
             </tr>
             <tr>
-              <td><strong>Chest harness</strong></td>
+              <td><strong>Chest / shoulder harness</strong></td>
               <td>Never used</td>
               <td>Engages opposition reflex — physically encourages pulling</td>
             </tr>

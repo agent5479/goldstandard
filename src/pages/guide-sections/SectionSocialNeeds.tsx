@@ -70,7 +70,7 @@ export default function SectionSocialNeeds() {
 
         <p>Avoid putting your dog in unstructured, unleashed meetings with unfamiliar intact dogs — the arousal and rank pressure are not worth the gamble. Your dog may respond beautifully to clean leash corrections; you often cannot control or trust other owners' dogs, especially reactive or high-drive breeds. Prioritise safety — avoid chaotic environments where other dogs roam unmuzzled.</p>
 
-        <p>If you lack the mechanical advantage to control your dog's mass in a high-trigger environment, a <a href="#head-halter">Halti</a> is a legitimate temporary safety brake while you build impulse control through the methods in this guide — not a permanent crutch. Your leash and corrections handle your dog; structure handles the environment you choose to enter.</p>
+        <p>If you lack the mechanical advantage to control your dog's mass in a high-trigger environment — including older or physically limited handlers with strong dogs — a <a href="#head-halter">Gentle Leader or Halti</a> is a legitimate coached exception: temporary management while you build impulse control through the methods in this guide, not a permanent crutch. Your leash and corrections handle your dog; structure handles the environment you choose to enter.</p>
 
         <p>For intact large males still building structure — rank pressure, mass, and testosterone compound every threshold — see <a href="#intact-large-males">Intact large males: the playbook</a>, <a href="#intact-social-penalty">the social penalty</a>, and <a href="#intact-three-paths">three lifestyle paths</a>.</p>
 
