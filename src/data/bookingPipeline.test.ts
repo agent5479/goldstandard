@@ -28,8 +28,9 @@ import {
 } from '@shared/bookingPackages';
 import {
   getBeachSessionShape,
+  getStandardSessionShape,
+  getHouseholdSessionShape,
   STANDARD_SESSION_MINUTES,
-  TWO_DOG_SESSION_MINUTES,
 } from '@shared/bookingPricing';
 
 describe('booking pipeline — form extended JSON', () => {
@@ -118,8 +119,8 @@ describe('booking pipeline — form extended JSON', () => {
     });
 
     expect(summary).toContain('Session');
-    expect(summary).toContain('Private Household Transformations');
-    expect(summary).toContain('$400');
+    expect(summary).toContain('Elite extended coaching');
+    expect(summary).toContain('$350');
     expect(summary).toContain('2.5-hour session');
     expect(summary).toContain('Golden Bay');
     expect(summary).toContain('Archie');
@@ -145,11 +146,11 @@ describe('booking pipeline — form extended JSON', () => {
 
     expect(summary).toContain('Standard training session');
     expect(summary).toContain('$60');
-    expect(summary).toContain('per additional person attending');
-    expect(summary).not.toContain('$400');
+    expect(summary).toContain('per additional person attending, or when a helper dog is used');
+    expect(summary).not.toContain('$350');
   });
 
-  it('formats standard home visit submission summary with $90 flat rate', () => {
+  it('formats standard home visit submission summary with household hourly lump', () => {
     const summary = formatBookingSubmissionSummary({
       regionId: 'golden-bay',
       bookingType: 'standard_beach',
@@ -165,8 +166,8 @@ describe('booking pipeline — form extended JSON', () => {
       isAddressBased: true,
     });
 
-    expect(summary).toContain('$90');
-    expect(summary).toContain('up to 1 hour');
+    expect(summary).toContain('$160');
+    expect(summary).toContain('private household');
     expect(summary).not.toContain('per additional person attending');
   });
 
@@ -181,7 +182,7 @@ describe('booking pipeline — form extended JSON', () => {
       packageSessions: [
         {
           slotLabel: 'Mon 1 Jun 2026, 10:00 am',
-          slotEndLabel: '10:55 am',
+          slotEndLabel: '11:00 am',
           locationLabel: 'Pohara Beach',
           locationName: 'Pohara Beach',
           bookingType: 'standard_beach',
@@ -195,7 +196,7 @@ describe('booking pipeline — form extended JSON', () => {
         },
         {
           slotLabel: 'Wed 3 Jun 2026, 2:00 pm',
-          slotEndLabel: '2:55 pm',
+          slotEndLabel: '3:00 pm',
           locationLabel: 'Rototai Reserve',
           locationName: 'Rototai Reserve',
           bookingType: 'standard_beach',
@@ -203,11 +204,11 @@ describe('booking pipeline — form extended JSON', () => {
       ],
     });
 
-    expect(summary).toContain('3-day programme');
+    expect(summary).toContain('3-session programme');
     expect(summary).toContain('Session 1');
     expect(summary).toContain('Session 3');
     expect(summary).toContain('$60');
-    expect(summary).toContain('$90');
+    expect(summary).toContain('$160');
   });
 
   it('documents Nelson online booking policy flags', () => {
@@ -245,50 +246,57 @@ describe('booking pipeline — package session dates', () => {
   });
 });
 
-describe('booking pipeline — 3-day programme copy', () => {
+describe('booking pipeline — 3-session programme copy', () => {
   it('avoids week-biased scheduling language', () => {
     const pkg = BOOKING_PACKAGES.three_day;
     expect(pkg.headline.toLowerCase()).not.toContain('week');
-    expect(pkg.schedulingNote).toBe('Consecutive days where possible.');
-    expect(BOOKING_PACKAGES.town_ready_five.schedulingNote).toBe('Consecutive days where possible.');
+    expect(pkg.schedulingNote).toMatch(/Consecutive days/i);
   });
 
-  it('explains commitment and adaptive approach for the 3-day programme', () => {
+  it('explains commitment and adaptive approach for the 3-session programme', () => {
     expect(BOOKING_PACKAGES.three_day.whyNote).toMatch(/reinforcement/i);
     expect(BOOKING_PACKAGES.three_day.approachNote).toMatch(/adapts each session/i);
     expect(BOOKING_PACKAGES.three_day.approachNote).toMatch(/carry it on yourself/i);
     expect(BOOKING_PACKAGES.three_day.approachNote).not.toMatch(/Session 1/i);
   });
 
-  it('identifies the town-ready package and its 2-session count', () => {
+  it('keeps deprecated town-ready package id for legacy payloads only', () => {
     expect(isTownReadyPackage('town_ready_five')).toBe(true);
     expect(isTownReadyPackage('three_day')).toBe(false);
-    expect(isTownReadyPackage('single')).toBe(false);
     expect(BOOKING_PACKAGES.town_ready_five.sessionCount).toBe(2);
   });
 });
 
-describe('booking pipeline — two-dog beach session shape', () => {
-  it('keeps the standard single-dog shape for one dog', () => {
-    const shape = getBeachSessionShape(1);
+describe('booking pipeline — beach session shapes', () => {
+  it('keeps the 60-minute single-dog shape', () => {
+    const shape = getStandardSessionShape(60, 1);
     expect(shape.dogCount).toBe(1);
     expect(shape.sessionMinutes).toBe(STANDARD_SESSION_MINUTES);
     expect(shape.priceDollars).toBe(60);
     expect(shape.priceLabel).toBe('$60');
   });
 
-  it('uses the 85-minute $100 pair for two dogs', () => {
-    const shape = getBeachSessionShape(2);
-    expect(shape.dogCount).toBe(2);
-    expect(shape.sessionMinutes).toBe(TWO_DOG_SESSION_MINUTES);
-    expect(shape.sessionMinutes).toBe(85);
-    expect(shape.priceDollars).toBe(100);
-    expect(shape.priceLabel).toBe('$100');
+  it('prices 90-minute one dog at $90 and two dogs at $100', () => {
+    expect(getStandardSessionShape(90, 1).priceDollars).toBe(90);
+    expect(getStandardSessionShape(90, 1).sessionMinutes).toBe(90);
+    const two = getStandardSessionShape(90, 2);
+    expect(two.dogCount).toBe(2);
+    expect(two.sessionMinutes).toBe(90);
+    expect(two.priceDollars).toBe(100);
+    expect(two.priceLabel).toBe('$100');
   });
 
-  it('clamps out-of-range dog counts to the two-dog cap', () => {
-    expect(getBeachSessionShape(3).dogCount).toBe(2);
+  it('clamps out-of-range dog counts on 90-minute sessions', () => {
+    expect(getStandardSessionShape(90, 3).dogCount).toBe(2);
     expect(getBeachSessionShape(0).dogCount).toBe(1);
+  });
+
+  it('prices household hourly and elite upsell', () => {
+    expect(getHouseholdSessionShape(1).priceDollars).toBe(160);
+    expect(getHouseholdSessionShape(1.5).priceDollars).toBe(240);
+    expect(getHouseholdSessionShape(2).priceDollars).toBe(320);
+    expect(getHouseholdSessionShape(2.5).priceDollars).toBe(350);
+    expect(getHouseholdSessionShape(2.5).isElite).toBe(true);
   });
 });
 

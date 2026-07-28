@@ -10,8 +10,6 @@ import {
   formatDisplayDate,
   maxBookingDate,
   minBookingDate,
-  SESSION_MINUTES,
-  ELITE_SESSION_MINUTES,
   TRANSITION_MINUTES,
   STANDARD_SERVICE,
   STANDARD_SERVICE_SUMMARY,
@@ -59,19 +57,24 @@ import {
   type BookingServiceType,
 } from '@shared/bookingServiceTypes';
 import {
-  STANDARD_BOOKING_PACKAGE_LIST,
+  BOOKING_PACKAGES,
   getPackageConfig,
   getPackageSessionCount,
-  isTownReadyPackage,
   type BookingPackageId,
   type PackageSessionDraft,
 } from '@shared/bookingPackages';
 import {
   formatPriceLine,
-  getRegionPricing,
-  getBeachSessionShape,
+  getStandardSessionShape,
+  getHouseholdSessionShape,
   TWO_DOG_CHANGEOVER_NOTE,
-  TWO_DOG_SESSION_MINUTES,
+  STANDARD_SESSION_MINUTES,
+  STANDARD_ADDITIONAL_PERSON_NOTE,
+  STANDARD_ADDITIONAL_DOG_NOTE,
+  HOUSEHOLD_HOURLY_PRICE_DOLLARS,
+  ELITE_PRICE_LABEL,
+  type BeachDurationMinutes,
+  type HouseholdHoursOption,
 } from '@shared/bookingPricing';
 import { Link, useSearchParams } from 'react-router-dom';
 import TurnstileField from '../components/TurnstileField';
@@ -200,6 +203,8 @@ export default function BookForm() {
   const successRef = useRef<HTMLDivElement>(null);
   const [selectedServiceType, setSelectedServiceType] = useState<BookingServiceType | ''>('');
   const [selectedPackageId, setSelectedPackageId] = useState<BookingPackageId>('single');
+  const [beachDurationMinutes, setBeachDurationMinutes] = useState<BeachDurationMinutes>(60);
+  const [householdHours, setHouseholdHours] = useState<HouseholdHoursOption | null>(null);
   const [packageSessions, setPackageSessions] = useState<PackageSessionDraft[]>([]);
   const [activePackageSessionIndex, setActivePackageSessionIndex] = useState(0);
   const [standardVenue, setStandardVenue] = useState<StandardVenue>(null);
@@ -241,11 +246,23 @@ export default function BookForm() {
   const [dog2Breed, setDog2Breed] = useState('');
   const [dog2AgeFields, setDog2AgeFields] = useState<DogAgeFieldsValue>(() => emptyDogAgeFields());
 
-  const isPackageBooking = selectedPackageId !== 'single' && selectedServiceType === 'standard_beach';
-  const isTownPackage = isPackageBooking && isTownReadyPackage(selectedPackageId);
+  const isPackageBooking = selectedPackageId === 'three_day' && selectedServiceType === 'standard_beach';
+  const isPrivateOffer = householdHours !== null;
+  const householdShape = householdHours !== null ? getHouseholdSessionShape(householdHours) : null;
+  const beachShape = getStandardSessionShape(
+    beachDurationMinutes,
+    beachDurationMinutes === 90 ? dogCount : 1
+  );
+  const sessionMinutesForRequest = isPrivateOffer
+    ? (householdShape?.sessionMinutes ?? HOME_VISIT_SESSION_MINUTES)
+    : isPackageBooking
+      ? STANDARD_SESSION_MINUTES
+      : beachShape.sessionMinutes;
   const isTwoDogEligible =
     selectedServiceType === 'standard_beach' &&
     !isPackageBooking &&
+    !isPrivateOffer &&
+    beachDurationMinutes === 90 &&
     standardVenue === 'beach' &&
     selectedRegionId === 'golden-bay';
   const isTwoDog = isTwoDogEligible && dogCount === 2;
@@ -373,6 +390,7 @@ export default function BookForm() {
           region: selectedRegionId,
           location: locationForFilter.name,
           dogs: isTwoDog ? '2' : '1',
+          session_minutes: String(sessionMinutesForRequest),
           website: '',
         };
 
@@ -402,7 +420,7 @@ export default function BookForm() {
     return () => {
       cancelled = true;
     };
-  }, [date, selectedRegionId, selectedLocationId, selectedServiceType, isPackageBooking, packageSessions, activePackageSessionIndex, isTwoDog]);
+  }, [date, selectedRegionId, selectedLocationId, selectedServiceType, isPackageBooking, packageSessions, activePackageSessionIndex, isTwoDog, sessionMinutesForRequest]);
 
   useEffect(() => {
     if (!selectedServiceType) return;
@@ -447,9 +465,7 @@ export default function BookForm() {
     });
   };
 
-  const handleServiceSelect = (serviceType: BookingServiceType) => {
-    setSelectedServiceType(serviceType);
-    setSelectedPackageId('single');
+  const resetOfferSharedState = () => {
     setPackageSessions([]);
     setActivePackageSessionIndex(0);
     setStandardVenue(null);
@@ -462,24 +478,49 @@ export default function BookForm() {
     setTownPrereqConfirmed(null);
     resetTwoDogState();
     setStatus({ kind: 'idle' });
+  };
+
+  const handleOfferSelect = (
+    offer: 'single_60' | 'single_90' | 'three_day' | 'private'
+  ) => {
+    resetOfferSharedState();
+    if (offer === 'single_60') {
+      setSelectedServiceType('standard_beach');
+      setSelectedPackageId('single');
+      setBeachDurationMinutes(60);
+      setHouseholdHours(null);
+    } else if (offer === 'single_90') {
+      setSelectedServiceType('standard_beach');
+      setSelectedPackageId('single');
+      setBeachDurationMinutes(90);
+      setHouseholdHours(null);
+    } else if (offer === 'three_day') {
+      setSelectedServiceType('standard_beach');
+      setSelectedPackageId('three_day');
+      setBeachDurationMinutes(60);
+      setHouseholdHours(null);
+    } else {
+      setSelectedPackageId('single');
+      setBeachDurationMinutes(60);
+      setHouseholdHours(1);
+      setSelectedServiceType('standard_beach');
+      setStandardVenue('home');
+    }
     scrollTo(regionRef);
   };
 
-  const handlePackageSelect = (packageId: BookingPackageId) => {
-    setSelectedServiceType('standard_beach');
-    setSelectedPackageId(packageId);
-    setPackageSessions([]);
-    setActivePackageSessionIndex(0);
-    setStandardVenue(null);
-    setSelectedRegionId('');
-    setSelectedSlot('');
+  const handleHouseholdHoursSelect = (hours: HouseholdHoursOption) => {
+    setHouseholdHours(hours);
+    const shape = getHouseholdSessionShape(hours);
+    setSelectedServiceType(shape.isElite ? 'elite_coaching' : 'standard_beach');
+    setSelectedPackageId('single');
+    setStandardVenue(shape.isElite ? null : 'home');
     setSelectedLocationId('');
+    setSelectedSlot('');
     setClientAddress('');
     setIsHomeAddress(null);
-    setPackageDateError('');
     setTownPrereqConfirmed(null);
     resetTwoDogState();
-    scrollTo(regionRef);
   };
 
   const handleStandardHomeConfirm = () => {
@@ -573,7 +614,7 @@ export default function BookForm() {
         setClientAddress('');
         setIsHomeAddress(null);
         setStatus({ kind: 'idle' });
-        if (isTownPackage && townPrereqConfirmed) {
+        if (isTownshipTrainingLocation(selectedLocationId) && townPrereqConfirmed) {
           setStandardVenue('town');
           setSelectedLocationId(getTownshipTrainingLocationId(selectedRegionId || 'golden-bay'));
         } else {
@@ -1014,6 +1055,7 @@ export default function BookForm() {
       payload.dog2_breed = dog2Breed;
       payload.dog2_age = buildAgeLabel(dog2AgeFields.ageYearsAtRecord, dog2AgeFields.ageMonthsAtRecord) ?? '';
     }
+    payload.session_minutes = String(sessionMinutesForRequest);
 
     try {
       setStatus({ kind: 'submitting' });
@@ -1056,7 +1098,12 @@ export default function BookForm() {
   const selectedSlotData = slots.find((slot) => slot.start === selectedSlot);
   const selectedLocation = getLocationById(selectedLocationId);
   const regionLocations: BookingLocation[] = selectedRegionId
-    ? getLocationsByRegion(selectedRegionId)
+    ? getLocationsByRegion(selectedRegionId).filter(
+        (loc) =>
+          !isTownshipTrainingLocation(loc.id) &&
+          !isAddressBasedLocation(loc.id) &&
+          !isEliteCoachingLocation(loc.id)
+      )
     : [];
   const mapCenter = selectedRegionId ? getMapCenterForRegion(selectedRegionId) : getMapCenterForRegion('golden-bay');
   const isEliteService = selectedServiceType === 'elite_coaching';
@@ -1067,12 +1114,23 @@ export default function BookForm() {
     Boolean(selectedRegionId) &&
     clientAddress.trim().length > 0 &&
     isHomeAddress !== null;
+  const householdLocationReady =
+    isPrivateOffer &&
+    !isEliteService &&
+    Boolean(selectedRegionId) &&
+    clientAddress.trim().length > 0 &&
+    isHomeAddress !== null &&
+    Boolean(selectedLocationId);
+  const townLocationReady =
+    standardVenue !== 'town' || townPrereqConfirmed === true;
   const stepLocationDone = isPackageBooking
     ? stepRegionDone &&
       (packageSessions.length === packageSessionCount || Boolean(selectedLocationId))
     : stepRegionDone &&
       Boolean(selectedLocationId) &&
-      (!isEliteService || eliteLocationReady);
+      townLocationReady &&
+      (!isEliteService || eliteLocationReady) &&
+      (!isPrivateOffer || isEliteService || householdLocationReady);
   const stepTimeDone = isPackageBooking
     ? packageSessions.length === packageSessionCount
     : stepLocationDone && Boolean(selectedSlot);
@@ -1119,21 +1177,17 @@ export default function BookForm() {
   };
 
   const slotHoursCopy = isEliteService ? ELITE_CLIENT_SLOT_HOURS : BOOKING_CLIENT_SLOT_HOURS;
-  const sessionMinutes = isEliteService
-    ? ELITE_SESSION_MINUTES
-    : isStandardHomeVisitLocation(selectedLocationId)
-      ? HOME_VISIT_SESSION_MINUTES
-      : isTwoDog
-        ? TWO_DOG_SESSION_MINUTES
-        : SESSION_MINUTES;
+  const sessionMinutes = sessionMinutesForRequest;
   const confirmPricingNote = selectedRegionId
-    ? isEliteService
+    ? isEliteService || (householdShape?.isElite ?? false)
       ? formatPriceLine(selectedRegionId, 'elite_coaching')
-      : isStandardHomeVisitLocation(selectedLocationId)
-        ? formatPriceLine(selectedRegionId, 'home_visit')
+      : isPrivateOffer && householdShape
+        ? householdShape.pricingNote
         : isTwoDog
-          ? `$${getBeachSessionShape(2).priceDollars} · ${TWO_DOG_SESSION_MINUTES}-minute two-dog session (40 min per dog). ${PAYMENT_AT_MEETING_NOTE}`
-          : formatPriceLine(selectedRegionId, 'beach')
+          ? `${beachShape.priceLabel} · ${beachShape.sessionMinutes}-minute session (two dogs). ${STANDARD_ADDITIONAL_PERSON_NOTE}. ${PAYMENT_AT_MEETING_NOTE}`
+          : beachDurationMinutes === 90
+            ? `${beachShape.priceLabel} · ${beachShape.sessionMinutes}-minute session. ${STANDARD_ADDITIONAL_DOG_NOTE}; ${STANDARD_ADDITIONAL_PERSON_NOTE}. ${PAYMENT_AT_MEETING_NOTE}`
+            : formatPriceLine(selectedRegionId, 'beach')
     : '';
 
   if (status.kind === 'success') {
@@ -1195,8 +1249,8 @@ export default function BookForm() {
     <form className="enquiry-form booking-form" id="booking-form" noValidate onSubmit={handleSubmit}>
       {clientReady && packageBookingLive === false ? (
         <p className="form-feedback error booking-server-warning" role="alert">
-          Online package booking is not live on the server yet — single sessions may still work. For 3-day
-          or Get ready for town packages, call or text{' '}
+          Online package booking is not live on the server yet — single sessions may still work. For the
+          3-session programme, call or text{' '}
           <a href="tel:+64278142222">027 814 2222</a>.
         </p>
       ) : null}
@@ -1239,59 +1293,144 @@ export default function BookForm() {
               Selected:{' '}
               <strong>
                 {isPackageBooking
-                  ? activePackageConfig?.label
-                  : BOOKING_SERVICE_TYPES[selectedServiceType].label}
+                  ? BOOKING_PACKAGES.three_day.label
+                  : isPrivateOffer
+                    ? householdShape?.isElite
+                      ? 'Elite extended coaching (2.5 hr)'
+                      : `Private household (${householdHours} hr)`
+                    : beachDurationMinutes === 90
+                      ? 'Single session — 90 min'
+                      : 'Single session — 60 min'}
               </strong>
             </p>
           ) : null}
         </header>
         <div className="booking-step-body">
           <div className="booking-service-picker" role="radiogroup" aria-label="Booking type">
-            {STANDARD_BOOKING_PACKAGE_LIST.map((pkg) => {
-              const isSelected = selectedPackageId === pkg.id && selectedServiceType === 'standard_beach';
-              const showWhyNote = pkg.whyNote && (pkg.id === 'three_day' || isSelected);
-
-              return (
-              <button
-                key={pkg.id}
-                type="button"
-                className={`booking-service-btn${isSelected ? ' is-selected' : ''}`}
-                disabled={endpointMissing || submitting}
-                aria-pressed={isSelected}
-                onClick={() => handlePackageSelect(pkg.id)}
-              >
-                <strong>{pkg.label}</strong>
-                <span className="booking-region-note">{pkg.headline}</span>
-                {showWhyNote ? (
-                  <span className="booking-region-note booking-package-why">{pkg.whyNote}</span>
-                ) : null}
-                {pkg.schedulingNote ? (
-                  <span className="booking-region-note">{pkg.schedulingNote}</span>
-                ) : null}
-                {pkg.patternHints?.map((hint) => (
-                  <span key={hint} className="booking-region-note">{hint}</span>
-                ))}
-              </button>
-              );
-            })}
             <button
               type="button"
-              className={`booking-service-btn${selectedServiceType === 'elite_coaching' ? ' is-selected' : ''}`}
+              className={`booking-service-btn${
+                selectedServiceType === 'standard_beach' &&
+                selectedPackageId === 'single' &&
+                beachDurationMinutes === 60 &&
+                !isPrivateOffer
+                  ? ' is-selected'
+                  : ''
+              }`}
               disabled={endpointMissing || submitting}
-              aria-pressed={selectedServiceType === 'elite_coaching'}
-              onClick={() => handleServiceSelect('elite_coaching')}
+              aria-pressed={
+                selectedServiceType === 'standard_beach' &&
+                selectedPackageId === 'single' &&
+                beachDurationMinutes === 60 &&
+                !isPrivateOffer
+              }
+              onClick={() => handleOfferSelect('single_60')}
             >
-              <strong>{BOOKING_SERVICE_TYPES.elite_coaching.label}</strong>
-              <span className="booking-region-note">{BOOKING_SERVICE_TYPES.elite_coaching.headline}</span>
+              <strong>Single session — 60 min</strong>
+              <span className="booking-region-note">
+                $60 · beach, reserve, or town. {STANDARD_ADDITIONAL_PERSON_NOTE}.
+              </span>
+            </button>
+            <button
+              type="button"
+              className={`booking-service-btn${
+                selectedServiceType === 'standard_beach' &&
+                selectedPackageId === 'single' &&
+                beachDurationMinutes === 90 &&
+                !isPrivateOffer
+                  ? ' is-selected'
+                  : ''
+              }`}
+              disabled={endpointMissing || submitting}
+              aria-pressed={
+                selectedServiceType === 'standard_beach' &&
+                selectedPackageId === 'single' &&
+                beachDurationMinutes === 90 &&
+                !isPrivateOffer
+              }
+              onClick={() => handleOfferSelect('single_90')}
+            >
+              <strong>Single session — 90 min</strong>
+              <span className="booking-region-note">
+                $90 · beach, reserve, or town. {STANDARD_ADDITIONAL_DOG_NOTE};{' '}
+                {STANDARD_ADDITIONAL_PERSON_NOTE}.
+              </span>
+            </button>
+            <button
+              type="button"
+              className={`booking-service-btn${isPackageBooking ? ' is-selected' : ''}`}
+              disabled={endpointMissing || submitting}
+              aria-pressed={isPackageBooking}
+              onClick={() => handleOfferSelect('three_day')}
+            >
+              <strong>{BOOKING_PACKAGES.three_day.label}</strong>
+              <span className="booking-region-note">{BOOKING_PACKAGES.three_day.headline}</span>
+              {BOOKING_PACKAGES.three_day.whyNote ? (
+                <span className="booking-region-note booking-package-why">
+                  {BOOKING_PACKAGES.three_day.whyNote}
+                </span>
+              ) : null}
+              {BOOKING_PACKAGES.three_day.schedulingNote ? (
+                <span className="booking-region-note">{BOOKING_PACKAGES.three_day.schedulingNote}</span>
+              ) : null}
+            </button>
+            <button
+              type="button"
+              className={`booking-service-btn${isPrivateOffer ? ' is-selected' : ''}`}
+              disabled={endpointMissing || submitting}
+              aria-pressed={isPrivateOffer}
+              onClick={() => handleOfferSelect('private')}
+            >
+              <strong>Private household / Elite</strong>
+              <span className="booking-region-note">
+                From ${HOUSEHOLD_HOURLY_PRICE_DOLLARS}/hr at your home or a custom location — lump sum, no
+                add-ons. Elite extended 2.5 hr for {ELITE_PRICE_LABEL}.
+              </span>
             </button>
           </div>
+          {isPrivateOffer ? (
+            <fieldset className="form-field">
+              <legend>Household session length</legend>
+              <div className="booking-meeting-picker" role="radiogroup" aria-label="Household duration">
+                {([1, 1.5, 2, 2.5] as HouseholdHoursOption[]).map((hours) => {
+                  const shape = getHouseholdSessionShape(hours);
+                  const selected = householdHours === hours;
+                  return (
+                    <label
+                      key={hours}
+                      className={`booking-meeting-btn${selected ? ' is-selected' : ''}`}
+                    >
+                      <input
+                        type="radio"
+                        name="household_hours"
+                        checked={selected}
+                        disabled={submitting}
+                        onChange={() => handleHouseholdHoursSelect(hours)}
+                      />
+                      <strong>
+                        {hours === 2.5
+                          ? 'Elite extended — 2.5 hr'
+                          : hours === 1
+                            ? '1 hour'
+                            : `${hours} hours`}
+                      </strong>
+                      <span className="booking-region-note">
+                        {shape.priceLabel}
+                        {hours === 2.5 ? ' · upsell vs hourly rate' : ` · $${HOUSEHOLD_HOURLY_PRICE_DOLLARS}/hr`}
+                      </span>
+                    </label>
+                  );
+                })}
+              </div>
+            </fieldset>
+          ) : null}
           <p className="form-hint booking-service-help">
             Not sure what would be best for your needs right now? Call or text Warwick on{' '}
             <a href="tel:+64278142222">027 814 2222</a>
             {' '}— or <Link to="/contact">send an enquiry</Link>.
           </p>
-          {isPackageBooking && activePackageConfig?.approachNote ? (
-            <p className="form-hint booking-package-approach">{activePackageConfig.approachNote}</p>
+          {isPackageBooking && BOOKING_PACKAGES.three_day.approachNote ? (
+            <p className="form-hint booking-package-approach">{BOOKING_PACKAGES.three_day.approachNote}</p>
           ) : null}
           <p className="form-hint">{PAYMENT_AT_MEETING_NOTE}</p>
         </div>
@@ -1449,7 +1588,7 @@ export default function BookForm() {
                         {formatSlotTimeFromIso(session.slotStart)}
                       </p>
                     ) : null}
-                    {isActive && (!isTownPackage || townPrereqConfirmed === true) ? (
+                    {isActive ? (
                       <>
                         {index > 0 ? (
                           <p className="form-hint">
@@ -1599,80 +1738,63 @@ export default function BookForm() {
               Continue — location to be confirmed
             </button>
           </>
-        ) : isTownPackage ? (
+        ) : isPrivateOffer && !isEliteService ? (
           <>
-            {townPrereqConfirmed !== true ? (
+            <p className="form-hint booking-home-visit-pricing">
+              {householdShape?.pricingNote ?? HOME_VISIT_PRICING_NOTE}
+            </p>
+            <fieldset className="form-field">
+              <legend>Is this your home address?</legend>
+              <div className="booking-meeting-picker" role="radiogroup" aria-label="Home address confirmation">
+                <label className={`booking-meeting-btn${isHomeAddress === true ? ' is-selected' : ''}`}>
+                  <input
+                    type="radio"
+                    name="household_is_home"
+                    checked={isHomeAddress === true}
+                    disabled={submitting}
+                    onChange={() => setIsHomeAddress(true)}
+                  />
+                  <strong>Yes — this is my home</strong>
+                </label>
+                <label className={`booking-meeting-btn${isHomeAddress === false ? ' is-selected' : ''}`}>
+                  <input
+                    type="radio"
+                    name="household_is_home"
+                    checked={isHomeAddress === false}
+                    disabled={submitting}
+                    onChange={() => setIsHomeAddress(false)}
+                  />
+                  <strong>No — custom location</strong>
+                </label>
+              </div>
+            </fieldset>
+            {isHomeAddress !== null ? (
               <>
-                <p className="form-hint booking-package-prereq">
-                  Get ready for town is for dogs that have completed the 3-session foundation programme.
-                </p>
-                <fieldset className="form-field">
-                  <legend>Have you completed 3 sessions with Warwick?</legend>
-                  <div className="booking-meeting-picker" role="radiogroup" aria-label="3-session prerequisite confirmation">
-                    <label className="booking-meeting-btn">
-                      <input
-                        type="radio"
-                        name="town_prereq"
-                        checked={false}
-                        disabled={submitting}
-                        onChange={() => {
-                          setTownPrereqConfirmed(true);
-                          setStandardVenue('town');
-                          setSelectedLocationId(getTownshipTrainingLocationId(selectedRegionId || 'golden-bay'));
-                          setSelectedSlot('');
-                          setClientAddress('');
-                          setIsHomeAddress(null);
-                        }}
-                      />
-                      <strong>Yes, I have.</strong>
-                    </label>
-                    <label className={`booking-meeting-btn${townPrereqConfirmed === false ? ' is-selected' : ''}`}>
-                      <input
-                        type="radio"
-                        name="town_prereq"
-                        checked={townPrereqConfirmed === false}
-                        disabled={submitting}
-                        onChange={() => {
-                          setTownPrereqConfirmed(false);
-                          setStandardVenue(null);
-                          setSelectedLocationId('');
-                          setSelectedSlot('');
-                          setClientAddress('');
-                          setIsHomeAddress(null);
-                        }}
-                      />
-                      <strong>No, not yet.</strong>
-                    </label>
-                  </div>
-                </fieldset>
-                {townPrereqConfirmed === false ? (
-                  <div className="form-feedback error" role="alert">
-                    <p>
-                      We recommend starting with the 3-day foundation programme to build core skills before
-                      town-specific training.
-                    </p>
-                    <button
-                      type="button"
-                      className="btn btn-primary mt-2"
-                      disabled={submitting}
-                      onClick={() => handlePackageSelect('three_day')}
-                    >
-                      Switch to the 3-day programme
-                    </button>
-                  </div>
-                ) : null}
+                <div className="form-field">
+                  <label htmlFor="householdAddress">
+                    {isHomeAddress ? 'Home address' : 'Meeting address'}
+                  </label>
+                  <textarea
+                    id="householdAddress"
+                    name="client_address"
+                    rows={3}
+                    required
+                    value={clientAddress}
+                    disabled={submitting}
+                    onChange={(event) => setClientAddress(event.target.value)}
+                    placeholder="Street address, suburb, and any access notes"
+                  />
+                </div>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  disabled={submitting || !clientAddress.trim()}
+                  onClick={handleStandardHomeConfirm}
+                >
+                  Continue with this address
+                </button>
               </>
-            ) : (
-              <>
-                <p className="form-hint">
-                  Town sessions meet by the <strong>Takaka Memorial Library</strong> — markets, pavement, traffic, and
-                  real-world distractions.
-                </p>
-                <p className="booking-step-done-note">
-                  <strong>{getLocationById(getTownshipTrainingLocationId(selectedRegionId || 'golden-bay'))?.name}</strong>
-                </p>
-              </>
-            )}
+            ) : null}
           </>
         ) : (
           <>
@@ -1694,26 +1816,36 @@ export default function BookForm() {
                           setSelectedSlot('');
                           setClientAddress('');
                           setIsHomeAddress(null);
+                          setTownPrereqConfirmed(null);
                         }}
                       />
                       <strong>Beach or reserve</strong>
-                      <span className="booking-region-note">{getRegionPricing('golden-bay').beach.pricingNote}</span>
+                      <span className="booking-region-note">
+                        {beachDurationMinutes === 90
+                          ? `$${beachShape.priceDollars} · 90 min`
+                          : `$60 · 60 min`}
+                      </span>
                     </label>
-                    <label className={`booking-meeting-btn${standardVenue === 'home' ? ' is-selected' : ''}`}>
+                    <label className={`booking-meeting-btn${standardVenue === 'town' ? ' is-selected' : ''}`}>
                       <input
                         type="radio"
                         name="standard_venue"
-                        checked={standardVenue === 'home'}
-                        disabled={submitting || !getHomeVisitLocationId('golden-bay')}
+                        checked={standardVenue === 'town'}
+                        disabled={submitting}
                         onChange={() => {
-                          setStandardVenue('home');
+                          setStandardVenue('town');
                           setSelectedLocationId('');
                           setSelectedSlot('');
+                          setClientAddress('');
+                          setIsHomeAddress(null);
+                          setTownPrereqConfirmed(null);
                           resetTwoDogState();
                         }}
                       />
-                      <strong>Home visit</strong>
-                      <span className="booking-region-note">{HOME_VISIT_PRICING_NOTE}</span>
+                      <strong>Takaka township</strong>
+                      <span className="booking-region-note">
+                        By the library — requires the 3-session foundation first
+                      </span>
                     </label>
                   </div>
                 </fieldset>
@@ -1782,17 +1914,87 @@ export default function BookForm() {
               </>
             ) : standardVenue === 'town' ? (
               <>
-                <p className="form-hint">
-                  Town sessions meet by the <strong>Takaka Memorial Library</strong> — markets, pavement, traffic, and
-                  real-world distractions.
-                </p>
-                <p className="booking-step-done-note">
-                  <strong>{getLocationById(getTownshipTrainingLocationId('golden-bay'))?.name}</strong>
-                </p>
+                {townPrereqConfirmed === true ? (
+                  <>
+                    <p className="form-hint">
+                      Town sessions meet by the <strong>Takaka Memorial Library</strong> — markets, pavement,
+                      traffic, and real-world distractions.
+                    </p>
+                    <p className="booking-step-done-note">
+                      <strong>
+                        {getLocationById(getTownshipTrainingLocationId(selectedRegionId || 'golden-bay'))?.name}
+                      </strong>
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <p className="form-hint booking-package-prereq">
+                      Town sessions are for dogs that have completed the fundamental 3-session programme with
+                      Warwick.
+                    </p>
+                    <fieldset className="form-field">
+                      <legend>Have you completed the 3-session foundation with Warwick?</legend>
+                      <div
+                        className="booking-meeting-picker"
+                        role="radiogroup"
+                        aria-label="3-session foundation confirmation"
+                      >
+                        <label className="booking-meeting-btn">
+                          <input
+                            type="radio"
+                            name="town_prereq"
+                            checked={false}
+                            disabled={submitting}
+                            onChange={() => {
+                              setTownPrereqConfirmed(true);
+                              setSelectedLocationId(
+                                getTownshipTrainingLocationId(selectedRegionId || 'golden-bay')
+                              );
+                              setSelectedSlot('');
+                            }}
+                          />
+                          <strong>Yes — foundation complete</strong>
+                        </label>
+                        <label
+                          className={`booking-meeting-btn${townPrereqConfirmed === false ? ' is-selected' : ''}`}
+                        >
+                          <input
+                            type="radio"
+                            name="town_prereq"
+                            checked={townPrereqConfirmed === false}
+                            disabled={submitting}
+                            onChange={() => {
+                              setTownPrereqConfirmed(false);
+                              setSelectedLocationId('');
+                              setSelectedSlot('');
+                            }}
+                          />
+                          <strong>No — not yet</strong>
+                        </label>
+                      </div>
+                    </fieldset>
+                    {townPrereqConfirmed === false ? (
+                      <div className="form-feedback error" role="alert">
+                        <p>
+                          Town can&apos;t be selected until the foundation is complete. Book the 3-session
+                          programme, or choose a beach / reserve session.
+                        </p>
+                        <button
+                          type="button"
+                          className="btn btn-primary mt-2"
+                          disabled={submitting}
+                          onClick={() => handleOfferSelect('three_day')}
+                        >
+                          Switch to the 3-session programme
+                        </button>
+                      </div>
+                    ) : null}
+                  </>
+                )}
               </>
             ) : (
               <>
-                {selectedRegionId === 'golden-bay' && !isPackageBooking ? (
+                {isTwoDogEligible ? (
                   <fieldset className="form-field">
                     <legend>How many dogs?</legend>
                     <div className="booking-meeting-picker" role="radiogroup" aria-label="Number of dogs">
@@ -1808,7 +2010,7 @@ export default function BookForm() {
                           }}
                         />
                         <strong>One dog</strong>
-                        <span className="booking-region-note">$60 · {SESSION_MINUTES}-minute session</span>
+                        <span className="booking-region-note">$90 · 90-minute session</span>
                       </label>
                       <label className={`booking-meeting-btn${dogCount === 2 ? ' is-selected' : ''}`}>
                         <input
@@ -1823,7 +2025,7 @@ export default function BookForm() {
                         />
                         <strong>Two dogs</strong>
                         <span className="booking-region-note">
-                          $100 · {TWO_DOG_SESSION_MINUTES}-minute session (40 min per dog)
+                          $100 · 90-minute session (+$10 for the additional dog)
                         </span>
                       </label>
                     </div>

@@ -3,7 +3,13 @@ import Seo from '../components/Seo';
 import SiteHeader from '../components/SiteHeader';
 import SiteFooter from '../components/SiteFooter';
 import BookForm from './BookForm';
-import { formatStandardPriceLine, getGoldenBayPricingSummaryLines, HOME_VISIT_PRICE_LABEL } from '@shared/bookingPricing';
+import {
+  ELITE_PRICE_LABEL,
+  formatStandard90PriceLine,
+  formatStandardPriceLine,
+  HOUSEHOLD_HOURLY_PRICE_DOLLARS,
+  STANDARD_ADDITIONAL_PERSON_NOTE,
+} from '@shared/bookingPricing';
 import { BOOKING_PACKAGES } from '@shared/bookingPackages';
 import { NELSON_PRICING_ENQUIRY_NOTE } from '@shared/bookingRegions';
 
@@ -12,7 +18,7 @@ export default function BookPage() {
     <>
       <Seo
         title="Book a session | Gold Standard Dog Training"
-        description="Book dog training with Warwick Marshall in Golden Bay or Nelson Bays, NZ. Single sessions, 3-day programmes, Get ready for town packages, or elite coaching."
+        description="Book dog training with Warwick Marshall in Golden Bay or Nelson Bays, NZ. 60 or 90-minute sessions, 3-session programme, private household, or elite coaching."
         path="/book"
         bodyClass="page-book"
       />
@@ -27,10 +33,10 @@ export default function BookPage() {
               <p className="section-label">Golden Bay pricing</p>
               <ul className="booking-hero-facts">
                 <li>
-                  <strong>Beach / reserve</strong> — 55&nbsp;min ({formatStandardPriceLine('golden-bay')})
+                  <strong>Single session — 60&nbsp;min</strong> — {formatStandardPriceLine('golden-bay')}
                 </li>
                 <li>
-                  <strong>Home visit</strong> — up to 1&nbsp;hr ({HOME_VISIT_PRICE_LABEL} flat, household included)
+                  <strong>Single session — 90&nbsp;min</strong> — {formatStandard90PriceLine('golden-bay')}
                 </li>
                 <li>
                   <strong>{BOOKING_PACKAGES.three_day.label}</strong> — {BOOKING_PACKAGES.three_day.headline}
@@ -42,13 +48,18 @@ export default function BookPage() {
                   ) : null}
                 </li>
                 <li>
-                  <strong>{BOOKING_PACKAGES.town_ready_five.label}</strong> — {BOOKING_PACKAGES.town_ready_five.headline}
+                  <strong>Private household</strong> — ${HOUSEHOLD_HOURLY_PRICE_DOLLARS}/hr lump sum (1–2&nbsp;hr options); no person, helper-dog, or dog add-ons
                 </li>
                 <li>
-                  <strong>Elite coaching</strong> — {getGoldenBayPricingSummaryLines()[2]}
+                  <strong>Elite extended — 2.5&nbsp;hr</strong> — {ELITE_PRICE_LABEL} (upsell vs hourly rate)
+                </li>
+                <li>
+                  <strong>Takaka township</strong> — same session rates; only after the 3-session foundation
                 </li>
               </ul>
-              <p className="form-hint">{NELSON_PRICING_ENQUIRY_NOTE}</p>
+              <p className="form-hint">
+                Beach / town sessions: {STANDARD_ADDITIONAL_PERSON_NOTE}. {NELSON_PRICING_ENQUIRY_NOTE}
+              </p>
             </div>
 
             <Link to="/contact" className="contact-path-card page-hero-enquiry-card">

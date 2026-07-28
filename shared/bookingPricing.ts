@@ -3,69 +3,135 @@
 import type { BookingRegionId } from './bookingRegions';
 
 export const STANDARD_SESSION_PRICE_DOLLARS = 60;
+export const STANDARD_90_SESSION_PRICE_DOLLARS = 90;
 export const ADDITIONAL_PERSON_PRICE_DOLLARS = 10;
-export const HOME_VISIT_SESSION_PRICE_DOLLARS = 90;
-export const ELITE_SESSION_PRICE_DOLLARS = 400;
+export const ADDITIONAL_DOG_PRICE_DOLLARS = 10;
 
-export const STANDARD_SESSION_MINUTES = 55;
+/** Private household hourly rate (lump sum — no person/helper/dog add-ons). */
+export const HOUSEHOLD_HOURLY_PRICE_DOLLARS = 160;
+
+/** Elite extended 2.5-hour session (upsell vs 2.5 × hourly). */
+export const ELITE_SESSION_PRICE_DOLLARS = 350;
+
+export const STANDARD_SESSION_MINUTES = 60;
+export const STANDARD_90_SESSION_MINUTES = 90;
 export const HOME_VISIT_SESSION_MINUTES = 60;
 export const ELITE_SESSION_MINUTES = 150;
 export const ELITE_CALENDAR_BLOCK_MINUTES = 240;
 
-/**
- * Two-dog beach sessions: each dog gets its own focused window plus a single
- * changeover buffer, and the pair is a flat price. Only offered for
- * beach/reserve standard sessions (see getBeachSessionShape).
- */
-export const TWO_DOG_SESSION_PRICE_DOLLARS = 100;
-export const TWO_DOG_PER_DOG_MINUTES = 40;
-export const TWO_DOG_CHANGEOVER_MINUTES = 5;
-export const TWO_DOG_SESSION_MINUTES =
-  TWO_DOG_PER_DOG_MINUTES * 2 + TWO_DOG_CHANGEOVER_MINUTES;
-
 export const MAX_BEACH_DOGS = 2;
 
-export type BeachSessionShape = {
+/** @deprecated Prefer STANDARD_90_* + ADDITIONAL_DOG; kept for migration references. */
+export const TWO_DOG_SESSION_PRICE_DOLLARS =
+  STANDARD_90_SESSION_PRICE_DOLLARS + ADDITIONAL_DOG_PRICE_DOLLARS;
+/** @deprecated */
+export const TWO_DOG_SESSION_MINUTES = STANDARD_90_SESSION_MINUTES;
+/** @deprecated */
+export const HOME_VISIT_SESSION_PRICE_DOLLARS = HOUSEHOLD_HOURLY_PRICE_DOLLARS;
+
+export type BeachDurationMinutes = 60 | 90;
+
+export type StandardSessionShape = {
   dogCount: number;
+  durationMinutes: BeachDurationMinutes;
   sessionMinutes: number;
   priceDollars: number;
   priceLabel: string;
 };
 
 /**
- * Duration + price for a beach/reserve standard session by dog count.
- * 1 dog keeps the standard 55 min / $60; 2 dogs is the 85 min / $100 pair.
- * Mirror this logic in google-apps-script/Code.gs getBookingDurations.
+ * Duration + price for a beach/reserve standard session.
+ * 60 min = 1 dog / $60; 90 min = $90 + $10 per dog beyond the first.
+ * Mirror in google-apps-script/Code.gs getBookingDurations.
  */
-export function getBeachSessionShape(dogCount: number): BeachSessionShape {
-  const clamped = dogCount >= MAX_BEACH_DOGS ? MAX_BEACH_DOGS : 1;
-  if (clamped === MAX_BEACH_DOGS) {
+export function getStandardSessionShape(
+  durationMinutes: BeachDurationMinutes,
+  dogCount = 1
+): StandardSessionShape {
+  if (durationMinutes === 60) {
     return {
-      dogCount: MAX_BEACH_DOGS,
-      sessionMinutes: TWO_DOG_SESSION_MINUTES,
-      priceDollars: TWO_DOG_SESSION_PRICE_DOLLARS,
-      priceLabel: `$${TWO_DOG_SESSION_PRICE_DOLLARS}`,
+      dogCount: 1,
+      durationMinutes: 60,
+      sessionMinutes: STANDARD_SESSION_MINUTES,
+      priceDollars: STANDARD_SESSION_PRICE_DOLLARS,
+      priceLabel: `$${STANDARD_SESSION_PRICE_DOLLARS}`,
     };
   }
+  const clamped = dogCount >= MAX_BEACH_DOGS ? MAX_BEACH_DOGS : Math.max(1, dogCount);
+  const extraDogs = Math.max(0, clamped - 1);
+  const priceDollars =
+    STANDARD_90_SESSION_PRICE_DOLLARS + extraDogs * ADDITIONAL_DOG_PRICE_DOLLARS;
   return {
-    dogCount: 1,
-    sessionMinutes: STANDARD_SESSION_MINUTES,
-    priceDollars: STANDARD_SESSION_PRICE_DOLLARS,
-    priceLabel: `$${STANDARD_SESSION_PRICE_DOLLARS}`,
+    dogCount: clamped,
+    durationMinutes: 90,
+    sessionMinutes: STANDARD_90_SESSION_MINUTES,
+    priceDollars,
+    priceLabel: `$${priceDollars}`,
   };
 }
 
+/** @deprecated Use getStandardSessionShape(60|90, dogCount). */
+export function getBeachSessionShape(dogCount: number): StandardSessionShape {
+  return dogCount >= 2
+    ? getStandardSessionShape(90, 2)
+    : getStandardSessionShape(60, 1);
+}
+
 export const TWO_DOG_CHANGEOVER_NOTE =
-  'Two-dog session: each dog gets its own focused time with a short changeover in the middle. Please have a plan to hold, crate, or secure the waiting dog during the swap.';
+  'Two-dog session: each dog gets its own focused time within the 90-minute window. Please have a plan to hold, crate, or secure the waiting dog during the swap.';
 
 export const STANDARD_PRICE_LABEL = `$${STANDARD_SESSION_PRICE_DOLLARS}`;
-export const HOME_VISIT_PRICE_LABEL = `$${HOME_VISIT_SESSION_PRICE_DOLLARS}`;
+export const STANDARD_90_PRICE_LABEL = `$${STANDARD_90_SESSION_PRICE_DOLLARS}`;
+export const HOME_VISIT_PRICE_LABEL = `$${HOUSEHOLD_HOURLY_PRICE_DOLLARS}`;
 export const ELITE_PRICE_LABEL = `$${ELITE_SESSION_PRICE_DOLLARS}`;
 
-export const STANDARD_ADDITIONAL_PERSON_NOTE = `+$${ADDITIONAL_PERSON_PRICE_DOLLARS} per additional person attending`;
+export const STANDARD_ADDITIONAL_PERSON_NOTE = `+$${ADDITIONAL_PERSON_PRICE_DOLLARS} per additional person attending, or when a helper dog is used`;
+
+export const STANDARD_ADDITIONAL_DOG_NOTE = `+$${ADDITIONAL_DOG_PRICE_DOLLARS} per additional dog`;
 
 export const PAYMENT_AT_MEETING_NOTE =
   'Payment is arranged at your session — no online payment on this site.';
+
+/** Household visit length options (hours). Elite 2.5 is a fixed upsell, not hourly. */
+export type HouseholdHoursOption = 1 | 1.5 | 2 | 2.5;
+
+export type HouseholdSessionShape = {
+  hours: HouseholdHoursOption;
+  sessionMinutes: number;
+  calendarBlockMinutes: number;
+  priceDollars: number;
+  priceLabel: string;
+  isElite: boolean;
+  pricingNote: string;
+};
+
+export function getHouseholdSessionShape(hours: HouseholdHoursOption): HouseholdSessionShape {
+  if (hours === 2.5) {
+    return {
+      hours: 2.5,
+      sessionMinutes: ELITE_SESSION_MINUTES,
+      calendarBlockMinutes: ELITE_CALENDAR_BLOCK_MINUTES,
+      priceDollars: ELITE_SESSION_PRICE_DOLLARS,
+      priceLabel: ELITE_PRICE_LABEL,
+      isElite: true,
+      pricingNote: `${ELITE_PRICE_LABEL} · 2.5-hour elite extended session. Warwick reserves a 4-hour calendar block for travel and preparation. Lump sum — no add-ons.`,
+    };
+  }
+  const sessionMinutes = Math.round(hours * 60);
+  const priceDollars = Math.round(hours * HOUSEHOLD_HOURLY_PRICE_DOLLARS);
+  const hoursLabel = hours === 1 ? '1 hour' : `${hours} hours`;
+  return {
+    hours,
+    sessionMinutes,
+    calendarBlockMinutes: sessionMinutes,
+    priceDollars,
+    priceLabel: `$${priceDollars}`,
+    isElite: false,
+    pricingNote: `$${priceDollars} lump · ${hoursLabel} at your home or a custom location ($${HOUSEHOLD_HOURLY_PRICE_DOLLARS}/hr). Household included — no extra person, helper-dog, or dog charges.`,
+  };
+}
+
+export const HOUSEHOLD_DURATION_OPTIONS: HouseholdHoursOption[] = [1, 1.5, 2, 2.5];
 
 export type BookingVenueKind = 'beach' | 'home_visit' | 'elite_coaching';
 
@@ -84,9 +150,9 @@ export type RegionPricing = {
   enquiryFallback: string;
 };
 
-const GB_BEACH_NOTE = `${STANDARD_PRICE_LABEL} · ${STANDARD_SESSION_MINUTES}-minute session. ${STANDARD_ADDITIONAL_PERSON_NOTE}.`;
-const GB_HOME_NOTE = `${HOME_VISIT_PRICE_LABEL} flat · up to ${HOME_VISIT_SESSION_MINUTES} minutes at your home · household included (children welcome; up to 2 dogs from the same home).`;
-const GB_ELITE_NOTE = `${ELITE_PRICE_LABEL} · 2.5-hour session. Warwick reserves a 4-hour calendar block for travel and preparation.`;
+const GB_BEACH_NOTE = `${STANDARD_PRICE_LABEL} · ${STANDARD_SESSION_MINUTES}-minute session. ${STANDARD_ADDITIONAL_PERSON_NOTE}. Or ${STANDARD_90_PRICE_LABEL} · ${STANDARD_90_SESSION_MINUTES}-minute session (${STANDARD_ADDITIONAL_DOG_NOTE}; ${STANDARD_ADDITIONAL_PERSON_NOTE}).`;
+const GB_HOME_NOTE = getHouseholdSessionShape(1).pricingNote;
+const GB_ELITE_NOTE = getHouseholdSessionShape(2.5).pricingNote;
 
 const NELSON_ENQUIRY = 'Pricing on enquiry — contact Warwick to confirm.';
 
@@ -152,8 +218,14 @@ export function formatStandardPriceLine(regionId: BookingRegionId = 'golden-bay'
   const tier = getPricingTier(regionId, 'beach');
   if (!tier.priceLabel) return tier.pricingNote;
   return tier.additionalPersonNote
-    ? `${tier.priceLabel} (${tier.additionalPersonNote})`
+    ? `${tier.priceLabel} · ${STANDARD_SESSION_MINUTES} min (${tier.additionalPersonNote})`
     : tier.priceLabel;
+}
+
+export function formatStandard90PriceLine(regionId: BookingRegionId = 'golden-bay'): string {
+  const tier = getPricingTier(regionId, 'beach');
+  if (!tier.priceLabel) return tier.pricingNote;
+  return `${STANDARD_90_PRICE_LABEL} · ${STANDARD_90_SESSION_MINUTES} min (${STANDARD_ADDITIONAL_DOG_NOTE}; ${STANDARD_ADDITIONAL_PERSON_NOTE})`;
 }
 
 export function formatHomeVisitPriceLine(regionId: BookingRegionId = 'golden-bay'): string {
@@ -199,7 +271,7 @@ export function formatSubmissionPriceLine(
 export function getGoldenBayPricingSummaryLines(): string[] {
   return [
     `Beach / reserve — ${GB_BEACH_NOTE}`,
-    `Home visit — ${GB_HOME_NOTE}`,
-    `Elite coaching — ${GB_ELITE_NOTE}`,
+    `Private household — ${GB_HOME_NOTE}`,
+    `Elite extended — ${GB_ELITE_NOTE}`,
   ];
 }

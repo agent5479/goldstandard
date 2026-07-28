@@ -114,7 +114,7 @@ function formatWhenLine(input: BookingSubmissionSummaryInput, bookingType: Booki
     );
   }
   if (venueKind === 'home_visit' && input.slotEndLabel && input.slotEndLabel !== input.slotLabel) {
-    return `${input.slotLabel} – ${input.slotEndLabel} (NZ time, up to 1 hour)`;
+    return `${input.slotLabel} – ${input.slotEndLabel} (NZ time, private household)`;
   }
   if (input.slotEndLabel && input.slotEndLabel !== input.slotLabel) {
     return `${input.slotLabel} – ${input.slotEndLabel} (NZ time)`;

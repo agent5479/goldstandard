@@ -4,7 +4,12 @@ import Seo from '../components/Seo';
 import SectionIcon from '../components/SectionIcon';
 import SiteHeader from '../components/SiteHeader';
 import SiteFooter from '../components/SiteFooter';
-import { STANDARD_PRICING_NOTE, HOME_VISIT_PRICING_NOTE } from '../data/bookingConfig';
+import { STANDARD_PRICING_NOTE, HOME_VISIT_PRICING_NOTE, ELITE_PRICING_NOTE } from '../data/bookingConfig';
+import {
+  formatStandard90PriceLine,
+  HOUSEHOLD_HOURLY_PRICE_DOLLARS,
+  ELITE_PRICE_LABEL,
+} from '@shared/bookingPricing';
 import { NELSON_STANDARD_COMING_SOON_NOTE, NELSON_PRICING_ENQUIRY_NOTE } from '@shared/bookingRegions';
 
 export default function AboutPage() {
@@ -348,12 +353,29 @@ export default function AboutPage() {
           </p>
           <div className="pricing-grid">
             <article className="pricing-block">
-              <h3>Golden Bay</h3>
+              <h3>Golden Bay — beach, reserve &amp; town</h3>
               <p>
-                <strong>Beach / reserve</strong> — {STANDARD_PRICING_NOTE}
+                <strong>60-minute session</strong> — {STANDARD_PRICING_NOTE}
               </p>
               <p>
-                <strong>Home visits</strong> — {HOME_VISIT_PRICING_NOTE}
+                <strong>90-minute session</strong> — {formatStandard90PriceLine('golden-bay')}
+              </p>
+              <p>
+                Town (Takaka library) uses the same rates after the 3-session foundation.
+              </p>
+            </article>
+            <article className="pricing-block">
+              <h3>Private household &amp; elite</h3>
+              <p>
+                <strong>Household visit</strong> — from ${HOUSEHOLD_HOURLY_PRICE_DOLLARS}/hr lump sum (choose
+                1, 1.5, or 2 hours). No extra person, helper-dog, or dog charges.
+              </p>
+              <p>
+                <strong>Elite extended (2.5&nbsp;hr)</strong> — {ELITE_PRICE_LABEL} (upsell vs hourly).{' '}
+                {ELITE_PRICING_NOTE}
+              </p>
+              <p className="form-hint" style={{ marginTop: '0.75rem' }}>
+                {HOME_VISIT_PRICING_NOTE}
               </p>
             </article>
             <article className="pricing-block">

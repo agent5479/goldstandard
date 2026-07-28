@@ -39,30 +39,33 @@ const CALENDAR_ID =
 const SHEET_NAME = "Submissions";
 const TIMEZONE = "Pacific/Auckland";
 
-const SESSION_MINUTES = 55;
+const SESSION_MINUTES = 60;
+const STANDARD_90_SESSION_MINUTES = 90;
 const ELITE_SESSION_MINUTES = 150;
 const ELITE_CALENDAR_BLOCK_MINUTES = 240;
 const ELITE_LAST_START_HOUR = 12;
 const STANDARD_SESSION_PRICE_DOLLARS = 60;
+const STANDARD_90_SESSION_PRICE_DOLLARS = 90;
 const ADDITIONAL_PERSON_PRICE_DOLLARS = 10;
-const HOME_VISIT_SESSION_PRICE_DOLLARS = 90;
+const ADDITIONAL_DOG_PRICE_DOLLARS = 10;
+const HOUSEHOLD_HOURLY_PRICE_DOLLARS = 160;
+const HOME_VISIT_SESSION_PRICE_DOLLARS = HOUSEHOLD_HOURLY_PRICE_DOLLARS;
 const HOME_VISIT_SESSION_MINUTES = 60;
+const ELITE_SESSION_PRICE_DOLLARS = 350;
 const STANDARD_PRICE_LABEL = "$" + STANDARD_SESSION_PRICE_DOLLARS;
-const HOME_VISIT_PRICE_LABEL = "$" + HOME_VISIT_SESSION_PRICE_DOLLARS;
-const STANDARD_ADDITIONAL_PERSON_NOTE = "+$" + ADDITIONAL_PERSON_PRICE_DOLLARS + " per additional person attending";
+const STANDARD_90_PRICE_LABEL = "$" + STANDARD_90_SESSION_PRICE_DOLLARS;
+const HOME_VISIT_PRICE_LABEL = "$" + HOUSEHOLD_HOURLY_PRICE_DOLLARS;
+const ELITE_PRICE_LABEL = "$" + ELITE_SESSION_PRICE_DOLLARS;
+const STANDARD_ADDITIONAL_PERSON_NOTE = "+$" + ADDITIONAL_PERSON_PRICE_DOLLARS + " per additional person attending, or when a helper dog is used";
+const STANDARD_ADDITIONAL_DOG_NOTE = "+$" + ADDITIONAL_DOG_PRICE_DOLLARS + " per additional dog";
 const PAYMENT_AT_MEETING_NOTE = "Payment is arranged at your session — no online payment on this site.";
 const NELSON_PRICING_ENQUIRY = "Pricing on enquiry — contact Warwick to confirm.";
 
-/** Two-dog beach sessions — keep in sync with shared/bookingPricing.ts */
-const TWO_DOG_SESSION_PRICE_DOLLARS = 100;
-const TWO_DOG_PER_DOG_MINUTES = 40;
-const TWO_DOG_CHANGEOVER_MINUTES = 5;
-const TWO_DOG_SESSION_MINUTES = TWO_DOG_PER_DOG_MINUTES * 2 + TWO_DOG_CHANGEOVER_MINUTES;
-const TWO_DOG_PRICE_LABEL = "$" + TWO_DOG_SESSION_PRICE_DOLLARS;
+/** 90-min beach sessions with optional second dog — keep in sync with shared/bookingPricing.ts */
 const MAX_BEACH_DOGS = 2;
-const TWO_DOG_CHANGEOVER_NOTE = "Two-dog session: each dog gets its own focused time with a short changeover in the middle. Please have a plan to hold, crate, or secure the waiting dog during the swap.";
+const TWO_DOG_CHANGEOVER_NOTE = "Two-dog session: each dog gets its own focused time within the 90-minute window. Please have a plan to hold, crate, or secure the waiting dog during the swap.";
 
-const SCRIPT_VERSION = "2026-07-09-v30";
+const SCRIPT_VERSION = "2026-07-28-v31";
 const SUPPORTED_ACTIONS = [
   "availability",
   "book",
@@ -74,10 +77,10 @@ const SUPPORTED_ACTIONS = [
   "enquiry"
 ];
 
-/** Keep in sync with shared/bookingPackages.ts */
+/** Keep in sync with shared/bookingPackages.ts — town_ready_five deprecated (location gate instead). */
 const PACKAGE_CONFIG = {
   single: { label: "Single session", sessionCount: 1 },
-  three_day: { label: "3-day programme", sessionCount: 3 },
+  three_day: { label: "3-session programme", sessionCount: 3 },
   town_ready_five: { label: "Get ready for town", sessionCount: 2 }
 };
 
@@ -96,10 +99,10 @@ const BOOKING_TYPES = {
     priceLabel: STANDARD_PRICE_LABEL
   },
   elite_coaching: {
-    label: "Private Household Transformations & Elite Coaching",
+    label: "Elite extended coaching",
     sessionMinutes: ELITE_SESSION_MINUTES,
     calendarBlockMinutes: ELITE_CALENDAR_BLOCK_MINUTES,
-    priceLabel: "$400"
+    priceLabel: ELITE_PRICE_LABEL
   }
 };
 const TRANSITION_MINUTES = 5;
@@ -263,20 +266,20 @@ const REGION_PRICING = {
   "golden-bay": {
     beach: {
       priceLabel: STANDARD_PRICE_LABEL,
-      pricingNote: STANDARD_PRICE_LABEL + " · " + SESSION_MINUTES + "-minute session. " + STANDARD_ADDITIONAL_PERSON_NOTE + ".",
+      pricingNote: STANDARD_PRICE_LABEL + " · " + SESSION_MINUTES + "-minute session. " + STANDARD_ADDITIONAL_PERSON_NOTE + ". Or " + STANDARD_90_PRICE_LABEL + " · " + STANDARD_90_SESSION_MINUTES + "-minute session (" + STANDARD_ADDITIONAL_DOG_NOTE + "; " + STANDARD_ADDITIONAL_PERSON_NOTE + ").",
       sessionMinutes: SESSION_MINUTES,
       calendarBlockMinutes: SESSION_MINUTES,
       additionalPersonNote: STANDARD_ADDITIONAL_PERSON_NOTE
     },
     home_visit: {
       priceLabel: HOME_VISIT_PRICE_LABEL,
-      pricingNote: HOME_VISIT_PRICE_LABEL + " flat · up to " + HOME_VISIT_SESSION_MINUTES + " minutes at your home · household included.",
+      pricingNote: HOME_VISIT_PRICE_LABEL + "/hr lump at your home or a custom location. Household included — no add-ons.",
       sessionMinutes: HOME_VISIT_SESSION_MINUTES,
       calendarBlockMinutes: HOME_VISIT_SESSION_MINUTES
     },
     elite_coaching: {
-      priceLabel: "$400",
-      pricingNote: "$400 · 2.5-hour session. 4-hour calendar block for travel and preparation.",
+      priceLabel: ELITE_PRICE_LABEL,
+      pricingNote: ELITE_PRICE_LABEL + " · 2.5-hour elite extended session. 4-hour calendar block for travel and preparation. Lump sum — no add-ons.",
       sessionMinutes: ELITE_SESSION_MINUTES,
       calendarBlockMinutes: ELITE_CALENDAR_BLOCK_MINUTES
     },
@@ -497,9 +500,10 @@ function handleAvailability(data) {
   }
 
   const dogCount = resolveDogCount(data, bookingType, locationName, region);
+  const sessionMinutes = resolveSessionMinutes(data, bookingType, locationName, region, dogCount);
   const bookingWindow = getBookingWindowForDate(date);
-  const rawSlots = getAvailableSlots(date, region, locationName, bookingType, dogCount);
-  const durations = getBookingDurations(bookingType, locationName, region, dogCount);
+  const rawSlots = getAvailableSlots(date, region, locationName, bookingType, dogCount, sessionMinutes);
+  const durations = getBookingDurations(bookingType, locationName, region, dogCount, sessionMinutes);
 
   const slots = rawSlots.map(function (slot) {
     const sessionEnd = new Date(slot.start.getTime() + durations.sessionMinutes * 60 * 1000);
@@ -841,7 +845,8 @@ function handleBooking(data) {
   const bookingType = resolveBookingType(data, location);
   const requestedDogs = parseInt(String(data.dogs || "1"), 10) || 1;
   const dogCount = resolveDogCount(data, bookingType, location, region);
-  const durations = getBookingDurations(bookingType, location, region, dogCount);
+  const sessionMinutes = resolveSessionMinutes(data, bookingType, location, region, dogCount);
+  const durations = getBookingDurations(bookingType, location, region, dogCount, sessionMinutes);
 
   if (isReturning) {
     const filled = finalizeReturningClientProfile(applyReturningClientProfile(data));
@@ -1264,7 +1269,8 @@ function handleBookPackage(data) {
     var clientAddress = String(session.client_address || "").trim();
     var isHomeAddressRaw = String(session.is_home_address || "").trim().toLowerCase();
     var bookingType = resolveBookingType(session, location);
-    var durations = getBookingDurations(bookingType, location, region);
+    var sessionMinutes = resolveSessionMinutes(session, bookingType, location, region, 1);
+    var durations = getBookingDurations(bookingType, location, region, 1, sessionMinutes);
 
     if (!slotStartStr || !location) {
       return jsonResponse({ success: false, message: "Each session needs a date, time, and location." });
@@ -1589,30 +1595,77 @@ function resolveDogCount(data, bookingType, locationName, regionId) {
   return isTwoDogEligible(bookingType, locationName, regionId) ? raw : 1;
 }
 
-function getBookingDurations(bookingType, locationName, regionId, dogCount) {
+/** Resolve session length from payload (session_minutes) + venue/dog context. */
+function resolveSessionMinutes(data, bookingType, locationName, regionId, dogCount) {
+  var venueKind = inferVenueKindFromLocation(locationName || "", bookingType);
+  var raw = parseInt(String((data && data.session_minutes) || ""), 10);
+  if (bookingType === "elite_coaching" || venueKind === "elite_coaching") {
+    return ELITE_SESSION_MINUTES;
+  }
+  if (venueKind === "home_visit") {
+    if (raw === 60 || raw === 90 || raw === 120) return raw;
+    return HOME_VISIT_SESSION_MINUTES;
+  }
+  if (dogCount >= 2) return STANDARD_90_SESSION_MINUTES;
+  if (raw === 90) return STANDARD_90_SESSION_MINUTES;
+  return SESSION_MINUTES;
+}
+
+function getBookingDurations(bookingType, locationName, regionId, dogCount, sessionMinutes) {
   regionId = regionId || "golden-bay";
   var venueKind = inferVenueKindFromLocation(locationName || "", bookingType);
   var tier = getRegionPricingTier(regionId, venueKind);
   var config = BOOKING_TYPES[bookingType] || BOOKING_TYPES.standard_beach;
+  var minutes = sessionMinutes || tier.sessionMinutes;
 
-  if (dogCount && dogCount >= MAX_BEACH_DOGS && isTwoDogEligible(bookingType, locationName, regionId)) {
+  if (venueKind === "elite_coaching") {
     return {
-      sessionMinutes: TWO_DOG_SESSION_MINUTES,
-      calendarBlockMinutes: TWO_DOG_SESSION_MINUTES,
-      label: config.label + " (two dogs)",
-      priceLabel: TWO_DOG_PRICE_LABEL,
-      pricingNote: TWO_DOG_PRICE_LABEL + " · " + TWO_DOG_SESSION_MINUTES + "-minute two-dog session (40 min per dog).",
+      sessionMinutes: ELITE_SESSION_MINUTES,
+      calendarBlockMinutes: ELITE_CALENDAR_BLOCK_MINUTES,
+      label: config.label,
+      priceLabel: ELITE_PRICE_LABEL,
+      pricingNote: tier.pricingNote,
       venueKind: venueKind,
-      dogCount: MAX_BEACH_DOGS
+      dogCount: 1
+    };
+  }
+
+  if (venueKind === "home_visit") {
+    var hours = minutes / 60;
+    var homePrice = Math.round(hours * HOUSEHOLD_HOURLY_PRICE_DOLLARS);
+    var hoursLabel = hours === 1 ? "1 hour" : hours + " hours";
+    return {
+      sessionMinutes: minutes,
+      calendarBlockMinutes: minutes,
+      label: config.label + " (household)",
+      priceLabel: "$" + homePrice,
+      pricingNote: "$" + homePrice + " lump · " + hoursLabel + " at your home ( $" + HOUSEHOLD_HOURLY_PRICE_DOLLARS + "/hr). No add-ons.",
+      venueKind: venueKind,
+      dogCount: 1
+    };
+  }
+
+  if (minutes >= STANDARD_90_SESSION_MINUTES && isTwoDogEligible(bookingType, locationName, regionId)) {
+    var dogs = dogCount && dogCount >= 2 ? MAX_BEACH_DOGS : 1;
+    var extraDogs = Math.max(0, dogs - 1);
+    var beach90Price = STANDARD_90_SESSION_PRICE_DOLLARS + extraDogs * ADDITIONAL_DOG_PRICE_DOLLARS;
+    return {
+      sessionMinutes: STANDARD_90_SESSION_MINUTES,
+      calendarBlockMinutes: STANDARD_90_SESSION_MINUTES,
+      label: dogs >= 2 ? config.label + " (90 min, two dogs)" : config.label + " (90 min)",
+      priceLabel: "$" + beach90Price,
+      pricingNote: "$" + beach90Price + " · " + STANDARD_90_SESSION_MINUTES + "-minute session" + (dogs >= 2 ? " (two dogs)." : ".") + " " + STANDARD_ADDITIONAL_PERSON_NOTE + ".",
+      venueKind: venueKind,
+      dogCount: dogs
     };
   }
 
   return {
-    sessionMinutes: tier.sessionMinutes,
-    calendarBlockMinutes: tier.calendarBlockMinutes,
+    sessionMinutes: SESSION_MINUTES,
+    calendarBlockMinutes: SESSION_MINUTES,
     label: config.label,
     priceLabel: tier.priceLabel,
-    pricingNote: tier.pricingNote,
+    pricingNote: STANDARD_PRICE_LABEL + " · " + SESSION_MINUTES + "-minute session. " + STANDARD_ADDITIONAL_PERSON_NOTE + ".",
     venueKind: venueKind,
     dogCount: 1
   };
@@ -1778,9 +1831,9 @@ function getBookingCalendar() {
   return calendar;
 }
 
-function getAvailableSlots(date, regionId, locationName, bookingType, dogCount) {
+function getAvailableSlots(date, regionId, locationName, bookingType, dogCount, sessionMinutes) {
   bookingType = bookingType || "standard_beach";
-  const durations = getBookingDurations(bookingType, locationName, regionId, dogCount);
+  const durations = getBookingDurations(bookingType, locationName, regionId, dogCount, sessionMinutes);
   const windows = getBookingWindows(date, regionId);
   if (!windows.length) {
     return [];
@@ -2650,7 +2703,7 @@ function buildBookingSubmissionSummary(options) {
   var bookingType = options.bookingType || "standard_beach";
   var regionId = options.region || "golden-bay";
   var locationName = options.location || options.locationLabel || "";
-  var durations = getBookingDurations(bookingType, locationName, regionId, options.dogCount);
+  var durations = getBookingDurations(bookingType, locationName, regionId, options.dogCount, options.sessionMinutes);
   var regionLabel = REGIONS[options.region] ? REGIONS[options.region].label : options.region;
   var sessionEnd = options.sessionEnd || options.slotEnd;
   var calendarEnd = options.calendarEnd || options.slotEnd;
@@ -2675,7 +2728,7 @@ function buildBookingSubmissionSummary(options) {
       formatSlotLabel(options.slotStart) +
       " – " +
       formatSlotLabel(sessionEnd) +
-      " (NZ time, up to 1 hour)";
+      " (NZ time, private household)";
   } else {
     whenLine =
       "When: " +

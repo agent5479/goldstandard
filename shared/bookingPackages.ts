@@ -23,30 +23,31 @@ export const BOOKING_PACKAGES: Record<BookingPackageId, BookingPackageConfig> = 
     id: 'single',
     label: 'Single session',
     sessionCount: 1,
-    headline: 'One session at a beach, reserve, or your home.',
+    headline: 'One session at a beach, reserve, town, or your home.',
     schedulingNote: '',
   },
   three_day: {
     id: 'three_day',
-    label: '3-day programme',
+    label: '3-session programme',
     sessionCount: 3,
     headline: 'Three sessions with Warwick — a commitment to secure the transformation.',
     whyNote:
       'One session can shift things; three give consistent practice and reinforcement between visits so you progress much faster. You are committing to the work, not cramming everything into one week.',
     approachNote:
       'Warwick adapts each session to what you and your dog need that day — there is always more to work on, and sometimes it has to be less. The consistency across three visits is what builds permanence; by the end you know how to carry it on yourself.',
-    schedulingNote: 'Consecutive days where possible.',
+    schedulingNote: 'Consecutive days where possible. Each session is a 60-minute foundation slot.',
   },
+  /** @deprecated Removed from public picker — town is gated by foundation confirmation on location select. */
   town_ready_five: {
     id: 'town_ready_five',
     label: 'Get ready for town',
     sessionCount: 2,
     headline:
-      'Two town sessions for dogs who have completed the 3-session foundation — markets, pavement, traffic, and real distractions.',
+      'Town sessions for dogs who have completed the 3-session foundation — markets, pavement, traffic, and real distractions.',
     whyNote:
-      'This builds on the 3-session foundation. Once your dog is solid at a beach or reserve, two focused town sessions transfer that work into the busy, unpredictable environment of Takaka township.',
+      'This builds on the 3-session foundation. Once your dog is solid at a beach or reserve, town sessions transfer that work into Takaka township.',
     approachNote:
-      'Warwick adapts each town session to how your dog handles the pavement, traffic, and foot-traffic on the day — proofing the skills you already have where they matter most.',
+      'Warwick adapts each town session to how your dog handles the pavement, traffic, and foot-traffic on the day.',
     schedulingNote: 'Consecutive days where possible.',
   },
 };
@@ -54,13 +55,11 @@ export const BOOKING_PACKAGES: Record<BookingPackageId, BookingPackageConfig> = 
 export const BOOKING_PACKAGE_LIST: BookingPackageConfig[] = [
   BOOKING_PACKAGES.single,
   BOOKING_PACKAGES.three_day,
-  BOOKING_PACKAGES.town_ready_five,
 ];
 
+/** Public package options after picking a single-session duration (60/90 are separate offers). */
 export const STANDARD_BOOKING_PACKAGE_LIST: BookingPackageConfig[] = [
-  BOOKING_PACKAGES.single,
   BOOKING_PACKAGES.three_day,
-  BOOKING_PACKAGES.town_ready_five,
 ];
 
 export function getPackageConfig(packageId: BookingPackageId): BookingPackageConfig {
@@ -71,7 +70,7 @@ export function getPackageSessionCount(packageId: BookingPackageId): number {
   return BOOKING_PACKAGES[packageId].sessionCount;
 }
 
-/** Get ready for town runs entirely at the Takaka township meeting point. */
+/** @deprecated Town is no longer a package — foundation confirm gates township location. */
 export function isTownReadyPackage(packageId: BookingPackageId): boolean {
   return packageId === 'town_ready_five';
 }
@@ -82,7 +81,7 @@ export function isBookingPackageId(value: string): value is BookingPackageId {
 
 export function getPackagePriceNote(_regionId: BookingRegionId, packageId: BookingPackageId): string {
   if (packageId === 'single') return '';
-  return `Per-session prices apply for each day booked. ${PAYMENT_AT_MEETING_NOTE}`;
+  return `Per-session prices apply for each day booked (60-minute foundation rate). ${PAYMENT_AT_MEETING_NOTE}`;
 }
 
 export type PackageSessionDraft = {
