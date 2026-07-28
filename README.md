@@ -120,7 +120,7 @@ Summary (full walkthrough in local gitignored `zz/GOOGLE-SHEETS-SETUP.md`):
 2. Paste [`google-apps-script/Code.gs`](google-apps-script/Code.gs) into Apps Script; set `NOTIFY_EMAIL` and `CALENDAR_ID`.
 3. Apps Script → **Project settings → Script properties** → add `TRAINER_IMPORT_KEY` (same value as trainer app `VITE_BOOKING_IMPORT_KEY` / GitHub secret).
 4. Deploy as a **Web app** (Execute as: Me, Anyone). **Important:** after editing `Code.gs`, create a **New deployment** — saving the script alone does not update the live `/exec` URL. Package booking (`book_package`) requires v26+.
-5. Set `FORM_ENDPOINT` in [`src/data/formConfig.ts`](src/data/formConfig.ts) or `VITE_FORM_ENDPOINT` in `.env.local` before build.
+5. Set `VITE_FORM_ENDPOINT` in `.env.local` (required for `npm run build`; CI uses secret `VITE_BOOKING_API_URL`). There is no hardcoded fallback URL.
 6. Verify: open the `/exec` URL in a browser — response should include `supported_actions` with `book_package`.
 7. Run `npm run build` and push.
 

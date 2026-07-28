@@ -8,7 +8,7 @@ Automated round-trip tests: run `npm run test:booking` (public site) and `npm ru
 
 ## Pre-flight
 
-- [ ] Apps Script **v29** deployed; `VITE_FORM_ENDPOINT` / `VITE_BOOKING_API_URL` point to the live `/exec` URL
+- [ ] Apps Script deployed; `VITE_FORM_ENDPOINT` / `VITE_BOOKING_API_URL` point to the live `/exec` URL (required for site production builds — no hardcoded fallback)
 - [ ] `GET` on the `/exec` URL returns `supported_actions` including `book_package`
 - [ ] Google Sheet **Submissions** tab has headers A–Q (see [`README.md`](../README.md))
 - [ ] Column **P** header: `Extended Details`

@@ -1,12 +1,10 @@
 /**
  * Google Apps Script web app endpoint for enquiry + booking forms.
  * Public URL (called from the browser) — not an auth secret; spam is handled in Code.gs.
- * Production builds use GitHub secret VITE_BOOKING_API_URL (same URL as trainer-app).
- * Override locally with VITE_FORM_ENDPOINT in .env.local if the deployment URL changes.
+ * Set via VITE_FORM_ENDPOINT (.env.local) or CI secret VITE_BOOKING_API_URL (mapped in site.yml).
+ * No hardcoded fallback — missing config disables online forms rather than hitting a stale URL.
  */
-export const FORM_ENDPOINT =
-  import.meta.env.VITE_FORM_ENDPOINT ||
-  'https://script.google.com/macros/s/AKfycbxw0Yv1tOCNzzh842kFHD2R8e8lhqFeNYzv7yKU17ds1br134KAdD4IDgzuI8VnRZdXTw/exec';
+export const FORM_ENDPOINT = String(import.meta.env.VITE_FORM_ENDPOINT || '').trim();
 
 /**
  * Cloudflare Turnstile site key (public). Pair with Apps Script property TURNSTILE_SECRET_KEY.
