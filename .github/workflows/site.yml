@@ -38,6 +38,8 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    # Needed so VITE_BOOKING_API_URL (environment secret) is available for the production build.
+    environment: github-pages
     steps:
       - uses: actions/checkout@v4
 
