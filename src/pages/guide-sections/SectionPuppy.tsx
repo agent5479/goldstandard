@@ -217,6 +217,14 @@ export default function SectionPuppy() {
           </li>
         </ul>
 
+        <p>
+          Puppy room work may use enter-but-invisible as above. For <strong>adult alone-time practice</strong>, return is
+          conditional on quiet — silence-gated, not mid-vocalisation — see{' '}
+          <a href="#pattern-playbook-separation">Separation stress</a> and{' '}
+          <a href="#symptom-vocal-demand-alone">distress vocalising when left alone</a>. A simple camera or live feed
+          helps tell demand barking from true physiological distress so you do not accidentally reward a spike.
+        </p>
+
         <h3 id="puppy-toilet-training">🚽 Toilet training: the golden routine</h3>
 
         <p>

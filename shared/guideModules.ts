@@ -168,6 +168,7 @@ const TRAINING_ANCHORS = [
   'head-halter',
   'collars-excluded',
   'leash',
+  'walking-position',
   'leash-accountability',
   'leash-selection',
   'leash-weight',

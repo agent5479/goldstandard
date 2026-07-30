@@ -341,10 +341,13 @@ export const SYMPTOM_EXPRESSIONS: SymptomExpression[] = [
     summary: 'Whining, howling, barking when handler departs — separation stress, not velcro in room.',
     linkedPatterns: ['separation'],
     confusableDrivers: ['owner_dynamics', 'skill_gap'],
-    distinguishFrom: 'Velcro when handler present is anxious_attachment — different pattern row.',
+    distinguishFrom:
+      'Velcro when handler present is anxious_attachment — different pattern row. Camera or live monitor: true distress shows pacing, panting, drooling, or chewing at exits; demand vocalisation often whines, pauses to listen, whines again, then settles when it fails.',
     substitution: 'Calm departure ritual; earned independence; safe den — not flooding.',
-    decoupling: 'Do not return and soothe mid-panic — teaches panic gets reunion.',
-    proactiveGuidance: 'Short departures with wins; build duration gradually.',
+    decoupling:
+      'Do not return and soothe mid-panic — teaches panic gets reunion. Re-enter only on settled quiet; a live feed helps time that second.',
+    proactiveGuidance:
+      'Short departures with wins; start with brief silence required before return, then build duration; optional camera to confirm demand vs true anxiety.',
     guideAnchor: 'symptom-vocal-demand-alone',
   },
 

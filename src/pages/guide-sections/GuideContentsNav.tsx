@@ -81,6 +81,7 @@ const CONTENTS_LINKS: ContentsLink[] = [
   { moduleId: 'training', group: '⚡ Training', anchor: 'dog-language', label: '🗣️ Dog language & gruff correction' },
   { moduleId: 'training', group: '⚡ Training', anchor: 'collar-selection', label: '🛡️ Collar selection' },
   { moduleId: 'training', group: '⚡ Training', anchor: 'leash', label: '🦮 Leash & line' },
+  { moduleId: 'training', group: '⚡ Training', anchor: 'walking-position', label: '🚶 Walking position' },
   { moduleId: 'training', group: '⚡ Training', anchor: 'leash-accountability', label: '🧲 Choice to leave' },
   { moduleId: 'training', group: '⚡ Training', anchor: 'leash-selection', label: '🧭 Leash selection' },
   { moduleId: 'training', group: '⚡ Training', anchor: 'leash-weight', label: '⚓ Line weight & dangle' },

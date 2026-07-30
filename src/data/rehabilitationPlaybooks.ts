@@ -122,16 +122,16 @@ export const REHABILITATION_PLAYBOOKS: RehabilitationPlaybook[] = [
     label: 'Separation stress',
     path: 'security_first',
     rootCause:
-      'Distress when left alone — pack structure unclear; panic rehearsed on departure, distinct from handler-present velcro.',
+      'Distress when left alone — pack structure unclear; panic rehearsed on departure. Often an accidental whine→return loop: early check-ins taught that vocalising summons the human. Distinct from handler-present velcro.',
     typicalExpressions: ['Distress vocalising when left alone', 'Destruction during alone time'],
     predisposedCategories: getPredisposedCategories('separation'),
     instinctLeverage: ['companion', 'guard'],
     substitution:
-      'Calm departure ritual; safe den; graduated alone duration — structure without flooding.',
+      'Calm departure ritual; safe den; silence-gated returns — re-enter on quiet (even a few seconds at first), build required silence gradually; structure without flooding.',
     decoupling:
-      'Do not return mid-panic to soothe. Do not make every reunion a frantic party — see home return.',
+      'Do not return mid-panic to soothe — that rehearses whine controls presence. Neutral re-entry on settled quiet only. Do not make every reunion a frantic party — see home return.',
     proactiveGuidance:
-      'Short successful departures; build duration; earned independence through access training.',
+      'Short successful departures; wait for a lull before returning; build silence duration; earned independence through access training.',
     avoidWhen:
       'Flooding — long absences before wins. Conflating with velcro when handler is present — different symptom row.',
     confusableDrivers: ['skill_gap', 'owner_dynamics'],

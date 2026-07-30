@@ -124,6 +124,7 @@ export const GUIDE_EXAM_ANCHORS = new Set([
   'head-halter',
   'collars-excluded',
   'leash',
+  'walking-position',
   'leash-accountability',
   'leash-selection',
   'leash-weight',

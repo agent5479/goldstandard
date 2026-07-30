@@ -98,8 +98,10 @@ export default function SectionLeash() {
         <p>A relaxed leash lets you see who your dog actually is — where attention goes, how quickly fixation builds, whether they are scent- or sight-driven. You cannot read any of that through a tight line. Slack-leash walking is the goal and the ongoing diagnostic tool; see <a href="#breed-temperament">breed temperament</a> and <a href="#butt-push">butt push</a> when fixation builds.</p>
       </div>
 
-      <h3>🚶 Walking position</h3>
+      <h3 id="walking-position">🚶 Walking position</h3>
       <p>You lead. The dog walks beside or slightly behind, not ahead. This is not just about control — it's about what the dog understands about the relationship. A dog that walks ahead of you has concluded it is responsible for the pair. That's a burden, and it produces anxiety — the same gap described in <a href="#owner-mindset">Owner mindset</a>. Walking beside you means you're in charge of what's out there, and the dog can simply be a dog.</p>
+
+      <p>Position is also vision geometry. Even a half-step ahead puts you in the dog's blind spot or on the far edge of their field of view — to check in, they must stop, turn their head, or pivot. Amid squirrels, cars, and strange dogs, they simply will not. Beside or slightly behind you, you sit in their peripheral vision: path ahead and handler can be monitored together without a choice between them. That is what makes leash focus possible — see also handler <a href="#ready-stance">peripheral awareness</a> on the other end of the line.</p>
 
       <p>On rural sealed roads and gravel shoulders, position beside you is also survival geometry — see <a href="#road-safety">Road safety</a> for the car protocol: evacuate off the sealed edge, gutter sit, hold until release.</p>
 
@@ -114,12 +116,12 @@ export default function SectionLeash() {
       </p>
 
       <p>
-        The pattern is simple and relentless: <strong>stop</strong> the instant the line goes tight or the body commits forward, deliver a well-timed low <a href="#leash-jerk">downward pop</a>, return to slack, and wait for the dog to yield position or glance back. On a first structured walk this may mean fifteen or more stops — that is not failure; it is how the baseline gets installed. Over time the dog learns to check in on its own accord rather than waiting for the next "heel."
+        The pattern is simple and relentless: <strong>stop</strong> the instant the line goes tight, the body commits forward, or the dog's shoulders pass your leg — that is the forge cue for the spatial boundary. Deliver a well-timed low <a href="#leash-jerk">downward pop</a>, return to slack, and wait for the dog to yield position or glance back. The goal is to interrupt forward momentum the moment they leave <a href="#walking-position">visible position</a>, not to haul them back by force. On a first structured walk this may mean fifteen or more stops — that is not failure; it is how the baseline gets installed. Over time the dog learns to check in on its own accord rather than waiting for the next "heel."
       </p>
 
       <ul className="checklist">
         <li>Slack line is the goal — tension means the dog chose to leave; correct that choice, don't pull through it</li>
-        <li>Stop your feet when the dog forges or fixes on its own agenda</li>
+        <li>Stop your feet when the dog forges — shoulders past your leg — or fixes on its own agenda</li>
         <li>One downward pop, then slack — not sustained fighting on the collar. The dog goes heavy and self-corrects; upward tension invites more pull</li>
         <li>Voluntary glance back or softening into position earns the walk continuing — see <a href="#check-in-seven">The seven-second check-in</a> for the off-lead version</li>
         <li>Do not gamify with treats or excited praise at every stop — calm consistency is the teacher</li>

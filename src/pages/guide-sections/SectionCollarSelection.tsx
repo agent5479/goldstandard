@@ -42,7 +42,7 @@ export default function SectionCollarSelection() {
         <div className="col-card">
           <h4>👁️ Breaking the explosive visual lock</h4>
           <p><strong>The condition:</strong> a powerful dog with a thick neck freezes and locks eyes and brain onto a trigger — spatial pressure alone cannot interrupt the focus.</p>
-          <p><strong>Why it is used:</strong> the halter lets you physically turn the head away from the trigger. Turning the head breaks the visual lock, forcing a momentary interruption in the over-aroused state so you can re-engage — pair with <a href="#butt-push">butt push</a> and <a href="#reading-dog">reading your dog</a> for the longer arc.</p>
+          <p><strong>Why it is used:</strong> the halter lets you physically turn the head away from the trigger. Turning the head breaks the visual lock, forcing a momentary interruption in the over-aroused state so you can re-engage — pair with <a href="#butt-push">butt push</a> and <a href="#reading-dog">reading your dog</a> for the longer arc. The same head-turn also restores you into the dog's field of view when they forge ahead — a management benefit of this exception while flat-collar <a href="#leash-accountability">accountability</a> and <a href="#walking-position">walking position</a> remain the teaching arc.</p>
         </div>
         <div className="col-card">
           <h4>🐕‍🦺 Charged dog-to-dog greetings</h4>
