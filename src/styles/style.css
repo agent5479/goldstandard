@@ -770,6 +770,65 @@ h2 {
   border-top: 2px solid rgba(184, 131, 42, 0.55);
 }
 
+/* equipment recommendations page */
+.equipment-section {
+  padding: 3.5rem 2.5rem;
+  background: var(--page-bg);
+  scroll-margin-top: calc(var(--site-header-height) + 0.75rem);
+}
+
+.equipment-section--soft {
+  background: var(--surface-soft);
+  border-top: 2px solid rgba(184, 131, 42, 0.55);
+}
+
+.equipment-product {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.35fr);
+  gap: 2.5rem;
+  align-items: start;
+}
+
+.equipment-product-media {
+  margin: 0;
+}
+
+.equipment-product-media img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 420px;
+  margin: 0 auto;
+  object-fit: contain;
+}
+
+.equipment-product-body h2 {
+  margin-bottom: 1rem;
+}
+
+.equipment-product-body h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.35rem;
+  color: var(--forest);
+  margin: 1.75rem 0 0.75rem;
+}
+
+.equipment-product-body p {
+  color: var(--text);
+  line-height: 1.65;
+  margin: 0 0 1rem;
+}
+
+.equipment-product-body a {
+  color: var(--forest);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.equipment-product-body a:hover {
+  color: var(--gold);
+}
+
 .about-callout {
   margin-top: 1.5rem;
   padding: 1rem 1.25rem;
@@ -3831,6 +3890,9 @@ body.page-guide {
   .guide-main, .contact-page-main, .book-page-main { padding: 2rem 1.25rem 4rem; }
   .pillars-table th, .pillars-table td { padding: 0.5rem 0.75rem; font-size: 0.95rem; }
   .two-col { grid-template-columns: 1fr; }
+  .equipment-product { grid-template-columns: 1fr; gap: 1.5rem; }
+  .equipment-section { padding-left: 1.25rem; padding-right: 1.25rem; }
+  .equipment-product-media img { max-width: 280px; }
   .steps li { padding-left: 2.75rem; }
   .steps li::before { width: 2rem; height: 2rem; font-size: 0.85rem; top: 0.9rem; }
 }

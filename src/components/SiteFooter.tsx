@@ -9,6 +9,7 @@ export default function SiteFooter() {
         <Link to="/#services">Services</Link>
         <Link to="/book">Book</Link>
         <Link to="/guide">Guide</Link>
+        <Link to="/equipment">Equipment</Link>
         <Link to="/contact">Contact</Link>
         <span className="footer-links-divider" aria-hidden="true">·</span>
         <Link to="/exam">Exam</Link>

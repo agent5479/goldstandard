@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 export default function SectionLeash() {
   return (
     <section className="guide-section" id="leash">
@@ -9,7 +11,13 @@ export default function SectionLeash() {
 
       <h3 id="leash-selection">🧭 Leash selection: what we use and why</h3>
 
-      <p>We use a <strong>medium-length, strong fixed line</strong> with weight matched to the dog. Length is adjusted dynamically by hand — shortened for close-quarters engagement, extended to grant decompression space — so you are always actively managing the spatial conversation. Bungee and extending leashes are excluded.</p>
+      <p>
+        We use a <strong>medium-length, strong fixed line</strong> with weight matched to the dog. Length is adjusted
+        dynamically by hand — shortened for close-quarters engagement, extended to grant decompression space — so you
+        are always actively managing the spatial conversation. Bungee and extending leashes are excluded. A practical
+        pick we recommend is the{' '}
+        <Link to="/equipment#carhartt-leash">Carhartt Nylon Duck 6 ft leash</Link>.
+      </p>
 
       <div className="two-col">
         <div className="col-card">

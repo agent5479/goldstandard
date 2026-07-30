@@ -16,6 +16,7 @@ export const PRERENDER_ROUTES = [
   '/intelligence',
   '/dog-personality',
   '/breed-finder',
+  '/equipment',
 ] as const;
 
 export type PrerenderRoute = (typeof PRERENDER_ROUTES)[number];

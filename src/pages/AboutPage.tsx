@@ -192,6 +192,7 @@ export default function AboutPage() {
               Preferred equipment is a flat collar or properly positioned slip lead. A head collar — Gentle Leader,
               Halti, or similar — may be coached as temporary management for older or physically limited handlers
               with strong dogs. Chest and shoulder harnesses are not used — see{' '}
+              <Link to="/equipment">recommended equipment</Link> and{' '}
               <Link to={guideHref('head-halter')}>head halter guidance</Link>.
             </p>
             <blockquote className="approach-quote">

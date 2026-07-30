@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 export default function SectionCollarSelection() {
   return (
     <section className="guide-section" id="collar-selection">
@@ -16,7 +18,8 @@ export default function SectionCollarSelection() {
         method. It is a temporary management device: a mechanical override that micro-manages the body rather than
         teaching the brain. It keeps the handler safe while you work on impulse control and state of mind through the
         methods elsewhere in this guide. Sessions may include technique coaching — timing, slack, and turning the head
-        to break a lock, not yanking.
+        to break a lock, not yanking. For the specific headcollar we recommend, see{' '}
+        <Link to="/equipment#gentle-leader">recommended equipment — Gentle Leader</Link>.
       </p>
 
       <p>
