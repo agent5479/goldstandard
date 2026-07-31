@@ -25,7 +25,7 @@ export const BOOKING_SERVICE_TYPES: Record<BookingServiceType, BookingServiceTyp
   standard_beach: {
     id: 'standard_beach',
     label: 'Standard training session',
-    headline: `Beach or reserve (${STANDARD_PRICE_LABEL} / 60 min or $90 / 90 min) or private household (from ${HOME_VISIT_PRICE_LABEL}/hr) — Golden Bay pricing; Nelson by enquiry`,
+    headline: `Beach or reserve (${STANDARD_PRICE_LABEL} / 60 min) or private household (from ${HOME_VISIT_PRICE_LABEL}/hr) — Golden Bay pricing; Nelson by enquiry`,
     sessionMinutes: STANDARD_SESSION_MINUTES,
     calendarBlockMinutes: STANDARD_SESSION_MINUTES,
     priceLabel: STANDARD_PRICE_LABEL,

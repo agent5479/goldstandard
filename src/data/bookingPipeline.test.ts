@@ -145,10 +145,9 @@ describe('booking pipeline — form extended JSON', () => {
     });
 
     expect(summary).toContain('Standard training session');
-    expect(summary).toContain('$60');
-    expect(summary).toContain('Extra for beach visits');
-    expect(summary).toContain('per additional person attending');
-    expect(summary).toContain('if a helper dog is used');
+    expect(summary).toContain('$70');
+    expect(summary).toContain('helper dog or a group');
+    expect(summary).toContain('base fee covers two people');
     expect(summary).not.toContain('$350');
   });
 
@@ -170,7 +169,7 @@ describe('booking pipeline — form extended JSON', () => {
 
     expect(summary).toContain('$160');
     expect(summary).toContain('private household');
-    expect(summary).not.toContain('per additional person attending');
+    expect(summary).not.toContain('helper dog or a group');
   });
 
   it('formats package submission summary', () => {
@@ -206,10 +205,10 @@ describe('booking pipeline — form extended JSON', () => {
       ],
     });
 
-    expect(summary).toContain('3-session programme');
+    expect(summary).toContain('Recommended starter pack');
     expect(summary).toContain('Session 1');
     expect(summary).toContain('Session 3');
-    expect(summary).toContain('$60');
+    expect(summary).toContain('$70');
     expect(summary).toContain('$160');
   });
 
@@ -248,14 +247,15 @@ describe('booking pipeline — package session dates', () => {
   });
 });
 
-describe('booking pipeline — 3-session programme copy', () => {
+describe('booking pipeline — recommended starter pack copy', () => {
   it('avoids week-biased scheduling language', () => {
     const pkg = BOOKING_PACKAGES.three_day;
+    expect(pkg.label).toMatch(/Recommended starter pack/i);
     expect(pkg.headline.toLowerCase()).not.toContain('week');
     expect(pkg.schedulingNote).toMatch(/Consecutive days/i);
   });
 
-  it('explains commitment and adaptive approach for the 3-session programme', () => {
+  it('explains commitment and adaptive approach for the starter pack', () => {
     expect(BOOKING_PACKAGES.three_day.whyNote).toMatch(/reinforcement/i);
     expect(BOOKING_PACKAGES.three_day.approachNote).toMatch(/adapts each session/i);
     expect(BOOKING_PACKAGES.three_day.approachNote).toMatch(/carry it on yourself/i);
@@ -274,8 +274,8 @@ describe('booking pipeline — beach session shapes', () => {
     const shape = getStandardSessionShape(60, 1);
     expect(shape.dogCount).toBe(1);
     expect(shape.sessionMinutes).toBe(STANDARD_SESSION_MINUTES);
-    expect(shape.priceDollars).toBe(60);
-    expect(shape.priceLabel).toBe('$60');
+    expect(shape.priceDollars).toBe(70);
+    expect(shape.priceLabel).toBe('$70');
   });
 
   it('prices 90-minute one dog at $90 and two dogs at $100', () => {

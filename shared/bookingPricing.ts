@@ -2,8 +2,9 @@
 
 import type { BookingRegionId } from './bookingRegions';
 
-export const STANDARD_SESSION_PRICE_DOLLARS = 60;
+export const STANDARD_SESSION_PRICE_DOLLARS = 70;
 export const STANDARD_90_SESSION_PRICE_DOLLARS = 90;
+/** Surcharge for a helper dog or a group beyond two people (base fee covers two). */
 export const ADDITIONAL_PERSON_PRICE_DOLLARS = 10;
 export const ADDITIONAL_DOG_PRICE_DOLLARS = 10;
 
@@ -41,7 +42,7 @@ export type StandardSessionShape = {
 
 /**
  * Duration + price for a beach/reserve standard session.
- * 60 min = 1 dog / $60; 90 min = $90 + $10 per dog beyond the first.
+ * 60 min = 1 dog / $70. 90-min multi-dog remains for legacy/backend only — not offered publicly.
  * Mirror in google-apps-script/Code.gs getBookingDurations.
  */
 export function getStandardSessionShape(
@@ -85,15 +86,20 @@ export const STANDARD_90_PRICE_LABEL = `$${STANDARD_90_SESSION_PRICE_DOLLARS}`;
 export const HOME_VISIT_PRICE_LABEL = `$${HOUSEHOLD_HOURLY_PRICE_DOLLARS}`;
 export const ELITE_PRICE_LABEL = `$${ELITE_SESSION_PRICE_DOLLARS}`;
 
-export const BEACH_EXTRA_PERSON_NOTE = `+$${ADDITIONAL_PERSON_PRICE_DOLLARS} per additional person attending`;
+/** Base session covers two people; surcharge for helper dog or a larger group. */
+export const BEACH_EXTRAS_NOTE = `+$${ADDITIONAL_PERSON_PRICE_DOLLARS} for a helper dog or a group (base fee covers two people).`;
 
-export const BEACH_HELPER_DOG_NOTE = `+$${ADDITIONAL_PERSON_PRICE_DOLLARS} if a helper dog is used`;
+/** Town visits — groups beyond two may surcharge; helper dogs are not used. */
+export const TOWN_EXTRAS_NOTE = `+$${ADDITIONAL_PERSON_PRICE_DOLLARS} for a group beyond two people. Helper dogs are not used for town visits.`;
 
-/** Beach / reserve only — people and helper dog are separate extras. */
-export const BEACH_EXTRAS_NOTE = `Extra for beach visits: ${BEACH_EXTRA_PERSON_NOTE}, and ${BEACH_HELPER_DOG_NOTE}.`;
+/** Public copy — multi-dog is by arrangement, not online. */
+export const MULTI_DOG_CONTACT_NOTE =
+  'Multi-dog sessions — enquire to arrange.';
 
-/** Town visits — extra people allowed; helper dogs are not used. */
-export const TOWN_EXTRAS_NOTE = `${BEACH_EXTRA_PERSON_NOTE}. Helper dogs are not used for town visits.`;
+/** @deprecated Prefer BEACH_EXTRAS_NOTE. */
+export const BEACH_EXTRA_PERSON_NOTE = BEACH_EXTRAS_NOTE;
+/** @deprecated Prefer BEACH_EXTRAS_NOTE. */
+export const BEACH_HELPER_DOG_NOTE = BEACH_EXTRAS_NOTE;
 
 export const STANDARD_ADDITIONAL_DOG_NOTE = `+$${ADDITIONAL_DOG_PRICE_DOLLARS} per additional dog`;
 
@@ -110,6 +116,44 @@ export const ELITE_SHORT_PITCH =
 
 export const PAYMENT_AT_MEETING_NOTE =
   'Payment is arranged at your session — no online payment on this site.';
+
+/** Glanceable service labels (hero / About). */
+export const PRICING_LABEL_BEACH_60 = 'Beach / reserve — 60 min';
+/** @deprecated Multi-dog is by contact, not a published online rate. */
+export const PRICING_LABEL_MULTI_DOG = 'Multi-dog';
+export const PRICING_LABEL_HOME = 'Home visit — 1 hr';
+export const PRICING_LABEL_ELITE = 'Elite — 2.5 hr';
+export const PRICING_LABEL_TOWN = 'Town visit';
+export const PRICING_LABEL_PROGRAMME = 'Recommended starter pack';
+export const PRICING_AMOUNT_PROGRAMME = '3 × beach sessions';
+export const PRICING_AMOUNT_TOWN = 'same as beach*';
+export const PRICING_LABEL_MULTI_DOG_ENQUIRE = 'Multi-dog';
+export const PRICING_AMOUNT_MULTI_DOG = 'enquire';
+
+/** Compact footnote lines for hero / About (not the longer booking-form notes). */
+export const GLANCE_BEACH_FOOTNOTE = `Beach / reserve: +$${ADDITIONAL_PERSON_PRICE_DOLLARS} helper dog or group (two people included)`;
+export const GLANCE_TOWN_FOOTNOTE = `Town: +$${ADDITIONAL_PERSON_PRICE_DOLLARS} for groups beyond two · no helper dogs · after 3 sessions`;
+export const GLANCE_HOME_FOOTNOTE = 'Home / elite: household included · no helper dog';
+export const GLANCE_MULTI_DOG_FOOTNOTE = MULTI_DOG_CONTACT_NOTE;
+
+export function formatStandardPriceAmount(regionId: BookingRegionId = 'golden-bay'): string {
+  const tier = getPricingTier(regionId, 'beach');
+  return tier.priceLabel ?? tier.pricingNote;
+}
+
+export function formatStandard90PriceAmount(regionId: BookingRegionId = 'golden-bay'): string {
+  const tier = getPricingTier(regionId, 'beach');
+  if (!tier.priceLabel) return tier.pricingNote;
+  return STANDARD_90_PRICE_LABEL;
+}
+
+export function formatHomeVisitPriceAmount(): string {
+  return HOME_VISIT_PRICE_LABEL;
+}
+
+export function formatElitePriceAmount(): string {
+  return ELITE_PRICE_LABEL;
+}
 
 /** Household visit length options (hours). Elite 2.5 is a flat-rate session, not hourly. */
 export type HouseholdHoursOption = 1 | 1.5 | 2 | 2.5;
@@ -173,7 +217,7 @@ export type RegionPricing = {
   enquiryFallback: string;
 };
 
-const GB_BEACH_NOTE = `${STANDARD_PRICE_LABEL} · ${STANDARD_SESSION_MINUTES} min. ${BEACH_EXTRAS_NOTE} Or ${STANDARD_90_PRICE_LABEL} · ${STANDARD_90_SESSION_MINUTES} min MULTI DOG. ${BEACH_EXTRAS_NOTE}`;
+const GB_BEACH_NOTE = `${STANDARD_PRICE_LABEL} · ${STANDARD_SESSION_MINUTES} min. ${BEACH_EXTRAS_NOTE} ${MULTI_DOG_CONTACT_NOTE}`;
 const GB_HOME_NOTE = getHouseholdSessionShape(1).pricingNote;
 const GB_ELITE_NOTE = getHouseholdSessionShape(2.5).pricingNote;
 
@@ -246,7 +290,7 @@ export function formatStandardPriceLine(regionId: BookingRegionId = 'golden-bay'
 export function formatStandard90PriceLine(regionId: BookingRegionId = 'golden-bay'): string {
   const tier = getPricingTier(regionId, 'beach');
   if (!tier.priceLabel) return tier.pricingNote;
-  return `${STANDARD_90_PRICE_LABEL} · ${STANDARD_90_SESSION_MINUTES} min. ${BEACH_EXTRAS_NOTE}`;
+  return MULTI_DOG_CONTACT_NOTE;
 }
 
 export function formatHomeVisitPriceLine(regionId: BookingRegionId = 'golden-bay'): string {

@@ -4,16 +4,26 @@ import Seo from '../components/Seo';
 import SectionIcon from '../components/SectionIcon';
 import SiteHeader from '../components/SiteHeader';
 import SiteFooter from '../components/SiteFooter';
-import { STANDARD_PRICING_NOTE, HOME_VISIT_PRICING_NOTE } from '../data/bookingConfig';
+import { HOME_VISIT_PRICING_NOTE } from '../data/bookingConfig';
 import {
-  formatStandard90PriceLine,
-  HOUSEHOLD_HOURLY_PRICE_DOLLARS,
-  HOUSEHOLD_INCLUSION_NOTE,
-  ELITE_PRICE_LABEL,
+  formatElitePriceAmount,
+  formatHomeVisitPriceAmount,
+  formatStandardPriceAmount,
+  GLANCE_BEACH_FOOTNOTE,
+  GLANCE_HOME_FOOTNOTE,
+  GLANCE_TOWN_FOOTNOTE,
   ELITE_SHORT_PITCH,
-  TOWN_EXTRAS_NOTE,
+  PRICING_AMOUNT_MULTI_DOG,
+  PRICING_AMOUNT_PROGRAMME,
+  PRICING_LABEL_BEACH_60,
+  PRICING_LABEL_ELITE,
+  PRICING_LABEL_HOME,
+  PRICING_LABEL_MULTI_DOG_ENQUIRE,
+  PRICING_LABEL_PROGRAMME,
+  PRICING_LABEL_TOWN,
 } from '@shared/bookingPricing';
 import { NELSON_STANDARD_COMING_SOON_NOTE, NELSON_PRICING_ENQUIRY_NOTE } from '@shared/bookingRegions';
+import { Link } from 'react-router-dom';
 
 export default function AboutPage() {
   return (
@@ -359,27 +369,34 @@ export default function AboutPage() {
             <article className="pricing-block">
               <h3>Golden Bay — beach, reserve &amp; town</h3>
               <p>
-                <strong>60-minute session</strong> — {STANDARD_PRICING_NOTE}
+                <strong>{PRICING_LABEL_PROGRAMME}</strong> — {PRICING_AMOUNT_PROGRAMME} (best first step)
               </p>
               <p>
-                <strong>90-minute MULTI DOG session</strong> — {formatStandard90PriceLine('golden-bay')}
+                <strong>{PRICING_LABEL_BEACH_60}</strong> — {formatStandardPriceAmount('golden-bay')}
               </p>
               <p>
-                <strong>Town visit</strong> — same pricing as a normal session; {TOWN_EXTRAS_NOTE} Requires
-                three sessions previously before the town visit.
+                <strong>{PRICING_LABEL_TOWN}</strong> — same as beach
               </p>
+              <p>
+                <strong>{PRICING_LABEL_MULTI_DOG_ENQUIRE}</strong> — {PRICING_AMOUNT_MULTI_DOG}{' '}
+                (<Link to="/contact">send an enquiry</Link>)
+              </p>
+              <ul className="booking-price-footnotes form-hint">
+                <li>{GLANCE_BEACH_FOOTNOTE}</li>
+                <li>{GLANCE_TOWN_FOOTNOTE}</li>
+              </ul>
             </article>
             <article className="pricing-block">
               <h3>Private household &amp; elite</h3>
               <p>
-                <strong>Household visit</strong> — ${HOUSEHOLD_HOURLY_PRICE_DOLLARS} one hour fixed rate (
-                {HOUSEHOLD_INCLUSION_NOTE.charAt(0).toLowerCase() + HOUSEHOLD_INCLUSION_NOTE.slice(1)}) Choose
-                1, 1.5, or 2 hours.
+                <strong>{PRICING_LABEL_HOME}</strong> — {formatHomeVisitPriceAmount()} (choose 1, 1.5, or 2 hours)
               </p>
               <p>
-                <strong>Elite home visit (2.5&nbsp;hr)</strong> — {ELITE_PRICE_LABEL} flat rate. {ELITE_SHORT_PITCH}{' '}
-                {HOUSEHOLD_INCLUSION_NOTE}
+                <strong>{PRICING_LABEL_ELITE}</strong> — {formatElitePriceAmount()}. {ELITE_SHORT_PITCH}
               </p>
+              <ul className="booking-price-footnotes form-hint">
+                <li>{GLANCE_HOME_FOOTNOTE}</li>
+              </ul>
               <p className="form-hint" style={{ marginTop: '0.75rem' }}>
                 {HOME_VISIT_PRICING_NOTE}
               </p>

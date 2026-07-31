@@ -28,9 +28,9 @@ export const BOOKING_PACKAGES: Record<BookingPackageId, BookingPackageConfig> = 
   },
   three_day: {
     id: 'three_day',
-    label: '3-session programme',
+    label: 'Recommended starter pack',
     sessionCount: 3,
-    headline: 'Three sessions with Warwick — a commitment to secure the transformation.',
+    headline: 'Three beach / reserve sessions — the best first experience for most dogs.',
     whyNote:
       'One session can shift things; three give consistent practice and reinforcement between visits so you progress much faster. More effective when sessions are on consecutive days.',
     approachNote:

@@ -4,23 +4,39 @@ import SiteHeader from '../components/SiteHeader';
 import SiteFooter from '../components/SiteFooter';
 import BookForm from './BookForm';
 import {
-  ELITE_PRICE_LABEL,
-  ELITE_SHORT_PITCH,
-  formatStandard90PriceLine,
-  formatStandardPriceLine,
-  HOUSEHOLD_HOURLY_PRICE_DOLLARS,
-  HOUSEHOLD_INCLUSION_NOTE,
-  TOWN_EXTRAS_NOTE,
+  formatElitePriceAmount,
+  formatHomeVisitPriceAmount,
+  formatStandardPriceAmount,
+  GLANCE_BEACH_FOOTNOTE,
+  GLANCE_HOME_FOOTNOTE,
+  GLANCE_TOWN_FOOTNOTE,
+  PRICING_AMOUNT_MULTI_DOG,
+  PRICING_AMOUNT_PROGRAMME,
+  PRICING_AMOUNT_TOWN,
+  PRICING_LABEL_BEACH_60,
+  PRICING_LABEL_ELITE,
+  PRICING_LABEL_HOME,
+  PRICING_LABEL_MULTI_DOG_ENQUIRE,
+  PRICING_LABEL_PROGRAMME,
+  PRICING_LABEL_TOWN,
 } from '@shared/bookingPricing';
-import { BOOKING_PACKAGES } from '@shared/bookingPackages';
 import { NELSON_PRICING_ENQUIRY_NOTE } from '@shared/bookingRegions';
+
+const HERO_PRICE_ROWS = [
+  { label: PRICING_LABEL_PROGRAMME, amount: PRICING_AMOUNT_PROGRAMME, emphasize: true },
+  { label: PRICING_LABEL_BEACH_60, amount: formatStandardPriceAmount('golden-bay') },
+  { label: PRICING_LABEL_HOME, amount: formatHomeVisitPriceAmount() },
+  { label: PRICING_LABEL_ELITE, amount: formatElitePriceAmount() },
+  { label: PRICING_LABEL_TOWN, amount: PRICING_AMOUNT_TOWN },
+  { label: PRICING_LABEL_MULTI_DOG_ENQUIRE, amount: PRICING_AMOUNT_MULTI_DOG },
+] as const;
 
 export default function BookPage() {
   return (
     <>
       <Seo
         title="Book a session | Gold Standard Dog Training"
-        description="Book dog training with Warwick Marshall in Golden Bay or Nelson Bays, NZ. 60 or 90-minute sessions, 3-session programme, private household, or elite coaching."
+        description="Book dog training with Warwick Marshall in Golden Bay or Nelson Bays, NZ. Recommended starter pack, single sessions, private household, or elite coaching."
         path="/book"
         bodyClass="page-book"
       />
@@ -33,36 +49,34 @@ export default function BookPage() {
               <p className="section-label">Book a session</p>
               <h1>Choose your service, pick your times, and confirm online. Calendar confirmation by email when you add one.</h1>
               <p className="section-label">Golden Bay pricing</p>
-              <ul className="booking-hero-facts">
+              <div className="booking-price-table" role="table" aria-label="Golden Bay session rates">
+                {HERO_PRICE_ROWS.map((row) => (
+                  <div
+                    className={`booking-price-table-row${'emphasize' in row && row.emphasize ? ' is-recommended' : ''}`}
+                    role="row"
+                    key={row.label}
+                  >
+                    <span className="booking-price-table-label" role="cell">
+                      {'emphasize' in row && row.emphasize ? (
+                        <span className="booking-price-recommended-tag">Best first step</span>
+                      ) : null}
+                      {row.label}
+                    </span>
+                    <strong className="booking-price-table-amount" role="cell">
+                      {row.amount}
+                    </strong>
+                  </div>
+                ))}
+              </div>
+              <ul className="booking-price-footnotes form-hint">
+                <li>{GLANCE_BEACH_FOOTNOTE}</li>
+                <li>{GLANCE_TOWN_FOOTNOTE}</li>
+                <li>{GLANCE_HOME_FOOTNOTE}</li>
                 <li>
-                  <strong>Single session — 60&nbsp;min</strong> — {formatStandardPriceLine('golden-bay')}
+                  Multi-dog — <Link to="/contact">enquire</Link> to arrange.
                 </li>
-                <li>
-                  <strong>Single session MULTI DOG — 90&nbsp;min</strong> — {formatStandard90PriceLine('golden-bay')}
-                </li>
-                <li>
-                  <strong>{BOOKING_PACKAGES.three_day.label}</strong> — {BOOKING_PACKAGES.three_day.headline}
-                  {BOOKING_PACKAGES.three_day.whyNote ? (
-                    <>
-                      <br />
-                      <span className="booking-hero-fact-detail">{BOOKING_PACKAGES.three_day.whyNote}</span>
-                    </>
-                  ) : null}
-                </li>
-                <li>
-                  <strong>Private household</strong> — ${HOUSEHOLD_HOURLY_PRICE_DOLLARS} one hour fixed rate (
-                  {HOUSEHOLD_INCLUSION_NOTE.charAt(0).toLowerCase() + HOUSEHOLD_INCLUSION_NOTE.slice(1)})
-                </li>
-                <li>
-                  <strong>Elite home visit</strong> — 2.5 hour flat rate {ELITE_PRICE_LABEL} — {ELITE_SHORT_PITCH}{' '}
-                  {HOUSEHOLD_INCLUSION_NOTE}
-                </li>
-                <li>
-                  <strong>Town visit</strong> — same pricing as a normal session; {TOWN_EXTRAS_NOTE} Requires three
-                  sessions previously before the town visit.
-                </li>
+                <li>{NELSON_PRICING_ENQUIRY_NOTE}</li>
               </ul>
-              <p className="form-hint">{NELSON_PRICING_ENQUIRY_NOTE}</p>
             </div>
 
             <Link to="/contact" className="contact-path-card page-hero-enquiry-card">

@@ -70,11 +70,11 @@ import {
   TWO_DOG_CHANGEOVER_NOTE,
   STANDARD_SESSION_MINUTES,
   STANDARD_ADDITIONAL_DOG_NOTE,
+  STANDARD_PRICE_LABEL,
   BEACH_EXTRAS_NOTE,
   TOWN_EXTRAS_NOTE,
   HOUSEHOLD_HOURLY_PRICE_DOLLARS,
   HOUSEHOLD_INCLUSION_NOTE,
-  ELITE_PRICE_LABEL,
   ELITE_SHORT_PITCH,
   type BeachDurationMinutes,
   type HouseholdHoursOption,
@@ -1256,7 +1256,7 @@ export default function BookForm() {
       {clientReady && packageBookingLive === false ? (
         <p className="form-feedback error booking-server-warning" role="alert">
           Online package booking is not live on the server yet — single sessions may still work. For the
-          3-session programme, call or text{' '}
+          recommended starter pack, call or text{' '}
           <a href="tel:+64278142222">027 814 2222</a>.
         </p>
       ) : null}
@@ -1302,17 +1302,28 @@ export default function BookForm() {
                   ? BOOKING_PACKAGES.three_day.label
                   : isPrivateOffer
                     ? householdShape?.isElite
-                      ? 'Elite home visit (2.5 hr)'
-                      : `Private household (${householdHours} hr)`
+                      ? 'Elite — 2.5 hr'
+                      : `Home visit (${householdHours} hr)`
                     : beachDurationMinutes === 90
-                      ? 'Single session MULTI DOG — 90 min'
-                      : 'Single session — 60 min'}
+                      ? 'Multi-dog (arranged)'
+                      : '60 min'}
               </strong>
             </p>
           ) : null}
         </header>
         <div className="booking-step-body">
           <div className="booking-service-picker" role="radiogroup" aria-label="Booking type">
+            <button
+              type="button"
+              className={`booking-service-btn booking-service-btn--recommended${isPackageBooking ? ' is-selected' : ''}`}
+              disabled={endpointMissing || submitting}
+              aria-pressed={isPackageBooking}
+              onClick={() => handleOfferSelect('three_day')}
+            >
+              <span className="booking-price-recommended-tag">Best first step</span>
+              <strong>{BOOKING_PACKAGES.three_day.label}</strong>
+              <span className="booking-region-note">{BOOKING_PACKAGES.three_day.headline}</span>
+            </button>
             <button
               type="button"
               className={`booking-service-btn${
@@ -1332,52 +1343,7 @@ export default function BookForm() {
               }
               onClick={() => handleOfferSelect('single_60')}
             >
-              <strong>Single session — 60 min</strong>
-              <span className="booking-region-note">
-                $60 · beach, reserve, or town. {BEACH_EXTRAS_NOTE} Town: {TOWN_EXTRAS_NOTE}
-              </span>
-            </button>
-            <button
-              type="button"
-              className={`booking-service-btn${
-                selectedServiceType === 'standard_beach' &&
-                selectedPackageId === 'single' &&
-                beachDurationMinutes === 90 &&
-                !isPrivateOffer
-                  ? ' is-selected'
-                  : ''
-              }`}
-              disabled={endpointMissing || submitting}
-              aria-pressed={
-                selectedServiceType === 'standard_beach' &&
-                selectedPackageId === 'single' &&
-                beachDurationMinutes === 90 &&
-                !isPrivateOffer
-              }
-              onClick={() => handleOfferSelect('single_90')}
-            >
-              <strong>Single session MULTI DOG — 90 min</strong>
-              <span className="booking-region-note">
-                $90 · beach, reserve, or town. {BEACH_EXTRAS_NOTE} Town: {TOWN_EXTRAS_NOTE}
-              </span>
-            </button>
-            <button
-              type="button"
-              className={`booking-service-btn${isPackageBooking ? ' is-selected' : ''}`}
-              disabled={endpointMissing || submitting}
-              aria-pressed={isPackageBooking}
-              onClick={() => handleOfferSelect('three_day')}
-            >
-              <strong>{BOOKING_PACKAGES.three_day.label}</strong>
-              <span className="booking-region-note">{BOOKING_PACKAGES.three_day.headline}</span>
-              {BOOKING_PACKAGES.three_day.whyNote ? (
-                <span className="booking-region-note booking-package-why">
-                  {BOOKING_PACKAGES.three_day.whyNote}
-                </span>
-              ) : null}
-              {BOOKING_PACKAGES.three_day.schedulingNote ? (
-                <span className="booking-region-note">{BOOKING_PACKAGES.three_day.schedulingNote}</span>
-              ) : null}
+              <strong>Single session · 60 min · {STANDARD_PRICE_LABEL}</strong>
             </button>
             <button
               type="button"
@@ -1386,13 +1352,17 @@ export default function BookForm() {
               aria-pressed={isPrivateOffer}
               onClick={() => handleOfferSelect('private')}
             >
-              <strong>Private household / Elite home visit</strong>
-              <span className="booking-region-note">
-                ${HOUSEHOLD_HOURLY_PRICE_DOLLARS} one hour fixed rate at your home or a custom location —{' '}
-                {HOUSEHOLD_INCLUSION_NOTE} Elite home visit: 2.5 hour flat rate {ELITE_PRICE_LABEL}.{' '}
-                {ELITE_SHORT_PITCH}
-              </span>
+              <strong>Home / Elite · from ${HOUSEHOLD_HOURLY_PRICE_DOLLARS}/hr</strong>
             </button>
+            <Link
+              to="/contact"
+              className="booking-service-btn booking-service-btn--enquire"
+            >
+              <strong>Multi-dog · enquire</strong>
+              <span className="booking-region-note">
+                Tell Warwick about your dogs and he will arrange a suitable plan.
+              </span>
+            </Link>
           </div>
           {isPrivateOffer ? (
             <fieldset className="form-field">
@@ -1415,7 +1385,7 @@ export default function BookForm() {
                       />
                       <strong>
                         {hours === 2.5
-                          ? 'Elite home visit — 2.5 hr'
+                          ? 'Elite — 2.5 hr'
                           : hours === 1
                             ? '1 hour'
                             : `${hours} hours`}
@@ -1428,6 +1398,11 @@ export default function BookForm() {
                   );
                 })}
               </div>
+              {householdShape?.isElite ? (
+                <p className="form-hint booking-home-visit-pricing">{ELITE_SHORT_PITCH}</p>
+              ) : householdShape ? (
+                <p className="form-hint booking-home-visit-pricing">{HOUSEHOLD_INCLUSION_NOTE}</p>
+              ) : null}
             </fieldset>
           ) : null}
           <p className="form-hint booking-service-help">
@@ -1435,6 +1410,9 @@ export default function BookForm() {
             <a href="tel:+64278142222">027 814 2222</a>
             {' '}— or <Link to="/contact">send an enquiry</Link>.
           </p>
+          {isPackageBooking && BOOKING_PACKAGES.three_day.whyNote ? (
+            <p className="form-hint booking-package-why">{BOOKING_PACKAGES.three_day.whyNote}</p>
+          ) : null}
           {isPackageBooking && BOOKING_PACKAGES.three_day.approachNote ? (
             <p className="form-hint booking-package-approach">{BOOKING_PACKAGES.three_day.approachNote}</p>
           ) : null}
@@ -1828,8 +1806,8 @@ export default function BookForm() {
                       <strong>Beach or reserve</strong>
                       <span className="booking-region-note">
                         {beachDurationMinutes === 90
-                          ? `$${beachShape.priceDollars} · 90 min. ${BEACH_EXTRAS_NOTE}`
-                          : `$60 · 60 min. ${BEACH_EXTRAS_NOTE}`}
+                          ? `$${beachShape.priceDollars} · 90 min`
+                          : `${STANDARD_PRICE_LABEL} · 60 min`}
                       </span>
                     </label>
                     <label className={`booking-meeting-btn${standardVenue === 'town' ? ' is-selected' : ''}`}>
@@ -1849,16 +1827,14 @@ export default function BookForm() {
                         }}
                       />
                       <strong>Takaka township</strong>
-                      <span className="booking-region-note">
-                        Same session rates; {TOWN_EXTRAS_NOTE} Requires the 3-session foundation first.
-                      </span>
+                      <span className="booking-region-note">Same session rates · after 3 sessions</span>
                     </label>
                   </div>
                 </fieldset>
               </>
             ) : standardVenue === 'home' ? (
               <>
-                <p className="form-hint booking-home-visit-pricing">{HOME_VISIT_PRICING_NOTE}</p>
+                <p className="form-hint booking-home-visit-pricing">{HOUSEHOLD_INCLUSION_NOTE}</p>
                 <div className="form-field">
                   <label htmlFor="bookHomeAddress">Home address</label>
                   <input
@@ -1920,6 +1896,7 @@ export default function BookForm() {
               </>
             ) : standardVenue === 'town' ? (
               <>
+                <p className="form-hint booking-home-visit-pricing">{TOWN_EXTRAS_NOTE}</p>
                 {townPrereqConfirmed === true ? (
                   <>
                     <p className="form-hint">
@@ -1935,8 +1912,8 @@ export default function BookForm() {
                 ) : (
                   <>
                     <p className="form-hint booking-package-prereq">
-                      Town sessions are for dogs that have completed the fundamental 3-session programme with
-                      Warwick.
+                      Town sessions are for dogs that have completed the recommended starter pack
+                      (three beach / reserve sessions) with Warwick.
                     </p>
                     <fieldset className="form-field">
                       <legend>Have you completed the 3-session foundation with Warwick?</legend>
@@ -1991,7 +1968,7 @@ export default function BookForm() {
                           disabled={submitting}
                           onClick={() => handleOfferSelect('three_day')}
                         >
-                          Switch to the 3-session programme
+                          Switch to the recommended starter pack
                         </button>
                       </div>
                     ) : null}
@@ -2000,6 +1977,7 @@ export default function BookForm() {
               </>
             ) : (
               <>
+                <p className="form-hint booking-home-visit-pricing">{BEACH_EXTRAS_NOTE}</p>
                 {isTwoDogEligible ? (
                   <fieldset className="form-field">
                     <legend>How many dogs?</legend>

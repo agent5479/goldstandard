@@ -44,7 +44,7 @@ const STANDARD_90_SESSION_MINUTES = 90;
 const ELITE_SESSION_MINUTES = 150;
 const ELITE_CALENDAR_BLOCK_MINUTES = 240;
 const ELITE_LAST_START_HOUR = 12;
-const STANDARD_SESSION_PRICE_DOLLARS = 60;
+const STANDARD_SESSION_PRICE_DOLLARS = 70;
 const STANDARD_90_SESSION_PRICE_DOLLARS = 90;
 const ADDITIONAL_PERSON_PRICE_DOLLARS = 10;
 const ADDITIONAL_DOG_PRICE_DOLLARS = 10;
@@ -56,10 +56,10 @@ const STANDARD_PRICE_LABEL = "$" + STANDARD_SESSION_PRICE_DOLLARS;
 const STANDARD_90_PRICE_LABEL = "$" + STANDARD_90_SESSION_PRICE_DOLLARS;
 const HOME_VISIT_PRICE_LABEL = "$" + HOUSEHOLD_HOURLY_PRICE_DOLLARS;
 const ELITE_PRICE_LABEL = "$" + ELITE_SESSION_PRICE_DOLLARS;
-const STANDARD_ADDITIONAL_PERSON_NOTE = "+$" + ADDITIONAL_PERSON_PRICE_DOLLARS + " per additional person attending";
-const BEACH_HELPER_DOG_NOTE = "+$" + ADDITIONAL_PERSON_PRICE_DOLLARS + " if a helper dog is used";
-const BEACH_EXTRAS_NOTE = "Extra for beach visits: " + STANDARD_ADDITIONAL_PERSON_NOTE + ", and " + BEACH_HELPER_DOG_NOTE + ".";
-const TOWN_EXTRAS_NOTE = STANDARD_ADDITIONAL_PERSON_NOTE + ". Helper dogs are not used for town visits.";
+const BEACH_EXTRAS_NOTE = "+$" + ADDITIONAL_PERSON_PRICE_DOLLARS + " for a helper dog or a group (base fee covers two people).";
+const TOWN_EXTRAS_NOTE = "+$" + ADDITIONAL_PERSON_PRICE_DOLLARS + " for a group beyond two people. Helper dogs are not used for town visits.";
+const MULTI_DOG_CONTACT_NOTE = "Multi-dog sessions — enquire to arrange.";
+const STANDARD_ADDITIONAL_PERSON_NOTE = BEACH_EXTRAS_NOTE;
 const STANDARD_ADDITIONAL_DOG_NOTE = "+$" + ADDITIONAL_DOG_PRICE_DOLLARS + " per additional dog";
 const HOUSEHOLD_INCLUSION_NOTE = "Includes any people and dogs in the house. No helper dog is typically brought to a home.";
 const ELITE_SHORT_PITCH = "A home-and-beyond session to shape the optimal family dog: proactive work so neuroses don't develop, and unwinding conditioning mistakes already made.";
@@ -85,7 +85,7 @@ const SUPPORTED_ACTIONS = [
 /** Keep in sync with shared/bookingPackages.ts — town_ready_five deprecated (location gate instead). */
 const PACKAGE_CONFIG = {
   single: { label: "Single session", sessionCount: 1 },
-  three_day: { label: "3-session programme", sessionCount: 3 },
+  three_day: { label: "Recommended starter pack", sessionCount: 3 },
   town_ready_five: { label: "Get ready for town", sessionCount: 2 }
 };
 
@@ -271,7 +271,7 @@ const REGION_PRICING = {
   "golden-bay": {
     beach: {
       priceLabel: STANDARD_PRICE_LABEL,
-      pricingNote: STANDARD_PRICE_LABEL + " · " + SESSION_MINUTES + " min. " + BEACH_EXTRAS_NOTE + " Or " + STANDARD_90_PRICE_LABEL + " · " + STANDARD_90_SESSION_MINUTES + " min MULTI DOG. " + BEACH_EXTRAS_NOTE,
+      pricingNote: STANDARD_PRICE_LABEL + " · " + SESSION_MINUTES + " min. " + BEACH_EXTRAS_NOTE + " " + MULTI_DOG_CONTACT_NOTE,
       sessionMinutes: SESSION_MINUTES,
       calendarBlockMinutes: SESSION_MINUTES,
       additionalPersonNote: BEACH_EXTRAS_NOTE
