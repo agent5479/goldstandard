@@ -56,8 +56,13 @@ const STANDARD_PRICE_LABEL = "$" + STANDARD_SESSION_PRICE_DOLLARS;
 const STANDARD_90_PRICE_LABEL = "$" + STANDARD_90_SESSION_PRICE_DOLLARS;
 const HOME_VISIT_PRICE_LABEL = "$" + HOUSEHOLD_HOURLY_PRICE_DOLLARS;
 const ELITE_PRICE_LABEL = "$" + ELITE_SESSION_PRICE_DOLLARS;
-const STANDARD_ADDITIONAL_PERSON_NOTE = "+$" + ADDITIONAL_PERSON_PRICE_DOLLARS + " per additional person attending, or when a helper dog is used";
+const STANDARD_ADDITIONAL_PERSON_NOTE = "+$" + ADDITIONAL_PERSON_PRICE_DOLLARS + " per additional person attending";
+const BEACH_HELPER_DOG_NOTE = "+$" + ADDITIONAL_PERSON_PRICE_DOLLARS + " if a helper dog is used";
+const BEACH_EXTRAS_NOTE = "Extra for beach visits: " + STANDARD_ADDITIONAL_PERSON_NOTE + ", and " + BEACH_HELPER_DOG_NOTE + ".";
+const TOWN_EXTRAS_NOTE = STANDARD_ADDITIONAL_PERSON_NOTE + ". Helper dogs are not used for town visits.";
 const STANDARD_ADDITIONAL_DOG_NOTE = "+$" + ADDITIONAL_DOG_PRICE_DOLLARS + " per additional dog";
+const HOUSEHOLD_INCLUSION_NOTE = "Includes any people and dogs in the house. No helper dog is typically brought to a home.";
+const ELITE_SHORT_PITCH = "A home-and-beyond session to shape the optimal family dog: proactive work so neuroses don't develop, and unwinding conditioning mistakes already made.";
 const PAYMENT_AT_MEETING_NOTE = "Payment is arranged at your session — no online payment on this site.";
 const NELSON_PRICING_ENQUIRY = "Pricing on enquiry — contact Warwick to confirm.";
 
@@ -99,7 +104,7 @@ const BOOKING_TYPES = {
     priceLabel: STANDARD_PRICE_LABEL
   },
   elite_coaching: {
-    label: "Elite extended coaching",
+    label: "Elite home visit",
     sessionMinutes: ELITE_SESSION_MINUTES,
     calendarBlockMinutes: ELITE_CALENDAR_BLOCK_MINUTES,
     priceLabel: ELITE_PRICE_LABEL
@@ -266,20 +271,20 @@ const REGION_PRICING = {
   "golden-bay": {
     beach: {
       priceLabel: STANDARD_PRICE_LABEL,
-      pricingNote: STANDARD_PRICE_LABEL + " · " + SESSION_MINUTES + "-minute session. " + STANDARD_ADDITIONAL_PERSON_NOTE + ". Or " + STANDARD_90_PRICE_LABEL + " · " + STANDARD_90_SESSION_MINUTES + "-minute session (" + STANDARD_ADDITIONAL_DOG_NOTE + "; " + STANDARD_ADDITIONAL_PERSON_NOTE + ").",
+      pricingNote: STANDARD_PRICE_LABEL + " · " + SESSION_MINUTES + " min. " + BEACH_EXTRAS_NOTE + " Or " + STANDARD_90_PRICE_LABEL + " · " + STANDARD_90_SESSION_MINUTES + " min MULTI DOG. " + BEACH_EXTRAS_NOTE,
       sessionMinutes: SESSION_MINUTES,
       calendarBlockMinutes: SESSION_MINUTES,
-      additionalPersonNote: STANDARD_ADDITIONAL_PERSON_NOTE
+      additionalPersonNote: BEACH_EXTRAS_NOTE
     },
     home_visit: {
       priceLabel: HOME_VISIT_PRICE_LABEL,
-      pricingNote: HOME_VISIT_PRICE_LABEL + "/hr lump at your home or a custom location. Household included — no add-ons.",
+      pricingNote: HOME_VISIT_PRICE_LABEL + " · 1 hour at your home or a custom location. Fixed rate — " + HOUSEHOLD_INCLUSION_NOTE,
       sessionMinutes: HOME_VISIT_SESSION_MINUTES,
       calendarBlockMinutes: HOME_VISIT_SESSION_MINUTES
     },
     elite_coaching: {
       priceLabel: ELITE_PRICE_LABEL,
-      pricingNote: ELITE_PRICE_LABEL + " · 2.5-hour elite extended session. 4-hour calendar block for travel and preparation. Lump sum — no add-ons.",
+      pricingNote: ELITE_PRICE_LABEL + " · 2.5 hour flat rate. " + ELITE_SHORT_PITCH + " " + HOUSEHOLD_INCLUSION_NOTE,
       sessionMinutes: ELITE_SESSION_MINUTES,
       calendarBlockMinutes: ELITE_CALENDAR_BLOCK_MINUTES
     },
@@ -1639,7 +1644,7 @@ function getBookingDurations(bookingType, locationName, regionId, dogCount, sess
       calendarBlockMinutes: minutes,
       label: config.label + " (household)",
       priceLabel: "$" + homePrice,
-      pricingNote: "$" + homePrice + " lump · " + hoursLabel + " at your home ( $" + HOUSEHOLD_HOURLY_PRICE_DOLLARS + "/hr). No add-ons.",
+      pricingNote: "$" + homePrice + " · " + hoursLabel + " at your home" + (hours === 1 ? "" : " ($" + HOUSEHOLD_HOURLY_PRICE_DOLLARS + "/hr)") + ". Fixed rate — " + HOUSEHOLD_INCLUSION_NOTE,
       venueKind: venueKind,
       dogCount: 1
     };
@@ -1654,7 +1659,7 @@ function getBookingDurations(bookingType, locationName, regionId, dogCount, sess
       calendarBlockMinutes: STANDARD_90_SESSION_MINUTES,
       label: dogs >= 2 ? config.label + " (90 min, two dogs)" : config.label + " (90 min)",
       priceLabel: "$" + beach90Price,
-      pricingNote: "$" + beach90Price + " · " + STANDARD_90_SESSION_MINUTES + "-minute session" + (dogs >= 2 ? " (two dogs)." : ".") + " " + STANDARD_ADDITIONAL_PERSON_NOTE + ".",
+      pricingNote: "$" + beach90Price + " · " + STANDARD_90_SESSION_MINUTES + "-minute session" + (dogs >= 2 ? " (two dogs)." : ".") + " " + BEACH_EXTRAS_NOTE,
       venueKind: venueKind,
       dogCount: dogs
     };
@@ -1665,7 +1670,7 @@ function getBookingDurations(bookingType, locationName, regionId, dogCount, sess
     calendarBlockMinutes: SESSION_MINUTES,
     label: config.label,
     priceLabel: tier.priceLabel,
-    pricingNote: STANDARD_PRICE_LABEL + " · " + SESSION_MINUTES + "-minute session. " + STANDARD_ADDITIONAL_PERSON_NOTE + ".",
+    pricingNote: STANDARD_PRICE_LABEL + " · " + SESSION_MINUTES + "-minute session. " + BEACH_EXTRAS_NOTE,
     venueKind: venueKind,
     dogCount: 1
   };

@@ -13,7 +13,7 @@ import {
 /** Fixed offering — customised session with Warwick on the day. */
 export const STANDARD_SERVICE = 'Training session' as const;
 
-export const ELITE_SERVICE = 'Elite extended coaching' as const;
+export const ELITE_SERVICE = 'Elite home visit' as const;
 
 export const SESSION_MINUTES = STANDARD_SESSION_MINUTES;
 export { ELITE_SESSION_MINUTES, ELITE_CALENDAR_BLOCK_MINUTES, HOME_VISIT_SESSION_MINUTES };

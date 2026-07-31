@@ -4,11 +4,14 @@ import Seo from '../components/Seo';
 import SectionIcon from '../components/SectionIcon';
 import SiteHeader from '../components/SiteHeader';
 import SiteFooter from '../components/SiteFooter';
-import { STANDARD_PRICING_NOTE, HOME_VISIT_PRICING_NOTE, ELITE_PRICING_NOTE } from '../data/bookingConfig';
+import { STANDARD_PRICING_NOTE, HOME_VISIT_PRICING_NOTE } from '../data/bookingConfig';
 import {
   formatStandard90PriceLine,
   HOUSEHOLD_HOURLY_PRICE_DOLLARS,
+  HOUSEHOLD_INCLUSION_NOTE,
   ELITE_PRICE_LABEL,
+  ELITE_SHORT_PITCH,
+  TOWN_EXTRAS_NOTE,
 } from '@shared/bookingPricing';
 import { NELSON_STANDARD_COMING_SOON_NOTE, NELSON_PRICING_ENQUIRY_NOTE } from '@shared/bookingRegions';
 
@@ -359,21 +362,23 @@ export default function AboutPage() {
                 <strong>60-minute session</strong> — {STANDARD_PRICING_NOTE}
               </p>
               <p>
-                <strong>90-minute session</strong> — {formatStandard90PriceLine('golden-bay')}
+                <strong>90-minute MULTI DOG session</strong> — {formatStandard90PriceLine('golden-bay')}
               </p>
               <p>
-                Town (Takaka library) uses the same rates after the 3-session foundation.
+                <strong>Town visit</strong> — same pricing as a normal session; {TOWN_EXTRAS_NOTE} Requires
+                three sessions previously before the town visit.
               </p>
             </article>
             <article className="pricing-block">
               <h3>Private household &amp; elite</h3>
               <p>
-                <strong>Household visit</strong> — from ${HOUSEHOLD_HOURLY_PRICE_DOLLARS}/hr lump sum (choose
-                1, 1.5, or 2 hours). No extra person, helper-dog, or dog charges.
+                <strong>Household visit</strong> — ${HOUSEHOLD_HOURLY_PRICE_DOLLARS} one hour fixed rate (
+                {HOUSEHOLD_INCLUSION_NOTE.charAt(0).toLowerCase() + HOUSEHOLD_INCLUSION_NOTE.slice(1)}) Choose
+                1, 1.5, or 2 hours.
               </p>
               <p>
-                <strong>Elite extended (2.5&nbsp;hr)</strong> — {ELITE_PRICE_LABEL} (upsell vs hourly).{' '}
-                {ELITE_PRICING_NOTE}
+                <strong>Elite home visit (2.5&nbsp;hr)</strong> — {ELITE_PRICE_LABEL} flat rate. {ELITE_SHORT_PITCH}{' '}
+                {HOUSEHOLD_INCLUSION_NOTE}
               </p>
               <p className="form-hint" style={{ marginTop: '0.75rem' }}>
                 {HOME_VISIT_PRICING_NOTE}

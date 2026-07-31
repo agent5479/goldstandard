@@ -119,7 +119,7 @@ describe('booking pipeline — form extended JSON', () => {
     });
 
     expect(summary).toContain('Session');
-    expect(summary).toContain('Elite extended coaching');
+    expect(summary).toContain('Elite home visit');
     expect(summary).toContain('$350');
     expect(summary).toContain('2.5-hour session');
     expect(summary).toContain('Golden Bay');
@@ -146,7 +146,9 @@ describe('booking pipeline — form extended JSON', () => {
 
     expect(summary).toContain('Standard training session');
     expect(summary).toContain('$60');
-    expect(summary).toContain('per additional person attending, or when a helper dog is used');
+    expect(summary).toContain('Extra for beach visits');
+    expect(summary).toContain('per additional person attending');
+    expect(summary).toContain('if a helper dog is used');
     expect(summary).not.toContain('$350');
   });
 
@@ -291,7 +293,7 @@ describe('booking pipeline — beach session shapes', () => {
     expect(getBeachSessionShape(0).dogCount).toBe(1);
   });
 
-  it('prices household hourly and elite upsell', () => {
+  it('prices household hourly and elite fixed session', () => {
     expect(getHouseholdSessionShape(1).priceDollars).toBe(160);
     expect(getHouseholdSessionShape(1.5).priceDollars).toBe(240);
     expect(getHouseholdSessionShape(2).priceDollars).toBe(320);

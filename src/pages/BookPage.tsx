@@ -5,10 +5,12 @@ import SiteFooter from '../components/SiteFooter';
 import BookForm from './BookForm';
 import {
   ELITE_PRICE_LABEL,
+  ELITE_SHORT_PITCH,
   formatStandard90PriceLine,
   formatStandardPriceLine,
   HOUSEHOLD_HOURLY_PRICE_DOLLARS,
-  STANDARD_ADDITIONAL_PERSON_NOTE,
+  HOUSEHOLD_INCLUSION_NOTE,
+  TOWN_EXTRAS_NOTE,
 } from '@shared/bookingPricing';
 import { BOOKING_PACKAGES } from '@shared/bookingPackages';
 import { NELSON_PRICING_ENQUIRY_NOTE } from '@shared/bookingRegions';
@@ -36,7 +38,7 @@ export default function BookPage() {
                   <strong>Single session — 60&nbsp;min</strong> — {formatStandardPriceLine('golden-bay')}
                 </li>
                 <li>
-                  <strong>Single session — 90&nbsp;min</strong> — {formatStandard90PriceLine('golden-bay')}
+                  <strong>Single session MULTI DOG — 90&nbsp;min</strong> — {formatStandard90PriceLine('golden-bay')}
                 </li>
                 <li>
                   <strong>{BOOKING_PACKAGES.three_day.label}</strong> — {BOOKING_PACKAGES.three_day.headline}
@@ -48,18 +50,19 @@ export default function BookPage() {
                   ) : null}
                 </li>
                 <li>
-                  <strong>Private household</strong> — ${HOUSEHOLD_HOURLY_PRICE_DOLLARS}/hr lump sum (1–2&nbsp;hr options); no person, helper-dog, or dog add-ons
+                  <strong>Private household</strong> — ${HOUSEHOLD_HOURLY_PRICE_DOLLARS} one hour fixed rate (
+                  {HOUSEHOLD_INCLUSION_NOTE.charAt(0).toLowerCase() + HOUSEHOLD_INCLUSION_NOTE.slice(1)})
                 </li>
                 <li>
-                  <strong>Elite extended — 2.5&nbsp;hr</strong> — {ELITE_PRICE_LABEL} (upsell vs hourly rate)
+                  <strong>Elite home visit</strong> — 2.5 hour flat rate {ELITE_PRICE_LABEL} — {ELITE_SHORT_PITCH}{' '}
+                  {HOUSEHOLD_INCLUSION_NOTE}
                 </li>
                 <li>
-                  <strong>Takaka township</strong> — same session rates; only after the 3-session foundation
+                  <strong>Town visit</strong> — same pricing as a normal session; {TOWN_EXTRAS_NOTE} Requires three
+                  sessions previously before the town visit.
                 </li>
               </ul>
-              <p className="form-hint">
-                Beach / town sessions: {STANDARD_ADDITIONAL_PERSON_NOTE}. {NELSON_PRICING_ENQUIRY_NOTE}
-              </p>
+              <p className="form-hint">{NELSON_PRICING_ENQUIRY_NOTE}</p>
             </div>
 
             <Link to="/contact" className="contact-path-card page-hero-enquiry-card">

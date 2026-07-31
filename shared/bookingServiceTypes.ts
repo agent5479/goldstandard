@@ -32,7 +32,7 @@ export const BOOKING_SERVICE_TYPES: Record<BookingServiceType, BookingServiceTyp
   },
   elite_coaching: {
     id: 'elite_coaching',
-    label: 'Elite extended coaching',
+    label: 'Elite home visit',
     headline: `2.5-hour private session at your home or a custom location — ${formatElitePriceLine('golden-bay').split(' · ')[0]}`,
     sessionMinutes: ELITE_SESSION_MINUTES,
     calendarBlockMinutes: ELITE_CALENDAR_BLOCK_MINUTES,

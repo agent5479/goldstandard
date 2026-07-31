@@ -32,7 +32,7 @@ export const BOOKING_PACKAGES: Record<BookingPackageId, BookingPackageConfig> = 
     sessionCount: 3,
     headline: 'Three sessions with Warwick — a commitment to secure the transformation.',
     whyNote:
-      'One session can shift things; three give consistent practice and reinforcement between visits so you progress much faster. You are committing to the work, not cramming everything into one week.',
+      'One session can shift things; three give consistent practice and reinforcement between visits so you progress much faster. More effective when sessions are on consecutive days.',
     approachNote:
       'Warwick adapts each session to what you and your dog need that day — there is always more to work on, and sometimes it has to be less. The consistency across three visits is what builds permanence; by the end you know how to carry it on yourself.',
     schedulingNote: 'Consecutive days where possible. Each session is a 60-minute foundation slot.',

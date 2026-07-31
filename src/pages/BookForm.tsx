@@ -69,10 +69,13 @@ import {
   getHouseholdSessionShape,
   TWO_DOG_CHANGEOVER_NOTE,
   STANDARD_SESSION_MINUTES,
-  STANDARD_ADDITIONAL_PERSON_NOTE,
   STANDARD_ADDITIONAL_DOG_NOTE,
+  BEACH_EXTRAS_NOTE,
+  TOWN_EXTRAS_NOTE,
   HOUSEHOLD_HOURLY_PRICE_DOLLARS,
+  HOUSEHOLD_INCLUSION_NOTE,
   ELITE_PRICE_LABEL,
+  ELITE_SHORT_PITCH,
   type BeachDurationMinutes,
   type HouseholdHoursOption,
 } from '@shared/bookingPricing';
@@ -1178,16 +1181,19 @@ export default function BookForm() {
 
   const slotHoursCopy = isEliteService ? ELITE_CLIENT_SLOT_HOURS : BOOKING_CLIENT_SLOT_HOURS;
   const sessionMinutes = sessionMinutesForRequest;
+  const beachOrTownExtrasNote = standardVenue === 'town' ? TOWN_EXTRAS_NOTE : BEACH_EXTRAS_NOTE;
   const confirmPricingNote = selectedRegionId
     ? isEliteService || (householdShape?.isElite ?? false)
       ? formatPriceLine(selectedRegionId, 'elite_coaching')
       : isPrivateOffer && householdShape
         ? householdShape.pricingNote
         : isTwoDog
-          ? `${beachShape.priceLabel} · ${beachShape.sessionMinutes}-minute session (two dogs). ${STANDARD_ADDITIONAL_PERSON_NOTE}. ${PAYMENT_AT_MEETING_NOTE}`
+          ? `${beachShape.priceLabel} · ${beachShape.sessionMinutes}-minute session (two dogs). ${beachOrTownExtrasNote} ${PAYMENT_AT_MEETING_NOTE}`
           : beachDurationMinutes === 90
-            ? `${beachShape.priceLabel} · ${beachShape.sessionMinutes}-minute session. ${STANDARD_ADDITIONAL_DOG_NOTE}; ${STANDARD_ADDITIONAL_PERSON_NOTE}. ${PAYMENT_AT_MEETING_NOTE}`
-            : formatPriceLine(selectedRegionId, 'beach')
+            ? `${beachShape.priceLabel} · ${beachShape.sessionMinutes}-minute session. ${STANDARD_ADDITIONAL_DOG_NOTE}; ${beachOrTownExtrasNote} ${PAYMENT_AT_MEETING_NOTE}`
+            : standardVenue === 'town'
+              ? `${beachShape.priceLabel} · ${beachShape.sessionMinutes} min. ${TOWN_EXTRAS_NOTE} ${PAYMENT_AT_MEETING_NOTE}`
+              : formatPriceLine(selectedRegionId, 'beach')
     : '';
 
   if (status.kind === 'success') {
@@ -1296,10 +1302,10 @@ export default function BookForm() {
                   ? BOOKING_PACKAGES.three_day.label
                   : isPrivateOffer
                     ? householdShape?.isElite
-                      ? 'Elite extended coaching (2.5 hr)'
+                      ? 'Elite home visit (2.5 hr)'
                       : `Private household (${householdHours} hr)`
                     : beachDurationMinutes === 90
-                      ? 'Single session — 90 min'
+                      ? 'Single session MULTI DOG — 90 min'
                       : 'Single session — 60 min'}
               </strong>
             </p>
@@ -1328,7 +1334,7 @@ export default function BookForm() {
             >
               <strong>Single session — 60 min</strong>
               <span className="booking-region-note">
-                $60 · beach, reserve, or town. {STANDARD_ADDITIONAL_PERSON_NOTE}.
+                $60 · beach, reserve, or town. {BEACH_EXTRAS_NOTE} Town: {TOWN_EXTRAS_NOTE}
               </span>
             </button>
             <button
@@ -1350,10 +1356,9 @@ export default function BookForm() {
               }
               onClick={() => handleOfferSelect('single_90')}
             >
-              <strong>Single session — 90 min</strong>
+              <strong>Single session MULTI DOG — 90 min</strong>
               <span className="booking-region-note">
-                $90 · beach, reserve, or town. {STANDARD_ADDITIONAL_DOG_NOTE};{' '}
-                {STANDARD_ADDITIONAL_PERSON_NOTE}.
+                $90 · beach, reserve, or town. {BEACH_EXTRAS_NOTE} Town: {TOWN_EXTRAS_NOTE}
               </span>
             </button>
             <button
@@ -1381,10 +1386,11 @@ export default function BookForm() {
               aria-pressed={isPrivateOffer}
               onClick={() => handleOfferSelect('private')}
             >
-              <strong>Private household / Elite</strong>
+              <strong>Private household / Elite home visit</strong>
               <span className="booking-region-note">
-                From ${HOUSEHOLD_HOURLY_PRICE_DOLLARS}/hr at your home or a custom location — lump sum, no
-                add-ons. Elite extended 2.5 hr for {ELITE_PRICE_LABEL}.
+                ${HOUSEHOLD_HOURLY_PRICE_DOLLARS} one hour fixed rate at your home or a custom location —{' '}
+                {HOUSEHOLD_INCLUSION_NOTE} Elite home visit: 2.5 hour flat rate {ELITE_PRICE_LABEL}.{' '}
+                {ELITE_SHORT_PITCH}
               </span>
             </button>
           </div>
@@ -1409,14 +1415,14 @@ export default function BookForm() {
                       />
                       <strong>
                         {hours === 2.5
-                          ? 'Elite extended — 2.5 hr'
+                          ? 'Elite home visit — 2.5 hr'
                           : hours === 1
                             ? '1 hour'
                             : `${hours} hours`}
                       </strong>
                       <span className="booking-region-note">
                         {shape.priceLabel}
-                        {hours === 2.5 ? ' · upsell vs hourly rate' : ` · $${HOUSEHOLD_HOURLY_PRICE_DOLLARS}/hr`}
+                        {hours === 2.5 ? '' : ` · $${HOUSEHOLD_HOURLY_PRICE_DOLLARS}/hr`}
                       </span>
                     </label>
                   );
@@ -1822,8 +1828,8 @@ export default function BookForm() {
                       <strong>Beach or reserve</strong>
                       <span className="booking-region-note">
                         {beachDurationMinutes === 90
-                          ? `$${beachShape.priceDollars} · 90 min`
-                          : `$60 · 60 min`}
+                          ? `$${beachShape.priceDollars} · 90 min. ${BEACH_EXTRAS_NOTE}`
+                          : `$60 · 60 min. ${BEACH_EXTRAS_NOTE}`}
                       </span>
                     </label>
                     <label className={`booking-meeting-btn${standardVenue === 'town' ? ' is-selected' : ''}`}>
@@ -1844,7 +1850,7 @@ export default function BookForm() {
                       />
                       <strong>Takaka township</strong>
                       <span className="booking-region-note">
-                        By the library — requires the 3-session foundation first
+                        Same session rates; {TOWN_EXTRAS_NOTE} Requires the 3-session foundation first.
                       </span>
                     </label>
                   </div>
