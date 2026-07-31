@@ -1799,7 +1799,9 @@ export default function BookForm() {
                         }}
                       />
                       <strong>Takaka township</strong>
-                      <span className="booking-region-note">Same session rates · after 3 sessions</span>
+                      <span className="booking-region-note">
+                        {`${STANDARD_PRICE_LABEL} · ${STANDARD_SESSION_MINUTES} min · foundation required`}
+                      </span>
                     </label>
                   </div>
                 </fieldset>
