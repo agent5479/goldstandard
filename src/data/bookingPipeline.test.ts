@@ -270,8 +270,8 @@ describe('booking pipeline — recommended starter pack copy', () => {
 });
 
 describe('booking pipeline — beach session shapes', () => {
-  it('keeps the 60-minute single-dog shape', () => {
-    const shape = getStandardSessionShape(60, 1);
+  it('keeps the 55-minute single-dog shape', () => {
+    const shape = getStandardSessionShape(55, 1);
     expect(shape.dogCount).toBe(1);
     expect(shape.sessionMinutes).toBe(STANDARD_SESSION_MINUTES);
     expect(shape.priceDollars).toBe(70);

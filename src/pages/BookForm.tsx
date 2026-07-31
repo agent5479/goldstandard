@@ -207,7 +207,7 @@ export default function BookForm() {
   const successRef = useRef<HTMLDivElement>(null);
   const [selectedServiceType, setSelectedServiceType] = useState<BookingServiceType | ''>('');
   const [selectedPackageId, setSelectedPackageId] = useState<BookingPackageId>('single');
-  const [beachDurationMinutes, setBeachDurationMinutes] = useState<BeachDurationMinutes>(60);
+  const [beachDurationMinutes, setBeachDurationMinutes] = useState<BeachDurationMinutes>(STANDARD_SESSION_MINUTES);
   const [householdHours, setHouseholdHours] = useState<HouseholdHoursOption | null>(null);
   const [packageSessions, setPackageSessions] = useState<PackageSessionDraft[]>([]);
   const [activePackageSessionIndex, setActivePackageSessionIndex] = useState(0);
@@ -491,7 +491,7 @@ export default function BookForm() {
     if (offer === 'single_60') {
       setSelectedServiceType('standard_beach');
       setSelectedPackageId('single');
-      setBeachDurationMinutes(60);
+      setBeachDurationMinutes(STANDARD_SESSION_MINUTES);
       setHouseholdHours(null);
     } else if (offer === 'single_90') {
       setSelectedServiceType('standard_beach');
@@ -501,17 +501,17 @@ export default function BookForm() {
     } else if (offer === 'three_day') {
       setSelectedServiceType('standard_beach');
       setSelectedPackageId('three_day');
-      setBeachDurationMinutes(60);
+      setBeachDurationMinutes(STANDARD_SESSION_MINUTES);
       setHouseholdHours(null);
     } else if (offer === 'home') {
       setSelectedPackageId('single');
-      setBeachDurationMinutes(60);
+      setBeachDurationMinutes(STANDARD_SESSION_MINUTES);
       setHouseholdHours(1);
       setSelectedServiceType('standard_beach');
       setStandardVenue('home');
     } else {
       setSelectedPackageId('single');
-      setBeachDurationMinutes(60);
+      setBeachDurationMinutes(STANDARD_SESSION_MINUTES);
       setHouseholdHours(2.5);
       setSelectedServiceType('elite_coaching');
       setStandardVenue(null);
@@ -1299,7 +1299,7 @@ export default function BookForm() {
                       : 'Home or custom location'
                     : beachDurationMinutes === 90
                       ? 'Multi-dog (arranged)'
-                      : '60 min'}
+                      : `${STANDARD_SESSION_MINUTES} min`}
               </strong>
             </p>
           ) : null}
@@ -1322,7 +1322,7 @@ export default function BookForm() {
               className={`booking-service-btn${
                 selectedServiceType === 'standard_beach' &&
                 selectedPackageId === 'single' &&
-                beachDurationMinutes === 60 &&
+                beachDurationMinutes === STANDARD_SESSION_MINUTES &&
                 !isPrivateOffer
                   ? ' is-selected'
                   : ''
@@ -1331,12 +1331,14 @@ export default function BookForm() {
               aria-pressed={
                 selectedServiceType === 'standard_beach' &&
                 selectedPackageId === 'single' &&
-                beachDurationMinutes === 60 &&
+                beachDurationMinutes === STANDARD_SESSION_MINUTES &&
                 !isPrivateOffer
               }
               onClick={() => handleOfferSelect('single_60')}
             >
-              <strong>Single session · 60 min · {STANDARD_PRICE_LABEL}</strong>
+              <strong>
+                Single session · {STANDARD_SESSION_MINUTES} min · {STANDARD_PRICE_LABEL}
+              </strong>
             </button>
             <button
               type="button"
@@ -1774,7 +1776,7 @@ export default function BookForm() {
                       <span className="booking-region-note">
                         {beachDurationMinutes === 90
                           ? `$${beachShape.priceDollars} · 90 min`
-                          : `${STANDARD_PRICE_LABEL} · 60 min`}
+                          : `${STANDARD_PRICE_LABEL} · ${STANDARD_SESSION_MINUTES} min`}
                       </span>
                     </label>
                     <label className={`booking-meeting-btn${standardVenue === 'town' ? ' is-selected' : ''}`}>

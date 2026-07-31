@@ -14,7 +14,7 @@ export const HOUSEHOLD_HOURLY_PRICE_DOLLARS = 140;
 /** Elite home visit — 2.5-hour flat-rate session. */
 export const ELITE_SESSION_PRICE_DOLLARS = 350;
 
-export const STANDARD_SESSION_MINUTES = 60;
+export const STANDARD_SESSION_MINUTES = 55;
 export const STANDARD_90_SESSION_MINUTES = 90;
 export const HOME_VISIT_SESSION_MINUTES = 60;
 export const ELITE_SESSION_MINUTES = 150;
@@ -30,7 +30,7 @@ export const TWO_DOG_SESSION_MINUTES = STANDARD_90_SESSION_MINUTES;
 /** @deprecated */
 export const HOME_VISIT_SESSION_PRICE_DOLLARS = HOUSEHOLD_HOURLY_PRICE_DOLLARS;
 
-export type BeachDurationMinutes = 60 | 90;
+export type BeachDurationMinutes = 55 | 90;
 
 export type StandardSessionShape = {
   dogCount: number;
@@ -42,17 +42,17 @@ export type StandardSessionShape = {
 
 /**
  * Duration + price for a beach/reserve standard session.
- * 60 min = 1 dog / $70. 90-min multi-dog remains for legacy/backend only — not offered publicly.
+ * 55 min = 1 dog / $70. 90-min multi-dog remains for legacy/backend only — not offered publicly.
  * Mirror in google-apps-script/Code.gs getBookingDurations.
  */
 export function getStandardSessionShape(
   durationMinutes: BeachDurationMinutes,
   dogCount = 1
 ): StandardSessionShape {
-  if (durationMinutes === 60) {
+  if (durationMinutes === 55) {
     return {
       dogCount: 1,
-      durationMinutes: 60,
+      durationMinutes: 55,
       sessionMinutes: STANDARD_SESSION_MINUTES,
       priceDollars: STANDARD_SESSION_PRICE_DOLLARS,
       priceLabel: `$${STANDARD_SESSION_PRICE_DOLLARS}`,
@@ -71,11 +71,11 @@ export function getStandardSessionShape(
   };
 }
 
-/** @deprecated Use getStandardSessionShape(60|90, dogCount). */
+/** @deprecated Use getStandardSessionShape(55|90, dogCount). */
 export function getBeachSessionShape(dogCount: number): StandardSessionShape {
   return dogCount >= 2
     ? getStandardSessionShape(90, 2)
-    : getStandardSessionShape(60, 1);
+    : getStandardSessionShape(55, 1);
 }
 
 export const TWO_DOG_CHANGEOVER_NOTE =
@@ -118,7 +118,7 @@ export const PAYMENT_AT_MEETING_NOTE =
   'Payment is arranged at your session — no online payment on this site.';
 
 /** Glanceable service labels (hero / About). */
-export const PRICING_LABEL_BEACH_60 = 'Beach / reserve — 60 min';
+export const PRICING_LABEL_BEACH_60 = `Beach / reserve — ${STANDARD_SESSION_MINUTES} min`;
 /** @deprecated Multi-dog is by contact, not a published online rate. */
 export const PRICING_LABEL_MULTI_DOG = 'Multi-dog';
 export const PRICING_LABEL_HOME = 'Home or custom location';

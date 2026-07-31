@@ -39,7 +39,7 @@ const CALENDAR_ID =
 const SHEET_NAME = "Submissions";
 const TIMEZONE = "Pacific/Auckland";
 
-const SESSION_MINUTES = 60;
+const SESSION_MINUTES = 55;
 const STANDARD_90_SESSION_MINUTES = 90;
 const ELITE_SESSION_MINUTES = 150;
 const ELITE_CALENDAR_BLOCK_MINUTES = 240;
@@ -1613,6 +1613,7 @@ function resolveSessionMinutes(data, bookingType, locationName, regionId, dogCou
   }
   if (dogCount >= 2) return STANDARD_90_SESSION_MINUTES;
   if (raw === 90) return STANDARD_90_SESSION_MINUTES;
+  if (raw === 55 || raw === 60) return SESSION_MINUTES;
   return SESSION_MINUTES;
 }
 

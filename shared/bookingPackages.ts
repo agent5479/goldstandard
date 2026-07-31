@@ -1,7 +1,7 @@
 /** Multi-day booking packages — keep in sync with google-apps-script/Code.gs PACKAGE_CONFIG. */
 
 import type { BookingRegionId } from './bookingRegions';
-import { PAYMENT_AT_MEETING_NOTE } from './bookingPricing';
+import { PAYMENT_AT_MEETING_NOTE, STANDARD_SESSION_MINUTES } from './bookingPricing';
 
 export type BookingPackageId = 'single' | 'three_day' | 'town_ready_five';
 
@@ -35,7 +35,7 @@ export const BOOKING_PACKAGES: Record<BookingPackageId, BookingPackageConfig> = 
       'One session can shift things; three give consistent practice and reinforcement between visits so you progress much faster. More effective when sessions are on consecutive days.',
     approachNote:
       'Warwick adapts each session to what you and your dog need that day — there is always more to work on, and sometimes it has to be less. The consistency across three visits is what builds permanence; by the end you know how to carry it on yourself.',
-    schedulingNote: 'Consecutive days where possible. Each session is a 60-minute foundation slot.',
+    schedulingNote: `Consecutive days where possible. Each session is a ${STANDARD_SESSION_MINUTES}-minute foundation slot.`,
   },
   /** @deprecated Removed from public picker — town is gated by foundation confirmation on location select. */
   town_ready_five: {
@@ -81,7 +81,7 @@ export function isBookingPackageId(value: string): value is BookingPackageId {
 
 export function getPackagePriceNote(_regionId: BookingRegionId, packageId: BookingPackageId): string {
   if (packageId === 'single') return '';
-  return `Per-session prices apply for each day booked (60-minute foundation rate). ${PAYMENT_AT_MEETING_NOTE}`;
+  return `Per-session prices apply for each day booked (${STANDARD_SESSION_MINUTES}-minute foundation rate). ${PAYMENT_AT_MEETING_NOTE}`;
 }
 
 export type PackageSessionDraft = {
