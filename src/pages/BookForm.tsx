@@ -1339,6 +1339,9 @@ export default function BookForm() {
               <strong>
                 Single session · {STANDARD_SESSION_MINUTES} min · {STANDARD_PRICE_LABEL}
               </strong>
+              <span className="booking-region-note">
+                Select from a list of standard public locations.
+              </span>
             </button>
             <button
               type="button"
