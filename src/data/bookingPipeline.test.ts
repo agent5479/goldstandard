@@ -145,9 +145,9 @@ describe('booking pipeline — form extended JSON', () => {
     });
 
     expect(summary).toContain('Standard training session');
-    expect(summary).toContain('$70');
-    expect(summary).toContain('helper dog or a group');
-    expect(summary).toContain('base fee covers two people');
+    expect(summary).toContain('$80');
+    expect(summary).toContain('Includes additional people attending');
+    expect(summary).toContain('helper dog when needed');
     expect(summary).not.toContain('$350');
   });
 
@@ -169,7 +169,7 @@ describe('booking pipeline — form extended JSON', () => {
 
     expect(summary).toContain('$140');
     expect(summary).toContain('private household');
-    expect(summary).not.toContain('helper dog or a group');
+    expect(summary).not.toContain('helper dog when needed');
   });
 
   it('formats package submission summary', () => {
@@ -208,7 +208,7 @@ describe('booking pipeline — form extended JSON', () => {
     expect(summary).toContain('Recommended starter pack');
     expect(summary).toContain('Session 1');
     expect(summary).toContain('Session 3');
-    expect(summary).toContain('$70');
+    expect(summary).toContain('$80');
     expect(summary).toContain('$140');
   });
 
@@ -274,8 +274,8 @@ describe('booking pipeline — beach session shapes', () => {
     const shape = getStandardSessionShape(55, 1);
     expect(shape.dogCount).toBe(1);
     expect(shape.sessionMinutes).toBe(STANDARD_SESSION_MINUTES);
-    expect(shape.priceDollars).toBe(70);
-    expect(shape.priceLabel).toBe('$70');
+    expect(shape.priceDollars).toBe(80);
+    expect(shape.priceLabel).toBe('$80');
   });
 
   it('prices 90-minute one dog at $90 and two dogs at $100', () => {

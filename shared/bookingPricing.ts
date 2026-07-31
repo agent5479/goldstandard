@@ -2,9 +2,9 @@
 
 import type { BookingRegionId } from './bookingRegions';
 
-export const STANDARD_SESSION_PRICE_DOLLARS = 70;
+export const STANDARD_SESSION_PRICE_DOLLARS = 80;
 export const STANDARD_90_SESSION_PRICE_DOLLARS = 90;
-/** Surcharge for a helper dog or a group beyond two people (base fee covers two). */
+/** @deprecated Person/helper-dog surcharges are included in the standard beach rate. */
 export const ADDITIONAL_PERSON_PRICE_DOLLARS = 10;
 export const ADDITIONAL_DOG_PRICE_DOLLARS = 10;
 
@@ -42,7 +42,7 @@ export type StandardSessionShape = {
 
 /**
  * Duration + price for a beach/reserve standard session.
- * 55 min = 1 dog / $70. 90-min multi-dog remains for legacy/backend only — not offered publicly.
+ * 55 min = 1 dog / $80 (people and helper dog included). 90-min multi-dog remains for legacy/backend only.
  * Mirror in google-apps-script/Code.gs getBookingDurations.
  */
 export function getStandardSessionShape(
@@ -86,11 +86,13 @@ export const STANDARD_90_PRICE_LABEL = `$${STANDARD_90_SESSION_PRICE_DOLLARS}`;
 export const HOME_VISIT_PRICE_LABEL = `$${HOUSEHOLD_HOURLY_PRICE_DOLLARS}`;
 export const ELITE_PRICE_LABEL = `$${ELITE_SESSION_PRICE_DOLLARS}`;
 
-/** Base session covers two people; surcharge for helper dog or a larger group. */
-export const BEACH_EXTRAS_NOTE = `+$${ADDITIONAL_PERSON_PRICE_DOLLARS} for a helper dog or a group (base fee covers two people).`;
+/** Beach / reserve — surcharges included in the session rate. */
+export const BEACH_EXTRAS_NOTE =
+  'Includes additional people attending, and a helper dog when needed.';
 
-/** Town visits — groups beyond two may surcharge; helper dogs are not used. */
-export const TOWN_EXTRAS_NOTE = `+$${ADDITIONAL_PERSON_PRICE_DOLLARS} for a group beyond two people. Helper dogs are not used for town visits.`;
+/** Town visits — people included; helper dogs are not used. */
+export const TOWN_EXTRAS_NOTE =
+  'Includes additional people attending. Helper dogs are not used for town visits.';
 
 /** Public copy — multi-dog is by arrangement, not online. */
 export const MULTI_DOG_CONTACT_NOTE =
@@ -131,8 +133,10 @@ export const PRICING_LABEL_MULTI_DOG_ENQUIRE = 'Multi-dog';
 export const PRICING_AMOUNT_MULTI_DOG = 'enquire';
 
 /** Compact footnote lines for hero / About (not the longer booking-form notes). */
-export const GLANCE_BEACH_FOOTNOTE = `Beach / reserve: +$${ADDITIONAL_PERSON_PRICE_DOLLARS} helper dog or group (two people included)`;
-export const GLANCE_TOWN_FOOTNOTE = `Town: +$${ADDITIONAL_PERSON_PRICE_DOLLARS} for groups beyond two · no helper dogs · after 3 sessions`;
+export const GLANCE_BEACH_FOOTNOTE =
+  'Beach / reserve: people and helper dog included';
+export const GLANCE_TOWN_FOOTNOTE =
+  'Town: people included · no helper dogs · after 3 sessions';
 export const GLANCE_HOME_FOOTNOTE = 'Home / elite: household included · no helper dog';
 export const GLANCE_MULTI_DOG_FOOTNOTE = MULTI_DOG_CONTACT_NOTE;
 
