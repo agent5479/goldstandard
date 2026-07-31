@@ -388,7 +388,7 @@ export default function AboutPage() {
             <article className="pricing-block">
               <h3>Private household &amp; elite</h3>
               <p>
-                <strong>{PRICING_LABEL_HOME}</strong> — {formatHomeVisitPriceAmount()} (choose 1, 1.5, or 2 hours)
+                <strong>{PRICING_LABEL_HOME}</strong> — {formatHomeVisitPriceAmount()}
               </p>
               <p>
                 <strong>{PRICING_LABEL_ELITE}</strong> — {formatElitePriceAmount()}. {ELITE_SHORT_PITCH}

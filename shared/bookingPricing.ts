@@ -8,8 +8,8 @@ export const STANDARD_90_SESSION_PRICE_DOLLARS = 90;
 export const ADDITIONAL_PERSON_PRICE_DOLLARS = 10;
 export const ADDITIONAL_DOG_PRICE_DOLLARS = 10;
 
-/** Private household hourly rate (fixed rate for the household). */
-export const HOUSEHOLD_HOURLY_PRICE_DOLLARS = 160;
+/** Private household / home-or-custom flat rate for 1 hour. */
+export const HOUSEHOLD_HOURLY_PRICE_DOLLARS = 140;
 
 /** Elite home visit — 2.5-hour flat-rate session. */
 export const ELITE_SESSION_PRICE_DOLLARS = 350;
@@ -121,7 +121,7 @@ export const PAYMENT_AT_MEETING_NOTE =
 export const PRICING_LABEL_BEACH_60 = 'Beach / reserve — 60 min';
 /** @deprecated Multi-dog is by contact, not a published online rate. */
 export const PRICING_LABEL_MULTI_DOG = 'Multi-dog';
-export const PRICING_LABEL_HOME = 'Home visit — 1 hr';
+export const PRICING_LABEL_HOME = 'Home or custom location';
 export const PRICING_LABEL_ELITE = 'Elite — 2.5 hr';
 export const PRICING_LABEL_TOWN = 'Town visit';
 export const PRICING_LABEL_PROGRAMME = 'Recommended starter pack';
@@ -198,7 +198,10 @@ export function getHouseholdSessionShape(hours: HouseholdHoursOption): Household
   };
 }
 
-export const HOUSEHOLD_DURATION_OPTIONS: HouseholdHoursOption[] = [1, 1.5, 2, 2.5];
+export const HOUSEHOLD_DURATION_OPTIONS: HouseholdHoursOption[] = [1, 2.5];
+
+/** Legacy lengths still priced for backend / Apps Script; not shown in the public picker. */
+export const HOUSEHOLD_DURATION_OPTIONS_ALL: HouseholdHoursOption[] = [1, 1.5, 2, 2.5];
 
 export type BookingVenueKind = 'beach' | 'home_visit' | 'elite_coaching';
 

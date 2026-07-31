@@ -75,6 +75,7 @@ import {
   TOWN_EXTRAS_NOTE,
   HOUSEHOLD_HOURLY_PRICE_DOLLARS,
   HOUSEHOLD_INCLUSION_NOTE,
+  ELITE_PRICE_LABEL,
   ELITE_SHORT_PITCH,
   type BeachDurationMinutes,
   type HouseholdHoursOption,
@@ -484,7 +485,7 @@ export default function BookForm() {
   };
 
   const handleOfferSelect = (
-    offer: 'single_60' | 'single_90' | 'three_day' | 'private'
+    offer: 'single_60' | 'single_90' | 'three_day' | 'home' | 'elite'
   ) => {
     resetOfferSharedState();
     if (offer === 'single_60') {
@@ -502,28 +503,20 @@ export default function BookForm() {
       setSelectedPackageId('three_day');
       setBeachDurationMinutes(60);
       setHouseholdHours(null);
-    } else {
+    } else if (offer === 'home') {
       setSelectedPackageId('single');
       setBeachDurationMinutes(60);
       setHouseholdHours(1);
       setSelectedServiceType('standard_beach');
       setStandardVenue('home');
+    } else {
+      setSelectedPackageId('single');
+      setBeachDurationMinutes(60);
+      setHouseholdHours(2.5);
+      setSelectedServiceType('elite_coaching');
+      setStandardVenue(null);
     }
     scrollTo(regionRef);
-  };
-
-  const handleHouseholdHoursSelect = (hours: HouseholdHoursOption) => {
-    setHouseholdHours(hours);
-    const shape = getHouseholdSessionShape(hours);
-    setSelectedServiceType(shape.isElite ? 'elite_coaching' : 'standard_beach');
-    setSelectedPackageId('single');
-    setStandardVenue(shape.isElite ? null : 'home');
-    setSelectedLocationId('');
-    setSelectedSlot('');
-    setClientAddress('');
-    setIsHomeAddress(null);
-    setTownPrereqConfirmed(null);
-    resetTwoDogState();
   };
 
   const handleStandardHomeConfirm = () => {
@@ -1303,7 +1296,7 @@ export default function BookForm() {
                   : isPrivateOffer
                     ? householdShape?.isElite
                       ? 'Elite — 2.5 hr'
-                      : `Home visit (${householdHours} hr)`
+                      : 'Home or custom location'
                     : beachDurationMinutes === 90
                       ? 'Multi-dog (arranged)'
                       : '60 min'}
@@ -1347,12 +1340,27 @@ export default function BookForm() {
             </button>
             <button
               type="button"
-              className={`booking-service-btn${isPrivateOffer ? ' is-selected' : ''}`}
+              className={`booking-service-btn${
+                isPrivateOffer && householdHours === 1 ? ' is-selected' : ''
+              }`}
               disabled={endpointMissing || submitting}
-              aria-pressed={isPrivateOffer}
-              onClick={() => handleOfferSelect('private')}
+              aria-pressed={isPrivateOffer && householdHours === 1}
+              onClick={() => handleOfferSelect('home')}
             >
-              <strong>Home / Elite · from ${HOUSEHOLD_HOURLY_PRICE_DOLLARS}/hr</strong>
+              <strong>Home or custom location · ${HOUSEHOLD_HOURLY_PRICE_DOLLARS}</strong>
+              <span className="booking-region-note">{HOUSEHOLD_INCLUSION_NOTE}</span>
+            </button>
+            <button
+              type="button"
+              className={`booking-service-btn${
+                isPrivateOffer && householdShape?.isElite ? ' is-selected' : ''
+              }`}
+              disabled={endpointMissing || submitting}
+              aria-pressed={Boolean(isPrivateOffer && householdShape?.isElite)}
+              onClick={() => handleOfferSelect('elite')}
+            >
+              <strong>Elite — 2.5 hr · {ELITE_PRICE_LABEL}</strong>
+              <span className="booking-region-note">{ELITE_SHORT_PITCH}</span>
             </button>
             <Link
               to="/contact"
@@ -1364,47 +1372,6 @@ export default function BookForm() {
               </span>
             </Link>
           </div>
-          {isPrivateOffer ? (
-            <fieldset className="form-field">
-              <legend>Household session length</legend>
-              <div className="booking-meeting-picker" role="radiogroup" aria-label="Household duration">
-                {([1, 1.5, 2, 2.5] as HouseholdHoursOption[]).map((hours) => {
-                  const shape = getHouseholdSessionShape(hours);
-                  const selected = householdHours === hours;
-                  return (
-                    <label
-                      key={hours}
-                      className={`booking-meeting-btn${selected ? ' is-selected' : ''}`}
-                    >
-                      <input
-                        type="radio"
-                        name="household_hours"
-                        checked={selected}
-                        disabled={submitting}
-                        onChange={() => handleHouseholdHoursSelect(hours)}
-                      />
-                      <strong>
-                        {hours === 2.5
-                          ? 'Elite — 2.5 hr'
-                          : hours === 1
-                            ? '1 hour'
-                            : `${hours} hours`}
-                      </strong>
-                      <span className="booking-region-note">
-                        {shape.priceLabel}
-                        {hours === 2.5 ? '' : ` · $${HOUSEHOLD_HOURLY_PRICE_DOLLARS}/hr`}
-                      </span>
-                    </label>
-                  );
-                })}
-              </div>
-              {householdShape?.isElite ? (
-                <p className="form-hint booking-home-visit-pricing">{ELITE_SHORT_PITCH}</p>
-              ) : householdShape ? (
-                <p className="form-hint booking-home-visit-pricing">{HOUSEHOLD_INCLUSION_NOTE}</p>
-              ) : null}
-            </fieldset>
-          ) : null}
           <p className="form-hint booking-service-help">
             Not sure what would be best for your needs right now? Call or text Warwick on{' '}
             <a href="tel:+64278142222">027 814 2222</a>

@@ -167,7 +167,7 @@ describe('booking pipeline — form extended JSON', () => {
       isAddressBased: true,
     });
 
-    expect(summary).toContain('$160');
+    expect(summary).toContain('$140');
     expect(summary).toContain('private household');
     expect(summary).not.toContain('helper dog or a group');
   });
@@ -209,7 +209,7 @@ describe('booking pipeline — form extended JSON', () => {
     expect(summary).toContain('Session 1');
     expect(summary).toContain('Session 3');
     expect(summary).toContain('$70');
-    expect(summary).toContain('$160');
+    expect(summary).toContain('$140');
   });
 
   it('documents Nelson online booking policy flags', () => {
@@ -294,9 +294,9 @@ describe('booking pipeline — beach session shapes', () => {
   });
 
   it('prices household hourly and elite fixed session', () => {
-    expect(getHouseholdSessionShape(1).priceDollars).toBe(160);
-    expect(getHouseholdSessionShape(1.5).priceDollars).toBe(240);
-    expect(getHouseholdSessionShape(2).priceDollars).toBe(320);
+    expect(getHouseholdSessionShape(1).priceDollars).toBe(140);
+    expect(getHouseholdSessionShape(1.5).priceDollars).toBe(210);
+    expect(getHouseholdSessionShape(2).priceDollars).toBe(280);
     expect(getHouseholdSessionShape(2.5).priceDollars).toBe(350);
     expect(getHouseholdSessionShape(2.5).isElite).toBe(true);
   });
