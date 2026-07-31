@@ -23,7 +23,6 @@ import {
   PRICING_LABEL_TOWN,
 } from '@shared/bookingPricing';
 import { NELSON_STANDARD_COMING_SOON_NOTE, NELSON_PRICING_ENQUIRY_NOTE } from '@shared/bookingRegions';
-import { Link } from 'react-router-dom';
 
 export default function AboutPage() {
   return (
