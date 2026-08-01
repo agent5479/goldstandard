@@ -1800,7 +1800,8 @@ export default function BookForm() {
                       />
                       <strong>Takaka township</strong>
                       <span className="booking-region-note">
-                        {`${STANDARD_PRICE_LABEL} · ${STANDARD_SESSION_MINUTES} min · foundation required`}
+                        {`${STANDARD_PRICE_LABEL} · ${STANDARD_SESSION_MINUTES} min`}{' '}
+                        <em>(only available after previous foundation sessions are completed)</em>
                       </span>
                     </label>
                   </div>
