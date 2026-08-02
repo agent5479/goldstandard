@@ -17,7 +17,7 @@
   --surface-soft: #f1ecdf;
   --header-bg: rgba(248, 245, 238, 0.96);
   --header-rule: rgba(45, 74, 45, 0.18);
-  --site-header-height: 3.35rem;
+  --site-header-height: 3.85rem;
   --content-width: 980px;
   --hero-photo-gap: 0.3rem;
   --hero-photo-cols-desktop: 8;
@@ -63,17 +63,32 @@ body::before {
   justify-content: space-between;
   align-items: center;
   gap: 1.5rem;
-  padding: 0.75rem 2.5rem;
+  padding: 0.65rem 2.5rem;
   box-shadow: 0 2px 14px rgba(24, 38, 24, 0.08);
 }
 
-.site-header-brand {
-  font-family: 'Playfair Display', serif;
-  font-size: 1rem;
-  color: var(--forest);
+.site-header-brand,
+.guide-sticky-nav-brand {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  line-height: 0;
   text-decoration: none;
-  letter-spacing: 0.02em;
-  white-space: nowrap;
+  color: inherit;
+  transition: opacity 0.2s;
+}
+
+.site-header-brand:hover,
+.guide-sticky-nav-brand:hover {
+  opacity: 0.88;
+}
+
+.site-header-brand-logo {
+  display: block;
+  height: 2.55rem;
+  width: auto;
+  max-width: min(11.5rem, 46vw);
+  object-fit: contain;
 }
 
 .site-header-nav {
@@ -2054,7 +2069,7 @@ h2 {
   backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--header-rule);
   box-shadow: 0 2px 14px rgba(24, 38, 24, 0.08);
-  padding: 0.75rem 2.5rem;
+  padding: 0.65rem 2.5rem;
 }
 
 .guide-sticky-nav-inner {
@@ -2062,19 +2077,6 @@ h2 {
   align-items: center;
   justify-content: space-between;
   gap: 1.5rem;
-}
-
-.guide-sticky-nav-brand {
-  font-family: 'Playfair Display', serif;
-  font-size: 1rem;
-  color: var(--forest);
-  text-decoration: none;
-  letter-spacing: 0.02em;
-  white-space: nowrap;
-}
-
-.guide-sticky-nav-brand:hover {
-  color: var(--moss);
 }
 
 .guide-sticky-nav-actions {
@@ -3894,7 +3896,7 @@ body.page-guide {
 
 @media (max-width: 700px) {
   html { font-size: 108%; }
-  .site-header { padding: 0.75rem 1.25rem; flex-wrap: wrap; }
+  .site-header { padding: 0.55rem 1.25rem; flex-wrap: wrap; }
   .menu-toggle { display: inline-flex; align-items: center; }
   .site-header-nav {
     width: 100%;
@@ -3943,7 +3945,7 @@ body.page-guide {
   .guide-header, .page-hero { padding-left: 1.25rem; padding-right: 1.25rem; }
   .guide-sticky-nav { padding-left: 1.25rem; padding-right: 1.25rem; }
   .guide-sticky-nav-inner { flex-wrap: wrap; row-gap: 0.65rem; }
-  .guide-sticky-nav-brand { font-size: 0.92rem; }
+  .site-header-brand-logo { height: 2.25rem; }
   .guide-sticky-nav-actions { gap: 0.85rem; }
   .guide-sticky-nav-contents,
   .guide-sticky-nav-back { font-size: 0.8rem; }
