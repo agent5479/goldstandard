@@ -63,7 +63,8 @@ body::before {
   justify-content: space-between;
   align-items: center;
   gap: 1.5rem;
-  padding: 0.65rem 2.5rem;
+  padding: 0 2.5rem;
+  min-height: var(--site-header-height);
   box-shadow: 0 2px 14px rgba(24, 38, 24, 0.08);
 }
 
@@ -71,6 +72,7 @@ body::before {
 .guide-sticky-nav-brand {
   display: inline-flex;
   align-items: center;
+  align-self: stretch;
   flex-shrink: 0;
   line-height: 0;
   text-decoration: none;
@@ -85,10 +87,11 @@ body::before {
 
 .site-header-brand-logo {
   display: block;
-  height: 2.55rem;
+  height: var(--site-header-height);
   width: auto;
-  max-width: min(11.5rem, 46vw);
+  max-width: min(14rem, 52vw);
   object-fit: contain;
+  object-position: left center;
 }
 
 .site-header-nav {
@@ -99,6 +102,7 @@ body::before {
   align-items: center;
   justify-content: flex-end;
   margin-left: auto;
+  padding: 0.55rem 0;
 }
 
 .site-header-nav a {
@@ -2069,7 +2073,8 @@ h2 {
   backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--header-rule);
   box-shadow: 0 2px 14px rgba(24, 38, 24, 0.08);
-  padding: 0.65rem 2.5rem;
+  padding: 0 2.5rem;
+  min-height: var(--site-header-height);
 }
 
 .guide-sticky-nav-inner {
@@ -2077,6 +2082,7 @@ h2 {
   align-items: center;
   justify-content: space-between;
   gap: 1.5rem;
+  min-height: var(--site-header-height);
 }
 
 .guide-sticky-nav-actions {
@@ -2084,6 +2090,7 @@ h2 {
   align-items: center;
   gap: 1.25rem;
   margin-left: auto;
+  padding: 0.55rem 0;
 }
 
 .guide-sticky-nav-contents {
@@ -3896,7 +3903,7 @@ body.page-guide {
 
 @media (max-width: 700px) {
   html { font-size: 108%; }
-  .site-header { padding: 0.55rem 1.25rem; flex-wrap: wrap; }
+  .site-header { padding: 0 1.25rem; flex-wrap: wrap; }
   .menu-toggle { display: inline-flex; align-items: center; }
   .site-header-nav {
     width: 100%;
@@ -3943,9 +3950,8 @@ body.page-guide {
   .feature-image--small { max-width: 100%; margin: 2rem auto; }
   .philosophy-grid { grid-template-columns: 1fr; gap: 2rem; }
   .guide-header, .page-hero { padding-left: 1.25rem; padding-right: 1.25rem; }
-  .guide-sticky-nav { padding-left: 1.25rem; padding-right: 1.25rem; }
+  .guide-sticky-nav { padding: 0 1.25rem; }
   .guide-sticky-nav-inner { flex-wrap: wrap; row-gap: 0.65rem; }
-  .site-header-brand-logo { height: 2.25rem; }
   .guide-sticky-nav-actions { gap: 0.85rem; }
   .guide-sticky-nav-contents,
   .guide-sticky-nav-back { font-size: 0.8rem; }
