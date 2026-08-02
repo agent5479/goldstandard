@@ -43,9 +43,29 @@ export default function SectionPillars() {
 
       <div className="callout golden-rule">
         <strong>⭐ The Gold Standard Rule</strong>
-        <p>At its core this is a standard of <strong>authority in the relationship</strong>: the dog does not decide what is going to happen — you do. Permission, pace, and release flow from you, not from the dog's impulse.</p>
-        <p>Every resource is an opportunity to reinforce that frame. Before meals, <a href="#front-door">doorways</a>, or <a href="#leash">leash clips</a>, ask for a "Sit" or "Wait" — if they haven't earned it, they haven't learned it. When the reward is offered — bowl down, door open, leash off — that is still not consent: the dog stays in a culture of <a href="#check-in-seven">checking in</a> until you explicitly release them. The behaviour earns access; your word grants it. See <a href="#access">Access training</a> and <a href="#front-door">It starts at the front door</a>.</p>
+        <p>At its core this is a standard of <strong>authority in the relationship</strong>: the dog does not decide what is going to happen — you do. Permission, pace, and release flow from you, not from the dog&apos;s impulse. Both sides have a job.</p>
       </div>
+      <div className="two-col">
+        <div className="col-card">
+          <h4>Your job (owner)</h4>
+          <ul className="checklist">
+            <li>Set the frame before resources — meals, <a href="#front-door">doorways</a>, <a href="#leash">leash clips</a></li>
+            <li>Ask for a Sit or Wait; behaviour earns access, your word grants it</li>
+            <li>Release only with an explicit cue — bowl down, door open, or leash off is still not consent</li>
+            <li>Hold calm follow-through and upgrade what you tolerate until high expectation is the baseline — see <a href="#owner-mindset">Owner mindset</a></li>
+          </ul>
+        </div>
+        <div className="col-card">
+          <h4>Their job (dog)</h4>
+          <ul className="checklist">
+            <li>Hold and wait until released — impulse does not run the moment</li>
+            <li>Check in with you rather than deciding the next move — see <a href="#check-in-seven">The seven-second check-in</a></li>
+            <li>Earn access through behaviour; freedom is a privilege of the frame, not a default</li>
+            <li>Relax into clear structure once the partnership is consistent</li>
+          </ul>
+        </div>
+      </div>
+      <p>Every resource is an opportunity to reinforce that frame. Before meals, <a href="#front-door">doorways</a>, or <a href="#leash">leash clips</a>, ask for a &quot;Sit&quot; or &quot;Wait&quot; — if they haven&apos;t earned it, they haven&apos;t learned it. When the reward is offered — bowl down, door open, leash off — that is still not consent: the dog stays in a culture of <a href="#check-in-seven">checking in</a> until you explicitly release them. The behaviour earns access; your word grants it. See <a href="#access">Access training</a> and <a href="#front-door">It starts at the front door</a>.</p>
       </div>
     </section>
   );

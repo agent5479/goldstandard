@@ -91,7 +91,7 @@ export const examQuestions: Question[] = [
       'The dog must be corrected firmly for every mistake on the walk to stay sharp',
       'The dog should be free to make its own choices once basic obedience is solid',
     ],
-    explanation: 'This is a standard of authority in the relationship: the dog does not decide what happens — you do.',
+    explanation: 'This is a standard of authority in the relationship: the dog does not decide what happens — you do. You set permission, pace, and release; the dog checks in and waits for your word.',
     guideLink: '#pillars'
   },
   {

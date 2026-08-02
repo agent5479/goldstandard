@@ -56,8 +56,8 @@ export default function GuideShell({ children, stickyLabel = 'Client Reference G
           <a href="tel:+64278142222">027 814 2222</a>
         </p>
         <p className="footer-rule">
-          ⭐ The Gold Standard Rule: The dog does not decide what happens — you do. Permission before action, not
-          action until stopped.
+          ⭐ The Gold Standard Rule: The dog does not decide what happens — you do. You set the frame; the dog
+          checks in. Permission before action, not action until stopped.
         </p>
       </footer>
     </>
