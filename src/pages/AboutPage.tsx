@@ -117,10 +117,27 @@ export default function AboutPage() {
               </ul>
             </div>
           </div>
+          <div className="two-col">
+            <div className="col-card">
+              <h4>On the leash — owner</h4>
+              <ul className="checklist">
+                <li>Leads pace and direction on a slack line; corrects forging and tension</li>
+                <li>Expects regular check-ins and a single-call return</li>
+              </ul>
+            </div>
+            <div className="col-card">
+              <h4>On the leash — dog</h4>
+              <ul className="checklist">
+                <li>Loose leash beside or slightly behind you; checks in; turns with you</li>
+                <li>No launches at distractions; calm when meeting other dogs; regulated; knows its place</li>
+              </ul>
+            </div>
+          </div>
           <div className="philosophy-text">
             <p>
               How that plays out day to day is laid out in the guide —{' '}
               <Link to={guideHref('pillars')}>the Gold Standard Rule</Link>,{' '}
+              <Link to={guideHref('leash')}>Leash &amp; line</Link>,{' '}
               <Link to={guideHref('access')}>Access training</Link>, and{' '}
               <Link to={guideHref('front-door')}>It starts at the front door</Link>.
             </p>

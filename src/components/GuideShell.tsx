@@ -57,7 +57,7 @@ export default function GuideShell({ children, stickyLabel = 'Client Reference G
         </p>
         <p className="footer-rule">
           ⭐ The Gold Standard Rule: The dog does not decide what happens — you do. You set the frame; the dog
-          checks in. Permission before action, not action until stopped.
+          checks in — including on the leash. Permission before action, not action until stopped.
         </p>
       </footer>
     </>
