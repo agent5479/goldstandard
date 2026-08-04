@@ -216,7 +216,7 @@ export default function SectionReadingDog() {
 
       <p>Structural corrections and spatial pressure — the <a href="#butt-push">butt push</a>, <a href="#collar-snatch">collar grab</a>, pushing a dog off your space — are for <strong>training mode</strong>: active work, thresholds, greetings, corrections, and new exposures. They yield accountability when the dog is testing boundaries or loading arousal.</p>
 
-      <p><strong>Living mode</strong> is different. When the household is at peace and the dog voluntarily leans their full weight against your legs during rest, that is often an ultimate expression of trust — a tool for security, not dependency. Pushing a dog away during a calm living-mode moment can shatter that trust. The Gold Standard Rule is not about being cold or mechanical; it is about absolute clarity so the dog can step into their role as a peaceful centerpiece of the home.</p>
+      <p><strong>Living mode</strong> is different. When the household is at peace and the dog voluntarily leans their full weight against your legs during rest, that is often an ultimate expression of trust — a tool for security, not dependency. Pushing a dog away during a calm living-mode moment can shatter that trust. The <a href="#gold-standard-rule">Gold Standard Rule</a> is not about being cold or mechanical; it is about absolute clarity so the dog can step into their role as a peaceful centerpiece of the home.</p>
 
       <div className="two-col">
         <div className="col-card">

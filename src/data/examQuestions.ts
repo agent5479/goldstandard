@@ -92,7 +92,7 @@ export const examQuestions: Question[] = [
       'The dog should be free to make its own choices once basic obedience is solid',
     ],
     explanation: 'This is a standard of authority in the relationship: the dog does not decide what happens — you do. You set permission, pace, and release; the dog checks in and waits for your word.',
-    guideLink: '#pillars'
+    guideLink: '#gold-standard-rule'
   },
   {
     topic: 'Foundations',
@@ -106,7 +106,7 @@ export const examQuestions: Question[] = [
       'The end of the training moment, so what happens next is up to the dog',
     ],
     explanation: 'When the reward is offered — bowl down, door open, leash off — that is still not permission. The behaviour earns access; your word grants it.',
-    guideLink: '#pillars'
+    guideLink: '#gold-standard-rule'
   },
   {
     topic: 'Foundations',

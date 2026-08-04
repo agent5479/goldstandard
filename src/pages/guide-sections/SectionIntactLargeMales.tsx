@@ -219,7 +219,7 @@ export default function SectionIntactLargeMales() {
 
         <p>
           No matter which path you choose, you must remain the sole decision-maker in this relationship — see the{' '}
-          <a href="#owner-mindset">Gold Standard Rule</a>, <a href="#check-in-seven">The seven-second check-in</a>,
+          <a href="#gold-standard-rule">Gold Standard Rule</a>, <a href="#check-in-seven">The seven-second check-in</a>,
           and <a href="#front-door">It starts at the front door</a>.
         </p>
       </div>

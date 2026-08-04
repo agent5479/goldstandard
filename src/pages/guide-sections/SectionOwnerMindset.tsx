@@ -1,3 +1,7 @@
+import {
+  GOLD_STANDARD_RULE_ONE_LINER,
+} from '@shared/goldStandardRule';
+
 export default function SectionOwnerMindset() {
   return (
     <section className="guide-section" id="owner-mindset">
@@ -191,12 +195,9 @@ export default function SectionOwnerMindset() {
         <div className="callout">
           <strong>⭐ The Gold Standard Rule</strong>
           <p>
-            The dog does not decide what happens — you do. You set the frame; the dog checks in and waits for
-            your word — including on the leash: loose line, pack attunement, and a calm regulated walk. It is an
-            unyielding journey of upgrading what you tolerate until your high expectations naturally become your
-            dog&apos;s effortless baseline. Permission before action, not action until stopped — see{' '}
-            <a href="#check-in-seven">The seven-second check-in</a> and{' '}
-            <a href="#pillars">the Gold Standard Rule</a> in Foundations.
+            {GOLD_STANDARD_RULE_ONE_LINER} See{' '}
+            <a href="#gold-standard-rule">the Gold Standard Rule</a> in Foundations for the full owner and dog
+            standard — at resources and on the leash.
           </p>
         </div>
       </div>

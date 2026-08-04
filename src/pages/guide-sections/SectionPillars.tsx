@@ -41,54 +41,56 @@ export default function SectionPillars() {
         <p>Training is a mental workout, not a physical one. Ensure your dog has had a good sniff-walk or a game of fetch before you start a session. A tired body leads to a focused mind.</p>
       </div>
 
-      <div className="callout golden-rule">
-        <strong>⭐ The Gold Standard Rule</strong>
-        <p>At its core this is a standard of <strong>authority in the relationship</strong>: the dog does not decide what is going to happen — you do. Permission, pace, and release flow from you, not from the dog&apos;s impulse. Both sides have a job.</p>
+      <div id="gold-standard-rule" className="gold-standard-rule-block">
+        <div className="callout golden-rule">
+          <strong>⭐ The Gold Standard Rule</strong>
+          <p>At its core this is a standard of <strong>authority in the relationship</strong>: the dog does not decide what is going to happen — you do. Permission, pace, and release flow from you, not from the dog&apos;s impulse. Both sides have a job.</p>
+        </div>
+        <div className="two-col">
+          <div className="col-card">
+            <h4>Your job (owner)</h4>
+            <ul className="checklist">
+              <li>Set the frame before resources — meals, <a href="#front-door">doorways</a>, <a href="#leash">leash clips</a></li>
+              <li>Ask for a Sit or Wait; behaviour earns access, your word grants it</li>
+              <li>Release only with an explicit cue — bowl down, door open, or leash off is still not consent</li>
+              <li>Hold calm follow-through and upgrade what you tolerate until high expectation is the baseline — see <a href="#owner-mindset">Owner mindset</a></li>
+            </ul>
+          </div>
+          <div className="col-card">
+            <h4>Their job (dog)</h4>
+            <ul className="checklist">
+              <li>Hold and wait until released — impulse does not run the moment</li>
+              <li>Check in with you rather than deciding the next move — see <a href="#check-in-seven">The seven-second check-in</a></li>
+              <li>Earn access through behaviour; freedom is a privilege of the frame, not a default</li>
+              <li>Relax into clear structure once the partnership is consistent</li>
+            </ul>
+          </div>
+        </div>
+        <p>The same standard on the walk — the leash is a communication line, not a tow rope. See <a href="#leash">Leash &amp; line</a>.</p>
+        <div className="two-col">
+          <div className="col-card">
+            <h4>Your job on the leash</h4>
+            <ul className="checklist">
+              <li>Own pace and direction; slack line is the goal — stop and correct the choice to leave, do not haul through tension — see <a href="#leash-accountability">leash accountability</a></li>
+              <li>Require <a href="#walking-position">visible position</a> beside or slightly behind you; forging and steer-lean are not negotiable</li>
+              <li>Expect regular check-ins and a single clear recall — access follows the frame — see <a href="#check-in-seven">The seven-second check-in</a> and <a href="#access">Access training</a></li>
+              <li>Hold calm handler energy so the dog can stay regulated — see <a href="#owner-mindset">Owner mindset</a></li>
+            </ul>
+          </div>
+          <div className="col-card">
+            <h4>Their job on the leash</h4>
+            <ul className="checklist">
+              <li>Loose leash — no tension applied to the line; they do not freelance at the end of it</li>
+              <li>Walk beside or slightly behind; do not walk ahead blind to you — see <a href="#walking-position">walking position</a></li>
+              <li>Check in regularly; change direction with you because they are pack-attuned, not entitled and deciding</li>
+              <li>Do not launch at distractions; nervous system stays regulated</li>
+              <li>Approach other dogs calmly when you allow it — see <a href="#dog-meetings">dog meetings</a></li>
+              <li>Return on a single recall call; know their place in the partnership</li>
+            </ul>
+          </div>
+        </div>
+        <p>Every resource is an opportunity to reinforce that frame. Before meals, <a href="#front-door">doorways</a>, or <a href="#leash">leash clips</a>, ask for a &quot;Sit&quot; or &quot;Wait&quot; — if they haven&apos;t earned it, they haven&apos;t learned it. When the reward is offered — bowl down, door open, leash off — that is still not consent: the dog stays in a culture of <a href="#check-in-seven">checking in</a> until you explicitly release them. The behaviour earns access; your word grants it. See <a href="#access">Access training</a> and <a href="#front-door">It starts at the front door</a>.</p>
       </div>
-      <div className="two-col">
-        <div className="col-card">
-          <h4>Your job (owner)</h4>
-          <ul className="checklist">
-            <li>Set the frame before resources — meals, <a href="#front-door">doorways</a>, <a href="#leash">leash clips</a></li>
-            <li>Ask for a Sit or Wait; behaviour earns access, your word grants it</li>
-            <li>Release only with an explicit cue — bowl down, door open, or leash off is still not consent</li>
-            <li>Hold calm follow-through and upgrade what you tolerate until high expectation is the baseline — see <a href="#owner-mindset">Owner mindset</a></li>
-          </ul>
-        </div>
-        <div className="col-card">
-          <h4>Their job (dog)</h4>
-          <ul className="checklist">
-            <li>Hold and wait until released — impulse does not run the moment</li>
-            <li>Check in with you rather than deciding the next move — see <a href="#check-in-seven">The seven-second check-in</a></li>
-            <li>Earn access through behaviour; freedom is a privilege of the frame, not a default</li>
-            <li>Relax into clear structure once the partnership is consistent</li>
-          </ul>
-        </div>
-      </div>
-      <p>The same standard on the walk — the leash is a communication line, not a tow rope. See <a href="#leash">Leash &amp; line</a>.</p>
-      <div className="two-col">
-        <div className="col-card">
-          <h4>Your job on the leash</h4>
-          <ul className="checklist">
-            <li>Own pace and direction; slack line is the goal — stop and correct the choice to leave, do not haul through tension — see <a href="#leash-accountability">leash accountability</a></li>
-            <li>Require <a href="#walking-position">visible position</a> beside or slightly behind you; forging and steer-lean are not negotiable</li>
-            <li>Expect regular check-ins and a single clear recall — access follows the frame — see <a href="#check-in-seven">The seven-second check-in</a> and <a href="#access">Access training</a></li>
-            <li>Hold calm handler energy so the dog can stay regulated — see <a href="#owner-mindset">Owner mindset</a></li>
-          </ul>
-        </div>
-        <div className="col-card">
-          <h4>Their job on the leash</h4>
-          <ul className="checklist">
-            <li>Loose leash — no tension applied to the line; they do not freelance at the end of it</li>
-            <li>Walk beside or slightly behind; do not walk ahead blind to you — see <a href="#walking-position">walking position</a></li>
-            <li>Check in regularly; change direction with you because they are pack-attuned, not entitled and deciding</li>
-            <li>Do not launch at distractions; nervous system stays regulated</li>
-            <li>Approach other dogs calmly when you allow it — see <a href="#dog-meetings">dog meetings</a></li>
-            <li>Return on a single recall call; know their place in the partnership</li>
-          </ul>
-        </div>
-      </div>
-      <p>Every resource is an opportunity to reinforce that frame. Before meals, <a href="#front-door">doorways</a>, or <a href="#leash">leash clips</a>, ask for a &quot;Sit&quot; or &quot;Wait&quot; — if they haven&apos;t earned it, they haven&apos;t learned it. When the reward is offered — bowl down, door open, leash off — that is still not consent: the dog stays in a culture of <a href="#check-in-seven">checking in</a> until you explicitly release them. The behaviour earns access; your word grants it. See <a href="#access">Access training</a> and <a href="#front-door">It starts at the front door</a>.</p>
       </div>
     </section>
   );

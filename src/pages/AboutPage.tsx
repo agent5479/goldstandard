@@ -90,56 +90,16 @@ export default function AboutPage() {
           <h2>A standard for both dog and handler.</h2>
           <div className="philosophy-text">
             <p>
-              The Gold Standard is a relationship frame of clear authority: permission, pace, and release
-              come from you; the dog&apos;s job is to check in and wait for your word — not to decide what
-              happens next. The name marks what Warwick holds for every partnership: measured correction,
-              calm follow-through, and results that last after the session ends — not short-term compliance
-              that evaporates when the trainer leaves.
+              The name marks what Warwick holds for every partnership: clear authority on both sides of the
+              relationship, measured correction, and results that last after the session ends — not short-term
+              compliance that evaporates when the trainer leaves.
             </p>
-          </div>
-          <div className="two-col">
-            <div className="col-card">
-              <h4>The owner</h4>
-              <ul className="checklist">
-                <li>Sets permission, pace, and release before meals, doorways, and leash clips</li>
-                <li>Asks for a Sit or Wait — behaviour earns access; your word grants it</li>
-                <li>Releases only with an explicit cue; bowl down, door open, or leash off is still not consent</li>
-                <li>Holds calm, consistent expectations and upgrades what they tolerate until that becomes the baseline</li>
-              </ul>
-            </div>
-            <div className="col-card">
-              <h4>The dog</h4>
-              <ul className="checklist">
-                <li>Holds and waits until released — impulse does not run the moment</li>
-                <li>Checks in with the handler rather than deciding the next move</li>
-                <li>Earns access through behaviour; freedom is a privilege of the frame, not a default</li>
-                <li>Relaxes into clear structure once the partnership is consistent</li>
-              </ul>
-            </div>
-          </div>
-          <div className="two-col">
-            <div className="col-card">
-              <h4>On the leash — owner</h4>
-              <ul className="checklist">
-                <li>Leads pace and direction on a slack line; corrects forging and tension</li>
-                <li>Expects regular check-ins and a single-call return</li>
-              </ul>
-            </div>
-            <div className="col-card">
-              <h4>On the leash — dog</h4>
-              <ul className="checklist">
-                <li>Loose leash beside or slightly behind you; checks in; turns with you</li>
-                <li>No launches at distractions; calm when meeting other dogs; regulated; knows its place</li>
-              </ul>
-            </div>
-          </div>
-          <div className="philosophy-text">
             <p>
-              How that plays out day to day is laid out in the guide —{' '}
-              <Link to={guideHref('pillars')}>the Gold Standard Rule</Link>,{' '}
-              <Link to={guideHref('leash')}>Leash &amp; line</Link>,{' '}
-              <Link to={guideHref('access')}>Access training</Link>, and{' '}
-              <Link to={guideHref('front-door')}>It starts at the front door</Link>.
+              <Link to={guideHref('gold-standard-rule')}>
+                Read the Gold Standard Rule in the Foundations guide
+              </Link>
+              {' '}
+              — what the owner does, what the dog does, at resources and on the leash.
             </p>
           </div>
           <aside className="about-callout" aria-label="Independence and Beckman references">

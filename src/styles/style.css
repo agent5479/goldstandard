@@ -2507,7 +2507,21 @@ body.page-guide {
 .pillars-table tbody tr:last-child td { border-bottom: none; }
 .callout.pro-tip { border-left-color: var(--amber); }
 .callout.golden-rule { background: #f3ead8; }
+
+.gold-standard-rule-block {
+  scroll-margin-top: calc(var(--site-header-height, 4rem) + 1rem);
+}
 .site-footer .footer-rule { margin-top: 1rem; font-size: 0.9rem; color: rgba(255, 255, 255, 0.7); font-style: italic; max-width: 520px; margin-left: auto; margin-right: auto; }
+.site-footer .footer-rule a {
+  color: rgba(255, 255, 255, 0.95);
+  font-style: normal;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+.site-footer .footer-rule a:hover {
+  color: #fff;
+}
 
 /* ============================================================
    PAGE HEROES + TRUST + CONTACT PAGE

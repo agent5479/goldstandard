@@ -1,5 +1,10 @@
 import { Link } from 'react-router-dom';
 import type { ReactNode } from 'react';
+import { guideHref } from '@shared/guideHref';
+import {
+  GOLD_STANDARD_RULE_ANCHOR,
+  GOLD_STANDARD_RULE_ONE_LINER,
+} from '@shared/goldStandardRule';
 import SectionIcon from './SectionIcon';
 
 interface GuideShellProps {
@@ -56,8 +61,8 @@ export default function GuideShell({ children, stickyLabel = 'Client Reference G
           <a href="tel:+64278142222">027 814 2222</a>
         </p>
         <p className="footer-rule">
-          ⭐ The Gold Standard Rule: The dog does not decide what happens — you do. You set the frame; the dog
-          checks in — including on the leash. Permission before action, not action until stopped.
+          ⭐ The Gold Standard Rule: {GOLD_STANDARD_RULE_ONE_LINER}{' '}
+          <Link to={guideHref(GOLD_STANDARD_RULE_ANCHOR)}>Read the full Rule</Link>
         </p>
       </footer>
     </>

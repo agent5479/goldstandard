@@ -12,6 +12,7 @@ interface ContentsLink {
 const CONTENTS_LINKS: ContentsLink[] = [
   { moduleId: 'foundation', group: '🏛️ Foundation', anchor: 'missing-framework', label: '🧭 Missing a framework' },
   { moduleId: 'foundation', group: '🏛️ Foundation', anchor: 'pillars', label: '🏆 Four pillars' },
+  { moduleId: 'foundation', group: '🏛️ Foundation', anchor: 'gold-standard-rule', label: '⭐ Gold Standard Rule' },
 
   { moduleId: 'leadership', group: '👤 Leadership', anchor: 'owner-mindset', label: '👤 Owner mindset' },
   { moduleId: 'leadership', group: '👤 Leadership', anchor: 'new-baseline', label: '🧠 New baseline' },

@@ -2,6 +2,7 @@
 export const GUIDE_EXAM_ANCHORS = new Set([
   'missing-framework',
   'pillars',
+  'gold-standard-rule',
   'pack-leader-energy',
   'owner-mindset',
   'new-baseline',

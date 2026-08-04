@@ -20,7 +20,7 @@ export interface GuideModuleMeta {
   anchors: string[];
 }
 
-const FOUNDATION_ANCHORS = ['missing-framework', 'pillars', 'pack-leader-energy'] as const;
+const FOUNDATION_ANCHORS = ['missing-framework', 'pillars', 'gold-standard-rule', 'pack-leader-energy'] as const;
 
 const LEADERSHIP_ANCHORS = [
   'guide-theme-leadership',
