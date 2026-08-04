@@ -351,6 +351,7 @@ body::before {
   text-transform: uppercase;
   color: var(--gold);
   margin-bottom: 0.65rem;
+  text-align: center;
   opacity: 0;
   animation: fadeUp 0.6s 0.2s forwards;
 }
