@@ -357,16 +357,20 @@ body::before {
 
 .hero h1,
 .hero-brand {
+  width: 100%;
   margin: 0 0 1.25rem;
   line-height: 0;
+  text-align: center;
   opacity: 0;
   animation: fadeUp 0.7s 0.4s forwards;
 }
 
 .hero-brand-banner {
   display: block;
-  width: min(100%, clamp(18rem, 78vw, 42rem));
+  width: 100%;
+  max-width: 100%;
   height: auto;
+  margin-inline: auto;
 }
 
 .hero-headline {
