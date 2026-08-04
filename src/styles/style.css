@@ -6,16 +6,17 @@
 :root {
   --forest: #2d4a2d;
   --moss: #4a6741;
-  --gold: #b8832a;
-  --amber: #d4a43a;
-  --bark: #5c3d1e;
-  --text: #1f2b1f;
-  --light-text: #5a6b4a;
+  --gold: #c9962e;
+  --gold-deep: #b07f1c;
+  --amber: #e0b85a;
+  --bark: #8a6238;
+  --text: #1a1a18;
+  --light-text: #5c5a4e;
   --rule: rgba(45, 74, 45, 0.15);
-  --page-bg: #f8f5ee;
+  --page-bg: #fbf8f1;
   --surface: #ffffff;
-  --surface-soft: #f1ecdf;
-  --header-bg: rgba(248, 245, 238, 0.96);
+  --surface-soft: #f5f0e4;
+  --header-bg: rgba(251, 248, 241, 0.96);
   --header-rule: rgba(45, 74, 45, 0.18);
   --site-header-height: 3.85rem;
   --content-width: 980px;
@@ -140,8 +141,8 @@ body::before {
 }
 
 .site-header-nav .nav-cta a:hover {
-  background: var(--amber);
-  border-color: var(--amber);
+  background: var(--gold-deep);
+  border-color: var(--gold-deep);
   color: #fff;
 }
 
@@ -212,7 +213,7 @@ body::before {
   top: 0;
   left: 0;
   right: 0;
-  background: rgba(248, 245, 238, 0.82);
+  background: rgba(251, 248, 241, 0.82);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(45, 74, 45, 0.1);
   box-shadow: none;
@@ -251,10 +252,10 @@ body::before {
 }
 
 .btn-primary:hover {
-  background: var(--amber);
-  border-color: var(--amber);
+  background: var(--gold-deep);
+  border-color: var(--gold-deep);
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(184, 131, 42, 0.28);
+  box-shadow: 0 6px 20px rgba(201, 150, 46, 0.28);
 }
 
 .btn-secondary {
@@ -315,7 +316,7 @@ body::before {
   min-height: auto;
   display: grid;
   grid-template-rows: auto auto;
-  background: linear-gradient(180deg, #fbf9f3 0%, #f7f2e8 100%);
+  background: linear-gradient(180deg, var(--page-bg) 0%, var(--surface-soft) 100%);
   position: relative;
   padding: 0;
 }
@@ -325,7 +326,7 @@ body::before {
   position: absolute;
   inset: 0;
   z-index: 0;
-  background: radial-gradient(ellipse 75% 50% at 50% 0%, rgba(184, 131, 42, 0.14) 0%, transparent 58%);
+  background: radial-gradient(ellipse 75% 50% at 50% 0%, rgba(201, 150, 46, 0.14) 0%, transparent 58%);
   pointer-events: none;
 }
 
@@ -571,7 +572,7 @@ body::before {
 }
 
 .hero-photo-trigger:focus-visible {
-  outline: 2px solid rgba(184, 131, 42, 0.65);
+  outline: 2px solid rgba(201, 150, 46, 0.65);
   outline-offset: 2px;
 }
 
@@ -705,7 +706,7 @@ body::before {
 
 .about-teaser {
   background: var(--surface-soft);
-  border-top: 2px solid rgba(184, 131, 42, 0.35);
+  border-top: 2px solid rgba(201, 150, 46, 0.35);
 }
 
 .about-teaser .pain-quotes-rotator {
@@ -792,7 +793,7 @@ h2 {
 
 .about-section--soft {
   background: var(--surface-soft);
-  border-top: 2px solid rgba(184, 131, 42, 0.55);
+  border-top: 2px solid rgba(201, 150, 46, 0.55);
 }
 
 /* equipment recommendations page */
@@ -804,7 +805,7 @@ h2 {
 
 .equipment-section--soft {
   background: var(--surface-soft);
-  border-top: 2px solid rgba(184, 131, 42, 0.55);
+  border-top: 2px solid rgba(201, 150, 46, 0.55);
 }
 
 .equipment-product {
@@ -934,7 +935,7 @@ h2 {
   color: var(--forest);
   font-weight: 600;
   text-decoration: none;
-  border-bottom: 1px solid rgba(184, 131, 42, 0.45);
+  border-bottom: 1px solid rgba(201, 150, 46, 0.45);
 }
 
 .about-location-line a:hover {
@@ -952,7 +953,7 @@ h2 {
   color: var(--forest);
   font-weight: 600;
   text-decoration: none;
-  border-bottom: 1px solid rgba(184, 131, 42, 0.45);
+  border-bottom: 1px solid rgba(201, 150, 46, 0.45);
 }
 
 .about-section .philosophy-text a:hover,
@@ -978,7 +979,7 @@ h2 {
 /* philosophy */
 .philosophy {
   background: var(--surface-soft);
-  border-top: 2px solid rgba(184, 131, 42, 0.55);
+  border-top: 2px solid rgba(201, 150, 46, 0.55);
 }
 
 .philosophy-grid {
@@ -995,7 +996,7 @@ h2 {
   color: var(--forest);
   font-weight: 600;
   text-decoration: none;
-  border-bottom: 1px solid rgba(184, 131, 42, 0.45);
+  border-bottom: 1px solid rgba(201, 150, 46, 0.45);
 }
 .philosophy a:hover { color: var(--gold); border-bottom-color: var(--gold); }
 
@@ -1032,7 +1033,7 @@ h2 {
   color: var(--forest);
   font-weight: 600;
   text-decoration: none;
-  border-bottom: 1px solid rgba(184, 131, 42, 0.35);
+  border-bottom: 1px solid rgba(201, 150, 46, 0.35);
 }
 
 .philosophy-pillar a:hover { color: var(--gold); border-bottom-color: var(--gold); }
@@ -1239,7 +1240,7 @@ h2 {
 .service-footer-chip.info-popout--chip.info-popout--open .info-popout-trigger,
 .service-footer-chip.info-popout--chip:focus-within .info-popout-trigger {
   background: var(--surface);
-  border-color: rgba(184, 131, 42, 0.45);
+  border-color: rgba(201, 150, 46, 0.45);
   box-shadow: 0 6px 22px rgba(45, 74, 45, 0.08);
 }
 
@@ -1272,7 +1273,7 @@ h2 {
   color: var(--forest);
   font-weight: 600;
   text-decoration: none;
-  border-bottom: 1px solid rgba(184, 131, 42, 0.45);
+  border-bottom: 1px solid rgba(201, 150, 46, 0.45);
 }
 
 .service-footer-cta a:hover {
@@ -1360,7 +1361,7 @@ h2 {
 .info-popout--chip.info-popout--open .info-popout-trigger,
 .info-popout--chip:focus-within .info-popout-trigger {
   background: var(--surface-soft);
-  border-color: rgba(184, 131, 42, 0.55);
+  border-color: rgba(201, 150, 46, 0.55);
 }
 
 .info-popout-chevron {
@@ -1518,7 +1519,7 @@ h2 {
 /* resources — guide, exam, breed analysis invitations */
 .resources {
   background: var(--surface-soft);
-  border-top: 2px solid rgba(184, 131, 42, 0.35);
+  border-top: 2px solid rgba(201, 150, 46, 0.35);
 }
 
 .resources-lead {
@@ -1737,7 +1738,7 @@ h2 {
 }
 
 .guide-search-input:focus {
-  outline: 2px solid rgba(184, 131, 42, 0.5);
+  outline: 2px solid rgba(201, 150, 46, 0.5);
   outline-offset: 1px;
   border-color: rgba(45, 74, 45, 0.35);
 }
@@ -2649,7 +2650,7 @@ body.page-guide {
   padding: 0.35rem 0.5rem;
   margin: 0 -0.5rem;
   border-radius: 0.35rem;
-  background: rgba(184, 131, 42, 0.1);
+  background: rgba(201, 150, 46, 0.1);
 }
 
 .booking-price-table-label {
@@ -2811,7 +2812,7 @@ body.page-guide {
 .form-field select:focus,
 .form-field textarea:focus,
 .menu-toggle:focus {
-  outline: 2px solid rgba(184, 131, 42, 0.5);
+  outline: 2px solid rgba(201, 150, 46, 0.5);
   outline-offset: 1px;
 }
 
@@ -2878,7 +2879,7 @@ body.page-guide {
 
 .booking-slot-option:has(input:checked) {
   border-color: var(--gold);
-  background: rgba(184, 131, 42, 0.08);
+  background: rgba(201, 150, 46, 0.08);
 }
 
 .booking-slot-option input {
@@ -2911,7 +2912,7 @@ body.page-guide {
 
 .contact-path-card.is-active {
   border-color: var(--gold);
-  background: rgba(184, 131, 42, 0.08);
+  background: rgba(201, 150, 46, 0.08);
 }
 
 .contact-path-icon {
@@ -2979,8 +2980,8 @@ body.page-guide {
 .booking-steps li.is-active {
   border-color: var(--gold);
   color: var(--forest);
-  background: rgba(184, 131, 42, 0.1);
-  box-shadow: 0 0 0 1px rgba(184, 131, 42, 0.25);
+  background: rgba(201, 150, 46, 0.1);
+  box-shadow: 0 0 0 1px rgba(201, 150, 46, 0.25);
   font-weight: 600;
 }
 
@@ -3063,8 +3064,8 @@ body.page-guide {
 .booking-service-btn:hover:not(:disabled),
 .booking-region-btn:hover:not(:disabled),
 .booking-meeting-btn:hover:not(:has(input:disabled)) {
-  border-color: rgba(184, 131, 42, 0.45);
-  background: linear-gradient(180deg, rgba(184, 131, 42, 0.07) 0%, rgba(184, 131, 42, 0.02) 100%);
+  border-color: rgba(201, 150, 46, 0.45);
+  background: linear-gradient(180deg, rgba(201, 150, 46, 0.07) 0%, rgba(201, 150, 46, 0.02) 100%);
   box-shadow: 0 3px 12px rgba(45, 74, 45, 0.07);
   transform: translateY(-1px);
 }
@@ -3073,9 +3074,9 @@ body.page-guide {
 .booking-region-btn.is-selected,
 .booking-meeting-btn.is-selected {
   border-color: var(--gold);
-  background: linear-gradient(180deg, rgba(184, 131, 42, 0.14) 0%, rgba(184, 131, 42, 0.05) 100%);
+  background: linear-gradient(180deg, rgba(201, 150, 46, 0.14) 0%, rgba(201, 150, 46, 0.05) 100%);
   box-shadow:
-    0 0 0 1px rgba(184, 131, 42, 0.25),
+    0 0 0 1px rgba(201, 150, 46, 0.25),
     0 4px 16px rgba(45, 74, 45, 0.09);
 }
 
@@ -3108,9 +3109,9 @@ body.page-guide {
 }
 
 .booking-service-btn--recommended {
-  border-color: rgba(184, 131, 42, 0.55);
-  background: linear-gradient(180deg, rgba(184, 131, 42, 0.14) 0%, rgba(184, 131, 42, 0.04) 100%);
-  box-shadow: 0 2px 10px rgba(184, 131, 42, 0.12);
+  border-color: rgba(201, 150, 46, 0.55);
+  background: linear-gradient(180deg, rgba(201, 150, 46, 0.14) 0%, rgba(201, 150, 46, 0.04) 100%);
+  box-shadow: 0 2px 10px rgba(201, 150, 46, 0.12);
 }
 
 .booking-service-btn--enquire {
@@ -3170,7 +3171,7 @@ body.page-guide {
   margin-top: 0.75rem;
   padding: 0.65rem 0.85rem;
   border-left: 3px solid var(--gold);
-  background: rgba(184, 131, 42, 0.06);
+  background: rgba(201, 150, 46, 0.06);
 }
 
 .booking-nelson-contact-panel {
@@ -3213,7 +3214,7 @@ body.page-guide {
   border-color: var(--gold);
   background: #fff;
   box-shadow:
-    0 0 0 1px rgba(184, 131, 42, 0.18),
+    0 0 0 1px rgba(201, 150, 46, 0.18),
     0 10px 28px rgba(45, 74, 45, 0.1);
   transform: translateY(-1px);
 }
@@ -3224,8 +3225,8 @@ body.page-guide {
 }
 
 .booking-step-panel.is-active .booking-step-header {
-  border-bottom-color: rgba(184, 131, 42, 0.18);
-  background: linear-gradient(180deg, rgba(184, 131, 42, 0.1) 0%, rgba(184, 131, 42, 0.03) 100%);
+  border-bottom-color: rgba(201, 150, 46, 0.18);
+  background: linear-gradient(180deg, rgba(201, 150, 46, 0.1) 0%, rgba(201, 150, 46, 0.03) 100%);
 }
 
 .booking-step-panel.is-done .booking-step-header {
@@ -3298,7 +3299,7 @@ body.page-guide {
 
 .booking-package-session-card.is-active {
   border-color: var(--gold);
-  box-shadow: 0 0 0 1px rgba(184, 131, 42, 0.18);
+  box-shadow: 0 0 0 1px rgba(201, 150, 46, 0.18);
 }
 
 .booking-package-session-card.is-upcoming {
@@ -3427,15 +3428,15 @@ body.page-guide {
 }
 
 .booking-slot-btn:hover:not(:disabled) {
-  border-color: rgba(184, 131, 42, 0.45);
-  background: rgba(184, 131, 42, 0.08);
+  border-color: rgba(201, 150, 46, 0.45);
+  background: rgba(201, 150, 46, 0.08);
   transform: translateY(-1px);
 }
 
 .booking-slot-btn.is-selected {
   border-color: var(--gold);
-  background: linear-gradient(180deg, rgba(184, 131, 42, 0.18) 0%, rgba(184, 131, 42, 0.07) 100%);
-  box-shadow: 0 0 0 1px rgba(184, 131, 42, 0.22);
+  background: linear-gradient(180deg, rgba(201, 150, 46, 0.18) 0%, rgba(201, 150, 46, 0.07) 100%);
+  box-shadow: 0 0 0 1px rgba(201, 150, 46, 0.22);
 }
 
 .booking-slot-btn:disabled {
@@ -3454,8 +3455,8 @@ body.page-guide {
   margin: 0 0 1rem;
   padding: 0.75rem 0.9rem;
   border-radius: 4px;
-  border: 1px solid rgba(184, 131, 42, 0.35);
-  background: rgba(184, 131, 42, 0.08);
+  border: 1px solid rgba(201, 150, 46, 0.35);
+  background: rgba(201, 150, 46, 0.08);
   color: var(--forest);
   font-size: 0.95rem;
 }
@@ -3623,8 +3624,8 @@ body.page-guide {
 }
 
 .booking-confirmation-block--important {
-  border-color: rgba(184, 131, 42, 0.4);
-  background: rgba(184, 131, 42, 0.08);
+  border-color: rgba(201, 150, 46, 0.4);
+  background: rgba(201, 150, 46, 0.08);
 }
 
 .booking-confirmation-block h4 {
@@ -3709,7 +3710,7 @@ body.page-guide {
 }
 
 .booking-map-marker.is-selected .booking-map-pin-label {
-  background: rgba(184, 131, 42, 0.15);
+  background: rgba(201, 150, 46, 0.15);
   border-color: var(--gold);
   color: var(--forest);
 }
@@ -3742,7 +3743,7 @@ body.page-guide {
 
 .booking-location-option.is-selected {
   border-color: var(--gold);
-  background: rgba(184, 131, 42, 0.08);
+  background: rgba(201, 150, 46, 0.08);
 }
 
 .booking-location-option input {
@@ -4714,7 +4715,7 @@ body.page-guide {
 
 .exam-option.is-selected {
   border-color: var(--gold);
-  background: rgba(184, 131, 42, 0.1);
+  background: rgba(201, 150, 46, 0.1);
   box-shadow: inset 0 0 0 1px var(--gold);
 }
 
