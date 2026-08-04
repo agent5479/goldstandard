@@ -355,18 +355,19 @@ body::before {
   animation: fadeUp 0.6s 0.2s forwards;
 }
 
-.hero h1 {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(2.6rem, 7vw, 5rem);
-  font-weight: 900;
-  line-height: 1.06;
-  color: var(--forest);
-  margin-bottom: 1.25rem;
+.hero h1,
+.hero-brand {
+  margin: 0 0 1.25rem;
+  line-height: 0;
   opacity: 0;
   animation: fadeUp 0.7s 0.4s forwards;
 }
 
-.hero h1 span { color: var(--gold); }
+.hero-brand-banner {
+  display: block;
+  width: min(100%, clamp(18rem, 78vw, 42rem));
+  height: auto;
+}
 
 .hero-headline {
   font-family: 'Playfair Display', serif;

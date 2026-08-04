@@ -79,7 +79,17 @@ export default function HomePage() {
       <section className="hero">
         <div className="hero-body">
           <p className="hero-eyebrow">Golden Bay &amp; Tasman Region · New Zealand</p>
-          <h1>Gold Standard Dog Training</h1>
+          <h1 className="hero-brand">
+            <img
+              className="hero-brand-banner"
+              src={asset('images/icons/banner-full.png')}
+              alt="Gold Standard Dog Training"
+              width={1200}
+              height={480}
+              decoding="async"
+              fetchPriority="high"
+            />
+          </h1>
           <p className="hero-headline">
             The dog you always wanted <span>is already in there.</span>
           </p>
