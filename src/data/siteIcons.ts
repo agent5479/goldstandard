@@ -112,20 +112,34 @@ export function faviconLinksForSet(iconSet: IconSetId): {
   };
 }
 
-/** Square mascot icons rotated in the sticky header brand mark (72px for retina). */
+/** Square mascot icons for the sticky header brand mark — always the 72px assets. */
 export const HEADER_BRAND_ICON_PREFIXES = [
   'dog',
   'graduated',
-  'studyguide',
-  'breedanalysis',
   'human',
+  'studyguide',
+  'right',
+  'wrong',
+  'breedanalysis',
 ] as const;
 
 export type HeaderBrandIconPrefix = (typeof HEADER_BRAND_ICON_PREFIXES)[number];
 
-/** Asset URL for a header brand rotator frame. */
+/** Asset URL for a header brand rotator frame (72px for all viewports). */
 export function headerBrandIconAsset(prefix: HeaderBrandIconPrefix): string {
   return iconAsset(prefix, 72);
+}
+
+/** Fisher–Yates shuffle copy for a random rotator order per page load. */
+export function shuffleHeaderBrandIcons(
+  prefixes: readonly HeaderBrandIconPrefix[] = HEADER_BRAND_ICON_PREFIXES,
+): HeaderBrandIconPrefix[] {
+  const next = [...prefixes];
+  for (let i = next.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [next[i], next[j]] = [next[j], next[i]];
+  }
+  return next;
 }
 
 
