@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { TRAINER_APP_URL } from '../data/trainerAppConfig';
+import HeaderBrandMark from './HeaderBrandMark';
 
 const TOOL_LINKS = [
   { to: '/exam', label: 'Exam' },
@@ -66,16 +67,7 @@ export default function SiteHeader() {
 
   return (
     <header className={`site-header${open ? ' is-open' : ''}`} data-site-header ref={headerRef}>
-      <Link to="/" className="site-header-brand" onClick={close} aria-label="Gold Standard Dog Training home">
-        <img
-          className="site-header-brand-logo"
-          src="/images/icons/banner.png"
-          alt="Gold Standard Dog Training"
-          width={480}
-          height={192}
-          decoding="async"
-        />
-      </Link>
+      <HeaderBrandMark onClick={close} />
       <button
         className="menu-toggle"
         type="button"

@@ -111,3 +111,21 @@ export function faviconLinksForSet(iconSet: IconSetId): {
     tileImage: iconUrl(prefix, 192),
   };
 }
+
+/** Square mascot icons rotated in the sticky header brand mark (72px for retina). */
+export const HEADER_BRAND_ICON_PREFIXES = [
+  'dog',
+  'graduated',
+  'studyguide',
+  'breedanalysis',
+  'human',
+] as const;
+
+export type HeaderBrandIconPrefix = (typeof HEADER_BRAND_ICON_PREFIXES)[number];
+
+/** Asset URL for a header brand rotator frame. */
+export function headerBrandIconAsset(prefix: HeaderBrandIconPrefix): string {
+  return iconAsset(prefix, 72);
+}
+
+

@@ -6,6 +6,7 @@ import {
   GOLD_STANDARD_RULE_ONE_LINER,
 } from '@shared/goldStandardRule';
 import SectionIcon from './SectionIcon';
+import HeaderBrandMark from './HeaderBrandMark';
 
 interface GuideShellProps {
   children: ReactNode;
@@ -17,16 +18,7 @@ export default function GuideShell({ children, stickyLabel = 'Client Reference G
     <>
       <header className="guide-sticky-nav" aria-label="Guide navigation">
         <div className="guide-sticky-nav-inner">
-          <Link to="/" className="guide-sticky-nav-brand" aria-label="Gold Standard Dog Training home">
-            <img
-              className="site-header-brand-logo"
-              src="/images/icons/banner.png"
-              alt="Gold Standard Dog Training"
-              width={480}
-              height={192}
-              decoding="async"
-            />
-          </Link>
+          <HeaderBrandMark className="guide-sticky-nav-brand" />
           <div className="guide-sticky-nav-actions">
             <Link to="/guide" className="guide-sticky-nav-contents">
               {stickyLabel}

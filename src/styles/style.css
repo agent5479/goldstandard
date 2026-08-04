@@ -75,24 +75,67 @@ body::before {
   align-items: center;
   align-self: stretch;
   flex-shrink: 0;
-  line-height: 0;
+  gap: 0.65rem;
+  line-height: 1.15;
   text-decoration: none;
   color: inherit;
-  transition: opacity 0.2s;
+  min-width: 0;
 }
 
-.site-header-brand:hover,
-.guide-sticky-nav-brand:hover {
-  opacity: 0.88;
-}
-
-.site-header-brand-logo {
+.site-header-brand-stage {
+  position: relative;
   display: block;
-  height: var(--site-header-height);
-  width: auto;
-  max-width: min(14rem, 52vw);
+  width: 2.65rem;
+  height: 2.65rem;
+  flex-shrink: 0;
+  align-self: center;
+}
+
+.site-header-brand-stage img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
-  object-position: left center;
+  opacity: 0;
+  transition: opacity 0.45s ease;
+  pointer-events: none;
+}
+
+.site-header-brand-stage img.is-active {
+  opacity: 1;
+}
+
+.site-header-brand-name {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: var(--forest);
+  max-width: 0;
+  opacity: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  transition: max-width 0.35s ease, opacity 0.25s ease;
+}
+
+.site-header-brand:hover .site-header-brand-name,
+.guide-sticky-nav-brand:hover .site-header-brand-name,
+.site-header-brand:focus-visible .site-header-brand-name,
+.guide-sticky-nav-brand:focus-visible .site-header-brand-name {
+  max-width: 15rem;
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-header-brand-stage img {
+    transition: none;
+  }
+
+  .site-header-brand-name {
+    transition: none;
+  }
 }
 
 .site-header-nav {
