@@ -96,4 +96,10 @@ export const HERO_PHOTOS = [
     alt: 'Bella',
     label: 'Bella',
   },
+  {
+    thumb: 'images/thumbs/otiscollie.jpg',
+    full: 'images/otiscollie.jpg',
+    alt: 'Otis',
+    label: 'Otis',
+  },
 ] as const;
