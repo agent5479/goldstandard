@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { guideHref } from '@shared/guideHref';
+import { asset } from '../asset';
 import Seo from '../components/Seo';
 import SectionIcon from '../components/SectionIcon';
 import SiteHeader from '../components/SiteHeader';
@@ -52,16 +53,28 @@ export default function AboutPage() {
 
       <section className="about-section about-section--soft">
         <div className="section-inner">
-          <div className="philosophy-text page-hero-bio">
-            <p>
-              Warwick founded Gold Standard to give owners more than a quick fix — a path to understand how
-              dogs think, how pack structure works, and how to hold calm leadership in everyday life.
-            </p>
-            <p>
-              Owners often say, &ldquo;I finally feel like I&apos;m enjoying my dog again.&rdquo; The approach
-              behind that — relationship before commands — is laid out in{' '}
-              <a href="#about-philosophy">The philosophy</a> below.
-            </p>
+          <div className="about-intro">
+            <figure className="feature-image feature-image--services about-intro-photo">
+              <img
+                src={asset('images/Warwick.jpg')}
+                alt="Warwick Marshall with a dog — Gold Standard Dog Training, Golden Bay"
+                width={679}
+                height={987}
+                loading="eager"
+                decoding="async"
+              />
+            </figure>
+            <div className="philosophy-text page-hero-bio">
+              <p>
+                Warwick founded Gold Standard to give owners more than a quick fix — a path to understand how
+                dogs think, how pack structure works, and how to hold calm leadership in everyday life.
+              </p>
+              <p>
+                Owners often say, &ldquo;I finally feel like I&apos;m enjoying my dog again.&rdquo; The approach
+                behind that — relationship before commands — is laid out in{' '}
+                <a href="#about-philosophy">The philosophy</a> below.
+              </p>
+            </div>
           </div>
           <div className="trust-grid">
             <article className="trust-card">
