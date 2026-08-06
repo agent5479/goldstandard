@@ -392,37 +392,14 @@ body::before {
 }
 
 .hero-eyebrow {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.35rem;
-  margin-bottom: 0.65rem;
-  text-align: center;
-  opacity: 0;
-  animation: fadeUp 0.6s 0.2s forwards;
-}
-
-.hero-eyebrow > p {
-  margin: 0;
   font-size: 0.85rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--gold);
-}
-
-.hero-eyebrow > .hero-eyebrow-sub {
-  max-width: 38rem;
-  font-size: 0.78rem;
-  letter-spacing: 0.04em;
-  line-height: 1.4;
-  text-transform: none;
-  color: rgba(201, 150, 46, 0.88);
-}
-
-.hero-eyebrow > .hero-eyebrow-sub em {
-  font-style: italic;
-  font-weight: 400;
-  color: rgba(201, 150, 46, 0.72);
+  margin-bottom: 0.65rem;
+  text-align: center;
+  opacity: 0;
+  animation: fadeUp 0.6s 0.2s forwards;
 }
 
 .hero h1,
@@ -552,7 +529,7 @@ body::before {
 }
 
 .hero-phone-link {
-  margin-top: 0.85rem;
+  margin-top: 0.55rem;
   font-size: 0.95rem;
   color: var(--light-text);
   text-align: center;
@@ -567,6 +544,24 @@ body::before {
 
 .hero-phone-link a:hover {
   color: var(--gold);
+}
+
+.hero-cta-sub {
+  margin: 0.95rem auto 0;
+  max-width: 40rem;
+  text-align: center;
+  font-size: 0.82rem;
+  letter-spacing: 0.03em;
+  line-height: 1.45;
+  color: rgba(201, 150, 46, 0.9);
+  opacity: 0;
+  animation: fadeUp 0.7s 0.82s forwards;
+}
+
+.hero-cta-sub em {
+  font-style: italic;
+  font-weight: 400;
+  color: rgba(201, 150, 46, 0.72);
 }
 
 .hero-sub {

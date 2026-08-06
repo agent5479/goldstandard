@@ -78,15 +78,7 @@ export default function HomePage() {
 
       <section className="hero">
         <div className="hero-body">
-          <div className="hero-eyebrow">
-            <p>Golden Bay &amp; Tasman Region · New Zealand</p>
-            <p className="hero-eyebrow-sub">
-              Structured coaching — <em>Clear standards &amp; real results</em>
-            </p>
-            <p className="hero-eyebrow-sub">
-              All dogs — <em>Every age, breed &amp; temperament</em>
-            </p>
-          </div>
+          <p className="hero-eyebrow">Golden Bay &amp; Tasman Region · New Zealand</p>
           <h1 className="hero-brand">
             <img
               className="hero-brand-banner"
@@ -116,6 +108,11 @@ export default function HomePage() {
               What&apos;s going on with your dog?
             </button>
           </div>
+          <p className="hero-cta-sub">
+            Structured coaching — <em>Clear standards &amp; real results</em>
+            {' · '}
+            All dogs — <em>Every age, breed &amp; temperament</em>
+          </p>
           <p className="hero-phone-link">
             Or call <a href="tel:+64278142222">027 814 2222</a>
           </p>
