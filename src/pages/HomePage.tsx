@@ -81,7 +81,10 @@ export default function HomePage() {
           <div className="hero-eyebrow">
             <p>Golden Bay &amp; Tasman Region · New Zealand</p>
             <p className="hero-eyebrow-sub">
-              Structured coaching · Clear standards &amp; real results · All dogs · Every age, breed &amp; temperament
+              Structured coaching — <em>Clear standards &amp; real results</em>
+            </p>
+            <p className="hero-eyebrow-sub">
+              All dogs — <em>Every age, breed &amp; temperament</em>
             </p>
           </div>
           <h1 className="hero-brand">

@@ -412,10 +412,17 @@ body::before {
 
 .hero-eyebrow > .hero-eyebrow-sub {
   max-width: 38rem;
-  font-size: 0.72rem;
-  letter-spacing: 0.1em;
-  line-height: 1.45;
-  color: rgba(201, 150, 46, 0.85);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  line-height: 1.4;
+  text-transform: none;
+  color: rgba(201, 150, 46, 0.88);
+}
+
+.hero-eyebrow > .hero-eyebrow-sub em {
+  font-style: italic;
+  font-weight: 400;
+  color: rgba(201, 150, 46, 0.72);
 }
 
 .hero h1,
