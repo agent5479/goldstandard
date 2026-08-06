@@ -1,6 +1,11 @@
 /**
- * Discovers hero gallery images in public/images/, generates missing thumbnails,
- * and writes shared/heroPhotos.data.ts for the public site and trainer app.
+ * Discovers hero gallery images in public/images/ (top-level .jpg only),
+ * generates missing thumbnails, and writes shared/heroPhotos.data.ts for the
+ * public site and trainer app.
+ *
+ * Subfolders are ignored on purpose (e.g. images/trainer/ for About portraits,
+ * images/equip/, images/icons/, images/thumbs/). Keep non-gallery photos out of
+ * the images/ root, or list their stem in heroPhotos.manifest.json exclude.
  */
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { basename, dirname, extname, join } from 'node:path';

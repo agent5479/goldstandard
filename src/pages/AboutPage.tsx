@@ -56,7 +56,7 @@ export default function AboutPage() {
           <div className="about-intro">
             <figure className="feature-image feature-image--services about-intro-photo">
               <img
-                src={asset('images/Warwick.jpg')}
+                src={asset('images/trainer/Warwick.jpg')}
                 alt="Warwick Marshall with a dog — Gold Standard Dog Training, Golden Bay"
                 width={679}
                 height={987}
