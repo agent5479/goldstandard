@@ -131,8 +131,16 @@ export default function HomePage() {
               Every age, breed, and temperament
             </div>
           </div>
-          <Link to="/about" className="resource-card-cta">
-            About Warwick and the approach →
+          <Link to="/about" className="about-teaser-cta">
+            <img
+              src={asset('images/trainer/Warwick-thumb.jpg')}
+              alt="Warwick Marshall"
+              width={176}
+              height={176}
+              loading="lazy"
+              decoding="async"
+            />
+            <span>About Warwick and the approach →</span>
           </Link>
         </div>
       </section>
