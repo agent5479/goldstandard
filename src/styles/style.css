@@ -777,8 +777,9 @@ body::before {
 }
 
 .about-teaser-cta {
-  display: inline-flex;
+  display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.85rem;
   margin-top: 0.25rem;
   text-decoration: none;

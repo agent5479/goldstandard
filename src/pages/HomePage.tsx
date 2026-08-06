@@ -132,6 +132,7 @@ export default function HomePage() {
             </div>
           </div>
           <Link to="/about" className="about-teaser-cta">
+            <span>About Warwick and the approach →</span>
             <img
               src={asset('images/trainer/Warwick-thumb.jpg')}
               alt="Warwick Marshall"
@@ -140,7 +141,6 @@ export default function HomePage() {
               loading="lazy"
               decoding="async"
             />
-            <span>About Warwick and the approach →</span>
           </Link>
         </div>
       </section>
