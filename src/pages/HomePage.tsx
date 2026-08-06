@@ -125,17 +125,6 @@ export default function HomePage() {
       <section className="about-teaser">
         <div className="section-inner">
           <PainQuotesRotator />
-          <Link to="/about" className="about-teaser-cta">
-            <span>About Warwick and the approach →</span>
-            <img
-              src={asset('images/trainer/Warwick-thumb.jpg')}
-              alt="Warwick Marshall"
-              width={176}
-              height={176}
-              loading="lazy"
-              decoding="async"
-            />
-          </Link>
         </div>
       </section>
 
@@ -162,6 +151,17 @@ export default function HomePage() {
               ))}
             </div>
           </div>
+          <Link to="/about" className="about-teaser-cta">
+            <span>About Warwick and the approach →</span>
+            <img
+              src={asset('images/trainer/Warwick-thumb.jpg')}
+              alt="Warwick Marshall"
+              width={176}
+              height={176}
+              loading="lazy"
+              decoding="async"
+            />
+          </Link>
           <p className="service-footer-cta">
             <Link to="/book">Book online</Link>
             {' · '}

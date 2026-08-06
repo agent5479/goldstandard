@@ -756,25 +756,11 @@ body::before {
 }
 
 .about-teaser .pain-quotes-rotator {
-  margin-bottom: 1.25rem;
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
   opacity: 1;
   animation: none;
-}
-
-.about-teaser p {
-  color: var(--text);
-  max-width: 42rem;
-  margin-bottom: 1.25rem;
-}
-
-.about-teaser .resource-card-cta {
-  display: inline-block;
-  text-decoration: none;
-  margin-top: 0.25rem;
-}
-
-.about-teaser .resource-card-cta:hover {
-  color: var(--forest);
 }
 
 .about-teaser-cta {
@@ -782,7 +768,7 @@ body::before {
   align-items: center;
   justify-content: center;
   gap: 0.85rem;
-  margin-top: 0.25rem;
+  margin: 2rem 0 0.5rem;
   text-decoration: none;
   font-size: 0.88rem;
   font-weight: 600;

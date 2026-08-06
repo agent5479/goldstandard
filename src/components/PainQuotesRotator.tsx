@@ -113,9 +113,6 @@ export default function PainQuotesRotator() {
       aria-live="polite"
       aria-atomic="true"
     >
-      <p id="pain-quotes-label" className="pain-quotes-rotator-label">
-        Sound familiar?
-      </p>
       <div className="pain-quotes-rotator-stage" ref={stageRef}>
         <q
           ref={quoteRef}
@@ -124,6 +121,9 @@ export default function PainQuotesRotator() {
           {PAIN_QUOTES[index]}
         </q>
       </div>
+      <p id="pain-quotes-label" className="pain-quotes-rotator-label">
+        Sound familiar?
+      </p>
     </aside>
   );
 }
