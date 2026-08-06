@@ -392,14 +392,30 @@ body::before {
 }
 
 .hero-eyebrow {
-  font-size: 0.85rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--gold);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
   margin-bottom: 0.65rem;
   text-align: center;
   opacity: 0;
   animation: fadeUp 0.6s 0.2s forwards;
+}
+
+.hero-eyebrow > p {
+  margin: 0;
+  font-size: 0.85rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.hero-eyebrow > .hero-eyebrow-sub {
+  max-width: 38rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  line-height: 1.45;
+  color: rgba(201, 150, 46, 0.85);
 }
 
 .hero h1,
@@ -544,15 +560,6 @@ body::before {
 
 .hero-phone-link a:hover {
   color: var(--gold);
-}
-
-.hero-stats-strip {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2rem 2.25rem;
-  padding-bottom: 1.75rem;
-  margin-bottom: 1.5rem;
-  border-bottom: 1px solid rgba(45, 74, 45, 0.13);
 }
 
 .hero-sub {
@@ -736,26 +743,13 @@ body::before {
   width: 100%;
 }
 
-.hero-stat {
-  color: rgba(31, 43, 31, 0.72);
-  font-size: 0.9rem;
-  letter-spacing: 0.04em;
-}
-
-.hero-stat strong {
-  display: block;
-  color: var(--forest);
-  font-size: 1rem;
-  font-weight: 600;
-}
-
 .about-teaser {
   background: var(--surface-soft);
   border-top: 2px solid rgba(201, 150, 46, 0.35);
 }
 
 .about-teaser .pain-quotes-rotator {
-  margin-bottom: 1.75rem;
+  margin-bottom: 1.25rem;
   opacity: 1;
   animation: none;
 }

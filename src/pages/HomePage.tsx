@@ -78,7 +78,12 @@ export default function HomePage() {
 
       <section className="hero">
         <div className="hero-body">
-          <p className="hero-eyebrow">Golden Bay &amp; Tasman Region · New Zealand</p>
+          <div className="hero-eyebrow">
+            <p>Golden Bay &amp; Tasman Region · New Zealand</p>
+            <p className="hero-eyebrow-sub">
+              Structured coaching · Clear standards &amp; real results · All dogs · Every age, breed &amp; temperament
+            </p>
+          </div>
           <h1 className="hero-brand">
             <img
               className="hero-brand-banner"
@@ -117,20 +122,6 @@ export default function HomePage() {
       <section className="about-teaser">
         <div className="section-inner">
           <PainQuotesRotator />
-          <div className="hero-stats-strip" aria-label="At a glance">
-            <div className="hero-stat">
-              <strong>Tasman region</strong>
-              Based in Golden Bay &amp; Takaka
-            </div>
-            <div className="hero-stat">
-              <strong>Structured coaching</strong>
-              Clear standards &amp; real results
-            </div>
-            <div className="hero-stat">
-              <strong>All dogs</strong>
-              Every age, breed, and temperament
-            </div>
-          </div>
           <Link to="/about" className="about-teaser-cta">
             <span>About Warwick and the approach →</span>
             <img
