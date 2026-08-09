@@ -148,6 +148,19 @@ export default function HomePage() {
               ))}
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="lead-testimonial" aria-label="Client testimonial">
+        <div className="section-inner">
+          <blockquote className="lead-testimonial-quote">
+            <p>
+              Warwick has an uncanny ability to understand the core needs within household dynamics,
+              as well as effectively communicate in a way that repositions the family into a true pack.
+              The dogs feel understood and are willing to adjust to their new role in support of the pack,
+              while the humans find great peace, ease, and stability within a satisfying pack harmony.
+            </p>
+          </blockquote>
           <Link to="/about" className="about-teaser-cta">
             <span>About Warwick and the approach →</span>
             <img
