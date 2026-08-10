@@ -154,11 +154,18 @@ export default function HomePage() {
       <section className="lead-testimonial" aria-label="Client testimonial">
         <div className="section-inner">
           <blockquote className="lead-testimonial-quote">
-            <p>
-              Warwick has an uncanny ability to understand the core needs within household dynamics,
-              as well as effectively communicate in a way that repositions the family into a true pack.
-              The dogs feel understood and are willing to adjust to their new role in support of the pack,
-              while the humans find great peace, ease, and stability within a satisfying pack harmony.
+            <p className="lead-testimonial-stanza">
+              Warwick has an <em className="lead-pull">uncanny</em> ability to understand
+              the core needs within household dynamics, as well as effectively communicate
+              in a way that repositions the family into a <em className="lead-pull">true pack</em>.
+            </p>
+            <p className="lead-testimonial-stanza">
+              The dogs feel understood and are willing to adjust to their new role in support
+              of the pack, while the humans find{' '}
+              <em className="lead-pull">great peace, ease, and stability</em>
+            </p>
+            <p className="lead-testimonial-closer">
+              within a satisfying <span>pack harmony</span>.
             </p>
           </blockquote>
           <Link to="/about" className="about-teaser-cta">

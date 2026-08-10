@@ -798,37 +798,93 @@ body::before {
 }
 
 .lead-testimonial .section-inner {
-  max-width: 44rem;
+  max-width: 42rem;
 }
 
 .lead-testimonial-quote {
+  position: relative;
   margin: 0;
-  padding: 0;
+  padding: 1.75rem 0 0;
   border: none;
+  quotes: '"' '"';
 }
 
-.lead-testimonial-quote p {
-  margin: 0;
+.lead-testimonial-quote::before {
+  content: open-quote;
+  display: block;
+  margin: 0 0 0.35rem;
   font-family: 'Playfair Display', serif;
-  font-size: clamp(1.15rem, 2.4vw, 1.4rem);
+  font-size: clamp(3.5rem, 8vw, 5rem);
+  font-style: normal;
+  font-weight: 700;
+  line-height: 0.7;
+  color: var(--amber);
+  opacity: 0.85;
+}
+
+.lead-testimonial-stanza {
+  margin: 0 0 1.15rem;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.2rem, 2.6vw, 1.5rem);
   font-style: italic;
   font-weight: 500;
-  line-height: 1.45;
+  line-height: 1.5;
   color: var(--forest);
 }
 
-.lead-testimonial-quote p::before {
-  content: open-quote;
+.lead-pull {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 1.08em;
+  color: var(--gold-deep);
+  letter-spacing: 0.01em;
 }
 
-.lead-testimonial-quote p::after {
-  content: close-quote;
+.lead-testimonial-closer {
+  margin: 1.5rem 0 0;
+  padding-top: 1.35rem;
+  border-top: 1px solid rgba(201, 150, 46, 0.45);
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.35rem, 3.2vw, 1.75rem);
+  font-style: italic;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--gold);
+}
+
+.lead-testimonial-closer span {
+  display: inline-block;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 1.12em;
+  letter-spacing: 0.02em;
+  color: var(--gold-deep);
+}
+
+.lead-testimonial .about-teaser-cta {
+  margin-top: 2rem;
 }
 
 .lead-testimonial .service-footer-cta {
   margin-top: 1rem;
   border-top: none;
   padding-top: 0;
+}
+
+@media (max-width: 640px) {
+  .lead-testimonial-quote {
+    padding-top: 1.25rem;
+  }
+
+  .lead-testimonial-stanza {
+    margin-bottom: 1rem;
+    line-height: 1.45;
+  }
+
+  .lead-testimonial-closer {
+    margin-top: 1.25rem;
+    padding-top: 1.15rem;
+  }
 }
 
 /* feature images — small, centered */
