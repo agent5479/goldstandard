@@ -2698,6 +2698,17 @@ body.page-guide {
 
 .gold-standard-rule-block {
   scroll-margin-top: calc(var(--site-header-height, 4rem) + 1rem);
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.gold-standard-rule-block .col-card {
+  margin: 0;
+}
+
+.gold-standard-rule-block .col-card p {
+  margin-bottom: 0.75rem;
 }
 .site-footer .footer-rule { margin-top: 1rem; font-size: 0.9rem; color: rgba(255, 255, 255, 0.7); font-style: italic; max-width: 520px; margin-left: auto; margin-right: auto; }
 .site-footer .footer-rule a {

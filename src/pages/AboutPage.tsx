@@ -105,14 +105,14 @@ export default function AboutPage() {
             <p>
               The name marks what Warwick holds for every partnership: clear authority on both sides of the
               relationship, measured correction, and results that last after the session ends — not short-term
-              compliance that evaporates when the trainer leaves.
+              compliance that evaporates when the trainer leaves. On the surface it looks like relaxed
+              companionship; underneath it is a high bar of engagement and mutual clarity.
             </p>
             <p>
               <Link to={guideHref('gold-standard-rule')}>
                 Read the Gold Standard Rule in the Foundations guide
               </Link>
-              {' '}
-              — what the owner does, what the dog does, at resources and on the leash.
+              .
             </p>
           </div>
           <aside className="about-callout" aria-label="Independence and Beckman references">
