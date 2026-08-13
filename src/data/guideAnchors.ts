@@ -29,6 +29,7 @@ export const GUIDE_EXAM_ANCHORS = new Set([
   'breed-age-intensity',
   'common-pitfalls',
   'pushy-space-games',
+  'needs-vice-vocabulary',
   'symptom-glossary',
   'trauma-signals',
   'trauma-vs-hardship',

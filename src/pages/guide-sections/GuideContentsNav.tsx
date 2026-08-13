@@ -41,6 +41,7 @@ const CONTENTS_LINKS: ContentsLink[] = [
   { moduleId: 'understanding', group: '🧠 Understanding', anchor: 'breed-temperament', label: '🐾 Breed variance' },
   { moduleId: 'understanding', group: '🧠 Understanding', anchor: 'common-pitfalls', label: '⚠️ Common pitfalls' },
   { moduleId: 'understanding', group: '🧠 Understanding', anchor: 'pushy-space-games', label: '👊 Pushy space games' },
+  { moduleId: 'understanding', group: '🧠 Understanding', anchor: 'needs-vice-vocabulary', label: '🧭 Needs & vice vocabulary' },
   { moduleId: 'understanding', group: '🧠 Understanding', anchor: 'symptom-glossary', label: '📋 Symptom glossary' },
   { moduleId: 'understanding', group: '🧠 Understanding', anchor: 'trauma-signals', label: '💙 Trauma signals' },
   { moduleId: 'understanding', group: '🧠 Understanding', anchor: 'trauma-vs-hardship', label: '⚖️ Trauma vs hardship' },

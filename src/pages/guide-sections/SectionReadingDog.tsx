@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { NEEDS_CATEGORIES, VICE_EXPRESSIONS } from '../../data/canineNeedsVocabulary';
 
 export default function SectionReadingDog() {
   return (
@@ -235,6 +236,37 @@ export default function SectionReadingDog() {
         <li>When unsure which mode you are in, read the body first — see <a href="#three-second-pause">three-second pause</a> and <a href="#symptom-glossary">Symptom glossary</a></li>
         <li>Clingy breeds need both: structure in training mode and warmth in living mode — see <a href="#breed-temperament">breed temperament</a> and <a href="#trust-not-just-love">Trust, not just love</a></li>
       </ul>
+
+      <h3 id="needs-vice-vocabulary">🧭 Canine pattern tracing — needs &amp; vice vocabulary</h3>
+
+      <p>
+        <em>
+          Useful for kinesiology pattern tracing — and more generally for supporting awareness of what may sit
+          under behaviour.
+        </em>
+      </p>
+
+      <p>
+        When a dog&apos;s pattern is hard to name, hold this vocabulary as a tracing lens: which unmet need
+        might be driving the loop, and which vice-form expression is showing on the surface. Use it alongside
+        the <a href="#symptom-glossary">Symptom glossary</a> and{' '}
+        <a href="#dog-tantra-reading">somatic reading</a> — not as a diagnosis, and not as permission to soften
+        structure.
+      </p>
+
+      <div className="two-col">
+        {NEEDS_CATEGORIES.map((category) => (
+          <div className="col-card" key={category.id}>
+            <h4>{category.label}</h4>
+            <p>{category.terms.join(', ')}</p>
+          </div>
+        ))}
+      </div>
+
+      <div className="callout">
+        <strong>Negative / vice forms / expressions</strong>
+        <p>{VICE_EXPRESSIONS.join(', ')}</p>
+      </div>
 
       <h3 id="symptom-glossary">📋 Symptom glossary</h3>
 
