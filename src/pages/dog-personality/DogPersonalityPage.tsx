@@ -204,8 +204,8 @@ export default function DogPersonalityPage() {
   return (
     <>
       <Seo
-        title="What Kind of Dog Are You? | Gold Standard Dog Training"
-        description="A playful personality quiz — slide to allocate how much each trait fits you, discover your dog personality archetype, then narrow to your spirit breed. Free fun tool from Gold Standard Dog Training, Golden Bay & Nelson Bays, NZ."
+        title="What Kind of Dog Are You? | Dog Personality Quiz NZ | Gold Standard Dog Training"
+        description="Free dog personality quiz from Gold Standard Dog Training in Golden Bay & Nelson Bays, NZ — discover your archetype, then narrow to your spirit breed."
         path="/dog-personality"
         bodyClass="page-dog-personality"
         iconSet="personality"

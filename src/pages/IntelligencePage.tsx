@@ -13,8 +13,8 @@ export default function IntelligencePage() {
   return (
     <>
       <Seo
-        title="Breed Analysis | Gold Standard Dog Training"
-        description="Compare dog breeds across nine intelligence and temperament dimensions on a 1–10 scale — IQ, working drive, dominance, protectiveness, and more. Free breed analysis reference from Gold Standard Dog Training; explore purebred rankings and probabilistic mix estimates."
+        title="Dog Breed Intelligence & Temperament Analysis | Gold Standard Dog Training"
+        description="Compare dog breeds across nine intelligence and temperament dimensions — IQ, working drive, dominance, protectiveness, and more. Free breed analysis from Gold Standard Dog Training, Golden Bay & Nelson Bays, NZ."
         path="/intelligence"
         bodyClass="page-intelligence"
         iconSet="breedanalysis"

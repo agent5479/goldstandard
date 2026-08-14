@@ -89,8 +89,8 @@ export default function BreedFinderPage() {
   return (
     <>
       <Seo
-        title="What Dog Should You Get? | Gold Standard Dog Training"
-        description="Help choosing the right breed — match your household, lifestyle, and expectations for maximum compatibility, with ranked results and honest caveats. Gold Standard Dog Training, Golden Bay & Nelson Bays, NZ."
+        title="What Dog Should You Get? | Breed Finder NZ | Gold Standard Dog Training"
+        description="Dog breed finder for NZ households — match lifestyle and expectations with ranked breeds and honest caveats. From Gold Standard Dog Training, Golden Bay & Nelson Bays."
         path="/breed-finder"
         bodyClass="page-breed-finder"
         iconSet="breedfinder"

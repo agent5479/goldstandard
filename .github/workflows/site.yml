@@ -81,9 +81,13 @@ jobs:
           test -f docs/CNAME
           grep -q 'goldstandarddogtraining.nz' docs/CNAME
           grep -q 'Sitemap: https://goldstandarddogtraining.nz/sitemap.xml' docs/robots.txt
+          grep -q 'dog trainer Golden Bay' docs/robots.txt
           grep -q 'https://goldstandarddogtraining.nz/book' docs/sitemap.xml
           grep -q 'https://goldstandarddogtraining.nz/equipment' docs/sitemap.xml
           ! grep -q 'https://goldstandarddogtraining.nz/start' docs/sitemap.xml
+          test -f docs/BingSiteAuth.xml
+          grep -q 'Dog Trainer Golden Bay' docs/index.html
+          grep -q 'dog trainer Golden Bay' docs/index.html
           grep -q 'data-seo-ready="true"' docs/about/index.html
           grep -q 'Gentle Leader' docs/equipment/index.html
           grep -q 'missing-framework' docs/guide/foundation/index.html

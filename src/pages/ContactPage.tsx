@@ -8,8 +8,8 @@ export default function ContactPage() {
   return (
     <>
       <Seo
-        title="Contact | Gold Standard Dog Training"
-        description="Contact Gold Standard Dog Training in Golden Bay or Nelson Bays, NZ. Enquire about obedience, reactivity, rehabilitation, or owner coaching with Warwick Marshall."
+        title="Contact Dog Trainer Golden Bay | Warwick Marshall | Gold Standard Dog Training"
+        description="Contact dog trainer Warwick Marshall in Golden Bay, Takaka, or Nelson Bays, NZ. Enquire about obedience, recall, reactivity, rehabilitation, or puppy training. Call 027 814 2222."
         path="/contact"
       />
       <SiteHeader />

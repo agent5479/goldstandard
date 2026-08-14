@@ -9,8 +9,8 @@ export default function EquipmentPage() {
   return (
     <>
       <Seo
-        title="Recommended Equipment | Gold Standard Dog Training"
-        description="Educational recommendations for the Gentle Leader headcollar, Kong Classic enrichment feeder, and Carhartt 6ft leash — sizing, fit, and why we use them."
+        title="Dog Training Equipment | Gentle Leader & More | Gold Standard Dog Training"
+        description="Dog training equipment we recommend in Golden Bay sessions — Gentle Leader headcollar, Kong Classic, and Carhartt 6ft leash. Sizing, fit, and why Warwick uses them."
         path="/equipment"
       />
       <SiteHeader />

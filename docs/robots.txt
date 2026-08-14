@@ -1,14 +1,17 @@
-# Gold Standard Dog Training — dog trainer in Golden Bay, Takaka & Nelson Bays, New Zealand
+# Gold Standard Dog Training — dog trainer Golden Bay, Takaka & Nelson Bays, New Zealand
+# Primary search: dog trainer Golden Bay · dog training Takaka · puppy training Nelson Bays
+# Also: obedience · recall · leash work · reactive dog training · dog rehabilitation NZ
 # Service area: Golden Bay · Takaka · Pohara · Nelson Bays · Motueka · Richmond · Greater Tasman Region
 # Website: https://goldstandarddogtraining.nz/
-# Book online: https://goldstandarddogtraining.nz/book
-# Resources: /guide · /exam · /intelligence (breed analysis) · /dog-personality · /breed-finder
+# Book: https://goldstandarddogtraining.nz/book · Contact: /contact · About: /about
+# Resources: /guide · /exam · /intelligence · /dog-personality · /breed-finder · /equipment
 # Contact: Warwick Marshall · 027 814 2222 · warwick.marshall@gmail.com
 # Address: Rangihaeata, Takaka 7182, Golden Bay, NZ
 
 User-agent: *
 Allow: /
 
+# Major search crawlers (explicit allow — same policy as *)
 User-agent: Googlebot
 Allow: /
 

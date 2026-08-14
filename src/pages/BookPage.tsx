@@ -35,8 +35,8 @@ export default function BookPage() {
   return (
     <>
       <Seo
-        title="Book a session | Gold Standard Dog Training"
-        description="Book dog training with Warwick Marshall in Golden Bay or Nelson Bays, NZ. Recommended starter pack, single sessions, private household, or elite coaching."
+        title="Book Dog Training Golden Bay & Nelson Bays | Gold Standard Dog Training"
+        description="Book dog training with Warwick Marshall in Golden Bay, Takaka, or Nelson Bays, NZ. Starter pack, single sessions, private household, or elite coaching. Call 027 814 2222."
         path="/book"
         bodyClass="page-book"
       />

@@ -21,8 +21,8 @@ export default function GuideHubPage() {
   return (
     <>
       <Seo
-        title="Client Reference Guide | Gold Standard Dog Training"
-        description="The dog you always wanted is already in there. Client guide for Gold Standard Dog Training in Golden Bay and Nelson Bays, NZ — techniques, corrections, leash work, and access training by Warwick Marshall."
+        title="Dog Training Client Guide | Golden Bay & Nelson Bays | Gold Standard Dog Training"
+        description="Client dog training guide for Golden Bay and Nelson Bays, NZ — obedience, corrections, leash work, and access training by Warwick Marshall. The dog you always wanted is already in there."
         path="/guide"
         bodyClass="page-guide page-guide-hub"
         iconSet="guide"

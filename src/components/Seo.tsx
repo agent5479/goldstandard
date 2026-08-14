@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import {
   SITE_GEO_LAT,
   SITE_GEO_LNG,
+  SITE_KEYWORDS,
   SITE_LOCALE,
   SITE_NAME,
   SITE_OG_IMAGE,
@@ -116,6 +117,7 @@ export default function Seo({
     document.title = title;
 
     setMeta('name', 'description', description);
+    setMeta('name', 'keywords', SITE_KEYWORDS);
     setMeta('name', 'robots', index ? 'index, follow, max-image-preview:large' : 'noindex, nofollow');
     setMeta('name', 'geo.region', 'NZ-TAS');
     setMeta('name', 'geo.placename', `${SITE_REGION_LABEL}, New Zealand`);
