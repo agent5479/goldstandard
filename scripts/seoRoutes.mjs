@@ -24,6 +24,7 @@ export const SEO_ROUTES = [
   { path: '/intelligence', changefreq: 'monthly', priority: '0.6' },
   { path: '/dog-personality', changefreq: 'monthly', priority: '0.5' },
   { path: '/breed-finder', changefreq: 'monthly', priority: '0.5' },
+  { path: '/dog-selector', changefreq: 'monthly', priority: '0.5' },
   { path: '/equipment', changefreq: 'monthly', priority: '0.6' },
 ];
 

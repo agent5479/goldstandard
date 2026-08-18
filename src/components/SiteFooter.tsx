@@ -16,6 +16,7 @@ export default function SiteFooter() {
         <Link to="/intelligence">Breed Analysis</Link>
         <Link to="/dog-personality">Dog Personality</Link>
         <Link to="/breed-finder">Breed Finder</Link>
+        <Link to="/dog-selector">Dog Selector</Link>
       </nav>
       <p>© 2026 <span>Gold Standard Dog Training</span> · Warwick Marshall · Golden Bay, New Zealand</p>
     </footer>

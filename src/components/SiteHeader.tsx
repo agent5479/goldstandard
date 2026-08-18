@@ -8,6 +8,7 @@ const TOOL_LINKS = [
   { to: '/intelligence', label: 'Breed Analysis' },
   { to: '/dog-personality', label: 'Dog Personality' },
   { to: '/breed-finder', label: 'Breed Finder' },
+  { to: '/dog-selector', label: 'Dog Selector' },
 ] as const;
 
 /** Sticky site header with mobile menu toggle (port of nav.js). */

@@ -251,6 +251,15 @@ export default function HomePage() {
               </span>
               <span className="resource-card-cta">Find your match →</span>
             </Link>
+            <Link to="/dog-selector" className="resource-card">
+              <SectionIcon set="breedfinder" size="card" className="resource-card-icon" alt="" />
+              <strong className="resource-card-title">Dog Selector</strong>
+              <span className="resource-card-desc">
+                Pick a working or family job, or a breed mix — likely outcomes, dice-roll gambits, and
+                nervous-system cultivation by age.
+              </span>
+              <span className="resource-card-cta">Open the selector →</span>
+            </Link>
           </div>
         </div>
       </section>

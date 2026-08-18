@@ -7873,3 +7873,246 @@ a.problem-finder-tertiary {
   margin: 0 0 1rem;
   max-width: 40rem;
 }
+
+.dog-selector-doors {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 1.4rem;
+}
+
+.dog-selector-door {
+  text-align: left;
+  background: var(--surface);
+  border: 1px solid rgba(45, 74, 45, 0.16);
+  border-radius: 6px;
+  padding: 1.1rem 1.2rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.dog-selector-door:hover,
+.dog-selector-door:focus-visible {
+  border-color: rgba(45, 74, 45, 0.4);
+}
+
+.dog-selector-door strong {
+  font-size: 1.05rem;
+}
+
+.dog-selector-door span {
+  color: var(--light-text);
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
+.dog-selector-role-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  max-width: 920px;
+  margin: 0 auto;
+}
+
+.dog-selector-role-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 0.85rem;
+  margin-top: 0.85rem;
+}
+
+.dog-selector-role-card {
+  text-align: left;
+  background: var(--surface);
+  border: 1px solid rgba(45, 74, 45, 0.14);
+  border-radius: 6px;
+  padding: 1rem 1.05rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-height: 8.5rem;
+}
+
+.dog-selector-role-card:hover,
+.dog-selector-role-card:focus-visible {
+  border-color: rgba(45, 74, 45, 0.4);
+}
+
+.dog-selector-role-card span {
+  color: var(--light-text);
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+.dog-selector-matches,
+.dog-selector-combo,
+.dog-selector-result {
+  max-width: 920px;
+  margin: 0 auto;
+}
+
+.dog-selector-matches-lead,
+.dog-selector-timeline-lead {
+  color: var(--light-text);
+  max-width: 42rem;
+}
+
+.dog-selector-match-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 1rem 0 2rem;
+}
+
+.dog-selector-highlight {
+  margin: 1.2rem 0;
+}
+
+.dog-selector-highlight-score {
+  font-size: 1.15rem;
+  font-weight: 650;
+  margin: 0 0 0.6rem;
+}
+
+.dog-selector-highlight-score span {
+  font-weight: 500;
+  color: var(--light-text);
+  font-size: 0.95rem;
+}
+
+.dog-selector-gambit {
+  border: 1px solid rgba(45, 74, 45, 0.14);
+  border-radius: 6px;
+  padding: 1.1rem 1.2rem;
+  margin: 1.25rem 0;
+  background: var(--surface);
+}
+
+.dog-selector-gambit.is-wide,
+.dog-selector-gambit.is-conflict {
+  border-color: rgba(180, 90, 70, 0.35);
+}
+
+.dog-selector-gambit-level {
+  font-weight: 650;
+  margin: 0 0 0.4rem;
+}
+
+.dog-selector-role-rank {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.dog-selector-role-rank li {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 0.75rem;
+  align-items: baseline;
+  padding: 0.45rem 0.6rem;
+  border-radius: 4px;
+}
+
+.dog-selector-role-rank li.is-highlighted {
+  background: rgba(45, 74, 45, 0.08);
+  font-weight: 650;
+}
+
+.dog-selector-role-rank-gambit {
+  color: var(--light-text);
+  font-size: 0.85rem;
+}
+
+.dog-selector-timeline {
+  margin: 2rem 0;
+}
+
+.dog-selector-timeline-list {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+
+.dog-selector-timeline-item {
+  background: var(--surface);
+  border: 1px solid rgba(45, 74, 45, 0.12);
+  border-radius: 6px;
+  padding: 1.1rem 1.2rem;
+}
+
+.dog-selector-timeline-age {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 0.78rem;
+  color: var(--light-text);
+}
+
+.dog-selector-timeline-stage {
+  font-weight: 500;
+  color: var(--light-text);
+  font-size: 0.92rem;
+}
+
+.dog-selector-timeline-divergence {
+  background: rgba(180, 90, 70, 0.08);
+  padding: 0.55rem 0.7rem;
+  border-radius: 4px;
+}
+
+.dog-selector-timeline-cols {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.85rem;
+  margin-top: 0.75rem;
+}
+
+.dog-selector-timeline-cols h5,
+.dog-selector-timeline-role h5 {
+  margin: 0 0 0.35rem;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.dog-selector-timeline-cols ul,
+.dog-selector-timeline-category {
+  margin: 0;
+  padding-left: 1.1rem;
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+.dog-selector-timeline-role,
+.dog-selector-timeline-category,
+.dog-selector-timeline-links {
+  margin-top: 0.85rem;
+}
+
+.dog-selector-timeline-links {
+  font-size: 0.9rem;
+}
+
+@media (max-width: 720px) {
+  .dog-selector-doors,
+  .dog-selector-timeline-cols {
+    grid-template-columns: 1fr;
+  }
+
+  .dog-selector-role-rank li {
+    grid-template-columns: 1fr auto;
+  }
+
+  .dog-selector-role-rank-gambit {
+    grid-column: 1 / -1;
+  }
+}

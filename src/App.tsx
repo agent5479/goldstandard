@@ -10,6 +10,7 @@ import ExamPage from './pages/ExamPage';
 import IntelligencePage from './pages/IntelligencePage';
 import DogPersonalityPage from './pages/dog-personality/DogPersonalityPage';
 import BreedFinderPage from './pages/breed-finder/BreedFinderPage';
+import DogSelectorPage from './pages/DogSelectorPage';
 import EquipmentPage from './pages/EquipmentPage';
 import NotFoundPage from './pages/NotFoundPage';
 
@@ -35,6 +36,7 @@ export default function App() {
         <Route path="/intelligence" element={<IntelligencePage />} />
         <Route path="/dog-personality" element={<DogPersonalityPage />} />
         <Route path="/breed-finder" element={<BreedFinderPage />} />
+        <Route path="/dog-selector" element={<DogSelectorPage />} />
         <Route path="/equipment" element={<EquipmentPage />} />
 
         <Route path="/index.html" element={<LegacyRedirect to="/" />} />
@@ -46,6 +48,7 @@ export default function App() {
         <Route path="/intelligence.html" element={<LegacyRedirect to="/intelligence" />} />
         <Route path="/dog-personality.html" element={<LegacyRedirect to="/dog-personality" />} />
         <Route path="/breed-finder.html" element={<LegacyRedirect to="/breed-finder" />} />
+        <Route path="/dog-selector.html" element={<LegacyRedirect to="/dog-selector" />} />
         <Route path="/equipment.html" element={<LegacyRedirect to="/equipment" />} />
 
         <Route path="*" element={<NotFoundPage />} />

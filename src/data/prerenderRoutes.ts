@@ -16,6 +16,7 @@ export const PRERENDER_ROUTES = [
   '/intelligence',
   '/dog-personality',
   '/breed-finder',
+  '/dog-selector',
   '/equipment',
 ] as const;
 

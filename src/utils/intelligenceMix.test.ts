@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   clampScore,
+  classifyMixGambit,
   computeMixIntelligence,
   computeMixTemperamentNotes,
   formatMixTitle,
@@ -107,5 +108,19 @@ describe('intelligenceMix', () => {
     expect(notes.notes).toHaveLength(3);
     expect(notes.notes[0].parentNotes).toHaveLength(2);
     expect(notes.notes.some((n) => n.wideLottery)).toBe(true);
+  });
+
+  it('classifies aligned versus wide mix gambits', () => {
+    const aligned = classifyMixGambit([
+      { breed: 'Golden Retriever', fraction: 0.5 },
+      { breed: 'Labrador Retriever', fraction: 0.5 },
+    ]);
+    const wide = classifyMixGambit([
+      { breed: 'German Shepherd', fraction: 0.5 },
+      { breed: 'Labrador Retriever', fraction: 0.5 },
+    ]);
+    expect(aligned.level).not.toBe('wide');
+    expect(wide.level).toBe('wide');
+    expect(wide.signals.length).toBeGreaterThan(0);
   });
 });

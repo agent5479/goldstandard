@@ -2,8 +2,12 @@ import {
   blendTraitSegments,
   findIntelligenceByBreedName,
   INTELLIGENCE_DIMENSION_KEYS,
+  INSTINCT_SUBTYPE_META,
+  NEURO_PATTERN_META,
+  type InstinctSubtype,
   type IntelligenceDimension,
   type IntelligenceScores,
+  type NeuroPattern,
   type TraitSegment,
 } from '../data/dogIntelligence';
 import { AXES, findBreedByName, getBreedMixAxisProfile, type TraitAxis } from '../data/breedTraits';
@@ -41,6 +45,53 @@ export interface MixTemperamentNote {
 export interface MixTemperamentResult {
   notes: MixTemperamentNote[];
 }
+
+export type MixGambitLevel = 'aligned' | 'moderate' | 'wide';
+
+export type MixGambitSource = 'dimension' | 'instinct' | 'neuro' | 'temperament';
+
+export interface MixGambitSignal {
+  source: MixGambitSource;
+  level: MixGambitLevel;
+  title: string;
+  detail: string;
+}
+
+export interface MixGambitResult {
+  level: MixGambitLevel;
+  summary: string;
+  signals: MixGambitSignal[];
+}
+
+const GAMBIT_RANK: Record<MixGambitLevel, number> = {
+  aligned: 0,
+  moderate: 1,
+  wide: 2,
+};
+
+const ROLE_CRITICAL_DIMENSIONS: IntelligenceDimension[] = [
+  'prot',
+  'ei',
+  'neuro',
+  'dom',
+  'work',
+  'inst',
+];
+
+const OPPOSING_INSTINCTS: [InstinctSubtype, InstinctSubtype][] = [
+  ['guard', 'companion'],
+  ['guard', 'retrieve'],
+  ['herding_eye', 'hunt_dig'],
+  ['chase', 'companion'],
+  ['chase', 'retrieve'],
+];
+
+const OPPOSING_NEURO: [NeuroPattern, NeuroPattern][] = [
+  ['territorial_vigilance', 'separation'],
+  ['territorial_vigilance', 'anxious_attachment'],
+  ['fear_reactive', 'frustration_reactive'],
+  ['hyper_vigilant', 'anxious_attachment'],
+];
 
 const BASE_SPREAD = 0.4;
 const PARENT_VARIANCE_FACTOR = 0.25;
@@ -188,4 +239,127 @@ export function computeMixTemperamentNotes(parents: MixParentInput[]): MixTemper
 /** Resolve scores for a breed name — used in tests and mix calculations */
 export function getBreedIntelligenceScores(breedName: string): IntelligenceScores | undefined {
   return findIntelligenceByBreedName(breedName)?.scores;
+}
+
+function worstGambitLevel(levels: MixGambitLevel[]): MixGambitLevel {
+  return levels.reduce<MixGambitLevel>(
+    (worst, level) => (GAMBIT_RANK[level] > GAMBIT_RANK[worst] ? level : worst),
+    'aligned'
+  );
+}
+
+function primarySegmentKey<T extends string>(segments: TraitSegment[]): T | undefined {
+  if (segments.length === 0) return undefined;
+  const top = segments.slice().sort((a, b) => b.weight - a.weight)[0];
+  return top?.key as T | undefined;
+}
+
+function instinctLabel(key: InstinctSubtype): string {
+  return INSTINCT_SUBTYPE_META.find((meta) => meta.key === key)?.label ?? key;
+}
+
+function neuroLabel(key: NeuroPattern): string {
+  return NEURO_PATTERN_META.find((meta) => meta.key === key)?.label ?? key;
+}
+
+function dimensionDeltaLevel(delta: number): MixGambitLevel | null {
+  if (delta >= 3.2) return 'wide';
+  if (delta >= 1.8) return 'moderate';
+  return null;
+}
+
+/**
+ * Structured genetic-lottery readout for a mix — aligned / moderate spread / wide lottery.
+ * Role-specific "conflict" (a parent is a hard miss for a job) is applied in roleFit.
+ */
+export function classifyMixGambit(parents: MixParentInput[]): MixGambitResult {
+  const intelligence = computeMixIntelligence(parents);
+  const temperament = computeMixTemperamentNotes(parents);
+  const empty: MixGambitResult = {
+    level: 'aligned',
+    summary: 'Select at least two parent breeds with fractions totalling 100% to see mix gambits.',
+    signals: [],
+  };
+  if (!intelligence.valid) return empty;
+
+  const resolved = parents
+    .filter((parent) => parent.breed && parent.fraction > 0)
+    .map((parent) => ({
+      ...parent,
+      profile: findIntelligenceByBreedName(parent.breed),
+    }));
+  if (resolved.some((parent) => !parent.profile)) return empty;
+
+  const signals: MixGambitSignal[] = [];
+
+  for (const dimension of ROLE_CRITICAL_DIMENSIONS) {
+    const scores = resolved.map((parent) => parent.profile!.scores[dimension]);
+    const delta = Math.max(...scores) - Math.min(...scores);
+    const level = dimensionDeltaLevel(delta);
+    if (!level) continue;
+    const range = intelligence.ranges.find((item) => item.dimension === dimension);
+    signals.push({
+      source: 'dimension',
+      level,
+      title: `${dimension.toUpperCase()} spread`,
+      detail:
+        level === 'wide'
+          ? `Parents differ by ${delta.toFixed(1)} on ${dimension} — the litter could land anywhere between ${range?.likelyLow.toFixed(1) ?? '?'} and ${range?.likelyHigh.toFixed(1) ?? '?'}.`
+          : `Parents differ by ${delta.toFixed(1)} on ${dimension}. The midpoint is usable; tails can miss a job that depends on this trait.`,
+    });
+  }
+
+  const primaryInstincts = resolved
+    .map((parent) => primarySegmentKey<InstinctSubtype>(parent.profile!.instinctSegments))
+    .filter((key): key is InstinctSubtype => Boolean(key));
+  for (const [left, right] of OPPOSING_INSTINCTS) {
+    if (primaryInstincts.includes(left) && primaryInstincts.includes(right)) {
+      signals.push({
+        source: 'instinct',
+        level: 'wide',
+        title: 'Opposing drives',
+        detail: `Wide lottery — ${instinctLabel(left).toLowerCase()} versus ${instinctLabel(right).toLowerCase()}. Individual dogs often take after one parent more than the fraction suggests.`,
+      });
+    }
+  }
+
+  const primaryNeuro = resolved
+    .map((parent) => primarySegmentKey<NeuroPattern>(parent.profile!.neuroSegments))
+    .filter((key): key is NeuroPattern => Boolean(key));
+  for (const [left, right] of OPPOSING_NEURO) {
+    if (primaryNeuro.includes(left) && primaryNeuro.includes(right)) {
+      signals.push({
+        source: 'neuro',
+        level: 'wide',
+        title: 'Opposing stress patterns',
+        detail: `${neuroLabel(left)} versus ${neuroLabel(right)} — which loop expresses is a dice roll, and upbringing decides whether it becomes the adult's default.`,
+      });
+    }
+  }
+
+  if (temperament.notes.some((note) => note.wideLottery)) {
+    const axes = temperament.notes.filter((note) => note.wideLottery).map((note) => note.axisLabel.toLowerCase());
+    const alreadyWide = signals.some((signal) => signal.level === 'wide');
+    signals.push({
+      source: 'temperament',
+      level: alreadyWide ? 'wide' : 'moderate',
+      title: 'Temperament lottery',
+      detail: `Personality, working, or physical prose diverges on ${axes.join(', ')} — the mix could land anywhere between the parent profiles.`,
+    });
+  }
+
+  const level = worstGambitLevel(signals.map((signal) => signal.level));
+  let summary: string;
+  if (level === 'wide') {
+    summary =
+      'Wide lottery — parent drives or scores oppose. Genetics in mixes is a dice roll; the ranges below are illustrative, not a promise.';
+  } else if (level === 'moderate') {
+    summary =
+      'Moderate spread — the midpoint is usable, but tails can miss a specialised job. Select the individual, not the pedigree.';
+  } else {
+    summary =
+      'Aligned parents — scores and drives agree more than they fight. Mixes still vary; this is a narrower dice roll, not a clone.';
+  }
+
+  return { level, summary, signals };
 }
