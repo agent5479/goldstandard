@@ -128,6 +128,43 @@ export default function AboutPage() {
         </div>
       </section>
 
+      <section className="about-section about-section--soft" id="outcomes">
+        <div className="section-inner">
+          <p className="section-label">First-party patterns</p>
+          <h2>What households typically report after the standard lands.</h2>
+          <div className="philosophy-text">
+            <p>
+              These are recurring outcomes from in-person coaching in Golden Bay and across the Tasman region —
+              not generic promises. Every dog and household is different; the pattern is what we coach toward.
+            </p>
+          </div>
+          <ul className="checklist">
+            <li>
+              Owners say they finally enjoy the dog again — walks, doors, and guests stop feeling like a negotiation.
+            </li>
+            <li>
+              Lunging and fixation interrupt earlier because handler timing catches the one-second window, not the aftermath.
+            </li>
+            <li>
+              Doorways and greetings calm down when access is earned and both adults hold the same line.
+            </li>
+            <li>
+              Reactive dog-to-dog moments shrink when meetings are structured and social friction is read before the snap.
+            </li>
+            <li>
+              Results hold between sessions when the household practices embodied leadership — not only cue lists.
+            </li>
+          </ul>
+          <p className="service-footer-cta">
+            <Link to="/services">Explore services</Link>
+            {' · '}
+            <Link to="/areas">Service areas</Link>
+            {' · '}
+            <Link to="/book">Book a session</Link>
+          </p>
+        </div>
+      </section>
+
       <section className="about-section" id="about-philosophy">
         <div className="section-inner">
           <p className="section-label">The philosophy</p>

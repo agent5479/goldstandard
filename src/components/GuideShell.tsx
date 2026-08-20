@@ -42,7 +42,7 @@ export default function GuideShell({ children, stickyLabel = 'Client Reference G
         <nav className="footer-links" aria-label="Footer links">
           <Link to="/">Home</Link>
           <Link to="/about">About</Link>
-          <Link to="/#services">Services</Link>
+          <Link to="/services">Services</Link>
           <Link to="/guide">Guide</Link>
           <Link to="/exam">Exam</Link>
           <Link to="/intelligence">Breed Analysis</Link>

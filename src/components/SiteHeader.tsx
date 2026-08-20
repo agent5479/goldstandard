@@ -81,7 +81,8 @@ export default function SiteHeader() {
       </button>
       <ul className="site-header-nav" id="site-nav">
         <li><Link to="/about" onClick={close}>About</Link></li>
-        <li><Link to="/#services" onClick={close}>Services</Link></li>
+        <li><Link to="/services" onClick={close}>Services</Link></li>
+        <li><Link to="/areas" onClick={close}>Areas</Link></li>
         <li><Link to="/about#pricing" onClick={close}>Pricing</Link></li>
         <li className="nav-tools" ref={toolsRef}>
           <button

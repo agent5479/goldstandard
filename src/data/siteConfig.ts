@@ -1,3 +1,6 @@
+import type { AreaSeoEntry, ServiceSeoEntry } from './localSeo';
+import { SERVICE_SEO } from './localSeo';
+
 /** Public marketing site — custom domain (no trailing slash). */
 export const SITE_URL = 'https://goldstandarddogtraining.nz';
 
@@ -54,13 +57,65 @@ export const SITE_EMAIL = 'warwick.marshall@gmail.com';
 export const SITE_FACEBOOK_URL = 'https://www.facebook.com/profile.php?id=61580061262910';
 export const SITE_LOCALE = 'en_NZ';
 
+/**
+ * Google Business Profile public URL — paste when available (included in sameAs).
+ * Example: https://www.google.com/maps/place/?q=place_id:...
+ */
+export const SITE_GBP_URL = '';
+
+/** Optional brand channels — set when live; empty strings are omitted from sameAs / footer. */
+export const SITE_YOUTUBE_URL = '';
+export const SITE_INSTAGRAM_URL = '';
+export const SITE_NEWSLETTER_URL = '';
+
 export function siteUrl(path = ''): string {
   if (!path || path === '/') return `${SITE_URL}/`;
   return `${SITE_URL}${path.startsWith('/') ? path : `/${path}`}`;
 }
 
+/** Profile URLs for schema sameAs and footer (Facebook always; others when set). */
+export function buildSameAsUrls(): string[] {
+  return [SITE_FACEBOOK_URL, SITE_GBP_URL, SITE_YOUTUBE_URL, SITE_INSTAGRAM_URL, SITE_NEWSLETTER_URL].filter(
+    (url) => Boolean(url && url.trim())
+  );
+}
+
+export interface SocialLink {
+  label: string;
+  href: string;
+}
+
+/** Footer / contact social links (only profiles with a URL). */
+export function buildSocialLinks(): SocialLink[] {
+  const links: SocialLink[] = [{ label: 'Facebook', href: SITE_FACEBOOK_URL }];
+  if (SITE_GBP_URL.trim()) links.push({ label: 'Google Business Profile', href: SITE_GBP_URL });
+  if (SITE_YOUTUBE_URL.trim()) links.push({ label: 'YouTube', href: SITE_YOUTUBE_URL });
+  if (SITE_INSTAGRAM_URL.trim()) links.push({ label: 'Instagram', href: SITE_INSTAGRAM_URL });
+  if (SITE_NEWSLETTER_URL.trim()) links.push({ label: 'Newsletter', href: SITE_NEWSLETTER_URL });
+  return links;
+}
+
+function offerCatalogFromServices() {
+  return {
+    '@type': 'OfferCatalog',
+    name: 'Dog training services',
+    itemListElement: SERVICE_SEO.map((service) => ({
+      '@type': 'Offer',
+      itemOffered: {
+        '@type': 'Service',
+        '@id': `${SITE_URL}/services/${service.slug}#service`,
+        name: service.schemaName,
+        description: service.schemaDescription,
+        url: `${SITE_URL}/services/${service.slug}`,
+        provider: { '@id': `${SITE_URL}/#business` },
+      },
+    })),
+  };
+}
+
 /** Structured data graph for the marketing site (home + entity). */
 export function buildSiteJsonLd(): Record<string, unknown> {
+  const sameAs = buildSameAsUrls();
   return {
     '@context': 'https://schema.org',
     '@graph': [
@@ -103,31 +158,8 @@ export function buildSiteJsonLd(): Record<string, unknown> {
           name,
         })),
         founder: { '@id': `${SITE_URL}/#warwick` },
-        sameAs: [SITE_FACEBOOK_URL],
-        hasOfferCatalog: {
-          '@type': 'OfferCatalog',
-          name: 'Dog training services',
-          itemListElement: [
-            {
-              '@type': 'Offer',
-              itemOffered: {
-                '@type': 'Service',
-                name: 'Private dog training session',
-                description: 'In-person obedience, recall, leash work, and owner coaching.',
-                url: `${SITE_URL}/book`,
-              },
-            },
-            {
-              '@type': 'Offer',
-              itemOffered: {
-                '@type': 'Service',
-                name: 'Dog rehabilitation coaching',
-                description: 'Structured rehabilitation for reactivity, anxiety, and difficult histories.',
-                url: `${SITE_URL}/book`,
-              },
-            },
-          ],
-        },
+        sameAs,
+        hasOfferCatalog: offerCatalogFromServices(),
       },
       {
         '@type': 'Person',
@@ -144,7 +176,7 @@ export function buildSiteJsonLd(): Record<string, unknown> {
           addressRegion: SITE_ADDRESS_REGION,
           addressCountry: SITE_COUNTRY,
         },
-        sameAs: [SITE_FACEBOOK_URL],
+        sameAs,
       },
     ],
   };
@@ -166,5 +198,169 @@ export function buildWebPageJsonLd(options: {
     isPartOf: { '@id': `${SITE_URL}/#website` },
     about: { '@id': `${SITE_URL}/#business` },
     inLanguage: 'en-NZ',
+  };
+}
+
+function webPageNode(options: {
+  title: string;
+  description: string;
+  path: string;
+  about?: string;
+  contentLocation?: string;
+}): Record<string, unknown> {
+  const url = siteUrl(options.path);
+  const node: Record<string, unknown> = {
+    '@type': 'WebPage',
+    '@id': `${url}#webpage`,
+    url,
+    name: options.title,
+    description: options.description,
+    isPartOf: { '@id': `${SITE_URL}/#website` },
+    about: { '@id': options.about ?? `${SITE_URL}/#business` },
+    inLanguage: 'en-NZ',
+  };
+  if (options.contentLocation) {
+    node.contentLocation = { '@id': options.contentLocation };
+  }
+  return node;
+}
+
+export function buildBreadcrumbJsonLd(options: {
+  path: string;
+  title: string;
+  description: string;
+  crumbs: { name: string; path: string }[];
+}): Record<string, unknown> {
+  const url = siteUrl(options.path);
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      webPageNode({
+        title: options.title,
+        description: options.description,
+        path: options.path,
+      }),
+      {
+        '@type': 'BreadcrumbList',
+        '@id': `${url}#breadcrumb`,
+        itemListElement: options.crumbs.map((crumb, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          name: crumb.name,
+          item: siteUrl(crumb.path),
+        })),
+      },
+    ],
+  };
+}
+
+export function buildServicePageJsonLd(service: ServiceSeoEntry): Record<string, unknown> {
+  const path = `/services/${service.slug}`;
+  const url = siteUrl(path);
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      webPageNode({
+        title: service.title,
+        description: service.metaDescription,
+        path,
+        about: `${url}#service`,
+      }),
+      {
+        '@type': 'Service',
+        '@id': `${url}#service`,
+        name: service.schemaName,
+        description: service.schemaDescription,
+        url,
+        provider: { '@id': `${SITE_URL}/#business` },
+        areaServed: SITE_SERVICE_AREAS.map((name) => ({
+          '@type': 'Place',
+          name,
+        })),
+      },
+      {
+        '@type': 'BreadcrumbList',
+        '@id': `${url}#breadcrumb`,
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl('/') },
+          { '@type': 'ListItem', position: 2, name: 'Services', item: siteUrl('/services') },
+          { '@type': 'ListItem', position: 3, name: service.cardTitle, item: url },
+        ],
+      },
+    ],
+  };
+}
+
+export function buildAreaPageJsonLd(area: AreaSeoEntry): Record<string, unknown> {
+  const path = `/areas/${area.slug}`;
+  const url = siteUrl(path);
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      webPageNode({
+        title: area.title,
+        description: area.metaDescription,
+        path,
+        contentLocation: `${url}#place`,
+      }),
+      {
+        '@type': 'Place',
+        '@id': `${url}#place`,
+        name: area.placeName,
+        url,
+      },
+      {
+        '@type': 'BreadcrumbList',
+        '@id': `${url}#breadcrumb`,
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl('/') },
+          { '@type': 'ListItem', position: 2, name: 'Areas', item: siteUrl('/areas') },
+          { '@type': 'ListItem', position: 3, name: area.name, item: url },
+        ],
+      },
+    ],
+  };
+}
+
+export interface SoftwareToolMeta {
+  path: string;
+  title: string;
+  description: string;
+  applicationName: string;
+}
+
+/** Free first-party tools — SoftwareApplication + WebPage for AI citation. */
+export function buildSoftwareToolJsonLd(tool: SoftwareToolMeta): Record<string, unknown> {
+  const url = siteUrl(tool.path);
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'WebPage',
+        '@id': `${url}#webpage`,
+        url,
+        name: tool.title,
+        description: tool.description,
+        isPartOf: { '@id': `${SITE_URL}/#website` },
+        about: { '@id': `${url}#app` },
+        inLanguage: 'en-NZ',
+      },
+      {
+        '@type': ['SoftwareApplication', 'WebApplication'],
+        '@id': `${url}#app`,
+        name: tool.applicationName,
+        description: tool.description,
+        url,
+        applicationCategory: 'LifestyleApplication',
+        operatingSystem: 'Web',
+        offers: {
+          '@type': 'Offer',
+          price: '0',
+          priceCurrency: 'NZD',
+        },
+        publisher: { '@id': `${SITE_URL}/#business` },
+        isAccessibleForFree: true,
+      },
+    ],
   };
 }

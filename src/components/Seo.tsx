@@ -34,6 +34,8 @@ interface SeoProps {
   ogImage?: string;
   /** Override Open Graph / Twitter image alt text. */
   ogImageAlt?: string;
+  /** Override page-level JSON-LD (Service, SoftwareApplication, breadcrumbs, etc.). */
+  pageJsonLd?: Record<string, unknown>;
 }
 
 const SITE_JSON_LD_ID = 'gsdt-site-jsonld';
@@ -105,6 +107,7 @@ export default function Seo({
   iconSet = 'site',
   ogImage,
   ogImageAlt,
+  pageJsonLd,
 }: SeoProps) {
   useEffect(() => {
     const url = siteUrl(path);
@@ -141,7 +144,10 @@ export default function Seo({
 
     setJsonLd(SITE_JSON_LD_ID, buildSiteJsonLd());
     if (index && !isHome) {
-      setJsonLd(PAGE_JSON_LD_ID, buildWebPageJsonLd({ title, description, path }));
+      setJsonLd(
+        PAGE_JSON_LD_ID,
+        pageJsonLd ?? buildWebPageJsonLd({ title, description, path })
+      );
     } else {
       document.getElementById(PAGE_JSON_LD_ID)?.remove();
     }
@@ -156,7 +162,7 @@ export default function Seo({
       applyFavicons('site');
       applySocialImage(ICON_SETS.site, SITE_OG_IMAGE, ICON_SETS.site.ogImageAlt);
     };
-  }, [title, description, path, bodyClass, index, socialDescription, iconSet, ogImage, ogImageAlt]);
+  }, [title, description, path, bodyClass, index, socialDescription, iconSet, ogImage, ogImageAlt, pageJsonLd]);
 
   return null;
 }

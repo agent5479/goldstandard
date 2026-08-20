@@ -1267,6 +1267,73 @@ h2 {
   gap: 1.25rem;
 }
 
+.services-grid--hub {
+  margin-top: 0.5rem;
+}
+
+.service-hub-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.45rem;
+  text-decoration: none;
+  color: inherit;
+  background: var(--surface);
+  border: 1px solid rgba(45, 74, 45, 0.12);
+  border-radius: 4px;
+  padding: 1.35rem 1.35rem 1.1rem;
+  border-top: 3px solid var(--gold);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.service-hub-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(45, 74, 45, 0.1);
+  color: inherit;
+}
+
+.service-hub-card-icon {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.service-hub-card-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--forest);
+}
+
+.service-hub-card-desc {
+  font-size: 0.95rem;
+  line-height: 1.45;
+  color: var(--light-text);
+  flex: 1;
+}
+
+.service-hub-card-cta {
+  margin-top: 0.35rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--forest);
+}
+
+.service-hub-card:hover .service-hub-card-cta {
+  color: var(--gold-dark, var(--gold));
+}
+
+.social-links-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-top: 1.25rem;
+}
+
+.footer-social {
+  margin-top: 0.75rem;
+}
+
 .service-card.info-popout--card {
   background: var(--surface);
   border: 1px solid rgba(45, 74, 45, 0.12);

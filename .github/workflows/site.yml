@@ -73,6 +73,10 @@ jobs:
           test -f docs/dog-personality/index.html
           test -f docs/breed-finder/index.html
           test -f docs/equipment/index.html
+          test -f docs/services/index.html
+          test -f docs/services/puppy-training/index.html
+          test -f docs/areas/index.html
+          test -f docs/areas/takaka/index.html
           test -f docs/guide/foundation/index.html
           test -f docs/.nojekyll
           test -f docs/404.html
@@ -84,6 +88,8 @@ jobs:
           grep -q 'dog trainer Golden Bay' docs/robots.txt
           grep -q 'https://goldstandarddogtraining.nz/book' docs/sitemap.xml
           grep -q 'https://goldstandarddogtraining.nz/equipment' docs/sitemap.xml
+          grep -q 'https://goldstandarddogtraining.nz/services/puppy-training' docs/sitemap.xml
+          grep -q 'https://goldstandarddogtraining.nz/areas/takaka' docs/sitemap.xml
           ! grep -q 'https://goldstandarddogtraining.nz/start' docs/sitemap.xml
           test -f docs/BingSiteAuth.xml
           grep -q 'Dog Trainer Golden Bay' docs/index.html
@@ -96,12 +102,19 @@ jobs:
           ! grep -q 'href="/start"' docs/index.html
           grep -q 'gsdt-site-jsonld' docs/index.html
           grep -q 'ProfessionalService' docs/index.html
+          grep -q 'OfferCatalog' docs/index.html
+          grep -q 'href="/services/puppy-training"' docs/index.html
+          grep -q 'Puppies started' docs/services/puppy-training/index.html
+          grep -q '"@type":"Service"' docs/services/puppy-training/index.html
+          grep -q 'SoftwareApplication' docs/exam/index.html
+          grep -q 'Dog training in Takaka' docs/areas/takaka/index.html
           grep -q '<h1' docs/book/index.html
           grep -q 'Breed Analysis' docs/index.html
           grep -q 'Breed Analysis' docs/guide/index.html
           grep -q 'breed-rankings' docs/intelligence/index.html
           grep -q 'rel="canonical"' docs/dog-personality/index.html
           grep -q 'noindex' docs/404.html
+          grep -q 'First-party patterns' docs/about/index.html
 
       - name: Upload Pages artifact
         if: (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.ref == 'refs/heads/main'

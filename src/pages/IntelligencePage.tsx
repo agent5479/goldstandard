@@ -8,6 +8,7 @@ import { BreedDetailTipProvider } from './intelligence/BreedDetailTipRail';
 import InstinctTrainingLeverageTable from './intelligence/InstinctTrainingLeverageTable';
 import MixIntelligenceExplorer from './intelligence/MixIntelligenceExplorer';
 import SectionIcon from '../components/SectionIcon';
+import { buildSoftwareToolJsonLd } from '../data/siteConfig';
 
 export default function IntelligencePage() {
   return (
@@ -18,6 +19,13 @@ export default function IntelligencePage() {
         path="/intelligence"
         bodyClass="page-intelligence"
         iconSet="breedanalysis"
+        pageJsonLd={buildSoftwareToolJsonLd({
+          path: '/intelligence',
+          title: 'Dog Breed Intelligence & Temperament Analysis | Gold Standard Dog Training',
+          description:
+            'Compare dog breeds across nine intelligence and temperament dimensions — IQ, working drive, dominance, protectiveness, and more. Free breed analysis from Gold Standard Dog Training, Golden Bay & Nelson Bays, NZ.',
+          applicationName: 'Gold Standard Breed Analysis',
+        })}
       />
       <SiteHeader />
 

@@ -17,6 +17,7 @@ import type { ExamDogProfile } from '../data/examDemographics';
 import { formatExamProfileLabel } from '../data/examDemographics';
 import { normalizeMixSelection, formatMixTitle, resolveCrossParentNamesFromBreed } from '../utils/dogBreedLabel';
 import SectionIcon from '../components/SectionIcon';
+import { buildSoftwareToolJsonLd } from '../data/siteConfig';
 
 interface OwnerExamPending {
   categories: BreedCategory[];
@@ -126,6 +127,13 @@ export default function ExamPage() {
         path="/exam"
         bodyClass="page-exam"
         iconSet="exam"
+        pageJsonLd={buildSoftwareToolJsonLd({
+          path: '/exam',
+          title: 'Dog Training Knowledge Exam NZ | Gold Standard Dog Training',
+          description:
+            'Test your dog training knowledge with a 24-question breed-aware owner exam or full trainer track. Corrections, timing, and access training — Gold Standard Dog Training, Golden Bay & Nelson Bays, NZ.',
+          applicationName: 'Gold Standard Dog Training Knowledge Exam',
+        })}
       />
       <SiteHeader />
 

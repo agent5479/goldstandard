@@ -4,6 +4,7 @@ import Seo from '../../components/Seo';
 import SiteHeader from '../../components/SiteHeader';
 import SiteFooter from '../../components/SiteFooter';
 import SectionIcon from '../../components/SectionIcon';
+import { buildSoftwareToolJsonLd } from '../../data/siteConfig';
 import QuizShell from '../../components/quiz/QuizShell';
 import QuizLinkedSliders from '../../components/quiz/QuizLinkedSliders';
 import QuizLinkedSliderDimensions from '../../components/quiz/QuizLinkedSliderDimensions';
@@ -209,6 +210,13 @@ export default function DogPersonalityPage() {
         path="/dog-personality"
         bodyClass="page-dog-personality"
         iconSet="personality"
+        pageJsonLd={buildSoftwareToolJsonLd({
+          path: '/dog-personality',
+          title: 'What Kind of Dog Are You? | Dog Personality Quiz NZ | Gold Standard Dog Training',
+          description:
+            'Free dog personality quiz from Gold Standard Dog Training in Golden Bay & Nelson Bays, NZ — discover your archetype, then narrow to your spirit breed.',
+          applicationName: 'Gold Standard Dog Personality Quiz',
+        })}
       />
       <SiteHeader />
 

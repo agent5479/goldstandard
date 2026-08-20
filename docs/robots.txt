@@ -5,8 +5,10 @@
 # Website: https://goldstandarddogtraining.nz/
 # Book: https://goldstandarddogtraining.nz/book · Contact: /contact · About: /about
 # Resources: /guide · /exam · /intelligence · /dog-personality · /breed-finder · /equipment
+# Local SEO: /services · /areas · service & town pages for GBP entity matching
 # Contact: Warwick Marshall · 027 814 2222 · warwick.marshall@gmail.com
 # Address: Rangihaeata, Takaka 7182, Golden Bay, NZ
+# Off-site: paste Google Business Profile URL into SITE_GBP_URL in src/data/siteConfig.ts when ready
 
 User-agent: *
 Allow: /

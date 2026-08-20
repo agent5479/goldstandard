@@ -12,6 +12,10 @@ import DogPersonalityPage from './pages/dog-personality/DogPersonalityPage';
 import BreedFinderPage from './pages/breed-finder/BreedFinderPage';
 import DogSelectorPage from './pages/DogSelectorPage';
 import EquipmentPage from './pages/EquipmentPage';
+import ServiceHubPage from './pages/ServiceHubPage';
+import ServiceDetailPage from './pages/ServiceDetailPage';
+import AreaHubPage from './pages/AreaHubPage';
+import AreaDetailPage from './pages/AreaDetailPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 /** Redirect legacy .html URLs to their SPA routes, preserving the hash. */
@@ -38,6 +42,10 @@ export default function App() {
         <Route path="/breed-finder" element={<BreedFinderPage />} />
         <Route path="/dog-selector" element={<DogSelectorPage />} />
         <Route path="/equipment" element={<EquipmentPage />} />
+        <Route path="/services" element={<ServiceHubPage />} />
+        <Route path="/services/:slug" element={<ServiceDetailPage />} />
+        <Route path="/areas" element={<AreaHubPage />} />
+        <Route path="/areas/:slug" element={<AreaDetailPage />} />
 
         <Route path="/index.html" element={<LegacyRedirect to="/" />} />
         <Route path="/about.html" element={<LegacyRedirect to="/about" />} />

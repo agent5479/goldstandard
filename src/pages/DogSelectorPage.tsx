@@ -13,6 +13,7 @@ import {
 import MixParentPicker, { type MixParentResolved } from './intelligence/MixParentPicker';
 import RoleSelectGrid from './dog-selector/RoleSelectGrid';
 import SelectorResult from './dog-selector/SelectorResult';
+import { buildSoftwareToolJsonLd } from '../data/siteConfig';
 
 type Step =
   | { kind: 'intro' }
@@ -64,6 +65,13 @@ export default function DogSelectorPage() {
         path="/dog-selector"
         bodyClass="page-dog-selector"
         iconSet="breedfinder"
+        pageJsonLd={buildSoftwareToolJsonLd({
+          path: '/dog-selector',
+          title: 'Dog Selector — Roles, Mixes & Cultivation | Gold Standard Dog Training',
+          description:
+            'Pick a working or family job, or a breed mix, and read likely trait outcomes, dice-roll gambits, and nervous-system cultivation by age. From Gold Standard Dog Training, Golden Bay & Nelson Bays, NZ.',
+          applicationName: 'Gold Standard Dog Selector',
+        })}
       />
       <SiteHeader />
 

@@ -4,6 +4,7 @@ import Seo from '../../components/Seo';
 import SiteHeader from '../../components/SiteHeader';
 import SiteFooter from '../../components/SiteFooter';
 import SectionIcon from '../../components/SectionIcon';
+import { buildSoftwareToolJsonLd } from '../../data/siteConfig';
 import QuizShell from '../../components/quiz/QuizShell';
 import QuizLinkedSliders from '../../components/quiz/QuizLinkedSliders';
 import BreedFinderResultView from './BreedFinderResult';
@@ -94,6 +95,13 @@ export default function BreedFinderPage() {
         path="/breed-finder"
         bodyClass="page-breed-finder"
         iconSet="breedfinder"
+        pageJsonLd={buildSoftwareToolJsonLd({
+          path: '/breed-finder',
+          title: 'What Dog Should You Get? | Breed Finder NZ | Gold Standard Dog Training',
+          description:
+            'Dog breed finder for NZ households — match lifestyle and expectations with ranked breeds and honest caveats. From Gold Standard Dog Training, Golden Bay & Nelson Bays.',
+          applicationName: 'Gold Standard Breed Finder',
+        })}
       />
       <SiteHeader />
 

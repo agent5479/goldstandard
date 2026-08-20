@@ -6,64 +6,19 @@ import SiteFooter from '../components/SiteFooter';
 import ProblemFinderModal from '../components/ProblemFinderModal';
 import PainQuotesRotator from '../components/PainQuotesRotator';
 import HeroGallery from './HeroGallery';
-import CompactInfoPopout from '../components/CompactInfoPopout';
-import { SITE_DEFAULT_TITLE, SITE_META_DESCRIPTION, SITE_OG_DESCRIPTION } from '../data/siteConfig';
+import {
+  SITE_DEFAULT_TITLE,
+  SITE_META_DESCRIPTION,
+  SITE_OG_DESCRIPTION,
+  buildSocialLinks,
+} from '../data/siteConfig';
+import { SERVICE_SEO } from '../data/localSeo';
 import { asset } from '../asset';
 import SectionIcon from '../components/SectionIcon';
 
-const SERVICES = [
-  {
-    icon: '🐕',
-    title: 'Everyday manners & obedience',
-    description:
-      'Sit, lie, wait, heel, come when called — the basics that make daily life easy, built around your goals. With the right mix of correction, reward, and your own energy, your dog can be shaped into almost anything you want.',
-  },
-  {
-    icon: '🐶',
-    title: 'Puppies started right',
-    description:
-      'The early months set everything up. Toilet training, biting and mouthing, crate and sleep routines, and calm structure — matched to your puppy\u2019s age so you build the right habits before problems ever take hold.',
-  },
-  {
-    icon: '🛡️',
-    title: 'Safe and under control',
-    description:
-      'Stopping the lunge, breaking a fixation, walking without pulling or cutting in front, staying aware of the road. The skills that matter when something unexpected happens — so you can trust your dog in any situation.',
-  },
-  {
-    icon: '🏠',
-    title: 'Calm at home & greetings',
-    description:
-      'Jumping on visitors, bolting the door, barking, or a dog that just can\u2019t settle. We build calm thresholds and quiet greetings so your home feels relaxed — for you, your guests, and your dog.',
-  },
-  {
-    icon: '🤝',
-    title: 'Calm around other dogs',
-    description:
-      'Structured sessions with the right dogs — including Controlled Confrontation with a balanced master helper dog when pushiness needs native canine feedback. Yours learns healthy social habits and how to be corrected naturally. A social dog is a settled dog — one that reads other animals and stays calm instead of reacting.',
-  },
-  {
-    icon: '🔗',
-    title: 'A fresh start for tough cases',
-    description:
-      'For dogs with a hard history, high anxiety, or habits that feel stuck. We meet your dog where it is — safely, without force — and rebuild the trust that training needs to take hold.',
-  },
-  {
-    icon: '🧭',
-    title: 'Coaching for you, too',
-    description:
-      "Your energy, attention, and consistency are the most powerful tools your dog has. Every session coaches you in how to hold your own — so the results don't disappear the moment Warwick leaves.",
-  },
-  {
-    icon: '📍',
-    title: 'Training in the real world',
-    description:
-      'Markets, beaches, roads, other dogs — the places training actually has to hold. Practising where the real distractions are is what turns a learned trick into reliable behaviour.',
-  },
-] as const;
-
 export default function HomePage() {
   const [problemFinderOpen, setProblemFinderOpen] = useState(false);
+  const socialLinks = buildSocialLinks();
 
   return (
     <>
@@ -134,20 +89,27 @@ export default function HomePage() {
               <img src={asset('images/archieglory.jpg')} alt="Dog in training — Gold Standard Dog Training, Golden Bay" width={480} height={640} loading="lazy" decoding="async" />
             </figure>
             <div className="services-grid">
-              {SERVICES.map((service) => (
-                <CompactInfoPopout
-                  key={service.title}
-                  className="service-card"
-                  variant="card"
-                  icon={service.icon}
-                  label={service.title}
-                  panelLabel={service.title}
+              {SERVICE_SEO.map((service) => (
+                <Link
+                  key={service.slug}
+                  to={`/services/${service.slug}`}
+                  className="service-hub-card service-hub-card--home"
                 >
-                  <p>{service.description}</p>
-                </CompactInfoPopout>
+                  <span className="service-hub-card-icon" aria-hidden="true">{service.icon}</span>
+                  <strong className="service-hub-card-title">{service.cardTitle}</strong>
+                  <span className="service-hub-card-desc">{service.cardDescription}</span>
+                  <span className="service-hub-card-cta">Read more →</span>
+                </Link>
               ))}
             </div>
           </div>
+          <p className="service-footer-cta">
+            <Link to="/services">All services</Link>
+            {' · '}
+            <Link to="/areas">Where we train</Link>
+            {' · '}
+            <Link to="/book">Book online</Link>
+          </p>
         </div>
       </section>
 
@@ -290,10 +252,24 @@ export default function HomePage() {
               <span>Rangihaeata, Takaka — Golden Bay</span>
             </div>
           </div>
-          <a href="https://www.facebook.com/profile.php?id=61580061262910" target="_blank" rel="noopener noreferrer" className="facebook-link">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" /></svg>
-            Follow on Facebook
-          </a>
+          <div className="social-links-row">
+            {socialLinks.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="facebook-link"
+              >
+                {link.label === 'Facebook' ? (
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                  </svg>
+                ) : null}
+                {link.label === 'Facebook' ? 'Follow on Facebook' : link.label}
+              </a>
+            ))}
+          </div>
         </div>
       </section>
 
