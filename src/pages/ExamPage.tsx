@@ -124,6 +124,7 @@ export default function ExamPage() {
       <Seo
         title="Dog Training Knowledge Exam NZ | Gold Standard Dog Training"
         description="Test your dog training knowledge with a 24-question breed-aware owner exam or full trainer track. Corrections, timing, and access training — Gold Standard Dog Training, Golden Bay & Nelson Bays, NZ."
+        keywords="dog training knowledge exam NZ, Gold Standard Dog Training exam, Warwick Marshall exam, breed-aware owner exam, dog trainer quiz Golden Bay"
         path="/exam"
         bodyClass="page-exam"
         iconSet="exam"

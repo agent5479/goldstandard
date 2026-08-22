@@ -31,6 +31,7 @@ export default function AboutPage() {
       <Seo
         title="About Warwick Marshall | Dog Trainer Golden Bay | Gold Standard Dog Training"
         description="Meet Warwick Marshall — dog trainer in Golden Bay and Takaka. Embodied Dog-Tantra coaching, measured leash work, and what to expect from sessions across the Tasman region."
+        keywords="Warwick Marshall dog trainer, about Gold Standard Dog Training, dog trainer Golden Bay Takaka, Dog-Tantra coaching NZ"
         path="/about"
       />
       <SiteHeader />

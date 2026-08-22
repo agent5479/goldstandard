@@ -23,6 +23,7 @@ export default function AreaDetailPage() {
       <Seo
         title={area.title}
         description={area.metaDescription}
+        keywords={area.keywords}
         path={path}
         bodyClass="page-area-detail"
         pageJsonLd={buildAreaPageJsonLd(area)}

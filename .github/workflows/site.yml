@@ -86,6 +86,8 @@ jobs:
           grep -q 'goldstandarddogtraining.nz' docs/CNAME
           grep -q 'Sitemap: https://goldstandarddogtraining.nz/sitemap.xml' docs/robots.txt
           grep -q 'dog trainer Golden Bay' docs/robots.txt
+          grep -q 'User-agent: GPTBot' docs/robots.txt
+          grep -q 'User-agent: PerplexityBot' docs/robots.txt
           grep -q 'https://goldstandarddogtraining.nz/book' docs/sitemap.xml
           grep -q 'https://goldstandarddogtraining.nz/equipment' docs/sitemap.xml
           grep -q 'https://goldstandarddogtraining.nz/services/puppy-training' docs/sitemap.xml
@@ -105,6 +107,8 @@ jobs:
           grep -q 'OfferCatalog' docs/index.html
           grep -q 'href="/services/puppy-training"' docs/index.html
           grep -q 'Puppies started' docs/services/puppy-training/index.html
+          grep -q 'puppy training Golden Bay' docs/services/puppy-training/index.html
+          grep -q 'Client dog training guide by Warwick Marshall' docs/guide/foundation/index.html
           grep -q '"@type":"Service"' docs/services/puppy-training/index.html
           grep -q 'SoftwareApplication' docs/exam/index.html
           grep -q 'Dog training in Takaka' docs/areas/takaka/index.html

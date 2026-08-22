@@ -37,6 +37,7 @@ export default function BookPage() {
       <Seo
         title="Book Dog Training Golden Bay & Nelson Bays | Gold Standard Dog Training"
         description="Book dog training with Warwick Marshall in Golden Bay, Takaka, or Nelson Bays, NZ. Starter pack, single sessions, private household, or elite coaching. Call 027 814 2222."
+        keywords="book dog training Golden Bay, book dog trainer Takaka, dog training session Nelson Bays, elite dog coaching Tasman, Warwick Marshall booking"
         path="/book"
         bodyClass="page-book"
       />

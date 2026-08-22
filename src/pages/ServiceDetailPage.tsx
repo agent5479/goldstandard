@@ -21,6 +21,7 @@ export default function ServiceDetailPage() {
       <Seo
         title={service.title}
         description={service.metaDescription}
+        keywords={service.keywords}
         path={path}
         bodyClass="page-service-detail"
         pageJsonLd={buildServicePageJsonLd(service)}

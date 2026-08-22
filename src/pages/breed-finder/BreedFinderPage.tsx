@@ -92,6 +92,7 @@ export default function BreedFinderPage() {
       <Seo
         title="What Dog Should You Get? | Breed Finder NZ | Gold Standard Dog Training"
         description="Dog breed finder for NZ households — match lifestyle and expectations with ranked breeds and honest caveats. From Gold Standard Dog Training, Golden Bay & Nelson Bays."
+        keywords="dog breed finder NZ, what dog should I get, breed lifestyle match, Gold Standard breed finder, Warwick Marshall"
         path="/breed-finder"
         bodyClass="page-breed-finder"
         iconSet="breedfinder"

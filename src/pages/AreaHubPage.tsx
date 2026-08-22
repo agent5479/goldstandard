@@ -12,11 +12,12 @@ export default function AreaHubPage() {
       <Seo
         title={AREAS_HUB.title}
         description={AREAS_HUB.metaDescription}
+        keywords={AREAS_HUB.keywords}
         path={path}
         bodyClass="page-areas"
         pageJsonLd={buildBreadcrumbJsonLd({
           path,
-          title: AREAS_HUB.h1,
+          title: AREAS_HUB.title,
           description: AREAS_HUB.metaDescription,
           crumbs: [
             { name: 'Home', path: '/' },

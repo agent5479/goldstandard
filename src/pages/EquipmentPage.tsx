@@ -11,6 +11,7 @@ export default function EquipmentPage() {
       <Seo
         title="Dog Training Equipment | Gentle Leader & More | Gold Standard Dog Training"
         description="Dog training equipment we recommend in Golden Bay sessions — Gentle Leader headcollar, Kong Classic, and Carhartt 6ft leash. Sizing, fit, and why Warwick uses them."
+        keywords="Gentle Leader dog training, dog training equipment Golden Bay, Kong Classic, Carhartt leash, Warwick Marshall equipment"
         path="/equipment"
       />
       <SiteHeader />

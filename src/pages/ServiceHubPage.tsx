@@ -12,11 +12,12 @@ export default function ServiceHubPage() {
       <Seo
         title={SERVICES_HUB.title}
         description={SERVICES_HUB.metaDescription}
+        keywords={SERVICES_HUB.keywords}
         path={path}
         bodyClass="page-services"
         pageJsonLd={buildBreadcrumbJsonLd({
           path,
-          title: SERVICES_HUB.h1,
+          title: SERVICES_HUB.title,
           description: SERVICES_HUB.metaDescription,
           crumbs: [
             { name: 'Home', path: '/' },

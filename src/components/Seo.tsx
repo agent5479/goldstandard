@@ -28,6 +28,8 @@ interface SeoProps {
   index?: boolean;
   /** Open Graph / Twitter text; defaults to `description`. Use for emoji social previews on the home page. */
   socialDescription?: string;
+  /** Page-specific keywords; defaults to site-wide local terms. */
+  keywords?: string;
   /** Favicon and default OG image set for this route. */
   iconSet?: IconSetId;
   /** Override Open Graph / Twitter image URL. */
@@ -104,6 +106,7 @@ export default function Seo({
   bodyClass,
   index = true,
   socialDescription,
+  keywords,
   iconSet = 'site',
   ogImage,
   ogImageAlt,
@@ -120,7 +123,7 @@ export default function Seo({
     document.title = title;
 
     setMeta('name', 'description', description);
-    setMeta('name', 'keywords', SITE_KEYWORDS);
+    setMeta('name', 'keywords', keywords?.trim() || SITE_KEYWORDS);
     setMeta('name', 'robots', index ? 'index, follow, max-image-preview:large' : 'noindex, nofollow');
     setMeta('name', 'geo.region', 'NZ-TAS');
     setMeta('name', 'geo.placename', `${SITE_REGION_LABEL}, New Zealand`);
@@ -162,7 +165,7 @@ export default function Seo({
       applyFavicons('site');
       applySocialImage(ICON_SETS.site, SITE_OG_IMAGE, ICON_SETS.site.ogImageAlt);
     };
-  }, [title, description, path, bodyClass, index, socialDescription, iconSet, ogImage, ogImageAlt, pageJsonLd]);
+  }, [title, description, path, bodyClass, index, socialDescription, keywords, iconSet, ogImage, ogImageAlt, pageJsonLd]);
 
   return null;
 }

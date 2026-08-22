@@ -4,8 +4,8 @@
 # Service area: Golden Bay · Takaka · Pohara · Nelson Bays · Motueka · Richmond · Greater Tasman Region
 # Website: https://goldstandarddogtraining.nz/
 # Book: https://goldstandarddogtraining.nz/book · Contact: /contact · About: /about
-# Resources: /guide · /exam · /intelligence · /dog-personality · /breed-finder · /equipment
-# Local SEO: /services · /areas · service & town pages for GBP entity matching
+# Services: /services · Areas: /areas (local entity pages for GBP / AI matching)
+# Resources: /guide · /exam · /intelligence · /dog-personality · /breed-finder · /dog-selector · /equipment
 # Contact: Warwick Marshall · 027 814 2222 · warwick.marshall@gmail.com
 # Address: Rangihaeata, Takaka 7182, Golden Bay, NZ
 # Off-site: paste Google Business Profile URL into SITE_GBP_URL in src/data/siteConfig.ts when ready
@@ -27,6 +27,34 @@ User-agent: DuckDuckBot
 Allow: /
 
 User-agent: Slurp
+Allow: /
+
+# AI / answer-engine crawlers — allow indexing for citation (same public content)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Bytespider
 Allow: /
 
 # Private staff app (separate host — not part of this site):
