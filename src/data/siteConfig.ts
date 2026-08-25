@@ -1,5 +1,6 @@
 import type { AreaSeoEntry, ServiceSeoEntry } from './localSeo';
 import { SERVICE_SEO } from './localSeo';
+import type { SiteFaqItem } from './siteFaqs';
 
 /** Public marketing site — custom domain (no trailing slash). */
 export const SITE_URL = 'https://goldstandarddogtraining.nz';
@@ -133,6 +134,7 @@ export function buildSiteJsonLd(): Record<string, unknown> {
         '@id': `${SITE_URL}/#business`,
         name: SITE_NAME,
         alternateName: 'Warwick Marshall Dog Training',
+        legalName: 'Gold Standard Dog Training',
         url: `${SITE_URL}/`,
         logo: `${SITE_URL}/images/icons/dog512.jpg`,
         image: SITE_OG_IMAGE,
@@ -360,6 +362,79 @@ export function buildSoftwareToolJsonLd(tool: SoftwareToolMeta): Record<string, 
         },
         publisher: { '@id': `${SITE_URL}/#business` },
         isAccessibleForFree: true,
+      },
+    ],
+  };
+}
+
+/** FAQPage + WebPage graph — answers must match visible on-page copy. */
+export function buildFaqPageJsonLd(options: {
+  title: string;
+  description: string;
+  path: string;
+  faqs: SiteFaqItem[];
+}): Record<string, unknown> {
+  const url = siteUrl(options.path);
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      webPageNode({
+        title: options.title,
+        description: options.description,
+        path: options.path,
+      }),
+      {
+        '@type': 'FAQPage',
+        '@id': `${url}#faq`,
+        url,
+        mainEntity: options.faqs.map((faq) => ({
+          '@type': 'Question',
+          name: faq.question,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: faq.answer,
+          },
+        })),
+      },
+    ],
+  };
+}
+
+export interface HowToStepMeta {
+  name: string;
+  text: string;
+}
+
+/** HowTo + WebPage for procedural kit / method pages. */
+export function buildHowToJsonLd(options: {
+  title: string;
+  description: string;
+  path: string;
+  howToName: string;
+  howToDescription: string;
+  steps: HowToStepMeta[];
+}): Record<string, unknown> {
+  const url = siteUrl(options.path);
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      webPageNode({
+        title: options.title,
+        description: options.description,
+        path: options.path,
+      }),
+      {
+        '@type': 'HowTo',
+        '@id': `${url}#howto`,
+        name: options.howToName,
+        description: options.howToDescription,
+        url,
+        step: options.steps.map((step, index) => ({
+          '@type': 'HowToStep',
+          position: index + 1,
+          name: step.name,
+          text: step.text,
+        })),
       },
     ],
   };

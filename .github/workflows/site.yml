@@ -88,6 +88,11 @@ jobs:
           grep -q 'dog trainer Golden Bay' docs/robots.txt
           grep -q 'User-agent: GPTBot' docs/robots.txt
           grep -q 'User-agent: PerplexityBot' docs/robots.txt
+          grep -q 'User-agent: Perplexity-User' docs/robots.txt
+          grep -q 'User-agent: Google-Extended' docs/robots.txt
+          test -f docs/llms.txt
+          grep -q 'Gold Standard Dog Training' docs/llms.txt
+          grep -q 'https://goldstandarddogtraining.nz/book' docs/llms.txt
           grep -q 'https://goldstandarddogtraining.nz/book' docs/sitemap.xml
           grep -q 'https://goldstandarddogtraining.nz/equipment' docs/sitemap.xml
           grep -q 'https://goldstandarddogtraining.nz/services/puppy-training' docs/sitemap.xml
@@ -98,6 +103,9 @@ jobs:
           grep -q 'dog trainer Golden Bay' docs/index.html
           grep -q 'data-seo-ready="true"' docs/about/index.html
           grep -q 'Gentle Leader' docs/equipment/index.html
+          grep -q 'FAQPage' docs/about/index.html
+          grep -q 'HowTo' docs/equipment/index.html
+          grep -q 'legalName' docs/index.html
           grep -q 'missing-framework' docs/guide/foundation/index.html
           grep -q "You're not failing" docs/guide/foundation/index.html
           grep -q 'href="/book"' docs/index.html

@@ -1181,6 +1181,27 @@ h2 {
 }
 .philosophy a:hover { color: var(--gold); border-bottom-color: var(--gold); }
 
+.about-faq-list {
+  margin: 1.5rem 0 0;
+  display: grid;
+  gap: 1.25rem;
+}
+
+.about-faq-item dt h3 {
+  font-family: var(--font-display, inherit);
+  font-size: 1.15rem;
+  margin: 0 0 0.35rem;
+  color: var(--forest);
+}
+
+.about-faq-item dd {
+  margin: 0;
+}
+
+.about-faq-item dd p {
+  margin-bottom: 0;
+}
+
 .philosophy-pillars {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));

@@ -4,15 +4,48 @@ import { asset } from '../asset';
 import Seo from '../components/Seo';
 import SiteHeader from '../components/SiteHeader';
 import SiteFooter from '../components/SiteFooter';
+import { buildHowToJsonLd } from '../data/siteConfig';
+
+const EQUIPMENT_TITLE = 'Dog Training Equipment | Gentle Leader & More | Gold Standard Dog Training';
+const EQUIPMENT_DESCRIPTION =
+  'Dog training equipment we recommend in Golden Bay sessions — Gentle Leader headcollar, Kong Classic, and Carhartt 6ft leash. Sizing, fit, and why Warwick uses them.';
+
+const GENTLE_LEADER_STEPS = [
+  {
+    name: 'Measure the neck',
+    text: 'Measure neck circumference high behind the ears and check the maker’s snout/neck chart. If between sizes, choose the larger. Not suitable for short-snouted breeds such as pugs or bulldogs.',
+  },
+  {
+    name: 'Set the neck strap',
+    text: 'Place the neck strap high behind the ears, snug like a belt — about one finger under, not free to rotate around the neck.',
+  },
+  {
+    name: 'Fit the nose loop',
+    text: 'Form a V under the chin so the nose loop reaches the fleshy part of the nose but does not slip off. The mouth must open freely for panting, drinking, and treats.',
+  },
+  {
+    name: 'Introduce without pressure',
+    text: 'Let the dog accept the feel with no leash pressure first. Use the Gentle Leader as coached temporary management while flat collar and slip-lead work continue in parallel.',
+  },
+];
 
 export default function EquipmentPage() {
   return (
     <>
       <Seo
-        title="Dog Training Equipment | Gentle Leader & More | Gold Standard Dog Training"
-        description="Dog training equipment we recommend in Golden Bay sessions — Gentle Leader headcollar, Kong Classic, and Carhartt 6ft leash. Sizing, fit, and why Warwick uses them."
+        title={EQUIPMENT_TITLE}
+        description={EQUIPMENT_DESCRIPTION}
         keywords="Gentle Leader dog training, dog training equipment Golden Bay, Kong Classic, Carhartt leash, Warwick Marshall equipment"
         path="/equipment"
+        pageJsonLd={buildHowToJsonLd({
+          title: EQUIPMENT_TITLE,
+          description: EQUIPMENT_DESCRIPTION,
+          path: '/equipment',
+          howToName: 'How to fit a PetSafe Gentle Leader headcollar',
+          howToDescription:
+            'Sizing and fit steps Warwick uses when coaching the Gentle Leader as temporary management for strong dogs or visual lock — not a permanent substitute for flat collar and slip-lead work.',
+          steps: GENTLE_LEADER_STEPS,
+        })}
       />
       <SiteHeader />
 
@@ -69,12 +102,14 @@ export default function EquipmentPage() {
                 <li><strong>X-Large</strong> — roughly 59 kg and up; neck about 30–71 cm</li>
               </ul>
 
-              <h3>Fit notes</h3>
-              <ul className="checklist">
-                <li>Neck strap sits high behind the ears, snug like a belt — about one finger under, not free to rotate</li>
-                <li>Nose loop forms a V under the chin; it should reach the fleshy part of the nose but not slip off</li>
-                <li>Mouth must open freely; introduce without leash pressure first so the dog accepts the feel</li>
-              </ul>
+              <h3>How to fit a Gentle Leader</h3>
+              <ol className="steps">
+                {GENTLE_LEADER_STEPS.map((step) => (
+                  <li key={step.name}>
+                    <strong>{step.name}.</strong> {step.text}
+                  </li>
+                ))}
+              </ol>
             </div>
           </div>
         </section>

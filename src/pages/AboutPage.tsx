@@ -24,15 +24,29 @@ import {
   PRICING_LABEL_TOWN,
 } from '@shared/bookingPricing';
 import { NELSON_STANDARD_COMING_SOON_NOTE, NELSON_PRICING_ENQUIRY_NOTE } from '@shared/bookingRegions';
+import { buildAboutFaqs } from '../data/siteFaqs';
+import { buildFaqPageJsonLd } from '../data/siteConfig';
+
+const ABOUT_TITLE = 'About Warwick Marshall | Dog Trainer Golden Bay | Gold Standard Dog Training';
+const ABOUT_DESCRIPTION =
+  'Meet Warwick Marshall — dog trainer in Golden Bay and Takaka. Embodied Dog-Tantra coaching, measured leash work, and what to expect from sessions across the Tasman region.';
 
 export default function AboutPage() {
+  const faqs = buildAboutFaqs();
+
   return (
     <>
       <Seo
-        title="About Warwick Marshall | Dog Trainer Golden Bay | Gold Standard Dog Training"
-        description="Meet Warwick Marshall — dog trainer in Golden Bay and Takaka. Embodied Dog-Tantra coaching, measured leash work, and what to expect from sessions across the Tasman region."
+        title={ABOUT_TITLE}
+        description={ABOUT_DESCRIPTION}
         keywords="Warwick Marshall dog trainer, about Gold Standard Dog Training, dog trainer Golden Bay Takaka, Dog-Tantra coaching NZ"
         path="/about"
+        pageJsonLd={buildFaqPageJsonLd({
+          title: ABOUT_TITLE,
+          description: ABOUT_DESCRIPTION,
+          path: '/about',
+          faqs,
+        })}
       />
       <SiteHeader />
 
@@ -470,6 +484,25 @@ export default function AboutPage() {
             <Link to="/contact">Send an enquiry</Link>
             {' to get started.'}
           </p>
+        </div>
+      </section>
+
+      <section className="about-section" id="faq" aria-labelledby="about-faq-heading">
+        <div className="section-inner philosophy-text">
+          <p className="section-label">Common questions</p>
+          <h2 id="about-faq-heading">Straight answers before you book.</h2>
+          <dl className="about-faq-list">
+            {faqs.map((faq) => (
+              <div key={faq.question} className="about-faq-item">
+                <dt>
+                  <h3>{faq.question}</h3>
+                </dt>
+                <dd>
+                  <p>{faq.answer}</p>
+                </dd>
+              </div>
+            ))}
+          </dl>
         </div>
       </section>
 

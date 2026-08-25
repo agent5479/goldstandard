@@ -77,10 +77,15 @@ export default function AreaDetailPage() {
           <div className="section-inner">
             <p className="section-label">Services</p>
             <h2>What we train in {area.name}.</h2>
+            <p className="about-expect-intro">
+              Same Gold Standard method — named the way owners search for help in {area.name}.
+            </p>
             <ul className="checklist">
               {SERVICE_SEO.map((service) => (
                 <li key={service.slug}>
-                  <Link to={`/services/${service.slug}`}>{service.cardTitle}</Link>
+                  <Link to={`/services/${service.slug}`}>
+                    {service.cardTitle} in {area.name}
+                  </Link>
                 </li>
               ))}
             </ul>

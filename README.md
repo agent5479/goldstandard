@@ -55,26 +55,32 @@ Legacy `.html` URLs (e.g. `guide.html`, `intelligence.html`) redirect to the rou
 
 **Staff trainer app (private):** [gsdt-trainer-private.web.app](https://gsdt-trainer-private.web.app/) — linked from the public site header; Firebase Auth required. See [`trainer-app/README.md`](trainer-app/README.md).
 
-### SEO & discoverability (search engines)
+### SEO & discoverability (search engines + AI)
 
-This repository powers a public marketing site indexed by Google, Bing, and other crawlers. Location and contact details appear in the README (for GitHub search), in page metadata, and in machine-readable files served with the site:
+This repository powers a public marketing site indexed by Google, Bing, and AI answer crawlers. Location and contact details appear in the README (for GitHub search), in page metadata, and in machine-readable files served with the site:
 
 | Resource | URL |
 |----------|-----|
 | **Canonical home** | [goldstandarddogtraining.nz](https://goldstandarddogtraining.nz/) |
 | **Sitemap** | […/sitemap.xml](https://goldstandarddogtraining.nz/sitemap.xml) |
 | **Robots** | […/robots.txt](https://goldstandarddogtraining.nz/robots.txt) |
+| **llms.txt** | […/llms.txt](https://goldstandarddogtraining.nz/llms.txt) |
 
 - **Canonical base:** `https://goldstandarddogtraining.nz/`
 - **Geo targeting:** Tasman Region (`NZ-TAS`) — Takaka, Golden Bay; service extends to Nelson Bays
-- **Structured data:** `WebSite` + `LocalBusiness`/`ProfessionalService` + `Person` JSON-LD in [`index.html`](index.html) (address, geo, service areas, offers); per-route `WebPage` via [`Seo.tsx`](src/components/Seo.tsx)
+- **Structured data:** `WebSite` + `LocalBusiness`/`ProfessionalService` + `Person` JSON-LD in [`index.html`](index.html) (address, geo, `legalName`, service areas, offers); per-route `WebPage` / `Service` / `SoftwareApplication` / `FAQPage` / `HowTo` via [`Seo.tsx`](src/components/Seo.tsx) and [`siteConfig.ts`](src/data/siteConfig.ts)
 - **Per-route SEO:** titles, descriptions, canonical URLs, and Open Graph tags via [`src/components/Seo.tsx`](src/components/Seo.tsx) and defaults in [`src/data/siteConfig.ts`](src/data/siteConfig.ts)
 - **Static prerender (SSG):** `npm run build` runs Vite, then [`scripts/prerender.mjs`](scripts/prerender.mjs) exports each public route as fully rendered HTML under `docs/` so crawlers receive baked content on GitHub Pages
 - **Sitemap:** generated on every build from [`scripts/seoRoutes.mjs`](scripts/seoRoutes.mjs) via [`scripts/generate-sitemap.mjs`](scripts/generate-sitemap.mjs)
-- **Crawl files:** [`public/robots.txt`](public/robots.txt), generated `public/sitemap.xml`, and [`public/CNAME`](public/CNAME) for the custom domain
+- **Crawl files:** [`public/robots.txt`](public/robots.txt) (explicit allow for GPTBot, OAI-SearchBot, ChatGPT-User, Google-Extended, ClaudeBot, PerplexityBot, Perplexity-User, Applebot-Extended, Bytespider), generated `public/sitemap.xml`, [`public/llms.txt`](public/llms.txt), and [`public/CNAME`](public/CNAME)
+- **Hosting:** GitHub Pages (no Cloudflare WAF bot rules). HTTPS via custom domain.
 - **Social preview:** `images/icons/dog1024.jpg` (favicons + [`site.webmanifest`](public/site.webmanifest))
 - **CI / deploy:** [`.github/workflows/site.yml`](.github/workflows/site.yml) builds, verifies prerendered HTML + crawl files, and deploys `docs/` via GitHub Actions. In repo **Settings → Pages**, set **Source** to **GitHub Actions**, and confirm the custom domain `goldstandarddogtraining.nz`
 - **After deploy:** submit the sitemap in [Google Search Console](https://search.google.com/search-console) for `https://goldstandarddogtraining.nz/sitemap.xml` (and Bing Webmaster Tools if desired)
+- **GBP / social:** paste Google Business Profile URL into `SITE_GBP_URL` in [`siteConfig.ts`](src/data/siteConfig.ts) when ready; optional YouTube / Instagram / newsletter URLs likewise
+- **Off-site / measurement (ops, not in-repo):** keep brand name + phone + URL consistent on Facebook/GBP/directories; track branded search (“Gold Standard Dog Training”, “Warwick Marshall dog”); periodically query ChatGPT / Perplexity / Gemini / Claude with target prompts and log citations (Search Console does not capture AI citations)
+
+**Local SEO shape today:** dedicated `/services/{slug}` and `/areas/{slug}` entity pages with local-intent cross-links (not a full service×town URL matrix yet — that is the next GEO increment if thin-doorway risk is acceptable).
 
 The private trainer app at [gsdt-trainer-private.web.app](https://gsdt-trainer-private.web.app/) is **not** indexed (`noindex`, separate `robots.txt`).
 

@@ -3,7 +3,7 @@ import { guideHref } from '@shared/guideHref';
 import Seo from '../components/Seo';
 import SiteHeader from '../components/SiteHeader';
 import SiteFooter from '../components/SiteFooter';
-import { getServiceSeo, SERVICE_SEO } from '../data/localSeo';
+import { AREA_SEO, getServiceSeo, SERVICE_SEO } from '../data/localSeo';
 import { buildServicePageJsonLd } from '../data/siteConfig';
 
 export default function ServiceDetailPage() {
@@ -91,8 +91,27 @@ export default function ServiceDetailPage() {
           </div>
         </section>
 
+        <section className="about-section">
+          <div className="section-inner">
+            <p className="section-label">Service areas</p>
+            <h2>{service.cardTitle} across the Tasman region.</h2>
+            <p className="about-expect-intro">
+              In-person {service.cardTitle.toLowerCase()} with Warwick Marshall — book for the town you live in.
+            </p>
+            <ul className="checklist">
+              {AREA_SEO.map((area) => (
+                <li key={area.slug}>
+                  <Link to={`/areas/${area.slug}`}>
+                    {service.cardTitle} in {area.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
         {related.length > 0 ? (
-          <section className="about-section">
+          <section className="about-section about-section--soft">
             <div className="section-inner">
               <p className="section-label">Related</p>
               <h2>Other focuses clients often need.</h2>
