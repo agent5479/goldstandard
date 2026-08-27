@@ -50,7 +50,7 @@ export const SITE_META_DESCRIPTION =
 export const SITE_OG_DESCRIPTION =
   '🌿 Dog trainer Golden Bay & Takaka · obedience, recall & rehab · Gold Standard Dog Training · 027 814 2222';
 
-export const SITE_OG_IMAGE = `${SITE_URL}/images/icons/dog1024.jpg`;
+export const SITE_OG_IMAGE = `${SITE_URL}/images/og/site.jpg`;
 
 export const SITE_PHONE = '+64278142222';
 export const SITE_PHONE_DISPLAY = '027 814 2222';

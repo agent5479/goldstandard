@@ -98,6 +98,11 @@ jobs:
           grep -q 'https://goldstandarddogtraining.nz/services/puppy-training' docs/sitemap.xml
           grep -q 'https://goldstandarddogtraining.nz/areas/takaka' docs/sitemap.xml
           ! grep -q 'https://goldstandarddogtraining.nz/start' docs/sitemap.xml
+          test -f docs/favicon.ico
+          test -f docs/images/og/site.jpg
+          grep -q 'favicon.ico' docs/index.html
+          grep -q 'images/og/site.jpg' docs/index.html
+          grep -q 'og:image:width" content="1200"' docs/index.html
           test -f docs/BingSiteAuth.xml
           grep -q 'Dog Trainer Golden Bay' docs/index.html
           grep -q 'dog trainer Golden Bay' docs/index.html
