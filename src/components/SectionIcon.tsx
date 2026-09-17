@@ -1,4 +1,4 @@
-import { iconAssetForSet, type IconSetId } from '../data/siteIcons';
+import { iconAssetForSet, ICON_SETS, type IconSetId } from '../data/siteIcons';
 
 type SectionIconSize = 'sm' | 'md' | 'lg' | 'card' | 'hero';
 
@@ -30,7 +30,7 @@ export default function SectionIcon({
   set,
   size = 'sm',
   className,
-  alt = '',
+  alt,
 }: SectionIconProps) {
   const display = DISPLAY_SIZE[size];
   const classes = ['section-icon', `section-icon--${size}`, className].filter(Boolean).join(' ');
@@ -38,7 +38,7 @@ export default function SectionIcon({
   return (
     <img
       src={iconAssetForSet(set, SOURCE_SIZE[size])}
-      alt={alt}
+      alt={alt ?? ICON_SETS[set].iconAlt}
       className={classes}
       width={display}
       height={display}

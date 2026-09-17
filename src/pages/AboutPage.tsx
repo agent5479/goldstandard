@@ -27,9 +27,9 @@ import { NELSON_STANDARD_COMING_SOON_NOTE, NELSON_PRICING_ENQUIRY_NOTE } from '@
 import { buildAboutFaqs } from '../data/siteFaqs';
 import { buildFaqPageJsonLd } from '../data/siteConfig';
 
-const ABOUT_TITLE = 'About Warwick Marshall | Dog Trainer Golden Bay | Gold Standard Dog Training';
+const ABOUT_TITLE = 'About Warwick Marshall | Dog Trainer Golden Bay';
 const ABOUT_DESCRIPTION =
-  'Meet Warwick Marshall — dog trainer in Golden Bay and Takaka. Embodied Dog-Tantra coaching, measured leash work, and what to expect from sessions across the Tasman region.';
+  'Meet Warwick Marshall — dog trainer in Golden Bay and Takaka. Embodied Dog-Tantra coaching, measured leash work, and what to expect from sessions.';
 
 export default function AboutPage() {
   const faqs = buildAboutFaqs();

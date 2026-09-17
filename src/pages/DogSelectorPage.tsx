@@ -60,17 +60,17 @@ export default function DogSelectorPage() {
   return (
     <>
       <Seo
-        title="Dog Selector — Roles, Mixes & Cultivation | Gold Standard Dog Training"
-        description="Pick a working or family job, or a breed mix, and read likely trait outcomes, dice-roll gambits, and nervous-system cultivation by age. From Gold Standard Dog Training, Golden Bay & Nelson Bays, NZ."
+        title="Dog Selector | Roles, Mixes & Cultivation"
+        description="Pick a working or family job, or a breed mix, and read likely trait outcomes, dice-roll gambits, and cultivation by age. Gold Standard Dog Training, Golden Bay."
         keywords="dog selector, working dog roles, breed mix gambits, nervous system cultivation, Gold Standard dog selector NZ"
         path="/dog-selector"
         bodyClass="page-dog-selector"
         iconSet="breedfinder"
         pageJsonLd={buildSoftwareToolJsonLd({
           path: '/dog-selector',
-          title: 'Dog Selector — Roles, Mixes & Cultivation | Gold Standard Dog Training',
+          title: 'Dog Selector | Roles, Mixes & Cultivation',
           description:
-            'Pick a working or family job, or a breed mix, and read likely trait outcomes, dice-roll gambits, and nervous-system cultivation by age. From Gold Standard Dog Training, Golden Bay & Nelson Bays, NZ.',
+            'Pick a working or family job, or a breed mix, and read likely trait outcomes, dice-roll gambits, and cultivation by age. Gold Standard Dog Training, Golden Bay.',
           applicationName: 'Gold Standard Dog Selector',
         })}
       />

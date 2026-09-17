@@ -21,8 +21,8 @@ export default function GuideHubPage() {
   return (
     <>
       <Seo
-        title="Dog Training Client Guide | Golden Bay & Nelson Bays | Gold Standard Dog Training"
-        description="Client dog training guide for Golden Bay and Nelson Bays, NZ — obedience, corrections, leash work, and access training by Warwick Marshall. The dog you always wanted is already in there."
+        title="Dog Training Client Guide | Golden Bay & Nelson Bays"
+        description="Client dog training guide for Golden Bay and Nelson Bays — obedience, corrections, leash work, and access training by Warwick Marshall."
         keywords="dog training client guide, Gold Standard Dog Training guide, Warwick Marshall guide, obedience corrections Golden Bay, leash work Nelson Bays"
         path="/guide"
         bodyClass="page-guide page-guide-hub"

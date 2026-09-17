@@ -55,7 +55,7 @@ export default function HeaderBrandMark({
             key={prefix}
             className={i === index ? 'is-active' : undefined}
             src={headerBrandIconAsset(prefix)}
-            alt=""
+            alt="Gold Standard Dog Training"
             width={72}
             height={72}
             decoding="async"

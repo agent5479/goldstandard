@@ -6,9 +6,9 @@ import SiteHeader from '../components/SiteHeader';
 import SiteFooter from '../components/SiteFooter';
 import { buildHowToJsonLd } from '../data/siteConfig';
 
-const EQUIPMENT_TITLE = 'Dog Training Equipment | Gentle Leader & More | Gold Standard Dog Training';
+const EQUIPMENT_TITLE = 'Dog Training Equipment | Gentle Leader & More';
 const EQUIPMENT_DESCRIPTION =
-  'Dog training equipment we recommend in Golden Bay sessions — Gentle Leader headcollar, Kong Classic, and Carhartt 6ft leash. Sizing, fit, and why Warwick uses them.';
+  'Dog training equipment we recommend in Golden Bay — Gentle Leader headcollar, Kong Classic, and Carhartt 6ft leash. Sizing, fit, and why Warwick uses them.';
 
 const GENTLE_LEADER_STEPS = [
   {

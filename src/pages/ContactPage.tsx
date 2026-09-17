@@ -8,8 +8,8 @@ export default function ContactPage() {
   return (
     <>
       <Seo
-        title="Contact Dog Trainer Golden Bay | Warwick Marshall | Gold Standard Dog Training"
-        description="Contact dog trainer Warwick Marshall in Golden Bay, Takaka, or Nelson Bays, NZ. Enquire about obedience, recall, reactivity, rehabilitation, or puppy training. Call 027 814 2222."
+        title="Contact Dog Trainer Golden Bay | Warwick Marshall"
+        description="Contact dog trainer Warwick Marshall in Golden Bay, Takaka, or Nelson Bays. Enquire about obedience, recall, reactivity, rehab, or puppies. Call 027 814 2222."
         keywords="contact dog trainer Golden Bay, Warwick Marshall contact, dog training enquiry Takaka, Nelson Bays dog trainer phone"
         path="/contact"
       />

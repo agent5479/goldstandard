@@ -112,7 +112,7 @@ export default function HeroGallery() {
         aria-hidden="true"
         style={preview ? { left: `${preview.left}px`, top: `${preview.top}px` } : undefined}
       >
-        {preview ? <img src={preview.src} alt={preview.alt} /> : <img alt="" />}
+        {preview ? <img src={preview.src} alt={preview.alt} /> : null}
       </div>
 
       <dialog
@@ -129,7 +129,7 @@ export default function HeroGallery() {
           &times;
         </button>
         <figure>
-          {lightbox ? <img src={lightbox.src} alt={lightbox.alt} id="photo-lightbox-img" /> : <img alt="" id="photo-lightbox-img" />}
+          {lightbox ? <img src={lightbox.src} alt={lightbox.alt} id="photo-lightbox-img" /> : null}
           <figcaption id="photo-lightbox-caption">{lightbox?.caption ?? ''}</figcaption>
         </figure>
       </dialog>

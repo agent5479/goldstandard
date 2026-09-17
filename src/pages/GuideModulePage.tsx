@@ -62,8 +62,8 @@ function GuideModulePageInner({ moduleId }: { moduleId: GuideModuleId }) {
   return (
     <>
       <Seo
-        title={`${module.title} | Client Reference Guide | Gold Standard Dog Training`}
-        description={`${module.description} Client dog training guide by Warwick Marshall — Gold Standard Dog Training, Golden Bay & Nelson Bays, NZ.`}
+        title={`${module.title} | Client Reference Guide`}
+        description={`${module.description} Client dog training guide by Warwick Marshall, Golden Bay.`}
         keywords={`dog training ${module.title.toLowerCase()} guide, client guide Golden Bay, Warwick Marshall dog training, Gold Standard Dog Training guide, Nelson Bays`}
         path={module.route}
         bodyClass="page-guide page-guide-module"

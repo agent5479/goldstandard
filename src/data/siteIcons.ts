@@ -13,6 +13,8 @@ export const ICONS_DIR = 'images/icons';
 
 export interface IconSet {
   prefix: string;
+  /** Visible img alt for in-page mascots (Bing flags empty alt). */
+  iconAlt: string;
   ogImage: string;
   ogImageAlt: string;
   ogImageWidth: number;
@@ -26,6 +28,7 @@ const OG_HEIGHT = 630;
 export const ICON_SETS: Record<IconSetId, IconSet> = {
   site: {
     prefix: 'dog',
+    iconAlt: 'Gold Standard Dog Training',
     ogImage: `${SITE_URL}/${OG_DIR}/site.jpg`,
     ogImageAlt:
       'Gold Standard Dog Training — dog training in Golden Bay & Tasman Region, New Zealand',
@@ -34,6 +37,7 @@ export const ICON_SETS: Record<IconSetId, IconSet> = {
   },
   exam: {
     prefix: 'graduated',
+    iconAlt: 'Knowledge exam',
     ogImage: `${SITE_URL}/${OG_DIR}/exam.jpg`,
     ogImageAlt: 'Gold Standard Dog Training knowledge exam — graduated dog mascot',
     ogImageWidth: OG_WIDTH,
@@ -41,6 +45,7 @@ export const ICON_SETS: Record<IconSetId, IconSet> = {
   },
   guide: {
     prefix: 'studyguide',
+    iconAlt: 'Client reference guide',
     ogImage: `${SITE_URL}/${OG_DIR}/guide.jpg`,
     ogImageAlt: 'Gold Standard Dog Training client reference guide',
     ogImageWidth: OG_WIDTH,
@@ -48,6 +53,7 @@ export const ICON_SETS: Record<IconSetId, IconSet> = {
   },
   breedanalysis: {
     prefix: 'breedanalysis',
+    iconAlt: 'Breed analysis',
     ogImage: `${SITE_URL}/${OG_DIR}/breedanalysis.jpg`,
     ogImageAlt: 'Gold Standard Dog Training breed analysis reference',
     ogImageWidth: OG_WIDTH,
@@ -55,6 +61,7 @@ export const ICON_SETS: Record<IconSetId, IconSet> = {
   },
   problemfinder: {
     prefix: 'wrong',
+    iconAlt: 'Problem finder',
     ogImage: `${SITE_URL}/${OG_DIR}/problemfinder.jpg`,
     ogImageAlt: 'Gold Standard Dog Training Problem Finder tool',
     ogImageWidth: OG_WIDTH,
@@ -62,6 +69,7 @@ export const ICON_SETS: Record<IconSetId, IconSet> = {
   },
   breedfinder: {
     prefix: 'right',
+    iconAlt: 'Breed finder',
     ogImage: `${SITE_URL}/${OG_DIR}/breedfinder.jpg`,
     ogImageAlt: 'Gold Standard Dog Training — what dog should you get?',
     ogImageWidth: OG_WIDTH,
@@ -69,6 +77,7 @@ export const ICON_SETS: Record<IconSetId, IconSet> = {
   },
   personality: {
     prefix: 'human',
+    iconAlt: 'Dog personality quiz',
     ogImage: `${SITE_URL}/${OG_DIR}/personality.jpg`,
     ogImageAlt: 'Gold Standard Dog Training — what kind of dog are you?',
     ogImageWidth: OG_WIDTH,

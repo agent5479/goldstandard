@@ -14,17 +14,17 @@ export default function IntelligencePage() {
   return (
     <>
       <Seo
-        title="Dog Breed Intelligence & Temperament Analysis | Gold Standard Dog Training"
-        description="Compare dog breeds across nine intelligence and temperament dimensions — IQ, working drive, dominance, protectiveness, and more. Free breed analysis from Gold Standard Dog Training, Golden Bay & Nelson Bays, NZ."
+        title="Dog Breed Intelligence & Temperament Analysis"
+        description="Compare dog breeds across IQ, working drive, dominance, and protectiveness. Free breed analysis from Gold Standard Dog Training, Golden Bay."
         keywords="dog breed intelligence, breed temperament analysis, Stanley Coren dog IQ, breed comparison NZ, Gold Standard breed analysis"
         path="/intelligence"
         bodyClass="page-intelligence"
         iconSet="breedanalysis"
         pageJsonLd={buildSoftwareToolJsonLd({
           path: '/intelligence',
-          title: 'Dog Breed Intelligence & Temperament Analysis | Gold Standard Dog Training',
+          title: 'Dog Breed Intelligence & Temperament Analysis',
           description:
-            'Compare dog breeds across nine intelligence and temperament dimensions — IQ, working drive, dominance, protectiveness, and more. Free breed analysis from Gold Standard Dog Training, Golden Bay & Nelson Bays, NZ.',
+            'Compare dog breeds across IQ, working drive, dominance, and protectiveness. Free breed analysis from Gold Standard Dog Training, Golden Bay.',
           applicationName: 'Gold Standard Breed Analysis',
         })}
       />

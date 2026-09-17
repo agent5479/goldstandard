@@ -64,9 +64,9 @@ export interface AreaSeoEntry {
 }
 
 export const SERVICES_HUB = {
-  title: 'Dog Training Services | Golden Bay & Tasman | Gold Standard Dog Training',
+  title: 'Dog Training Services | Golden Bay & Tasman',
   metaDescription:
-    'Dog training services with Warwick Marshall in Golden Bay and the Tasman region — obedience, puppy start, leash and recall, home manners, dog-social calm, rehabilitation, and owner coaching.',
+    'Dog training services in Golden Bay and Tasman — obedience, puppy start, leash and recall, home manners, social calm, rehab, and owner coaching.',
   keywords:
     'dog training services Golden Bay, dog trainer Takaka, obedience training, puppy training, leash training, reactive dog training, dog rehabilitation Tasman, Warwick Marshall',
   h1: 'Services built for real households.',
@@ -75,9 +75,9 @@ export const SERVICES_HUB = {
 } as const;
 
 export const AREAS_HUB = {
-  title: 'Service Areas | Golden Bay, Takaka & Nelson Bays | Gold Standard Dog Training',
+  title: 'Service Areas | Golden Bay, Takaka & Nelson Bays',
   metaDescription:
-    'Dog training with Warwick Marshall across Golden Bay, Takaka, Pohara, Nelson Bays, Motueka, and Richmond. In-person sessions based in Takaka, serving the wider Tasman region.',
+    'Dog training across Golden Bay, Takaka, Pohara, Nelson Bays, Motueka, and Richmond. In-person sessions based in Takaka, serving the Tasman region.',
   keywords:
     'dog trainer Golden Bay, dog trainer Takaka, dog trainer Pohara, dog trainer Motueka, dog trainer Richmond, dog trainer Nelson Bays, Tasman dog training, Warwick Marshall',
   h1: 'Where we train.',
@@ -92,9 +92,9 @@ export const SERVICE_SEO: ServiceSeoEntry[] = [
     cardTitle: 'Everyday manners & obedience',
     cardDescription:
       'Sit, lie, wait, heel, come when called — the basics that make daily life easy, built around your goals. With the right mix of correction, reward, and your own energy, your dog can be shaped into almost anything you want.',
-    title: 'Everyday Obedience & Manners | Dog Training Golden Bay | Gold Standard',
+    title: 'Everyday Obedience & Manners | Dog Training Golden Bay',
     metaDescription:
-      'Everyday dog obedience in Golden Bay and Takaka — sit, wait, heel, and reliable recall with Warwick Marshall. Clear standards for daily life across the Tasman region.',
+      'Everyday dog obedience in Golden Bay and Takaka — sit, wait, heel, and reliable recall with Warwick Marshall. Clear standards for daily life.',
     keywords:
       'dog obedience Golden Bay, everyday manners training Takaka, heel training, sit wait come, Warwick Marshall dog training',
     h1: 'Everyday manners that hold when life gets busy.',
@@ -130,9 +130,9 @@ export const SERVICE_SEO: ServiceSeoEntry[] = [
     cardTitle: 'Puppies started right',
     cardDescription:
       'The early months set everything up. Toilet training, biting and mouthing, crate and sleep routines, and calm structure — matched to your puppy’s age so you build the right habits before problems ever take hold.',
-    title: 'Puppy Training Golden Bay & Takaka | Gold Standard Dog Training',
+    title: 'Puppy Training Golden Bay & Takaka',
     metaDescription:
-      'Puppy training in Golden Bay and Takaka — toilet training, biting, crate routines, and early structure with Warwick Marshall. Start habits before problems lock in.',
+      'Puppy training in Golden Bay and Takaka — toilet, biting, crate routines, and early structure with Warwick Marshall. Start habits before problems lock in.',
     keywords:
       'puppy training Golden Bay, puppy trainer Takaka, toilet training puppy NZ, crate training Golden Bay, Warwick Marshall puppy',
     h1: 'Puppies started with structure, not guesswork.',
@@ -168,9 +168,9 @@ export const SERVICE_SEO: ServiceSeoEntry[] = [
     cardTitle: 'Safe and under control',
     cardDescription:
       'Stopping the lunge, breaking a fixation, walking without pulling or cutting in front, staying aware of the road. The skills that matter when something unexpected happens — so you can trust your dog in any situation.',
-    title: 'Leash Training & Recall | Golden Bay Dog Trainer | Gold Standard',
+    title: 'Leash Training & Recall | Golden Bay Dog Trainer',
     metaDescription:
-      'Leash training and recall in Golden Bay — stop pulling, lunging, and road fixation. Warwick Marshall coaches reliable control for walks and real-world distractions.',
+      'Leash training and recall in Golden Bay — stop pulling, lunging, and road fixation. Warwick Marshall coaches reliable control for walks and distractions.',
     keywords:
       'leash training Golden Bay, dog recall Takaka, stop pulling leash, reactive lunge training, road awareness dog training NZ',
     h1: 'Leash work and recall you can trust on the road.',
@@ -206,7 +206,7 @@ export const SERVICE_SEO: ServiceSeoEntry[] = [
     cardTitle: 'Calm at home & greetings',
     cardDescription:
       'Jumping on visitors, bolting the door, barking, or a dog that just can’t settle. We build calm thresholds and quiet greetings so your home feels relaxed — for you, your guests, and your dog.',
-    title: 'Home Manners & Door Training | Golden Bay | Gold Standard Dog Training',
+    title: 'Home Manners & Door Training | Golden Bay',
     metaDescription:
       'Home dog manners in Golden Bay — stop door bolting, jumping on visitors, and demand barking. Calm thresholds and greetings with Warwick Marshall.',
     keywords:
@@ -244,7 +244,7 @@ export const SERVICE_SEO: ServiceSeoEntry[] = [
     cardTitle: 'Calm around other dogs',
     cardDescription:
       'Structured sessions with the right dogs — including Controlled Confrontation with a balanced master helper dog when pushiness needs native canine feedback. Yours learns healthy social habits and how to be corrected naturally.',
-    title: 'Reactive Dog Training & Social Calm | Golden Bay | Gold Standard',
+    title: 'Reactive Dog Training & Social Calm | Golden Bay',
     metaDescription:
       'Dog reactivity and social calm training in Golden Bay — structured dog meetings, Controlled Confrontation, and handler coaching with Warwick Marshall.',
     keywords:
@@ -282,7 +282,7 @@ export const SERVICE_SEO: ServiceSeoEntry[] = [
     cardTitle: 'A fresh start for tough cases',
     cardDescription:
       'For dogs with a hard history, high anxiety, or habits that feel stuck. We meet your dog where it is — safely, without force — and rebuild the trust that training needs to take hold.',
-    title: 'Dog Rehabilitation Coaching | Golden Bay & Tasman | Gold Standard',
+    title: 'Dog Rehabilitation Coaching | Golden Bay & Tasman',
     metaDescription:
       'Dog rehabilitation in Golden Bay — anxiety, hard history, and stuck habits. Structured, safety-first coaching with Warwick Marshall across the Tasman region.',
     keywords:
@@ -320,9 +320,9 @@ export const SERVICE_SEO: ServiceSeoEntry[] = [
     cardTitle: 'Coaching for you, too',
     cardDescription:
       "Your energy, attention, and consistency are the most powerful tools your dog has. Every session coaches you in how to hold your own — so the results don't disappear the moment Warwick leaves.",
-    title: 'Owner Coaching & Elite Dog Training | Golden Bay | Gold Standard',
+    title: 'Owner Coaching & Elite Dog Training | Golden Bay',
     metaDescription:
-      'Owner coaching and elite private dog training in Golden Bay — embodied leadership, private household sessions, and standards that last after the trainer leaves.',
+      'Owner coaching and elite private dog training in Golden Bay — embodied leadership, household sessions, and standards that last after the trainer leaves.',
     keywords:
       'owner coaching dog training, elite dog coaching Tasman, private household dog training Golden Bay, handler leadership, Warwick Marshall',
     h1: 'Coaching for the handler — so results stay.',
@@ -358,9 +358,9 @@ export const AREA_SEO: AreaSeoEntry[] = [
   {
     slug: 'golden-bay',
     name: 'Golden Bay',
-    title: 'Dog Trainer Golden Bay | Warwick Marshall | Gold Standard Dog Training',
+    title: 'Dog Trainer Golden Bay | Warwick Marshall',
     metaDescription:
-      'Dog trainer in Golden Bay, NZ — Warwick Marshall offers obedience, puppy training, recall, reactivity, and rehabilitation. Book in-person sessions. Call 027 814 2222.',
+      'Dog trainer in Golden Bay, NZ — Warwick Marshall offers obedience, puppy training, recall, reactivity, and rehab. Book in-person sessions. Call 027 814 2222.',
     keywords:
       'dog trainer Golden Bay, dog training Golden Bay NZ, Warwick Marshall Golden Bay, obedience Golden Bay',
     h1: 'Dog training across Golden Bay.',
@@ -373,7 +373,7 @@ export const AREA_SEO: AreaSeoEntry[] = [
   {
     slug: 'takaka',
     name: 'Takaka',
-    title: 'Dog Trainer Takaka | Warwick Marshall | Gold Standard Dog Training',
+    title: 'Dog Trainer Takaka | Warwick Marshall',
     metaDescription:
       'Dog trainer in Takaka, Golden Bay — Warwick Marshall for obedience, puppies, leash work, and rehabilitation. Based in Rangihaeata. Call 027 814 2222.',
     keywords:
@@ -388,7 +388,7 @@ export const AREA_SEO: AreaSeoEntry[] = [
   {
     slug: 'pohara',
     name: 'Pohara',
-    title: 'Dog Trainer Pohara | Golden Bay | Gold Standard Dog Training',
+    title: 'Dog Trainer Pohara | Golden Bay',
     metaDescription:
       'Dog training for Pohara and Golden Bay — leash work, recall, obedience, and rehab with Warwick Marshall. In-person coaching near the coast. Call 027 814 2222.',
     keywords:
@@ -403,7 +403,7 @@ export const AREA_SEO: AreaSeoEntry[] = [
   {
     slug: 'nelson-bays',
     name: 'Nelson Bays',
-    title: 'Dog Trainer Nelson Bays | Tasman Region | Gold Standard Dog Training',
+    title: 'Dog Trainer Nelson Bays | Tasman Region',
     metaDescription:
       'Dog trainer serving Nelson Bays and the Tasman region — Warwick Marshall for obedience, reactivity, and rehabilitation. Enquire or book. Call 027 814 2222.',
     keywords:
@@ -418,9 +418,9 @@ export const AREA_SEO: AreaSeoEntry[] = [
   {
     slug: 'motueka',
     name: 'Motueka',
-    title: 'Dog Trainer Motueka | Tasman | Gold Standard Dog Training',
+    title: 'Dog Trainer Motueka | Tasman',
     metaDescription:
-      'Dog training for Motueka and Tasman — obedience, leash work, puppies, and rehabilitation with Warwick Marshall. Serving the Motueka area from Golden Bay. Call 027 814 2222.',
+      'Dog training for Motueka and Tasman — obedience, leash work, puppies, and rehab with Warwick Marshall, serving Motueka from Golden Bay. Call 027 814 2222.',
     keywords:
       'dog trainer Motueka, dog training Motueka, Warwick Marshall Motueka',
     h1: 'Dog training for Motueka.',
@@ -433,9 +433,9 @@ export const AREA_SEO: AreaSeoEntry[] = [
   {
     slug: 'richmond',
     name: 'Richmond',
-    title: 'Dog Trainer Richmond NZ | Tasman | Gold Standard Dog Training',
+    title: 'Dog Trainer Richmond NZ | Tasman',
     metaDescription:
-      'Dog training for Richmond, Tasman — Warwick Marshall for obedience, recall, reactivity, and rehab. Serving Richmond as part of the wider Tasman region. Call 027 814 2222.',
+      'Dog training for Richmond, Tasman — Warwick Marshall for obedience, recall, reactivity, and rehab. Serving Richmond in the Tasman region. Call 027 814 2222.',
     keywords:
       'dog trainer Richmond NZ, dog training Richmond Tasman, Warwick Marshall Richmond',
     h1: 'Dog training for Richmond.',

@@ -34,17 +34,16 @@ export const SITE_SERVICE_AREAS = [
 export const SITE_KEYWORDS =
   'dog trainer Golden Bay, dog training Golden Bay, dog trainer Takaka, dog training Takaka, dog trainer Nelson Bays, dog training Nelson, puppy training Golden Bay, puppy training Takaka, obedience training Golden Bay, recall training Takaka, reactive dog training NZ, dog rehabilitation Golden Bay, leash training Golden Bay, Warwick Marshall dog training, dog trainer Pohara, dog trainer Motueka, dog trainer Richmond, Tasman dog trainer, Greater Tasman Region dog training, book dog training Golden Bay, elite dog coaching Tasman, dog breed intelligence, breed temperament comparison, Stanley Coren dog IQ, dog training knowledge exam NZ';
 
-/** Default document / Open Graph title for the home page and static HTML shell. */
-export const SITE_DEFAULT_TITLE =
-  'Warwick Marshall | Dog Trainer Golden Bay & Takaka | Gold Standard Dog Training';
+/** Default document / Open Graph title for the home page and static HTML shell (≤60 chars for Bing). */
+export const SITE_DEFAULT_TITLE = 'Dog Trainer Golden Bay & Takaka | Warwick Marshall';
 
 /** Core brand line — aligned with the Facebook page bio. */
 export const SITE_TAGLINE =
   'Dog training, rehabilitation, and in-person coaching. Using proven, structured methods. Dogs find peace and freedom when they know their place and learn trust and obedience.';
 
-/** Default meta description (plain text — no emoji for search snippets). */
+/** Default meta description (plain text — no emoji; 50–160 chars for Bing). */
 export const SITE_META_DESCRIPTION =
-  'Dog trainer in Golden Bay & Takaka — Warwick Marshall offers obedience, recall, puppy training, and rehabilitation across Nelson Bays and the Tasman region, NZ. Book in-person sessions. Call 027 814 2222.';
+  'Dog trainer in Golden Bay & Takaka — Warwick Marshall offers obedience, recall, puppy training, and rehab in Nelson Bays. Book in person. Call 027 814 2222.';
 
 /** Open Graph / Twitter preview — light emoji for link shares (Facebook, etc.). */
 export const SITE_OG_DESCRIPTION =

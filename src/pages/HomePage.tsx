@@ -189,7 +189,7 @@ export default function HomePage() {
               className="resource-card"
               onClick={() => setProblemFinderOpen(true)}
             >
-              <SectionIcon set="problemfinder" size="card" className="resource-card-icon" alt="" />
+              <SectionIcon set="problemfinder" size="card" className="resource-card-icon" />
               <strong className="resource-card-title">Problem Finder</strong>
               <span className="resource-card-desc">
                 A few quick questions to clarify your main training goal — then links to the right guide sections and next steps.
@@ -197,7 +197,7 @@ export default function HomePage() {
               <span className="resource-card-cta">Find your focus →</span>
             </button>
             <Link to="/dog-personality" className="resource-card">
-              <SectionIcon set="personality" size="card" className="resource-card-icon" alt="" />
+              <SectionIcon set="personality" size="card" className="resource-card-icon" />
               <strong className="resource-card-title">What Kind of Dog Are You?</strong>
               <span className="resource-card-desc">
                 A playful branching quiz — discover your temperament archetype and which breeds share your vibe.
@@ -205,7 +205,7 @@ export default function HomePage() {
               <span className="resource-card-cta">Take the quiz →</span>
             </Link>
             <Link to="/breed-finder" className="resource-card">
-              <SectionIcon set="breedfinder" size="card" className="resource-card-icon" alt="" />
+              <SectionIcon set="breedfinder" size="card" className="resource-card-icon" />
               <strong className="resource-card-title">What Dog Should You Get?</strong>
               <span className="resource-card-desc">
                 Help choosing the right breed — match your household, lifestyle, and expectations for maximum
@@ -214,7 +214,7 @@ export default function HomePage() {
               <span className="resource-card-cta">Find your match →</span>
             </Link>
             <Link to="/dog-selector" className="resource-card">
-              <SectionIcon set="breedfinder" size="card" className="resource-card-icon" alt="" />
+              <SectionIcon set="breedfinder" size="card" className="resource-card-icon" alt="Dog selector" />
               <strong className="resource-card-title">Dog Selector</strong>
               <span className="resource-card-desc">
                 Pick a working or family job, or a breed mix — likely outcomes, dice-roll gambits, and
