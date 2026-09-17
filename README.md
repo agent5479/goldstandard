@@ -65,6 +65,7 @@ This repository powers a public marketing site indexed by Google, Bing, and AI a
 | **Sitemap** | […/sitemap.xml](https://goldstandarddogtraining.nz/sitemap.xml) |
 | **Robots** | […/robots.txt](https://goldstandarddogtraining.nz/robots.txt) |
 | **llms.txt** | […/llms.txt](https://goldstandarddogtraining.nz/llms.txt) |
+| **IndexNow key** | […/3481b2c71f3849bd9d53fd46b812c1c4.txt](https://goldstandarddogtraining.nz/3481b2c71f3849bd9d53fd46b812c1c4.txt) |
 
 - **Canonical base:** `https://goldstandarddogtraining.nz/`
 - **Geo targeting:** Tasman Region (`NZ-TAS`) — Takaka, Golden Bay; service extends to Nelson Bays
@@ -72,11 +73,11 @@ This repository powers a public marketing site indexed by Google, Bing, and AI a
 - **Per-route SEO:** titles, descriptions, canonical URLs, and Open Graph tags via [`src/components/Seo.tsx`](src/components/Seo.tsx) and defaults in [`src/data/siteConfig.ts`](src/data/siteConfig.ts)
 - **Static prerender (SSG):** `npm run build` runs Vite, then [`scripts/prerender.mjs`](scripts/prerender.mjs) exports each public route as fully rendered HTML under `docs/` so crawlers receive baked content on GitHub Pages
 - **Sitemap:** generated on every build from [`scripts/seoRoutes.mjs`](scripts/seoRoutes.mjs) via [`scripts/generate-sitemap.mjs`](scripts/generate-sitemap.mjs)
-- **Crawl files:** [`public/robots.txt`](public/robots.txt) (explicit allow for GPTBot, OAI-SearchBot, ChatGPT-User, Google-Extended, ClaudeBot, PerplexityBot, Perplexity-User, Applebot-Extended, Bytespider), generated `public/sitemap.xml`, [`public/llms.txt`](public/llms.txt), and [`public/CNAME`](public/CNAME)
+- **Crawl files:** [`public/robots.txt`](public/robots.txt) (explicit allow for GPTBot, OAI-SearchBot, ChatGPT-User, Google-Extended, ClaudeBot, PerplexityBot, Perplexity-User, Applebot-Extended, Bytespider), generated `public/sitemap.xml`, [`public/llms.txt`](public/llms.txt), [`public/CNAME`](public/CNAME), and IndexNow key [`public/3481b2c71f3849bd9d53fd46b812c1c4.txt`](public/3481b2c71f3849bd9d53fd46b812c1c4.txt)
 - **Hosting:** GitHub Pages (no Cloudflare WAF bot rules). HTTPS via custom domain.
 - **Social preview:** `images/icons/dog1024.jpg` (favicons + [`site.webmanifest`](public/site.webmanifest))
 - **CI / deploy:** [`.github/workflows/site.yml`](.github/workflows/site.yml) builds, verifies prerendered HTML + crawl files, and deploys `docs/` via GitHub Actions. In repo **Settings → Pages**, set **Source** to **GitHub Actions**, and confirm the custom domain `goldstandarddogtraining.nz`
-- **After deploy:** submit the sitemap in [Google Search Console](https://search.google.com/search-console) for `https://goldstandarddogtraining.nz/sitemap.xml` (and Bing Webmaster Tools if desired)
+- **After deploy:** submit the sitemap in [Google Search Console](https://search.google.com/search-console) for `https://goldstandarddogtraining.nz/sitemap.xml`. CI pings [IndexNow](https://www.bing.com/indexnow) (`npm run indexnow`) so Bing receives the sitemap URL list; confirm receipts in [Bing Webmaster Tools](https://www.bing.com/webmasters) (the IndexNow report can lag by hours)
 - **GBP / social:** paste Google Business Profile URL into `SITE_GBP_URL` in [`siteConfig.ts`](src/data/siteConfig.ts) when ready; optional YouTube / Instagram / newsletter URLs likewise
 - **Off-site / measurement (ops, not in-repo):** keep brand name + phone + URL consistent on Facebook/GBP/directories; track branded search (“Gold Standard Dog Training”, “Warwick Marshall dog”); periodically query ChatGPT / Perplexity / Gemini / Claude with target prompts and log citations (Search Console does not capture AI citations)
 

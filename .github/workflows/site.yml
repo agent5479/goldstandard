@@ -104,6 +104,8 @@ jobs:
           grep -q 'images/og/site.jpg' docs/index.html
           grep -q 'og:image:width" content="1200"' docs/index.html
           test -f docs/BingSiteAuth.xml
+          test -f docs/3481b2c71f3849bd9d53fd46b812c1c4.txt
+          grep -q '3481b2c71f3849bd9d53fd46b812c1c4' docs/3481b2c71f3849bd9d53fd46b812c1c4.txt
           grep -q 'Dog Trainer Golden Bay' docs/index.html
           grep -q 'dog trainer Golden Bay' docs/index.html
           grep -q 'data-seo-ready="true"' docs/about/index.html
@@ -166,3 +168,20 @@ jobs:
         run: |
           echo "::error::GitHub Pages deploy failed after retry. Re-run this workflow from Actions, or check repo Settings → Pages → Source is GitHub Actions."
           exit 1
+
+      - name: Checkout for IndexNow submit
+        uses: actions/checkout@v4
+
+      - name: Wait for Pages to serve IndexNow key
+        run: sleep 60
+
+      - name: Submit sitemap URLs to IndexNow
+        id: indexnow
+        continue-on-error: true
+        run: node scripts/submit-indexnow.mjs
+
+      - name: Retry IndexNow submit
+        if: steps.indexnow.outcome == 'failure'
+        run: |
+          sleep 30
+          node scripts/submit-indexnow.mjs
