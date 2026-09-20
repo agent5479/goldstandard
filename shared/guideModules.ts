@@ -18,6 +18,15 @@ export interface GuideModuleMeta {
   readMinutes: number;
   primaryAnchors: string[];
   anchors: string[];
+  /** SEO document title (includes conventional topic). */
+  seoTitle: string;
+  /** SEO meta description. */
+  seoDescription: string;
+  /** Optional H1 override attaching conventional language. */
+  seoH1: string;
+  /** Commercial reverse-link for module foot CTA. */
+  commercialPath: string;
+  commercialCta: string;
 }
 
 const FOUNDATION_ANCHORS = ['missing-framework', 'pillars', 'gold-standard-rule', 'pack-leader-energy'] as const;
@@ -223,6 +232,12 @@ export const GUIDE_MODULES: GuideModuleMeta[] = [
     readMinutes: 10,
     primaryAnchors: ['missing-framework', 'pillars'],
     anchors: [...FOUNDATION_ANCHORS],
+    seoTitle: 'Dog Training Foundations & Impulse Control | Client Guide',
+    seoDescription:
+      'Foundation principles for structured dog training — the Gold Standard Rule, four pillars, and handler authority. Client guide by Warwick Marshall, Golden Bay.',
+    seoH1: 'Foundation — impulse control and handler authority',
+    commercialPath: '/obedience-training',
+    commercialCta: 'If you want calm everyday obedience coached in person, book obedience training in Golden Bay.',
   },
   {
     id: 'leadership',
@@ -233,6 +248,12 @@ export const GUIDE_MODULES: GuideModuleMeta[] = [
     readMinutes: 25,
     primaryAnchors: ['owner-mindset', 'expectations', 'front-door'],
     anchors: [...LEADERSHIP_ANCHORS],
+    seoTitle: 'Dog Owner Mindset & Household Structure | Client Guide',
+    seoDescription:
+      'Handler focus, household structure, and Dog-Tantra — owner mindset for lasting dog training results. Client guide by Warwick Marshall, Golden Bay.',
+    seoH1: 'Leadership — handler focus and household structure',
+    commercialPath: '/owner-coaching',
+    commercialCta: 'If results fade between sessions, book owner coaching so the standard holds when you are alone with the dog.',
   },
   {
     id: 'understanding',
@@ -243,6 +264,12 @@ export const GUIDE_MODULES: GuideModuleMeta[] = [
     readMinutes: 35,
     primaryAnchors: ['reading-dog', 'rehabilitation-patterns', 'symptom-glossary'],
     anchors: [...UNDERSTANDING_ANCHORS],
+    seoTitle: 'Reading Dog Behaviour & Rehabilitation | Client Guide',
+    seoDescription:
+      'Read dog behaviour — stress signals, breed temperament, trauma vs hardship, and rehabilitation patterns. Client guide by Warwick Marshall, Golden Bay.',
+    seoH1: 'Understanding — reading behaviour and drivers',
+    commercialPath: '/difficult-dogs',
+    commercialCta: 'If your dog is still stuck in anxiety or hard-history patterns, book training for difficult or complex cases.',
   },
   {
     id: 'social',
@@ -253,6 +280,12 @@ export const GUIDE_MODULES: GuideModuleMeta[] = [
     readMinutes: 30,
     primaryAnchors: ['social-needs', 'intact-large-males'],
     anchors: [...SOCIAL_ANCHORS],
+    seoTitle: 'Dog Socialisation Principles & Pack Dynamics | Client Guide',
+    seoDescription:
+      'Dog-to-dog socialisation principles — friction signals, Controlled Confrontation, and calm meetings. Client guide by Warwick Marshall, Golden Bay.',
+    seoH1: 'Social needs — dog socialisation with structure',
+    commercialPath: '/reactive-dog',
+    commercialCta: 'If your dog is still lunging or fixating despite these principles, book reactive dog training in Golden Bay.',
   },
   {
     id: 'training',
@@ -263,6 +296,12 @@ export const GUIDE_MODULES: GuideModuleMeta[] = [
     readMinutes: 45,
     primaryAnchors: ['timing', 'corrections', 'access'],
     anchors: [...TRAINING_ANCHORS],
+    seoTitle: 'Dog Training Timing, Leash Technique & Corrections | Guide',
+    seoDescription:
+      'Timing, the one-second rule, leash technique, collar selection, and measured corrections. Client guide by Warwick Marshall, Golden Bay.',
+    seoH1: 'Training — timing, leash technique, and corrections',
+    commercialPath: '/leash-training',
+    commercialCta: 'If pulling or walk reliability is still the daily battle, book leash training — or recall training for come-when-called.',
   },
   {
     id: 'puppy-phase',
@@ -273,6 +312,12 @@ export const GUIDE_MODULES: GuideModuleMeta[] = [
     readMinutes: 20,
     primaryAnchors: ['puppy-phase', 'puppy-toilet-training', 'puppy-behavior-design'],
     anchors: [...PUPPY_PHASE_ANCHORS],
+    seoTitle: 'Puppy Structure, Toilet Training & Early Habits | Guide',
+    seoDescription:
+      'Puppy toilet training, structure, and early habits — developmental standards for the first months. Client guide by Warwick Marshall, Golden Bay.',
+    seoH1: 'Puppy phase — structure before problems lock in',
+    commercialPath: '/puppy-training',
+    commercialCta: 'If you want age-matched puppy coaching in person, book puppy training in Golden Bay & Takaka.',
   },
   {
     id: 'daily-life',
@@ -283,6 +328,12 @@ export const GUIDE_MODULES: GuideModuleMeta[] = [
     readMinutes: 12,
     primaryAnchors: ['check-in-seven', 'daily', 'graduation'],
     anchors: [...DAILY_LIFE_ANCHORS],
+    seoTitle: 'Daily Dog Training Practice & Check-In | Client Guide',
+    seoDescription:
+      'Sustain dog training standards — seven-second check-in, daily practice, and graduation. Client guide by Warwick Marshall, Golden Bay.',
+    seoH1: 'Daily life — practice that sustains the standard',
+    commercialPath: '/book',
+    commercialCta: 'Ready to put the standard into practice with coaching? Book a private session in Golden Bay.',
   },
 ];
 

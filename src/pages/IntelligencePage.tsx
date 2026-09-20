@@ -14,17 +14,17 @@ export default function IntelligencePage() {
   return (
     <>
       <Seo
-        title="Dog Breed Intelligence & Temperament Analysis"
-        description="Compare dog breeds across IQ, working drive, dominance, and protectiveness. Free breed analysis from Gold Standard Dog Training, Golden Bay."
-        keywords="dog breed intelligence, breed temperament analysis, Stanley Coren dog IQ, breed comparison NZ, Gold Standard breed analysis"
+        title="Dog Breed Intelligence & Temperament"
+        description="Compare dog breed intelligence and temperament — IQ, drive, dominance, and mixes. Free breed analysis from Gold Standard Dog Training."
+        keywords="dog breed intelligence, dog breed temperament, Stanley Coren dog IQ, mixed breed temperament, breed comparison NZ"
         path="/intelligence"
         bodyClass="page-intelligence"
         iconSet="breedanalysis"
         pageJsonLd={buildSoftwareToolJsonLd({
           path: '/intelligence',
-          title: 'Dog Breed Intelligence & Temperament Analysis',
+          title: 'Dog Breed Intelligence & Temperament',
           description:
-            'Compare dog breeds across IQ, working drive, dominance, and protectiveness. Free breed analysis from Gold Standard Dog Training, Golden Bay.',
+            'Compare dog breed intelligence and temperament — IQ, drive, dominance, and mixes. Free breed analysis from Gold Standard Dog Training.',
           applicationName: 'Gold Standard Breed Analysis',
         })}
       />
@@ -97,9 +97,12 @@ export default function IntelligencePage() {
             <strong>Training context</strong>
             <p>
               Intelligence rankings describe learning aptitude — not trainability in your home, and not
-              temperament. For how breed type shapes correction delivery and reward currency, see the{' '}
-              <Link to={guideHref('breed-temperament')}>Client Reference Guide</Link> or take the{' '}
-              <Link to="/exam">owner exam</Link>.
+              temperament. Choosing the right dog is only the beginning; training establishes the
+              relationship. For how breed type shapes correction delivery and reward currency, see the{' '}
+              <Link to={guideHref('breed-temperament')}>Client Reference Guide</Link>, take the{' '}
+              <Link to="/exam">owner exam</Link>, or{' '}
+              <Link to="/puppy-training">book puppy training</Link> /{' '}
+              <Link to="/">start with dog training in Golden Bay</Link>.
             </p>
           </div>
         </div>

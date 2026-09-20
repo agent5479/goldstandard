@@ -13,9 +13,10 @@ import BreedFinderPage from './pages/breed-finder/BreedFinderPage';
 import DogSelectorPage from './pages/DogSelectorPage';
 import EquipmentPage from './pages/EquipmentPage';
 import ServiceHubPage from './pages/ServiceHubPage';
-import ServiceDetailPage from './pages/ServiceDetailPage';
+import ServiceDetailPage, { LegacyServiceMovedPage } from './pages/ServiceDetailPage';
 import AreaHubPage from './pages/AreaHubPage';
 import AreaDetailPage from './pages/AreaDetailPage';
+import ProblemFinderPage from './pages/ProblemFinderPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 /** Redirect legacy .html URLs to their SPA routes, preserving the hash. */
@@ -42,8 +43,19 @@ export default function App() {
         <Route path="/breed-finder" element={<BreedFinderPage />} />
         <Route path="/dog-selector" element={<DogSelectorPage />} />
         <Route path="/equipment" element={<EquipmentPage />} />
+        <Route path="/problem-finder" element={<ProblemFinderPage />} />
         <Route path="/services" element={<ServiceHubPage />} />
-        <Route path="/services/:slug" element={<ServiceDetailPage />} />
+        <Route path="/services/:slug" element={<LegacyServiceMovedPage />} />
+
+        <Route path="/obedience-training" element={<ServiceDetailPage slug="obedience-training" />} />
+        <Route path="/puppy-training" element={<ServiceDetailPage slug="puppy-training" />} />
+        <Route path="/leash-training" element={<ServiceDetailPage slug="leash-training" />} />
+        <Route path="/recall-training" element={<ServiceDetailPage slug="recall-training" />} />
+        <Route path="/dog-behaviour" element={<ServiceDetailPage slug="dog-behaviour" />} />
+        <Route path="/reactive-dog" element={<ServiceDetailPage slug="reactive-dog" />} />
+        <Route path="/difficult-dogs" element={<ServiceDetailPage slug="difficult-dogs" />} />
+        <Route path="/owner-coaching" element={<ServiceDetailPage slug="owner-coaching" />} />
+
         <Route path="/areas" element={<AreaHubPage />} />
         <Route path="/areas/:slug" element={<AreaDetailPage />} />
 

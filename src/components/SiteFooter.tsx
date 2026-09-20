@@ -16,6 +16,7 @@ export default function SiteFooter() {
         <Link to="/equipment">Equipment</Link>
         <Link to="/contact">Contact</Link>
         <span className="footer-links-divider" aria-hidden="true">·</span>
+        <Link to="/problem-finder">Problem Finder</Link>
         <Link to="/exam">Exam</Link>
         <Link to="/intelligence">Breed Analysis</Link>
         <Link to="/dog-personality">Dog Personality</Link>

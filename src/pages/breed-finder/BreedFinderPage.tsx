@@ -90,17 +90,17 @@ export default function BreedFinderPage() {
   return (
     <>
       <Seo
-        title="What Dog Should You Get? | Breed Finder NZ"
-        description="Dog breed finder for NZ households — match lifestyle and expectations with ranked breeds and honest caveats. From Gold Standard Dog Training, Golden Bay."
-        keywords="dog breed finder NZ, what dog should I get, breed lifestyle match, Gold Standard breed finder, Warwick Marshall"
+        title="Choosing a Dog Breed | Breed Finder NZ"
+        description="Choosing a dog breed for your family — match lifestyle and expectations with ranked breeds and honest caveats. Then train the relationship."
+        keywords="choosing a dog breed, best dog breed for family, what dog should I get, dog breed finder NZ, mixed breed temperament"
         path="/breed-finder"
         bodyClass="page-breed-finder"
         iconSet="breedfinder"
         pageJsonLd={buildSoftwareToolJsonLd({
           path: '/breed-finder',
-          title: 'What Dog Should You Get? | Breed Finder NZ',
+          title: 'Choosing a Dog Breed | Breed Finder NZ',
           description:
-            'Dog breed finder for NZ households — match lifestyle and expectations with ranked breeds and honest caveats. From Gold Standard Dog Training, Golden Bay.',
+            'Choosing a dog breed for your family — match lifestyle and expectations with ranked breeds and honest caveats. Then train the relationship.',
           applicationName: 'Gold Standard Breed Finder',
         })}
       />
@@ -198,6 +198,19 @@ export default function BreedFinderPage() {
           <BreedFinderResultView results={step.results} onRestart={restart} />
         )}
       </main>
+
+      <section className="about-section about-section--soft">
+        <div className="section-inner philosophy-text">
+          <p className="section-label">Next step</p>
+          <h2>Choosing the right dog is only the beginning.</h2>
+          <p>
+            Training establishes the relationship. When you are ready for structure —
+            especially with a new puppy — start with{' '}
+            <Link to="/puppy-training">puppy training in Golden Bay</Link> or the{' '}
+            <Link to="/">dog training home page</Link>.
+          </p>
+        </div>
+      </section>
 
       <SiteFooter />
     </>

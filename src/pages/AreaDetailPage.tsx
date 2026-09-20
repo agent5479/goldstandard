@@ -83,7 +83,7 @@ export default function AreaDetailPage() {
             <ul className="checklist">
               {SERVICE_SEO.map((service) => (
                 <li key={service.slug}>
-                  <Link to={`/services/${service.slug}`}>
+                  <Link to={service.path}>
                     {service.cardTitle} in {area.name}
                   </Link>
                 </li>

@@ -4,6 +4,7 @@ import { TRAINER_APP_URL } from '../data/trainerAppConfig';
 import HeaderBrandMark from './HeaderBrandMark';
 
 const TOOL_LINKS = [
+  { to: '/problem-finder', label: 'Problem Finder' },
   { to: '/exam', label: 'Exam' },
   { to: '/intelligence', label: 'Breed Analysis' },
   { to: '/dog-personality', label: 'Dog Personality' },

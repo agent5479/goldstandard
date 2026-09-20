@@ -402,7 +402,6 @@ body::before {
   animation: fadeUp 0.6s 0.2s forwards;
 }
 
-.hero h1,
 .hero-brand {
   width: 100%;
   margin: 0 0 1.25rem;
@@ -418,6 +417,21 @@ body::before {
   max-width: 100%;
   height: auto;
   margin-inline: auto;
+  margin-bottom: 1rem;
+  opacity: 0;
+  animation: fadeUp 0.7s 0.35s forwards;
+}
+
+.hero-search-h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.55rem, 4vw, 2.35rem);
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--forest);
+  margin: 0 0 0.65rem;
+  text-align: center;
+  opacity: 0;
+  animation: fadeUp 0.7s 0.42s forwards;
 }
 
 .hero-headline {
@@ -432,6 +446,81 @@ body::before {
 }
 
 .hero-headline span { color: var(--gold); }
+
+.guide-term-glosses {
+  padding: 1rem 1.25rem 0;
+}
+
+.guide-term-glosses-inner {
+  max-width: 52rem;
+  margin: 0 auto;
+  padding: 1rem 1.25rem;
+  border: 1px solid rgba(45, 74, 45, 0.15);
+  border-radius: 0.75rem;
+  background: rgba(45, 74, 45, 0.04);
+}
+
+.guide-term-gloss-list {
+  margin: 0.5rem 0 0;
+  padding-left: 1.2rem;
+}
+
+.guide-term-gloss-list li {
+  margin: 0.35rem 0;
+}
+
+.guide-commercial-cta {
+  padding: 1.5rem 1.25rem 0.5rem;
+}
+
+.guide-commercial-cta-inner {
+  max-width: 52rem;
+  margin: 0 auto;
+  padding: 1.25rem 1.35rem;
+  border-radius: 0.75rem;
+  background: rgba(184, 148, 58, 0.1);
+  border: 1px solid rgba(184, 148, 58, 0.28);
+}
+
+.guide-commercial-cta-inner p:last-of-type {
+  margin-bottom: 0;
+}
+
+.hero-problem-chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 0 0 1.25rem;
+  opacity: 0;
+  animation: fadeUp 0.7s 0.52s forwards;
+}
+
+.hero-problem-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.4rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid rgba(45, 74, 45, 0.22);
+  background: rgba(255, 255, 255, 0.72);
+  color: var(--forest);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.hero-problem-chip:hover,
+.hero-problem-chip:focus-visible {
+  background: #fff;
+  border-color: var(--gold);
+  outline: none;
+}
+
+.hero-problem-chip--finder {
+  background: rgba(45, 74, 45, 0.08);
+  border-color: var(--forest);
+}
 
 .pain-quotes-rotator {
   width: 100%;
@@ -4125,8 +4214,11 @@ body.page-guide {
   html { scroll-behavior: auto; }
 
   .hero-eyebrow,
-  .hero h1,
+  .hero-brand,
+  .hero-brand-banner,
+  .hero-search-h1,
   .hero-headline,
+  .hero-problem-chips,
   .hero-lead,
   .hero-cta-sub,
   .hero-phone-link,

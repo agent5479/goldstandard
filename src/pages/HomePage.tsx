@@ -12,7 +12,7 @@ import {
   SITE_OG_DESCRIPTION,
   buildSocialLinks,
 } from '../data/siteConfig';
-import { SERVICE_SEO } from '../data/localSeo';
+import { HOME_PROBLEM_CHIPS, SERVICE_SEO } from '../data/localSeo';
 import { asset } from '../asset';
 import SectionIcon from '../components/SectionIcon';
 
@@ -34,17 +34,16 @@ export default function HomePage() {
       <section className="hero">
         <div className="hero-body">
           <p className="hero-eyebrow">Golden Bay &amp; Tasman Region · New Zealand</p>
-          <h1 className="hero-brand">
-            <img
-              className="hero-brand-banner"
-              src={asset('images/icons/banner-full.png')}
-              alt="Gold Standard Dog Training"
-              width={1200}
-              height={480}
-              decoding="async"
-              fetchPriority="high"
-            />
-          </h1>
+          <img
+            className="hero-brand-banner"
+            src={asset('images/icons/banner-full.png')}
+            alt="Gold Standard Dog Training"
+            width={1200}
+            height={480}
+            decoding="async"
+            fetchPriority="high"
+          />
+          <h1 className="hero-search-h1">Dog Training in Golden Bay &amp; Takaka</h1>
           <p className="hero-headline">
             The dog you always wanted <span>is already in there.</span>
           </p>
@@ -53,6 +52,16 @@ export default function HomePage() {
             Give your dog the confidence to know how to handle any new situation without having to
             revert to default behaviour.
           </p>
+          <nav className="hero-problem-chips" aria-label="Common dog training problems">
+            {HOME_PROBLEM_CHIPS.map((chip) => (
+              <Link key={chip.label} to={chip.to} className="hero-problem-chip">
+                {chip.label}
+              </Link>
+            ))}
+            <Link to="/problem-finder" className="hero-problem-chip hero-problem-chip--finder">
+              Find the right starting point
+            </Link>
+          </nav>
           <div className="hero-cta">
             <Link to="/book" className="btn btn-primary">Book a session</Link>
             <button
@@ -92,7 +101,7 @@ export default function HomePage() {
               {SERVICE_SEO.map((service) => (
                 <Link
                   key={service.slug}
-                  to={`/services/${service.slug}`}
+                  to={service.path}
                   className="service-hub-card service-hub-card--home"
                 >
                   <span className="service-hub-card-icon" aria-hidden="true">{service.icon}</span>
@@ -184,18 +193,14 @@ export default function HomePage() {
               </span>
               <span className="resource-card-cta">Explore breeds →</span>
             </Link>
-            <button
-              type="button"
-              className="resource-card"
-              onClick={() => setProblemFinderOpen(true)}
-            >
+            <Link to="/problem-finder" className="resource-card">
               <SectionIcon set="problemfinder" size="card" className="resource-card-icon" />
               <strong className="resource-card-title">Problem Finder</strong>
               <span className="resource-card-desc">
                 A few quick questions to clarify your main training goal — then links to the right guide sections and next steps.
               </span>
               <span className="resource-card-cta">Find your focus →</span>
-            </button>
+            </Link>
             <Link to="/dog-personality" className="resource-card">
               <SectionIcon set="personality" size="card" className="resource-card-icon" />
               <strong className="resource-card-title">What Kind of Dog Are You?</strong>

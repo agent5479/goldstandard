@@ -6,22 +6,21 @@ import { SERVICES_HUB, SERVICE_SEO } from '../data/localSeo';
 import { buildBreadcrumbJsonLd } from '../data/siteConfig';
 
 export default function ServiceHubPage() {
-  const path = '/services';
   return (
     <>
       <Seo
         title={SERVICES_HUB.title}
         description={SERVICES_HUB.metaDescription}
         keywords={SERVICES_HUB.keywords}
-        path={path}
+        path="/services"
         bodyClass="page-services"
         pageJsonLd={buildBreadcrumbJsonLd({
-          path,
+          path: '/services',
           title: SERVICES_HUB.title,
           description: SERVICES_HUB.metaDescription,
           crumbs: [
             { name: 'Home', path: '/' },
-            { name: 'Services', path },
+            { name: 'Services', path: '/services' },
           ],
         })}
       />
@@ -29,24 +28,26 @@ export default function ServiceHubPage() {
 
       <section className="page-hero">
         <div className="page-hero-inner">
-          <p className="section-label">What&apos;s on offer</p>
+          <p className="section-label">Services</p>
           <h1>{SERVICES_HUB.h1}</h1>
           <p className="page-hero-lead">{SERVICES_HUB.lead}</p>
           <div className="contact-cta-row page-hero-cta">
             <Link to="/book" className="btn btn-primary">Book a session</Link>
-            <Link to="/areas" className="btn btn-secondary">Service areas</Link>
+            <Link to="/problem-finder" className="btn btn-secondary">
+              What&apos;s going on with your dog?
+            </Link>
           </div>
         </div>
       </section>
 
       <main>
-        <section className="about-section">
+        <section className="about-section about-section--soft">
           <div className="section-inner">
-            <div className="services-grid services-grid--hub">
+            <div className="services-grid">
               {SERVICE_SEO.map((service) => (
                 <Link
                   key={service.slug}
-                  to={`/services/${service.slug}`}
+                  to={service.path}
                   className="service-hub-card"
                 >
                   <span className="service-hub-card-icon" aria-hidden="true">{service.icon}</span>

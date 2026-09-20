@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Seo from '../components/Seo';
 import SiteHeader from '../components/SiteHeader';
 import SiteFooter from '../components/SiteFooter';
@@ -122,17 +123,17 @@ export default function ExamPage() {
   return (
     <>
       <Seo
-        title="Dog Training Knowledge Exam NZ"
-        description="Test dog training knowledge with a 24-question owner exam or full trainer track. Corrections, timing, and access training — Golden Bay & Nelson Bays, NZ."
-        keywords="dog training knowledge exam NZ, Gold Standard Dog Training exam, Warwick Marshall exam, breed-aware owner exam, dog trainer quiz Golden Bay"
+        title="Dog Training Knowledge Exam | Owner Education"
+        description="Test how to train your dog — owner knowledge exam on corrections, timing, and access. Free from Gold Standard Dog Training, NZ."
+        keywords="dog training knowledge exam, how to train your dog, dog owner education, dog behaviour education, Gold Standard exam NZ"
         path="/exam"
         bodyClass="page-exam"
         iconSet="exam"
         pageJsonLd={buildSoftwareToolJsonLd({
           path: '/exam',
-          title: 'Dog Training Knowledge Exam NZ',
+          title: 'Dog Training Knowledge Exam | Owner Education',
           description:
-            'Test dog training knowledge with a 24-question owner exam or full trainer track. Corrections, timing, and access training — Golden Bay & Nelson Bays, NZ.',
+            'Test how to train your dog — owner knowledge exam on corrections, timing, and access. Free from Gold Standard Dog Training, NZ.',
           applicationName: 'Gold Standard Dog Training Knowledge Exam',
         })}
       />
@@ -214,6 +215,18 @@ export default function ExamPage() {
           />
         )}
       </main>
+
+      <section className="about-section about-section--soft">
+        <div className="section-inner philosophy-text">
+          <p className="section-label">Put it into practice</p>
+          <h2>Owner education becomes results with coaching.</h2>
+          <p>
+            Learn to train your dog with{' '}
+            <Link to="/owner-coaching">owner coaching</Link>, or{' '}
+            <Link to="/book">book a private session</Link> in Golden Bay.
+          </p>
+        </div>
+      </section>
 
       <SiteFooter />
     </>

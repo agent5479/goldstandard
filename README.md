@@ -81,7 +81,7 @@ This repository powers a public marketing site indexed by Google, Bing, and AI a
 - **GBP / social:** paste Google Business Profile URL into `SITE_GBP_URL` in [`siteConfig.ts`](src/data/siteConfig.ts) when ready; optional YouTube / Instagram / newsletter URLs likewise
 - **Off-site / measurement (ops, not in-repo):** keep brand name + phone + URL consistent on Facebook/GBP/directories; track branded search (“Gold Standard Dog Training”, “Warwick Marshall dog”); periodically query ChatGPT / Perplexity / Gemini / Claude with target prompts and log citations (Search Console does not capture AI citations)
 
-**Local SEO shape today:** dedicated `/services/{slug}` and `/areas/{slug}` entity pages with local-intent cross-links (not a full service×town URL matrix yet — that is the next GEO increment if thin-doorway risk is acceptable).
+**Local SEO shape today:** root commercial URLs (`/obedience-training`, `/puppy-training`, `/leash-training`, `/recall-training`, `/reactive-dog`, `/dog-behaviour`, `/difficult-dogs`, `/owner-coaching`) plus `/areas/{slug}` entity pages. Legacy `/services/{slug}` paths soft-redirect (MovedPage). See `reference/seo/SEO-ENTITY-MAP.md`.
 
 The private trainer app at [gsdt-trainer-private.web.app](https://gsdt-trainer-private.web.app/) is **not** indexed (`noindex`, separate `robots.txt`).
 

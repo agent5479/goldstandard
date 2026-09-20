@@ -1,6 +1,9 @@
 /**
  * Single source of truth for public crawl routes (sitemap + prerender).
  * Keep `src/data/prerenderRoutes.ts` aligned with the `path` values here.
+ *
+ * Legacy `/services/*` paths are prerendered separately (MovedPage) but omitted
+ * from the sitemap — see LEGACY_PRERENDER_ROUTES.
  */
 export const SITE_ORIGIN = 'https://goldstandarddogtraining.nz';
 
@@ -13,13 +16,15 @@ export const SEO_ROUTES = [
   { path: '/contact', changefreq: 'monthly', priority: '0.8' },
   { path: '/about', changefreq: 'monthly', priority: '0.8' },
   { path: '/services', changefreq: 'monthly', priority: '0.85' },
-  { path: '/services/everyday-obedience', changefreq: 'monthly', priority: '0.8' },
-  { path: '/services/puppy-training', changefreq: 'monthly', priority: '0.8' },
-  { path: '/services/leash-recall-control', changefreq: 'monthly', priority: '0.8' },
-  { path: '/services/home-manners', changefreq: 'monthly', priority: '0.8' },
-  { path: '/services/dog-social-calm', changefreq: 'monthly', priority: '0.8' },
-  { path: '/services/rehabilitation', changefreq: 'monthly', priority: '0.8' },
-  { path: '/services/owner-coaching', changefreq: 'monthly', priority: '0.8' },
+  { path: '/obedience-training', changefreq: 'monthly', priority: '0.85' },
+  { path: '/puppy-training', changefreq: 'monthly', priority: '0.85' },
+  { path: '/leash-training', changefreq: 'monthly', priority: '0.85' },
+  { path: '/recall-training', changefreq: 'monthly', priority: '0.85' },
+  { path: '/dog-behaviour', changefreq: 'monthly', priority: '0.85' },
+  { path: '/reactive-dog', changefreq: 'monthly', priority: '0.85' },
+  { path: '/difficult-dogs', changefreq: 'monthly', priority: '0.8' },
+  { path: '/owner-coaching', changefreq: 'monthly', priority: '0.75' },
+  { path: '/problem-finder', changefreq: 'monthly', priority: '0.8' },
   { path: '/areas', changefreq: 'monthly', priority: '0.85' },
   { path: '/areas/golden-bay', changefreq: 'monthly', priority: '0.8' },
   { path: '/areas/takaka', changefreq: 'monthly', priority: '0.8' },
@@ -35,12 +40,23 @@ export const SEO_ROUTES = [
   { path: '/guide/training', changefreq: 'monthly', priority: '0.6' },
   { path: '/guide/puppy-phase', changefreq: 'monthly', priority: '0.6' },
   { path: '/guide/daily-life', changefreq: 'monthly', priority: '0.6' },
-  { path: '/exam', changefreq: 'monthly', priority: '0.6' },
-  { path: '/intelligence', changefreq: 'monthly', priority: '0.6' },
+  { path: '/exam', changefreq: 'monthly', priority: '0.55' },
+  { path: '/intelligence', changefreq: 'monthly', priority: '0.55' },
   { path: '/dog-personality', changefreq: 'monthly', priority: '0.5' },
   { path: '/breed-finder', changefreq: 'monthly', priority: '0.5' },
   { path: '/dog-selector', changefreq: 'monthly', priority: '0.5' },
-  { path: '/equipment', changefreq: 'monthly', priority: '0.6' },
+  { path: '/equipment', changefreq: 'monthly', priority: '0.55' },
+];
+
+/** Prerender only — soft redirects; never listed in sitemap.xml. */
+export const LEGACY_PRERENDER_ROUTES = [
+  '/services/everyday-obedience',
+  '/services/puppy-training',
+  '/services/leash-recall-control',
+  '/services/home-manners',
+  '/services/dog-social-calm',
+  '/services/rehabilitation',
+  '/services/owner-coaching',
 ];
 
 export function absoluteUrl(path) {

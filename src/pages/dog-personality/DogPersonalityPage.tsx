@@ -205,17 +205,17 @@ export default function DogPersonalityPage() {
   return (
     <>
       <Seo
-        title="What Kind of Dog Are You? | Personality Quiz NZ"
-        description="Free dog personality quiz from Gold Standard Dog Training in Golden Bay — discover your archetype, then narrow to your spirit breed."
-        keywords="dog personality quiz NZ, what kind of dog are you, temperament archetype quiz, Gold Standard dog personality"
+        title="What Kind of Dog Are You? | Dog Personality"
+        description="Free dog personality quiz — discover your temperament archetype and breed vibe. Choosing a dog is only the beginning; training establishes the relationship."
+        keywords="dog personality quiz, dog breed personality, what kind of dog am I, temperament archetype quiz NZ"
         path="/dog-personality"
         bodyClass="page-dog-personality"
         iconSet="personality"
         pageJsonLd={buildSoftwareToolJsonLd({
           path: '/dog-personality',
-          title: 'What Kind of Dog Are You? | Personality Quiz NZ',
+          title: 'What Kind of Dog Are You? | Dog Personality',
           description:
-            'Free dog personality quiz from Gold Standard Dog Training in Golden Bay — discover your archetype, then narrow to your spirit breed.',
+            'Free dog personality quiz — discover your temperament archetype and breed vibe. Choosing a dog is only the beginning; training establishes the relationship.',
           applicationName: 'Gold Standard Dog Personality Quiz',
         })}
       />
@@ -337,6 +337,19 @@ export default function DogPersonalityPage() {
           <PersonalityResultView result={step.result} onRestart={restart} />
         )}
       </main>
+
+      <section className="about-section about-section--soft">
+        <div className="section-inner philosophy-text">
+          <p className="section-label">Next step</p>
+          <h2>Choosing the right dog is only the beginning.</h2>
+          <p>
+            Training establishes the relationship.{' '}
+            <Link to="/">Dog training in Golden Bay</Link>
+            {' · '}
+            <Link to="/puppy-training">Puppy training</Link>
+          </p>
+        </div>
+      </section>
 
       <SiteFooter />
     </>

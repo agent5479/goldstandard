@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import type { MouseEvent } from 'react';
 import { Link, Navigate, useLocation, useNavigate, useParams } from 'react-router-dom';
 import Seo from '../components/Seo';
@@ -14,6 +14,8 @@ import {
 import { guideHref, guideModuleHref } from '@shared/guideHref';
 import { guideModuleSections } from '../data/guideModuleRegistry';
 import { useGuideProgress } from '../hooks/useGuideProgress';
+import { buildGuideModuleJsonLd } from '../data/siteConfig';
+import { TERM_GLOSSES, formatTermGloss } from '../data/termGlosses';
 
 export default function GuideModulePage() {
   const { moduleId: moduleParam } = useParams<{ moduleId: string }>();
@@ -31,6 +33,11 @@ function GuideModulePageInner({ moduleId }: { moduleId: GuideModuleId }) {
   const module = getGuideModule(moduleId);
   const sections = guideModuleSections[moduleId];
   const { prev, next } = getAdjacentModules(moduleId);
+
+  const moduleGlosses = useMemo(
+    () => TERM_GLOSSES.filter((g) => module.anchors.includes(g.anchor)),
+    [module.anchors]
+  );
 
   useEffect(() => {
     const anchor = hash ? hash.slice(1) : undefined;
@@ -62,16 +69,22 @@ function GuideModulePageInner({ moduleId }: { moduleId: GuideModuleId }) {
   return (
     <>
       <Seo
-        title={`${module.title} | Client Reference Guide`}
-        description={`${module.description} Client dog training guide by Warwick Marshall, Golden Bay.`}
+        title={module.seoTitle}
+        description={module.seoDescription}
         keywords={`dog training ${module.title.toLowerCase()} guide, client guide Golden Bay, Warwick Marshall dog training, Gold Standard Dog Training guide, Nelson Bays`}
         path={module.route}
         bodyClass="page-guide page-guide-module"
         iconSet="guide"
+        pageJsonLd={buildGuideModuleJsonLd({
+          title: module.seoTitle,
+          description: module.seoDescription,
+          path: module.route,
+          moduleTitle: module.seoH1,
+        })}
       />
 
       <GuideShell stickyLabel="All modules">
-        <GuidePageHeader title={module.title} description={module.description} />
+        <GuidePageHeader title={module.seoH1} description={module.description} />
 
         <section className="guide-module-nav-bar" aria-label="Module navigation">
           <div className="guide-module-nav-bar-inner">
@@ -94,6 +107,21 @@ function GuideModulePageInner({ moduleId }: { moduleId: GuideModuleId }) {
           </div>
         </section>
 
+        {moduleGlosses.length > 0 ? (
+          <section className="guide-term-glosses" aria-label="Key terms in this module">
+            <div className="guide-term-glosses-inner">
+              <p className="section-label">Key terms (proprietary + conventional)</p>
+              <ul className="guide-term-gloss-list">
+                {moduleGlosses.map((gloss) => (
+                  <li key={`${gloss.anchor}-${gloss.term}`}>
+                    <Link to={guideHref(gloss.anchor)}>{formatTermGloss(gloss)}</Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </section>
+        ) : null}
+
         <section
           className="guide-contents guide-contents-module"
           id="guide-contents"
@@ -110,6 +138,20 @@ function GuideModulePageInner({ moduleId }: { moduleId: GuideModuleId }) {
             <Section key={index} />
           ))}
         </main>
+
+        <section className="guide-commercial-cta" aria-label="Book related training">
+          <div className="guide-commercial-cta-inner">
+            <p className="section-label">Private coaching</p>
+            <p>{module.commercialCta}</p>
+            <p className="service-footer-cta">
+              <Link to={module.commercialPath}>Related training</Link>
+              {' · '}
+              <Link to="/book">Book a session</Link>
+              {' · '}
+              <Link to="/problem-finder">Problem Finder</Link>
+            </p>
+          </div>
+        </section>
 
         <nav className="guide-module-footer-nav" aria-label="Continue the guide">
           <div className="guide-module-footer-nav-inner">

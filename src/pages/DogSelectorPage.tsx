@@ -60,17 +60,17 @@ export default function DogSelectorPage() {
   return (
     <>
       <Seo
-        title="Dog Selector | Roles, Mixes & Cultivation"
-        description="Pick a working or family job, or a breed mix, and read likely trait outcomes, dice-roll gambits, and cultivation by age. Gold Standard Dog Training, Golden Bay."
-        keywords="dog selector, working dog roles, breed mix gambits, nervous system cultivation, Gold Standard dog selector NZ"
+        title="Dog Breed Mix Temperament | Dog Selector"
+        description="Explore dog breed mix temperament, working roles, and cultivation by age. Free selector from Gold Standard Dog Training — then train the relationship."
+        keywords="dog breed mix temperament, mixed breed temperament, working dog roles, dog selector NZ, nervous system cultivation"
         path="/dog-selector"
         bodyClass="page-dog-selector"
         iconSet="breedfinder"
         pageJsonLd={buildSoftwareToolJsonLd({
           path: '/dog-selector',
-          title: 'Dog Selector | Roles, Mixes & Cultivation',
+          title: 'Dog Breed Mix Temperament | Dog Selector',
           description:
-            'Pick a working or family job, or a breed mix, and read likely trait outcomes, dice-roll gambits, and cultivation by age. Gold Standard Dog Training, Golden Bay.',
+            'Explore dog breed mix temperament, working roles, and cultivation by age. Free selector from Gold Standard Dog Training — then train the relationship.',
           applicationName: 'Gold Standard Dog Selector',
         })}
       />
@@ -192,6 +192,21 @@ export default function DogSelectorPage() {
           />
         )}
       </main>
+
+      <section className="about-section about-section--soft">
+        <div className="section-inner philosophy-text">
+          <p className="section-label">Next step</p>
+          <h2>Choosing the right dog is only the beginning.</h2>
+          <p>
+            Training establishes the relationship.{' '}
+            <Link to="/">Dog training in Golden Bay &amp; Takaka</Link>
+            {' · '}
+            <Link to="/puppy-training">Puppy training</Link>
+            {' · '}
+            <Link to="/obedience-training">Obedience training</Link>
+          </p>
+        </div>
+      </section>
 
       <SiteFooter />
     </>

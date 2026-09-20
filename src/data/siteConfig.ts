@@ -32,10 +32,10 @@ export const SITE_SERVICE_AREAS = [
 
 /** Comma-separated keywords for the static HTML shell (highest-intent local terms first). */
 export const SITE_KEYWORDS =
-  'dog trainer Golden Bay, dog training Golden Bay, dog trainer Takaka, dog training Takaka, dog trainer Nelson Bays, dog training Nelson, puppy training Golden Bay, puppy training Takaka, obedience training Golden Bay, recall training Takaka, reactive dog training NZ, dog rehabilitation Golden Bay, leash training Golden Bay, Warwick Marshall dog training, dog trainer Pohara, dog trainer Motueka, dog trainer Richmond, Tasman dog trainer, Greater Tasman Region dog training, book dog training Golden Bay, elite dog coaching Tasman, dog breed intelligence, breed temperament comparison, Stanley Coren dog IQ, dog training knowledge exam NZ';
+  'dog training Golden Bay, dog trainer Golden Bay, dog training Takaka, dog trainer Takaka, dog obedience training Golden Bay, puppy training Golden Bay, puppy trainer Takaka, dog behaviour training Golden Bay, dog behaviourist Golden Bay, dog leash training Golden Bay, dog recall training Golden Bay, reactive dog training Golden Bay, dog training Nelson, dog trainer Tasman, private dog training NZ, Warwick Marshall dog training, dog trainer Pohara, dog trainer Motueka, dog trainer Richmond, book dog training Golden Bay';
 
-/** Default document / Open Graph title for the home page and static HTML shell (≤60 chars for Bing). */
-export const SITE_DEFAULT_TITLE = 'Dog Trainer Golden Bay & Takaka | Warwick Marshall';
+/** Default document / Open Graph title for the home page and static HTML shell (≤65 chars). */
+export const SITE_DEFAULT_TITLE = 'Dog Training Golden Bay & Takaka | Gold Standard Dog Training';
 
 /** Core brand line — aligned with the Facebook page bio. */
 export const SITE_TAGLINE =
@@ -43,12 +43,11 @@ export const SITE_TAGLINE =
 
 /** Default meta description (plain text — no emoji; 50–160 chars for Bing). */
 export const SITE_META_DESCRIPTION =
-  'Dog trainer in Golden Bay & Takaka — Warwick Marshall offers obedience, recall, puppy training, and rehab in Nelson Bays. Book in person. Call 027 814 2222.';
+  'Private dog training in Golden Bay and Takaka for puppies, obedience, recall, leash pulling, reactivity, behaviour and difficult cases. Structured coaching for dogs and their owners.';
 
 /** Open Graph / Twitter preview — light emoji for link shares (Facebook, etc.). */
 export const SITE_OG_DESCRIPTION =
-  '🌿 Dog trainer Golden Bay & Takaka · obedience, recall & rehab · Gold Standard Dog Training · 027 814 2222';
-
+  '🌿 Dog training Golden Bay & Takaka · puppies, obedience, recall, leash, reactivity · Gold Standard Dog Training · 027 814 2222';
 export const SITE_OG_IMAGE = `${SITE_URL}/images/og/site.jpg`;
 
 export const SITE_PHONE = '+64278142222';
@@ -103,10 +102,10 @@ function offerCatalogFromServices() {
       '@type': 'Offer',
       itemOffered: {
         '@type': 'Service',
-        '@id': `${SITE_URL}/services/${service.slug}#service`,
+        '@id': `${SITE_URL}${service.path}#service`,
         name: service.schemaName,
         description: service.schemaDescription,
-        url: `${SITE_URL}/services/${service.slug}`,
+        url: `${SITE_URL}${service.path}`,
         provider: { '@id': `${SITE_URL}/#business` },
       },
     })),
@@ -256,7 +255,7 @@ export function buildBreadcrumbJsonLd(options: {
 }
 
 export function buildServicePageJsonLd(service: ServiceSeoEntry): Record<string, unknown> {
-  const path = `/services/${service.slug}`;
+  const path = service.path;
   const url = siteUrl(path);
   return {
     '@context': 'https://schema.org',
@@ -286,6 +285,42 @@ export function buildServicePageJsonLd(service: ServiceSeoEntry): Record<string,
           { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl('/') },
           { '@type': 'ListItem', position: 2, name: 'Services', item: siteUrl('/services') },
           { '@type': 'ListItem', position: 3, name: service.cardTitle, item: url },
+        ],
+      },
+    ],
+  };
+}
+
+/** Guide module Article + Breadcrumb for authority pages. */
+export function buildGuideModuleJsonLd(options: {
+  title: string;
+  description: string;
+  path: string;
+  moduleTitle: string;
+}): Record<string, unknown> {
+  const url = siteUrl(options.path);
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': ['WebPage', 'Article'],
+        '@id': `${url}#webpage`,
+        url,
+        name: options.title,
+        headline: options.moduleTitle,
+        description: options.description,
+        isPartOf: { '@id': `${SITE_URL}/#website` },
+        about: { '@id': `${SITE_URL}/#business` },
+        author: { '@id': `${SITE_URL}/#warwick` },
+        inLanguage: 'en-NZ',
+      },
+      {
+        '@type': 'BreadcrumbList',
+        '@id': `${url}#breadcrumb`,
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl('/') },
+          { '@type': 'ListItem', position: 2, name: 'Client Guide', item: siteUrl('/guide') },
+          { '@type': 'ListItem', position: 3, name: options.moduleTitle, item: url },
         ],
       },
     ],
