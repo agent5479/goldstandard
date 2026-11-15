@@ -577,7 +577,7 @@ export const SERVICE_SEO: ServiceSeoEntry[] = [
       { anchor: 'pack-leader-energy', label: 'Pack-leader energy' },
       { anchor: 'owner-mindset', label: 'Owner mindset' },
       { anchor: 'gold-standard-rule', label: 'The Gold Standard Rule' },
-      { anchor: 'dog-tantra', label: 'Dog-Tantra' },
+      { anchor: 'dog-tantra', label: 'Somatic regulation' },
     ],
     relatedServiceSlugs: ['obedience-training', 'difficult-dogs', 'dog-behaviour'],
     schemaName: 'Dog owner coaching and private training',

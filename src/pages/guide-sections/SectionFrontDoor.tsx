@@ -13,7 +13,7 @@ export default function SectionFrontDoor() {
         <p>"You are not running this relationship. You check in with me for assent — for everything."</p>
       </div>
 
-      <p><em>Note on language:</em> "Alpha" here means the dog acting as if it leads the household. That is different from dog-to-dog rank (<a href="#dog-meetings">see Dog meetings</a>), where a socially competent adult may correct a pushy youngster in a language dogs understand — that is not your role duplicated; it is pack dynamics between dogs.</p>
+      <p><em>Note on language:</em> &ldquo;Alpha&rdquo; here means the dog testing spatial entitlement and taking over household decisions inside a leadership vacuum — not wolf-pack coup theory (see <a href="#dominance-modern-science">a note on &ldquo;dominance&rdquo; and modern science</a>). That is also different from dog-to-dog rank (<a href="#dog-meetings">see Dog meetings</a>), where a socially competent adult may correct a pushy youngster in a language dogs understand — pack dynamics between dogs, not you impersonating a wolf.</p>
 
       <ul className="checklist">
         <li>Same standard at every gateway — front door, car boot, yard gate. No door is a free pass</li>

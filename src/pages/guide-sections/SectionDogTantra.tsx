@@ -2,22 +2,27 @@ export default function SectionDogTantra() {
   return (
     <section className="guide-section" id="dog-tantra">
       <div className="guide-section-inner">
-        <p className="section-num">Leadership — Shared flow</p>
-        <h2>🌀 Dog-Tantra: the engine behind embodiment.</h2>
+        <p className="section-num">Leadership — Autonomic co-regulation</p>
+        <h2>🧠 Somatic Regulation &amp; Autonomic Co-Regulation.</h2>
 
         <p>
           Everything in this module — <a href="#owner-mindset">owner mindset</a>,{' '}
-          <a href="#pack-leader-energy">anchor energy</a>, <a href="#ready-stance">ready stance</a> — rests on one
-          hidden engine. Warwick calls it <strong>Dog-Tantra</strong>. It is not a gadget, a collar, or a trick. It
-          is the practised state where you stop being a separate handler and start leading from a shared,
-          instinctual frequency dogs already speak.
+          <a href="#pack-leader-energy">anchor energy</a>, <a href="#ready-stance">ready stance</a> — rests on
+          measurable physiology. It is not a gadget, a collar, or a mystical trick. It is{' '}
+          <strong>somatic regulation</strong> driving <strong>autonomic co-regulation</strong>: shifting your own
+          nervous system out of sympathetic urgency (tight throat, shallow breathing, locked stare) into a settled
+          parasympathetic baseline that your dog reads and syncs to.
         </p>
 
-        <p>
-          Do not hear mysticism — hear <strong>the Zone</strong>. The same unthinking, collective flow an elite rugby
-          player or athlete feels on the pitch: coordination without overthinking, rhythm without nagging. Dog-Tantra
-          names that state so you know what to seek in session and at home.
-        </p>
+        <div className="callout">
+          <strong>🌀 Session shorthand: &ldquo;Dog-Tantra&rdquo; &amp; athletic flow</strong>
+          <p>
+            In sessions, Warwick sometimes refers to this state as <strong>Dog-Tantra</strong> or compares it to{' '}
+            <strong>the Zone</strong> an athlete feels on the rugby pitch — coordination without overthinking,
+            rhythm without nagging. &ldquo;Tantra&rdquo; here means sensory weave and somatic alignment, never
+            mysticism: the mechanics are breath, centre of gravity, and peripheral vision.
+          </p>
+        </div>
 
         <table className="pillars-table" aria-label="Training paradigm comparison">
           <thead>
@@ -41,10 +46,10 @@ export default function SectionDogTantra() {
               </td>
             </tr>
             <tr>
-              <td><strong>Gold Standard / Dog-Tantra</strong></td>
+              <td><strong>Gold Standard (somatic regulation)</strong></td>
               <td>
-                Internal pack-feeling so clear the dog syncs into your rhythm — not managed from outside, but led from
-                inside out.
+                Paired mechanics and autonomic co-regulation: your parasympathetic baseline is steady enough that the
+                dog relaxes into your rhythm instead of reacting to handler tension.
               </td>
             </tr>
           </tbody>
@@ -53,10 +58,9 @@ export default function SectionDogTantra() {
         <div className="callout pro-tip">
           <strong>Why in-person coaching lands faster</strong>
           <p>
-            Video teaches mechanics. Dog-Tantra must be <em>felt</em>. In session, Warwick coaches you into the
-            awareness of gut weight and occiput openness, then reflects it back — affirming what you perceived so you
-            trust the subtle signal and know what to reward. That confirmation is the awakening; without it, owners
-            second-guess the very state that makes the dog sync.
+            Video teaches mechanics. Somatic regulation must be <em>felt</em>. In session, Warwick coaches you into
+            settled lower-core breathing and soft peripheral vision, then reflects your dog&apos;s shift back to you —
+            affirming what you perceived so you trust the timing and know what to reinforce.
           </p>
         </div>
 
@@ -74,27 +78,29 @@ export default function SectionDogTantra() {
           <li>Heavy gut + calm breath = the somatic message dogs read before your hand moves</li>
         </ul>
 
-        <h3 id="dog-tantra-occiput">👁️ The aware lookout (occiput)</h3>
+        <h3 id="dog-tantra-occiput">👁️ The aware lookout (peripheral vision &amp; parasympathetic shift)</h3>
 
         <p>
-          Stop staring intently with eyes locked forward — that is predator tension, and your dog feels it. Shift
-          awareness to the very <strong>back of your skull</strong>, where your head meets your neck (the occiput).
-          Expand peripheral vision. Let the primitive brain track the whole space at once instead of laser-focusing on
-          one threat.
+          Hard, locked-forward tunnel vision activates sympathetic threat arousal — to a dog, it reads like predator
+          tension. Instead, <strong>soften your gaze</strong> and rest awareness near the back of your skull (the
+          occiput) to engage wide <strong>peripheral vision</strong>. Physiologically, softening panoramic vision helps
+          recruit the <strong>parasympathetic nervous system</strong>, lowering handler vigilance while still letting
+          you track subtle movement across the environment.
         </p>
 
         <ul className="checklist">
           <li>Peripheral awareness catches precursors — stiffening, eye-lock, lip lick, wag that stops — before the lunge</li>
-          <li>Forward predator stare invites fixation; open occiput awareness invites check-in</li>
-          <li>Pair with <a href="#ready-stance">ready stance</a> — body forward, attention wide</li>
+          <li>Forward tunnel stare elevates arousal; soft panoramic vision supports calm check-ins</li>
+          <li>Pair with <a href="#ready-stance">ready stance</a> — body poised, nervous system settled, attention wide</li>
         </ul>
 
         <h3>Connecting the axis</h3>
 
         <p>
-          <strong>Heavy gut + open occiput</strong> is the athlete flow state. You stop &quot;training a dog&quot; and
-          start leading a pack from the inside out. The mechanics in Parts 4–5 — leash jerk, butt push, timing — all
-          land faster when this axis is live first.
+          <strong>Weighted lower core + soft peripheral gaze</strong> puts <strong>autonomic co-regulation</strong>{' '}
+          into action. You stop broadcasting sympathetic urgency down the leash and become a predictable anchor. The
+          mechanics in Parts 4–5 — downward leash jerk, butt push, timing — all land cleaner when your own nervous
+          system is regulated first.
         </p>
 
         <p>

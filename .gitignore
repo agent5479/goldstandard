@@ -1,4 +1,7 @@
 node_modules/
+
+# Site text extract from npm run extract:book; the book itself is book/goldstandardbook.md
+book/.extract/
 *.tsbuildinfo
 *.local
 .DS_Store

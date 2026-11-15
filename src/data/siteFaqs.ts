@@ -39,7 +39,7 @@ export function buildAboutFaqs(): SiteFaqItem[] {
     {
       question: 'What makes Gold Standard Dog Training different from generic obedience classes?',
       answer:
-        'Gold Standard coaches the owner as much as the dog: clear standards, measured leash work, and embodied leadership (Dog-Tantra / pack sensitivity). The goal is calm reliability that holds after the session — not treat bribery or a one-size class syllabus.',
+        'Gold Standard coaches the owner as much as the dog: clear standards, measured leash work, and embodied leadership (somatic regulation and autonomic co-regulation — sometimes called Dog-Tantra in sessions). The goal is calm reliability that holds after the session — not treat bribery or a one-size class syllabus.',
     },
     {
       question: 'Do you work with reactive or difficult dogs?',

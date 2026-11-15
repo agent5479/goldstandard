@@ -29,7 +29,7 @@ import { buildFaqPageJsonLd } from '../data/siteConfig';
 
 const ABOUT_TITLE = 'About Warwick Marshall | Dog Trainer Golden Bay';
 const ABOUT_DESCRIPTION =
-  'Meet Warwick Marshall — dog trainer in Golden Bay and Takaka. Embodied Dog-Tantra coaching, measured leash work, and what to expect from sessions.';
+  'Meet Warwick Marshall — dog trainer in Golden Bay and Takaka. Somatic regulation and autonomic co-regulation coaching, measured leash work, and what to expect from sessions.';
 
 export default function AboutPage() {
   const faqs = buildAboutFaqs();
@@ -39,7 +39,7 @@ export default function AboutPage() {
       <Seo
         title={ABOUT_TITLE}
         description={ABOUT_DESCRIPTION}
-        keywords="Warwick Marshall dog trainer, about Gold Standard Dog Training, dog trainer Golden Bay Takaka, Dog-Tantra coaching NZ"
+        keywords="Warwick Marshall dog trainer, about Gold Standard Dog Training, dog trainer Golden Bay Takaka, somatic regulation dog coaching NZ, Dog-Tantra"
         path="/about"
         pageJsonLd={buildFaqPageJsonLd({
           title: ABOUT_TITLE,
@@ -204,7 +204,7 @@ export default function AboutPage() {
                 You are the signal source — posture, breath, tension, and follow-through must congrue before
                 your hands move. See <Link to={guideHref('ready-stance')}>ready stance</Link> and{' '}
                 <Link to={guideHref('pack-leader-energy')}>anchor energy</Link>; the coached skill is expanded
-                under <a href="#about-dog-tantra">Dog-Tantra</a> below.
+                under <a href="#about-dog-tantra">Somatic regulation</a> below.
               </p>
             </article>
             <article className="philosophy-pillar">
@@ -301,18 +301,19 @@ export default function AboutPage() {
 
       <section className="about-section about-section--soft" id="about-dog-tantra">
         <div className="section-inner">
-          <p className="section-label">Dog-Tantra</p>
-          <h2>Pack sensitivity and embodied leadership.</h2>
+          <p className="section-label">Somatic regulation</p>
+          <h2>Autonomic co-regulation and embodied leadership.</h2>
           <div className="philosophy-text">
             <p>
-              <strong>Dog-Tantra</strong> is Warwick&apos;s shorthand for <strong>pack sensitivity</strong> — the
-              coached skill behind the Embodiment pillar above. He likens it to tantra only in the sense of
-              sensitivity and alignment, not mysticism: shifting out of the analytical, worrying mind into a
-              calmer baseline the dog can synchronise to.
+              <strong>Somatic regulation</strong> and <strong>autonomic co-regulation</strong> are the practical
+              mechanics behind the Embodiment pillar above: settling your breath into the lower core and softening
+              your gaze into wide peripheral vision so your parasympathetic nervous system cues calm instead of urgency.
+              (In sessions, Warwick sometimes calls this practised alignment <strong>Dog-Tantra</strong> — referring
+              strictly to sensory sensitivity and unforced timing, never mysticism.)
             </p>
             <p>
-              This is taught in person. Warwick guides you into what those states feel like and reflects them
-              back so you can trust your perception — what to seek, what to reward, and when the connection is real.
+              This is taught in person. Warwick guides you into what those physiological states feel like and reflects
+              them back so you can trust your perception — what to seek, what to reward, and when the connection is real.
             </p>
 
             <table className="pillars-table" aria-label="Training paradigm comparison">
@@ -338,17 +339,17 @@ export default function AboutPage() {
                   </td>
                 </tr>
                 <tr>
-                  <td><strong>Gold Standard (pack sensitivity)</strong></td>
+                  <td><strong>Gold Standard (somatic regulation)</strong></td>
                   <td>
-                    Pair clean mechanics with embodied alignment. You do not micromanage the dog; you hold a baseline
-                    so clear the dog can relax into the structure and synchronise to your rhythm.
+                    Pair clean mechanics with autonomic co-regulation. You do not micromanage the dog; you hold a
+                    regulated parasympathetic baseline so the dog can relax into the structure and synchronise to your rhythm.
                   </td>
                 </tr>
               </tbody>
             </table>
 
             <p className="about-dog-tantra-cta">
-              <Link to={guideHref('dog-tantra')}>Read the full Dog-Tantra section in the Guide</Link>
+              <Link to={guideHref('dog-tantra')}>Read Somatic Regulation in the Guide</Link>
               {' · '}
               <Link to="/book">Book a session</Link>
             </p>

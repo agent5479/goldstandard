@@ -13,9 +13,9 @@ export interface TermGloss {
 
 export const TERM_GLOSSES: TermGloss[] = [
   {
-    term: 'Dog-Tantra',
+    term: 'Somatic regulation',
     anchor: 'dog-tantra',
-    gloss: 'handler–dog regulation and shared flow',
+    gloss: 'autonomic co-regulation and settled handler baseline (Dog-Tantra)',
   },
   {
     term: 'Gold Standard Rule',

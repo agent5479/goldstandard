@@ -25,7 +25,7 @@ export default function SectionSocialNeeds() {
 
         <h3 id="dominance-navigation">🧭 Learning dominance navigation</h3>
 
-        <p>Expect your dog to learn how to read and navigate dominance — not by avoiding other dogs, but through structured exposure with you as backup. Mounting, barging, rough sniffing, and the signals in <a href="#social-friction">social friction</a> are antisocial dominance culture, not harmless play. There are more signals than these — learn them, name them, and correct early when your dog offers them; intervene when others offer them to yours.</p>
+        <p>Expect your dog to learn how to read and navigate social status — not by avoiding other dogs, but through structured exposure with you as backup (see <a href="#dominance-modern-science">modern science on &ldquo;dominance&rdquo;</a> for why household boundaries differ from dog-to-dog signalling). Mounting, barging, rough sniffing, and the signals in <a href="#social-friction">social friction</a> are antisocial pressure, not harmless play. There are more signals than these — learn them, name them, and correct early when your dog offers them; intervene when others offer them to yours.</p>
 
         <p>Healthy negotiation between calm, socially competent dogs still happens — see <a href="#master-dog">The master dog</a> and <a href="#controlled-confrontation">Controlled Confrontation</a>. The goal is a dog that can hold neutrality in a group, not one that never meets another dog until adulthood.</p>
 
@@ -199,6 +199,73 @@ export default function SectionSocialNeeds() {
           boundaries to test and begin looking to the pack — and to you — for guidance. Your tactical role never
           disappears; the master dog fills the neurological gap humans cannot close alone.
         </p>
+
+        <h4 id="controlled-confrontation-contraindications">⚠️ Contraindications: Controlled Confrontation vs. sub-threshold distance work (BAT)</h4>
+
+        <p>
+          Using a master helper dog is a targeted protocol, not a blanket prescription for every reactive dog. Put the
+          wrong dog into physical social pressure and you get flooding instead of clarity:
+        </p>
+
+        <div className="two-col">
+          <div className="col-card">
+            <h4>✅ Indicated — confident, socially pushy dogs</h4>
+            <p>
+              Privileged, boundary-testing, or high-arousal pushy dogs that bulldoze space (T-boning, mounting,
+              hard-staring, demanding rank) without underlying panic. They recover fast and need clear social walls.
+            </p>
+          </div>
+          <div className="col-card">
+            <h4>🚫 Contraindicated — fear-reactive, trauma, or shutdown dogs</h4>
+            <p>
+              <strong>Do not use</strong> Controlled Confrontation on dogs driven by acute fear, trauma overflow, or
+              chronic <a href="#learned-helplessness">learned helplessness</a>. Those dogs need sub-threshold distance
+              work (e.g., <strong>Behavior Adjustment Training / BAT</strong>-aligned setups at 50+ metres or behind
+              visual breaks) so they stay below panic and practise voluntary disengagement. See{' '}
+              <a href="#trauma-vs-hardship">Trauma vs. hardship</a> and{' '}
+              <a href="#split-second-guardrail">split-second guardrail</a>.
+            </p>
+          </div>
+        </div>
+
+        <h4 id="yield-vs-shutdown">⚖️ True Light-Switch Yield vs. Learned Helplessness (Shutdown)</h4>
+
+        <p>
+          Stopping movement is <strong>not</strong> automatically a healthy yield. If a misdiagnosed fearful dog shuts
+          down under pressure, stillness masks chronic panic. Never mistake shutdown for success:
+        </p>
+
+        <table className="pillars-table" aria-label="Light-switch yield versus learned helplessness comparison">
+          <thead>
+            <tr>
+              <th scope="col">Marker</th>
+              <th scope="col">True Light-Switch Yield (social learning)</th>
+              <th scope="col">Learned Helplessness / Shutdown (extract immediately)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Muscle tone &amp; posture</strong></td>
+              <td>Shoulders soften cleanly, weight unlocks fluidly, spine stays supple and mobile.</td>
+              <td>Frozen crouch, plank stiffness, pinned flat to the ground, or brittle immobility.</td>
+            </tr>
+            <tr>
+              <td><strong>Eyes &amp; head</strong></td>
+              <td>Brief smooth head turn, normal blinking, soft ears, relaxed brow.</td>
+              <td>Unblinking <strong>whale eye</strong> (whites showing), locked wide pupils, or blank fixed avert.</td>
+            </tr>
+            <tr>
+              <td><strong>Tail &amp; autonomic cues</strong></td>
+              <td>Lower neutral carriage, natural shake-off, normal breath and soft mouth.</td>
+              <td>Tail clamped tightly under belly, trembling, submissive urination, distress panting or yawning.</td>
+            </tr>
+            <tr>
+              <td><strong>Recovery &amp; curiosity</strong></td>
+              <td>Resumes loose exploration, sniffing, and calm check-in with handler within seconds.</td>
+              <td>Avoidant, flat, withdrawn, refuses food or movement, spooks at benign shifts after separation.</td>
+            </tr>
+          </tbody>
+        </table>
 
         <div className="two-col">
           <div className="col-card">

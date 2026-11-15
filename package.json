@@ -15,6 +15,7 @@
     "test:booking": "vitest run src/data/bookingPipeline.test.ts",
     "lint:exam": "npx tsx src/data/examLint.ts",
     "lint:guide": "npx tsx scripts/auditGuideLinks.ts",
+    "extract:book": "npx tsx --tsconfig tsconfig.app.json scripts/build-book.ts",
     "generate:icons": "node scripts/generate-icon-sizes.mjs",
     "generate:favicon-og": "node scripts/generate-favicon-and-og.mjs"
   },

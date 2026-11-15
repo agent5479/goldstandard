@@ -74,6 +74,60 @@ export default function SectionDogLanguage() {
         <strong>❌ Do not improvise at the top of the ladder</strong>
         <p>Pin &amp; hold and shocking squeeze are not first-line tools and not anger outlets. If nothing in the daily toolkit is landing, that is a session conversation — not something to escalate alone at home without guidance.</p>
       </div>
+
+      <h3 id="herron-study-contrast">🧪 Emotional confrontation (Herron et al., 2009) vs. Law of Conservation of Force</h3>
+
+      <p>
+        A well-known veterinary clinic survey by Herron, Shofer, and Reisner (2009) found that confrontational
+        techniques — including the &ldquo;alpha roll&rdquo; (31%), &ldquo;dominance down&rdquo; (29%), and
+        grabbing/shaking the jowls (26%) — triggered defensive aggression in roughly a quarter to a third of dogs.
+        Gold Standard draws a hard line between anxious owners wrestling a panicked dog at home and the{' '}
+        <a href="#conservation-of-force">Law of Conservation of Force</a>:
+      </p>
+
+      <table className="pillars-table" aria-label="Emotional confrontation versus Law of Conservation of Force">
+        <thead>
+          <tr>
+            <th scope="col">Dimension</th>
+            <th scope="col">Uncalibrated confrontation (Herron et al.)</th>
+            <th scope="col">Gold Standard Law of Conservation of Force</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Handler state</strong></td>
+            <td>Frustration, anger, or desperate ego battle to overpower the dog.</td>
+            <td>Zero anger, settled somatic baseline, and strict adherence to minimal total lifetime conflict.</td>
+          </tr>
+          <tr>
+            <td><strong>Pre-check before contact</strong></td>
+            <td>Applied to panicked, fearful, or unproofed dogs mid-meltdown.</td>
+            <td>
+              Filtered through <a href="#contextual-receptivity">contextual receptivity</a>,{' '}
+              <a href="#trauma-vs-hardship">trauma vs. hardship</a>, and the{' '}
+              <a href="#split-second-guardrail">split-second guardrail</a> (never guess upward when unsure).
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Release &amp; follow-through</strong></td>
+            <td>Prolonged pinning, shouting, or emotional correction-then-cuddle cycles.</td>
+            <td>
+              Instant release the millisecond pressure lands, immediate{' '}
+              <a href="#correction-redirection">redirection</a> to the right choice, and return to{' '}
+              <a href="#neutral-baseline-praise">neutral baseline</a> (no{' '}
+              <a href="#correction-praise-trap">correction-and-praise loop</a>).
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Upper-rung access</strong></td>
+            <td>Improvised DIY at home off internet clips or frustration.</td>
+            <td>
+              Top rungs (brief shocking squeeze and <a href="#pin-hold">pin &amp; hold</a>) are Sessions-Only,
+              calibrated live, and explicitly forbidden as DIY home experiments.
+            </td>
+          </tr>
+        </tbody>
+      </table>
       </div>
     </section>
   );

@@ -18,9 +18,11 @@ export default function SectionOwnerMindset() {
         </p>
 
         <p>
-          <a href="#dog-tantra">Dog-Tantra</a> is the practised state where your gut-to-brainstem baseline is
-          the message — not words alone. When that axis is heavy and calm, the dog syncs; when anxiety floats
-          to your chest and throat, the dog fills the leadership gap before you finish a sentence.
+          <a href="#dog-tantra">Somatic regulation</a> (autonomic co-regulation — sometimes called{' '}
+          <strong>Dog-Tantra</strong> in sessions) is the practised state where your settled lower-core breath and
+          calm brainstem baseline are the message — not words alone. When that axis is grounded and calm, your dog
+          can co-regulate; when anxiety floats to your chest and throat, the dog fills the leadership gap before you
+          finish a sentence.
         </p>
 
         <p>
@@ -57,6 +59,48 @@ export default function SectionOwnerMindset() {
           precursors in time — see <a href="#timing">Timing</a> and{' '}
           <a href="#symptom-glossary">Symptom glossary</a>.
         </p>
+
+        <h3 id="diagnostic-sequence">🩺 The 3-Step Diagnostic Sequence (rule out skill gaps first)</h3>
+
+        <p>
+          Handler regulation matters, but it is <strong>not</strong> meant to turn owners into anxious
+          self-policers blaming every wobble on their own nervous system. Whenever a dog breaks position or reacts,
+          walk through three checks in strict order before assuming your &ldquo;energy&rdquo; caused it:
+        </p>
+
+        <div className="callout pro-tip">
+          <strong>🐿️ Do not blame your energy first</strong>
+          <p>
+            &ldquo;If your dog breaks heel at a squirrel, don&apos;t blame your &lsquo;energy&rsquo; first — ask
+            whether pain is present, then ask if you&apos;ve actually proofed that distraction level.&rdquo;
+          </p>
+        </div>
+
+        <div className="trust-grid" aria-label="Diagnostic sequence flowchart">
+          <article className="trust-card">
+            <strong>1. Medical check →</strong>
+            <span>
+              Rule out pain, orthopaedic strain, thyroid imbalance, or acute discomfort first. Biology overrides
+              training.
+            </span>
+          </article>
+          <article className="trust-card">
+            <strong>2. Contextual receptivity →</strong>
+            <span>
+              Is the skill rock-solid in the living room before expecting it beside a squirrel or strange dog?
+              An unproofed gap needs lower-distraction reps — see{' '}
+              <a href="#contextual-receptivity">Contextual receptivity</a> and{' '}
+              <a href="#behavior-driver-calibration">Driver calibration</a>.
+            </span>
+          </article>
+          <article className="trust-card">
+            <strong>3. Somatic baseline ✓</strong>
+            <span>
+              Once health and proofing are solid, check breath, grip tension, and{' '}
+              <a href="#dog-tantra">somatic regulation</a> — steady your nervous system before resetting the dog.
+            </span>
+          </article>
+        </div>
 
         <h3 id="new-baseline">🧠 The subconscious shift and the new baseline</h3>
 

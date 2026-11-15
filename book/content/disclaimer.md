@@ -1,0 +1,21 @@
+# Important notice
+
+Please read this before using anything in this book.
+
+**Education, not a substitute for professional help.** This book explains the philosophy and methods of Gold Standard Dog Training so that clients can understand and reinforce their in-person coaching. It is not veterinary advice, behavioural-medicine advice, or a diagnosis for any individual dog. Nothing in it replaces an assessment of your dog by a qualified professional who has seen the dog in person.
+
+**See your vet first.** Sudden changes in behaviour, new aggression, noise sensitivity, restlessness, compulsive licking or spinning, house-soiling, and reluctance to be touched can all have medical causes such as pain, thyroid disease, skin conditions, or neurological problems. Rule these out with a veterinarian before treating a behaviour as a training issue. Decisions about desexing, diet, medication, and exercise for young or elderly dogs belong with your vet. Where this book takes a position that differs from mainstream veterinary advice (for example on desexing), it says so; treat those sections as one trainer's framework, not a clinical recommendation.
+
+**Physical techniques are taught in person.** Several techniques described here involve physical contact or leash pressure: the downward leash jerk, butt push, collar grab, the brief "shocking squeeze", and the pin & hold. Written descriptions cannot convey timing, placement, or intensity, and applied badly these techniques can injure a dog, damage trust, or provoke a defensive bite. Do not attempt the upper rungs of the escalation ladder from a page. The guide marks them as sessions-only, and this book repeats that instruction. The chapter [Where Gold Standard sits among training approaches](book:training-approaches) sets out how these techniques compare with other methods and what veterinary and welfare bodies say about them, so that you can make an informed choice.
+
+**Aggression and safety.** If a dog has bitten, or you are worried it may bite a person or another animal, manage the risk first: use a lead, a well-fitted and conditioned basket muzzle, barriers, and supervision. Seek hands-on professional help. Never let children or inexperienced handlers apply corrections to a dog showing aggression. Controlled Confrontation with a helper dog is a facilitated session technique with safety lines and, where necessary, muzzles. It is not something to recreate at a dog park.
+
+**No guarantees.** Every dog, household, and history is different. The outcomes described here are patterns seen in coaching, not promises. Results depend on consistency, the dog's health and temperament, and factors outside any trainer's control.
+
+**Law and welfare in New Zealand.** Dog owners are responsible for their dog's welfare and control under the Animal Welfare Act 1999, the Code of Welfare: Dogs (2018), the Animal Welfare (Care and Procedures) Regulations 2018, and the Dog Control Act 1996, together with local council bylaws. Any training aid must not cause unreasonable or unnecessary pain or distress, and pinch and prong collars must not be used. Dog training is not a regulated profession in New Zealand, so ask any trainer, including this one, about their methods, experience, and insurance.
+
+**Independence.** Gold Standard Dog Training is an independent business. It is influenced by, but not affiliated with, endorsed by, or certified by Beckman's Dog Training or any other named trainer or organisation. References to other methods and trainers are descriptive comparisons based on their public materials. The techniques in this book are Warwick's own application and should not be attributed to anyone else.
+
+**Breed and personality data.** The breed profiles, scores, instinct types, and personality readings in the appendices describe general tendencies drawn from breed history and working purpose. Individual dogs vary widely, and a breed label never replaces reading the dog in front of you. The spirit readings are interpretive and intended as reflection, not science.
+
+**The website is the living version.** This book is a snapshot of the Gold Standard Dog Training website on the date shown in the introduction. Methods, prices, service areas, and guidance may have changed since. Check the website or contact Warwick for current information.

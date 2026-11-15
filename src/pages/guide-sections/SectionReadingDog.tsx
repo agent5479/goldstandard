@@ -12,15 +12,15 @@ export default function SectionReadingDog() {
 
       <p>Your job is to read where the dog's psychology actually is — not where you wish it were. Attention span, prior trauma, age, <a href="#breed-temperament">breed temperament</a>, and how much structure they have had all change what they can absorb in a given moment. Push through when they are still capable. Reset or shorten the session when they are saturated. Confusing overload with defiance is one of the most common owner mistakes — see <a href="#symptom-glossary">Symptom glossary</a> (forgetting commands, panting, mouthing).</p>
 
-      <h3 id="dog-tantra-reading">🌀 Somatic reading — feel before you analyse</h3>
+      <h3 id="dog-tantra-reading">🧠 Somatic reading — feel before you analyse</h3>
 
       <p>
         Reading your dog is not only visual textbook analysis. When your{' '}
-        <a href="#dog-tantra">Dog-Tantra</a> axis is locked, you feel tension shift before the bark or lunge
-        lands — somatic field matching, not throat-level nagging. See Dog-Tantra for the full gut-and-occiput
-        frame; practice peripheral awareness for the dog&apos;s{' '}
-        <a href="#dog-ready-stance">ready stance</a> loading and the{' '}
-        <a href="#three-second-pause">three-second pause</a> when you sense the field spike.
+        <a href="#dog-tantra">somatic regulation</a> baseline is steady, your peripheral awareness catches tension
+        shifts before a bark or lunge lands — autonomic co-regulation in real time rather than throat-level nagging.
+        See <a href="#dog-tantra">Somatic regulation</a> for the lower-core and soft-gaze frame; track your
+        dog&apos;s <a href="#dog-ready-stance">ready stance</a> loading and use the{' '}
+        <a href="#three-second-pause">three-second pause</a> when arousal rises.
       </p>
 
       <div className="callout">
@@ -152,9 +152,21 @@ export default function SectionReadingDog() {
         </div>
       </div>
 
-      <div className="callout">
-        <strong>📚 A note on &ldquo;dominance&rdquo;</strong>
-        <p>Modern veterinary behaviourists often read these moves as <strong>resource guarding</strong> or a <strong>lack of impulse control</strong> — the dog learned that being pushy gets the best seat, the most attention, or the last word. They are not plotting household dictatorship. This guide still uses &ldquo;dominance&rdquo; as shorthand for rank games between dogs and pushy space tests on humans, but the fix is the same either way: clear boundaries, earned access, and calm structure — not winning a staring contest.</p>
+      <div className="callout" id="dominance-modern-science">
+        <strong>📚 A note on &ldquo;dominance&rdquo; and modern science</strong>
+        <p>
+          L. David Mech&apos;s 1999 correction of early captive-wolf studies dismantled the myth that dogs are
+          constantly plotting a violent wolf-pack coup to become &ldquo;alpha,&rdquo; and the American Veterinary
+          Society of Animal Behavior (AVSAB) explicitly cautions against adversarial dominance suppression. Gold
+          Standard agrees completely on that biology. When this guide uses terms like &ldquo;dominance,&rdquo;
+          &ldquo;rank,&rdquo; or &ldquo;alpha,&rdquo; it is shorthand for <strong>resource-control and spatial
+          entitlement inside a leadership vacuum</strong> (<strong>social privilege without social
+          responsibility</strong>) &mdash; the dog having learned that blocking doorways, claiming couches, leaning, or
+          hard-staring decides what happens next. Ethologists continue to document formal dominance and submission
+          signals <em>between dogs</em> (e.g., van der Borg et al., 2015), whereas with humans the issue is
+          impulse control and uncalibrated household boundaries. Either way, the fix is identical: earned access,
+          calm predictability, and clear structure &mdash; never a confrontational ego battle.
+        </p>
       </div>
 
       <h3 id="three-second-pause">⏸️ The three-second pause</h3>
@@ -499,6 +511,19 @@ export default function SectionReadingDog() {
         <li>Escalating to shocking physical correction on a trauma-signalling dog can confirm the world is unsafe — structure still matters; intensity must drop. See <a href="#trauma-vs-hardship">Trauma vs hardship</a> and <a href="#dog-language">Dog language</a> for when firmer treatment is and is not appropriate</li>
         <li>Progress may be non-linear; a bad day after a good week is common</li>
       </ul>
+
+      <div className="dont" id="split-second-guardrail">
+        <strong>🛑 Split-second calibration guardrail (when unsure, never guess upward)</strong>
+        <p>
+          Distinguishing fear-driven overload from privileged boundary-testing takes practice, and human adrenaline
+          clouds judgement in a split second. <strong>If you are not sure which one you are looking at, never guess
+          upward on the correction scale.</strong> Drop arousal through distance or calm reset, run the{' '}
+          <a href="#diagnostic-sequence">3-step diagnostic sequence</a> and check{' '}
+          <a href="#trauma-signals">trauma signals</a> when both of you are calm, and coach through higher-level
+          calibration in person before applying firm physical corrections. Calibrated firmness clarifies boundaries;
+          miscalibrated force on a fearful dog creates trauma.
+        </p>
+      </div>
 
       <h3 id="pack-guarding">🚪 Pack guarding: the bathroom follow</h3>
 

@@ -119,6 +119,20 @@ export default function HomePage() {
             {' · '}
             <Link to="/book">Book online</Link>
           </p>
+          <div className="trust-grid" aria-label="Core method commitments">
+            <article className="trust-card">
+              <strong>No shock or prong collars</strong>
+              <span>Mechanical pain tools are excluded completely. Clear boundaries come from calm posture, voice, and measured leash work — never remote electronics.</span>
+            </article>
+            <article className="trust-card">
+              <strong>Medical &amp; handler baseline first</strong>
+              <span>Behaviour is grounded in physiology before correction: rule out pain or thyroid issues first, then steady your own autonomic nervous system.</span>
+            </article>
+            <article className="trust-card">
+              <strong>Functional outlets, not suppression</strong>
+              <span>Natural breed drives are fulfilled rather than crushed — giving retrievers a structured &ldquo;mouth job&rdquo; and channelling instincts into calm work.</span>
+            </article>
+          </div>
         </div>
       </section>
 

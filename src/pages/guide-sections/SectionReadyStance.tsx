@@ -8,12 +8,12 @@ export default function SectionReadyStance() {
       <p>In martial arts, the ready stance is not tension — it is a pre-engaged body that can act the instant it needs to. The same principle applies here. A soft, slumped handler cannot reach the <a href="#timing">one-second window</a>. A handler with core engaged, knees soft, weight balanced, and attention forward can.</p>
 
       <div className="callout pro-tip">
-        <strong>🌀 Dog-Tantra activation</strong>
+        <strong>🧠 Somatic regulation activation</strong>
         <p>
-          Ready stance activates the <a href="#dog-tantra">Dog-Tantra</a> axis — drop awareness into the{' '}
-          <a href="#dog-tantra-lower-core">weighted anchor</a> and{' '}
-          <a href="#dog-tantra-occiput">aware lookout</a> before you engage core and move. See Dog-Tantra for
-          the full somatic frame.
+          Ready stance activates the <a href="#dog-tantra">autonomic co-regulation</a> axis — settle awareness into the{' '}
+          <a href="#dog-tantra-lower-core">weighted anchor</a> (lower core) and{' '}
+          <a href="#dog-tantra-occiput">aware lookout</a> (soft peripheral gaze) before you engage core and move. See
+          Somatic regulation for the full physiological frame.
         </p>
       </div>
 
