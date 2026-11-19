@@ -261,6 +261,7 @@ export const CATEGORY_LIFE_PHASE_DEFAULTS: Record<BreedCategory, BreedLifePhaseN
 export const SLOW_MATURING_BREED_NAMES = new Set([
   'Labrador Retriever',
   'Golden Retriever',
+  'Field Golden Retriever',
   'Flat-Coated Retriever',
   'Chesapeake Bay Retriever',
   'Curly-Coated Retriever',
@@ -342,6 +343,20 @@ export const BREED_SENSITIVITY_OVERRIDES: Record<string, BreedSensitivityProfile
       correction_delivery: 'low',
     },
     summary: 'Stable retriever — tolerates correction recovery well; less handler-mood amplification than poodle or bull companion types.',
+  },
+  'Field Golden Retriever': {
+    levels: {
+      handler_mood: 'low',
+      separation: 'moderate',
+      correction_delivery: 'low',
+      touch_handling: 'moderate',
+      movement_visual: 'moderate',
+    },
+    notes: {
+      movement_visual: 'Working-line marking and retrieve drive make fast movement more salient than in bench lines — build impulse control before releasing for retrieves.',
+      touch_handling: 'Soft-mouthed and people-pleasing like show lines, though fitter and more restless under static restraint — keep handling calm and brief.',
+    },
+    summary: 'High-drive, intelligent working retriever — soft-mouthed and biddable, with stronger scenting instinct and a high need for daily tasking or inquisitive self-tasking turns destructive.',
   },
   'Cavoodle / Spoodle': POODLE_COMPANION_SENSITIVITY,
   'Labradoodle / Groodle': {
@@ -501,6 +516,11 @@ export const BREED_SENSITIVITY_OVERRIDES: Record<string, BreedSensitivityProfile
 export const BREED_LIFE_PHASE_OVERRIDES: Record<string, BreedLifePhaseNotes> = {
   'Golden Retriever': {
     maturationNote: 'Slow to mature — adolescent phase may run to ~4 years; structure still starts in puppyhood.',
+  },
+  'Field Golden Retriever': {
+    puppy: 'Soft-mouthed but inquisitive and high-drive early — channel mouthing into structured retrieves/scent games and teach calm settle before self-tasking takes over.',
+    adolescent: 'Fitter, sharper, and more coordinated than show lines — requires substantial daily mental tasking (not just exercise) or boredom turns into destructive self-tasking.',
+    maturationNote: 'Slow to mature — working drive and inquisitive energy stay high through adolescence (~4 years); structured jobs and off-switch habits start in puppyhood.',
   },
   'Labrador Retriever': {
     maturationNote: 'Slow to mature — adolescent testing can run longer than smaller breeds.',

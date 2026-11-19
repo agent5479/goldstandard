@@ -74,6 +74,7 @@ export const breeds: Breed[] = [
   { name: 'American Bulldog', category: 'clingy' },
   { name: 'Labrador Retriever', category: 'clingy' },
   { name: 'Golden Retriever', category: 'clingy' },
+  { name: 'Field Golden Retriever', category: 'clingy' },
   { name: 'Flat-Coated Retriever', category: 'clingy' },
   { name: 'Chesapeake Bay Retriever', category: 'clingy' },
   { name: 'Curly-Coated Retriever', category: 'clingy' },

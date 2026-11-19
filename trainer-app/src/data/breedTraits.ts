@@ -249,6 +249,20 @@ const breedOverrideMap: Record<string, BreedTraitProfile> = {
         'Cooperative retriever engine — food, play, and access all work; responds to calm approval more than excited praise during reactions.',
     },
   },
+  'Field Golden Retriever': {
+    neuroticismInclination: 'low',
+    suggestedProfileTags: ['clingy', 'high_drive', 'puzzle_driven', 'play_motivated'],
+    trainerSummary:
+      'Working-line retriever — soft-mouthed, highly biddable, and sharper than show Goldens; needs real tasking and scent/retrieve jobs or inquisitive self-tasking turns destructive.',
+    clientSummary:
+      'Working-line retriever — fitter, smarter, and far more driven than a show Golden; people-pleasing with a soft mouth, but needs daily mental jobs or it invents its own (often destructive) projects.',
+    overrides: {
+      personality:
+        'People-pleasing, soft-mouthed, and highly biddable like show lines — without the clumsy, heavy-boned doofus energy. Noticeably higher intelligence and inquisitive curiosity mean an under-tasked field Golden will self-task quickly (similar to a Standard Poodle, though typically more destructive when bored). Needs structured mental work and an explicit off-switch rather than just physical mileage.',
+      working:
+        'High-drive, coordinated gundog engine — strong sniffing and marking instinct alongside retrieve drive; food, tug, scent work, and structured problem-solving land well when paired with impulse control.',
+    },
+  },
   'Poodle (Standard)': {
     sizeClass: 'large',
     neuroticismInclination: 'low',

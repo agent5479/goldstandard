@@ -51,6 +51,8 @@ export const breedPhysicalAppearance: Record<string, string> = {
     '~25–36 kg. Medium-large retriever — otter tail, broad head, short dense waterproof coat, and athletic but stocky frame.',
   'Golden Retriever':
     '~25–34 kg. Medium-large retriever — feathered golden coat, friendly open expression, level topline, and balanced athletic build.',
+  'Field Golden Retriever':
+    '~22–31 kg. Fitter, leaner, lighter-boned working retriever — shorter, flatter dark-gold to mahogany-red coat with light trim, narrower muzzle, and coordinated, agile endurance build without the heavy show-line clumsiness.',
   'Flat-Coated Retriever':
     '~25–32 kg. Large lean retriever — glossy flat black or liver coat, long head, and elegant athletic lines.',
   'Chesapeake Bay Retriever':

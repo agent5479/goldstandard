@@ -15,6 +15,7 @@ const LIFE_STAGE_TAG_SET = new Set<string>(LIFE_STAGE_TAG_IDS);
 const SLOW_MATURING_BREED_NAMES = new Set([
   'Labrador Retriever',
   'Golden Retriever',
+  'Field Golden Retriever',
   'Flat-Coated Retriever',
   'Chesapeake Bay Retriever',
   'Curly-Coated Retriever',
@@ -32,7 +33,7 @@ const SLOW_MATURING_BREED_NAMES = new Set([
 ]);
 
 const SLOW_MATURING_NAME_PATTERN =
-  /\blabrador\b|\bgolden retriever\b|\bflat-coated retriever\b|\bbmd\b|bernese mountain|\bnewfoundland\b|\bgreat dane\b|\bst bernard\b|\bleonberger\b|\blabradoodle\b|\bbgroodle\b|\bbernedoodle\b/;
+  /\blabrador\b|\bfield golden\b|\bgolden retriever\b|\bflat-coated retriever\b|\bbmd\b|bernese mountain|\bnewfoundland\b|\bgreat dane\b|\bst bernard\b|\bleonberger\b|\blabradoodle\b|\bbgroodle\b|\bbernedoodle\b/;
 
 /** Parse free-text dog age into approximate months, or null if unknown. */
 export function parseDogAgeMonths(ageText?: string): number | null {
