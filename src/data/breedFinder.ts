@@ -657,6 +657,8 @@ function scoreGoal(
   cautions: string[]
 ): number {
   const intel = findIntelligenceByBreedName(breed.name);
+  const tags = getBreedSuggestedProfileTags(breed.name);
+  const isHighDrive = tags.includes('high_drive');
   const work = intel?.scores.work ?? 5;
   const neuro = intel?.scores.neuro ?? 5;
   let delta = 0;
@@ -665,7 +667,7 @@ function scoreGoal(
   if (companionFrac > 0 && (breed.category === 'clingy' || breed.category === 'small')) {
     delta += companionFrac * 10;
     if (noteAt(0.5, companionFrac)) {
-      reasons.push('People-focused companion type â€” built for bonded family life.');
+      reasons.push('People-focused companion type — built for bonded family life.');
     }
   }
 
@@ -682,13 +684,21 @@ function scoreGoal(
     if (neuro >= 7) {
       delta -= calmFrac * 10;
       if (noteAt(0.5, calmFrac)) {
-        cautions.push('Can be stress-prone â€” calm home still needs structure, not just vibes.');
+        cautions.push('Can be stress-prone — calm home still needs structure, not just vibes.');
+      }
+    }
+    if (isHighDrive) {
+      delta -= calmFrac * 10;
+      if (noteAt(0.5, calmFrac)) {
+        cautions.push(
+          'High-drive working type — needs daily structured tasking or inquisitive boredom turns destructive.'
+        );
       }
     }
     if (work <= 5 && (breed.category === 'sighthound' || breed.category === 'clingy')) {
       delta += calmFrac * 10;
       if (noteAt(0.5, calmFrac)) {
-        reasons.push('Generally settles well when exercise is met â€” good calm-home candidate.');
+        reasons.push('Generally settles well when exercise is met — good calm-home candidate.');
       }
     }
   }
@@ -696,11 +706,14 @@ function scoreGoal(
   const workingFrac = fieldFraction(ctx, 'goal', 'working');
   if (
     workingFrac > 0 &&
-    (breed.category === 'herding' || breed.category === 'terrier' || breed.category === 'scenthound')
+    (breed.category === 'herding' ||
+      breed.category === 'terrier' ||
+      breed.category === 'scenthound' ||
+      isHighDrive)
   ) {
     delta += workingFrac * 12;
     if (noteAt(0.5, workingFrac)) {
-      reasons.push('Working heritage â€” thrives on jobs, puzzles, and earned access.');
+      reasons.push('Working heritage — thrives on jobs, puzzles, and earned access.');
     }
   }
 
